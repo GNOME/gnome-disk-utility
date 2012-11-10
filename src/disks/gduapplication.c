@@ -8,7 +8,12 @@
  */
 
 #include "config.h"
+
 #include <glib/gi18n.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -46,6 +51,9 @@ gdu_application_finalize (GObject *object)
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* called in local instance */
 static gboolean
 gdu_application_local_command_line (GApplication    *_app,
                                     gchar         ***arguments,
@@ -63,10 +71,11 @@ gdu_application_local_command_line (GApplication    *_app,
                                                                                  exit_status);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
-gdu_application_activate (GApplication *_app)
+gdu_application_ensure_client (GduApplication *app)
 {
-  GduApplication *app = GDU_APPLICATION (_app);
   GError *error;
 
   if (app->client != NULL)
@@ -80,14 +89,118 @@ gdu_application_activate (GApplication *_app)
       g_error ("Error getting udisks client: %s", error->message);
       g_error_free (error);
     }
+ out:
+  ;
+}
+/* ---------------------------------------------------------------------------------------------------- */
+
+/* called in primary instance */
+static gint
+gdu_application_command_line (GApplication            *_app,
+                              GApplicationCommandLine *command_line)
+{
+  GduApplication *app = GDU_APPLICATION (_app);
+  UDisksObject *object_to_select = NULL;
+  GOptionContext *context;
+  gchar **argv = NULL;
+  GError *error = NULL;
+  gint argc;
+  gint ret = 1;
+  gchar *s;
+  gchar *opt_block_device = NULL;
+  gboolean opt_help = FALSE;
+  GOptionEntry opt_entries[] =
+  {
+    {"block-device", 0, 0, G_OPTION_ARG_STRING, &opt_block_device, N_("Select device"), NULL },
+    {"help", '?', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &opt_help, N_("Show help options"), NULL },
+    {NULL}
+  };
+
+  argv = g_application_command_line_get_arguments (command_line, &argc);
+
+  context = g_option_context_new (NULL);
+  /* This is to avoid the primary instance calling exit() when encountering the "--help" option */
+  g_option_context_set_help_enabled (context, FALSE);
+  g_option_context_add_main_entries (context, opt_entries, GETTEXT_PACKAGE);
+
+  if (!g_option_context_parse (context, &argc, &argv, &error))
+    {
+      g_application_command_line_printerr (command_line, "%s\n", error->message);
+      g_clear_error (&error);
+      goto out;
+    }
+
+  if (opt_help)
+    {
+      s = g_option_context_get_help (context, FALSE, NULL);
+      g_application_command_line_print (command_line, "%s",  s);
+      g_free (s);
+      ret = 0;
+      goto out;
+    }
+
+  if (opt_block_device != NULL)
+    {
+      struct stat statbuf;
+      UDisksBlock *block;
+
+      if (stat (opt_block_device, &statbuf) != 0)
+        {
+          g_application_command_line_print (command_line, _("Error opening %s: %m\n"), opt_block_device);
+          goto out;
+        }
+
+      gdu_application_ensure_client (app);
+
+      block = udisks_client_get_block_for_dev (app->client, statbuf.st_rdev);
+      if (block == NULL)
+        {
+          g_application_command_line_print (command_line, _("Error looking up block device for %s: %m\n"),
+                                            opt_block_device);
+          goto out;
+        }
+
+      object_to_select = UDISKS_OBJECT (g_dbus_interface_dup_object (G_DBUS_INTERFACE (block)));
+      g_object_unref (block);
+    }
+
+  if (app->window == NULL)
+    {
+      g_application_activate (G_APPLICATION (app));
+    }
+  else
+    {
+      /* TODO: startup notification stuff */
+      gtk_window_present (GTK_WINDOW (app->window));
+    }
+
+  if (object_to_select != NULL)
+    gdu_window_select_object (app->window, object_to_select);
+
+
+  ret = 0;
+
+ out:
+  g_option_context_free (context);
+  g_clear_object (&object_to_select);
+  g_free (opt_block_device);
+  g_strfreev (argv);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+gdu_application_activate (GApplication *_app)
+{
+  GduApplication *app = GDU_APPLICATION (_app);
+
+  gdu_application_ensure_client (app);
 
   app->window = gdu_window_new (app, app->client);
   gtk_application_add_window (GTK_APPLICATION (app),
                               GTK_WINDOW (app->window));
   gtk_widget_show (GTK_WIDGET (app->window));
-
- out:
-  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -186,6 +299,7 @@ gdu_application_class_init (GduApplicationClass *klass)
 
   application_class = G_APPLICATION_CLASS (klass);
   application_class->local_command_line = gdu_application_local_command_line;
+  application_class->command_line = gdu_application_command_line;
   application_class->activate           = gdu_application_activate;
   application_class->startup            = gdu_application_startup;
 }
@@ -196,7 +310,7 @@ gdu_application_new (void)
   gtk_init (NULL, NULL);
   return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
                                       "application-id", "org.gnome.DiskUtility",
-                                      "flags", G_APPLICATION_FLAGS_NONE,
+                                      "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
                                       NULL));
 }
 

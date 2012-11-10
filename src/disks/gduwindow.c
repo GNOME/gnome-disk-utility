@@ -707,27 +707,56 @@ loop_delete_cb (UDisksLoop   *loop,
 }
 
 static void
+loop_delete_ensure_unused_cb (GduWindow     *window,
+                              GAsyncResult  *res,
+                              gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      UDisksBlock *block;
+      UDisksLoop *loop;
+
+      udisks_client_settle (window->client);
+
+      block = udisks_object_peek_block (object);
+      loop = udisks_object_peek_loop (object);
+      if (loop != NULL)
+        {
+          /* Could be that the loop device is using Auto-clear so
+           * already detached because we just did ensure_unused() on
+           * it
+           */
+          if (block != NULL && udisks_block_get_size (block) > 0)
+            {
+              GVariantBuilder options_builder;
+              g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+              udisks_loop_call_delete (loop,
+                                       g_variant_builder_end (&options_builder),
+                                       NULL, /* GCancellable */
+                                       (GAsyncReadyCallback) loop_delete_cb,
+                                       g_object_ref (window));
+            }
+        }
+      else
+        {
+          g_warning ("no loop interface");
+        }
+    }
+  g_object_unref (object);
+}
+
+
+static void
 on_devtab_drive_action_loop_detach_activated (GtkAction *action,
                                               gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  UDisksLoop *loop;
-
-  loop = udisks_object_peek_loop (window->current_object);
-  if (loop != NULL)
-    {
-      GVariantBuilder options_builder;
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      udisks_loop_call_delete (loop,
-                               g_variant_builder_end (&options_builder),
-                               NULL, /* GCancellable */
-                               (GAsyncReadyCallback) loop_delete_cb,
-                               g_object_ref (window));
-    }
-  else
-    {
-      g_warning ("remove action not implemented for object");
-    }
+  gdu_window_ensure_unused (window,
+                            window->current_object,
+                            (GAsyncReadyCallback) loop_delete_ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            g_object_ref (window->current_object));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -7,7 +7,7 @@
 
   <refnamediv>
     <refname>gnome-disks</refname>
-    <refpurpose>Inspect, modify and configure disks and block devices</refpurpose>
+    <refpurpose>the GNOME Disks application</refpurpose>
   </refnamediv>
 
   <refsynopsisdiv><title>SYNOPSIS</title>
@@ -19,9 +19,19 @@
 
   <refsect1><title>DESCRIPTION</title>
     <para>
-      <command>gnome-disks</command> is the disk utility in GNOME. It
-      provides a way to inspect, format, partition and configure disks
-      and block devices.
+      <command>gnome-disks</command> is the command to launch the
+      GNOME Disks application. Disks provides a way to inspect,
+      format, partition and configure disks and block devices.
+    </para>
+    <para>
+      The Disks application is
+      <emphasis>single-instance</emphasis>. What this means is that if
+      the application is not already running when the
+      <command>gnome-disks</command> command is invoked, it will get
+      launched and the command invocation will block until the
+      application exits. Otherwise the existing application instance
+      will be used and the <command>gnome-disks</command> command will
+      exit immediately.
     </para>
   </refsect1>
 
@@ -36,12 +46,8 @@
         <listitem>
           <para>
             Switches to the Disks application and selects the block
-            device given by the <replaceable>DEVICE</replaceable>
-            paramter (for example, <filename>/dev/sda</filename>). If
-            the Disks application is not running it will be launched
-            (and the command invocation will block until the
-            application exits), otherwise the existing instance will
-            be used (and the command will exit immediately).
+            device given by <replaceable>DEVICE</replaceable> (for
+            example, <filename>/dev/sda</filename>).
           </para>
         </listitem>
       </varlistentry>
@@ -50,13 +56,12 @@
         <term><option>--help</option></term>
         <listitem>
           <para>
-            Prints and short help text and exits.
+            Prints a short help text and exits.
           </para>
         </listitem>
       </varlistentry>
     </variablelist>
   </refsect1>
-
 
   <refsect1><title>AUTHOR</title>
     <para>

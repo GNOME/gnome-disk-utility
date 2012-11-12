@@ -3922,17 +3922,34 @@ partition_delete_cb (UDisksPartition *partition,
 }
 
 static void
+partition_delete_ensure_unused_cb (GduWindow     *window,
+                                   GAsyncResult  *res,
+                                   gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      UDisksPartition *partition;
+      partition = udisks_object_peek_partition (object);
+      udisks_partition_call_delete (partition,
+                                    g_variant_new ("a{sv}", NULL), /* options */
+                                    NULL, /* cancellable */
+                                    (GAsyncReadyCallback) partition_delete_cb,
+                                    g_object_ref (window));
+
+    }
+  g_object_unref (object);
+}
+
+static void
 on_devtab_action_partition_delete_activated (GtkAction *action,
                                              gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
-  UDisksPartition *partition;
   GList *objects = NULL;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  partition = udisks_object_peek_partition (object);
-
   objects = g_list_append (NULL, object);
   if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
                                     _("Are you sure you want to delete the partition?"),
@@ -3942,11 +3959,11 @@ on_devtab_action_partition_delete_activated (GtkAction *action,
                                     window->client, objects))
     goto out;
 
-  udisks_partition_call_delete (partition,
-                                g_variant_new ("a{sv}", NULL), /* options */
-                                NULL, /* cancellable */
-                                (GAsyncReadyCallback) partition_delete_cb,
-                                g_object_ref (window));
+  gdu_window_ensure_unused (window,
+                            object,
+                            (GAsyncReadyCallback) partition_delete_ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            g_object_ref (object));
 
  out:
   g_list_free (objects);

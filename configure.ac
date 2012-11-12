@@ -88,6 +88,8 @@ LIBSECRET1_REQUIRED=0.7
 PWQUALITY_REQUIRED=1.0.0
 CANBERRA_REQUIRED=0.1
 LIBDVDREAD_REQUIRED=4.2.0
+GSD_PLUGIN_REQUIRED=3.6
+LIBNOTIFY_REQUIRED=0.7
 
 PKG_CHECK_MODULES(GLIB2, [gmodule-2.0 gio-unix-2.0 >= $GLIB2_REQUIRED])
 PKG_CHECK_MODULES(UDISKS2, [udisks2 >= $UDISKS2_REQUIRED])
@@ -96,6 +98,11 @@ PKG_CHECK_MODULES(LIBSECRET1, [libsecret-1 >= $LIBSECRET1_REQUIRED])
 PKG_CHECK_MODULES(PWQUALITY, [pwquality >= $PWQUALITY_REQUIRED])
 PKG_CHECK_MODULES(CANBERRA, [libcanberra-gtk3 >= $CANBERRA_REQUIRED])
 PKG_CHECK_MODULES(LIBDVDREAD, [dvdread >= $LIBDVDREAD_REQUIRED])
+PKG_CHECK_MODULES(GSD_PLUGIN, [gnome-settings-daemon >= GSD_PLUGIN_REQUIRED])
+PKG_CHECK_MODULES(LIBNOTIFY, [libnotify >= LIBNOTIFY_REQUIRED])
+
+gsd_plugindir='${libdir}/gnome-settings-daemon-3.0'
+AC_SUBST([gsd_plugindir])
 
 GLIB_GSETTINGS
 
@@ -147,6 +154,7 @@ src/Makefile
 src/libgdu/Makefile
 src/disks/Makefile
 src/disk-image-mounter/Makefile
+src/notify/Makefile
 po/Makefile.in
 data/Makefile
 data/icons/Makefile
@@ -158,6 +166,7 @@ data/icons/48x48/Makefile
 data/icons/256x256/Makefile
 data/icons/scalable/Makefile
 data/org.gnome.Disks.gschema.xml.in
+data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in
 data/ui/Makefile
 doc/Makefile
 doc/man/Makefile

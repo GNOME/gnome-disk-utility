@@ -7,7 +7,10 @@ desktop_in_files = gnome-disks.desktop.in gnome-disk-image-mounter.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 # GSettings schemas
-gsettings_SCHEMAS = org.gnome.Disks.gschema.xml
+gsettings_SCHEMAS = 						\
+	org.gnome.Disks.gschema.xml 				\
+	org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml	\
+	$(NULL)
 
 @INTLTOOL_DESKTOP_RULE@
 @INTLTOOL_XML_NOMERGE_RULE@

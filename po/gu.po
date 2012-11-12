@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
 "cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2012-10-06 19:35+0000\n"
-"PO-Revision-Date: 2012-10-29 14:12+0530\n"
+"PO-Revision-Date: 2012-11-12 15:34+0530\n"
 "Last-Translator: \n"
 "Language-Team: gu_IN <kde-i18n-doc@kde.org>\n"
 "Language: \n"
@@ -47,6 +47,7 @@ msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
+"બનાવો/પુન:સંગ્રહો ડિસ્ક ઇમેજ સંવાદો માટે મૂળભૂત સ્થાન. જો ખાલી ~/Documents ફોલ્ડર વાપરેલ હોય."
 
 #: ../data/ui/about-dialog.ui.h:2
 msgid ""
@@ -86,10 +87,9 @@ msgid "_Start Benchmark..."
 msgstr "બેન્ચમાર્ક શરૂ કરો (_S)..."
 
 #: ../data/ui/benchmark-dialog.ui.h:3
-#, fuzzy
 #| msgid "_Benchmark"
 msgid "_Abort Benchmark"
-msgstr "બેન્ચમાર્ક (_B)"
+msgstr "બેન્ચમાર્ક કાઢો (_A)"
 
 #: ../data/ui/benchmark-dialog.ui.h:4
 #| msgid "Last Benchmark:"
@@ -97,22 +97,19 @@ msgid "Last Benchmarked"
 msgstr "છેલ્લો બેન્ચમાર્ક"
 
 #: ../data/ui/benchmark-dialog.ui.h:5
-#, fuzzy
 #| msgid "Thermal Asperity Rate"
 msgid "Average Read Rate"
-msgstr "થર્મલ ઍસ્પેરિટિ દર"
+msgstr "સરેરાશ વાંચન દર"
 
 #: ../data/ui/benchmark-dialog.ui.h:6
-#, fuzzy
 #| msgid "Thermal Asperity Rate"
 msgid "Average Write Rate"
-msgstr "થર્મલ ઍસ્પેરિટિ દર"
+msgstr "સરેરાશ દુરસ્ત દર"
 
 #: ../data/ui/benchmark-dialog.ui.h:7
-#, fuzzy
 #| msgid "Overall Assessment:"
 msgid "Average Access Time"
-msgstr "સંપૂર્ણ ચકાસણી:"
+msgstr "સરેરાશ વપરાશ સમય:"
 
 #: ../data/ui/benchmark-dialog.ui.h:8
 msgid "Disk Drive or Device"
@@ -132,6 +129,9 @@ msgid ""
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
+"બેન્ચમાર્કિંગ ઉપકરણનાં વિવિધ વિસ્તાર પર પરિવહન દરનાં માપનને સમાવે છે ની સાથે સાથે એક "
+"વિસ્તારમાંથી બીજા વિસ્તારમાં શોધવા માટે લાંબો સમય લાગે છે. મહેરબાની કરીને લખવાનાં "
+"બેન્ચમાર્કને વાપરતા પહેલાં મહત્વની માહિતીનો બેકઅપ લો."
 
 #: ../data/ui/benchmark-dialog.ui.h:12
 #| msgid "<b>Transfer Rate</b>"
@@ -148,7 +148,7 @@ msgstr "નમૂના માપ (_i) (MiB)"
 
 #: ../data/ui/benchmark-dialog.ui.h:15
 msgid "Also perform _write-benchmark"
-msgstr ""
+msgstr "write-benchmark પણ ચલાવો (_w)"
 
 #: ../data/ui/benchmark-dialog.ui.h:16
 msgid ""
@@ -161,12 +161,19 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use) ."
 msgstr ""
+"ડિસ્કનો બેન્ચમાર્કિંગ લખવાનો દર ડિસ્કમાં પ્રવેશવા જરૂરી છે (દા.ત. ડિસ્ક અથવા તેનાં "
+"પાર્ટીશનોને માઉન્ટ કરી શકાતા નથી અથવા વપરાશમાં છે) અને વાંચવા માહિતીને સમાવે છે અને પછી પછુ "
+"તેને લખી રહ્યા છે. પરિણામ તરીકે, ડિસ્કનાં સમાવિષ્ટો બદલાતા નથી.\n"
+"\n"
+"જો ચકાસેલ ન હોય તો, બેન્ચમાર્કનો લખાણ ભાગ પૂર્ણ થશે નહિં પરંતુ ઉપકરણમાં પ્રવેશવા બીજા હાથની "
+"જરૂર નથી (દા.ત. ડિસ્ક અથવા ઉપકરણ વપરાશમાં હોઇ શકે છે)."
 
 #: ../data/ui/benchmark-dialog.ui.h:19
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
 msgstr ""
+"નમૂનાઓની સંખ્યા. મોટી સંખ્યા વધારે ચોક્કસ ચિત્રોને ઉત્પન્ન કરે છે પરંતુ વધારે સમય લે છે."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
@@ -174,6 +181,8 @@ msgid ""
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
+"દરેક ઉદાહરણ માટે વાંચવા/લખવા માટે MiB (1048576 બાઇટ) ની સંખ્યા. મોટા નમૂના માપો વધારે સમય "
+"લાગે તેવા બેન્ચમાર્કની કિંમત પર વધારે ચોક્કસ બેન્ચમાર્કોને ઉત્પન્ન કરે છે."
 
 #: ../data/ui/benchmark-dialog.ui.h:21
 #| msgid "<b>Access Time</b>"
@@ -189,6 +198,7 @@ msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr ""
+"નમૂનાઓની સંખ્યા. મોટી સંખ્યા વધારે સરળ ગ્રાફ ઉત્પન્ન કરે છે પરંતુ બેન્ચમાર્ક વધારે સમય લગાડશે."
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
@@ -303,11 +313,11 @@ msgstr "ડ્રાઇવ સુયોજનો"
 
 #: ../data/ui/disk-settings-dialog.ui.h:2
 msgid "_Standby Timeout"
-msgstr ""
+msgstr "સ્ટેન્ડબાઇ સમયસમાપ્તિ (_S)"
 
 #: ../data/ui/disk-settings-dialog.ui.h:3
 msgid "Enter Standby After"
-msgstr ""
+msgstr "તેનાં પછી સ્ટેન્ડબાઇ દાખલ કરો"
 
 #: ../data/ui/disk-settings-dialog.ui.h:4
 msgid "_Advanced Power Management"
@@ -322,10 +332,12 @@ msgid ""
 "Agressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"વધુ પડતી ઝડપે ધીમુ કરવાથી ડ્રાઇવ ધાર્યા કરતા વધારે ઝડપે ઘસારો પામશે. મહેરબાની કરીને સમયે સમયે "
+"“શરૂ/બંધ ની ગણતરી” SMART ગુણધર્મને ચકાસો"
 
 #: ../data/ui/disk-settings-dialog.ui.h:7
 msgid "Automatic Aco_ustic Management"
-msgstr ""
+msgstr "આપોઆપ એકોસ્ટિક સંચાલન"
 
 #: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "Vendor Recommended"
@@ -478,11 +490,11 @@ msgstr "ડ્રાઇવ સુયોજનો..."
 
 #: ../data/ui/disks.ui.h:39
 msgid "Standby Now"
-msgstr ""
+msgstr "હવે સ્ટેન્ડબાય કરો"
 
 #: ../data/ui/disks.ui.h:40
 msgid "Wake-Up from Standby"
-msgstr ""
+msgstr "સ્ટેન્ડબાઇમાંથી ઝગાડો"
 
 #: ../data/ui/disks.ui.h:41
 msgid "Format..."
@@ -527,6 +539,9 @@ msgid ""
 "and passphrase for the device. The options correspond to an entry in the <b>/"
 "etc/crypttab</b> file"
 msgstr ""
+"ઉપકરણ માટે એનક્રિપ્શન વિકલ્પો અને પાસફ્રેજને સંચાલિત કરવા માટે <i>આપોઆપ એનક્રિપ્શન વિકલ્પો</i>"
+" ને બંધ કરો. વિકલ્પો  <b>/"
+"etc/crypttab</b> ફાઇલમાં નોંધણીને અનૂકુળ છે"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:5
 msgid "Opt_ions"
@@ -537,6 +552,8 @@ msgid ""
 "The name to use for the unlocked device - the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
+"તાળુ ખૂલેલ ઉપકરણ માટે વાપરેલ નામ - <b>/dev/mapper</b> સાથે ઉપસર્ગ થયેલ નામ તરીકે ઉપકરણ "
+"સુયોજિત છે "
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:7
 msgid "Options to use when unlocking the device"
@@ -556,6 +573,8 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
+"ઉપકરણનો પાસફ્રેજ અથવા વપરાશકર્તામાંથી માંગણી કરવા માટે ખાલી જ્યારે ઉપકરણને સુયોજિત કરી રહ્યા "
+"હોય"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:8
 #: ../data/ui/unlock-device-dialog.ui.h:2
@@ -578,7 +597,7 @@ msgstr "તાળુ ખોલવા માટે વધારે સત્ત�
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
-msgstr ""
+msgstr "જો ચકાસેલ હોય તો, વધારાની સત્તા ઉપકરણને તાળુ ખોલવા માટે જરૂરી છે [x-udisks-auth]"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:1
@@ -607,6 +626,8 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
+"નક્કી કરવા માટે પ્લેટફોર્મ બુટલોડર દ્દારા વાપરેલ ફ્લેગ જ્યાં OS જેમાંથી લાવવી જોઇએ. આ ફ્લેગ "
+"સુયોજન સાથે અમુકવાર પાર્ટીશન <i>સક્રિય</i> પાર્ટીશન તરીકે સંદર્ભ થયેલ છે"
 
 #: ../data/ui/edit-filesystem-dialog.ui.h:1
 #| msgid "<big>Change Filesystem Label</big>"
@@ -632,6 +653,9 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
+"માઉન્ટ બિંદુને સંચાલિત કરવા માટે <i>આપોઆપ માઉન્ટ વિકલ્પો</i> ને બંધ કરો અને ઉપકરણ માટે "
+"વિકલ્પોને માઉન્ટ કરો. વિકલ્પો <b>/etc/"
+"fstab</b> ફાઇલમાં નોંધણી માટે અનૂકુળ છે"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:4
 msgid "I_dentify As"
@@ -642,12 +666,14 @@ msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"<b>ખાસ ઉપકરણ ફાઇલ</b>- નોંધણીની સીમાને નિયંત્રિત કરવા માટે /dev/disk શ્રેણીમાં સીમલીંકને વાપરો"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid ""
 "The special device file - use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"ખાસ ઉપકરણ ફાઇલ - નોંધણીની સીમાને નિયંત્રિત કરવા માટે /dev/disk શ્રેણીમાં સીમલીંકને વાપરો"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:7
 msgid "Mount _Point"
@@ -681,7 +707,7 @@ msgstr "ચિહ્ન નામ (_m)"
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
-msgstr ""
+msgstr "જો સુયોજિત હોય તો, વપરાશકર્તા ઇન્ટરફેસમાં ઉપકરણમાં વપરાતુ ચિહ્નનું નામ [x-gvfs-icon=]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:15
 msgid "Sho_w in user interface"
@@ -692,6 +718,8 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
+"જો ચકાસેલ હોય તો, ઉપકરણ વપરાશકર્તામાં હંમેશા બતાવેલ છે તે કઇ ડિરેક્ટરી છે તે વાંધો નથી "
+"[x-gvfs-show]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:17
 msgid "Require additional authori_zation to mount"
@@ -729,6 +757,8 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
+"પાર્ટીશન નામ (36 યુનિકોડ અક્ષરો સુધી). આ ઉપયોગી છે જો તમે <b>/dev/disk/by-partlabel</b> "
+"ડિરેક્ટરીમાં સીમલીંક મારફતે ઉપકરણનો સંદર્ભ કરવા માંગતા હોય"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
 msgid "_System partition"
@@ -740,6 +770,8 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
+"તે પાર્ટીશનને સૂચિત કરવા વાપરેલ છે અને તેનાં સમાવિષ્ટો કાર્ય કરવા OS/પ્લેટફોર્મ માટે જરૂરી છે."
+" સમાવિષ્ટો દૂર ન થાય અથવા ઉપર લખાઇ ન જાય તે માટે ખાસ કાળજી લેવી જોઇએ"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
 msgid "Legacy BIOS _Bootable"
@@ -1050,7 +1082,6 @@ msgid "Reallocated Sector Count"
 msgstr "પુન:ફાળવેલ સેક્ટરની ગણતરી"
 
 #: ../src/disks/gduatasmartdialog.c:162
-#, fuzzy
 #| msgid ""
 #| "Count of remapped sectors. When the hard drive finds a read/write/"
 #| "verification error, it mark the sector as \"reallocated\" and transfers "
@@ -1094,7 +1125,6 @@ msgid "Seek Timer Performance"
 msgstr "Seek Timer Performance"
 
 #: ../src/disks/gduatasmartdialog.c:188
-#, fuzzy
 #| msgid "Average efficiency of operatings while positioning"
 msgid "Average efficiency of operations while positioning"
 msgstr "જ્યારે સ્થાનીયકરણ કરી રહ્યા હોય ત્યારે ઓપરેટીંગોની સરેરાશ ક્ષમતા"
@@ -1464,10 +1494,9 @@ msgid "Load Friction"
 msgstr "લોડ ઘર્ષણ"
 
 #: ../src/disks/gduatasmartdialog.c:456
-#, fuzzy
 #| msgid "Load on drive cause by friction in mechanical parts of the store"
 msgid "Load on drive caused by friction in mechanical parts of the store"
-msgstr "ડ્રાઇલ પર લોડ એ સંગ્રહનાં મિકેનીકલ ભાગોનાં ઘર્ષણનું કારણ બની શકે છે"
+msgstr "ડ્રાઇવ પર લોડ એ સંગ્રહનાં મિકેનીકલ ભાગોનાં ઘર્ષણનું કારણ બની શકે છે"
 
 #: ../src/disks/gduatasmartdialog.c:464
 msgid "Total number of load cycles"
@@ -1649,25 +1678,25 @@ msgid ""
 "Failure is a sign the disk exceeded its intended design life period <span "
 "size=\"small\">(Old-Age)</span>"
 msgstr ""
+"નિષ્ફળતા એ તેનાં ધારેલ રચના જીવન સમય ઓળંગાઇ ગયાનું ચિહ્ન છે <span size=\"small\">(જૂનું)<"
+"/span>"
 
 #. Translators: Please keep "(Online)" in English
 #.
 #: ../src/disks/gduatasmartdialog.c:797
-#, fuzzy
 #| msgid "Every time data is collected <span size=\"small\">(Online)</span>"
 msgid "Updated every time data is collected <span size=\"small\">(Online)</span>"
-msgstr "દરેક સમયે માહિતી સંગ્રહેલ છે <span size=\"small\">(ઓનલાઇન)</span>"
+msgstr "દરેક સમયે સુધારેલ માહિતી સંગ્રહેલ છે <span size=\"small\">(ઓનલાઇન)</span>"
 
 #. Translators: Please keep "(Not Online)" in English
 #.
 #: ../src/disks/gduatasmartdialog.c:803
-#, fuzzy
 #| msgid ""
 #| "Only during off-line activities <span size=\"small\">(Not Online)</span>"
 msgid ""
 "Updated only during off-line activities <span size=\"small\">(Not Online)</"
 "span>"
-msgstr "ફક્ત ઓફલાઇન પ્રવૃત્તિઓ દરમ્યાન <span size=\"small\">(ઓનલાઇન નથી)</span>"
+msgstr "ફક્ત ઓફલાઇન પ્રવૃત્તિઓ દરમ્યાન સુધારેલ છે <span size=\"small\">(ઓનલાઇન નથી)</span>"
 
 #: ../src/disks/gduatasmartdialog.c:834
 msgctxt "smart-self-test-result"
@@ -1677,12 +1706,12 @@ msgstr "છેલ્લી સ્વ-ચકાસણી સફળતાપૂર
 #: ../src/disks/gduatasmartdialog.c:838
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
-msgstr ""
+msgstr "છેલ્લી સ્વ-ચકાસણી કાઢી નાંખેલ હતી"
 
 #: ../src/disks/gduatasmartdialog.c:842
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
-msgstr ""
+msgstr "છેલ્લી સ્વ-ચકાસણી અટકેલ હતી"
 
 #: ../src/disks/gduatasmartdialog.c:846
 msgctxt "smart-self-test-result"
@@ -1761,8 +1790,8 @@ msgstr "SELF-TEST FAILED"
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ડિસ્ક બરાબર છે, એક નિષ્ફળ ગુણધર્મ નિષ્ફળ થઇ રહ્યો છે"
+msgstr[1] "ડિસ્ક બરાબર છે, %d ગુણધર્મો નિષ્ફળ થઇ રહ્યા છે"
 
 #: ../src/disks/gduatasmartdialog.c:1046
 #, c-format
@@ -1776,8 +1805,8 @@ msgstr[1] "ડિસ્ક બરાબર છે, %d બેડ સેક્ટ�
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ડિસ્ક બરાબર છે, એક ગુણધર્મ ભૂતકાળમાં નિષ્ફળ થયેલ છે"
+msgstr[1] "ડિસ્ક બરાબર છે, %d ગુણધર્મો ભૂતકાળમાં નિષ્ફળ થયેલ છે"
 
 #. Otherwise, it's all honky dory
 #: ../src/disks/gduatasmartdialog.c:1066
@@ -1795,25 +1824,23 @@ msgstr "%s (%s)"
 
 #. Translators: XXX
 #: ../src/disks/gduatasmartdialog.c:1235
-#, fuzzy
 #| msgid "Threshold:"
 msgid "Threshold exceeded"
-msgstr "થ્રેશોલ્ડ:"
+msgstr "વધારેલ થ્રેશોલ્ડ:"
 
 #. Translators: XXX
 #: ../src/disks/gduatasmartdialog.c:1240
 msgid "Threshold not exceeded"
-msgstr ""
+msgstr "થ્રેશોલ્ડને વધારેલ નથી"
 
 #: ../src/disks/gduatasmartdialog.c:1299
 msgid "Error refreshing SMART data"
 msgstr "SMART માહિતીને તાજુ કરી રહ્યા હોય ત્યારે ભૂલ"
 
 #: ../src/disks/gduatasmartdialog.c:1331
-#, fuzzy
 #| msgid "Error reading SMART data"
 msgid "Error aborting SMART self-test"
-msgstr "SMART માહિતીને વાંચતી વખતે ભૂલ"
+msgstr "SMART સ્વ-ચકાસણીને કાઢી રહ્યા હોય ત્યારે ભૂલ"
 
 #: ../src/disks/gduatasmartdialog.c:1350
 msgid "Error starting SMART self-test"
@@ -1882,13 +1909,13 @@ msgstr "ઉપકરણને ખોલી રહ્યા છે..."
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)..."
-msgstr ""
+msgstr "પરિવહન દરને માપી રહ્યા છે (%2.1f%% પૂર્ણ)..."
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)..."
-msgstr ""
+msgstr "પ્રવેશ સમયને માપી રહ્યા છે (%2.1f%% પૂર્ણ)..."
 
 #: ../src/disks/gdubenchmarkdialog.c:840
 msgctxt "benchmarking"
@@ -1944,11 +1971,11 @@ msgstr "ઑફસેટ %lld માં શોધી રહ્યા હોય �
 
 #: ../src/disks/gdubenchmarkdialog.c:1316
 #: ../src/disks/gdubenchmarkdialog.c:1371
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "ઑફસેટ % માંથી વાંચી રહ્યા રહ્યા હોય ત્યારે ભૂલ"
+msgstr "ઑફસેટ %lld માંથી %lld બાઇટને પહેલા વાંચી રહ્યા હોય ત્યારે ભૂલ"
 
 #: ../src/disks/gdubenchmarkdialog.c:1337
 #, c-format
@@ -1970,11 +1997,11 @@ msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld બાઇટોને લખવાની ઇચ્છા રાખેલ હતી, ફક્ત %lld ને લખ્યુ: %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1412
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading from offset %"
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
-msgstr "ઑફસેટ % માંથી વાંચી રહ્યા રહ્યા હોય ત્યારે ભૂલ"
+msgstr "સુમેળ કરતી વખતે ભૂલ (ઑફસેટ %lld પર): %m"
 
 #: ../src/disks/gdubenchmarkdialog.c:1452
 #, c-format
@@ -2358,11 +2385,11 @@ msgstr "આશરે %s"
 
 #: ../src/disks/gduformatdiskdialog.c:195
 msgid "ATA Secure Erase"
-msgstr ""
+msgstr "ATA Secure Erase"
 
 #: ../src/disks/gduformatdiskdialog.c:210
 msgid "ATA Enhanced Secure Erase"
-msgstr ""
+msgstr "ATA Enhanced Secure Erase"
 
 #: ../src/disks/gduformatdiskdialog.c:255
 msgid "MBR / DOS"
@@ -2406,13 +2433,16 @@ msgid ""
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
+"<b>મદદ</b>: જો તમે તમારાં જૂના કમ્મ્પ્યૂટર અથવા ડિસ્કથી દૂર જવા, રિસાયકલ અથવા વેચવા માંગતા "
+"હોય તો, તમારે ખોટા હાથમાં નિષ્ફળ થવાથી તમારી ખાનગી જાણકારી રાખીને ઇરેજ પ્રકાર મારફતે વાપરવુ "
+"જોઇએ"
 
 #. Translators: warning used when overwriting data
 #: ../src/disks/gduformatdiskdialog.c:396
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
-msgstr ""
+msgstr "ડિસ્ક પર બધી માહિતી ઉપર લખાઇ જશે પરંતુ માહિતી સુધારા સેવા દ્દારા સુધારાશે નહિં"
 
 #: ../src/disks/gduformatdiskdialog.c:404
 msgid ""
@@ -2423,6 +2453,12 @@ msgid ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
 msgstr ""
+"<b>ચેતવણી</b>: Secure Erase આદેશ સમાપ્ત થવા માટે લાંબો સમય લઇ શકે છે, રદ કરી શકાતુ નથી અને "
+"અમુક હાર્ડવેર સાથે યોગ્ય રીતે કામ કરી શકતુ નથી. ખરાબ સ્થિતિમાં, તમારુ ડ્રાઇવ બિનઉપયોગીને "
+"રેન્ડર કરી શકે છે અથવા તમારી સિસ્ટમ ભાંગી શકે અથવા તાળુ મરાઇ શકે છે. આગળ વધતા પહેલાં, "
+"મહેરબાની કરીને <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> વિશે લેખને વાંચો અને ખાતરી કરો કે તમે આ જોખમોને સમજો"
 
 #: ../src/disks/gduformatdiskdialog.c:411
 #: ../src/disks/gduformatvolumedialog.c:164
@@ -2442,14 +2478,14 @@ msgstr "શું તમે ખરેખર વોલ્યુમનું બ�
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
-msgstr ""
+msgstr "વોલ્યુમ પર બધી માહિતી ગુમ થઇ જશે પરંતુ માહિતી સુધારા સેવા દ્દારા હજુ સુધારી શકાય છે"
 
 #. Translators: warning used when overwriting data of the volume
 #: ../src/disks/gduformatvolumedialog.c:158
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
-msgstr ""
+msgstr "વોલ્યુમપર બધી માહિતી ઉપર લખાઇ જશે પરંતુ માહિતી સુધારા સેવા દ્દારા સુધારાશે નહિં"
 
 #: ../src/disks/gdufstabdialog.c:152
 #, c-format
@@ -2658,6 +2694,9 @@ msgid ""
 "If checked, the loop device will be read-only. This is useful if you don't "
 "want the underlying file to be modified"
 msgstr ""
+"જો ચકાસેલ હોય તો, લુપ ઉપકરણો ફક્ત વાંચી શકાશે. આ ઉપયોગી છે જો તમે બદલવા માટે ડિસ્ક ઇમેજને "
+"અંતર્ગત "
+"કરવા માંગતા ન હોય તો"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
 #: ../src/disks/gduwindow.c:1699
@@ -2737,11 +2776,11 @@ msgstr "ન ફાળવેલ જગ્યા"
 
 #: ../src/disks/gduwindow.c:2764
 msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
+msgstr "સ્ટેન્ડબાઇ સ્થિતિમાં ડ્રાઇવને મૂકવા માટે જ્યારે પ્રયત્ન કરી રહ્યા હોય ત્યારે ભૂલ ઉદ્ભવી"
 
 #: ../src/disks/gduwindow.c:2810
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
+msgstr "સ્ટેન્ડબાઇ સ્થિતિમાંથી ઝગાડવા માટે જ્યારે પ્રયત્ન કરી રહ્યા હોય ત્યારે ભૂલ ઉદ્ભવી"
 
 #: ../src/disks/gduwindow.c:2885
 msgid "Error mounting filesystem"

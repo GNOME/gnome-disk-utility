@@ -289,18 +289,23 @@ update_notification (GduSdMonitor        *monitor,
 {
   if (g_list_length (problems) > 0)
     {
-      g_warn_if_fail (*notification == NULL);
-      *notification = notify_notification_new (title, text, icon_name);
-      notify_notification_set_urgency (*notification, NOTIFY_URGENCY_CRITICAL);
-      notify_notification_set_timeout (*notification, NOTIFY_EXPIRES_NEVER);
-      notify_notification_set_hint_string (*notification, "desktop-entry", "gnome-disks");
-      notify_notification_add_action (*notification,
-                                      action,
-                                      action_label,
-                                      (NotifyActionCallback) on_examine_action_clicked,
-                                      monitor,
-                                      NULL);
-      notify_notification_show (*notification, NULL);
+      /* it could be the notification has already been presented, in that
+       * case, don't show another one
+       */
+      if (*notification == NULL)
+        {
+          *notification = notify_notification_new (title, text, icon_name);
+          notify_notification_set_urgency (*notification, NOTIFY_URGENCY_CRITICAL);
+          notify_notification_set_timeout (*notification, NOTIFY_EXPIRES_NEVER);
+          notify_notification_set_hint_string (*notification, "desktop-entry", "gnome-disks");
+          notify_notification_add_action (*notification,
+                                          action,
+                                          action_label,
+                                          (NotifyActionCallback) on_examine_action_clicked,
+                                          monitor,
+                                          NULL);
+          notify_notification_show (*notification, NULL);
+        }
     }
   else
     {

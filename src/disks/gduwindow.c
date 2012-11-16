@@ -95,21 +95,22 @@ struct _GduWindow
   GtkWidget *devtab_grid_hbox;
   GtkWidget *devtab_volumes_label;
   GtkWidget *devtab_grid_toolbar;
-  GtkWidget *devtab_action_generic;
-  GtkWidget *devtab_action_partition_create;
-  GtkWidget *devtab_action_partition_delete;
-  GtkWidget *devtab_action_mount;
-  GtkWidget *devtab_action_unmount;
-  GtkWidget *devtab_action_unlock;
-  GtkWidget *devtab_action_lock;
-  GtkWidget *devtab_action_activate_swap;
-  GtkWidget *devtab_action_deactivate_swap;
 
-  GtkWidget *devtab_drive_action_raid_start;
-  GtkWidget *devtab_drive_action_raid_stop;
-  GtkWidget *devtab_drive_action_loop_detach;
-  GtkWidget *devtab_drive_action_eject;
-  GtkWidget *devtab_drive_action_generic;
+  GtkAction *devtab_action_generic;
+  GtkAction *devtab_action_partition_create;
+  GtkAction *devtab_action_partition_delete;
+  GtkAction *devtab_action_mount;
+  GtkAction *devtab_action_unmount;
+  GtkAction *devtab_action_unlock;
+  GtkAction *devtab_action_lock;
+  GtkAction *devtab_action_activate_swap;
+  GtkAction *devtab_action_deactivate_swap;
+
+  GtkAction *devtab_drive_action_raid_start;
+  GtkAction *devtab_drive_action_raid_stop;
+  GtkAction *devtab_drive_action_loop_detach;
+  GtkAction *devtab_drive_action_eject;
+  GtkAction *devtab_drive_action_generic;
 
   GtkWidget *generic_drive_menu;
   GtkWidget *generic_drive_menu_item_format_disk;
@@ -1209,6 +1210,9 @@ static void
 gdu_window_constructed (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
+  guint key;
+  GdkModifierType mod;
+  GtkAccelGroup *accelgroup;
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkTreeSelection *selection;
@@ -1587,6 +1591,40 @@ gdu_window_constructed (GObject *object)
   device_tree_selection_toolbar_select_done_toggle (window, FALSE);
   gtk_widget_grab_focus (window->device_tree_treeview);
   update_all (window);
+
+  /* TODO: would be better to have all this in the .ui file - no idea
+   * why it doesn't work - accelerator support in GTK+ seems extremely
+   * confusing and flaky :-(
+   */
+  accelgroup = gtk_accel_group_new ();
+  gtk_window_add_accel_group (GTK_WINDOW (window), accelgroup);
+
+  /* Translators: This is the short-cut to open the disks/drive gear menu */
+  gtk_accelerator_parse (C_("accelerator", "F10"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/DriveMenu", key, mod);
+  gtk_widget_set_accel_path (window->devtab_drive_generic_button, "<Disks>/DriveMenu", accelgroup);
+
+  /* Translators: This is the short-cut to format a disk */
+  gtk_accelerator_parse (C_("accelerator", "<Ctrl>F"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/DriveMenu/Format", key, mod);
+  gtk_widget_set_accel_path (window->generic_drive_menu_item_format_disk, "<Disks>/DriveMenu/Format", accelgroup);
+
+  /* Translators: This is the short-cut to view SMART data for a disk */
+  gtk_accelerator_parse (C_("accelerator", "<Ctrl>S"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/DriveMenu/ViewSmart", key, mod);
+  gtk_widget_set_accel_path (window->generic_drive_menu_item_view_smart, "<Disks>/DriveMenu/ViewSmart", accelgroup);
+
+  /* Translators: This is the short-cut to open the volume gear menu */
+  gtk_accelerator_parse (C_("accelerator", "<Shift>F10"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/VolumeMenu", key, mod);
+  gtk_action_set_accel_group (window->devtab_action_generic, accelgroup);
+  gtk_action_set_accel_path (window->devtab_action_generic, "<Disks>/VolumeMenu");
+  gtk_action_connect_accelerator (window->devtab_action_generic);
+
+  /* Translators: This is the short-cut to format a volume */
+  gtk_accelerator_parse (C_("accelerator", "<Shift><Ctrl>F"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/VolumeMenu/Format", key, mod);
+  gtk_widget_set_accel_path (window->generic_menu_item_format_volume, "<Disks>/VolumeMenu/Format", accelgroup);
 }
 
 static void

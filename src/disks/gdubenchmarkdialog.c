@@ -1271,6 +1271,7 @@ benchmark_thread (gpointer user_data)
   G_UNLOCK (bm_lock);
   for (n = 0; n < data->bm_num_samples; n++)
     {
+      gchar *s, *s2;
       gint64 begin_usec;
       gint64 end_usec;
       gint64 offset;
@@ -1295,33 +1296,41 @@ benchmark_thread (gpointer user_data)
         }
       if (read (fd, buffer, page_size) != page_size)
         {
+          s = g_format_size_full (page_size, G_FORMAT_SIZE_LONG_FORMAT);
+          s2 = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
           g_set_error (&error,
                        G_IO_ERROR,
                        g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error pre-reading %lld bytes from offset %lld"),
-                       (long long int) page_size,
-                       (long long int) offset);
+                       C_("benchmarking", "Error pre-reading %s bytes from offset %s"),
+                       s, s2);
+          g_free (s2);
+          g_free (s);
           goto out;
         }
       if (lseek (fd, offset, SEEK_SET) != offset)
         {
+          s = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
           g_set_error (&error,
                        G_IO_ERROR,
                        g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error seeking to offset %lld"),
-                       (long long int) offset);
+                       C_("benchmarking", "Error seeking to offset %s"),
+                       s);
+          g_free (s);
           goto out;
         }
       begin_usec = g_get_monotonic_time ();
       num_read = read (fd, buffer, data->bm_sample_size_mib*1024*1024);
       if (G_UNLIKELY (num_read < 0))
         {
+          s = g_format_size_full (data->bm_sample_size_mib * 1024 * 1024, G_FORMAT_SIZE_LONG_FORMAT);
+          s2 = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
           g_set_error (&error,
                        G_IO_ERROR,
                        g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error reading %d MB from offset %lld"),
-                       data->bm_sample_size_mib,
-                       (long long int) offset);
+                       C_("benchmarking", "Error reading %s from offset %s"),
+                       s, s2);
+          g_free (s2);
+          g_free (s);
           goto out;
         }
       end_usec = g_get_monotonic_time ();

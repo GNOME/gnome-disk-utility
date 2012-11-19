@@ -1641,7 +1641,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
       switch (response)
         {
         case 0:
-          gtk_menu_popup (GTK_MENU (data->selftest_menu), NULL, NULL, NULL, NULL, 1, 0);
+          /* handled by GtkMenuButton */
           break;
         case 1:
           selftest_do (data, "abort");

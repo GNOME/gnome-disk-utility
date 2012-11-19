@@ -41,6 +41,16 @@ gboolean        gdu_window_ensure_unused_finish (GduWindow     *window,
                                                  GAsyncResult  *res,
                                                  GError       **error);
 
+void            gdu_window_ensure_unused_list (GduWindow            *window,
+                                               GList                *objects,
+                                               GAsyncReadyCallback   callback,
+                                               GCancellable         *cancellable,
+                                               gpointer              user_data);
+
+gboolean        gdu_window_ensure_unused_list_finish (GduWindow     *window,
+                                                      GAsyncResult  *res,
+                                                      GError       **error);
+
 G_END_DECLS
 
 #endif /* __GDU_WINDOW_H__ */

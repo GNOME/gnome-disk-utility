@@ -124,6 +124,7 @@ struct _GduWindow
   GtkWidget *generic_drive_menu_item_drive_sep_2;
   GtkWidget *generic_drive_menu_item_standby_now;
   GtkWidget *generic_drive_menu_item_resume_now;
+  GtkWidget *generic_drive_menu_item_power_off;
   /* MDRaid-specific items */
   GtkWidget *generic_drive_menu_item_mdraid_sep_1;
   GtkWidget *generic_drive_menu_item_mdraid_disks;
@@ -234,6 +235,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_2), "generic-drive-menu-item-drive-sep-2"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_power_off), "generic-drive-menu-item-power-off"},
   /* MDRaid-specific items */
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_sep_1), "generic-drive-menu-item-mdraid-sep-1"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_disks), "generic-drive-menu-item-mdraid-disks"},
@@ -306,7 +308,8 @@ typedef enum
   SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS         = (1<<5),
   SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW           = (1<<6),
   SHOW_FLAGS_DRIVE_MENU_RESUME_NOW            = (1<<7),
-  SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS          = (1<<8),
+  SHOW_FLAGS_DRIVE_MENU_POWER_OFF             = (1<<8),
+  SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS          = (1<<9),
 } ShowFlagsDriveMenu;
 
 typedef enum {
@@ -377,6 +380,8 @@ static void on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
                                                     gpointer   user_data);
 static void on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
                                                    gpointer   user_data);
+static void on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
+                                                  gpointer   user_data);
 static void on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
                                               gpointer   user_data);
 static void on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
@@ -551,6 +556,8 @@ update_for_show_flags (GduWindow *window,
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks),
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_power_off),
+                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_POWER_OFF);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
@@ -1487,6 +1494,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->generic_drive_menu_item_resume_now,
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_resume_now),
+                    window);
+  g_signal_connect (window->generic_drive_menu_item_power_off,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_power_off),
                     window);
   g_signal_connect (window->generic_drive_menu_item_format_disk,
                     "activate",
@@ -2671,6 +2682,10 @@ update_device_page_for_drive (GduWindow      *window,
         }
     }
 
+
+  if (udisks_drive_get_can_power_off (drive))
+    show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_POWER_OFF;
+
   size = udisks_drive_get_size (drive);
   if (size > 0)
     {
@@ -2726,7 +2741,7 @@ update_device_page_for_drive (GduWindow      *window,
   gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
   if (!(show_flags->drive_menu & (SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW|SHOW_FLAGS_DRIVE_MENU_RESUME_NOW)))
     {
-      /* no PM capabilities... only show "standby" greyed out */
+      /* no PM / safely-remove capabilities... only show "standby" greyed out */
       gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
       gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), FALSE);
     }
@@ -2740,7 +2755,7 @@ update_device_page_for_drive (GduWindow      *window,
       else
         gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
     }
-
+  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_power_off));
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
@@ -3379,6 +3394,7 @@ update_device_page (GduWindow      *window,
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_power_off));
 
   /* Hide all MDRaid-specific items - will be turned on again in update_device_page_for_mdraid() */
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
@@ -3720,6 +3736,105 @@ on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
     {
       g_warning ("object is not an ATA drive");
     }
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+power_off_cb (GObject      *source_object,
+              GAsyncResult *res,
+              gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  if (!udisks_drive_call_power_off_finish (UDISKS_DRIVE (source_object),
+                                           res,
+                                           &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error powering off drive"),
+                            error);
+      g_clear_error (&error);
+    }
+  g_object_unref (window);
+}
+
+static void
+power_off_ensure_unused_cb (GduWindow     *window,
+                            GAsyncResult  *res,
+                            gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      UDisksDrive *drive = udisks_object_peek_drive (object);
+      udisks_drive_call_power_off (drive,
+                                   g_variant_new ("a{sv}", NULL), /* options */
+                                   NULL, /* GCancellable */
+                                   (GAsyncReadyCallback) power_off_cb,
+                                   g_object_ref (window));
+    }
+  g_object_unref (object);
+}
+
+static void
+on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
+                                      gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+  GList *objects = NULL;
+  GList *siblings, *l;
+  UDisksDrive *drive;
+  const gchar *heading;
+  const gchar *message;
+
+  object = window->current_object;
+  drive = udisks_object_peek_drive (object);
+  objects = g_list_append (NULL, object);
+
+  /* include other drives this will affect */
+  siblings = udisks_client_get_drive_siblings (window->client, drive);
+  for (l = siblings; l != NULL; l = l->next)
+    {
+      UDisksDrive *sibling = UDISKS_DRIVE (l->data);
+      UDisksObject *sibling_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (sibling));
+      if (sibling_object != NULL)
+        objects = g_list_append (objects, sibling_object);
+    }
+
+  if (siblings == NULL)
+    {
+      /* Translators: Heading for powering off a device with a single drive */
+      heading = _("Are you sure you want to power off the drive?");
+      /* Translators: Message for powering off a device with a single drive */
+      message = _("This operation will prepare the system for the drive to be removed and powered down.");
+    }
+  else
+    {
+      /* Translators: Heading for powering off a device with multiple drives */
+      heading = _("Are you sure you want to power off the drives?");
+      /* Translators: Message for powering off a device with multiple drives */
+      message = _("This operation will prepare the system for the following drives to be removed and powered down.");
+    }
+
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                    heading,
+                                    message,
+                                    _("_Power Off"),
+                                    NULL, NULL,
+                                    window->client, objects))
+    goto out;
+
+  gdu_window_ensure_unused_list (window,
+                                 objects,
+                                 (GAsyncReadyCallback) power_off_ensure_unused_cb,
+                                 NULL, /* GCancellable */
+                                 g_object_ref (object));
+ out:
+  g_list_free_full (siblings, g_object_unref);
+  g_list_free (objects);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -4647,7 +4762,8 @@ on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
 typedef struct
 {
   GduWindow *window;
-  UDisksObject *object;
+  GList *objects;
+  GList *object_iter;
   GSimpleAsyncResult *simple;
   GCancellable *cancellable; /* borrowed ref */
 } UnuseData;
@@ -4656,7 +4772,7 @@ static void
 unuse_data_free (UnuseData *data)
 {
   g_clear_object (&data->window);
-  g_clear_object (&data->object);
+  g_list_free_full (data->objects, g_object_unref);
   g_clear_object (&data->simple);
   g_slice_free (UnuseData, data);
 }
@@ -4722,6 +4838,7 @@ unuse_lock_cb (UDisksEncrypted  *encrypted,
 static void
 unuse_data_iterate (UnuseData *data)
 {
+  UDisksObject *object;
   UDisksFilesystem *filesystem_to_unmount = NULL;
   UDisksEncrypted *encrypted_to_lock = NULL;
   UDisksBlock *block = NULL;
@@ -4732,7 +4849,9 @@ unuse_data_iterate (UnuseData *data)
   GList *l;
   GList *objects_to_check = NULL;
 
-  drive = udisks_object_get_drive (data->object);
+  object = UDISKS_OBJECT (data->object_iter->data);
+
+  drive = udisks_object_get_drive (object);
   if (drive != NULL)
     {
       block = udisks_client_get_block_for_drive (data->window->client,
@@ -4741,7 +4860,7 @@ unuse_data_iterate (UnuseData *data)
     }
   else
     {
-      block = udisks_object_get_block (data->object);
+      block = udisks_object_get_block (object);
     }
 
   if (block != NULL)
@@ -4768,9 +4887,9 @@ unuse_data_iterate (UnuseData *data)
   /* Add LUKS objects */
   for (l = objects_to_check; l != NULL; l = l->next)
     {
-      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksObject *object_iter = UDISKS_OBJECT (l->data);
       UDisksBlock *block_for_object;
-      block_for_object = udisks_object_peek_block (object);
+      block_for_object = udisks_object_peek_block (object_iter);
       if (block_for_object != NULL)
         {
           UDisksBlock *cleartext;
@@ -4790,14 +4909,14 @@ unuse_data_iterate (UnuseData *data)
   objects_to_check = g_list_reverse (objects_to_check);
   for (l = objects_to_check; l != NULL; l = l->next)
     {
-      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksObject *object_iter = UDISKS_OBJECT (l->data);
       UDisksBlock *block_for_object;
       UDisksFilesystem *filesystem_for_object;
       UDisksEncrypted *encrypted_for_object;
 
-      block_for_object = udisks_object_peek_block (object);
+      block_for_object = udisks_object_peek_block (object_iter);
 
-      filesystem_for_object = udisks_object_peek_filesystem (object);
+      filesystem_for_object = udisks_object_peek_filesystem (object_iter);
       if (filesystem_for_object != NULL)
         {
           const gchar *const *mount_points = udisks_filesystem_get_mount_points (filesystem_for_object);
@@ -4808,7 +4927,7 @@ unuse_data_iterate (UnuseData *data)
             }
         }
 
-      encrypted_for_object = udisks_object_peek_encrypted (object);
+      encrypted_for_object = udisks_object_peek_encrypted (object_iter);
       if (encrypted_for_object != NULL)
         {
           UDisksBlock *cleartext;
@@ -4842,8 +4961,17 @@ unuse_data_iterate (UnuseData *data)
     }
   else
     {
-      /* nothing left to do, terminate without error */
-      unuse_data_complete (data, NULL, NULL);
+      /* nothing left to do, move on to next object */
+      data->object_iter = data->object_iter->next;
+      if (data->object_iter != NULL)
+        {
+          unuse_data_iterate (data);
+        }
+      else
+        {
+          /* yay, no objects left, terminate without error */
+          unuse_data_complete (data, NULL, NULL);
+        }
     }
 
   g_clear_object (&partition_table);
@@ -4857,35 +4985,37 @@ unuse_data_iterate (UnuseData *data)
 }
 
 void
-gdu_window_ensure_unused (GduWindow            *window,
-                          UDisksObject         *object,
-                          GAsyncReadyCallback   callback,
-                          GCancellable         *cancellable,
-                          gpointer              user_data)
+gdu_window_ensure_unused_list (GduWindow            *window,
+                               GList                *objects,
+                               GAsyncReadyCallback   callback,
+                               GCancellable         *cancellable,
+                               gpointer              user_data)
 {
   UnuseData *data;
 
   g_return_if_fail (GDU_IS_WINDOW (window));
-  g_return_if_fail (UDISKS_IS_OBJECT (object));
+  g_return_if_fail (objects != NULL);
   g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
 
   data = g_slice_new0 (UnuseData);
   data->window = g_object_ref (window);
-  data->object = g_object_ref (object);
+  data->objects = g_list_copy (objects);
+  g_list_foreach (data->objects, (GFunc) g_object_ref, NULL);
+  data->object_iter = data->objects;
   data->cancellable = cancellable;
   data->simple = g_simple_async_result_new (G_OBJECT (window),
                                             callback,
                                             user_data,
-                                            gdu_window_ensure_unused);
+                                            gdu_window_ensure_unused_list);
   g_simple_async_result_set_check_cancellable (data->simple, cancellable);
 
   unuse_data_iterate (data);
 }
 
 gboolean
-gdu_window_ensure_unused_finish (GduWindow     *window,
-                                 GAsyncResult  *res,
-                                 GError       **error)
+gdu_window_ensure_unused_list_finish (GduWindow     *window,
+                                      GAsyncResult  *res,
+                                      GError       **error)
 {
   GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
   gboolean ret = FALSE;
@@ -4893,7 +5023,7 @@ gdu_window_ensure_unused_finish (GduWindow     *window,
   g_return_val_if_fail (G_IS_ASYNC_RESULT (res), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_window_ensure_unused);
+  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_window_ensure_unused_list);
 
   if (g_simple_async_result_propagate_error (simple, error))
     goto out;
@@ -4904,3 +5034,27 @@ gdu_window_ensure_unused_finish (GduWindow     *window,
   return ret;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_window_ensure_unused (GduWindow            *window,
+                          UDisksObject         *object,
+                          GAsyncReadyCallback   callback,
+                          GCancellable         *cancellable,
+                          gpointer              user_data)
+{
+  GList *objects;
+  objects = g_list_append (NULL, object);
+  gdu_window_ensure_unused_list (window, objects, callback, cancellable, user_data);
+  g_list_free (objects);
+}
+
+gboolean
+gdu_window_ensure_unused_finish (GduWindow     *window,
+                                 GAsyncResult  *res,
+                                 GError       **error)
+{
+  return gdu_window_ensure_unused_list_finish (window, res, error);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

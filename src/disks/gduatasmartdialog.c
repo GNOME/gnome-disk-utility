@@ -39,6 +39,11 @@ typedef struct
 
   GtkListStore *attributes_list;
 
+  GtkWidget *enabled_switch;
+  GtkWidget *status_grid;
+  GtkWidget *attributes_label;
+  GtkWidget *attributes_vbox;
+
   GtkWidget *dialog;
   GtkWidget *updated_label;
   GtkWidget *temperature_label;
@@ -55,6 +60,7 @@ typedef struct
 
   GtkWidget *start_selftest_button;
   GtkWidget *stop_selftest_button;
+  GtkWidget *refresh_button;
 
   GtkWidget *selftest_menu;
   GtkWidget *selftest_short_menuitem;
@@ -66,6 +72,12 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
+  {G_STRUCT_OFFSET (DialogData, enabled_switch), "enabled-switch"},
+
+  {G_STRUCT_OFFSET (DialogData, status_grid), "status-grid"},
+  {G_STRUCT_OFFSET (DialogData, attributes_label), "attributes-label"},
+  {G_STRUCT_OFFSET (DialogData, attributes_vbox), "attributes-vbox"},
+
   {G_STRUCT_OFFSET (DialogData, updated_label), "updated-label"},
   {G_STRUCT_OFFSET (DialogData, temperature_label), "temperature-label"},
   {G_STRUCT_OFFSET (DialogData, powered_on_label), "powered-on-label"},
@@ -80,6 +92,10 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, attr_value_label), "attr-value-label"},
   {G_STRUCT_OFFSET (DialogData, attr_type_label), "attr-type-label"},
   {G_STRUCT_OFFSET (DialogData, attr_long_description_label), "attr-long-description-label"},
+
+  {G_STRUCT_OFFSET (DialogData, start_selftest_button), "start-selftest-button"},
+  {G_STRUCT_OFFSET (DialogData, stop_selftest_button), "stop-selftest-button"},
+  {G_STRUCT_OFFSET (DialogData, refresh_button), "refresh-button"},
   {0, NULL}
 };
 
@@ -893,18 +909,25 @@ calculate_self_test (UDisksDriveAta *ata,
 static void
 update_updated_label (DialogData *data)
 {
-  time_t now;
-  time_t updated;
-  gchar *s;
-  gchar *s2;
+  gchar *s = NULL;
+  if (udisks_drive_ata_get_smart_enabled (data->ata))
+    {
+      time_t now;
+      time_t updated;
+      gchar *s2;
 
-  now = time (NULL);
-  updated = udisks_drive_ata_get_smart_updated (data->ata);
-  s = gdu_utils_format_duration_usec ((now - updated) * G_USEC_PER_SEC,
-                                      GDU_FORMAT_DURATION_FLAGS_NONE);
-  s2 = g_strdup_printf (_("%s ago"), s);
-  gtk_label_set_text (GTK_LABEL (data->updated_label), s2);
-  g_free (s2);
+      now = time (NULL);
+      updated = udisks_drive_ata_get_smart_updated (data->ata);
+      s2 = gdu_utils_format_duration_usec ((now - updated) * G_USEC_PER_SEC,
+                                           GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
+      s = g_strdup_printf (_("%s ago"), s2);
+      g_free (s2);
+    }
+  else
+    {
+      s = g_strdup ("—");
+    }
+  gtk_label_set_text (GTK_LABEL (data->updated_label), s);
   g_free (s);
 }
 
@@ -964,13 +987,13 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
       goto out_no_smart;
     }
 
+  smart_is_supported = TRUE;
+
   if (!udisks_drive_ata_get_smart_enabled (ata))
     {
       ret = g_strdup (_("SMART is not enabled"));
       goto out_no_smart;
     }
-
-  smart_is_supported = TRUE;
 
   num_failing = udisks_drive_ata_get_smart_num_attributes_failing (ata);
   num_failed_in_the_past = udisks_drive_ata_get_smart_num_attributes_failed_in_the_past (ata);
@@ -1100,46 +1123,15 @@ gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
   return gdu_ata_smart_get_overall_assessment (ata, TRUE, out_smart_is_supported, out_warn);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
 static void
-update_dialog (DialogData *data)
+update_attributes_list (DialogData *data,
+                        GVariant   *attributes)
 {
-  gchar *s;
-  GVariant *attributes = NULL;
-  GError *error;
   GtkTreeIter tree_iter;
   GtkTreeIter *tree_iter_to_select;
   gint selected_id;
-  gboolean selftest_running;
-
-  /* TODO: do it async and show spinner while call is pending */
-  error = NULL;
-  if (!udisks_drive_ata_call_smart_get_attributes_sync (udisks_object_peek_drive_ata (data->object),
-                                                        g_variant_new ("a{sv}", NULL), /* options */
-                                                        &attributes,
-                                                        NULL, /* GCancellable */
-                                                        &error))
-    {
-      g_warning ("Error getting ATA SMART information: %s (%s, %d)",
-                 error->message, g_quark_to_string (error->domain), error->code);
-      g_error_free (error);
-    }
-
-  update_updated_label (data);
-
-  s = calculate_self_test (data->ata, &selftest_running);
-  gtk_label_set_text (GTK_LABEL (data->self_test_label), s);
-  g_free (s);
-
-  if (selftest_running)
-    {
-      gtk_widget_set_visible (data->start_selftest_button, FALSE);
-      gtk_widget_set_visible (data->stop_selftest_button, TRUE);
-    }
-  else
-    {
-      gtk_widget_set_visible (data->start_selftest_button, TRUE);
-      gtk_widget_set_visible (data->stop_selftest_button, FALSE);
-    }
 
   /* record currently selected row so we can reselect it */
   selected_id = -1;
@@ -1228,38 +1220,106 @@ update_dialog (DialogData *data)
                                           &titer);
         }
     }
+}
 
-  if (udisks_drive_ata_get_smart_failing (data->ata))
+static void
+update_dialog (DialogData *data)
+{
+  gchar *s;
+  gboolean enabled = FALSE;
+
+  enabled = udisks_drive_ata_get_smart_enabled (data->ata);
+  gtk_switch_set_active (GTK_SWITCH (data->enabled_switch), enabled);
+
+  if (enabled)
     {
-      /* Translators: XXX */
-      s = g_strdup (_("Threshold exceeded"));
+      GVariant *attributes = NULL;
+      GError *error = NULL;
+      gboolean selftest_running = FALSE;
+
+      /* TODO: do it async and show spinner while call is pending */
+      if (!udisks_drive_ata_call_smart_get_attributes_sync (udisks_object_peek_drive_ata (data->object),
+                                                            g_variant_new ("a{sv}", NULL), /* options */
+                                                            &attributes,
+                                                            NULL, /* GCancellable */
+                                                            &error))
+        {
+          g_warning ("Error getting ATA SMART information: %s (%s, %d)",
+                     error->message, g_quark_to_string (error->domain), error->code);
+          g_error_free (error);
+        }
+
+
+      s = calculate_self_test (data->ata, &selftest_running);
+      gtk_label_set_text (GTK_LABEL (data->self_test_label), s);
+      g_free (s);
+
+      if (selftest_running)
+        {
+          gtk_widget_set_visible (data->start_selftest_button, FALSE);
+          gtk_widget_set_visible (data->stop_selftest_button, TRUE);
+        }
+      else
+        {
+          gtk_widget_set_visible (data->start_selftest_button, TRUE);
+          gtk_widget_set_visible (data->stop_selftest_button, FALSE);
+        }
+      gtk_widget_set_visible (data->refresh_button, TRUE);
+
+      update_attributes_list (data, attributes);
+      update_updated_label (data);
+
+      if (udisks_drive_ata_get_smart_failing (data->ata))
+        {
+          /* Translators: XXX */
+          s = g_strdup (_("Threshold exceeded"));
+        }
+      else
+        {
+          /* Translators: XXX */
+          s = g_strdup (_("Threshold not exceeded"));
+        }
+      gtk_label_set_markup (GTK_LABEL (data->self_assessment_label), s);
+      g_free (s);
+
+      s = format_powered_on (data->ata);
+      if (s == NULL)
+        s = g_strdup ("—");
+      gtk_label_set_markup (GTK_LABEL (data->powered_on_label), s);
+      g_free (s);
+
+      s = format_temp (data->ata);
+      if (s == NULL)
+        s = g_strdup ("—");
+      gtk_label_set_markup (GTK_LABEL (data->temperature_label), s);
+      g_free (s);
+
+      s = gdu_ata_smart_get_overall_assessment (data->ata, FALSE, NULL, NULL);
+      gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), s);
+      g_free (s);
+
+      if (attributes != NULL)
+        g_variant_unref (attributes);
     }
   else
     {
-      /* Translators: XXX */
-      s = g_strdup (_("Threshold not exceeded"));
+      gtk_widget_set_visible (data->start_selftest_button, FALSE);
+      gtk_widget_set_visible (data->stop_selftest_button, FALSE);
+      gtk_widget_set_visible (data->refresh_button, FALSE);
+      update_attributes_list (data, NULL);
+      update_updated_label (data);
+      gtk_label_set_markup (GTK_LABEL (data->self_test_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->temperature_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->powered_on_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->self_assessment_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->attr_value_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->attr_type_label), "—");
+      gtk_label_set_markup (GTK_LABEL (data->attr_long_description_label), "—");
     }
-  gtk_label_set_markup (GTK_LABEL (data->self_assessment_label), s);
-  g_free (s);
-
-  s = format_powered_on (data->ata);
-  if (s == NULL)
-    s = g_strdup ("—");
-  gtk_label_set_markup (GTK_LABEL (data->powered_on_label), s);
-  g_free (s);
-
-  s = format_temp (data->ata);
-  if (s == NULL)
-    s = g_strdup ("—");
-  gtk_label_set_markup (GTK_LABEL (data->temperature_label), s);
-  g_free (s);
-
-  s = gdu_ata_smart_get_overall_assessment (data->ata, FALSE, NULL, NULL);
-  gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), s);
-  g_free (s);
-
-  if (attributes != NULL)
-    g_variant_unref (attributes);
+  gtk_widget_set_sensitive (data->status_grid, enabled);
+  gtk_widget_set_sensitive (data->attributes_label, enabled);
+  gtk_widget_set_sensitive (data->attributes_vbox, enabled);
 }
 
 /* called when properties on the Drive.Ata object changes */
@@ -1414,6 +1474,49 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+smart_set_enabled_cb (GObject      *source_object,
+                      GAsyncResult *res,
+                      gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  if (!udisks_drive_ata_call_smart_set_enabled_finish (UDISKS_DRIVE_ATA (source_object),
+                                                       res,
+                                                       &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("An error occurred when trying toggle whether SMART is enabled"),
+                            error);
+      g_clear_error (&error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_enabled_switch_notify_active (GObject    *object,
+                                 GParamSpec *pspec,
+                                 gpointer    user_data)
+{
+  DialogData *data = user_data;
+  gboolean enabled;
+
+  enabled = gtk_switch_get_active (GTK_SWITCH (data->enabled_switch));
+  if (!!enabled != !!udisks_drive_ata_get_smart_enabled (data->ata))
+    {
+      udisks_drive_ata_call_smart_set_enabled (data->ata,
+                                               enabled,
+                                               g_variant_new ("a{sv}", NULL), /* options */
+                                               NULL, /* GCancellable */
+                                               (GAsyncReadyCallback) smart_set_enabled_cb,
+                                               g_object_ref (data->window));
+    }
+  update_dialog (data);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 void
 gdu_ata_smart_dialog_show (GduWindow    *window,
                            UDisksObject *object)
@@ -1438,6 +1541,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
     {
       gpointer *p = (gpointer *) ((char *) data + widget_mapping[n].offset);
       *p = GTK_WIDGET (gtk_builder_get_object (data->builder, widget_mapping[n].name));
+      g_warn_if_fail (*p != NULL);
     }
 
   data->attributes_list = gtk_list_store_new (N_COLUMNS,
@@ -1509,8 +1613,6 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   gtk_tree_view_column_set_attributes (column, renderer,
                                        "markup", ASSESSMENT_COLUMN, NULL);
 
-  column = gtk_tree_view_column_new ();
-
 
   g_signal_connect (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->attributes_treeview)),
                     "changed",
@@ -1526,10 +1628,10 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   g_signal_connect (data->selftest_extended_menuitem, "activate", G_CALLBACK (on_selftest_extended), data);
   g_signal_connect (data->selftest_conveyance_menuitem, "activate", G_CALLBACK (on_selftest_conveyance), data);
 
-  data->start_selftest_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), 0);
-  data->stop_selftest_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), 1);
+  g_signal_connect (data->enabled_switch, "notify::active", G_CALLBACK (on_enabled_switch_notify_active), data);
 
   update_dialog (data);
+  gtk_widget_grab_focus (data->attributes_treeview);
 
   while (TRUE)
     {

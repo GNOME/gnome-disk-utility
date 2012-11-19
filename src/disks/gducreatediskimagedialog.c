@@ -949,6 +949,22 @@ show_in_folder (DialogData *data)
 
 
 static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  DialogData *data = user_data;
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      start_copying (data);
+    }
+  else
+    {
+      dialog_data_complete_and_unref (data);
+    }
+}
+
+static void
 on_dialog_response (GtkDialog     *dialog,
                     gint           response,
                     gpointer       user_data)
@@ -972,7 +988,12 @@ on_dialog_response (GtkDialog     *dialog,
 
           gtk_widget_hide (data->start_copying_button);
 
-          start_copying (data);
+          /* ensure the device is unused (e.g. unmounted) before copying data from it... */
+          gdu_window_ensure_unused (data->window,
+                                    data->object,
+                                    (GAsyncReadyCallback) ensure_unused_cb,
+                                    NULL, /* GCancellable */
+                                    data);
         }
       break;
 

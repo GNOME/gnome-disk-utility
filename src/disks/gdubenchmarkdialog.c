@@ -821,7 +821,6 @@ update_dialog (DialogData *data)
   gdouble access_time_avg = 0.0;
   gchar *s = NULL;
   UDisksDrive *drive = NULL;
-  const gchar *drive_revision = NULL;
   UDisksObjectInfo *info = NULL;
 
   G_LOCK (bm_lock);
@@ -856,29 +855,9 @@ update_dialog (DialogData *data)
 
   /* disk / device label */
   drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), data->block);
-  if (drive != NULL)
-    drive_revision = udisks_drive_get_revision (drive);
   info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
-  if (drive_revision != NULL && strlen (drive_revision) > 0)
-    {
-      /* Translators: Shown for "Disk / Device" field.
-       *              The first %s is the description of the object (e.g. "80 GB Disk").
-       *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
-       *              The third %s is the fw revision (e.g "45ABX21").
-       */
-      s = g_strdup_printf (C_("benchmark", "%s — %s (%s)"), info->description, info->name, drive_revision);
-    }
-  else
-    {
-      /* Translators: Shown for "Disk / Device" field.
-       *              The first %s is the description of the object (e.g. "80 GB Disk").
-       *              The second %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
-       */
-      s = g_strdup_printf (C_("benchmark", "%s — %s"), info->description, info->name);
-    }
-  gtk_label_set_text (GTK_LABEL (data->device_label), s);
+  gtk_label_set_text (GTK_LABEL (data->device_label), udisks_object_info_get_one_liner (info));
   g_free (s);
-
 
   G_LOCK (bm_lock);
 
@@ -952,8 +931,7 @@ update_dialog (DialogData *data)
     gdk_window_invalidate_rect (window, NULL, TRUE);
 
   g_clear_object (&drive);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
 }
 
 

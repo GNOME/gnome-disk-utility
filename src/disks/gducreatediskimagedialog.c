@@ -272,8 +272,8 @@ create_disk_image_populate (DialogData *data)
 
   /* Source label */
   info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
-  gtk_label_set_text (GTK_LABEL (data->source_label), info->one_liner);
-  udisks_object_info_unref (info);
+  gtk_label_set_text (GTK_LABEL (data->source_label), udisks_object_info_get_one_liner (info));
+  g_clear_object (&info);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

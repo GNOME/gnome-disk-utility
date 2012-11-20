@@ -2546,7 +2546,7 @@ update_device_page_for_drive (GduWindow      *window,
       g_string_append (str, s);
       g_free (s);
     }
-  s = g_strdup_printf ("<big><b>%s</b></big>", info->description);
+  s = g_strdup_printf ("<big><b>%s</b></big>", udisks_object_info_get_description (info));
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
   gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
@@ -2561,10 +2561,10 @@ update_device_page_for_drive (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_eject_button);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  if (info->media_icon != NULL)
-    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), info->media_icon, GTK_ICON_SIZE_DIALOG);
+  if (udisks_object_info_get_media_icon (info) != NULL)
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), udisks_object_info_get_media_icon (info), GTK_ICON_SIZE_DIALOG);
   else
-    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), info->icon, GTK_ICON_SIZE_DIALOG);
+    gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), udisks_object_info_get_icon (info), GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
   str = g_string_new (NULL);
@@ -2710,7 +2710,7 @@ update_device_page_for_drive (GduWindow      *window,
       set_markup (window,
                   "devtab-drive-media-label",
                   "devtab-drive-media-value-label",
-                  info->media_description, SET_MARKUP_FLAGS_NONE);
+                  udisks_object_info_get_media_description (info), SET_MARKUP_FLAGS_NONE);
     }
   else
     {
@@ -2759,8 +2759,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

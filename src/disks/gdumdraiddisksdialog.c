@@ -278,11 +278,13 @@ update_dialog_labels (DialogData *data)
        *              The first %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
        *              The second %s is the fw revision (e.g "45ABX21").
        */
-      model_markup = g_strdup_printf (C_("mdraid-disks", "%s (%s)"), info->name, drive_revision);
+      model_markup = g_strdup_printf (C_("mdraid-disks", "%s (%s)"),
+                                      udisks_object_info_get_name (info),
+                                      drive_revision);
     }
   else
     {
-      model_markup = g_strdup (info->name);
+      model_markup = g_strdup (udisks_object_info_get_name (info));
     }
 
  out:
@@ -295,8 +297,7 @@ update_dialog_labels (DialogData *data)
   g_free (device_markup);
   g_free (serial_markup);
   g_free (assessment_markup);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
   g_clear_object (&drive);
   g_clear_object (&object);
   g_clear_object (&block);
@@ -506,8 +507,8 @@ pixbuf_cell_func (GtkTreeViewColumn *column,
     goto out;
 
   info = udisks_client_get_object_info (data->client, object);
-  if (info->icon != NULL)
-    icon = g_object_ref (info->icon);
+  if (udisks_object_info_get_icon (info) != NULL)
+    icon = g_object_ref (udisks_object_info_get_icon (info));
 
   if (icon == NULL)
     icon = g_themed_icon_new ("drive-removable-media"); /* fallback - for now */
@@ -520,8 +521,7 @@ pixbuf_cell_func (GtkTreeViewColumn *column,
   g_clear_object (&icon);
   g_clear_object (&object);
   g_clear_object (&block);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
 }
 
 static void
@@ -550,7 +550,7 @@ name_cell_func (GtkTreeViewColumn *column,
     goto out;
 
   info = udisks_client_get_object_info (data->client, object);
-  markup = g_strdup (info->description);
+  markup = g_strdup (udisks_object_info_get_description (info));
 
  out:
 
@@ -561,8 +561,7 @@ name_cell_func (GtkTreeViewColumn *column,
   g_free (markup);
   g_clear_object (&object);
   g_clear_object (&block);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
 }
 
 static void

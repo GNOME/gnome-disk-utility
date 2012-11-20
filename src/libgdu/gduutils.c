@@ -631,15 +631,15 @@ get_widget_for_object (UDisksClient *client,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-  image = gtk_image_new_from_gicon (info->icon, GTK_ICON_SIZE_SMALL_TOOLBAR);
+  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info), GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
 
-  label = gtk_label_new (info->one_liner);
+  label = gtk_label_new (udisks_object_info_get_one_liner (info));
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
-  udisks_object_info_unref (info);
+  g_object_unref (info);
 
   return hbox;
 }

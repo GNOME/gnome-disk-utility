@@ -930,15 +930,15 @@ update_drive (GduDeviceTreeModel *model,
        */
       s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
                            "<small><span foreground=\"#ff0000\">%s</span></small>",
-                           info->description,
-                           info->name);
+                           udisks_object_info_get_description (info),
+                           udisks_object_info_get_name (info));
     }
   else
     {
       s = g_strdup_printf ("%s\n"
                            "<small>%s</small>",
-                           info->description,
-                           info->name);
+                           udisks_object_info_get_description (info),
+                           udisks_object_info_get_name (info));
     }
 
   jobs_running = drive_has_jobs (model->client, drive);
@@ -954,7 +954,7 @@ update_drive (GduDeviceTreeModel *model,
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, info->icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
@@ -975,8 +975,7 @@ update_drive (GduDeviceTreeModel *model,
 
  out:
   g_clear_object (&block);
-  if (info != NULL)
-    udisks_object_info_unref (info);
+  g_clear_object (&info);
   g_free (sort_key);
   g_free (s);
   return jobs_running;

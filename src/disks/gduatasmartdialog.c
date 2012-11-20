@@ -33,6 +33,8 @@ enum
 
 typedef struct
 {
+  volatile guint ref_count;
+
   UDisksObject *object;
   UDisksDriveAta *ata;
 
@@ -94,25 +96,36 @@ static const struct {
   {0, NULL}
 };
 
-static void
-dialog_data_free (DialogData *data)
+
+static DialogData *
+dialog_data_ref (DialogData *data)
 {
-  if (data->dialog != NULL)
+  g_atomic_int_inc (&data->ref_count);
+  return data;
+}
+
+static void
+dialog_data_unref (DialogData *data)
+{
+  if (g_atomic_int_dec_and_test (&data->ref_count))
     {
-      gtk_widget_hide (data->dialog);
-      gtk_widget_destroy (data->dialog);
+      if (data->dialog != NULL)
+        {
+          gtk_widget_hide (data->dialog);
+          gtk_widget_destroy (data->dialog);
+        }
+      if (data->object != NULL)
+        g_object_unref (data->object);
+      if (data->window != NULL)
+        g_object_unref (data->window);
+      if (data->builder != NULL)
+        g_object_unref (data->builder);
+
+      if (data->attributes_list != NULL)
+        g_object_unref (data->attributes_list);
+
+      g_free (data);
     }
-  if (data->object != NULL)
-    g_object_unref (data->object);
-  if (data->window != NULL)
-    g_object_unref (data->window);
-  if (data->builder != NULL)
-    g_object_unref (data->builder);
-
-  if (data->attributes_list != NULL)
-    g_object_unref (data->attributes_list);
-
-  g_free (data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1393,19 +1406,21 @@ smart_set_enabled_cb (GObject      *source_object,
                       GAsyncResult *res,
                       gpointer      user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
+  DialogData *data = user_data;
   GError *error = NULL;
 
   if (!udisks_drive_ata_call_smart_set_enabled_finish (UDISKS_DRIVE_ATA (source_object),
                                                        res,
                                                        &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (window),
+      gdu_utils_show_error (GTK_WINDOW (data->window),
                             _("An error occurred when trying toggle whether SMART is enabled"),
                             error);
       g_clear_error (&error);
     }
-  g_object_unref (window);
+  udisks_client_settle (gdu_window_get_client (data->window));
+  update_dialog (data);
+  dialog_data_unref (data);
 }
 
 static void
@@ -1424,9 +1439,8 @@ on_enabled_switch_notify_active (GObject    *object,
                                                g_variant_new ("a{sv}", NULL), /* options */
                                                NULL, /* GCancellable */
                                                (GAsyncReadyCallback) smart_set_enabled_cb,
-                                               g_object_ref (data->window));
+                                               dialog_data_ref (data));
     }
-  update_dialog (data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1443,6 +1457,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   guint timeout_id;
 
   data = g_new0 (DialogData, 1);
+  data->ref_count = 1;
   data->object = g_object_ref (object);
   data->ata = udisks_object_peek_drive_ata (data->object);
   data->window = g_object_ref (window);
@@ -1604,10 +1619,10 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   g_signal_connect (data->selftest_extended_menuitem, "activate", G_CALLBACK (on_selftest_extended), data);
   g_signal_connect (data->selftest_conveyance_menuitem, "activate", G_CALLBACK (on_selftest_conveyance), data);
 
-  g_signal_connect (data->enabled_switch, "notify::active", G_CALLBACK (on_enabled_switch_notify_active), data);
-
   update_dialog (data);
   gtk_widget_grab_focus (data->attributes_treeview);
+
+  g_signal_connect (data->enabled_switch, "notify::active", G_CALLBACK (on_enabled_switch_notify_active), data);
 
   while (TRUE)
     {
@@ -1634,5 +1649,5 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   g_source_remove (timeout_id);
   g_signal_handler_disconnect (data->ata, notify_id);
 
-  dialog_data_free (data);
+  dialog_data_unref (data);
 }

@@ -25,6 +25,8 @@ enum
   NORMALIZED_COLUMN,
   THRESHOLD_COLUMN,
   WORST_COLUMN,
+  TYPE_COLUMN,
+  UPDATES_COLUMN,
   FLAGS_COLUMN,
   N_COLUMNS,
 };
@@ -51,10 +53,6 @@ typedef struct
   GtkWidget *self_test_label;
   GtkWidget *self_assessment_label;
   GtkWidget *overall_assessment_label;
-
-  GtkWidget *attr_value_label;
-  GtkWidget *attr_type_label;
-  GtkWidget *attr_long_description_label;
 
   GtkWidget *attributes_treeview;
 
@@ -89,9 +87,6 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, selftest_short_menuitem), "selftest-short-menuitem"},
   {G_STRUCT_OFFSET (DialogData, selftest_extended_menuitem), "selftest-extended-menuitem"},
   {G_STRUCT_OFFSET (DialogData, selftest_conveyance_menuitem), "selftest-conveyance-menuitem"},
-  {G_STRUCT_OFFSET (DialogData, attr_value_label), "attr-value-label"},
-  {G_STRUCT_OFFSET (DialogData, attr_type_label), "attr-type-label"},
-  {G_STRUCT_OFFSET (DialogData, attr_long_description_label), "attr-long-description-label"},
 
   {G_STRUCT_OFFSET (DialogData, start_selftest_button), "start-selftest-button"},
   {G_STRUCT_OFFSET (DialogData, stop_selftest_button), "stop-selftest-button"},
@@ -580,7 +575,7 @@ static const SmartDetails smart_details[] = {
 static gboolean
 attribute_get_details (const gchar  *name,
                        const gchar **out_name,
-                       const gchar **out_description)
+                       const gchar **out_desc)
 {
   SmartDetails *details;
   static volatile gsize have_hash = 0;
@@ -607,14 +602,13 @@ attribute_get_details (const gchar  *name,
     {
       if (out_name != NULL)
         *out_name = gettext (details->pretty_name);
-      if (out_description != NULL)
-        *out_description = gettext (details->desc);;
+      if (out_desc != NULL)
+        *out_desc = gettext (details->desc);
       ret = TRUE;
     }
 
   return ret;
 }
-
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -641,17 +635,13 @@ static gchar *
 attr_format_desc (gint id, const gchar *name)
 {
   const gchar *localized_name;
-  const gchar *localized_desc;
   gchar *ret;
 
-  if (!attribute_get_details (name, &localized_name, &localized_desc))
+  if (!attribute_get_details (name, &localized_name, NULL))
     {
       localized_name = name;
-      localized_desc = "";
     }
-
   ret = g_strdup (localized_name);
-
   return ret;
 }
 
@@ -746,92 +736,6 @@ pretty_to_string (guint64 pretty,
     }
 
   return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-/* called whenever a new attribute is selected */
-static void
-update_attr (DialogData *data)
-{
-  gboolean prefail;
-  gboolean online;
-  const gchar *prefail_str;
-  const gchar *online_str;
-  gchar *pretty = NULL;
-  gchar *type_str = NULL;
-  gint normalized, threshold, worst;
-  gint flags;
-  GtkTreeIter tree_iter;
-  gchar *value_str = NULL;
-  gchar *long_description_str = NULL;
-
-  if (!gtk_tree_selection_get_selected (gtk_tree_view_get_selection (GTK_TREE_VIEW (data->attributes_treeview)),
-                                        NULL,
-                                        &tree_iter))
-    goto out;
-
-  gtk_tree_model_get (GTK_TREE_MODEL (data->attributes_list),
-                      &tree_iter,
-                      PRETTY_COLUMN, &pretty,
-                      NORMALIZED_COLUMN, &normalized,
-                      THRESHOLD_COLUMN, &threshold,
-                      WORST_COLUMN, &worst,
-                      FLAGS_COLUMN, &flags,
-                      LONG_DESC_COLUMN, &long_description_str,
-                      -1);
-
-  /* Translators: The first %s is the pretty value (such as '300
-   * sectors' or '2.5 years' or '53° C / 127° F').
-   *
-   * The three %d are the normalized, threshold and worst values -
-   * these are all decimal numbers.
-   */
-  value_str = g_strdup_printf (_("%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"),
-                               pretty, normalized, threshold, worst);
-
-  prefail = (flags & 0x0001);
-  online = (flags & 0x0002);
-
-  if (prefail)
-    {
-      /* Translators: Please keep "(Pre-Fail)" in English
-       */
-      prefail_str = _("Failure is a sign the disk will fail within 24 hours <span size=\"small\">(Pre-Fail)</span>");
-    }
-  else
-    {
-      /* Translators: Please keep "(Old-Age)" in English
-       */
-      prefail_str = _("Failure is a sign the disk exceeded its intended design life period <span size=\"small\">(Old-Age)</span>");
-    }
-
-  if (online)
-    {
-      /* Translators: Please keep "(Online)" in English
-       */
-      online_str = _("Updated every time data is collected <span size=\"small\">(Online)</span>");
-    }
-  else
-    {
-      /* Translators: Please keep "(Not Online)" in English
-       */
-      online_str = _("Updated only during off-line activities <span size=\"small\">(Not Online)</span>");
-    }
-
-  type_str = g_strdup_printf ("%s\n%s",
-                              prefail_str,
-                              online_str);
-
- out:
-  gtk_label_set_markup (GTK_LABEL (data->attr_value_label), value_str);
-  gtk_label_set_markup (GTK_LABEL (data->attr_type_label), type_str);
-  gtk_label_set_markup (GTK_LABEL (data->attr_long_description_label), long_description_str);
-
-  g_free (long_description_str);
-  g_free (value_str);
-  g_free (type_str);
-  g_free (pretty);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1172,11 +1076,23 @@ update_attributes_list (DialogData *data,
           gchar *desc_str;
           gchar *assessment_str;
           gchar *pretty_str;
+          const gchar *type_str;
+          const gchar *updates_str;
 
           desc_str = attr_format_desc (id, name);
           long_desc_str = attr_format_long_desc (id, name);
           assessment_str = attr_format_assessment (current, worst, threshold, flags);
           pretty_str = pretty_to_string (pretty, pretty_unit);
+
+          if (flags & 0x0001)
+            type_str = _("Pre-Fail");
+          else
+            type_str = _("Old-Age");
+
+          if (flags & 0x0002)
+            updates_str = _("Online");
+          else
+            updates_str = _("Offline");
 
           gtk_list_store_append (data->attributes_list, &titer);
           gtk_list_store_set (data->attributes_list, &titer,
@@ -1188,14 +1104,16 @@ update_attributes_list (DialogData *data,
                               NORMALIZED_COLUMN, current,
                               THRESHOLD_COLUMN, threshold,
                               WORST_COLUMN, worst,
+                              TYPE_COLUMN, type_str,
+                              UPDATES_COLUMN, updates_str,
                               FLAGS_COLUMN, flags,
                               -1);
 
           if (id == selected_id)
             tree_iter_to_select = gtk_tree_iter_copy (&titer);
 
-          g_free (long_desc_str);
           g_free (desc_str);
+          g_free (long_desc_str);
           g_free (assessment_str);
           g_free (pretty_str);
 
@@ -1313,9 +1231,6 @@ update_dialog (DialogData *data)
       gtk_label_set_markup (GTK_LABEL (data->powered_on_label), "—");
       gtk_label_set_markup (GTK_LABEL (data->self_assessment_label), "—");
       gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), "—");
-      gtk_label_set_markup (GTK_LABEL (data->attr_value_label), "—");
-      gtk_label_set_markup (GTK_LABEL (data->attr_type_label), "—");
-      gtk_label_set_markup (GTK_LABEL (data->attr_long_description_label), "—");
     }
   gtk_widget_set_sensitive (data->status_grid, enabled);
   gtk_widget_set_sensitive (data->attributes_label, enabled);
@@ -1468,8 +1383,7 @@ static void
 on_tree_selection_changed (GtkTreeSelection *tree_selection,
                            gpointer          user_data)
 {
-  DialogData *data = user_data;
-  update_attr (data);
+  /* DialogData *data = user_data;*/
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1553,6 +1467,8 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
                                               G_TYPE_INT,         /* normalized */
                                               G_TYPE_INT,         /* threshold */
                                               G_TYPE_INT,         /* worst */
+                                              G_TYPE_STRING,      /* type */
+                                              G_TYPE_STRING,      /* updates */
                                               G_TYPE_INT);        /* flags */
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (data->attributes_list),
                                         ID_COLUMN,
@@ -1600,6 +1516,66 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   gtk_tree_view_column_pack_start (column, renderer, TRUE);
   gtk_tree_view_column_set_attributes (column, renderer,
                                        "markup", PRETTY_COLUMN, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);
+  /* Translators: This string is used as the column title in the treeview for the normalized value */
+  gtk_tree_view_column_set_title (column, _("Normalized"));
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "yalign", 0.5,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", NORMALIZED_COLUMN, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);
+  /* Translators: This string is used as the column title in the treeview for the threshold value */
+  gtk_tree_view_column_set_title (column, _("Threshold"));
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "yalign", 0.5,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", THRESHOLD_COLUMN, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);
+  /* Translators: This string is used as the column title in the treeview for the worst value */
+  gtk_tree_view_column_set_title (column, _("Worst"));
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "yalign", 0.5,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", WORST_COLUMN, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);
+  /* Translators: This string is used as the column title in the treeview for the type */
+  gtk_tree_view_column_set_title (column, _("Type"));
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "yalign", 0.5,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", TYPE_COLUMN, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);
+  /* Translators: This string is used as the column title in the treeview for the update type (Online / Offline) */
+  gtk_tree_view_column_set_title (column, _("Updates"));
+  renderer = gtk_cell_renderer_text_new ();
+  g_object_set (G_OBJECT (renderer),
+                "yalign", 0.5,
+                NULL);
+  gtk_tree_view_column_pack_start (column, renderer, TRUE);
+  gtk_tree_view_column_set_attributes (column, renderer,
+                                       "markup", UPDATES_COLUMN, NULL);
 
   column = gtk_tree_view_column_new ();
   gtk_tree_view_append_column (GTK_TREE_VIEW (data->attributes_treeview), column);

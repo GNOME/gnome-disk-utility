@@ -1089,8 +1089,12 @@ update_attributes_list (DialogData *data,
           gchar *desc_str;
           gchar *assessment_str;
           gchar *pretty_str;
+          gchar *current_str;
+          gchar *threshold_str;
+          gchar *worst_str;
           const gchar *type_str;
           const gchar *updates_str;
+          const gchar *na_str;
 
           desc_str = attr_format_desc (id, name);
           long_desc_str = attr_format_long_desc (id, name);
@@ -1107,6 +1111,14 @@ update_attributes_list (DialogData *data,
           else
             updates_str = _("Offline");
 
+          /* Translators: Shown for normalized values (current, worst, threshold) if the value is
+           * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
+           */
+          na_str = _("N/A");
+          current_str   = (current == -1   ? g_strdup (na_str) : g_strdup_printf ("%d", current));
+          threshold_str = (threshold == -1 ? g_strdup (na_str) : g_strdup_printf ("%d", threshold));
+          worst_str     = (worst == -1     ? g_strdup (na_str) : g_strdup_printf ("%d", worst));
+
           gtk_list_store_append (data->attributes_list, &titer);
           gtk_list_store_set (data->attributes_list, &titer,
                               ID_COLUMN, (gint) id,
@@ -1114,9 +1126,9 @@ update_attributes_list (DialogData *data,
                               LONG_DESC_COLUMN, long_desc_str,
                               ASSESSMENT_COLUMN, assessment_str,
                               PRETTY_COLUMN, pretty_str,
-                              NORMALIZED_COLUMN, current,
-                              THRESHOLD_COLUMN, threshold,
-                              WORST_COLUMN, worst,
+                              NORMALIZED_COLUMN, current_str,
+                              THRESHOLD_COLUMN, threshold_str,
+                              WORST_COLUMN, worst_str,
                               TYPE_COLUMN, type_str,
                               UPDATES_COLUMN, updates_str,
                               FLAGS_COLUMN, flags,
@@ -1129,6 +1141,9 @@ update_attributes_list (DialogData *data,
           g_free (long_desc_str);
           g_free (assessment_str);
           g_free (pretty_str);
+          g_free (current_str);
+          g_free (threshold_str);
+          g_free (worst_str);
 
           g_variant_unref (expansion);
         }
@@ -1479,9 +1494,9 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
                                               G_TYPE_STRING,      /* long_desc */
                                               G_TYPE_STRING,      /* assessment */
                                               G_TYPE_STRING,      /* pretty */
-                                              G_TYPE_INT,         /* normalized */
-                                              G_TYPE_INT,         /* threshold */
-                                              G_TYPE_INT,         /* worst */
+                                              G_TYPE_STRING,      /* normalized */
+                                              G_TYPE_STRING,      /* threshold */
+                                              G_TYPE_STRING,      /* worst */
                                               G_TYPE_STRING,      /* type */
                                               G_TYPE_STRING,      /* updates */
                                               G_TYPE_INT);        /* flags */

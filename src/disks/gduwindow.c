@@ -1114,6 +1114,7 @@ device_sort_function (GtkTreeModel *model,
                       gpointer user_data)
 {
   gchar *sa, *sb;
+  gint ret;
 
   gtk_tree_model_get (model, a,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, &sa,
@@ -1121,8 +1122,10 @@ device_sort_function (GtkTreeModel *model,
   gtk_tree_model_get (model, b,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, &sb,
                       -1);
-
-  return g_strcmp0 (sa, sb);
+  ret = g_strcmp0 (sa, sb);
+  g_free (sa);
+  g_free (sb);
+  return ret;
 }
 
 static void

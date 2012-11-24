@@ -446,9 +446,6 @@ populate (GduCreateFilesystemWidget *widget)
       gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "ext4");
     }
 
-  /* Translators: this is the default name for the filesystem */
-  gtk_entry_set_text (GTK_ENTRY (widget->name_entry), _("New Volume"));
-
   /* Set 'btrfs' for the custom filesystem */
   gtk_entry_set_text (GTK_ENTRY (widget->filesystem_entry), "btrfs");
 

@@ -360,8 +360,6 @@ init_dialog (DialogData *data)
   else
     gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->level_combobox), "raid6");
   gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->chunk_combobox), "chunk_512");
-  /* Translators: this is the default name for the RAID Array */
-  gtk_entry_set_text (GTK_ENTRY (data->name_entry), _("New RAID Array"));
 
   /* ---------- */
 

@@ -737,77 +737,24 @@ static gchar *
 get_bm_filename (DialogData *data)
 {
   gchar *ret = NULL;
-  UDisksDrive *drive = NULL;
-  GDBusObject *drive_object = NULL;
-  UDisksPartition *partition = NULL;
-  const gchar *object_path;
   gchar *bench_dir = NULL;
-  gchar *tmp;
-  guint n;
+  const gchar *id = NULL;
 
-  /* If the device has a _distinct_ preferred name, use that for the filename */
-  if (g_strcmp0 (udisks_block_get_preferred_device (data->block),
-                 udisks_block_get_device (data->block)) != 0)
-    {
-      ret = g_strdup (udisks_block_get_preferred_device (data->block));
-      for (n = 0; ret[n] != '\0'; n++)
-        {
-          if (ret[n] == '/')
-            {
-              ret[n] = '_';
-            }
-        }
-    }
-  else
-    {
-      /* otherwise, we only load/save benchmarks for drives... */
-      drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), data->block);
-      if (drive == NULL)
-        goto out;
+  id = udisks_block_get_id (data->block);
+  if (id == NULL || strlen (id) == 0)
+    goto out;
 
-      /* ... where the medium is not removable (the benchmark would be for the media, not the drive) */
-      if (udisks_drive_get_media_removable (drive))
-        goto out;
-
-      drive_object = g_dbus_interface_dup_object (G_DBUS_INTERFACE (drive));
-      if (drive_object == NULL)
-        goto out;
-
-      object_path = g_dbus_object_get_object_path (drive_object);
-      object_path = strrchr (object_path, '/');
-      if (object_path == NULL)
-        goto out;
-
-      ret = g_strdup (object_path + 1);
-
-      partition = udisks_object_get_partition (data->object);
-      if (partition != NULL)
-        {
-          tmp = ret;
-          ret = g_strdup_printf ("%s-part-offset%lld-size%lld", ret,
-                                 (long long int) udisks_partition_get_offset (partition),
-                                 (long long int) udisks_partition_get_size (partition));
-          g_free (tmp);
-        }
-    }
-
-  bench_dir = g_strdup_printf ("%s/gnome-disks/benchmarks",
-                               g_get_user_cache_dir ());
+  bench_dir = g_strdup_printf ("%s/gnome-disks/benchmarks", g_get_user_cache_dir ());
   if (g_mkdir_with_parents (bench_dir, 0777) != 0)
     {
       g_warning ("Error creating directory %s: %m", bench_dir);
       goto out;
     }
 
-  tmp = ret;
-  ret = g_strdup_printf ("%s/%s.gnome-disks-benchmark", bench_dir, ret);
-  g_free (tmp);
+  ret = g_strdup_printf ("%s/%s.gnome-disks-benchmark", bench_dir, id);
 
  out:
   g_free (bench_dir);
-  g_clear_object (&drive_object);
-  g_clear_object (&drive);
-  g_clear_object (&partition);
   return ret;
 }
 

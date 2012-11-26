@@ -710,18 +710,18 @@ update_updated_label (DialogData *data)
       break;
 
     case BM_STATE_OPENING_DEVICE:
-      gtk_label_set_markup (GTK_LABEL (data->updated_label), C_("benchmark-updated", "Opening Device..."));
+      gtk_label_set_markup (GTK_LABEL (data->updated_label), C_("benchmark-updated", "Opening Device…"));
       break;
 
     case BM_STATE_TRANSFER_RATE:
-      s = g_strdup_printf (C_("benchmark-updated", "Measuring transfer rate (%2.1f%% complete)..."),
+      s = g_strdup_printf (C_("benchmark-updated", "Measuring transfer rate (%2.1f%% complete)…"),
                            data->bm_read_samples->len * 100.0 / data->bm_num_samples);
       gtk_label_set_markup (GTK_LABEL (data->updated_label), s);
       g_free (s);
       break;
 
     case BM_STATE_ACCESS_TIME:
-      s = g_strdup_printf (C_("benchmark-updated", "Measuring access time (%2.1f%% complete)..."),
+      s = g_strdup_printf (C_("benchmark-updated", "Measuring access time (%2.1f%% complete)…"),
                            data->bm_access_time_samples->len * 100.0 / data->bm_num_access_samples);
       gtk_label_set_markup (GTK_LABEL (data->updated_label), s);
       g_free (s);

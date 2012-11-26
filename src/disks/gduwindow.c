@@ -1989,7 +1989,7 @@ get_job_progress_text (GduWindow *window,
           /* Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
            * the expected end time...
            */
-          s3 = g_strdup_printf (C_("job-remaining-exceeded", "Almost done..."));
+          s3 = g_strdup_printf (C_("job-remaining-exceeded", "Almost done…"));
         }
       else
         {

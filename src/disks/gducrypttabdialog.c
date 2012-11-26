@@ -490,7 +490,7 @@ gdu_crypttab_dialog_show (GduWindow    *window,
 
   /* do infobar stuff manually because of glade-hate !@#$ :-/ */
   data->passphrase_warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
-                                                                _("Only the passphrase referenced by the <i>/etc/crypttab</i> file will be changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"),
+                                                                _("Only the passphrase referenced by the <i>/etc/crypttab</i> file will be changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"),
                                                                 NULL);
   /* don't show by default (see crypttab_dialog_on_get_secrets_cb()) */
   gtk_widget_set_no_show_all (data->passphrase_warning_infobar, TRUE);

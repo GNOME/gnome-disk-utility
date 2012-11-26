@@ -3177,12 +3177,19 @@ update_device_page_for_block (GduWindow          *window,
 
   if (in_use_markup != NULL)
     {
-      /* Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
-       *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
-       *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
-       */
-      s2 = g_strdup_printf (C_("volume-contents-combiner", "%s — %s"), s, in_use_markup);
-      g_free (s); s = s2;
+      if (s != NULL)
+        {
+          /* Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
+           *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
+           *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
+           */
+          s2 = g_strdup_printf (C_("volume-contents-combiner", "%s — %s"), s, in_use_markup);
+          g_free (s); s = s2;
+        }
+      else
+        {
+          s = in_use_markup; in_use_markup = NULL;
+        }
     }
   set_markup (window,
               "devtab-volume-type-label",

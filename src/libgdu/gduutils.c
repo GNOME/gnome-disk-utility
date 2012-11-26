@@ -905,3 +905,120 @@ gdu_utils_get_pretty_uri (GFile *file)
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
+
+/* keep in sync with src/disks/gduwindow.c:unuse_data_iterate() */
+
+gboolean
+gdu_utils_is_in_use (UDisksClient *client,
+                     UDisksObject *object)
+{
+  gboolean ret = FALSE;
+  UDisksBlock *block = NULL;
+  UDisksDrive *drive = NULL;
+  UDisksObject *block_object = NULL;
+  UDisksPartitionTable *partition_table = NULL;
+  GList *partitions = NULL;
+  GList *l;
+  GList *objects_to_check = NULL;
+
+  drive = udisks_object_get_drive (object);
+  if (drive != NULL)
+    {
+      block = udisks_client_get_block_for_drive (client,
+                                                 drive,
+                                                 FALSE /* get_physical */);
+    }
+  else
+    {
+      block = udisks_object_get_block (object);
+    }
+
+  if (block != NULL)
+    {
+      block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
+      objects_to_check = g_list_prepend (objects_to_check, g_object_ref (block_object));
+    }
+
+  /* if we're a partitioned block device, add all partitions */
+  partition_table = udisks_object_get_partition_table (block_object);
+  if (partition_table != NULL)
+    {
+      partitions = udisks_client_get_partitions (client, partition_table);
+      for (l = partitions; l != NULL; l = l->next)
+        {
+          UDisksPartition *partition = UDISKS_PARTITION (l->data);
+          UDisksObject *partition_object;
+          partition_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (partition));
+          if (partition_object != NULL)
+            objects_to_check = g_list_append (objects_to_check, partition_object);
+        }
+    }
+
+  /* Add LUKS objects */
+  for (l = objects_to_check; l != NULL; l = l->next)
+    {
+      UDisksObject *object_iter = UDISKS_OBJECT (l->data);
+      UDisksBlock *block_for_object;
+      block_for_object = udisks_object_peek_block (object_iter);
+      if (block_for_object != NULL)
+        {
+          UDisksBlock *cleartext;
+          cleartext = udisks_client_get_cleartext_block (client, block_for_object);
+          if (cleartext != NULL)
+            {
+              UDisksObject *cleartext_object;
+              cleartext_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (cleartext));
+              if (cleartext_object != NULL)
+                objects_to_check = g_list_append (objects_to_check, cleartext_object);
+              g_object_unref (cleartext);
+            }
+        }
+    }
+
+  /* Check in reverse order, e.g. cleartext before LUKS, partitions before the main block device */
+  objects_to_check = g_list_reverse (objects_to_check);
+  for (l = objects_to_check; l != NULL; l = l->next)
+    {
+      UDisksObject *object_iter = UDISKS_OBJECT (l->data);
+      UDisksBlock *block_for_object;
+      UDisksFilesystem *filesystem_for_object;
+      UDisksEncrypted *encrypted_for_object;
+
+      block_for_object = udisks_object_peek_block (object_iter);
+
+      filesystem_for_object = udisks_object_peek_filesystem (object_iter);
+      if (filesystem_for_object != NULL)
+        {
+          const gchar *const *mount_points = udisks_filesystem_get_mount_points (filesystem_for_object);
+          if (g_strv_length ((gchar **) mount_points) > 0)
+            {
+              ret = TRUE;
+              goto out;
+            }
+        }
+
+      encrypted_for_object = udisks_object_peek_encrypted (object_iter);
+      if (encrypted_for_object != NULL)
+        {
+          UDisksBlock *cleartext;
+          cleartext = udisks_client_get_cleartext_block (client, block_for_object);
+          if (cleartext != NULL)
+            {
+              g_object_unref (cleartext);
+              ret = TRUE;
+              goto out;
+            }
+        }
+    }
+
+ out:
+
+  g_clear_object (&partition_table);
+  g_list_free_full (partitions, g_object_unref);
+  g_list_free_full (objects_to_check, g_object_unref);
+  g_clear_object (&block_object);
+  g_clear_object (&block);
+  g_clear_object (&drive);
+  return ret;
+}
+

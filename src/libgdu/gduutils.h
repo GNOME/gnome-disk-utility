@@ -70,6 +70,9 @@ gboolean gdu_util_is_same_size (GList   *blocks,
 
 gchar *gdu_utils_get_pretty_uri (GFile *file);
 
+gboolean gdu_utils_is_in_use (UDisksClient *client,
+                              UDisksObject *object);
+
 
 G_END_DECLS
 

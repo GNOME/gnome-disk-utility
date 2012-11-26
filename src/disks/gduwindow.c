@@ -4844,6 +4844,8 @@ unuse_lock_cb (UDisksEncrypted  *encrypted,
     }
 }
 
+/* keep in sync with src/libgdu/gduutils.c:gdu_utils_is_in_use() */
+
 static void
 unuse_data_iterate (UnuseData *data)
 {

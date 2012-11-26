@@ -313,13 +313,6 @@
       <action-widget response="-7">button1</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkAdjustment" id="num-access-samples-adjustment">
-    <property name="lower">2</property>
-    <property name="upper">10000</property>
-    <property name="value">1000</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="GtkDialog" id="dialog2">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -458,7 +451,7 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="write-checkbutton">
-                    <property name="label" translatable="yes">Also perform _write-benchmark</property>
+                    <property name="label" translatable="yes">Perform _write-benchmark</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -613,6 +606,13 @@ If not checked, the write-part of the benchmark will not be done but on the othe
       <action-widget response="-6">button2</action-widget>
       <action-widget response="-5">button3</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="num-access-samples-adjustment">
+    <property name="lower">2</property>
+    <property name="upper">10000</property>
+    <property name="value">1000</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="num-samples-adjustment">
     <property name="lower">2</property>

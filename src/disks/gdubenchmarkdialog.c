@@ -1509,6 +1509,12 @@ start_benchmark (DialogData *data)
       gtk_widget_set_sensitive (write_checkbutton, FALSE);
     }
 
+  /* If the device is currently in use, uncheck the "perform write-test" check-button */
+  if (gdu_utils_is_in_use (gdu_window_get_client (data->window), data->object))
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
+    }
+
   /* and scene... */
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 

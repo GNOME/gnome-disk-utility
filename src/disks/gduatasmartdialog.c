@@ -185,7 +185,7 @@ static const SmartDetails smart_details[] = {
   N_("Reallocated Sector Count"),
   N_("Count of remapped sectors. "
      "When the hard drive finds a read/write/verification error, it marks the sector "
-     "as \"reallocated\" and transfers data to a special reserved area (spare area)")
+     "as “reallocated” and transfers data to a special reserved area (spare area)")
 },
 {
   "read-channel-margin",

@@ -818,11 +818,10 @@ check_overwrite (DialogData *data)
                                    GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
                                    GTK_MESSAGE_QUESTION,
                                    GTK_BUTTONS_NONE,
-                                   _("A file named \"%s\" already exists.  Do you want to replace it?"),
+                                   _("A file named “%s” already exists.  Do you want to replace it?"),
                                    name);
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                            _("The file already exists in \"%s\".  Replacing it will "
-                                              "overwrite its contents."),
+                                            _("The file already exists in “%s”.  Replacing it will overwrite its contents."),
                                             g_file_info_get_display_name (folder_info));
   gtk_dialog_add_button (GTK_DIALOG (dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
   gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Replace"), GTK_RESPONSE_ACCEPT);

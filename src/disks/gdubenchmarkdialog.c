@@ -1444,6 +1444,36 @@ abort_benchmark (DialogData *data)
 }
 
 static void
+start_benchmark2 (DialogData *data)
+{
+  data->bm_in_progress = TRUE;
+  data->bm_state = BM_STATE_OPENING_DEVICE;
+  g_clear_error (&data->bm_error);
+  g_array_set_size (data->bm_read_samples, 0);
+  g_array_set_size (data->bm_write_samples, 0);
+  g_array_set_size (data->bm_access_time_samples, 0);
+  data->bm_time_benchmarked_usec = 0;
+  g_cancellable_reset (data->bm_cancellable);
+
+  data->bm_thread = g_thread_new ("benchmark-thread",
+                                  benchmark_thread,
+                                  dialog_data_ref (data));
+}
+
+static void
+ensure_unused_cb (GduWindow     *window,
+                  GAsyncResult  *res,
+                  gpointer       user_data)
+{
+  DialogData *data = user_data;
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      start_benchmark2 (data);
+    }
+  dialog_data_unref (data);
+}
+
+static void
 start_benchmark (DialogData *data)
 {
   GtkWidget *dialog;
@@ -1497,18 +1527,19 @@ start_benchmark (DialogData *data)
   //g_print ("do_write=%d\n", data->bm_do_write);
   //g_print ("num_access_samples=%d\n", data->bm_num_access_samples);
 
-  data->bm_in_progress = TRUE;
-  data->bm_state = BM_STATE_OPENING_DEVICE;
-  g_clear_error (&data->bm_error);
-  g_array_set_size (data->bm_read_samples, 0);
-  g_array_set_size (data->bm_write_samples, 0);
-  g_array_set_size (data->bm_access_time_samples, 0);
-  data->bm_time_benchmarked_usec = 0;
-  g_cancellable_reset (data->bm_cancellable);
-
-  data->bm_thread = g_thread_new ("benchmark-thread",
-                                  benchmark_thread,
-                                  dialog_data_ref (data));
+  if (data->bm_do_write)
+    {
+      /* ensure the device is unused (e.g. unmounted) before formatting it... */
+      gdu_window_ensure_unused (data->window,
+                                data->object,
+                                (GAsyncReadyCallback) ensure_unused_cb,
+                                NULL, /* GCancellable */
+                                dialog_data_ref (data));
+    }
+  else
+    {
+      start_benchmark2 (data);
+    }
 
  out:
   gtk_widget_destroy (dialog);

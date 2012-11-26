@@ -483,7 +483,7 @@ populate (GduCreateFilesystemWidget *widget)
 
   /* Quick */
   s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Don't overwrite existing data"),
+                       _("Don’t overwrite existing data"),
                        _("Quick"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID, "", MODEL_COLUMN_MARKUP, s, -1);

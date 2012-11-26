@@ -857,7 +857,7 @@ gdu_window_show_attach_disk_image (GduWindow *window)
 
   /* Add a RO check button that defaults to RO */
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only loop device"));
-  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the loop device will be read-only. This is useful if you don't want the underlying file to be modified"));
+  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the loop device will be read-only. This is useful if you don’t want the underlying file to be modified"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), TRUE);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
 
@@ -1092,7 +1092,7 @@ init_css (GduWindow *window)
                                         -1,
                                         &error))
     {
-      g_warning ("Can't parse custom CSS: %s\n", error->message);
+      g_warning ("Can’t parse custom CSS: %s\n", error->message);
       g_error_free (error);
       goto out;
     }
@@ -2421,7 +2421,7 @@ update_device_page_for_mdraid (GduWindow      *window,
         }
       else
         {
-          g_warning ("unhandled sync action `%s'", sync_action);
+          g_warning ("unhandled sync action %s", sync_action);
           raid_state_lower = g_strdup (sync_action);
         }
     }

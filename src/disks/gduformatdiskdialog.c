@@ -148,7 +148,7 @@ populate_erase_combobox (FormatDiskData *data)
 
   /* Quick */
   s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Don't overwrite existing data"),
+                       _("Don’t overwrite existing data"),
                        _("Quick"));
   gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
                                      MODEL_COLUMN_ID, "",
@@ -434,7 +434,7 @@ gdu_format_disk_dialog_show (GduWindow    *window,
            g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0))
         {
           g_string_append (str, "\n\n");
-          g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can't be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
+          g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can’t be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
         }
 
       objects = g_list_append (NULL, object);

@@ -435,7 +435,7 @@ static const SmartDetails smart_details[] = {
    * or the next string for a longer explanation.
    */
   N_("Offline Seek Performance"),
-  N_("Drive's seek performance during offline operations")
+  N_("Drive’s seek performance during offline operations")
 },
 {
   "disk-shift",

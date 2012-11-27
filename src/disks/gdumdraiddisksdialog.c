@@ -359,7 +359,6 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
                               gpointer         user_data)
 {
   DialogData *data = user_data;
-  gboolean opt_wipe = TRUE;
   GVariantBuilder options_builder;
   UDisksBlock *selected_block = NULL;
   UDisksObject *selected_block_object = NULL;
@@ -389,13 +388,12 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
                                     C_("mdraid-disks", "Are you sure you want to remove the disk?"),
                                     C_("mdraid-disks", "Removing a disk from a RAID array may degrade it"),
                                     C_("mdraid-disks", "_Remove"),
-                                    C_("mdraid-disks", "_Quick-format after removal"), &opt_wipe,
+                                    NULL, NULL,
                                     gdu_window_get_client (data->window), objects))
     goto out;
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  if (opt_wipe)
-    g_variant_builder_add (&options_builder, "{sv}", "wipe", g_variant_new_boolean (TRUE));
+  g_variant_builder_add (&options_builder, "{sv}", "wipe", g_variant_new_boolean (TRUE));
 
   udisks_mdraid_call_remove_device (data->mdraid,
                                     g_dbus_object_get_object_path (G_DBUS_OBJECT (selected_block_object)),

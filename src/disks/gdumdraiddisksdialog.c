@@ -45,7 +45,6 @@ typedef struct
   GtkWidget *remove_toolbutton;
   GtkWidget *goto_disk_toolbutton;
 
-  GtkWidget *model_label;
   GtkWidget *device_label;
   GtkWidget *serial_label;
   GtkWidget *assessment_label;
@@ -67,7 +66,6 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, remove_toolbutton), "remove-toolbutton"},
   {G_STRUCT_OFFSET (DialogData, goto_disk_toolbutton), "goto-disk-toolbutton"},
 
-  {G_STRUCT_OFFSET (DialogData, model_label), "model-label"},
   {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
   {G_STRUCT_OFFSET (DialogData, serial_label), "serial-label"},
   {G_STRUCT_OFFSET (DialogData, assessment_label), "assessment-label"},
@@ -220,11 +218,9 @@ update_dialog_labels (DialogData *data)
   UDisksObject *object = NULL;
   UDisksBlock *block = NULL;
   UDisksDrive *drive = NULL;
-  gchar *model_markup = NULL;
   gchar *device_markup = NULL;
   gchar *serial_markup = NULL;
   gchar *assessment_markup = NULL;
-  const gchar *drive_revision = NULL;
   UDisksObjectInfo *info = NULL;
   UDisksObject *drive_object = NULL;
   UDisksDriveAta *ata = NULL;
@@ -260,7 +256,6 @@ update_dialog_labels (DialogData *data)
   drive = udisks_client_get_drive_for_block (data->client, block);
   if (drive != NULL)
     {
-      drive_revision = udisks_drive_get_revision (drive);
       drive_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (drive));
       ata = udisks_object_peek_drive_ata (drive_object);
       serial_markup = udisks_drive_dup_serial (drive);
@@ -272,28 +267,13 @@ update_dialog_labels (DialogData *data)
         }
     }
 
-  if (drive_revision != NULL && strlen (drive_revision) > 0)
-    {
-      /* Translators: Shown for "Model" field.
-       *              The first %s is the name of the object (e.g. "INTEL SSDSA2MH080G1GC").
-       *              The second %s is the fw revision (e.g "45ABX21").
-       */
-      model_markup = g_strdup_printf (C_("mdraid-disks", "%s (%s)"),
-                                      udisks_object_info_get_name (info),
-                                      drive_revision);
-    }
-  else
-    {
-      model_markup = g_strdup (udisks_object_info_get_name (info));
-    }
+  device_markup = g_strdup (udisks_object_info_get_one_liner (info));
 
  out:
-  gtk_label_set_markup (GTK_LABEL (data->model_label),      model_markup != NULL ?      model_markup : "—");
   gtk_label_set_markup (GTK_LABEL (data->device_label),     device_markup != NULL ?     device_markup : "—");
   gtk_label_set_markup (GTK_LABEL (data->serial_label),     serial_markup != NULL ?     serial_markup : "—");
   gtk_label_set_markup (GTK_LABEL (data->assessment_label), assessment_markup != NULL ? assessment_markup : "—");
 
-  g_free (model_markup);
   g_free (device_markup);
   g_free (serial_markup);
   g_free (assessment_markup);

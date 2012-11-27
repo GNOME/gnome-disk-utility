@@ -63,9 +63,7 @@ struct _GduWindow
 
   GtkWidget *overlay_toolbar;
   GtkWidget *overlay_toolbar_erase_button;
-  GtkWidget *overlay_toolbar_raid_button;
-  GtkWidget *ms_raid_menu_item_create;
-  GtkWidget *ms_raid_menu_item_add_to;
+  GtkWidget *overlay_toolbar_create_raid_button;
 
   GtkWidget *main_hpane;
   GtkWidget *details_notebook;
@@ -173,9 +171,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, toolbutton_generic_menu), "toolbutton-generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, overlay_toolbar), "overlay-toolbar"},
   {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_erase_button), "overlay-toolbar-erase-button"},
-  {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_raid_button), "overlay-toolbar-raid-button"},
-  {G_STRUCT_OFFSET (GduWindow, ms_raid_menu_item_create), "ms-raid-menu-item-create"},
-  {G_STRUCT_OFFSET (GduWindow, ms_raid_menu_item_add_to), "ms-raid-menu-item-add-to"},
+  {G_STRUCT_OFFSET (GduWindow, overlay_toolbar_create_raid_button), "overlay-toolbar-create-raid-button"},
 
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_overlay), "device-tree-overlay"},
@@ -426,14 +422,11 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
 
-static void on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
+static void on_overlay_toolbar_erase_button_clicked (GtkButton *button,
                                                      gpointer   user_data);
 
-static void on_ms_raid_menu_item_add_to_activated (GtkMenuItem *menu_item,
-                                                   gpointer   user_data);
-
-static void on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
-                                                   gpointer   user_data);
+static void on_overlay_toolbar_create_raid_button_clicked (GtkButton *button,
+                                                           gpointer   user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
 
@@ -1591,14 +1584,10 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_overlay_toolbar_erase_button_clicked),
                     window);
 
-  /* multiple-selection RAID menu */
-  g_signal_connect (window->ms_raid_menu_item_add_to,
-                    "activate",
-                    G_CALLBACK (on_ms_raid_menu_item_add_to_activated),
-                    window);
-  g_signal_connect (window->ms_raid_menu_item_create,
-                    "activate",
-                    G_CALLBACK (on_ms_raid_menu_item_create_activated),
+  /* Create RAID array */
+  g_signal_connect (window->overlay_toolbar_create_raid_button,
+                    "clicked",
+                    G_CALLBACK (on_overlay_toolbar_create_raid_button_clicked),
                     window);
 
   ensure_something_selected (window);
@@ -4704,17 +4693,14 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
 
       gtk_widget_show (window->overlay_toolbar_erase_button);
 
-      /* RAID requires at all disks are the same size */
-      if (gdu_util_is_same_size (selected_blocks, &disk_size))
+      /* Createing a RAID array requires at all disks are the same size and that there are at least two of them */
+      if (gdu_util_is_same_size (selected_blocks, &disk_size) && num_blocks >= 2)
         {
-          gtk_widget_show (window->overlay_toolbar_raid_button);
-          /* TODO: check that appropriate RAID array exist and size is right before setting this to TRUE */
-          gtk_widget_set_sensitive (window->ms_raid_menu_item_add_to, TRUE);
-          gtk_widget_set_sensitive (window->ms_raid_menu_item_create, num_blocks > 1);
+          gtk_widget_show (window->overlay_toolbar_create_raid_button);
         }
       else
         {
-          gtk_widget_hide (window->overlay_toolbar_raid_button);
+          gtk_widget_hide (window->overlay_toolbar_create_raid_button);
         }
     }
   else
@@ -4729,7 +4715,7 @@ update_for_multi_selection (GduWindow *window, ShowFlags *show_flags)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
+on_overlay_toolbar_erase_button_clicked (GtkButton *button,
                                          gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
@@ -4745,16 +4731,8 @@ on_overlay_toolbar_erase_button_clicked (GtkButton *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_ms_raid_menu_item_add_to_activated (GtkMenuItem *menu_item,
-                                       gpointer   user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  g_print ("TODO: add to RAID array %p\n", window);
-}
-
-static void
-on_ms_raid_menu_item_create_activated (GtkMenuItem *menu_item,
-                                       gpointer   user_data)
+on_overlay_toolbar_create_raid_button_clicked (GtkButton *button,
+                                               gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GList *selected_blocks;

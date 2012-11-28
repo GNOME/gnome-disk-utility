@@ -4256,18 +4256,53 @@ mdraid_stop_cb (UDisksMDRaid  *mdraid,
 }
 
 static void
+raid_stop_ensure_unused_cb (GduWindow     *window,
+                            GAsyncResult  *res,
+                            gpointer       user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
+    {
+      udisks_mdraid_call_stop (udisks_object_peek_mdraid (object),
+                               g_variant_new ("a{sv}", NULL), /* options */
+                               NULL, /* cancellable */
+                               (GAsyncReadyCallback) mdraid_stop_cb,
+                               g_object_ref (window));
+    }
+  g_object_unref (object);
+}
+
+static void
 on_devtab_drive_action_raid_stop_activated (GtkAction *action,
                                             gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  UDisksMDRaid *mdraid;
+  UDisksMDRaid *mdraid = NULL;
+  UDisksBlock *block_for_mdraid = NULL;
 
-  mdraid = udisks_object_peek_mdraid (window->current_object);
-  udisks_mdraid_call_stop (mdraid,
-                            g_variant_new ("a{sv}", NULL), /* options */
-                            NULL, /* cancellable */
-                            (GAsyncReadyCallback) mdraid_stop_cb,
-                            g_object_ref (window));
+  mdraid = udisks_object_get_mdraid (window->current_object);
+  if (mdraid == NULL)
+    {
+      g_warning ("No MDRaid interface");
+      goto out;
+    }
+
+  block_for_mdraid = udisks_client_get_block_for_mdraid (window->client, mdraid);
+  if (block_for_mdraid == NULL)
+    {
+      g_warning ("No block device for MDRaid object");
+      goto out;
+    }
+
+  gdu_window_ensure_unused (window,
+                            (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block_for_mdraid)),
+                            (GAsyncReadyCallback) raid_stop_ensure_unused_cb,
+                            NULL, /* GCancellable */
+                            g_object_ref (window->current_object));
+
+ out:
+  g_clear_object (&block_for_mdraid);
+  g_clear_object (&mdraid);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

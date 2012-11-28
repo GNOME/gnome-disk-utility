@@ -2,7 +2,6 @@ NULL =
 
 icondir = $(datadir)/icons/hicolor/48x48/apps
 icon_DATA = 				\
-	gdu-enclosure.png		\
 	gnome-disks.png			\
 	$(NULL)
 

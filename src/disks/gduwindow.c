@@ -2129,7 +2129,7 @@ update_device_page_for_mdraid (GduWindow      *window,
                                UDisksMDRaid   *mdraid,
                                ShowFlags      *show_flags)
 {
-  GIcon *icon = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *s = NULL, *s2, *s3;
   gchar *desc = NULL;
   gchar *device_desc = NULL;
@@ -2164,7 +2164,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
   chunk_size = udisks_mdraid_get_chunk_size (mdraid);
 
-  icon = g_themed_icon_new ("gdu-enclosure");
+  info = udisks_client_get_object_info (window->client, object);
 
   if (size > 0)
     {
@@ -2199,7 +2199,9 @@ update_device_page_for_mdraid (GduWindow      *window,
   if (block != NULL)
     update_drive_part_for_block (window, block, show_flags);
 
-  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image),
+                            udisks_object_info_get_icon (info),
+                            GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
   s = g_strdup_printf ("<big><b>%s</b></big>", desc);
@@ -2477,7 +2479,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   g_free (name);
   g_free (device_desc);
   g_free (desc);
-  g_clear_object (&icon);
+  g_clear_object (&info);
 
   g_clear_object (&block);
 }

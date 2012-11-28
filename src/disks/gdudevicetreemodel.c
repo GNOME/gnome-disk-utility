@@ -1055,10 +1055,10 @@ update_mdraid (GduDeviceTreeModel *model,
                UDisksObject       *object,
                gboolean            from_timer)
 {
+  UDisksObjectInfo *info = NULL;
   UDisksMDRaid *mdraid = NULL;
   UDisksBlock *block = NULL;
   const gchar *name;
-  GIcon *icon = NULL;
   gchar *desc = NULL;
   gchar *desc2 = NULL;
   gchar *s = NULL;
@@ -1079,8 +1079,8 @@ update_mdraid (GduDeviceTreeModel *model,
     }
 
   mdraid = udisks_object_peek_mdraid (object);
-
   block = udisks_client_get_block_for_mdraid (model->client, mdraid);
+  info = udisks_client_get_object_info (model->client, object);
 
   sort_key = g_strdup_printf ("01_mdraid_1_%s", udisks_mdraid_get_uuid (mdraid)); /* TODO: sort_key? */
 
@@ -1123,9 +1123,6 @@ update_mdraid (GduDeviceTreeModel *model,
       desc2 = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE, FALSE);
     }
 
-
-  icon = g_themed_icon_new ("gdu-enclosure");
-
   if (udisks_mdraid_get_degraded (mdraid) > 0)
     warning = TRUE;
 
@@ -1161,7 +1158,7 @@ update_mdraid (GduDeviceTreeModel *model,
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
@@ -1181,7 +1178,7 @@ update_mdraid (GduDeviceTreeModel *model,
     }
 
  out:
-  g_clear_object (&icon);
+  g_clear_object (&info);
   g_free (sort_key);
   g_free (s);
   g_free (desc);

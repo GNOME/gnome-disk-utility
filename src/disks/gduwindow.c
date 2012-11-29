@@ -1617,6 +1617,11 @@ gdu_window_constructed (GObject *object)
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/ViewSmart", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_view_smart, "<Disks>/DriveMenu/ViewSmart", accelgroup);
 
+  /* Translators: This is the short-cut to view RAID Disks for a RAID array */
+  gtk_accelerator_parse (C_("accelerator", "<Ctrl>R"), &key, &mod);
+  gtk_accel_map_add_entry ("<Disks>/DriveMenu/MDRaidDisks", key, mod);
+  gtk_widget_set_accel_path (window->generic_drive_menu_item_mdraid_disks, "<Disks>/DriveMenu/MDRaidDisks", accelgroup);
+
   /* Translators: This is the short-cut to open the volume gear menu */
   gtk_accelerator_parse (C_("accelerator", "<Shift>F10"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/VolumeMenu", key, mod);

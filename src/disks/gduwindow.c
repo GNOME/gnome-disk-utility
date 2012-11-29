@@ -2133,6 +2133,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *s = NULL, *s2, *s3;
   gchar *desc = NULL;
   gchar *device_desc = NULL;
+  GList *all_blocks = NULL;
   UDisksBlock *block = NULL;
   guint64 size = 0;
   guint num_devices = 0;
@@ -2157,6 +2158,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   size = udisks_mdraid_get_size (mdraid);
   num_devices = udisks_mdraid_get_num_devices (mdraid);
   block = udisks_client_get_block_for_mdraid (window->client, mdraid);
+  all_blocks = udisks_client_get_all_blocks_for_mdraid (window->client, mdraid);
   members = udisks_client_get_members_for_mdraid (window->client, mdraid);
   degraded = udisks_mdraid_get_degraded (mdraid);
   sync_action = udisks_mdraid_get_sync_action (mdraid);
@@ -2181,9 +2183,21 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   update_grid_for_mdraid (window, mdraid);
 
-  if (block != NULL)
+  if (all_blocks != NULL)
     {
-      device_desc = get_device_file_for_display (block);
+      GString *str;
+      GList *l;
+      str = g_string_new (NULL);
+      for (l = all_blocks; l != NULL; l = l->next)
+        {
+          UDisksBlock *mdraid_block = UDISKS_BLOCK (l->data);
+          if (str->len > 0)
+            g_string_append_c (str, ' ');
+          s = get_device_file_for_display (mdraid_block);
+          g_string_append (str, s);
+          g_free (s);
+        }
+      device_desc = g_string_free (str, FALSE);
       show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP;
       show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS;
     }
@@ -2417,6 +2431,30 @@ update_device_page_for_mdraid (GduWindow      *window,
         }
     }
 
+  /* If we've detected a split-brain situation, this is more important
+   * to convey than the actual array state
+   */
+  if (g_list_length (all_blocks) > 1)
+    {
+      s = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
+                           /* Translators: String for conveying the raid array is misconfigured */
+                           C_("raid-split-brain", "RAID ARRAY IS MISCONFIGURED"));
+      s2 = g_strdup_printf ("<a href='http://en.wikipedia.org/wiki/Split-brain_(computing)'>%s</a>",
+                           /* Translators: The specific type of misconfiguration, see
+                            * http://en.wikipedia.org/wiki/Split-brain_(computing)
+                            * for more details
+                            */
+                            C_("raid-split-brain", "Split-brain syndrome"));
+      g_free (raid_state_upper);
+      /* Translators: Combiner for the RAID split-brain strings.
+       *              The first %s is "SYSTEM IS MISCONFIGURED".
+       *              The second %s is "Split-brain syndrome" as a hyperlink.
+       */
+      raid_state_upper = g_strdup_printf (C_("raid-split-brain", "%s (%s)"), s, s2);
+      g_free (s2);
+      g_free (s);
+    }
+
   gtk_widget_show (window->devtab_drive_raid_state_value_label);
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state_upper);
 
@@ -2482,6 +2520,7 @@ update_device_page_for_mdraid (GduWindow      *window,
   g_clear_object (&info);
 
   g_clear_object (&block);
+  g_list_free_full (all_blocks, g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

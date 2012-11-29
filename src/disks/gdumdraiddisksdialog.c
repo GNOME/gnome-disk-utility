@@ -41,9 +41,9 @@ typedef struct
   GtkWidget *treeview;
 
   GtkWidget *toolbar;
-  GtkWidget *add_toolbutton;
-  GtkWidget *remove_toolbutton;
-  GtkWidget *goto_disk_toolbutton;
+  GtkWidget *add_disk_button;
+  GtkWidget *remove_disk_button;
+  GtkWidget *goto_disk_button;
 
   GtkWidget *device_label;
   GtkWidget *serial_label;
@@ -62,9 +62,9 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, treeview), "treeview"},
 
   {G_STRUCT_OFFSET (DialogData, toolbar), "toolbar"},
-  {G_STRUCT_OFFSET (DialogData, add_toolbutton), "add-toolbutton"},
-  {G_STRUCT_OFFSET (DialogData, remove_toolbutton), "remove-toolbutton"},
-  {G_STRUCT_OFFSET (DialogData, goto_disk_toolbutton), "goto-disk-toolbutton"},
+  {G_STRUCT_OFFSET (DialogData, add_disk_button), "add-disk-button"},
+  {G_STRUCT_OFFSET (DialogData, remove_disk_button), "remove-disk-button"},
+  {G_STRUCT_OFFSET (DialogData, goto_disk_button), "goto-disk-button"},
 
   {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
   {G_STRUCT_OFFSET (DialogData, serial_label), "serial-label"},
@@ -335,8 +335,8 @@ remove_device_cb (GObject      *source_object,
 }
 
 static void
-on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
-                              gpointer         user_data)
+on_remove_disk_button_clicked (GtkButton   *button,
+                               gpointer     user_data)
 {
   DialogData *data = user_data;
   GVariantBuilder options_builder;
@@ -391,8 +391,8 @@ on_remove_toolbutton_clicked (GtkToolButton   *tool_button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_goto_disk_toolbutton_clicked (GtkToolButton   *tool_button,
-                                 gpointer         user_data)
+on_goto_disk_button_clicked (GtkButton   *button,
+                             gpointer     user_data)
 {
   DialogData *data = user_data;
   UDisksBlock *selected_block = NULL;
@@ -818,14 +818,14 @@ init_dialog (DialogData *data)
 
   /* ---------- */
 
-  g_signal_connect (data->remove_toolbutton,
+  g_signal_connect (data->remove_disk_button,
                     "clicked",
-                    G_CALLBACK (on_remove_toolbutton_clicked),
+                    G_CALLBACK (on_remove_disk_button_clicked),
                     data);
 
-  g_signal_connect (data->goto_disk_toolbutton,
+  g_signal_connect (data->goto_disk_button,
                     "clicked",
-                    G_CALLBACK (on_goto_disk_toolbutton_clicked),
+                    G_CALLBACK (on_goto_disk_button_clicked),
                     data);
 
 

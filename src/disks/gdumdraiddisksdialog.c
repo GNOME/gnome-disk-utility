@@ -30,6 +30,7 @@ typedef struct
   UDisksObject *object;
   UDisksMDRaid *mdraid;
   guint num_devices;
+  guint64 member_size;
 
   GduWindow *window;
   GtkBuilder *builder;
@@ -81,6 +82,9 @@ static void on_client_changed (UDisksClient  *client,
 
 static void on_tree_selection_changed (GtkTreeSelection *selection,
                                        gpointer          user_data);
+
+static void on_add_disk_button_clicked (GtkButton   *button,
+                                        gpointer     user_data);
 
 enum
 {
@@ -327,7 +331,7 @@ remove_device_cb (GObject      *source_object,
                                                 &error))
     {
       gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("An error occurred when removing a disk from RAID Array"),
+                            _("An error occurred when removing a disk from the RAID Array"),
                             error);
       g_clear_error (&error);
     }
@@ -818,6 +822,11 @@ init_dialog (DialogData *data)
 
   /* ---------- */
 
+  g_signal_connect (data->add_disk_button,
+                    "clicked",
+                    G_CALLBACK (on_add_disk_button_clicked),
+                    data);
+
   g_signal_connect (data->remove_disk_button,
                     "clicked",
                     G_CALLBACK (on_remove_disk_button_clicked),
@@ -868,6 +877,7 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
                               UDisksObject *object)
 {
   DialogData *data;
+  GList *members, *l;
   guint n;
 
   data = g_new0 (DialogData, 1);
@@ -877,6 +887,18 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
   data->num_devices = udisks_mdraid_get_num_devices (data->mdraid);
   data->window = g_object_ref (window);
   data->client = gdu_window_get_client (data->window);
+
+  /* figure out member_size */
+  data->member_size = G_MAXUINT64;
+  members = udisks_client_get_members_for_mdraid (data->client, data->mdraid);
+  for (l = members; l != NULL; l = l->next)
+    {
+      UDisksBlock *member = UDISKS_BLOCK (l->data);
+      guint64 size = udisks_block_get_size (member);
+      if (data->member_size > size)
+        data->member_size = size;
+    }
+  g_list_free_full (members, g_object_unref);
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
                                                          "md-raid-disks-dialog.ui",
@@ -912,3 +934,235 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
   dialog_data_unref (data);
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+add_device_cb (GObject      *source_object,
+               GAsyncResult *res,
+               gpointer      user_data)
+{
+  DialogData *data = user_data;
+  GError *error = NULL;
+  error = NULL;
+  if (!udisks_mdraid_call_add_device_finish (UDISKS_MDRAID (source_object),
+                                             res,
+                                             &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("An error occurred when adding a disk to the RAID Array"),
+                            error);
+      g_clear_error (&error);
+    }
+  dialog_data_unref (data);
+}
+
+static void
+add_on_menu_item_activated (GtkMenuItem *item,
+                            gpointer     user_data)
+{
+  DialogData *data = user_data;
+  GList *objects = NULL;
+  UDisksBlock *block;
+  UDisksObject *object;
+  GVariantBuilder options_builder;
+
+  block = UDISKS_BLOCK (g_object_get_data (G_OBJECT (item), "x-udisks-block"));
+  object = UDISKS_OBJECT (g_dbus_interface_dup_object (G_DBUS_INTERFACE (block)));
+
+  objects = g_list_append (NULL, object);
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
+                                    C_("mdraid-disks", "Are you sure you want to add the disk to the array?"),
+                                    C_("mdraid-disks", "All existing data on the disk will be lost"),
+                                    C_("mdraid-disks", "_Add"),
+                                    NULL, NULL,
+                                    gdu_window_get_client (data->window), objects))
+    goto out;
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  udisks_mdraid_call_add_device (data->mdraid,
+                                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)),
+                                 g_variant_builder_end (&options_builder),
+                                 NULL, /* cancellable */
+                                 (GAsyncReadyCallback) add_device_cb,
+                                 dialog_data_ref (data));
+
+ out:
+  g_clear_object (&object);
+  g_list_free (objects);
+}
+
+static void
+menu_position_func (GtkMenu       *menu,
+                    gint          *x,
+                    gint          *y,
+                    gboolean      *push_in,
+                    gpointer       user_data)
+{
+  GtkWidget *align_widget = GTK_WIDGET (user_data);
+  GtkRequisition menu_req;
+  GtkTextDirection direction;
+  GdkRectangle monitor;
+  gint monitor_num;
+  GdkScreen *screen;
+  GdkWindow *gdk_window;
+  GtkAllocation allocation, arrow_allocation;
+  GtkAlign align;
+  GtkWidget *toplevel;
+
+  align = gtk_widget_get_halign (GTK_WIDGET (menu));
+  direction = gtk_widget_get_direction (align_widget);
+  gdk_window = gtk_widget_get_window (align_widget);
+
+  gtk_widget_get_preferred_size (GTK_WIDGET (menu),
+                                 &menu_req,
+                                 NULL);
+
+  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (menu));
+  gtk_window_set_type_hint (GTK_WINDOW (toplevel), GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU);
+
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+  monitor_num = gdk_screen_get_monitor_at_window (screen, gdk_window);
+  if (monitor_num < 0)
+    monitor_num = 0;
+  gdk_screen_get_monitor_workarea (screen, monitor_num, &monitor);
+
+  gtk_widget_get_allocation (align_widget, &allocation);
+  gtk_widget_get_allocation (align_widget, &arrow_allocation);
+
+  gdk_window_get_origin (gdk_window, x, y);
+  *x += allocation.x;
+  *y += allocation.y;
+
+  /* treat the default align value like START */
+  if (align == GTK_ALIGN_FILL)
+    align = GTK_ALIGN_START;
+
+  if (align == GTK_ALIGN_CENTER)
+    *x -= (menu_req.width - allocation.width) / 2;
+  else if ((align == GTK_ALIGN_START && direction == GTK_TEXT_DIR_LTR) ||
+           (align == GTK_ALIGN_END && direction == GTK_TEXT_DIR_RTL))
+    *x += MAX (allocation.width - menu_req.width, 0);
+  else if (menu_req.width > allocation.width)
+    *x -= menu_req.width - allocation.width;
+
+  if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height)
+    *y += arrow_allocation.height;
+  else if ((*y - menu_req.height) >= monitor.y)
+    *y -= menu_req.height;
+  else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y)
+    *y += arrow_allocation.height;
+  else
+    *y -= menu_req.height;
+
+  *push_in = FALSE;
+}
+
+static void
+on_add_disk_button_clicked (GtkButton   *button,
+                            gpointer     user_data)
+{
+  DialogData *data = user_data;
+  GdkEventButton *event = NULL;
+  GtkWidget *menu = NULL;
+  GtkWidget *item = NULL;
+  GList *object_proxies = NULL;
+  GList *l;
+  guint num_candidates = 0;
+
+  /* TODO: I think, down the road, we want *some* kind of popup "menu"
+   *       that allows the user to choose a device. This popup "menu"
+   *       should be backed by GduDeviceTreeModel to properly convey
+   *       the information in there, e.g.  naming, icons, warnings,
+   *       progress, classification and so on.
+   *
+   *       For now, we just use a GtkMenu. It's not pretty but it
+   *       works...
+   */
+
+  menu = gtk_menu_new ();
+
+  /* Go through all block devices */
+  object_proxies = g_dbus_object_manager_get_objects (udisks_client_get_object_manager (data->client));
+  for (l = object_proxies; l != NULL; l = l->next)
+    {
+      UDisksObject *object = UDISKS_OBJECT (l->data);
+      UDisksObjectInfo *info = NULL;
+      UDisksBlock *block = NULL;
+      guint64 block_size = 0;
+
+      block = udisks_object_peek_block (object);
+      if (block == NULL)
+        continue;
+
+      block_size = udisks_block_get_size (block);
+
+      /* Don't include empty devices or partitions */
+      if (block_size == 0 || udisks_object_peek_partition (object) != NULL)
+        continue;
+
+      /* Size must match within 1% or 1MiB */
+      if (block_size < data->member_size || block_size > (data->member_size * 101LL / 100LL))
+        continue;
+
+      /* Must not already be a member of _this_ RAID array */
+      if (g_strcmp0 (udisks_block_get_mdraid_member (block),
+                     g_dbus_object_get_object_path (G_DBUS_OBJECT (data->object))) == 0)
+        continue;
+
+      info = udisks_client_get_object_info (data->client, object);
+
+      item = gtk_image_menu_item_new ();
+      gtk_menu_item_set_label (GTK_MENU_ITEM (item), udisks_object_info_get_one_liner (info));
+      gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
+                                     gtk_image_new_from_gicon (udisks_object_info_get_icon (info), GTK_ICON_SIZE_MENU));
+      gtk_image_menu_item_set_always_show_image (GTK_IMAGE_MENU_ITEM (item), TRUE);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
+      /* yeah, this use of GObject data blows.. It Is What It Is(tm) */
+      g_object_set_data_full (G_OBJECT (item),
+                              "x-udisks-block",
+                              g_object_ref (block),
+                              g_object_unref);
+      g_signal_connect (item,
+                        "activate",
+                        G_CALLBACK (add_on_menu_item_activated),
+                        data);
+
+      g_clear_object (&info);
+      num_candidates++;
+    }
+
+  if (num_candidates == 0)
+    {
+      /* Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
+       *              right size available
+       */
+      item = gtk_menu_item_new_with_label (C_("mdraid-add", "No disks of suitable size available"));
+      gtk_widget_set_sensitive (item, FALSE);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+    }
+  else
+    {
+      item = gtk_separator_menu_item_new ();
+      gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item);
+      /* Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
+       *              disks that can be added to the array
+       */
+      item = gtk_menu_item_new_with_label (C_("mdraid-add", "Select disk to add"));
+      gtk_widget_set_sensitive (item, FALSE);
+      gtk_menu_shell_prepend (GTK_MENU_SHELL (menu), item);
+    }
+
+  gtk_widget_show_all (menu);
+  gtk_menu_popup_for_device (GTK_MENU (menu),
+                             event != NULL ? event->device : NULL,
+                             NULL, /* parent_menu_shell */
+                             NULL, /* parent_menu_item */
+                             menu_position_func,
+                             data->add_disk_button,
+                             NULL, /* GDestroyNotify for user data */
+                             event != NULL ? event->button : 0,
+                             event != NULL ? event->time : gtk_get_current_event_time ());
+
+  g_list_free_full (object_proxies, g_object_unref);
+}

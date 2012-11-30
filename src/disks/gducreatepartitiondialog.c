@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
+#include <math.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -18,6 +19,22 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#define NUM_UNITS 11
+
+/* Keep in sync with Glade file */
+static const guint64 unit_sizes[NUM_UNITS] = {
+  (1ULL),                /*  0: bytes */
+  (1000ULL),             /*  1: kB */
+  (1000000ULL),          /*  2: MB */
+  (1000000000ULL),       /*  3: GB */
+  (1000000000000ULL),    /*  4: TB */
+  (1000000000000000ULL), /*  5: PB */
+  ((1ULL)<<10),          /*  6: KiB */
+  ((1ULL)<<20),          /*  7: MiB */
+  ((1ULL)<<30),          /*  8: GiB */
+  ((1ULL)<<40),          /*  9: TiB */
+  ((1ULL)<<50),          /* 10: PiB */
+};
 
 typedef struct
 {
@@ -37,6 +54,10 @@ typedef struct
   GtkWidget *size_spinbutton;
   GtkAdjustment *size_adjustment;
   GtkAdjustment *free_following_adjustment;
+
+  GtkWidget *size_unit_combobox;
+  GtkWidget *size_unit_following_label;
+  gint cur_unit_num;
 
   GtkWidget *contents_box;
   GtkWidget *create_filesystem_widget;
@@ -127,6 +148,7 @@ create_partition_update (CreatePartitionData *data)
   gboolean can_proceed = FALSE;
   gboolean show_dos_error = FALSE;
   gboolean show_dos_warning = FALSE;
+  gchar *s;
 
   /* MBR Partitioning sucks. So if we're trying to create a primary partition, then
    *
@@ -158,6 +180,10 @@ create_partition_update (CreatePartitionData *data)
   if (!show_dos_error)
     gtk_widget_set_no_show_all (data->dos_error_infobar, TRUE);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
+
+  s = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->size_unit_combobox));
+  gtk_label_set_text (GTK_LABEL (data->size_unit_following_label), s);
+  g_free (s);
 }
 
 static void
@@ -170,8 +196,101 @@ create_partition_property_changed (GObject     *object,
 }
 
 static void
+set_unit_num (CreatePartitionData *data,
+              gint                 unit_num)
+{
+  guint64 unit_size;
+  guint64 value_units;
+  guint64 max_size_units;
+  guint64 value;
+
+  g_assert (unit_num < NUM_UNITS);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (data->size_unit_combobox), unit_num);
+
+  if (data->cur_unit_num == -1)
+    {
+      value = data->max_size;
+    }
+  else
+    {
+      value = gtk_adjustment_get_value (data->size_adjustment) * unit_sizes[data->cur_unit_num];
+    }
+
+  unit_size = unit_sizes[unit_num];
+  value_units = value / unit_size;
+  max_size_units = data->max_size / unit_size;
+
+  g_object_freeze_notify (G_OBJECT (data->size_adjustment));
+  g_object_freeze_notify (G_OBJECT (data->free_following_adjustment));
+
+  data->cur_unit_num = unit_num;
+
+  gtk_adjustment_configure (data->size_adjustment,
+                            value_units,
+                            0.0,                    /* lower */
+                            max_size_units,         /* upper */
+                            1,                      /* step increment */
+                            100,                    /* page increment */
+                            0.0);                   /* page_size */
+  gtk_adjustment_configure (data->free_following_adjustment,
+                            max_size_units - value_units,
+                            0.0,                    /* lower */
+                            max_size_units,         /* upper */
+                            1,                      /* step increment */
+                            100,                    /* page increment */
+                            0.0);                   /* page_size */
+
+  g_object_thaw_notify (G_OBJECT (data->size_adjustment));
+  g_object_thaw_notify (G_OBJECT (data->free_following_adjustment));
+}
+
+static void
 create_partition_populate (CreatePartitionData *data)
 {
+  gint unit_num;
+
+  /* figure out default unit */
+  if (data->max_size > unit_sizes[4] * 100ULL)
+    {
+      /*         size > 100TB -> TB */
+      unit_num = 4;
+    }
+  else if (data->max_size > unit_sizes[3] * 100ULL)
+    {
+      /* 100TB > size > 100GB -> GB */
+      unit_num = 3;
+    }
+  else if (data->max_size > unit_sizes[2] * 100ULL)
+    {
+      /* 100GB > size > 100MB -> MB */
+      unit_num = 2;
+    }
+  else if (data->max_size > unit_sizes[1] * 100ULL)
+    {
+      /* 100MB > size > 100kB -> kB */
+      unit_num = 1;
+    }
+  else
+    {
+      /* 100kB > size > 0 -> bytes */
+      unit_num = 0;
+    }
+
+  set_unit_num (data, unit_num);
+}
+
+static void
+on_size_unit_combobox_changed (GtkComboBox *combobox,
+                               gpointer     user_data)
+{
+  CreatePartitionData *data = user_data;
+  gint unit_num;
+
+  unit_num = gtk_combo_box_get_active (GTK_COMBO_BOX (data->size_unit_combobox));
+  set_unit_num (data, unit_num);
+
+  create_partition_update (data);
 }
 
 static gboolean
@@ -181,7 +300,10 @@ size_binding_func (GBinding     *binding,
                    gpointer      user_data)
 {
   CreatePartitionData *data = user_data;
-  g_value_set_double (target_value, data->max_size / (1000*1000) - g_value_get_double (source_value));
+  guint64 max_size_units;
+
+  max_size_units = data->max_size / unit_sizes[data->cur_unit_num];
+  g_value_set_double (target_value, max_size_units - g_value_get_double (source_value));
   return TRUE;
 }
 
@@ -294,7 +416,6 @@ gdu_create_partition_dialog_show (GduWindow    *window,
                                   guint64       max_size)
 {
   CreatePartitionData *data;
-  guint64 max_size_mb;
   gint response;
   const gchar *additional_fstypes[3] = {NULL, NULL, NULL};
   gchar dos_extended_partition_name[256];
@@ -309,6 +430,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
   data->offset = offset;
   data->max_size = max_size;
+  data->cur_unit_num = -1;
 
   if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
     {
@@ -342,6 +464,10 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), data);
   data->free_following_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "free-following-adjustment"));
   data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
+
+  data->size_unit_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-unit-combobox"));
+  data->size_unit_following_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-unit-following-label"));
+
   data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window),
                                                                      data->drive,
                                                                      additional_fstypes);
@@ -351,22 +477,16 @@ gdu_create_partition_dialog_show (GduWindow    *window,
   g_signal_connect (data->create_filesystem_widget, "notify::has-info",
                     G_CALLBACK (create_partition_property_changed), data);
 
-  /* The adjustments count MB, not bytes */
-  max_size_mb = max_size / (1000L*1000L);
-  gtk_adjustment_configure (data->size_adjustment,
-                            max_size_mb,
-                            0.0,                    /* lower */
-                            max_size_mb,            /* upper */
-                            1,                      /* step increment */
-                            1000,                   /* page increment */
-                            0.0);                   /* page_size */
-  gtk_adjustment_configure (data->free_following_adjustment,
-                            0,
-                            0.0,                    /* lower */
-                            max_size_mb,            /* upper */
-                            1,                      /* step increment */
-                            1000,                   /* page increment */
-                            0.0);                   /* page_size */
+  g_signal_connect (data->size_unit_combobox,
+                    "changed",
+                    G_CALLBACK (on_size_unit_combobox_changed),
+                    data);
+
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
+
+  create_partition_populate (data);
+  create_partition_update (data);
 
   g_object_bind_property_full (data->size_adjustment,
                                "value",
@@ -377,12 +497,6 @@ gdu_create_partition_dialog_show (GduWindow    *window,
                                size_binding_func,
                                data,
                                NULL);
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-
-  create_partition_populate (data);
-  create_partition_update (data);
 
   gtk_widget_show_all (data->dialog);
   gtk_widget_grab_focus (gdu_create_filesystem_widget_get_name_entry (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget)));
@@ -402,7 +516,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
           partition_type = "0x05";
         }
 
-      size = gtk_adjustment_get_value (data->size_adjustment) * 1000L * 1000L;
+      size = floor (gtk_adjustment_get_value (data->size_adjustment)) * unit_sizes[data->cur_unit_num];
       udisks_partition_table_call_create_partition (data->table,
                                                     data->offset,
                                                     size,

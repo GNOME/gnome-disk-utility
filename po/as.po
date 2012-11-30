@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-11-27 17:35+0000\n"
-"PO-Revision-Date: 2012-11-28 13:41+0530\n"
+"POT-Creation-Date: 2012-11-29 23:03+0000\n"
+"PO-Revision-Date: 2012-11-30 17:32+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: as_IN <kde-i18n-doc@kde.org>\n"
 "Language: as_IN\n"
@@ -131,8 +131,7 @@ msgstr "গড় লিখাৰ হাৰ"
 msgid "Average Access Time"
 msgstr "গড় অভিগম সময়"
 
-#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:7
-#| msgid "Disk Drive or Device"
+#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:4
 msgid "Disk or Device"
 msgstr "ডিস্ক অথবা ডিভাইচ"
 
@@ -498,7 +497,7 @@ msgstr "এটা ডিভাইচ বাছক"
 msgid "Model"
 msgstr "আৰ্হি"
 
-#: ../data/ui/disks.ui.h:19 ../data/ui/md-raid-disks-dialog.ui.h:5
+#: ../data/ui/disks.ui.h:19 ../data/ui/md-raid-disks-dialog.ui.h:2
 msgid "Serial Number"
 msgstr "ক্ৰমিক সংখ্যা"
 
@@ -516,7 +515,7 @@ msgid "Media"
 msgstr "মাধ্যম"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:24 ../data/ui/md-raid-disks-dialog.ui.h:6
+#: ../data/ui/disks.ui.h:24 ../data/ui/md-raid-disks-dialog.ui.h:3
 #: ../src/disks/gduatasmartdialog.c:1613
 msgid "Assessment"
 msgstr "বিশ্লেষণ"
@@ -631,7 +630,6 @@ msgid "Edit Encryption Options…"
 msgstr "ইনক্ৰিপষণ বিকল্পসমূহ সম্পাদন কৰক…"
 
 #: ../data/ui/disks.ui.h:55
-#| msgid "Create RAID Array"
 msgid "Create RAID"
 msgstr "RAID সৃষ্টি কৰক"
 
@@ -1021,18 +1019,6 @@ msgstr "আয়তন ফৰমেট কৰক"
 #: ../data/ui/md-raid-disks-dialog.ui.h:1
 msgid "RAID Disks"
 msgstr "RAID ডিস্কসমূহ"
-
-#: ../data/ui/md-raid-disks-dialog.ui.h:2
-msgid "Add Disk…"
-msgstr "ডিস্ক যোগ কৰক…"
-
-#: ../data/ui/md-raid-disks-dialog.ui.h:3
-msgid "Remove Disk…"
-msgstr "ডিস্ক আতৰাওক…"
-
-#: ../data/ui/md-raid-disks-dialog.ui.h:4
-msgid "Go To Disk"
-msgstr "ডিস্কলে যাওক"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "Restore Disk Image"
@@ -2530,12 +2516,12 @@ msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdudevicetreemodel.c:1271
+#: ../src/disks/gdudevicetreemodel.c:1268
 msgid "Other Devices"
 msgstr "অন্য ডিভাইচসমূহ"
 
 #. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/disks/gdudevicetreemodel.c:1376
+#: ../src/disks/gdudevicetreemodel.c:1373
 #, c-format
 msgid "%s Loop Device"
 msgstr "%s লুপ ডিভাইচ"
@@ -2543,7 +2529,7 @@ msgstr "%s লুপ ডিভাইচ"
 #. Translators: This is for a block device which we failed to categorize  - %s is
 #. * the size of the device e.g. "230 MB".
 #.
-#: ../src/disks/gdudevicetreemodel.c:1394
+#: ../src/disks/gdudevicetreemodel.c:1391
 #, c-format
 msgid "%s Block Device"
 msgstr "%s খন্ড ডিভাইচ"
@@ -2872,95 +2858,138 @@ msgid "Error updating /etc/fstab entry"
 msgstr "/etc/fstab প্ৰবিষ্টি আপডেইট কৰোতে ত্ৰুটি"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:247 ../src/disks/gduwindow.c:1949
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:1954
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(কেৱল-পঢ়িব পৰা)</span>"
 
-#: ../src/disks/gdumdraiddisksdialog.c:330
-msgid "An error occurred when removing a disk from RAID Array"
+#: ../src/disks/gdumdraiddisksdialog.c:334
+#| msgid "An error occurred when removing a disk from RAID Array"
+msgid "An error occurred when removing a disk from the RAID Array"
 msgstr "RAID এৰেৰ পৰা এটা ডিস্ক আতৰাওতে এটা ত্ৰুটি দেখা দিলে"
 
-#: ../src/disks/gdumdraiddisksdialog.c:368
+#: ../src/disks/gdumdraiddisksdialog.c:372
 msgctxt "mdraid-disks"
 msgid "Are you sure you want to remove the disk?"
 msgstr "আপুনি ডিস্ক আতৰাবলে নিশ্চিত নে?"
 
-#: ../src/disks/gdumdraiddisksdialog.c:369
+#: ../src/disks/gdumdraiddisksdialog.c:373
 msgctxt "mdraid-disks"
 msgid "Removing a disk from a RAID array may degrade it"
 msgstr "এটা RAID এৰেৰ পৰা এটা ডিস্ক আতৰালে ইয়াৰ স্খলন হব পাৰে"
 
-#: ../src/disks/gdumdraiddisksdialog.c:370
+#: ../src/disks/gdumdraiddisksdialog.c:374
 msgctxt "mdraid-disks"
 msgid "_Remove"
 msgstr "আতৰাওক (_R)"
 
-#: ../src/disks/gdumdraiddisksdialog.c:615
+#: ../src/disks/gdumdraiddisksdialog.c:619
 msgctxt "mdraid-disks-state"
 msgid "FAILED"
 msgstr "ব্যৰ্থ হল"
 
 #. Translators: MD-RAID member state for 'in_sync'
-#: ../src/disks/gdumdraiddisksdialog.c:622
+#: ../src/disks/gdumdraiddisksdialog.c:626
 msgctxt "mdraid-disks-state"
 msgid "In Sync"
 msgstr "সুসংগত আছে"
 
 #. Translators: MD-RAID member state for 'spare'
-#: ../src/disks/gdumdraiddisksdialog.c:631
+#: ../src/disks/gdumdraiddisksdialog.c:635
 msgctxt "mdraid-disks-state"
 msgid "Spare"
 msgstr "অতিৰিক্ত"
 
 #. Translators: MD-RAID member state for 'spare' but is being recovered to
-#: ../src/disks/gdumdraiddisksdialog.c:638
+#: ../src/disks/gdumdraiddisksdialog.c:642
 msgctxt "mdraid-disks-state"
 msgid "Recovering"
 msgstr "পুনৰুদ্ধাৰ কৰা হৈছে"
 
 #. Translators: MD-RAID member state for 'writemostly'
-#: ../src/disks/gdumdraiddisksdialog.c:646
+#: ../src/disks/gdumdraiddisksdialog.c:650
 msgctxt "mdraid-disks-state"
 msgid "Write-mostly"
 msgstr "লিখা-বেছিৰভাগ"
 
 #. Translators: MD-RAID member state for 'blocked'
-#: ../src/disks/gdumdraiddisksdialog.c:653
+#: ../src/disks/gdumdraiddisksdialog.c:657
 msgctxt "mdraid-disks-state"
 msgid "Blocked"
 msgstr "প্ৰতিৰোধিত"
 
 #. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
-#: ../src/disks/gdumdraiddisksdialog.c:660
+#: ../src/disks/gdumdraiddisksdialog.c:664
 #, c-format
 msgctxt "mdraid-disks-state"
 msgid "Unknown (%s)"
 msgstr "অজ্ঞাত (%s)"
 
 #. Translators: column name for the position of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:744
+#: ../src/disks/gdumdraiddisksdialog.c:748
 msgctxt "mdraid-disks"
 msgid "Position"
 msgstr "অৱস্থান"
 
 #. Translators: column name for the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:760
+#: ../src/disks/gdumdraiddisksdialog.c:764
 msgctxt "mdraid-disks"
 msgid "Disk"
 msgstr "ডিস্ক"
 
 #. Translators: column name for the state of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:790
+#: ../src/disks/gdumdraiddisksdialog.c:794
 msgctxt "mdraid-disks"
 msgid "State"
 msgstr "অৱস্থা"
 
 #. Translators: column name for the number of read errors of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:806
+#: ../src/disks/gdumdraiddisksdialog.c:810
 msgctxt "mdraid-disks"
 msgid "Errors"
 msgstr "ত্ৰুটিসমূহ"
+
+#: ../src/disks/gdumdraiddisksdialog.c:952
+#| msgid "An error occurred when removing a disk from RAID Array"
+msgid "An error occurred when adding a disk to the RAID Array"
+msgstr "RAID এৰেলে এটা ডিস্ক যোগ কৰোতে এটা ত্ৰুটি দেখা দিলে"
+
+#: ../src/disks/gdumdraiddisksdialog.c:974
+#| msgid "Are you sure you want to use the disks for a RAID array?"
+msgctxt "mdraid-disks"
+msgid "Are you sure you want to add the disk to the array?"
+msgstr "আপুনি ডিস্কটো এৰেলে যোগ কৰিবলে নিশ্চিত নে?"
+
+#: ../src/disks/gdumdraiddisksdialog.c:975
+#| msgid "All existing data will be lost"
+msgctxt "mdraid-disks"
+msgid "All existing data on the disk will be lost"
+msgstr "ডিস্কৰ সকলো স্থায়ী তথ্য হেৰাই যাব"
+
+#: ../src/disks/gdumdraiddisksdialog.c:976
+#| msgid "_Add..."
+msgctxt "mdraid-disks"
+msgid "_Add"
+msgstr "যোগ কৰক (_A)"
+
+#. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
+#. *              right size available
+#.
+#: ../src/disks/gdumdraiddisksdialog.c:1140
+#| msgid "Whole disk is uninitialized. %s available for use"
+msgctxt "mdraid-add"
+msgid "No disks of suitable size available"
+msgstr "উপযুক্ত আকাৰৰ কোনো ডিস্ক উপলব্ধ নাই"
+
+#. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
+#. *              disks that can be added to the array
+#.
+#: ../src/disks/gdumdraiddisksdialog.c:1151
+#| msgctxt "select-disk-dialog"
+#| msgid "Select Disk"
+msgctxt "mdraid-add"
+msgid "Select disk to add"
+msgstr "যোগ কৰিবলে ডিস্ক বাছক"
 
 #: ../src/disks/gdupartitiondialog.c:355
 msgid "Error setting partition type"
@@ -3056,7 +3085,7 @@ msgstr "ইনক্ৰিপ্টেড ডিভাইচ আনলক কৰ
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "ইনক্ৰিপষণ পাচফ্ৰেইছসমূহ কিৰিংৰ পৰা উদ্ধাৰ কৰা হৈছিল"
 
-#: ../src/disks/gduvolumegrid.c:532 ../src/disks/gduwindow.c:2521
+#: ../src/disks/gduvolumegrid.c:532 ../src/disks/gduwindow.c:2567
 msgid "No Media"
 msgstr "কোনো মাধ্যম নাই"
 
@@ -3156,14 +3185,22 @@ msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
 
-#. Translators: This is the short-cut to open the volume gear menu
+#. Translators: This is the short-cut to view RAID Disks for a RAID array
 #: ../src/disks/gduwindow.c:1621
+#| msgctxt "accelerator"
+#| msgid "<Ctrl>F"
+msgctxt "accelerator"
+msgid "<Ctrl>R"
+msgstr "<Ctrl>R"
+
+#. Translators: This is the short-cut to open the volume gear menu
+#: ../src/disks/gduwindow.c:1626
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
 
 #. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1628
+#: ../src/disks/gduwindow.c:1633
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3171,47 +3208,47 @@ msgstr "<Shift><Ctrl>F"
 #. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
 #. * the expected end time...
 #.
-#: ../src/disks/gduwindow.c:1981
+#: ../src/disks/gduwindow.c:1986
 msgctxt "job-remaining-exceeded"
 msgid "Almost done…"
 msgstr "প্ৰায় সম্পূৰ্ণ…"
 
-#: ../src/disks/gduwindow.c:1986
+#: ../src/disks/gduwindow.c:1991
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
 msgstr "%s অৱশিষ্ট"
 
-#: ../src/disks/gduwindow.c:2072 ../src/disks/gduwindow.c:2854
+#: ../src/disks/gduwindow.c:2077 ../src/disks/gduwindow.c:2900
 msgid "Block device is empty"
 msgstr "খন্ড ডিভাইচ ৰিক্ত"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2095
+#: ../src/disks/gduwindow.c:2100
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "অজ্ঞাত (%s)"
 
-#: ../src/disks/gduwindow.c:2155
+#: ../src/disks/gduwindow.c:2161
 msgid "RAID array is not running"
 msgstr "RAID এৰে চলি থকা নাই"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2173
+#: ../src/disks/gduwindow.c:2180
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "%s RAID এৰে"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2179
+#: ../src/disks/gduwindow.c:2186
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "RAID এৰে"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2193
+#: ../src/disks/gduwindow.c:2212
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "চলি থকা নাই"
@@ -3221,26 +3258,26 @@ msgstr "চলি থকা নাই"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2259
+#: ../src/disks/gduwindow.c:2280
 #, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (%s লে স্থানীয়)"
 
-#: ../src/disks/gduwindow.c:2283
+#: ../src/disks/gduwindow.c:2304
 #, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
 msgstr[0] "%d ডিস্ক"
 msgstr[1] "%d ডিস্কসমূহ"
 
-#: ../src/disks/gduwindow.c:2295
+#: ../src/disks/gduwindow.c:2316
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
 msgstr "%s, %s টুকুৰা"
 
-#: ../src/disks/gduwindow.c:2306
+#: ../src/disks/gduwindow.c:2327
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size-and-bitmap"
 msgid "%s, Bitmap"
@@ -3250,20 +3287,20 @@ msgstr "%s, বিটমেপ"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2314
+#: ../src/disks/gduwindow.c:2335
 #, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2334
+#: ../src/disks/gduwindow.c:2355
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
 msgstr[0] "%d ডিস্ক সন্ধানহিন"
 msgstr[1] "%d ডিস্কসমূহ সন্ধানহিন"
 
-#: ../src/disks/gduwindow.c:2340
+#: ../src/disks/gduwindow.c:2361
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "এৰে স্খলিত"
@@ -3271,153 +3308,179 @@ msgstr "এৰে স্খলিত"
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2344
+#: ../src/disks/gduwindow.c:2365
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2355 ../src/disks/gduwindow.c:2384
+#: ../src/disks/gduwindow.c:2376 ../src/disks/gduwindow.c:2405
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "চলি আছে"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running and can be started
-#: ../src/disks/gduwindow.c:2362
+#: ../src/disks/gduwindow.c:2383
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "চলি থকা নাই"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded
-#: ../src/disks/gduwindow.c:2367
+#: ../src/disks/gduwindow.c:2388
 msgctxt "mdraid-state"
 msgid "Not running — Can only start degraded"
 msgstr "নাই চলা — কেৱল স্খলিত অৱস্থাত আৰম্ভ হব পাৰে"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2372
+#: ../src/disks/gduwindow.c:2393
 msgctxt "mdraid-state"
 msgid "Not running — Not enough disks to start"
 msgstr "চলি থকা নাই — আৰম্ভ হবলে পৰ্যাপ্ত ডিস্ক নাই"
 
-#: ../src/disks/gduwindow.c:2393
+#: ../src/disks/gduwindow.c:2414
 msgctxt "mdraid-state"
 msgid "Redundancy check underway"
 msgstr "অপ্ৰয়োজনীয়তা নীৰিক্ষণ চলি আছে"
 
-#: ../src/disks/gduwindow.c:2397
+#: ../src/disks/gduwindow.c:2418
 msgctxt "mdraid-state"
 msgid "Redundancy check and repair underway"
 msgstr "অপ্ৰয়োজনীয়তা নীৰিক্ষণ আৰু মেৰামতি চলি আছে"
 
-#: ../src/disks/gduwindow.c:2401
+#: ../src/disks/gduwindow.c:2422
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "পুনৰ সংমিহলি কৰা হৈছে"
 
-#: ../src/disks/gduwindow.c:2405
+#: ../src/disks/gduwindow.c:2426
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "পুনৰুদ্ধাৰ কৰা হৈছে"
 
-#: ../src/disks/gduwindow.c:2409
+#: ../src/disks/gduwindow.c:2430
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "বৰফাবৃত"
 
+#. Translators: String for conveying the raid array is misconfigured
+#: ../src/disks/gduwindow.c:2446
+msgctxt "raid-split-brain"
+msgid "RAID ARRAY IS MISCONFIGURED"
+msgstr "RAID এৰে ভুলভাৱে সংৰূপিত"
+
+#. Translators: The specific type of misconfiguration, see
+#. * http://en.wikipedia.org/wiki/Split-brain_(computing)
+#. * for more details
+#.
+#: ../src/disks/gduwindow.c:2452
+msgctxt "raid-split-brain"
+msgid "Split-brain syndrome"
+msgstr "Split-brain লক্ষণ"
+
+#. Translators: Combiner for the RAID split-brain strings.
+#. *              The first %s is "SYSTEM IS MISCONFIGURED".
+#. *              The second %s is "Split-brain syndrome" as a hyperlink.
+#.
+#: ../src/disks/gduwindow.c:2458
+#, c-format
+#| msgid "%s (%s)"
+msgctxt "raid-split-brain"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2625
+#: ../src/disks/gduwindow.c:2671
 msgid "Connected to another seat"
 msgstr "অন্য আসনৰ সৈতে সংযুক্ত"
 
-#: ../src/disks/gduwindow.c:2773
+#: ../src/disks/gduwindow.c:2819
 msgid "Loop device is empty"
 msgstr "লুপ ডিভাইচ ৰিক্ত"
 
 #. Translators: Used in the main window for a loop device, the first %s is the size
-#: ../src/disks/gduwindow.c:2783
+#: ../src/disks/gduwindow.c:2829
 #, c-format
 msgctxt "loop-window"
 msgid "%s Loop Device"
 msgstr "%s লুপ ডিভাইচ"
 
 #. Translators: Used in the main window for a block device where the size is not known
-#: ../src/disks/gduwindow.c:2789
+#: ../src/disks/gduwindow.c:2835
 msgctxt "loop-window"
 msgid "Loop Device"
 msgstr "লুপ ডিভাইচ"
 
 #. Translators: Used in the main window for a block device, the first %s is the size
-#: ../src/disks/gduwindow.c:2864
+#: ../src/disks/gduwindow.c:2910
 #, c-format
 msgctxt "block-window"
 msgid "%s Block Device"
 msgstr "%s খন্ড ডিভাইচ"
 
 #. Translators: Used in the main window for a block device where the size is not known
-#: ../src/disks/gduwindow.c:2870
+#: ../src/disks/gduwindow.c:2916
 msgctxt "block-window"
 msgid "Block Device"
 msgstr "খন্ড ডিভাইচ"
 
-#: ../src/disks/gduwindow.c:3042
+#: ../src/disks/gduwindow.c:3088
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "অজ্ঞাত"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3070
+#: ../src/disks/gduwindow.c:3116
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "ফাইলচিস্টেম ৰুট"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3078
+#: ../src/disks/gduwindow.c:3124
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s ত মাউন্ট কৰা আছে"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3084
+#: ../src/disks/gduwindow.c:3130
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "মাউন্টেড নহয়"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:3153
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "সক্ৰিয়"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3113
+#: ../src/disks/gduwindow.c:3159
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "সক্ৰিয় নহয়"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3126
+#: ../src/disks/gduwindow.c:3172
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "আনলক কৰা আছে"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3132
+#: ../src/disks/gduwindow.c:3178
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "লক কৰা আছে"
 
-#: ../src/disks/gduwindow.c:3142
+#: ../src/disks/gduwindow.c:3188
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "প্ৰসাৰিত বিভাজন"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3152
+#: ../src/disks/gduwindow.c:3198
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "এৰেলৈ যাওক"
@@ -3426,7 +3489,7 @@ msgstr "এৰেলৈ যাওক"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3157
+#: ../src/disks/gduwindow.c:3203
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3436,37 +3499,37 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3175
+#: ../src/disks/gduwindow.c:3221
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3310
+#: ../src/disks/gduwindow.c:3356
 msgid "Unallocated Space"
 msgstr "অআবন্টিত স্থান"
 
-#: ../src/disks/gduwindow.c:3663
+#: ../src/disks/gduwindow.c:3709
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "ড্ৰাইভক স্টেণ্ডবাই অৱস্থাত লোৱাৰ চেষ্টা কৰোতে এটা ত্ৰুটি দেখা দিলে"
 
-#: ../src/disks/gduwindow.c:3709
+#: ../src/disks/gduwindow.c:3755
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "ড্ৰাইভক স্টেণ্ডবাই অৱস্থাৰ পৰা জগোৱাৰ চেষ্টা কৰোতে এটা ত্ৰুটি দেখা দিলে"
 
-#: ../src/disks/gduwindow.c:3754
+#: ../src/disks/gduwindow.c:3800
 msgid "Error powering off drive"
 msgstr "ড্ৰাইভ পাৱাৰ অফ কৰিবলে ত্ৰুটি"
 
 #. Translators: Heading for powering off a device with a single drive
-#: ../src/disks/gduwindow.c:3808
+#: ../src/disks/gduwindow.c:3854
 msgid "Are you sure you want to power off the drive?"
 msgstr "আপুনি ড্ৰাইভ পাৱাৰ অফ কৰিবলে নিশ্চিত নে?"
 
 #. Translators: Message for powering off a device with a single drive
-#: ../src/disks/gduwindow.c:3810
+#: ../src/disks/gduwindow.c:3856
 msgid ""
 "This operation will prepare the system for the drive to be removed and "
 "powered down."
@@ -3474,12 +3537,12 @@ msgstr ""
 "এই কাৰ্য্যয় চিস্টেমক ড্ৰাইভ আতৰোৱাৰ বাবে আৰু বন্ধ কৰাৰ বাবে প্ৰস্তুত কৰিব।"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3815
+#: ../src/disks/gduwindow.c:3861
 msgid "Are you sure you want to power off the drives?"
 msgstr "আপুনি ড্ৰাইভসমূহ বন্ধ কৰিবলে নিশ্চিত নে?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3817
+#: ../src/disks/gduwindow.c:3863
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "removed and powered down."
@@ -3488,96 +3551,96 @@ msgstr ""
 "প্ৰস্তুত "
 "কৰিব।"
 
-#: ../src/disks/gduwindow.c:3823
+#: ../src/disks/gduwindow.c:3869
 msgid "_Power Off"
 msgstr "বন্ধ কৰক (_P)"
 
-#: ../src/disks/gduwindow.c:3883
+#: ../src/disks/gduwindow.c:3929
 msgid "Error mounting filesystem"
 msgstr "ফাইলচিস্টেম মাউন্ট কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:3923 ../src/disks/gduwindow.c:4797
+#: ../src/disks/gduwindow.c:3969 ../src/disks/gduwindow.c:4878
 msgid "Error unmounting filesystem"
 msgstr "ফাইলচিস্টেম আনমাউন্ট কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4068
+#: ../src/disks/gduwindow.c:4114
 msgid "Error deleting partition"
 msgstr "বিভাজন মচোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4106
+#: ../src/disks/gduwindow.c:4152
 msgid "Are you sure you want to delete the partition?"
 msgstr "আপুনি বিভাজন মচি পেলাবলে নিশ্চিত নে?"
 
-#: ../src/disks/gduwindow.c:4107
+#: ../src/disks/gduwindow.c:4153
 msgid "All data on the partition will be lost"
 msgstr "বিভাজনৰ সকলো তথ্য হেৰাই যাব"
 
-#: ../src/disks/gduwindow.c:4108
+#: ../src/disks/gduwindow.c:4154
 msgid "_Delete"
 msgstr "মচি পেলাওক (_D)"
 
-#: ../src/disks/gduwindow.c:4139
+#: ../src/disks/gduwindow.c:4185
 msgid "Error ejecting media"
 msgstr "মাধ্যম বাহিৰ উলাওতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4193
+#: ../src/disks/gduwindow.c:4239
 msgid "Error starting RAID array"
 msgstr "RAID এৰে আৰম্ভ কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4216
+#: ../src/disks/gduwindow.c:4262
 msgctxt "mdraid"
 msgid "Are you sure you want to start the RAID array degraded?"
 msgstr "আপুনি RAID এৰেক স্খলিত অৱস্থাত আৰম্ভ কৰিবলে নিশ্চিত নে?"
 
-#: ../src/disks/gduwindow.c:4217
+#: ../src/disks/gduwindow.c:4263
 msgctxt "mdraid"
 msgid "A degraded RAID array is vulnerable to data- and performance-loss"
 msgstr "এটা স্খলিত RAID এৰে তথ্য-আৰু পৰিৱেশন-হ্ৰাসৰ বাবে বিপদজনক"
 
-#: ../src/disks/gduwindow.c:4218
+#: ../src/disks/gduwindow.c:4264
 msgctxt "mdraid"
 msgid "_Start"
 msgstr "আৰম্ভ কৰক (_S)"
 
-#: ../src/disks/gduwindow.c:4251
+#: ../src/disks/gduwindow.c:4297
 msgid "Error stopping RAID array"
 msgstr "RAID এৰে বন্ধ কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4303
+#: ../src/disks/gduwindow.c:4384
 msgid "Error locking encrypted device"
 msgstr "এনক্ৰিপ্ট কৰা ডিভাইচ লক কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4368
+#: ../src/disks/gduwindow.c:4449
 msgid "Error starting swap"
 msgstr "শ্বাপ আৰম্ভ কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:4486
 msgid "Error stopping swap"
 msgstr "শ্বাপ বন্ধ কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4447
+#: ../src/disks/gduwindow.c:4528
 msgid "Error setting autoclear flag"
 msgstr "autoclear ফ্লেগ সংহতি কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4500 ../src/disks/gduwindow.c:4555
+#: ../src/disks/gduwindow.c:4581 ../src/disks/gduwindow.c:4636
 msgid "Error canceling job"
 msgstr "কাৰ্য্য বাতিল কৰোতে ত্ৰুটি"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:4669
+#: ../src/disks/gduwindow.c:4750
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "কোনো ডিভাইচ নিৰ্বাচন কৰা হোৱা নাই (_D)"
 
-#: ../src/disks/gduwindow.c:4679
+#: ../src/disks/gduwindow.c:4760
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d ডিভাইচ নিৰ্বাচন কৰা হৈছে (%s) (_D)"
 msgstr[1] "%d ডিভাইচসমূহ নিৰ্বাচন কৰা হৈছে (%s) (_D)"
 
-#: ../src/disks/gduwindow.c:4817
+#: ../src/disks/gduwindow.c:4898
 msgid "Error locking device"
 msgstr "ডিভাইচ লক কৰোতে ত্ৰুটি"
 
@@ -3783,6 +3846,15 @@ msgstr "ডিস্কসমূহ সমস্যা পৰ্যবেক্�
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "ডিস্কসমূহ আৰু সংৰক্ষণ ডিভাইচসমূহৰ সমস্যাৰ বিষয়ে সতৰ্ক কৰে"
+
+#~ msgid "Add Disk…"
+#~ msgstr "ডিস্ক যোগ কৰক…"
+
+#~ msgid "Remove Disk…"
+#~ msgstr "ডিস্ক আতৰাওক…"
+
+#~ msgid "Go To Disk"
+#~ msgstr "ডিস্কলে যাওক"
 
 #~| msgid "Create New RAID Array..."
 #~ msgid "Create New RAID Array…"
@@ -5052,10 +5124,6 @@ msgstr "ডিস্কসমূহ আৰু সংৰক্ষণ ডিভা
 #~ msgid "The disk will be partitioned and a partition will be created"
 #~ msgstr "ডিস্কটি বিভাজন কৰা হ'ব আৰু এটা বিভাজন সৃষ্টি কৰা হ'ব"
 
-#~ msgid "Whole disk is uninitialized. %s available for use"
-#~ msgstr ""
-#~ "সম্পূৰ্ণ ডিস্কৰ কোনো অংশৰ ব্যৱহাৰ আৰম্ভ কৰা নহয়। ব্যৱহাৰৰ বাবে %s উপলব্ধ আছে"
-
 #~ msgid "%s available for use"
 #~ msgstr "ব্যৱহাৰৰ বাবে %s উপলব্ধ আছে"
 
@@ -5462,9 +5530,6 @@ msgstr "ডিস্কসমূহ আৰু সংৰক্ষণ ডিভা
 #~ msgstr ""
 #~ "RAID এৰেৰ পৰা চলমান অংশ বিচ্ছিন্ন কৰা হয়। এই অংশেত উপস্থিত তথ্য আঁতৰুৱা হ'ব আৰু "
 #~ "ইয়াৰ অন্য কোনো কামত ব্যৱহাৰৰ বাবে প্ৰস্তুত থাকিব।"
-
-#~ msgid "_Add..."
-#~ msgstr "যোগ কৰক...(_A)"
 
 #~ msgid ""
 #~ "Adds a new component to the running RAID array. Use this when replacing a "

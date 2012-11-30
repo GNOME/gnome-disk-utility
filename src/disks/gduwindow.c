@@ -139,6 +139,7 @@ struct _GduWindow
   GtkWidget *generic_menu_item_benchmark;
 
   GtkWidget *devtab_loop_autoclear_switch;
+  GtkWidget *devtab_drive_raid_bitmap_switch;
 
   GtkWidget *devtab_drive_raid_state_label;
   GtkWidget *devtab_drive_raid_state_grid;
@@ -218,6 +219,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_generic), "devtab-drive-action-generic"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_bitmap_switch), "devtab-drive-raid-bitmap-switch"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
@@ -411,6 +413,10 @@ static void on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
 static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
                                                            gpointer    user_data);
+
+static void on_devtab_drive_raid_bitmap_switch_notify_active (GObject    *object,
+                                                              GParamSpec *pspec,
+                                                              gpointer    user_data);
 
 static void on_drive_job_cancel_button_clicked (GtkButton *button,
                                                 gpointer   user_data);
@@ -1560,6 +1566,12 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_devtab_loop_autoclear_switch_notify_active),
                     window);
 
+  /* MDRAID's bitmap switch */
+  g_signal_connect (window->devtab_drive_raid_bitmap_switch,
+                    "notify::active",
+                    G_CALLBACK (on_devtab_drive_raid_bitmap_switch_notify_active),
+                    window);
+
   /* cancel-button for drive job */
   g_signal_connect (window->devtab_drive_job_cancel_button,
                     "clicked",
@@ -2293,6 +2305,22 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
 
   /* -------------------------------------------------- */
+  /* 'Bitmap' field */
+
+  if (strlen (bitmap_location) > 0)
+    {
+      gboolean has_bitmap = FALSE;
+      if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
+        has_bitmap = TRUE;
+
+      set_switch (window,
+                  "devtab-drive-raid-bitmap-label",
+                  "devtab-drive-raid-bitmap-switch-box",
+                  "devtab-drive-raid-bitmap-switch",
+                  has_bitmap);
+    }
+
+  /* -------------------------------------------------- */
   /* 'Raid Level' field */
 
   level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE, FALSE);
@@ -2316,16 +2344,6 @@ update_device_page_for_mdraid (GduWindow      *window,
       s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
       g_free (s);
       g_free (s3);
-    }
-
-  if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
-    {
-      /* Translators: Used to convey that bitmap is enabled for the disk.
-       *              The first %s is the number of disks e.g. "3 disks, 512 KiB".
-       */
-      s = s2;
-      s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size-and-bitmap", "%s, Bitmap"), s2);
-      g_free (s);
     }
 
   /* Translators: Shown in the "RAID Level" field.
@@ -4504,6 +4522,69 @@ on_devtab_action_deactivate_swap_activated (GtkAction *action, gpointer user_dat
                               NULL, /* cancellable */
                               (GAsyncReadyCallback) swapspace_stop_cb,
                               g_object_ref (window));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+mdraid_set_bitmap_location_cb (UDisksMDRaid  *mdraid,
+                               GAsyncResult  *res,
+                               gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error;
+
+  error = NULL;
+  if (!udisks_mdraid_call_set_bitmap_location_finish (mdraid,
+                                                      res,
+                                                      &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error setting bitmap for the RAID array"),
+                            error);
+      g_error_free (error);
+      /* in case of error, make sure the GtkSwitch:active reverts */
+      update_all (window);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_devtab_drive_raid_bitmap_switch_notify_active (GObject    *gobject,
+                                                  GParamSpec *pspec,
+                                                  gpointer    user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksMDRaid *mdraid;
+  gboolean sw_value = FALSE;
+  const gchar *bitmap_location;
+  gboolean has_bitmap = FALSE;
+
+  mdraid = udisks_object_peek_mdraid (window->current_object);
+
+  bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
+  if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
+    has_bitmap = TRUE;
+
+  sw_value = !! gtk_switch_get_active (GTK_SWITCH (gobject));
+  if (sw_value != (!!has_bitmap))
+    {
+      const gchar *bitmap_location_new_value;
+      GVariantBuilder options_builder;
+
+      if (sw_value)
+        bitmap_location_new_value = "internal";
+      else
+        bitmap_location_new_value = "none";
+
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+      udisks_mdraid_call_set_bitmap_location (mdraid,
+                                              bitmap_location_new_value,
+                                              g_variant_builder_end (&options_builder),
+                                              NULL, /* cancellable */
+                                              (GAsyncReadyCallback) mdraid_set_bitmap_location_cb,
+                                              g_object_ref (window));
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

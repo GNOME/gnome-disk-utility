@@ -199,10 +199,10 @@ static void
 set_unit_num (CreatePartitionData *data,
               gint                 unit_num)
 {
-  guint64 unit_size;
-  guint64 value_units;
-  guint64 max_size_units;
-  guint64 value;
+  gdouble unit_size;
+  gdouble value;
+  gdouble value_units;
+  gdouble max_size_units;
 
   g_assert (unit_num < NUM_UNITS);
 
@@ -214,12 +214,12 @@ set_unit_num (CreatePartitionData *data,
     }
   else
     {
-      value = gtk_adjustment_get_value (data->size_adjustment) * unit_sizes[data->cur_unit_num];
+      value = gtk_adjustment_get_value (data->size_adjustment) * ((gdouble) unit_sizes[data->cur_unit_num]);
     }
 
   unit_size = unit_sizes[unit_num];
   value_units = value / unit_size;
-  max_size_units = data->max_size / unit_size;
+  max_size_units = ((gdouble) data->max_size) / unit_size;
 
   g_object_freeze_notify (G_OBJECT (data->size_adjustment));
   g_object_freeze_notify (G_OBJECT (data->free_following_adjustment));
@@ -240,6 +240,9 @@ set_unit_num (CreatePartitionData *data,
                             1,                      /* step increment */
                             100,                    /* page increment */
                             0.0);                   /* page_size */
+
+  gtk_adjustment_set_value (data->size_adjustment, value_units);
+  gtk_adjustment_set_value (data->free_following_adjustment, max_size_units - value_units);
 
   g_object_thaw_notify (G_OBJECT (data->size_adjustment));
   g_object_thaw_notify (G_OBJECT (data->free_following_adjustment));
@@ -300,10 +303,11 @@ size_binding_func (GBinding     *binding,
                    gpointer      user_data)
 {
   CreatePartitionData *data = user_data;
-  guint64 max_size_units;
+  gdouble max_size_units;
 
-  max_size_units = data->max_size / unit_sizes[data->cur_unit_num];
+  max_size_units = ((gdouble) data->max_size) / unit_sizes[data->cur_unit_num];
   g_value_set_double (target_value, max_size_units - g_value_get_double (source_value));
+
   return TRUE;
 }
 
@@ -516,7 +520,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
           partition_type = "0x05";
         }
 
-      size = floor (gtk_adjustment_get_value (data->size_adjustment)) * unit_sizes[data->cur_unit_num];
+      size = gtk_adjustment_get_value (data->size_adjustment) * unit_sizes[data->cur_unit_num];
       udisks_partition_table_call_create_partition (data->table,
                                                     data->offset,
                                                     size,

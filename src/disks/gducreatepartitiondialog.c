@@ -52,6 +52,7 @@ typedef struct
   GtkWidget *dos_error_infobar;
   GtkWidget *dos_warning_infobar;
   GtkWidget *size_spinbutton;
+  GtkWidget *free_following_spinbutton;
   GtkAdjustment *size_adjustment;
   GtkAdjustment *free_following_adjustment;
 
@@ -203,6 +204,7 @@ set_unit_num (CreatePartitionData *data,
   gdouble value;
   gdouble value_units;
   gdouble max_size_units;
+  gint num_digits;
 
   g_assert (unit_num < NUM_UNITS);
 
@@ -220,6 +222,11 @@ set_unit_num (CreatePartitionData *data,
   unit_size = unit_sizes[unit_num];
   value_units = value / unit_size;
   max_size_units = ((gdouble) data->max_size) / unit_size;
+
+  /* show at least three digits in the spin buttons */
+  num_digits = 3.0 - ceil (log10 (max_size_units));
+  if (num_digits < 0)
+    num_digits = 0;
 
   g_object_freeze_notify (G_OBJECT (data->size_adjustment));
   g_object_freeze_notify (G_OBJECT (data->free_following_adjustment));
@@ -240,6 +247,9 @@ set_unit_num (CreatePartitionData *data,
                             1,                      /* step increment */
                             100,                    /* page increment */
                             0.0);                   /* page_size */
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (data->size_spinbutton), num_digits);
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (data->free_following_spinbutton), num_digits);
 
   gtk_adjustment_set_value (data->size_adjustment, value_units);
   gtk_adjustment_set_value (data->free_following_adjustment, max_size_units - value_units);
@@ -464,6 +474,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
                                                          NULL);
   gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->dos_warning_infobar, TRUE, TRUE, 0);
   data->size_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-spinbutton"));
+  data->free_following_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "free-following-spinbutton"));
   data->size_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "size-adjustment"));
   g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), data);
   data->free_following_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "free-following-adjustment"));

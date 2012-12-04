@@ -1333,9 +1333,9 @@ recompute_grid (GduVolumeGrid *grid)
   top_size = udisks_block_get_size (top_block);
 
   /* include "Free Space" elements if there is at least this much slack between
-   * partitions (currently 1% of the disk, at least 1MB)
+   * partitions (currently 1% of the disk, but at most 1MiB)
    */
-  free_space_slack = MAX (top_size / 100, 1000*1000);
+  free_space_slack = MIN (top_size / 100, 1024*1024);
 
   partitions = NULL;
   logical_partitions = NULL;

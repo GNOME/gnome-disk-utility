@@ -1089,25 +1089,37 @@ on_add_disk_button_clicked (GtkButton   *button,
       UDisksObjectInfo *info = NULL;
       UDisksBlock *block = NULL;
       guint64 block_size = 0;
+      GVariantIter active_devices_iter;
+      const gchar *disk_block_objpath;
 
       block = udisks_object_peek_block (object);
       if (block == NULL)
-        continue;
+        goto skip;
 
       block_size = udisks_block_get_size (block);
 
       /* Don't include empty devices or partitions */
       if (block_size == 0 || udisks_object_peek_partition (object) != NULL)
-        continue;
+        goto skip;
 
       /* Size must match within 1% or 1MiB */
       if (block_size < data->member_size || block_size > (data->member_size * 101LL / 100LL))
-        continue;
+        goto skip;
 
-      /* Must not already be a member of _this_ RAID array */
-      if (g_strcmp0 (udisks_block_get_mdraid_member (block),
-                     g_dbus_object_get_object_path (G_DBUS_OBJECT (data->object))) == 0)
-        continue;
+      /* Must not be an active member of this running array */
+      g_variant_iter_init (&active_devices_iter, udisks_mdraid_get_active_devices (data->mdraid));
+      while (g_variant_iter_next (&active_devices_iter, "(&oi^a&sta{sv})",
+                                  &disk_block_objpath,
+                                  NULL,  /* disk_slot */
+                                  NULL,  /* disk_states */
+                                  NULL,  /* disk_num_errors */
+                                  NULL)) /* expansion */
+        {
+          if (g_strcmp0 (disk_block_objpath, g_dbus_object_get_object_path (G_DBUS_OBJECT (object))) == 0)
+            {
+              goto skip;
+            }
+        }
 
       info = udisks_client_get_object_info (data->client, object);
 
@@ -1130,6 +1142,8 @@ on_add_disk_button_clicked (GtkButton   *button,
 
       g_clear_object (&info);
       num_candidates++;
+    skip:
+      ;
     }
 
   if (num_candidates == 0)

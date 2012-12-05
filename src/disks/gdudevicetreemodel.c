@@ -38,6 +38,8 @@ struct _GduDeviceTreeModel
 
   /* "Polling Every Few Seconds" ... e.g. power state */
   guint pefs_timeout_id;
+
+  GHashTable *sort_mz;
 };
 
 typedef struct
@@ -1595,6 +1597,103 @@ gdu_device_tree_model_toggle_selected (GduDeviceTreeModel *model,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+/* It's pretty expensive to compute the UDisksObjectInfo on _each_
+ * comparison when sorting ... so we use a simple memoization
+ * technique
+ */
+
+static void
+sort_begin (GduDeviceTreeModel *model)
+{
+  g_assert (model->sort_mz == NULL);
+  model->sort_mz = g_hash_table_new_full (g_direct_hash,
+                                          g_direct_equal,
+                                          g_object_unref,
+                                          g_object_unref);
+}
+
+static UDisksObjectInfo *
+sort_get_object_info (GduDeviceTreeModel *model,
+                      UDisksObject       *object)
+{
+  UDisksObjectInfo *ret;
+
+  g_assert (model->sort_mz != NULL);
+
+  ret = g_hash_table_lookup (model->sort_mz, object);
+  if (ret != NULL)
+    {
+      g_object_ref (ret);
+      goto out;
+    }
+
+  ret = udisks_client_get_object_info (model->client, object);
+  g_hash_table_insert (model->sort_mz, g_object_ref (object), g_object_ref (ret));
+
+ out:
+  return ret;
+}
+
+static void
+sort_end (GduDeviceTreeModel *model)
+{
+  g_assert (model->sort_mz != NULL);
+  g_hash_table_destroy (model->sort_mz);
+  model->sort_mz = NULL;
+}
+
+static gint
+sort_func (gconstpointer a,
+           gconstpointer b,
+           gpointer      user_data,
+           gboolean      is_block)
+{
+  GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (user_data);
+  UDisksObjectInfo *ia = NULL, *ib = NULL;
+  gint ret;
+
+  if (is_block)
+    {
+      UDisksObject *oa, *ob;
+      oa = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (UDISKS_BLOCK (a)));
+      ob = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (UDISKS_BLOCK (b)));
+      if (oa != NULL)
+        ia = sort_get_object_info (model, oa);
+      if (ob != NULL)
+        ib = sort_get_object_info (model, ob);
+    }
+  else
+    {
+      ia = sort_get_object_info (model, UDISKS_OBJECT (a));
+      ib = sort_get_object_info (model, UDISKS_OBJECT (b));
+    }
+
+  ret = g_strcmp0 (ia != NULL ? udisks_object_info_get_sort_key (ia) : NULL,
+                   ib != NULL ? udisks_object_info_get_sort_key (ib) : NULL);
+
+  g_clear_object (&ib);
+  g_clear_object (&ia);
+  return ret;
+}
+
+static gint
+sort_func_object (gconstpointer a,
+                  gconstpointer b,
+                  gpointer      user_data)
+{
+  return sort_func (a, b, user_data, FALSE);
+}
+
+static gint
+sort_func_block (gconstpointer a,
+                 gconstpointer b,
+                 gpointer      user_data)
+{
+  return sort_func (a, b, user_data, TRUE);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 static gboolean
 get_selected_cb (GtkTreeModel  *model,
                  GtkTreePath   *path,
@@ -1631,6 +1730,10 @@ gdu_device_tree_model_get_selected (GduDeviceTreeModel *model)
   g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
 
   gtk_tree_model_foreach (GTK_TREE_MODEL (model), get_selected_cb, &ret);
+
+  sort_begin (model);
+  ret = g_list_sort_with_data (ret, sort_func_object, model);
+  sort_end (model);
 
   return ret;
 }
@@ -1673,6 +1776,10 @@ gdu_device_tree_model_get_selected_blocks (GduDeviceTreeModel *model)
   g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
 
   gtk_tree_model_foreach (GTK_TREE_MODEL (model), get_selected_blocks_cb, &ret);
+
+  sort_begin (model);
+  ret = g_list_sort_with_data (ret, sort_func_block, model);
+  sort_end (model);
 
   return ret;
 }

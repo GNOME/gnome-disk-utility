@@ -2827,37 +2827,22 @@ update_device_page_for_loop (GduWindow      *window,
                              UDisksLoop     *loop,
                              ShowFlags      *show_flags)
 {
-  GIcon *icon = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
-  gchar *desc = NULL;
   gchar *device_desc = NULL;
-  guint64 size = 0;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Loop device is empty"));
 
-  size = udisks_block_get_size (block);
-
-  icon = g_themed_icon_new ("drive-removable-media"); /* for now */
-
-  if (size > 0)
-    {
-      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
-      /* Translators: Used in the main window for a loop device, the first %s is the size */
-      desc = g_strdup_printf (C_("loop-window", "%s Loop Device"), s);
-      g_free (s);
-    }
-  else
-    {
-      /* Translators: Used in the main window for a block device where the size is not known  */
-      desc = g_strdup (C_("loop-window", "Loop Device"));
-    }
+  info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image),
+                            udisks_object_info_get_icon (info),
+                            GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
-  s = g_strdup_printf ("<big><b>%s</b></big>", desc);
+  s = g_strdup_printf ("<big><b>%s</b></big>", udisks_object_info_get_description (info));
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
   gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
@@ -2893,7 +2878,8 @@ update_device_page_for_loop (GduWindow      *window,
     }
 
   /* cleanup */
-  g_clear_object (&icon);
+  g_clear_object (&info);
+  g_free (device_desc);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2908,37 +2894,22 @@ update_device_page_for_fake_block (GduWindow      *window,
                                    UDisksBlock    *block,
                                    ShowFlags      *show_flags)
 {
-  GIcon *icon = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
-  gchar *desc = NULL;
   gchar *device_desc = NULL;
-  guint64 size = 0;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Block device is empty"));
 
-  size = udisks_block_get_size (block);
-
-  icon = g_themed_icon_new ("drive-removable-media"); /* for now */
-
-  if (size > 0)
-    {
-      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
-      /* Translators: Used in the main window for a block device, the first %s is the size */
-      desc = g_strdup_printf (C_("block-window", "%s Block Device"), s);
-      g_free (s);
-    }
-  else
-    {
-      /* Translators: Used in the main window for a block device where the size is not known  */
-      desc = g_strdup (C_("block-window", "Block Device"));
-    }
+  info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image), icon, GTK_ICON_SIZE_DIALOG);
+  gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image),
+                            udisks_object_info_get_icon (info),
+                            GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (window->devtab_drive_image);
 
-  s = g_strdup_printf ("<big><b>%s</b></big>", desc);
+  s = g_strdup_printf ("<big><b>%s</b></big>", udisks_object_info_get_description (info));
   gtk_label_set_markup (GTK_LABEL (window->devtab_drive_desc_label), s);
   gtk_widget_show (window->devtab_drive_desc_label);
   g_free (s);
@@ -2955,7 +2926,8 @@ update_device_page_for_fake_block (GduWindow      *window,
   update_drive_part_for_block (window, block, show_flags);
 
   /* cleanup */
-  g_clear_object (&icon);
+  g_clear_object (&info);
+  g_free (device_desc);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

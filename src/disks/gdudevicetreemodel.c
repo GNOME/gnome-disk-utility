@@ -1335,7 +1335,7 @@ update_block (GduDeviceTreeModel  *model,
   GtkTreeIter iter;
   UDisksBlock *block;
   UDisksLoop *loop;
-  GIcon *icon = NULL;
+  UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
   gchar *sort_key = NULL;
   const gchar *preferred_device;
@@ -1360,42 +1360,25 @@ update_block (GduDeviceTreeModel  *model,
   size = udisks_block_get_size (block);
   size_str = udisks_client_get_size_for_display (model->client, size, FALSE, FALSE);
 
+  info = udisks_client_get_object_info (model->client, object);
+
   preferred_device = udisks_block_get_preferred_device (block);
   loop_backing_file = loop != NULL ? udisks_loop_get_backing_file (loop) : NULL;
   if (loop_backing_file != NULL)
     {
-      gchar *loop_name;
       gchar *backing_file_unfused;
-
       backing_file_unfused = gdu_utils_unfuse_path (loop_backing_file);
-
-      /* Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB". */
-      loop_name = g_strdup_printf (_("%s Loop Device"), size_str);
-
-      /* loop devices */
-      icon = g_themed_icon_new ("drive-removable-media"); /* for now */
       s = g_strdup_printf ("%s\n"
                            "<small>%s</small>",
-                           loop_name,
+                           udisks_object_info_get_description (info),
                            backing_file_unfused);
-      g_free (loop_name);
       g_free (backing_file_unfused);
     }
   else
     {
-      gchar *block_name;
-
-      /* Translators: This is for a block device which we failed to categorize  - %s is
-       * the size of the device e.g. "230 MB".
-       */
-      block_name = g_strdup_printf (_("%s Block Device"),
-                                    size_str);
-
-      /* fallback: preferred device and drive-harddisk icon */
-      icon = g_themed_icon_new ("drive-removable-media"); /* for now */
       s = g_strdup_printf ("%s\n"
                            "<small>%s</small>",
-                           block_name,
+                           udisks_object_info_get_description (info),
                            preferred_device);
     }
 
@@ -1414,7 +1397,7 @@ update_block (GduDeviceTreeModel  *model,
 
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
@@ -1433,7 +1416,7 @@ update_block (GduDeviceTreeModel  *model,
     }
 
  out:
-  g_object_unref (icon);
+  g_clear_object (&info);
   g_free (sort_key);
   g_free (s);
   g_free (size_str);

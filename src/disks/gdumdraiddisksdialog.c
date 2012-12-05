@@ -489,11 +489,7 @@ pixbuf_cell_func (GtkTreeViewColumn *column,
     goto out;
 
   info = udisks_client_get_object_info (data->client, object);
-  if (udisks_object_info_get_icon (info) != NULL)
-    icon = g_object_ref (udisks_object_info_get_icon (info));
-
-  if (icon == NULL)
-    icon = g_themed_icon_new ("drive-removable-media"); /* fallback - for now */
+  icon = g_object_ref (udisks_object_info_get_icon (info));
 
  out:
   g_object_set (renderer,

@@ -893,7 +893,6 @@ update_drive (GduDeviceTreeModel *model,
   UDisksObjectInfo *info = NULL;
   UDisksBlock *block = NULL;
   gchar *s = NULL;
-  gchar *sort_key = NULL;
   gboolean warning = FALSE;
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
@@ -913,8 +912,6 @@ update_drive (GduDeviceTreeModel *model,
   ata = udisks_object_peek_drive_ata (object);
 
   block = udisks_client_get_block_for_drive (model->client, drive, FALSE); /* get_physical */
-
-  sort_key = g_strdup_printf ("00_drives_1_%s", udisks_drive_get_sort_key (drive));
 
   if (ata != NULL)
     {
@@ -956,7 +953,7 @@ update_drive (GduDeviceTreeModel *model,
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, udisks_object_info_get_sort_key (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
@@ -976,7 +973,6 @@ update_drive (GduDeviceTreeModel *model,
  out:
   g_clear_object (&block);
   g_clear_object (&info);
-  g_free (sort_key);
   g_free (s);
   return jobs_running;
 }
@@ -1062,7 +1058,6 @@ update_mdraid (GduDeviceTreeModel *model,
   gchar *desc = NULL;
   gchar *desc2 = NULL;
   gchar *s = NULL;
-  gchar *sort_key = NULL;
   gboolean warning = FALSE;
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
@@ -1081,8 +1076,6 @@ update_mdraid (GduDeviceTreeModel *model,
   mdraid = udisks_object_peek_mdraid (object);
   block = udisks_client_get_block_for_mdraid (model->client, mdraid);
   info = udisks_client_get_object_info (model->client, object);
-
-  sort_key = g_strdup_printf ("01_mdraid_1_%s", udisks_mdraid_get_uuid (mdraid)); /* TODO: sort_key? */
 
   name = udisks_mdraid_get_name (mdraid);
   /* skip homehost, if any */
@@ -1160,7 +1153,7 @@ update_mdraid (GduDeviceTreeModel *model,
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, udisks_object_info_get_sort_key (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
@@ -1179,7 +1172,6 @@ update_mdraid (GduDeviceTreeModel *model,
 
  out:
   g_clear_object (&info);
-  g_free (sort_key);
   g_free (s);
   g_free (desc);
   g_free (desc2);
@@ -1337,7 +1329,6 @@ update_block (GduDeviceTreeModel  *model,
   UDisksLoop *loop;
   UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
-  gchar *sort_key = NULL;
   const gchar *preferred_device;
   const gchar *loop_backing_file;
   guint64 size;
@@ -1382,10 +1373,6 @@ update_block (GduDeviceTreeModel  *model,
                            preferred_device);
     }
 
-  /* for now */
-  sort_key = g_strdup_printf ("02_block_1_%s",
-                              g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
-
   jobs_running = block_has_jobs (model->client, block);
 
   gtk_tree_model_get (GTK_TREE_MODEL (model),
@@ -1399,7 +1386,7 @@ update_block (GduDeviceTreeModel  *model,
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, sort_key,
+                      GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, udisks_object_info_get_sort_key (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_JOBS_RUNNING, jobs_running,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, pulse,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SIZE, size,
@@ -1417,7 +1404,6 @@ update_block (GduDeviceTreeModel  *model,
 
  out:
   g_clear_object (&info);
-  g_free (sort_key);
   g_free (s);
   g_free (size_str);
   return jobs_running;

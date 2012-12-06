@@ -36,6 +36,7 @@ typedef struct
   GtkWidget *show_checkbutton;
   GtkWidget *name_entry;
   GtkWidget *icon_entry;
+  GtkWidget *symbolic_icon_entry;
 
   GVariant *orig_fstab_entry;
 } FstabDialogData;
@@ -85,6 +86,7 @@ update (FstabDialogData *data,
   gdu_options_update_check_option (data->options_entry, "x-gvfs-show", widget, data->show_checkbutton, FALSE, FALSE);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-name=", widget, data->name_entry);
   gdu_options_update_entry_option (data->options_entry, "x-gvfs-icon=", widget, data->icon_entry);
+  gdu_options_update_entry_option (data->options_entry, "x-gvfs-symbolic-icon=", widget, data->symbolic_icon_entry);
   g_object_thaw_notify (G_OBJECT (data->options_entry));
 
   can_ok = FALSE;
@@ -401,6 +403,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   data.show_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-show-checkbutton"));
   data.name_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-name-entry"));
   data.icon_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-icon-entry"));
+  data.symbolic_icon_entry = GTK_WIDGET (gtk_builder_get_object (builder, "fstab-symbolic-icon-entry"));
 
   /* there could be multiple fstab entries - we only consider the first one */
   g_variant_iter_init (&iter, udisks_block_get_configuration (block));
@@ -488,6 +491,8 @@ gdu_fstab_dialog_show (GduWindow    *window,
   g_signal_connect (data.name_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
   g_signal_connect (data.icon_entry,
+                    "notify::text", G_CALLBACK (on_property_changed), &data);
+  g_signal_connect (data.symbolic_icon_entry,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
 
  again:

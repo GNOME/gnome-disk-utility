@@ -61,6 +61,12 @@ typedef struct
   GtkWidget *aam_scale;
   GtkAdjustment *aam_adjustment;
 
+  /* Write Cache */
+  GtkWidget *write_cache_box;
+  GtkWidget *write_cache_switch;
+  GtkWidget *write_cache_widgets_box;
+  GtkWidget *write_cache_comboboxtext;
+
 } DialogData;
 
 static const struct {
@@ -91,6 +97,12 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, aam_vendor_recommended_value_label), "aam-vendor-recommended-value-label"},
   {G_STRUCT_OFFSET (DialogData, aam_scale), "aam-scale"},
   {G_STRUCT_OFFSET (DialogData, aam_adjustment), "aam-adjustment"},
+
+  /* Write Cache */
+  {G_STRUCT_OFFSET (DialogData, write_cache_box), "write-cache-box"},
+  {G_STRUCT_OFFSET (DialogData, write_cache_switch), "write-cache-switch"},
+  {G_STRUCT_OFFSET (DialogData, write_cache_widgets_box), "write-cache-widgets-box"},
+  {G_STRUCT_OFFSET (DialogData, write_cache_comboboxtext), "write-cache-comboboxtext"},
 
   {0, NULL}
 };
@@ -158,7 +170,8 @@ compute_configuration (DialogData *data)
         {
           if (g_strcmp0 (key, "ata-pm-standby") == 0 ||
               g_strcmp0 (key, "ata-apm-level") == 0 ||
-              g_strcmp0 (key, "ata-aam-level") == 0)
+              g_strcmp0 (key, "ata-aam-level") == 0 ||
+              g_strcmp0 (key, "ata-write-cache-enabled") == 0)
             {
               /* handled by us, skip */
             }
@@ -202,6 +215,18 @@ compute_configuration (DialogData *data)
         }
     }
 
+  /* AAM */
+  if (gtk_switch_get_active (GTK_SWITCH (data->write_cache_switch)))
+    {
+      if (udisks_drive_ata_get_write_cache_supported (data->ata))
+        {
+          gboolean enabled = FALSE;
+          if (gtk_combo_box_get_active (GTK_COMBO_BOX (data->write_cache_comboboxtext)) == 0)
+            enabled = TRUE;
+          g_variant_builder_add (&builder, "{sv}", "ata-write-cache-enabled", g_variant_new_boolean (enabled));
+        }
+    }
+
   return g_variant_builder_end (&builder);
 }
 
@@ -235,7 +260,6 @@ update_dialog (DialogData *data)
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, changed);
 
   /* update labels */
-
   update_standby_label (data);
   update_apm_label (data);
   update_aam_label (data);
@@ -469,11 +493,15 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
       gint standby_value = -1;
       gint apm_value = -1;
       gint aam_value = -1;
+      gboolean write_cache_enabled = FALSE;
+      gboolean write_cache_enabled_set = FALSE;
 
       /* Power Management page */
       g_variant_lookup (data->orig_drive_configuration, "ata-pm-standby", "i", &standby_value);
       g_variant_lookup (data->orig_drive_configuration, "ata-apm-level", "i", &apm_value);
       g_variant_lookup (data->orig_drive_configuration, "ata-aam-level", "i", &aam_value);
+      if (g_variant_lookup (data->orig_drive_configuration, "ata-write-cache-enabled", "b", &write_cache_enabled))
+        write_cache_enabled_set = TRUE;
 
       /* Standby (default to 10 minutes -> 120) */
       if (standby_value == -1)
@@ -515,6 +543,19 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
           gtk_adjustment_set_value (data->aam_adjustment, aam_value);
           gtk_switch_set_active (GTK_SWITCH (data->aam_switch), TRUE);
         }
+
+      /* Write Cache (default to "Enabled") */
+      if (!write_cache_enabled_set)
+        {
+          gtk_combo_box_set_active (GTK_COMBO_BOX (data->write_cache_comboboxtext), 0);
+          gtk_switch_set_active (GTK_SWITCH (data->write_cache_switch), FALSE);
+        }
+      else
+        {
+          gtk_combo_box_set_active (GTK_COMBO_BOX (data->write_cache_comboboxtext),
+                                    write_cache_enabled ? 0 : 1);
+          gtk_switch_set_active (GTK_SWITCH (data->write_cache_switch), TRUE);
+        }
     }
 
   g_signal_connect (data->standby_switch,
@@ -523,6 +564,8 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
                     "notify::active", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->aam_switch,
                     "notify::active", G_CALLBACK (on_property_changed), data);
+  g_signal_connect (data->write_cache_switch,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
 
   g_signal_connect (data->standby_adjustment,
                     "notify::value", G_CALLBACK (on_property_changed), data);
@@ -530,6 +573,8 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
                     "notify::value", G_CALLBACK (on_property_changed), data);
   g_signal_connect (data->aam_adjustment,
                     "notify::value", G_CALLBACK (on_property_changed), data);
+  g_signal_connect (data->write_cache_comboboxtext,
+                    "notify::active", G_CALLBACK (on_property_changed), data);
 
   g_object_bind_property (data->standby_switch,
                           "active",
@@ -546,6 +591,12 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
   g_object_bind_property (data->aam_switch,
                           "active",
                           data->aam_widgets_box,
+                          "sensitive",
+                          G_BINDING_SYNC_CREATE);
+
+  g_object_bind_property (data->write_cache_switch,
+                          "active",
+                          data->write_cache_widgets_box,
                           "sensitive",
                           G_BINDING_SYNC_CREATE);
 
@@ -603,6 +654,9 @@ disable_unused_widgets (DialogData *data)
 
   if (!udisks_drive_ata_get_aam_supported (data->ata))
     hide_forever (data->aam_box);
+
+  if (!udisks_drive_ata_get_write_cache_supported (data->ata))
+    hide_forever (data->write_cache_box);
 }
 
 gboolean
@@ -630,7 +684,8 @@ gdu_disk_settings_dialog_should_show (UDisksObject *object)
 
   if ((udisks_drive_ata_get_pm_supported (ata) && !is_ssd) ||
       udisks_drive_ata_get_apm_supported (ata) ||
-      udisks_drive_ata_get_aam_supported (ata))
+      udisks_drive_ata_get_aam_supported (ata) ||
+      udisks_drive_ata_get_write_cache_supported (ata))
     {
       ret = TRUE;
     }

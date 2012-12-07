@@ -19,6 +19,7 @@
     <property name="width_request">500</property>
     <property name="height_request">300</property>
     <property name="can_focus">False</property>
+    <property name="border_width">2</property>
     <property name="title" translatable="yes">Drive Settings</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -50,9 +51,7 @@
                       <object class="GtkLabel" id="label3">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Standby Timeout</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">standby-switch</property>
+                        <property name="label" translatable="yes">Standby Timeout</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                           <attribute name="scale" value="1"/>
@@ -69,6 +68,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Turn on to configure Standby Timeout at startup and when the disk is connected</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -156,7 +156,8 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Standby</property>
+                <property name="label" translatable="yes">_Standby</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="tab_fill">False</property>
@@ -178,9 +179,7 @@
                       <object class="GtkLabel" id="label6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">_Advanced Power Management</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">apm-switch</property>
+                        <property name="label" translatable="yes">Advanced Power Management</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                           <attribute name="scale" value="1"/>
@@ -197,6 +196,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Turn on to configure APM at startup and when the disk is connected</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -305,7 +305,9 @@
               <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">APM</property>
+                <property name="label" translatable="yes">A_PM</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">apm-box</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -328,9 +330,7 @@
                       <object class="GtkLabel" id="label4">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Automatic Aco_ustic Management</property>
-                        <property name="use_underline">True</property>
-                        <property name="mnemonic_widget">aam-switch</property>
+                        <property name="label" translatable="yes">Automatic Acoustic Management</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                           <attribute name="scale" value="1"/>
@@ -347,6 +347,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Turn on to configure AAM at startup and when the disk is connected</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -374,7 +375,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="row_spacing">6</property>
-                        <property name="column_spacing">6</property>
+                        <property name="column_spacing">12</property>
                         <child>
                           <object class="GtkLabel" id="aam-vendor-recommended-label">
                             <property name="visible">True</property>
@@ -469,10 +470,161 @@
               <object class="GtkLabel" id="label5">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">AAM</property>
+                <property name="label" translatable="yes">_AAM</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">aam-box</property>
               </object>
               <packing>
                 <property name="position">2</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="write-cache-box">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="border_width">6</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkBox" id="box3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">12</property>
+                    <child>
+                      <object class="GtkLabel" id="label9">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Write Cache</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                          <attribute name="scale" value="1"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="write-cache-switch">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text" translatable="yes">Turn on to configure Write Cache setting at startup and when the disk is connected</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="pack_type">end</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="write-cache-widgets-box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">24</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkGrid" id="grid2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="row_spacing">6</property>
+                        <property name="column_spacing">12</property>
+                        <child>
+                          <object class="GtkLabel" id="label10">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">1</property>
+                            <property name="label" translatable="yes">S_etting</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">write-cache-comboboxtext</property>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="write-cache-comboboxtext">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="entry_text_column">0</property>
+                            <property name="id_column">1</property>
+                            <items>
+                              <item translatable="yes">Enable Write Cache</item>
+                              <item translatable="yes">Disable Write Cache</item>
+                            </items>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="top_attach">0</property>
+                            <property name="width">1</property>
+                            <property name="height">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label11">
+                        <property name="width_request">500</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Performance is increased by enabling write caching, but leaves the system susceptible to data loss in the event of a power failure</property>
+                        <property name="wrap">True</property>
+                        <attributes>
+                          <attribute name="style" value="italic"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label8">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Write _Cache</property>
+                <property name="use_underline">True</property>
+                <property name="mnemonic_widget">write-cache-box</property>
+              </object>
+              <packing>
+                <property name="position">3</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

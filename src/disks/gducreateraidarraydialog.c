@@ -17,7 +17,6 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreateraidarraydialog.h"
-#include "gduselectdiskdialog.h"
 #include "gduatasmartdialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

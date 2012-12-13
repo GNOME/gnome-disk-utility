@@ -324,7 +324,7 @@ update_job (DialogData *data,
       /* Translators: Shown when there are read errors and we skip some data.
        *              The first %s is the amount of unreadable data (ex. "512 kB").
        */
-      s3 = g_strdup_printf (_("%s replaced with zeroes because of read errors"), s2);
+      s3 = g_strdup_printf (_("%s unreadable (replaced with zeroes)"), s2);
       /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
        * of hard-coding the color
        */

@@ -158,7 +158,7 @@ gdu_volume_grid_finalize (GObject *object)
 
   if (grid->block_object != NULL)
     g_object_unref (grid->block_object);
-  g_object_unref (grid->client);
+  g_object_unref (grid->application);
 
   g_free (grid->no_media_string);
 

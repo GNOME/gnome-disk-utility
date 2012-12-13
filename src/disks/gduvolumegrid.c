@@ -16,6 +16,7 @@
 #include <stdlib.h>
 
 #include "gduvolumegrid.h"
+#include "gduapplication.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -83,6 +84,7 @@ struct _GduVolumeGrid
 {
   GtkWidget parent;
 
+  GduApplication *application;
   UDisksClient *client;
   UDisksObject *block_object;
 
@@ -107,7 +109,7 @@ struct _GduVolumeGridClass
 enum
 {
   PROP_0,
-  PROP_CLIENT,
+  PROP_APPLICATION,
   PROP_BLOCK_OBJECT,
   PROP_NO_MEDIA_STRING,
 };
@@ -173,8 +175,8 @@ gdu_volume_grid_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_CLIENT:
-      g_value_set_object (value, grid->client);
+    case PROP_APPLICATION:
+      g_value_set_object (value, grid->application);
       break;
 
     case PROP_BLOCK_OBJECT:
@@ -201,8 +203,9 @@ gdu_volume_grid_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_CLIENT:
-      grid->client = g_value_dup_object (value);
+    case PROP_APPLICATION:
+      grid->application = g_value_dup_object (value);
+      grid->client = gdu_application_get_client (grid->application);
       break;
 
     case PROP_BLOCK_OBJECT:
@@ -504,11 +507,11 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
   gtkwidget_class->draw                 = gdu_volume_grid_draw;
 
   g_object_class_install_property (gobject_class,
-                                   PROP_CLIENT,
-                                   g_param_spec_object ("client",
-                                                        "Client",
-                                                        "The UDisksClient to use",
-                                                        UDISKS_TYPE_CLIENT,
+                                   PROP_APPLICATION,
+                                   g_param_spec_object ("application",
+                                                        "Application",
+                                                        "The GduApplication to use",
+                                                        GDU_TYPE_APPLICATION,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY |
@@ -554,11 +557,11 @@ gdu_volume_grid_init (GduVolumeGrid *grid)
 }
 
 GtkWidget *
-gdu_volume_grid_new (UDisksClient *client)
+gdu_volume_grid_new (GduApplication *application)
 {
-  g_return_val_if_fail (UDISKS_IS_CLIENT (client), NULL);
+  g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
   return GTK_WIDGET (g_object_new (GDU_TYPE_VOLUME_GRID,
-                                   "client", client,
+                                   "application", application,
                                    NULL));
 }
 
@@ -1613,6 +1616,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
           element->show_configured = TRUE;
 
         jobs = udisks_client_get_jobs_for_object (grid->client, element->object);
+        jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (grid->application, element->object));
         element->show_spinner = (jobs != NULL);
         g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
         g_list_free (jobs);

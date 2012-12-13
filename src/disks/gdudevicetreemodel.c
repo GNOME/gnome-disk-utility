@@ -13,6 +13,7 @@
 #include <glib/gi18n.h>
 
 #include "gdudevicetreemodel.h"
+#include "gduapplication.h"
 #include "gduatasmartdialog.h"
 #include "gduenumtypes.h"
 
@@ -20,6 +21,7 @@ struct _GduDeviceTreeModel
 {
   GtkTreeStore parent_instance;
 
+  GduApplication *application;
   UDisksClient *client;
 
   GList *current_drives;
@@ -50,7 +52,7 @@ typedef struct
 enum
 {
   PROP_0,
-  PROP_CLIENT
+  PROP_APPLICATION
 };
 
 G_DEFINE_TYPE (GduDeviceTreeModel, gdu_device_tree_model, GTK_TYPE_TREE_STORE);
@@ -113,8 +115,8 @@ gdu_device_tree_model_get_property (GObject    *object,
 
   switch (prop_id)
     {
-    case PROP_CLIENT:
-      g_value_set_object (value, gdu_device_tree_model_get_client (model));
+    case PROP_APPLICATION:
+      g_value_set_object (value, gdu_device_tree_model_get_application (model));
       break;
 
     default:
@@ -133,8 +135,9 @@ gdu_device_tree_model_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_CLIENT:
-      model->client = g_value_dup_object (value);
+    case PROP_APPLICATION:
+      model->application = g_value_dup_object (value);
+      model->client = gdu_application_get_client (model->application);
       break;
 
     default:
@@ -496,16 +499,14 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
   gobject_class->set_property = gdu_device_tree_model_set_property;
 
   /**
-   * GduDeviceTreeModel:client:
+   * GduDeviceTreeModel:application:
    *
-   * The #UDisksClient used by the #GduDeviceTreeModel instance.
+   * The #GduApplication used by the #GduDeviceTreeModel instance.
    */
   g_object_class_install_property (gobject_class,
-                                   PROP_CLIENT,
-                                   g_param_spec_object ("client",
-                                                        "Client",
-                                                        "The client used by the tree model",
-                                                        UDISKS_TYPE_CLIENT,
+                                   PROP_APPLICATION,
+                                   g_param_spec_object ("application", NULL, NULL,
+                                                        GDU_TYPE_APPLICATION,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY |
@@ -514,35 +515,35 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
 
 /**
  * gdu_device_tree_model_new:
- * @client: A #UDisksClient.
+ * @application: A #GduApplication.
  *
  * Creates a new #GduDeviceTreeModel for viewing the devices belonging to
- * @client.
+ * @application.
  *
  * Returns: A #GduDeviceTreeModel. Free with g_object_unref().
  */
 GduDeviceTreeModel *
-gdu_device_tree_model_new (UDisksClient *client)
+gdu_device_tree_model_new (GduApplication *application)
 {
   return GDU_DEVICE_TREE_MODEL (g_object_new (GDU_TYPE_DEVICE_TREE_MODEL,
-                                       "client", client,
-                                       NULL));
+                                              "application", application,
+                                              NULL));
 }
 
 /**
- * gdu_device_tree_model_get_client:
+ * gdu_device_tree_model_get_application:
  * @model: A #GduDeviceTreeModel.
  *
- * Gets the #UDisksClient used by @model.
+ * Gets the #GduApplication used by @model.
  *
- * Returns: (transfer none): A #UDisksClient. Do not free, the object
- * belongs to @model.
+ * Returns: (transfer none): A #GduApplication. Do not free, the
+ * object belongs to @model.
  */
-UDisksClient *
-gdu_device_tree_model_get_client (GduDeviceTreeModel *model)
+GduApplication *
+gdu_device_tree_model_get_application (GduDeviceTreeModel *model)
 {
   g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);
-  return model->client;
+  return model->application;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -694,13 +695,14 @@ remove_mdraid (GduDeviceTreeModel *model,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-object_has_jobs (UDisksClient   *client,
-                 UDisksObject   *object)
+object_has_jobs (GduDeviceTreeModel *model,
+                 UDisksObject       *object)
 {
   GList *jobs;
   gboolean ret;
 
-  jobs = udisks_client_get_jobs_for_object (client, object);
+  jobs = udisks_client_get_jobs_for_object (model->client, object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (model->application, object));
   ret = (jobs != NULL);
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -709,20 +711,20 @@ object_has_jobs (UDisksClient   *client,
 }
 
 static gboolean
-iface_has_jobs (UDisksClient   *client,
-                GDBusInterface *iface)
+iface_has_jobs (GduDeviceTreeModel *model,
+                GDBusInterface     *iface)
 {
   GDBusObject *object;
   object = g_dbus_interface_get_object (G_DBUS_INTERFACE (iface));
   if (object != NULL)
-    return object_has_jobs (client, UDISKS_OBJECT (object));
+    return object_has_jobs (model, UDISKS_OBJECT (object));
   else
     return FALSE;
 }
 
 static gboolean
-block_has_jobs (UDisksClient   *client,
-                UDisksBlock    *block)
+block_has_jobs (GduDeviceTreeModel *model,
+                UDisksBlock        *block)
 {
   gboolean ret = FALSE;
   GDBusObject *block_object;
@@ -731,7 +733,7 @@ block_has_jobs (UDisksClient   *client,
   GList *partitions = NULL, *l;
   UDisksBlock *cleartext_block = NULL;
 
-  if (iface_has_jobs (client, G_DBUS_INTERFACE (block)))
+  if (iface_has_jobs (model, G_DBUS_INTERFACE (block)))
     {
       ret = TRUE;
       goto out;
@@ -744,7 +746,7 @@ block_has_jobs (UDisksClient   *client,
   part_table = udisks_object_get_partition_table (UDISKS_OBJECT (block_object));
   if (part_table != NULL)
     {
-      partitions = udisks_client_get_partitions (client, part_table);
+      partitions = udisks_client_get_partitions (model->client, part_table);
       for (l = partitions; l != NULL; l = l->next)
         {
           UDisksPartition *partition = UDISKS_PARTITION (l->data);
@@ -755,7 +757,7 @@ block_has_jobs (UDisksClient   *client,
           if (partition_object != NULL)
             {
               partition_block = udisks_object_get_block (UDISKS_OBJECT (partition_object));
-              if (block_has_jobs (client, partition_block))
+              if (block_has_jobs (model, partition_block))
                 {
                   ret = TRUE;
                   goto out;
@@ -767,10 +769,10 @@ block_has_jobs (UDisksClient   *client,
   encrypted = udisks_object_get_encrypted (UDISKS_OBJECT (block_object));
   if (encrypted != NULL)
     {
-      cleartext_block = udisks_client_get_cleartext_block (client, block);
+      cleartext_block = udisks_client_get_cleartext_block (model->client, block);
       if (cleartext_block != NULL)
         {
-          if (block_has_jobs (client, cleartext_block))
+          if (block_has_jobs (model, cleartext_block))
             {
               ret = TRUE;
               goto out;
@@ -790,20 +792,20 @@ block_has_jobs (UDisksClient   *client,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-drive_has_jobs (UDisksClient   *client,
-                UDisksDrive    *drive)
+drive_has_jobs (GduDeviceTreeModel *model,
+                UDisksDrive        *drive)
 {
   gboolean ret = FALSE;
   UDisksBlock *block = NULL;
 
-  if (iface_has_jobs (client, G_DBUS_INTERFACE (drive)))
+  if (iface_has_jobs (model, G_DBUS_INTERFACE (drive)))
     {
       ret = TRUE;
       goto out;
     }
 
-  block = udisks_client_get_block_for_drive (client, drive, FALSE); /* get_physical */
-  if (block_has_jobs (client, block))
+  block = udisks_client_get_block_for_drive (model->client, drive, FALSE); /* get_physical */
+  if (block_has_jobs (model, block))
     {
       ret = TRUE;
       goto out;
@@ -817,20 +819,20 @@ drive_has_jobs (UDisksClient   *client,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-mdraid_has_jobs (UDisksClient   *client,
-                 UDisksMDRaid   *mdraid)
+mdraid_has_jobs (GduDeviceTreeModel *model,
+                 UDisksMDRaid       *mdraid)
 {
   gboolean ret = FALSE;
   UDisksBlock *block = NULL;
 
-  if (iface_has_jobs (client, G_DBUS_INTERFACE (mdraid)))
+  if (iface_has_jobs (model, G_DBUS_INTERFACE (mdraid)))
     {
       ret = TRUE;
       goto out;
     }
 
-  block = udisks_client_get_block_for_mdraid (client, mdraid);
-  if (block != NULL && block_has_jobs (client, block))
+  block = udisks_client_get_block_for_mdraid (model->client, mdraid);
+  if (block != NULL && block_has_jobs (model, block))
     {
       ret = TRUE;
       goto out;
@@ -940,7 +942,7 @@ update_drive (GduDeviceTreeModel *model,
                            udisks_object_info_get_name (info));
     }
 
-  jobs_running = drive_has_jobs (model->client, drive);
+  jobs_running = drive_has_jobs (model, drive);
 
   size = udisks_drive_get_size (drive);
 
@@ -1142,7 +1144,7 @@ update_mdraid (GduDeviceTreeModel *model,
   if (block != NULL)
     size = udisks_block_get_size (block);
 
-  jobs_running = mdraid_has_jobs (model->client, mdraid);
+  jobs_running = mdraid_has_jobs (model, mdraid);
 
   gtk_tree_model_get (GTK_TREE_MODEL (model),
                       &iter,
@@ -1375,7 +1377,7 @@ update_block (GduDeviceTreeModel  *model,
                            preferred_device);
     }
 
-  jobs_running = block_has_jobs (model->client, block);
+  jobs_running = block_has_jobs (model, block);
 
   gtk_tree_model_get (GTK_TREE_MODEL (model),
                       &iter,

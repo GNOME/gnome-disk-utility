@@ -17,6 +17,7 @@
 
 #include "gduapplication.h"
 #include "gduwindow.h"
+#include "gdulocaljob.h"
 
 struct _GduApplication
 {
@@ -26,6 +27,9 @@ struct _GduApplication
 
   UDisksClient *client;
   GduWindow *window;
+
+  /* Maps from UDisksObject* -> GList<GduLocalJob*> */
+  GHashTable *local_jobs;
 };
 
 typedef struct
@@ -38,12 +42,27 @@ G_DEFINE_TYPE (GduApplication, gdu_application, GTK_TYPE_APPLICATION);
 static void
 gdu_application_init (GduApplication *app)
 {
+  app->local_jobs = g_hash_table_new (g_direct_hash, g_direct_equal);
 }
 
 static void
 gdu_application_finalize (GObject *object)
 {
   GduApplication *app = GDU_APPLICATION (object);
+
+  if (app->local_jobs != NULL)
+    {
+      GHashTableIter iter;
+      GList *local_jobs, *jobs_to_destroy = NULL, *l;
+
+      g_hash_table_iter_init (&iter, app->local_jobs);
+      while (g_hash_table_iter_next (&iter, NULL /* object*/, (gpointer) &local_jobs))
+        jobs_to_destroy = g_list_concat (jobs_to_destroy, g_list_copy (local_jobs));
+      for (l = jobs_to_destroy; l != NULL; l = l->next)
+        gdu_application_destroy_local_job (app, GDU_LOCAL_JOB (l->data));
+      g_list_free (jobs_to_destroy);
+      g_hash_table_destroy (app->local_jobs);
+    }
 
   if (app->client != NULL)
     g_object_unref (app->client);
@@ -380,3 +399,87 @@ gdu_application_new_widget (GduApplication  *application,
     }
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_local_job_notify (GObject    *object,
+                     GParamSpec *pspec,
+                     gpointer    user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  udisks_client_queue_changed (app->client);
+}
+
+
+GduLocalJob *
+gdu_application_create_local_job  (GduApplication *application,
+                                   UDisksObject   *object)
+{
+  GduLocalJob *job = NULL;
+  GList *local_jobs;
+
+  g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
+  g_return_val_if_fail (UDISKS_IS_OBJECT (object), NULL);
+
+  job = gdu_local_job_new (object);
+
+  local_jobs = g_hash_table_lookup (application->local_jobs, object);
+  local_jobs = g_list_prepend (local_jobs, job);
+  g_hash_table_insert (application->local_jobs, object, local_jobs);
+
+  g_signal_connect (job, "notify", G_CALLBACK (on_local_job_notify), application);
+
+  udisks_client_queue_changed (application->client);
+
+  return job;
+}
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_application_destroy_local_job (GduApplication *application,
+                                   GduLocalJob    *job)
+{
+  GList *local_jobs;
+  UDisksObject *object;
+
+  g_return_if_fail (GDU_IS_APPLICATION (application));
+  g_return_if_fail (GDU_IS_LOCAL_JOB (job));
+
+  object = gdu_local_job_get_object (job);
+
+  local_jobs = g_hash_table_lookup (application->local_jobs, object);
+  g_warn_if_fail (g_list_find (local_jobs, job) != NULL);
+  local_jobs = g_list_remove (local_jobs, job);
+  g_signal_handlers_disconnect_by_func (job, G_CALLBACK (on_local_job_notify), application);
+
+  if (local_jobs != NULL)
+    g_hash_table_insert (application->local_jobs, object, local_jobs);
+  else
+    g_hash_table_remove (application->local_jobs, object);
+
+  g_object_unref (job);
+
+  udisks_client_queue_changed (application->client);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+GList *
+gdu_application_get_local_jobs_for_object (GduApplication *application,
+                                           UDisksObject   *object)
+{
+  GList *ret;
+
+  g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
+  g_return_val_if_fail (UDISKS_IS_OBJECT (object), NULL);
+
+  ret = g_list_copy_deep (g_hash_table_lookup (application->local_jobs, object),
+                          (GCopyFunc) g_object_ref,
+                          NULL);
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */

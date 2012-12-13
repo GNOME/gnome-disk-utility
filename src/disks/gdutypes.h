@@ -43,6 +43,9 @@ typedef struct _GduEstimator GduEstimator;
 struct GduDVDSupport;
 typedef struct GduDVDSupport GduDVDSupport;
 
+struct GduLocalJob;
+typedef struct GduLocalJob GduLocalJob;
+
 G_END_DECLS
 
 #endif /* __GDU_TYPES_H__ */

@@ -24,6 +24,7 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduvolumegrid.h"
 #include "gduestimator.h"
+#include "gdulocaljob.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -48,18 +49,10 @@ typedef struct
   GtkWidget *image_key_label;
   GtkWidget *image_fcbutton;
 
-  GtkWidget *source_key_label;
-  GtkWidget *source_label;
   GtkWidget *destination_key_label;
   GtkWidget *destination_label;
 
-  GtkWidget *copying_key_label;
-  GtkWidget *copying_vbox;
-  GtkWidget *copying_progressbar;
-  GtkWidget *copying_label;
-
   GtkWidget *start_copying_button;
-  GtkWidget *close_button;
   GtkWidget *cancel_button;
 
   guint64 block_size;
@@ -84,7 +77,10 @@ typedef struct
 
   guint inhibit_cookie;
 
+  gulong response_signal_handler_id;
   gboolean completed;
+
+  GduLocalJob *local_job;
 } DialogData;
 
 
@@ -96,19 +92,11 @@ static const struct {
 
   {G_STRUCT_OFFSET (DialogData, image_key_label), "image-key-label"},
   {G_STRUCT_OFFSET (DialogData, image_fcbutton), "image-fcbutton"},
-  {G_STRUCT_OFFSET (DialogData, source_key_label), "source-key-label"},
-  {G_STRUCT_OFFSET (DialogData, source_label), "source-label"},
   {G_STRUCT_OFFSET (DialogData, destination_key_label), "destination-key-label"},
   {G_STRUCT_OFFSET (DialogData, destination_label), "destination-label"},
 
-  {G_STRUCT_OFFSET (DialogData, copying_key_label), "copying-key-label"},
-  {G_STRUCT_OFFSET (DialogData, copying_vbox), "copying-vbox"},
-  {G_STRUCT_OFFSET (DialogData, copying_progressbar), "copying-progressbar"},
-  {G_STRUCT_OFFSET (DialogData, copying_label), "copying-label"},
-
   {G_STRUCT_OFFSET (DialogData, start_copying_button), "start-copying-button"},
   {G_STRUCT_OFFSET (DialogData, cancel_button), "cancel-button"},
-  {G_STRUCT_OFFSET (DialogData, close_button), "close-button"},
   {0, NULL}
 };
 
@@ -122,22 +110,53 @@ dialog_data_ref (DialogData *data)
 }
 
 static void
+dialog_data_terminate_job (DialogData *data)
+{
+  if (data->local_job != NULL)
+    {
+      gdu_application_destroy_local_job (gdu_window_get_application (data->window), data->local_job);
+      data->local_job = NULL;
+    }
+}
+
+static void
+dialog_data_uninhibit (DialogData *data)
+{
+  if (data->inhibit_cookie > 0)
+    {
+      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+                                 data->inhibit_cookie);
+      data->inhibit_cookie = 0;
+    }
+}
+
+static void
+dialog_data_hide (DialogData *data)
+{
+  if (data->dialog != NULL)
+    {
+      GtkWidget *dialog;
+      if (data->response_signal_handler_id != 0)
+        g_signal_handler_disconnect (data->dialog, data->response_signal_handler_id);
+      dialog = data->dialog;
+      data->dialog = NULL;
+      gtk_widget_hide (dialog);
+      gtk_widget_destroy (dialog);
+      data->dialog = NULL;
+    }
+}
+
+static void
 dialog_data_unref (DialogData *data)
 {
   if (g_atomic_int_dec_and_test (&data->ref_count))
     {
-      /* hide the dialog */
-      if (data->dialog != NULL)
-        {
-          GtkWidget *dialog;
-          dialog = data->dialog;
-          data->dialog = NULL;
-          gtk_widget_hide (dialog);
-          gtk_widget_destroy (dialog);
-        }
+      dialog_data_terminate_job (data);
+      dialog_data_uninhibit (data);
+      dialog_data_hide (data);
+
       g_object_unref (data->warning_infobar);
       g_object_unref (data->error_infobar);
-
       g_object_unref (data->window);
       g_object_unref (data->object);
       g_object_unref (data->block);
@@ -181,13 +200,8 @@ dialog_data_complete_and_unref (DialogData *data)
       data->completed = TRUE;
       g_cancellable_cancel (data->cancellable);
     }
-  if (data->inhibit_cookie > 0)
-    {
-      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
-                                 data->inhibit_cookie);
-      data->inhibit_cookie = 0;
-    }
-  gtk_widget_hide (data->dialog);
+  dialog_data_uninhibit (data);
+  dialog_data_hide (data);
   dialog_data_unref (data);
 }
 
@@ -328,15 +342,14 @@ restore_disk_image_populate (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_gui (DialogData *data,
+update_job (DialogData *data,
             gboolean    done)
 {
   guint64 bytes_completed = 0;
-  guint64 bytes_target = 1;
+  guint64 bytes_target = 0;
   guint64 bytes_per_sec = 0;
-  guint64 usec_remaining = 1;
-  gchar *s, *s2, *s3, *s4, *s5;
-  gdouble progress;
+  guint64 usec_remaining = 0;
+  gdouble progress = 0.0;
 
   g_mutex_lock (&data->copy_lock);
   if (data->estimator != NULL)
@@ -349,68 +362,35 @@ update_gui (DialogData *data,
   data->update_id = 0;
   g_mutex_unlock (&data->copy_lock);
 
-  if (done)
+  if (data->local_job != NULL)
     {
-      gint64 duration_usec = data->end_time_usec - data->start_time_usec;
-      s2 = g_format_size (bytes_target);
-      s3 = gdu_utils_format_duration_usec (duration_usec, GDU_FORMAT_DURATION_FLAGS_SUBSECOND_PRECISION);
-      s4 = g_format_size (G_USEC_PER_SEC * bytes_target / duration_usec);
-      /* Translators: string used for conveying how long the copy took.
-       *              The first %s is the amount of bytes copied (ex. "650 MB").
-       *              The second %s is the time it took to copy (ex. "1 minute", or "Less than a minute").
-       *              The third %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-       */
-      s = g_strdup_printf (_("%s copied in %s (%s/sec)"), s2, s3, s4);
-      g_free (s4);
-      g_free (s3);
-      g_free (s2);
-    }
-  else if (bytes_per_sec > 0 && usec_remaining > 0)
-    {
-      s2 = g_format_size (bytes_completed);
-      s3 = g_format_size (bytes_target);
-      s4 = gdu_utils_format_duration_usec (usec_remaining,
-                                           GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
-      s5 = g_format_size (bytes_per_sec);
-      /* Translators: string used for conveying progress of copy operation when there are no errors.
-       *              The first %s is the amount of bytes copied (ex. "650 MB").
-       *              The second %s is the size of the device (ex. "8.5 GB").
-       *              The third %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-       *              The fourth %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-       */
-      s = g_strdup_printf (_("%s of %s copied – %s remaining (%s/sec)"), s2, s3, s4, s5);
-      g_free (s5);
-      g_free (s4);
-      g_free (s3);
-      g_free (s2);
-    }
-  else
-    {
-      s2 = g_format_size (bytes_completed);
-      s3 = g_format_size (bytes_target);
-      /* Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
-       * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
-       */
-      s = g_strdup_printf (_("%s of %s copied"), s2, s3);
-      g_free (s2);
-      g_free (s3);
-    }
+      udisks_job_set_bytes (UDISKS_JOB (data->local_job), bytes_target);
+      udisks_job_set_rate (UDISKS_JOB (data->local_job), bytes_per_sec);
 
-  s2 = g_strconcat ("<small>", s, "</small>", NULL);
-  gtk_label_set_markup (GTK_LABEL (data->copying_label), s2);
-  g_free (s);
+      if (done)
+        {
+          progress = 1.0;
+        }
+      else
+        {
+          if (bytes_target != 0)
+            progress = ((gdouble) bytes_completed) / ((gdouble) bytes_target);
+          else
+            progress = 0.0;
+        }
+      udisks_job_set_progress (UDISKS_JOB (data->local_job), progress);
 
-  if (done)
-    progress = 1.0;
-  else
-    progress = ((gdouble) bytes_completed) / ((gdouble) bytes_target);
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (data->copying_progressbar), progress);
+      if (usec_remaining == 0)
+        udisks_job_set_expected_end_time (UDISKS_JOB (data->local_job), 0);
+      else
+        udisks_job_set_expected_end_time (UDISKS_JOB (data->local_job), usec_remaining + g_get_real_time ());
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-play_complete_sound_and_uninhibit (DialogData *data)
+play_complete_sound (DialogData *data)
 {
   const gchar *sound_message;
 
@@ -432,10 +412,10 @@ play_complete_sound_and_uninhibit (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-on_update_ui (gpointer user_data)
+on_update_job (gpointer user_data)
 {
   DialogData *data = user_data;
-  update_gui (data, FALSE);
+  update_job (data, FALSE);
   dialog_data_unref (data);
   return FALSE; /* remove source */
 }
@@ -447,10 +427,11 @@ on_show_error (gpointer user_data)
 {
   DialogData *data = user_data;
 
-  play_complete_sound_and_uninhibit (data);
+  play_complete_sound (data);
+  dialog_data_uninhibit (data);
 
   g_assert (data->copy_error != NULL);
-  gdu_utils_show_error (GTK_WINDOW (data->dialog),
+  gdu_utils_show_error (GTK_WINDOW (data->window),
                         _("Error restoring disk image"),
                         data->copy_error);
   g_clear_error (&data->copy_error);
@@ -468,12 +449,11 @@ on_success (gpointer user_data)
 {
   DialogData *data = user_data;
 
-  update_gui (data, TRUE);
+  update_job (data, TRUE);
 
-  gtk_widget_hide (data->cancel_button);
-  gtk_widget_show (data->close_button);
-
-  play_complete_sound_and_uninhibit (data);
+  play_complete_sound (data);
+  dialog_data_uninhibit (data);
+  dialog_data_complete_and_unref (data);
 
   dialog_data_unref (data);
   return FALSE; /* remove source */
@@ -594,7 +574,7 @@ copy_thread_func (gpointer user_data)
           if (num_bytes_completed > 0)
             gdu_estimator_add_sample (data->estimator, num_bytes_completed);
           if (data->update_id == 0)
-            data->update_id = g_idle_add (on_update_ui, dialog_data_ref (data));
+            data->update_id = g_idle_add (on_update_job, dialog_data_ref (data));
           last_update_usec = now_usec;
         }
       g_mutex_unlock (&data->copy_lock);
@@ -710,6 +690,19 @@ copy_thread_func (gpointer user_data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_local_job_canceled (GduLocalJob  *job,
+                       gpointer      user_data)
+{
+  DialogData *data = user_data;
+  if (!data->completed)
+    {
+      dialog_data_terminate_job (data);
+      dialog_data_complete_and_unref (data);
+      update_job (data, FALSE);
+    }
+}
+
 static gboolean
 start_copying (DialogData *data)
 {
@@ -717,7 +710,6 @@ start_copying (DialogData *data)
   gboolean ret = FALSE;
   GFileInfo *info;
   GError *error;
-  gchar *uri = NULL;
 
   error = NULL;
   file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->image_fcbutton));
@@ -749,15 +741,25 @@ start_copying (DialogData *data)
   data->file_size = g_file_info_get_size (info);
   g_object_unref (info);
 
-  uri = gdu_utils_get_pretty_uri (file);
-  gtk_label_set_text (GTK_LABEL (data->source_label), uri);
-
   data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
                                                   GTK_WINDOW (data->dialog),
                                                   GTK_APPLICATION_INHIBIT_SUSPEND |
                                                   GTK_APPLICATION_INHIBIT_LOGOUT,
                                                   /* Translators: Reason why suspend/logout is being inhibited */
                                                   C_("restore-inhibit-message", "Copying disk image to device"));
+
+  data->local_job = gdu_application_create_local_job (gdu_window_get_application (data->window),
+                                                      data->object);
+  udisks_job_set_operation (UDISKS_JOB (data->local_job), "x-gdu-restore-disk-image");
+  /* Translators: this is the description of the job */
+  gdu_local_job_set_description (data->local_job, _("Restoring Disk Image"));
+  udisks_job_set_progress_valid (UDISKS_JOB (data->local_job), TRUE);
+  udisks_job_set_cancelable (UDISKS_JOB (data->local_job), TRUE);
+  g_signal_connect (data->local_job, "canceled",
+                    G_CALLBACK (on_local_job_canceled),
+                    data);
+
+  dialog_data_hide (data);
 
   g_thread_new ("copy-disk-image-thread",
                 copy_thread_func,
@@ -766,7 +768,6 @@ start_copying (DialogData *data)
 
  out:
   g_clear_object (&file);
-  g_free (uri);
   return ret;
 }
 
@@ -816,26 +817,12 @@ on_dialog_response (GtkDialog     *dialog,
       /* now that we know the user picked a folder, update file chooser settings */
       gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->image_fcbutton));
 
-      /* now that we advance to the "copy stage", hide/show some more widgets */
-      gtk_widget_hide (data->image_key_label);
-      gtk_widget_hide (data->image_fcbutton);
-      gtk_widget_hide (data->start_copying_button);
-      gtk_widget_show (data->source_key_label);
-      gtk_widget_show (data->source_label);
-      gtk_widget_show (data->copying_key_label);
-      gtk_widget_show (data->copying_vbox);
-      gtk_widget_hide (data->infobar_vbox);
-
       /* ensure the device is unused (e.g. unmounted) before copying data to it... */
       gdu_window_ensure_unused (data->window,
                                 data->object,
                                 (GAsyncReadyCallback) ensure_unused_cb,
                                 NULL, /* GCancellable */
                                 data);
-      break;
-
-    case GTK_RESPONSE_CLOSE:
-      dialog_data_complete_and_unref (data);
       break;
 
     default: /* explicit fallthrough */
@@ -897,18 +884,12 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
   g_signal_connect (data->image_fcbutton, "notify",
                     G_CALLBACK (on_notify), data);
 
-  /* hide widgets not to be shown initially */
-  gtk_widget_hide (data->source_key_label);
-  gtk_widget_hide (data->source_label);
-  gtk_widget_hide (data->copying_key_label);
-  gtk_widget_hide (data->copying_vbox);
-  gtk_widget_hide (data->close_button);
+  data->response_signal_handler_id = g_signal_connect (data->dialog,
+                                                       "response",
+                                                       G_CALLBACK (on_dialog_response),
+                                                       data);
 
-  g_signal_connect (data->dialog,
-                    "response",
-                    G_CALLBACK (on_dialog_response),
-                    data);
-  gtk_widget_show (data->dialog);
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
   gtk_window_present (GTK_WINDOW (data->dialog));
 }
 

@@ -20,7 +20,7 @@ G_BEGIN_DECLS
 #define GDU_IS_VOLUME_GRID(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_VOLUME_GRID))
 
 GType                     gdu_volume_grid_get_type              (void) G_GNUC_CONST;
-GtkWidget*                gdu_volume_grid_new                   (UDisksClient        *client);
+GtkWidget*                gdu_volume_grid_new                   (GduApplication      *application);
 void                      gdu_volume_grid_set_block_object      (GduVolumeGrid       *grid,
                                                                  UDisksObject        *block_device);
 UDisksObject             *gdu_volume_grid_get_block_object      (GduVolumeGrid      *grid);

@@ -40,6 +40,7 @@
 #include "gdumdraiddisksdialog.h"
 #include "gducreateraidarraydialog.h"
 #include "gduerasemultipledisksdialog.h"
+#include "gdulocaljob.h"
 
 struct _GduWindow
 {
@@ -1287,7 +1288,7 @@ gdu_window_constructed (GObject *object)
   //gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
 
-  window->model = gdu_device_tree_model_new (window->client);
+  window->model = gdu_device_tree_model_new (window->application);
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->device_tree_treeview), GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
@@ -1398,7 +1399,7 @@ gdu_window_constructed (GObject *object)
 
   /* set up non-standard widgets that isn't in the .ui file */
 
-  window->volume_grid = gdu_volume_grid_new (window->client);
+  window->volume_grid = gdu_volume_grid_new (window->application);
   gtk_widget_show (window->volume_grid);
   gtk_box_pack_start (GTK_BOX (window->devtab_grid_hbox),
                       window->volume_grid,
@@ -1574,13 +1575,13 @@ gdu_window_constructed (GObject *object)
 
   /* cancel-button for drive job */
   g_signal_connect (window->devtab_drive_job_cancel_button,
-                    "clicked",
+                    "pressed",
                     G_CALLBACK (on_drive_job_cancel_button_clicked),
                     window);
 
   /* cancel-button for job */
   g_signal_connect (window->devtab_job_cancel_button,
-                    "clicked",
+                    "pressed",
                     G_CALLBACK (on_job_cancel_button_clicked),
                     window);
 
@@ -1982,41 +1983,84 @@ static gchar *
 get_job_progress_text (GduWindow *window,
                        UDisksJob *job)
 {
-  gchar *s;
-  gchar *desc;
+  gchar *s = NULL, *tmp;
   gint64 expected_end_time_usec;
-
-  desc = udisks_client_get_job_description (window->client, job);
+  guint64 rate;
+  guint64 bytes;
 
   expected_end_time_usec = udisks_job_get_expected_end_time (job);
+  rate = udisks_job_get_rate (job);
+  bytes = udisks_job_get_bytes (job);
   if (expected_end_time_usec > 0)
     {
       gint64 usec_left;
       gchar *s2, *s3;
 
       usec_left = expected_end_time_usec - g_get_real_time ();
-      if (usec_left < 0)
+      if (usec_left < 1)
+        usec_left = 1;
+      s2 = gdu_utils_format_duration_usec (usec_left, GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
+      if (rate > 0)
         {
-          /* Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
-           * the expected end time...
+          s3 = g_format_size (rate);
+          /* Translators: Used for job progress.
+           *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+           *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
            */
-          s3 = g_strdup_printf (C_("job-remaining-exceeded", "Almost done…"));
+          s = g_strdup_printf (C_("job-remaining-with-rate", "%s remaining (%s/sec)"), s2, s3);
+          g_free (s3);
         }
       else
         {
-          s2 = gdu_utils_format_duration_usec (usec_left, GDU_FORMAT_DURATION_FLAGS_NONE);
-          s3 = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
+          /* Translators: Used for job progress.
+           *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+           */
+          s = g_strdup_printf (C_("job-remaining", "%s remaining"), s2);
+        }
+      g_free (s2);
+
+      if (bytes > 0 && udisks_job_get_progress_valid (job))
+        {
+          guint64 bytes_done = bytes * udisks_job_get_progress (job);
+          s2 = g_format_size (bytes_done);
+          s3 = g_format_size (bytes);
+          tmp = s;
+          /* Translators: Used to convey job progress where the amount of bytes to process is known.
+           *              The first %s is the amount of bytes processed (ex. "650 MB").
+           *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
+           *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
+           */
+          s = g_strdup_printf (_("%s of %s – %s"), s2, s3, s);
+          g_free (tmp);
+          g_free (s3);
           g_free (s2);
         }
-      s = g_strdup_printf ("<small>%s — %s</small>", desc, s3);
-      g_free (s3);
-    }
-  else
-    {
-      s = g_strdup_printf ("<small>%s</small>", desc);
     }
 
-  g_free (desc);
+  if (GDU_IS_LOCAL_JOB (job))
+    {
+      const gchar *extra_markup = gdu_local_job_get_extra_markup (GDU_LOCAL_JOB (job));
+      if (extra_markup != NULL)
+        {
+          if (s != NULL)
+            {
+              tmp = s;
+              s = g_strdup_printf ("%s\n%s", s, extra_markup);
+              g_free (tmp);
+            }
+          else
+            {
+              s = g_strdup (extra_markup);
+            }
+        }
+    }
+
+  if (s != NULL)
+    {
+      tmp = s;
+      s = g_strdup_printf ("<small>%s</small>", s);
+      g_free (tmp);
+    }
 
   return s;
 }
@@ -2024,108 +2068,178 @@ get_job_progress_text (GduWindow *window,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_drive_jobs (GduWindow *window,
-                   GList     *jobs)
+update_jobs (GduWindow *window,
+             GList     *jobs,
+             gboolean   is_volume)
 {
+  GtkWidget *label = window->devtab_drive_job_label;
+  GtkWidget *grid = window->devtab_drive_job_grid;
+  GtkWidget *progressbar = window->devtab_drive_job_progressbar;
+  GtkWidget *remaining_label = window->devtab_drive_job_remaining_label;
+  GtkWidget *no_progress_label = window->devtab_drive_job_no_progress_label;
+  GtkWidget *cancel_button = window->devtab_drive_job_cancel_button;
+
+  if (is_volume)
+    {
+      label = window->devtab_job_label;
+      grid = window->devtab_job_grid;
+      progressbar = window->devtab_job_progressbar;
+      remaining_label = window->devtab_job_remaining_label;
+      no_progress_label = window->devtab_job_no_progress_label;
+      cancel_button = window->devtab_job_cancel_button;
+    }
+
   if (jobs == NULL)
     {
-      gtk_widget_hide (window->devtab_drive_job_label);
-      gtk_widget_hide (window->devtab_drive_job_grid);
+      gtk_widget_hide (label);
+      gtk_widget_hide (grid);
     }
   else
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      gchar *s;
+      gchar *s, *s2;
 
-      gtk_widget_show (window->devtab_drive_job_label);
-      gtk_widget_show (window->devtab_drive_job_grid);
+      gtk_widget_show (label);
+      gtk_widget_show (grid);
       if (udisks_job_get_progress_valid (job))
         {
           gdouble progress = udisks_job_get_progress (job);
-          gtk_widget_show (window->devtab_drive_job_progressbar);
-          gtk_widget_show (window->devtab_drive_job_remaining_label);
-          gtk_widget_hide (window->devtab_drive_job_no_progress_label);
+          gtk_widget_show (progressbar);
+          gtk_widget_hide (no_progress_label);
 
-          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), progress);
+          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progressbar), progress);
 
-          s = g_strdup_printf ("%2.1f%%", 100.0 * progress);
-          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_job_progressbar), s);
+          if (GDU_IS_LOCAL_JOB (job))
+            s2 = g_strdup (gdu_local_job_get_description (GDU_LOCAL_JOB (job)));
+          else
+            s2 = udisks_client_get_job_description (window->client, job);
+          /* Translators: Used in job progress bar.
+           *              The %s is the job description (e.g. "Erasing Device").
+           *              The %f is the completion percentage (between 0.0 and 100.0).
+           */
+          s = g_strdup_printf (_("%s: %2.1f%%"),
+                                s2,
+                                100.0 * progress);
+          g_free (s2);
+          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (progressbar), TRUE);
+          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (progressbar), s);
           g_free (s);
 
           s = get_job_progress_text (window, job);
-          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_job_remaining_label), s);
-          g_free (s);
+          if (s != NULL)
+            {
+              gtk_widget_show (remaining_label);
+              gtk_label_set_markup (GTK_LABEL (remaining_label), s);
+              g_free (s);
+            }
+          else
+            {
+              gtk_widget_hide (remaining_label);
+            }
         }
       else
         {
-          gtk_widget_hide (window->devtab_drive_job_progressbar);
-          gtk_widget_hide (window->devtab_drive_job_remaining_label);
-          gtk_widget_show (window->devtab_drive_job_no_progress_label);
-          s = udisks_client_get_job_description (window->client, job);
-          gtk_label_set_text (GTK_LABEL (window->devtab_drive_job_no_progress_label), s);
+          gtk_widget_hide (progressbar);
+          gtk_widget_hide (remaining_label);
+          gtk_widget_show (no_progress_label);
+          if (GDU_IS_LOCAL_JOB (job))
+            s = g_strdup (gdu_local_job_get_description (GDU_LOCAL_JOB (job)));
+          else
+            s = udisks_client_get_job_description (window->client, job);
+          gtk_label_set_text (GTK_LABEL (no_progress_label), s);
           g_free (s);
         }
       if (udisks_job_get_cancelable (job))
-        gtk_widget_show (window->devtab_drive_job_cancel_button);
+        gtk_widget_show (cancel_button);
       else
-        gtk_widget_hide (window->devtab_drive_job_cancel_button);
+        gtk_widget_hide (cancel_button);
     }
+}
+
+static void
+update_drive_jobs (GduWindow *window,
+                   GList     *jobs)
+{
+  update_jobs (window, jobs, FALSE);
+}
+
+static void
+update_volume_jobs (GduWindow *window,
+                    GList     *jobs)
+{
+  update_jobs (window, jobs, TRUE);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_drive_part_for_block (GduWindow      *window,
-                             UDisksBlock    *block,       /* should be the whole disk */
-                             ShowFlags      *show_flags)
+update_generic_drive_bits (GduWindow      *window,
+                           UDisksBlock    *block,          /* should be the whole disk */
+                           GList          *jobs,           /* jobs not specific to @block */
+                           ShowFlags      *show_flags)
 {
-  gchar *s = NULL;
-  guint64 size = 0;
-  UDisksObject *object = NULL;
-  UDisksPartitionTable *partition_table = NULL;
-
-  object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
-  if (object == NULL)
-    goto out;
-  partition_table = udisks_object_get_partition_table (object);
-
-  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
-                                       _("Block device is empty"));
-
-  size = udisks_block_get_size (block);
-
-  /* -------------------------------------------------- */
-  /* 'Size' field */
-
-  set_size (window,
-            "devtab-drive-size-label",
-            "devtab-drive-size-value-label",
-            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-
-  /* -------------------------------------------------- */
-  /* 'Partitioning' field - only show if actually partitioned */
-
-  s = NULL;
-  if (partition_table != NULL)
+  if (block != NULL)
     {
-      const gchar *table_type = udisks_partition_table_get_type_ (partition_table);
-      s = g_strdup (udisks_client_get_partition_table_type_for_display (window->client, table_type));
-      if (s == NULL)
-        {
-          /* Translators: Shown for unknown partitioning type. The first %s is the low-level type. */
-          s = g_strdup_printf (C_("partitioning", "Unknown (%s)"), table_type);
-        }
-    }
-  set_markup (window,
-              "devtab-drive-partitioning-label",
-              "devtab-drive-partitioning-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
-  g_free (s);
+      gchar *s = NULL;
+      guint64 size = 0;
+      UDisksObject *object = NULL;
+      UDisksPartitionTable *partition_table = NULL;
 
- out:
-  /* cleanup */
-  g_clear_object (&partition_table);
+      object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+      partition_table = udisks_object_get_partition_table (object);
+
+      gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
+                                           _("Block device is empty"));
+
+      size = udisks_block_get_size (block);
+
+      /* -------------------------------------------------- */
+      /* 'Size' field */
+
+      set_size (window,
+                "devtab-drive-size-label",
+                "devtab-drive-size-value-label",
+                size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+
+      /* -------------------------------------------------- */
+      /* 'Partitioning' field - only show if actually partitioned */
+
+      s = NULL;
+      if (partition_table != NULL)
+        {
+          const gchar *table_type = udisks_partition_table_get_type_ (partition_table);
+          s = g_strdup (udisks_client_get_partition_table_type_for_display (window->client, table_type));
+          if (s == NULL)
+            {
+              /* Translators: Shown for unknown partitioning type. The first %s is the low-level type. */
+              s = g_strdup_printf (C_("partitioning", "Unknown (%s)"), table_type);
+            }
+        }
+      set_markup (window,
+                  "devtab-drive-partitioning-label",
+                  "devtab-drive-partitioning-value-label",
+                  s, SET_MARKUP_FLAGS_NONE);
+      g_free (s);
+
+      g_clear_object (&partition_table);
+    }
+
+  /* -------------------------------------------------- */
+  /* 'Job' field - only shown if a job is running */
+
+  /* if there are no given jobs, look at the block object */
+  if (jobs == NULL && block != NULL)
+    {
+      UDisksObject *block_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+      jobs = udisks_client_get_jobs_for_object (window->client, block_object);
+      jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, block_object));
+      update_drive_jobs (window, jobs);
+      g_list_free_full (jobs, g_object_unref);
+    }
+  else
+    {
+      update_drive_jobs (window, jobs);
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2232,8 +2346,9 @@ update_device_page_for_mdraid (GduWindow      *window,
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
     }
 
-  if (block != NULL)
-    update_drive_part_for_block (window, block, show_flags);
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
+  update_generic_drive_bits (window, block, jobs, show_flags);
 
   gtk_image_set_from_gicon (GTK_IMAGE (window->devtab_drive_image),
                             udisks_object_info_get_icon (info),
@@ -2511,23 +2626,6 @@ update_device_page_for_mdraid (GduWindow      *window,
     }
 
   /* -------------------------------------------------- */
-  /* 'Job' field - only shown if a job is running */
-
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
-  /* if there are no jobs on the RAID array, look at the block object if it's partitioned
-   * (because: if it's not partitioned, we'll see the job in Volumes below so no need to show it here)
-   */
-  if (jobs == NULL && block != NULL)
-    {
-      UDisksObject *block_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
-      if (udisks_object_peek_partition_table (block_object) != NULL)
-        {
-          jobs = udisks_client_get_jobs_for_object (window->client, block_object);
-        }
-    }
-  update_drive_jobs (window, jobs);
-
-  /* -------------------------------------------------- */
 
   /* Show MDRaid-specific items */
   gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
@@ -2583,8 +2681,9 @@ update_device_page_for_drive (GduWindow      *window,
   if (blocks != NULL)
     block = udisks_object_peek_block (UDISKS_OBJECT (blocks->data));
 
-  if (block != NULL)
-    update_drive_part_for_block (window, block, show_flags);
+  jobs = udisks_client_get_jobs_for_object (window->client, object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
+  update_generic_drive_bits (window, block, jobs, show_flags);
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("No Media"));
@@ -2782,14 +2881,6 @@ update_device_page_for_drive (GduWindow      *window,
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
-  if (jobs != NULL)
-    {
-      update_drive_jobs (window, jobs);
-      g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-      g_list_free (jobs);
-    }
-
   if (udisks_drive_get_ejectable (drive))
     {
       show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
@@ -2821,6 +2912,9 @@ update_device_page_for_drive (GduWindow      *window,
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
   g_clear_object (&info);
+
+  g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
+  g_list_free (jobs);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2861,7 +2955,7 @@ update_device_page_for_loop (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  update_drive_part_for_block (window, block, show_flags);
+  update_generic_drive_bits (window, block, NULL, show_flags);
 
   /* -------------------------------------------------- */
   /* 'Auto-clear' and 'Backing File' fields */
@@ -2928,7 +3022,7 @@ update_device_page_for_fake_block (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_buttonbox);
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  update_drive_part_for_block (window, block, show_flags);
+  update_generic_drive_bits (window, block, NULL, show_flags);
 
   /* cleanup */
   g_clear_object (&info);
@@ -2991,7 +3085,7 @@ update_device_page_for_block (GduWindow          *window,
   gchar *in_use_markup = NULL;
   UDisksObject *drive_object;
   UDisksDrive *drive = NULL;
-  GList *jobs;
+  GList *jobs = NULL;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
@@ -3238,50 +3332,15 @@ update_device_page_for_block (GduWindow          *window,
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
 
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
-  if (jobs == NULL)
+  /* Only show jobs if the volume is a partition (if it's not, we're already showing
+   * the jobs in the drive section)
+   */
+  if (partition != NULL)
     {
-      gtk_widget_hide (window->devtab_job_label);
-      gtk_widget_hide (window->devtab_job_grid);
+      jobs = udisks_client_get_jobs_for_object (window->client, object);
+      jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
     }
-  else
-    {
-      UDisksJob *job = UDISKS_JOB (jobs->data);
-
-      gtk_widget_show (window->devtab_job_label);
-      gtk_widget_show (window->devtab_job_grid);
-      if (udisks_job_get_progress_valid (job))
-        {
-          gdouble progress = udisks_job_get_progress (job);
-          gtk_widget_show (window->devtab_job_progressbar);
-          gtk_widget_show (window->devtab_job_remaining_label);
-          gtk_widget_hide (window->devtab_job_no_progress_label);
-
-          gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_job_progressbar), progress);
-
-          s = g_strdup_printf ("%2.1f%%", 100.0 * progress);
-          gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_job_progressbar), TRUE);
-          gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_job_progressbar), s);
-          g_free (s);
-
-          s = get_job_progress_text (window, job);
-          gtk_label_set_markup (GTK_LABEL (window->devtab_job_remaining_label), s);
-          g_free (s);
-        }
-      else
-        {
-          gtk_widget_hide (window->devtab_job_progressbar);
-          gtk_widget_hide (window->devtab_job_remaining_label);
-          gtk_widget_show (window->devtab_job_no_progress_label);
-          s = udisks_client_get_job_description (window->client, job);
-          gtk_label_set_text (GTK_LABEL (window->devtab_job_no_progress_label), s);
-          g_free (s);
-        }
-      if (udisks_job_get_cancelable (job))
-        gtk_widget_show (window->devtab_job_cancel_button);
-      else
-        gtk_widget_hide (window->devtab_job_cancel_button);
-    }
+  update_volume_jobs (window, jobs);
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
   g_clear_object (&partition_table);
@@ -4651,6 +4710,7 @@ on_drive_job_cancel_button_clicked (GtkButton   *button,
   GList *jobs;
 
   jobs = udisks_client_get_jobs_for_object (window->client, window->current_object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, window->current_object));
   /* if there are no jobs on the drive, look at the first block object */
   if (jobs == NULL)
     {
@@ -4661,6 +4721,7 @@ on_drive_job_cancel_button_clicked (GtkButton   *button,
         {
           UDisksObject *block_object = UDISKS_OBJECT (blocks->data);
           jobs = udisks_client_get_jobs_for_object (window->client, block_object);
+          jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, block_object));
         }
       g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
       g_list_free (blocks);
@@ -4668,11 +4729,18 @@ on_drive_job_cancel_button_clicked (GtkButton   *button,
   if (jobs != NULL)
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      udisks_job_call_cancel (job,
-                              g_variant_new ("a{sv}", NULL), /* options */
-                              NULL, /* cancellable */
-                              (GAsyncReadyCallback) drive_job_cancel_cb,
-                              g_object_ref (window));
+      if (GDU_IS_LOCAL_JOB (job))
+        {
+          gdu_local_job_canceled (GDU_LOCAL_JOB (job));
+        }
+      else
+        {
+          udisks_job_call_cancel (job,
+                                  g_variant_new ("a{sv}", NULL), /* options */
+                                  NULL, /* cancellable */
+                                  (GAsyncReadyCallback) drive_job_cancel_cb,
+                                  g_object_ref (window));
+        }
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
@@ -4710,14 +4778,22 @@ on_job_cancel_button_clicked (GtkButton    *button,
   g_assert (object != NULL);
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
   if (jobs != NULL)
     {
       UDisksJob *job = UDISKS_JOB (jobs->data);
-      udisks_job_call_cancel (job,
-                              g_variant_new ("a{sv}", NULL), /* options */
-                              NULL, /* cancellable */
-                              (GAsyncReadyCallback) job_cancel_cb,
-                              g_object_ref (window));
+      if (GDU_IS_LOCAL_JOB (job))
+        {
+          gdu_local_job_canceled (GDU_LOCAL_JOB (job));
+        }
+      else
+        {
+          udisks_job_call_cancel (job,
+                                  g_variant_new ("a{sv}", NULL), /* options */
+                                  NULL, /* cancellable */
+                                  (GAsyncReadyCallback) job_cancel_cb,
+                                  g_object_ref (window));
+        }
     }
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);

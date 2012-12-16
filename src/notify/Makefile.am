@@ -10,7 +10,7 @@ gdu_sd_plugin_LTLIBRARIES = 					\
 	$(NULL)
 
 libgdu_sd_la_SOURCES = 						\
-	gdusdplugin.h		gdusdplugin.c			\
+	gdusdmanager.h		gdusdmanager.c			\
 	gdusdmonitor.h		gdusdmonitor.c			\
 	$(NULL)
 

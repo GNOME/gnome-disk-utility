@@ -12,6 +12,7 @@
 #include <glib/gi18n.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
+#include <gio/gfiledescriptorbased.h>
 
 #include <glib-unix.h>
 #include <sys/ioctl.h>
@@ -71,6 +72,7 @@ typedef struct
   GMutex copy_lock;
   GduEstimator *estimator;
 
+  gboolean allocating_file;
   gboolean retrieving_dvd_keys;
   guint64 num_error_bytes;
   gint64 start_time_usec;
@@ -313,7 +315,11 @@ update_job (DialogData *data,
   data->update_id = 0;
   g_mutex_unlock (&data->copy_lock);
 
-  if (data->retrieving_dvd_keys)
+  if (data->allocating_file)
+    {
+      extra_markup = g_strdup (_("Allocating Disk Image"));
+    }
+  else if (data->retrieving_dvd_keys)
     {
       extra_markup = g_strdup (_("Retrieving DVD keys"));
     }
@@ -640,6 +646,37 @@ copy_thread_func (gpointer user_data)
       error = g_error_new (G_IO_ERROR, G_IO_ERROR_FAILED,
                            _("Device is size 0"));
       goto out;
+    }
+
+  /* Allocate space at once to ensure blocks are laid out contigously,
+   * see http://lwn.net/Articles/226710/
+   */
+  if (G_IS_FILE_DESCRIPTOR_BASED (data->output_file_stream))
+    {
+      gint output_fd = g_file_descriptor_based_get_fd (G_FILE_DESCRIPTOR_BASED (data->output_file_stream));
+      gint rc;
+
+      /* With some filesystems drivers - for example ntfs-3g - posix_fallocate(3) may take a
+       * loong time since it may be implemented as writing zeroes to the file.
+       */
+      g_mutex_lock (&data->copy_lock);
+      data->allocating_file = TRUE;
+      g_mutex_unlock (&data->copy_lock);
+      g_idle_add (on_update_job, dialog_data_ref (data));
+
+      rc = posix_fallocate (output_fd, (off_t) 0, (off_t) block_device_size);
+
+      g_mutex_lock (&data->copy_lock);
+      data->allocating_file = FALSE;
+      g_mutex_unlock (&data->copy_lock);
+      g_idle_add (on_update_job, dialog_data_ref (data));
+
+      if (rc != 0)
+        {
+          error = g_error_new (G_IO_ERROR, g_io_error_from_errno (rc), "%s", strerror (rc));
+          g_prefix_error (&error, _("Error allocating space for disk image file: "));
+          goto out;
+        }
     }
 
   page_size = sysconf (_SC_PAGESIZE);

@@ -1418,6 +1418,7 @@ should_include_block (UDisksObject *object)
 {
   UDisksBlock *block;
   UDisksPartition *partition;
+  UDisksLoop *loop;
   gboolean ret;
   const gchar *device;
   const gchar *drive;
@@ -1428,19 +1429,29 @@ should_include_block (UDisksObject *object)
 
   block = udisks_object_peek_block (object);
   partition = udisks_object_peek_partition (object);
+  loop = udisks_object_peek_loop (object);
 
   /* RAM devices are useless */
   device = udisks_block_get_device (block);
   if (g_str_has_prefix (device, "/dev/ram"))
     goto out;
 
-  /* MD-RAID devices (e.g. /dev/md0) are shown in their own section */
+  /* MD-RAID devices (e.g. /dev/md0) with an associated org.fd.UDisks.MDRaid object are
+   * shown in their own section so don't show them here
+   */
   if (g_strcmp0 (udisks_block_get_mdraid (block), "/") != 0)
     goto out;
 
-  /* Don't show devices of size zero - otherwise we'd end up showing unused loop devices */
+  /* Don't show loop devices of size zero - they're unused.
+   *
+   * Do show any other block device of size 0.
+   *
+   * Note that we _do_ want to show any other device of size 0 (for
+   * exampleinactive MD-RAID devices) since that's a good hint that
+   * the system is misconfigured and attention is needed.
+   */
   size = udisks_block_get_size (block);
-  if (size == 0)
+  if (size == 0 && loop != NULL)
     goto out;
 
   /* Only include devices if they are top-level */

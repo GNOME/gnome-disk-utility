@@ -136,7 +136,7 @@ msg_gsd_plugin=no
 if test "x$enable_gsd_plugin" != "xno"; then
    msg_gsd_plugin=yes
 fi
-AM_CONDITIONAL(USE_GSD_PLUGIN, [test "$enable_gsd_plugin" = "yes"])
+AM_CONDITIONAL(USE_GSD_PLUGIN, [test "$msg_gsd_plugin" = "yes"])
 
 # ********************
 # Internationalization

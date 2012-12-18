@@ -1,6 +1,8 @@
 
 NULL =
 
+if USE_GSD_PLUGIN
+
 gdu_sd_plugin_name = gdu-sd
 
 gdu_sd_plugindir=$(gsd_plugindir)
@@ -42,6 +44,8 @@ libgdu_sd_la_LIBADD  = 						\
 	$(LIBNOTIFY_LIBS)					\
 	$(NULL)
 
+endif # USE_GSD_PLUGIN
+
 # ----------------------------------------------------------------------
 
 noinst_PROGRAMS = test-plugin
@@ -74,7 +78,11 @@ gdu_sd_plugin_in_files = 					\
 	gdu-sd-plugin.gnome-settings-plugin.in			\
 	$(NULL)
 
+if USE_GSD_PLUGIN
+
 gdu_sd_plugin_DATA = $(gdu_sd_plugin_in_files:.gnome-settings-plugin.in=.gnome-settings-plugin)
+
+endif # USE_GSD_PLUGIN
 
 %.gnome-settings-plugin: %.gnome-settings-plugin.in
 	LC_ALL=C $(INTLTOOL_MERGE) -d -u -c $(top_builddir)/po/.intltool-merge-cache $(top_srcdir)/po $< $@

@@ -127,6 +127,17 @@ fi
 
 AM_CONDITIONAL(USE_LIBSYSTEMD_LOGIN, [test "$msg_libsystemd_login" = "yes"])
 
+dnl *************************************
+dnl *** gnome-settings-daemon plug-in ***
+dnl *************************************
+
+AC_ARG_ENABLE(gsd_plugin, AS_HELP_STRING([--disable-gsd-plugin],[don't build gnome-settings-daemon plug-in]))
+msg_gsd_plugin=no
+if test "x$enable_gsd_plugin" != "xno"; then
+   msg_gsd_plugin=yes
+fi
+AM_CONDITIONAL(USE_GSD_PLUGIN, [test "$enable_gsd_plugin" = "yes"])
+
 # ********************
 # Internationalization
 # ********************
@@ -188,6 +199,7 @@ echo "
         localstatedir:              ${localstatedir}
 
         Use libsystem-login:        ${msg_libsystemd_login}
+        Build g-s-d plug-in:        ${msg_gsd_plugin}
 
         compiler:                   ${CC}
         cflags:                     ${CFLAGS}

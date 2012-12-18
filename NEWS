@@ -1,4 +1,210 @@
 -------------------------
+gnome-disk-utility 3.7.0
+-------------------------
+
+The gnome-disk-utility project provides the Disks and Disk Image
+Mounter applications for dealing with storage devices and a
+gnome-settings-daemon plug-in for notifying the user about problems
+with storage devices.
+
+Changes since gnome-disk-utility 3.6.1:
+
+Daniel Mustieles (1):
+      Fixed typo in strings. Fixes bug #683772
+
+David Zeuthen (178):
+      Initial MD-RAID support
+      Show array size and unify some formatting routines
+      If available, show block device when MD-RAID device is selected
+      Use enclosure icon for RAID arrays
+      Show information about array
+      Make it possible to start/stop RAID arrays
+      Slightly rework presentation strings for RAID arrays
+      Nuke "Home Host" field - just display it in the Array Name field if non-local
+      GduVolumeGrid: Nuke the container stuff
+      Show "RAID Array is not running" instead of "No Media"
+      Show jobs / operations for RAID arrays
+      Show "N required (M detected)" if not all RAID members are available
+      Merge branch 'master' into wip/mdraid
+      Split ShowFlags into separate enums depending on type
+      Use "Benchmark" instead of "Benchmark Drive" in the generic drive menu
+      Use "Job" instead of "Pending Operation"
+      Convey array state
+      Show progress bar for certain RAID sync operations
+      Add dialog for RAID disks
+      Make the remove button in the RAID Disks dialog work
+      Make it possible to show a check-box in gdu_utils_show_confirmation()
+      Use new @start-degraded option to make starting degraded arrays work
+      Slightly rework RAID Disks dialog
+      Add a "Go To Disk" toolbar button to the MD-RAID disk dialog
+      Catch up with D-Bus API change for the MDRaid:ActiveDevice property
+      Remove 'Degraded' field and make 'State' field convey if the array is degraded
+      Also show raid state when it's not running
+      Add 'Intent Log' field to convey whether a bitmap is being used
+      Convey RAID Chunk Size, if available
+      Capitalize Disks in the 'RAID Level' heading
+      Use short RAID description in 'RAID Level' field, not long
+      Port from udisks_client_get_drive_info() to udisks_client_get_object_info()
+      Use 'Write-Intent Log' instead of 'Intent Log' for header
+      Use 'Model or Name' instead of just 'Name' in the RAID Disks dialog
+      Show 'Running' for arrays with no redundancy when they're actually running
+      Merge branch 'master' into wip/mdraid
+      Make the "Go To Disk" button work on nested RAID arrays
+      Fix menu placement
+      Don't crash if udisksd drops off the bus
+      Use emblem-system-symbolic for drive menu
+      Ensure buttons in drive button box are square
+      Slightly change how values in the 'RAID Level' field are presented
+      Add a "Go To Array" hyperlink for Linux RAID members
+      Use "Benchmark..." as the menu item for volumes, not "Benchmark Volume..."
+      Take name, homehost into account when rendering Linux RAID members in the grid
+      Drop superfluous 'Using' in values for the 'Write-Intent Log' header
+      Add a "Create RAID Array..." menu item
+      Start working on the "Create RAID Array" dialog
+      Add 'Select Disk' dialog
+      Add GDU_DEVICE_TREE_MODEL_COLUMN_SIZE
+      Add window title to Create Partition dialog
+      Make the "Select Disks" dialog work inside the "Create RAID Array" dialog
+      Make the remove, up and down buttons work in the 'Create RAID Array' dialog
+      Remove hard-coded grey color in the device tree
+      Merge branch 'master' into wip/mdraid
+      Post-release version bump to 3.6.2
+      Merge branch 'master' into wip/mdraid
+      Bump version to 3.7.0
+      Bump required libudisks2 version to 2.0.90
+      Remove preprocessor define for UDISKS_API_IS_SUBJECT_TO_CHANGE
+      Include UDisks versions in the Disks about dialog
+      Remove "Write-Intent Log" field
+      Always show upper section, even for loop and fake block devices
+      Show 'Partitioning' field (if appropriate) and unify some codepaths
+      Don't show partitioning type for free space
+      Combine "Contents" and "In Use" fields
+      Add window title to the "Unlock LUKS" dialog
+      Add window title to the "Change Passphrase" dialog
+      Ensure we display "No Media" instead of "Block device is empty" for drives
+      Rework toolbar to allow for selection of multiple disks
+      Show selected disks in toolbar instead of menu item
+      Also handle MDRaid devices in multi-selection
+      More multi-selection rework after designer feedback
+      Fix up mnemonics for toolbar label
+      Use text for the RAID button, not an icon
+      Fix typo
+      Show a menu for the RAID multiple-selection toolbar button
+      Avoid flashes, by not deferring window setup to idle
+      Set title on secondary Benchmark dialog
+      Start reworking "Create RAID Array" dialog and hook it up
+      Update "Create RAID Array" dialog
+      Don't offer "Create RAID Array" dialog unless disks are all the same size
+      Hook up GUI to udisks master's newly added Manager.MDRaidCreate() method
+      Add dialog for erasing multiple disks at the same time
+      Don't exit multi-selection mode if the user cancels the operation dialog
+      Use option 'no-block' in Block.Format() when erasing multiple disks
+      Use 'Usable Size' instead of 'Array Size' in RAID array creation dialog
+      Show RAID Level description in smaller font
+      GduEstimator: Use 50 samples instead of 100
+      Make "Create Disk Image" feature tolerate read errors
+      Update "Restore Disk Image" to match look and feel of "Create Disk Image"
+      Remove unused define
+      Inhibit suspend/logout when creating a disk image
+      Inhibit suspend/logout when restoring a disk image
+      Use libdvdcss for creating disk images of DVDs, if available
+      Ignore empty VOB files
+      Call gtk_editable_select_region() after the entry is visible
+      Handle more corner-cases for the Drive.Ata.PmGetState() method call
+      Nuke debug spew
+      Update partition type when formatting volumes and creating partitions
+      Add ensure_unused() method to "shut down" a whole device
+      Use ensure_unused() before ejecting
+      Use ensure_unused() before locking a device
+      Use ensure_unused() before formatting a volume
+      Use ensure_unused() before formatting a disk
+      Use ensure_unused() before erasing multiple disks
+      Use ensure_unused() all disks before creating a RAID array on them
+      Show list of affected devices in confirmation dialogs
+      Use ensure_unused() on a loop device before trying to detach it
+      gnome-disks: add --block-device option
+      gnome-disks: update man page
+      Add gnome-settings-daemon plug-in to warn user on SMART failures
+      Update POTFILES.{in,skip}
+      Use ensure_unused() before deleting a partition
+      Don't present "disk is failing" notification more than once
+      Remove ending dots in some tooltips
+      Don't use second-precision in the "Last Benchmarked" label
+      Add Help menu
+      Add accelerator support
+      Fix plural forms
+      Add support for powering off drives
+      Make it possible to enable/disable SMART
+      Use ensure_unused() before creating disk image
+      Use ensure_unused() before restoring a disk image onto a device
+      Use GtkMenuButton in SMART dialog
+      Update SMART dialog
+      Update for udisks Drive.Ata.SmartSetEnabled() changes
+      Catch up with the udisks changes for the UDisksObjectInfo type
+      Show N/A instead of -1 if normalized/threshold/worst is unset
+      Don't leak when sorting
+      Slightly rework SMART dialog layout
+      Use Block:Id property as the filename for benchmarks
+      Don't default to "New Volume" for file system name
+      Don't default to "New RAID Array" for RAID array name
+      Focus cancel button in confirmation dialogs
+      Handle the case where we don't know the contents of a block device
+      Use ensure_unused() before doing a write-benchmark on a device
+      Add utility function to determine if a device is in use
+      Uncheck "Perform write-benchmark" if a device is in use
+      Use ellipsis character ("…") instead of three dots ("...")
+      Use the preferred Unicode characters for double quotes
+      Use the preferred Unicode characters for apostrophe
+      Switch "About Disks" and "Help" menu items in app menu
+      Rework RAID menu on overlay toolbar
+      Don't ask if disk should be wiped when removing it from a RAID array
+      Use the one_liner value from UDisksObjectInfo in RAID dialog
+      Use ensure_unused() on its block device before stopping RAID array
+      Remove gdu-enclosure icon and hard-coded references to it
+      Detect and convey MD-RAID split-brain syndrome
+      Fix-up toolbar in MD-RAID dialog
+      Add Ctrl+R accelerator to bring up the RAID disks dialog
+      Make the "Add" button in the MD-RAID Disks dialog work
+      Add a switch for turning MD-RAID bitmap on/off
+      Add a unit combo-box to the create partition dialog
+      Always show holes bigger than 1 MiB
+      Use floating point in the "Create Partition" dialog
+      Be smart about how many digits are shown in the create partition spinbuttons
+      Fix up some more double-quotes to use Unicode
+      Look at ActiveDevices to determine if a disk can be added to a RAID device
+      Use UDisksObjectInfo everywhere instead of hard-coding names and icons
+      Use udisks_object_info_get_sort_key() instead of rolling our own
+      Ensure sorted and predicted device order in multi-selection mode
+      Make it possible to edit x-gvfs-symbolic-icon=foo mount option
+      Minor cleanups to the confirmation dialog
+      Add Ctrl+E accelerator to bring up the Drive Settings dialog
+      Rework "Drive Settings" dialog to use tabs
+      Make it possible to configure the Write Cache on ATA hard disks
+      Use I as the mnemonic for Write Cache, not C
+      Reword switch labels in Drive Settings dialog
+      Remove unused disk selection dialog
+      Introduce local jobs and use it in create/restore disk image operations
+      Reword read-error message in Create Disk Image dialog
+      GduVolumeGrid: unref the right object
+      Pre-allocate disk image file, if possible
+      Catch up with removal of MDRaid:CanStart{,Degraded} in udisks
+      Show block device, even if size is zero
+      Add --disable-gsd-plugin option and use it at distcheck
+      Update NEWS for release
+
+Giovanni Campagna (2):
+      Fix compilation of GduSdPlugin with newer gnome-settings-daemon
+      Fix GtkMenuButtons with Gtk master
+
+Updated translations: Abderrahim Kitouni, Ask H. Larsen,
+  Dr.T.Vasudevan, Dušan Kazik, Fran Diéguez, Hannie Dumoleyn, Ihar
+  Hrachyshka, Kjartan Maraas, ManojKumar Giri, Nilamdyuti Goswami, Og
+  B. Maciel, Piotr Drąg, Shankar Prasad, Yaron Shahrabani
+
+David Zeuthen,
+December 18, 2012
+
+-------------------------
 gnome-disk-utility 3.6.1
 -------------------------
 

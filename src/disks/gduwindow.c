@@ -2341,9 +2341,7 @@ update_device_page_for_mdraid (GduWindow      *window,
     {
       /* Translators: shown as the device for a RAID array that is not currently running */
       device_desc = g_strdup (C_("mdraid", "Not running"));
-      if (udisks_mdraid_get_can_start (mdraid) ||
-          udisks_mdraid_get_can_start_degraded (mdraid))
-        show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
+      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
     }
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
@@ -2515,21 +2513,8 @@ update_device_page_for_mdraid (GduWindow      *window,
         }
       else
         {
-          if (udisks_mdraid_get_can_start (mdraid))
-            {
-              /* Translators: Shown in the 'State' field for MD-RAID when not running and can be started */
-              raid_state_upper = g_strdup (C_("mdraid-state", "Not running"));
-            }
-          else if (udisks_mdraid_get_can_start_degraded (mdraid))
-            {
-              /* Translators: Shown in the 'State' field for MD-RAID when not running and can only be started degraded */
-              raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Can only start degraded"));
-            }
-          else
-            {
-              /* Translators: Shown in the 'State' field for MD-RAID when not running */
-              raid_state_upper = g_strdup (C_("mdraid-state", "Not running — Not enough disks to start"));
-            }
+          /* Translators: Shown in the 'State' field for MD-RAID when not running */
+          raid_state_upper = g_strdup (C_("mdraid-state", "Not running"));
         }
     }
   else
@@ -4289,6 +4274,9 @@ mdraid_start_cb (UDisksMDRaid  *mdraid,
                                         res,
                                         &error))
     {
+      /* TODO: When udisks has a suitable error code - for example MDRAID_CAN_NOT_START_NORMALLY - and
+       * this is returned, put up a dialog with a --force and --run check-boxes.
+       */
       gdu_utils_show_error (GTK_WINDOW (window),
                             _("Error starting RAID array"),
                             error);
@@ -4308,28 +4296,12 @@ on_devtab_drive_action_raid_start_activated (GtkAction *action,
   mdraid = udisks_object_peek_mdraid (window->current_object);
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
-  if (!udisks_mdraid_get_can_start (mdraid))
-    {
-      g_warn_if_fail (udisks_mdraid_get_can_start_degraded (mdraid));
-
-      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
-                                        C_("mdraid", "Are you sure you want to start the RAID array degraded?"),
-                                        C_("mdraid", "A degraded RAID array is vulnerable to data- and performance-loss"),
-                                        C_("mdraid", "_Start"),
-                                        NULL, NULL,
-                                        window->client, NULL))
-        goto out;
-
-      g_variant_builder_add (&options_builder, "{sv}", "start-degraded", g_variant_new_boolean (TRUE));
-    }
-
+  /* g_variant_builder_add (&options_builder, "{sv}", "start-degraded", g_variant_new_boolean (TRUE)); */
   udisks_mdraid_call_start (mdraid,
                             g_variant_builder_end (&options_builder),
                             NULL, /* cancellable */
                             (GAsyncReadyCallback) mdraid_start_cb,
                             g_object_ref (window));
- out:
-  ;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

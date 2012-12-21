@@ -127,6 +127,8 @@ struct _GduWindow
   /* MDRaid-specific items */
   GtkWidget *generic_drive_menu_item_mdraid_sep_1;
   GtkWidget *generic_drive_menu_item_mdraid_disks;
+  GtkWidget *generic_drive_menu_item_mdraid_start_data_scrubbing;
+  GtkWidget *generic_drive_menu_item_mdraid_stop_data_scrubbing;
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_configure_fstab;
@@ -238,6 +240,8 @@ static const struct {
   /* MDRaid-specific items */
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_sep_1), "generic-drive-menu-item-mdraid-sep-1"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_disks), "generic-drive-menu-item-mdraid-disks"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_start_data_scrubbing), "generic-drive-menu-item-mdraid-start-data-scrubbing"},
+  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_stop_data_scrubbing), "generic-drive-menu-item-mdraid-stop-data-scrubbing"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
@@ -391,6 +395,10 @@ static void on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
 static void on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
                                                      gpointer   user_data);
+static void on_generic_drive_menu_item_mdraid_start_data_scrubbing (GtkMenuItem *menu_item,
+                                                                    gpointer   user_data);
+static void on_generic_drive_menu_item_mdraid_stop_data_scrubbing (GtkMenuItem *menu_item,
+                                                                   gpointer   user_data);
 
 static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
@@ -1522,6 +1530,14 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_mdraid_disks),
                     window);
+  g_signal_connect (window->generic_drive_menu_item_mdraid_start_data_scrubbing,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_mdraid_start_data_scrubbing),
+                    window);
+  g_signal_connect (window->generic_drive_menu_item_mdraid_stop_data_scrubbing,
+                    "activate",
+                    G_CALLBACK (on_generic_drive_menu_item_mdraid_stop_data_scrubbing),
+                    window);
 
   /* volume menu */
   g_signal_connect (window->generic_menu_item_configure_fstab,
@@ -2289,6 +2305,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *raid_state_extra = NULL;
   guint64 sync_rate = 0;
   guint64 sync_remaining_time = 0;
+  gboolean show_stop_data_scrubbing = FALSE;
+  gboolean show_start_data_scrubbing = FALSE;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID array is not running"));
@@ -2534,15 +2552,17 @@ update_device_page_for_mdraid (GduWindow      *window,
 
       if (g_strcmp0 (sync_action, "idle") == 0)
         {
-          ;
+          show_start_data_scrubbing = TRUE;
         }
       else if (g_strcmp0 (sync_action, "check") == 0)
         {
           raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing"));
+          show_stop_data_scrubbing = TRUE;
         }
       else if (g_strcmp0 (sync_action, "repair") == 0)
         {
           raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing and Repair"));
+          show_stop_data_scrubbing = TRUE;
         }
       else if (g_strcmp0 (sync_action, "resync") == 0)
         {
@@ -2658,6 +2678,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   /* Show MDRaid-specific items */
   gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
   gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_drive_menu_item_mdraid_start_data_scrubbing), show_start_data_scrubbing);
+  gtk_widget_set_visible (GTK_WIDGET (window->generic_drive_menu_item_mdraid_stop_data_scrubbing), show_stop_data_scrubbing);
 
   /* -------------------------------------------------- */
 
@@ -3525,6 +3547,8 @@ update_device_page (GduWindow      *window,
   /* Hide all MDRaid-specific items - will be turned on again in update_device_page_for_mdraid() */
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_start_data_scrubbing));
+  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_stop_data_scrubbing));
 
   /* ensure grid is set to the right volumes */
   device_page_ensure_grid (window);
@@ -3770,6 +3794,78 @@ on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_mdraid_disks_dialog_show (window, window->current_object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+request_sync_action_cb (GObject      *source_object,
+                        GAsyncResult *res,
+                        gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GError *error = NULL;
+
+  if (!udisks_mdraid_call_request_sync_action_finish (UDISKS_MDRAID (source_object),
+                                                      res,
+                                                      &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("An error occurred when requesting data redundancy check"),
+                            error);
+      g_clear_error (&error);
+    }
+  g_object_unref (window);
+}
+
+static void
+on_generic_drive_menu_item_mdraid_start_data_scrubbing (GtkMenuItem *menu_item,
+                                                        gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksMDRaid *mdraid = udisks_object_peek_mdraid (window->current_object);
+  const gchar *heading;
+  const gchar *message;
+  gboolean opt_repair = TRUE;
+
+  /* Translators: Heading for data scrubbing dialog */
+  heading = C_("mdraid-scrub-dialog", "Data Scrubbing");
+  /* Translators: Message for data scrubbing dialog */
+  message = C_("mdraid-scrub-dialog", "As storage devices can develop bad blocks at any time it is valuable to regularly read all blocks on all disks in a RAID array so as to catch such bad blocks early.\n\nThe RAID array will remain operational for the duration of the operation but performance will be impacted. For more information about data scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID Administration</a> article.");
+
+  if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                    heading,
+                                    message,
+                                    C_("mdraid-scrub-dialog", "_Start"),
+                                    C_("mdraid-scrub-dialog", "_Repair mismatched blocks, if possible"),
+                                    &opt_repair,
+                                    window->client, NULL))
+    goto out;
+
+  udisks_mdraid_call_request_sync_action (mdraid,
+                                          opt_repair ? "repair" : "check",
+                                          g_variant_new ("a{sv}", NULL), /* options */
+                                          NULL, /* cancellable */
+                                          (GAsyncReadyCallback) request_sync_action_cb,
+                                          g_object_ref (window));
+
+ out:
+  ;
+}
+
+static void
+on_generic_drive_menu_item_mdraid_stop_data_scrubbing (GtkMenuItem *menu_item,
+                                                       gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksMDRaid *mdraid = udisks_object_peek_mdraid (window->current_object);
+
+  udisks_mdraid_call_request_sync_action (mdraid,
+                                          "idle",
+                                          g_variant_new ("a{sv}", NULL), /* options */
+                                          NULL, /* cancellable */
+                                          (GAsyncReadyCallback) request_sync_action_cb,
+                                          g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

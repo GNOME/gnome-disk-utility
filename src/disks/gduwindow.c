@@ -146,6 +146,7 @@ struct _GduWindow
   GtkWidget *devtab_drive_raid_state_grid;
   GtkWidget *devtab_drive_raid_state_value_label;
   GtkWidget *devtab_drive_raid_state_progressbar;
+  GtkWidget *devtab_drive_raid_progress_label;
 
   GtkWidget *devtab_drive_job_label;
   GtkWidget *devtab_drive_job_grid;
@@ -253,6 +254,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_grid), "devtab-drive-raid-state-grid"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_value_label), "devtab-drive-raid-state-value-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progressbar), "devtab-drive-raid-state-progressbar"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_progress_label), "devtab-drive-raid-progress-label"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -2285,6 +2287,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   gchar *degraded_markup = NULL;
   gchar *raid_state = NULL;
   gchar *raid_state_extra = NULL;
+  guint64 sync_rate = 0;
+  guint64 sync_remaining_time = 0;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID array is not running"));
@@ -2297,6 +2301,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   degraded = udisks_mdraid_get_degraded (mdraid);
   sync_action = udisks_mdraid_get_sync_action (mdraid);
   sync_completed = udisks_mdraid_get_sync_completed (mdraid);
+  sync_rate = udisks_mdraid_get_sync_rate (mdraid);
+  sync_remaining_time = udisks_mdraid_get_sync_remaining_time (mdraid);
   bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
   chunk_size = udisks_mdraid_get_chunk_size (mdraid);
 
@@ -2624,6 +2630,24 @@ update_device_page_for_mdraid (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_raid_state_value_label);
   gtk_widget_show (window->devtab_drive_raid_state_label);
   gtk_widget_show (window->devtab_drive_raid_state_grid);
+
+  if (sync_remaining_time > 0)
+    {
+      s2 = gdu_utils_format_duration_usec (sync_remaining_time, GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
+      s3 = g_format_size (sync_rate);
+      /* Translators: Used for MD-RAID sync operation.
+       *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+       *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+       */
+      s = g_strdup_printf (C_("mdraid-sync-op", "%s remaining (%s/sec)"), s2, s3);
+      g_free (s3);
+      g_free (s2);
+      s2 = g_strdup_printf ("<small>%s</small>", s);
+      g_free (s);
+      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_progress_label), s2);
+      g_free (s2);
+      gtk_widget_show (window->devtab_drive_raid_progress_label);
+    }
 
   /* -------------------------------------------------- */
 

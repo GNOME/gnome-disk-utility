@@ -1146,6 +1146,10 @@ update_mdraid (GduDeviceTreeModel *model,
 
   jobs_running = mdraid_has_jobs (model, mdraid);
 
+  /* also show the spinner if a sync op is in progress */
+  if (udisks_mdraid_get_sync_completed (mdraid) > 0.0)
+    jobs_running = TRUE;
+
   gtk_tree_model_get (GTK_TREE_MODEL (model),
                       &iter,
                       GDU_DEVICE_TREE_MODEL_COLUMN_PULSE, &pulse,

@@ -381,7 +381,6 @@ check_for_mdraid_problem (GduSdMonitor  *monitor,
 
   mdraid = udisks_object_peek_mdraid (object);
   if (mdraid == NULL)
-
     goto out;
 
   if (udisks_mdraid_get_degraded (mdraid) == 0)

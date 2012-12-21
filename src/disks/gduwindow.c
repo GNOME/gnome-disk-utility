@@ -146,7 +146,6 @@ struct _GduWindow
   GtkWidget *devtab_drive_raid_state_grid;
   GtkWidget *devtab_drive_raid_state_value_label;
   GtkWidget *devtab_drive_raid_state_progressbar;
-  GtkWidget *devtab_drive_raid_state_progress_label;
 
   GtkWidget *devtab_drive_job_label;
   GtkWidget *devtab_drive_job_grid;
@@ -254,7 +253,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_grid), "devtab-drive-raid-state-grid"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_value_label), "devtab-drive-raid-state-value-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progressbar), "devtab-drive-raid-state-progressbar"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progress_label), "devtab-drive-raid-state-progress-label"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -2285,8 +2283,8 @@ update_device_page_for_mdraid (GduWindow      *window,
   gdouble sync_completed;
   const gchar *bitmap_location;
   gchar *degraded_markup = NULL;
-  gchar *raid_state_upper = NULL;
-  gchar *raid_state_lower = NULL;
+  gchar *raid_state = NULL;
+  gchar *raid_state_extra = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("RAID array is not running"));
@@ -2509,23 +2507,23 @@ update_device_page_for_mdraid (GduWindow      *window,
       /* could be we're already running but don't have any redundancy built-in */
       if (block != NULL)
         {
-          raid_state_upper = g_strdup (C_("mdraid-state", "Running"));
+          raid_state = g_strdup (C_("mdraid-state", "Running"));
         }
       else
         {
           /* Translators: Shown in the 'State' field for MD-RAID when not running */
-          raid_state_upper = g_strdup (C_("mdraid-state", "Not running"));
+          raid_state = g_strdup (C_("mdraid-state", "Not running"));
         }
     }
   else
     {
       if (degraded_markup != NULL)
         {
-          raid_state_upper = g_strdup (degraded_markup);
+          raid_state = g_strdup (degraded_markup);
         }
       else
         {
-          raid_state_upper = g_strdup (C_("mdraid-state", "Running"));
+          raid_state = g_strdup (C_("mdraid-state", "Running"));
         }
 
       if (g_strcmp0 (sync_action, "idle") == 0)
@@ -2534,28 +2532,28 @@ update_device_page_for_mdraid (GduWindow      *window,
         }
       else if (g_strcmp0 (sync_action, "check") == 0)
         {
-          raid_state_lower = g_strdup (C_("mdraid-state", "Redundancy check underway"));
+          raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing"));
         }
       else if (g_strcmp0 (sync_action, "repair") == 0)
         {
-          raid_state_lower = g_strdup (C_("mdraid-state", "Redundancy check and repair underway"));
+          raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing and Repair"));
         }
       else if (g_strcmp0 (sync_action, "resync") == 0)
         {
-          raid_state_lower = g_strdup (C_("mdraid-state", "Resyncing"));
+          raid_state_extra = g_strdup (C_("mdraid-state", "Resyncing"));
         }
       else if (g_strcmp0 (sync_action, "recover") == 0)
         {
-          raid_state_lower = g_strdup (C_("mdraid-state", "Recovering"));
+          raid_state_extra = g_strdup (C_("mdraid-state", "Recovering"));
         }
       else if (g_strcmp0 (sync_action, "frozen") == 0)
         {
-          raid_state_lower = g_strdup (C_("mdraid-state", "Frozen"));
+          raid_state_extra = g_strdup (C_("mdraid-state", "Frozen"));
         }
       else
         {
           g_warning ("unhandled sync action %s", sync_action);
-          raid_state_lower = g_strdup (sync_action);
+          raid_state_extra = g_strdup (sync_action);
         }
     }
 
@@ -2572,43 +2570,60 @@ update_device_page_for_mdraid (GduWindow      *window,
                             * http://en.wikipedia.org/wiki/Split-brain_(computing)
                             * for more details
                             */
-                            C_("raid-split-brain", "Split-brain syndrome"));
-      g_free (raid_state_upper);
+                            C_("raid-split-brain", "Split-Brain"));
+      g_free (raid_state);
       /* Translators: Combiner for the RAID split-brain strings.
        *              The first %s is "SYSTEM IS MISCONFIGURED".
-       *              The second %s is "Split-brain syndrome" as a hyperlink.
+       *              The second %s is "Split-Brain" as a hyperlink.
        */
-      raid_state_upper = g_strdup_printf (C_("raid-split-brain", "%s (%s)"), s, s2);
+      raid_state = g_strdup_printf (C_("raid-split-brain", "%s (%s)"), s, s2);
       g_free (s2);
       g_free (s);
     }
 
-  gtk_widget_show (window->devtab_drive_raid_state_value_label);
-  gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state_upper);
-
-  gtk_widget_show (window->devtab_drive_raid_state_label);
-  gtk_widget_show (window->devtab_drive_raid_state_grid);
-  if (raid_state_lower != NULL)
+  if (sync_completed == 0.0)
     {
-      gtk_widget_show (window->devtab_drive_raid_state_progressbar);
-      gtk_widget_show (window->devtab_drive_raid_state_progress_label);
+      if (raid_state_extra != NULL)
+        {
+          s = g_strdup_printf ("%s\n%s", raid_state, raid_state_extra);
+          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
+          g_free (s);
+        }
+      else
+        {
+          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
+        }
+      gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
+    }
+  else
+    {
+      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
 
-      s = g_strdup_printf ("<small>%s</small>", raid_state_lower);
-      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_progress_label), s);
+      s = g_strdup_printf ("%2.1f%%", 100.0 * sync_completed);
+      if (raid_state_extra != NULL)
+        {
+          /* Translators: Shown in RAID progress bar.
+           *              The first %s is about the operation, e.g. 'Data Scrubbing'.
+           *              The second is the percentage completed, e.g. '42.5%'
+           */
+          s2 = g_strdup_printf (C_("raid-state-progress", "%s: %s"), raid_state_extra, s);
+        }
+      else
+        {
+          s2 = s; s = NULL;
+        }
+      gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), TRUE);
+      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), s2);
+      g_free (s2);
       g_free (s);
 
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), sync_completed);
 
-      s = g_strdup_printf ("%2.1f%%", 100.0 * sync_completed);
-      gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), TRUE);
-      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), s);
-      g_free (s);
+      gtk_widget_show (window->devtab_drive_raid_state_progressbar);
     }
-  else
-    {
-      gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
-      gtk_widget_hide (window->devtab_drive_raid_state_progress_label);
-    }
+  gtk_widget_show (window->devtab_drive_raid_state_value_label);
+  gtk_widget_show (window->devtab_drive_raid_state_label);
+  gtk_widget_show (window->devtab_drive_raid_state_grid);
 
   /* -------------------------------------------------- */
 
@@ -2618,8 +2633,8 @@ update_device_page_for_mdraid (GduWindow      *window,
 
   /* -------------------------------------------------- */
 
-  g_free (raid_state_upper);
-  g_free (raid_state_lower);
+  g_free (raid_state);
+  g_free (raid_state_extra);
   g_free (degraded_markup);
   g_list_free_full (members, g_object_unref);
   g_list_free_full (jobs, g_object_unref);

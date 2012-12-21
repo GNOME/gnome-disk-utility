@@ -2587,7 +2587,7 @@ update_device_page_for_mdraid (GduWindow      *window,
       g_free (s);
     }
 
-  if (sync_completed == 0.0)
+  if (sync_completed == 0.0 && sync_rate == 0 && sync_remaining_time == 0)
     {
       if (raid_state_extra != NULL)
         {

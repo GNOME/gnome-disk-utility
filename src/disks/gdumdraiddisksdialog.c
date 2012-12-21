@@ -37,11 +37,6 @@ typedef struct
 
   GtkWidget *dialog;
 
-  GtkWidget *start_scrub_button;
-  GtkWidget *stop_scrub_button;
-  GtkWidget *scrub_check_menuitem;
-  GtkWidget *scrub_repair_menuitem;
-
   GtkWidget *close_button;
   GtkWidget *scrolledwindow;
   GtkWidget *treeview;
@@ -62,12 +57,8 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
-  {G_STRUCT_OFFSET (DialogData, start_scrub_button), "start-scrub-button"},
-  {G_STRUCT_OFFSET (DialogData, stop_scrub_button), "stop-scrub-button"},
-  {G_STRUCT_OFFSET (DialogData, scrub_check_menuitem), "scrub-check-menuitem"},
-  {G_STRUCT_OFFSET (DialogData, scrub_repair_menuitem), "scrub-repair-menuitem"},
-
   {G_STRUCT_OFFSET (DialogData, close_button), "close-button"},
+
   {G_STRUCT_OFFSET (DialogData, scrolledwindow), "scrolledwindow"},
   {G_STRUCT_OFFSET (DialogData, treeview), "treeview"},
 
@@ -299,31 +290,6 @@ update_dialog_labels (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-update_dialog_scrub_buttons (DialogData *data)
-{
-  gboolean show_start_scrub = FALSE;
-  gboolean show_stop_scrub = FALSE;
-  const gchar *sync_action;
-
-  sync_action = udisks_mdraid_get_sync_action (data->mdraid);
-
-  if (g_strcmp0 (sync_action, "idle") == 0)
-    {
-      show_start_scrub = TRUE;
-    }
-  else if (g_strcmp0 (sync_action, "check") == 0 ||
-           g_strcmp0 (sync_action, "repair") == 0)
-    {
-      show_stop_scrub = TRUE;
-    }
-
-  gtk_widget_set_visible (data->start_scrub_button, show_start_scrub);
-  gtk_widget_set_visible (data->stop_scrub_button, show_stop_scrub);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
 update_dialog (DialogData *data)
 {
   /* don't recurse */
@@ -333,7 +299,6 @@ update_dialog (DialogData *data)
   data->in_update = TRUE;
   update_dialog_treeview (data);
   update_dialog_labels (data);
-  update_dialog_scrub_buttons (data);
   data->in_update = FALSE;
 
  out:
@@ -903,53 +868,6 @@ on_tree_selection_changed (GtkTreeSelection *selection,
 /* ---------------------------------------------------------------------------------------------------- */
 
 
-static void
-request_sync_action_cb (GObject      *source_object,
-                        GAsyncResult *res,
-                        gpointer      user_data)
-{
-  DialogData *data = user_data;
-  GError *error = NULL;
-  if (!udisks_mdraid_call_request_sync_action_finish (UDISKS_MDRAID (source_object),
-                                                      res,
-                                                      &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("An error occurred when triggering data redundancy checks"),
-                            error);
-      g_clear_error (&error);
-    }
-  dialog_data_unref (data);
-}
-
-static void
-scrub_do (DialogData  *data,
-          const gchar *sync_action)
-{
-  udisks_mdraid_call_request_sync_action (data->mdraid,
-                                          sync_action,
-                                          g_variant_new ("a{sv}", NULL), /* options */
-                                          NULL, /* cancellable */
-                                          (GAsyncReadyCallback) request_sync_action_cb,
-                                          dialog_data_ref (data));
-}
-
-static void
-on_scrub_check (GtkMenuItem *menu_item,
-                gpointer     user_data)
-{
-  DialogData *data = user_data;
-  scrub_do (data, "check");
-}
-
-static void
-on_scrub_repair (GtkMenuItem *menu_item,
-                 gpointer     user_data)
-{
-  DialogData *data = user_data;
-  scrub_do (data, "repair");
-}
-
 void
 gdu_mdraid_disks_dialog_show (GduWindow    *window,
                               UDisksObject *object)
@@ -988,9 +906,6 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
       *p = gtk_builder_get_object (data->builder, widget_mapping[n].name);
     }
 
-  g_signal_connect (data->scrub_check_menuitem, "activate", G_CALLBACK (on_scrub_check), data);
-  g_signal_connect (data->scrub_repair_menuitem, "activate", G_CALLBACK (on_scrub_repair), data);
-
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 
   init_dialog (data);
@@ -1004,15 +919,6 @@ gdu_mdraid_disks_dialog_show (GduWindow    *window,
         {
         case GTK_RESPONSE_CLOSE: /* Close */
           goto out;
-          break;
-
-        case 0:
-          /* "Start Data Scrubbing" menu-button - do nothing, handled by menu */
-          break;
-
-        case 1:
-          /* "Stop Data Scrubbing" menu-button */
-          scrub_do (data, "idle");
           break;
 
         default:

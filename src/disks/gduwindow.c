@@ -2648,6 +2648,10 @@ update_device_page_for_mdraid (GduWindow      *window,
       g_free (s2);
       gtk_widget_show (window->devtab_drive_raid_progress_label);
     }
+  else
+    {
+      gtk_widget_hide (window->devtab_drive_raid_progress_label);
+    }
 
   /* -------------------------------------------------- */
 

@@ -355,7 +355,7 @@ update (GduSdMonitor *monitor)
                        /* Translators: This is used as the title of the SMART failure notification */
                        C_("notify-smart", "Hard Disk Problems Detected"),
                        /* Translators: This is used as the text of the SMART failure notification */
-                       C_("notify-smart", "One or more hard disks are likely to fail soon."),
+                       C_("notify-smart", "A hard disk is likely to fail soon."),
                        "gnome-disks",
                        "examine-smart",
                        /* Translators: Text for button in SMART failure notification */

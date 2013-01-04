@@ -4067,28 +4067,20 @@ do_power_off (GduWindow *window)
         objects = g_list_append (objects, sibling_object);
     }
 
-  if (siblings == NULL)
-    {
-      /* Translators: Heading for powering off a device with a single drive */
-      heading = _("Are you sure you want to power off the drive?");
-      /* Translators: Message for powering off a device with a single drive */
-      message = _("This operation will prepare the system for the drive to be removed and powered down.");
-    }
-  else
+  if (siblings != NULL)
     {
       /* Translators: Heading for powering off a device with multiple drives */
       heading = _("Are you sure you want to power off the drives?");
       /* Translators: Message for powering off a device with multiple drives */
       message = _("This operation will prepare the system for the following drives to be removed and powered down.");
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
+                                        heading,
+                                        message,
+                                        _("_Power Off"),
+                                        NULL, NULL,
+                                        window->client, objects))
+        goto out;
     }
-
-  if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
-                                    heading,
-                                    message,
-                                    _("_Power Off"),
-                                    NULL, NULL,
-                                    window->client, objects))
-    goto out;
 
   gdu_window_ensure_unused_list (window,
                                  objects,

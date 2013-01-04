@@ -1591,13 +1591,13 @@ gdu_window_constructed (GObject *object)
 
   /* cancel-button for drive job */
   g_signal_connect (window->devtab_drive_job_cancel_button,
-                    "pressed",
+                    "clicked",
                     G_CALLBACK (on_drive_job_cancel_button_clicked),
                     window);
 
   /* cancel-button for job */
   g_signal_connect (window->devtab_job_cancel_button,
-                    "pressed",
+                    "clicked",
                     G_CALLBACK (on_job_cancel_button_clicked),
                     window);
 
@@ -2768,7 +2768,6 @@ update_device_page_for_drive (GduWindow      *window,
   gtk_widget_show (window->devtab_drive_box);
   gtk_widget_show (window->devtab_drive_vbox);
   gtk_widget_show (window->devtab_drive_buttonbox);
-  gtk_widget_show (window->devtab_drive_eject_button);
   gtk_widget_show (window->devtab_drive_generic_button);
 
   if (udisks_object_info_get_media_icon (info) != NULL)
@@ -3514,6 +3513,33 @@ device_page_ensure_grid (GduWindow *window)
 }
 
 static void
+maybe_hide (GtkWidget *widget,
+            gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+
+  /* Don't hide drive box since visibility of its children (buttons)
+   * are controlled in update_for_show_flags() - hiding it here only
+   * to show it later may cause focus problems so the buttons can't
+   * be clicked if the window is continously updated (say, a job is
+   * running).
+   *
+   * Same for the grid containing the job widgets. Their visibility is
+   * manually controlled in update_jobs().
+   */
+  if (widget == window->devtab_drive_box ||
+      widget == window->devtab_drive_job_grid ||
+      widget == window->devtab_job_grid)
+    {
+      /* do nothing */
+    }
+  else
+    {
+      gtk_widget_hide (widget);
+    }
+}
+
+static void
 update_device_page (GduWindow      *window,
                     ShowFlags      *show_flags)
 {
@@ -3524,18 +3550,16 @@ update_device_page (GduWindow      *window,
   UDisksMDRaid *mdraid;
   UDisksLoop *loop = NULL;
   guint64 size;
-  GList *children;
-  GList *l;
 
-  /* first hide everything */
-  gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), (GtkCallback) gtk_widget_hide, NULL);
-  gtk_container_foreach (GTK_CONTAINER (window->devtab_table), (GtkCallback) gtk_widget_hide, NULL);
-  children = gtk_action_group_list_actions (GTK_ACTION_GROUP (gtk_builder_get_object (window->builder, "devtab-actions")));
-  for (l = children; l != NULL; l = l->next)
-    gtk_action_set_visible (GTK_ACTION (l->data), FALSE);
-  g_list_free (children);
+  /* First hide everything
+   *
+   * (TODO: this is wrong as hiding a widget only to show it again, is
+   * a cause for bad focus problems in GTK+)
+   */
+  gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), maybe_hide, window);
+  gtk_container_foreach (GTK_CONTAINER (window->devtab_table), maybe_hide, window);
 
-  /* Hide all Drive-specific items - will be turned on again in update_device_page_for_drive() */
+  /* Hide all Drive-specific menu items - will be turned on again in update_device_page_for_drive() */
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_1));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_view_smart));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_disk_settings));
@@ -3544,7 +3568,7 @@ update_device_page (GduWindow      *window,
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_power_off));
 
-  /* Hide all MDRaid-specific items - will be turned on again in update_device_page_for_mdraid() */
+  /* Hide all MDRaid-specific menu items - will be turned on again in update_device_page_for_mdraid() */
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_start_data_scrubbing));

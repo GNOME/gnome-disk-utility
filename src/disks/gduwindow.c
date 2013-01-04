@@ -85,6 +85,7 @@ struct _GduWindow
   GtkWidget *devtab_drive_raid_stop_button;
   GtkWidget *devtab_drive_loop_detach_button;
   GtkWidget *devtab_drive_eject_button;
+  GtkWidget *devtab_drive_power_off_button;
   GtkWidget *devtab_drive_generic_button;
   GtkWidget *devtab_drive_desc_label;
   GtkWidget *devtab_drive_devices_label;
@@ -109,6 +110,7 @@ struct _GduWindow
   GtkAction *devtab_drive_action_raid_stop;
   GtkAction *devtab_drive_action_loop_detach;
   GtkAction *devtab_drive_action_eject;
+  GtkAction *devtab_drive_action_power_off;
   GtkAction *devtab_drive_action_generic;
 
   GtkWidget *generic_drive_menu;
@@ -197,6 +199,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_stop_button), "devtab-drive-raid-stop-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_loop_detach_button), "devtab-drive-loop-detach-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_eject_button), "devtab-drive-eject-button"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_power_off_button), "devtab-drive-power-off-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_generic_button), "devtab-drive-generic-button"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_desc_label), "devtab-drive-desc-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_devices_label), "devtab-drive-devices-label"},
@@ -219,6 +222,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_raid_stop), "devtab-drive-action-raid-stop"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_loop_detach), "devtab-drive-action-loop-detach"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_eject), "devtab-drive-action-eject"},
+  {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_power_off), "devtab-drive-action-power-off"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_action_generic), "devtab-drive-action-generic"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
@@ -298,7 +302,8 @@ typedef enum {
   SHOW_FLAGS_DRIVE_BUTTONS_RAID_START       = (1<<0),
   SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP        = (1<<1),
   SHOW_FLAGS_DRIVE_BUTTONS_EJECT            = (1<<2),
-  SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH      = (1<<3),
+  SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF        = (1<<3),
+  SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH      = (1<<4),
 } ShowFlagsDriveButtons;
 
 typedef enum
@@ -374,6 +379,7 @@ static void on_devtab_drive_action_raid_start_activated (GtkAction *action, gpoi
 static void on_devtab_drive_action_raid_stop_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_loop_detach_activated (GtkAction *action, gpointer user_data);
 static void on_devtab_drive_action_eject_activated (GtkAction *action, gpointer user_data);
+static void on_devtab_drive_action_power_off_activated (GtkAction *action, gpointer user_data);
 
 static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
                                              gpointer   user_data);
@@ -532,6 +538,12 @@ update_for_show_flags (GduWindow *window,
   gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_eject), TRUE);
   gtk_widget_set_visible (window->devtab_drive_eject_button,
                           show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_EJECT);
+
+  gtk_action_set_sensitive (GTK_ACTION (window->devtab_drive_action_power_off),
+                            show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF);
+  gtk_action_set_visible (GTK_ACTION (window->devtab_drive_action_power_off), TRUE);
+  gtk_widget_set_visible (window->devtab_drive_power_off_button,
+                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF);
 
   gtk_action_set_visible (GTK_ACTION (window->devtab_action_partition_create),
                           show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_CREATE);
@@ -1487,6 +1499,10 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_drive_action_eject,
                     "activate",
                     G_CALLBACK (on_devtab_drive_action_eject_activated),
+                    window);
+  g_signal_connect (window->devtab_drive_action_power_off,
+                    "activate",
+                    G_CALLBACK (on_devtab_drive_action_power_off_activated),
                     window);
 
   /* drive menu */
@@ -2893,7 +2909,10 @@ update_device_page_for_drive (GduWindow      *window,
 
 
   if (udisks_drive_get_can_power_off (drive))
-    show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_POWER_OFF;
+    {
+      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_POWER_OFF;
+      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF;
+    }
 
   size = udisks_drive_get_size (drive);
   if (size > 0)
@@ -4025,10 +4044,8 @@ power_off_ensure_unused_cb (GduWindow     *window,
 }
 
 static void
-on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
-                                      gpointer     user_data)
+do_power_off (GduWindow *window)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
   GList *objects = NULL;
   GList *siblings, *l;
@@ -4081,6 +4098,22 @@ on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
  out:
   g_list_free_full (siblings, g_object_unref);
   g_list_free (objects);
+}
+
+static void
+on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
+                                      gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  do_power_off (window);
+}
+
+static void
+on_devtab_drive_action_power_off_activated (GtkAction *action,
+                                            gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  do_power_off (window);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

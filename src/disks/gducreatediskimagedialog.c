@@ -77,6 +77,7 @@ typedef struct
   guint64 num_error_bytes;
   gint64 start_time_usec;
   gint64 end_time_usec;
+  gboolean played_read_error_sound;
 
   guint update_id;
   GError *copy_error;
@@ -291,6 +292,24 @@ create_disk_image_populate (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+play_read_error_sound (DialogData *data)
+{
+  const gchar *sound_message;
+
+  /* Translators: A descriptive string for the sound played when
+   * there's a read error that's being ignored, see
+   * CA_PROP_EVENT_DESCRIPTION
+   */
+  sound_message = _("Disk image read error");
+  ca_gtk_play_for_widget (GTK_WIDGET (data->window), 0,
+                          CA_PROP_EVENT_ID, "dialog-warning",
+                          CA_PROP_EVENT_DESCRIPTION, sound_message,
+                          NULL);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
 update_job (DialogData *data,
             gboolean    done)
 {
@@ -364,6 +383,13 @@ update_job (DialogData *data,
         udisks_job_set_expected_end_time (UDISKS_JOB (data->local_job), usec_remaining + g_get_real_time ());
 
       gdu_local_job_set_extra_markup (data->local_job, extra_markup);
+    }
+
+  /* Play a sound the first time we encounter a read error */
+  if (num_error_bytes > 0 && !data->played_read_error_sound)
+    {
+      play_read_error_sound (data);
+      data->played_read_error_sound = TRUE;
     }
 
   g_free (extra_markup);

@@ -462,7 +462,6 @@ on_success (gpointer user_data)
   if (data->num_error_bytes > 0)
     {
       GtkWidget *dialog, *button;
-      GFileInfo *fi = NULL;
       GError *error = NULL;
       gchar *s = NULL;
       gint response;
@@ -473,32 +472,29 @@ on_success (gpointer user_data)
                                                    GTK_MESSAGE_WARNING,
                                                    GTK_BUTTONS_CLOSE,
                                                    "<big><b>%s</b></big>",
-                                                   /* Translators: Primary message in dialog if some data was unreadable while creating a disk image */
-                                                   _("Read errors while creating disk image"));
-      fi = g_file_query_info (data->output_file,
-                              "standard::display-name",
-                              G_FILE_QUERY_INFO_NONE, NULL, NULL);
+                                                   /* Translators: Primary message in dialog shown if some data was unreadable while creating a disk image */
+                                                   _("Unrecoverable read errors while creating disk image"));
       s = g_format_size (data->num_error_bytes);
       percentage = 100.0 * ((gdouble) data->num_error_bytes) / ((gdouble) gdu_estimator_get_completed_bytes (data->estimator));
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                                  /* Translators: Secondary message in dialog if some data was unreadable while creating a disk image.
-                                                   * The first %s is the amount of unreadable data (ex. "4.2 MB").
+                                                  /* Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
                                                    * The %f is the percentage of unreadable data (ex. 13.0).
-                                                   * The second %s is the name of the output file (ex "foo.iso").
+                                                   * The first %s is the amount of unreadable data (ex. "4.2 MB").
+                                                   * The second %s is the name of the device (ex "/dev/").
                                                    */
-                                                  _("%s (%2.1f%%) was unreadable and replaced with zeroes while creating the disk image “%s”. If this is not acceptable, you may delete the disk image"),
-                                                  s,
+                                                  _("%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive"),
                                                   percentage,
-                                                  g_file_info_get_display_name (fi));
+                                                  s,
+                                                  gtk_label_get_text (GTK_LABEL (data->source_label)));
       button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                      _("_Delete Disk Image"),
+                                      /* Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image */
+                                      _("_Delete Disk Image File"),
                                       GTK_RESPONSE_NO);
       gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))),
                                           button, TRUE);
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
       response = gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
-      g_clear_object (&fi);
       g_free (s);
 
       if (response == GTK_RESPONSE_NO)

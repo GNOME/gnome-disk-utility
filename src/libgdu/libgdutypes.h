@@ -1,6 +1,6 @@
 /* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*-
  *
- * Copyright (C) 2008-2012 Red Hat, Inc.
+ * Copyright (C) 2008-2013 Red Hat, Inc.
  *
  * Licensed under GPL version 2 or later.
  *

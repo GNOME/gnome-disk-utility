@@ -1,0 +1,66 @@
+
+ - For optical drives, replace "Create Disk Image…" with "Burn Image to Disc…"
+   - Also wanted: "Blank Disc…" dialog
+   - Part of this involves deciding on library / command-line tools to use
+
+ - Partition resizing
+   - for the udisks part, see https://bugs.freedesktop.org/show_bug.cgi?id=51783
+
+ - Btrfs support
+   - https://bugzilla.gnome.org/show_bug.cgi?id=608204
+
+ - Filesystem Checking
+   - https://bugzilla.gnome.org/show_bug.cgi?id=676555
+
+ - badblocks(8) functionality
+   - Menu item: "Test Disk…" dialog
+   - Basically, a way to do a burn-in test when you buy new disks
+     - e.g. badblocks -wsv /dev/sdb
+   - Avoid modal dialogs so multiple tests can run in parallel
+   - After confirmation (and explanation of the feature), launches a local
+     job that runs forever. Output of the job would be
+
+      [===============>--- Testing Disk: 23.1% complete ------------------] [X]
+      Pass 33: Testing with pattern 0xaa — 0 errors — 2 days, 5 hours elapsed
+
+   - When a new pass is over, the progress bar starts at 0% again
+
+ - Integrate with systemd's journal
+   - make it possible to easily view all log messages related to a device
+     - e.g. journalctl /dev/sda
+       - does this also cover messages in layers below the block layer?
+   - show exclamation icon in device tree-view and a cluebar if there are
+     _important_ and _unread_ messages
+     - define "important" (warning and above?)
+     - define "unread" (does the systemd journal have such a concept?)
+       - Disks will consume the journal APIs through (page-based?) D-Bus
+         interfaces in udisks so maybe we can put the concept of "unread"
+         into that
+   - make udisks log messages to the systemd journal
+   - with this in place, we can completely do away with modal error dialogs
+     - why? because udisksd will have logged an error message to the journal
+       - huge win
+
+ - Improve "Format Disk…" dialog so partitions can be created
+   - Size is adjusted through a slider
+   - Need designer input
+   - Might be hard to do with current GTK+
+
+   +--------------------------------------------------------------------------+
+   |                              Format disk                                 |
+   +--------------------------------------------------------------------------+
+   |         Erase  [Don't overwrite data (Quick)                        |V]  |
+   |  Partitioning  [Compatible with all systems and devices (MBR / DOS) |V]  |
+   |        Layout  [Two Partitions                                      |V]  |
+   |                                                                          |
+   |  /-------------------------------------------------+------------------\  |
+   |  |                                                 |                  |  |
+   |  |                                                 |                  |  |
+   |  |                   1600MB                        |      400MB       |  |
+   |  |                 [Stuff____]                     |   [sekrit____]   |  |
+   |  |                   [NTFS|V]                      |  [ Encrypted|V]  |  |
+   |  |                                                 |                  |  |
+   |  \-------------------------------------------------+------------------/  |
+   |                                                                          |
+   |                                                       [Cancel] [Format…] |
+   +--------------------------------------------------------------------------+

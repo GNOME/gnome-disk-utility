@@ -766,7 +766,7 @@ render_element (GduVolumeGrid *grid,
   gtk_style_context_save (context);
   state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
 
-  state &= ~(GTK_STATE_FLAG_SELECTED | GTK_STATE_FLAG_FOCUSED);
+  state &= ~(GTK_STATE_FLAG_SELECTED | GTK_STATE_FLAG_FOCUSED | GTK_STATE_FLAG_ACTIVE);
   if (is_selected)
     state |= GTK_STATE_FLAG_SELECTED;
   if (is_grid_focused)

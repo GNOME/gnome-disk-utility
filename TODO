@@ -41,6 +41,17 @@
      - why? because udisksd will have logged an error message to the journal
        - huge win
 
+ - Historical SMART values
+   - Like http://people.freedesktop.org/~david/smart-graph-temperature.png
+     - rightmost third is linear (covering 24 hours)
+     - leftmost two thirds are logarithmic (covering 100 days)
+   - We also want small arrows in the list-view to convey the trend of
+     a value over, say, the last week, e.g.
+
+                               | Value       | Normalized   | Worst | Threshold
+     Reallocated Sector Count  | ↑ 2 sectors | ↓ 99         | 99    | 50
+   - See also https://plus.google.com/110773474140772402317/posts/T4pqft6pP9c
+
  - Improve "Format Disk…" dialog so partitions can be created
    - Size is adjusted through a slider
    - Need designer input

@@ -2949,7 +2949,7 @@ update_device_page_for_drive (GduWindow      *window,
                   SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
     }
 
-  if (udisks_drive_get_ejectable (drive))
+  if (udisks_drive_get_ejectable (drive) && udisks_drive_get_media_removable (drive))
     {
       show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
@@ -3396,7 +3396,7 @@ update_device_page_for_block (GduWindow          *window,
     }
   else
     {
-      if (drive != NULL && udisks_drive_get_ejectable (drive))
+      if (drive != NULL && udisks_drive_get_ejectable (drive) && udisks_drive_get_media_removable (drive))
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
 

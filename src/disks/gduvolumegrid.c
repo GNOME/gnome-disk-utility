@@ -766,10 +766,13 @@ render_element (GduVolumeGrid *grid,
   gtk_style_context_save (context);
   state = gtk_widget_get_state_flags (GTK_WIDGET (grid));
 
+  state &= ~(GTK_STATE_FLAG_SELECTED | GTK_STATE_FLAG_FOCUSED);
   if (is_selected)
     state |= GTK_STATE_FLAG_SELECTED;
   if (is_grid_focused)
     state |= GTK_STATE_FLAG_FOCUSED;
+  if (element->show_spinner)
+    state |= GTK_STATE_FLAG_ACTIVE;
   gtk_style_context_set_state (context, state);
 
   /* frames */
@@ -958,15 +961,10 @@ gdu_volume_grid_draw (GtkWidget *widget,
 
   if (animate_spinner != grid->animating_spinner)
     {
-      GtkStyleContext *context = gtk_widget_get_style_context (widget);
-      gtk_style_context_save (context);
-      gtk_style_context_add_class (context, GTK_STYLE_CLASS_SPINNER);
-      gtk_style_context_notify_state_change (context,
-                                             gtk_widget_get_window (widget),
-                                             NULL, /* region_id */
-                                             GTK_STATE_ACTIVE,
-                                             animate_spinner);
-      gtk_style_context_restore (context);
+      if (animate_spinner)
+        gtk_widget_set_state_flags (widget, GTK_STATE_FLAG_ACTIVE, FALSE);
+      else
+        gtk_widget_unset_state_flags (widget, GTK_STATE_FLAG_ACTIVE);
     }
   if (animate_spinner)
     grid->animating_spinner = TRUE;

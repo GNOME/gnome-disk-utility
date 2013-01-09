@@ -1048,11 +1048,11 @@ gdu_utils_get_unused_for_block (UDisksClient *client,
   if (mount_points == NULL || mount_points[0] == NULL)
     goto out;
 
+  /* Don't warn, could be the filesystem is mounted in a place we have no
+   * permission to look at
+   */
   if (statvfs (mount_points[0], &statvfs_buf) != 0)
-    {
-      g_warning ("Error calling statvfs on path %s: %m", mount_points[0]);
-      goto out;
-    }
+    goto out;
 
   ret = ((gint64) statvfs_buf.f_bfree) * ((gint64) statvfs_buf.f_bsize);
 

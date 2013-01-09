@@ -73,6 +73,10 @@ gchar *gdu_utils_get_pretty_uri (GFile *file);
 gboolean gdu_utils_is_in_use (UDisksClient *client,
                               UDisksObject *object);
 
+gint64 gdu_utils_get_unused_for_block (UDisksClient *client,
+                                       UDisksBlock  *block);
+
+
 
 G_END_DECLS
 

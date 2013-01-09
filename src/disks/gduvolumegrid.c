@@ -43,6 +43,7 @@ struct GridElement
   UDisksObject *object;
   gint64 offset;
   gint64 size;
+  gint64 unused;
 
   GList *embedded_elements;
   GridElement *parent;
@@ -804,6 +805,24 @@ render_element (GduVolumeGrid *grid,
   gtk_render_frame (context, cr, x, y, w, h);
   if (is_focused && is_grid_focused)
     gtk_render_focus (context, cr, x + 2, y + 2, w - 4, h - 4);
+  if (element->unused > 0)
+    {
+      gdouble unused_height = element->unused * h / element->size;
+      cairo_pattern_t *gradient;
+      cairo_save (cr);
+      gradient = cairo_pattern_create_linear (x, y + unused_height - 10, x, y + unused_height);
+      cairo_pattern_add_color_stop_rgba (gradient, 0.0,  1.0, 1.0, 1.0, 0.25);
+      cairo_pattern_add_color_stop_rgba (gradient, 1.0,  1.0, 1.0, 1.0, 0.00);
+      cairo_set_source (cr, gradient);
+      cairo_pattern_destroy (gradient);
+      cairo_rectangle (cr,
+                       x,
+                       y,
+                       w,
+                       unused_height);
+      cairo_fill (cr);
+      cairo_restore (cr);
+    }
   gtk_style_context_restore (context);
 
   /* icons */
@@ -1655,6 +1674,10 @@ grid_element_set_details (GduVolumeGrid  *grid,
             mount_points = udisks_filesystem_get_mount_points (filesystem);
             if (g_strv_length ((gchar **) mount_points) > 0)
               element->show_mounted = TRUE;
+
+            element->unused = gdu_utils_get_unused_for_block (grid->client, block);
+            if (element->unused < 0)
+              element->unused = 0;
           }
         else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
           {

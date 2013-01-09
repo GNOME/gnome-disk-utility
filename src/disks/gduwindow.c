@@ -3154,6 +3154,7 @@ update_device_page_for_block (GduWindow          *window,
   UDisksObject *drive_object;
   UDisksDrive *drive = NULL;
   GList *jobs = NULL;
+  gint64 unused_space = -1;
 
   read_only = udisks_block_get_read_only (block);
   partition = udisks_object_peek_partition (object);
@@ -3188,6 +3189,8 @@ update_device_page_for_block (GduWindow          *window,
           show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME;
         }
     }
+
+  unused_space = gdu_utils_get_unused_for_block (window->client, block);
 
   if (partition != NULL && !read_only)
     show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_PARTITION_DELETE;
@@ -3225,10 +3228,33 @@ update_device_page_for_block (GduWindow          *window,
   g_free (s);
   if (size > 0)
     {
-      set_size (window,
-                "devtab-size-label",
-                "devtab-size-value-label",
-                size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+      if (unused_space > 0)
+        {
+          s2 = udisks_client_get_size_for_display (window->client, unused_space, FALSE, FALSE);
+          s3 = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
+          /* Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
+           *              space.
+           *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
+           *              The second %s is a short string with the space free (e.g. '43 GB').
+           *              The %f is the percentage in use (e.g. 62.2).
+           */
+          s = g_strdup_printf (_("%s — %s free (%.1f%% full)"), s3, s2,
+                               100.0 * (size - unused_space) / size);
+          g_free (s3);
+          g_free (s2);
+          set_markup (window,
+                      "devtab-size-label",
+                      "devtab-size-value-label",
+                      s, SET_MARKUP_FLAGS_NONE);
+          g_free (s);
+        }
+      else
+        {
+          set_size (window,
+                    "devtab-size-label",
+                    "devtab-size-value-label",
+                    size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
+        }
     }
   else
     {

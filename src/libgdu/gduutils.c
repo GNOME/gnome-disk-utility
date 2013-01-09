@@ -9,8 +9,8 @@
 
 #include "config.h"
 #include <glib/gi18n.h>
-
 #include <math.h>
+#include <sys/statvfs.h>
 
 #include "gduutils.h"
 
@@ -1021,3 +1021,41 @@ gdu_utils_is_in_use (UDisksClient *client,
   return ret;
 }
 
+/* ---------------------------------------------------------------------------------------------------- */
+
+gint64
+gdu_utils_get_unused_for_block (UDisksClient *client,
+                                UDisksBlock  *block)
+{
+  gint64 ret = -1;
+  UDisksFilesystem *filesystem = NULL;
+  UDisksObject *object = NULL;
+  const gchar *const *mount_points = NULL;
+  struct statvfs statvfs_buf;
+
+  object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
+  if (object == NULL)
+    goto out;
+
+  filesystem = udisks_object_peek_filesystem (object);
+  if (filesystem == NULL)
+    {
+      /* TODO: Look at UDisksFilesystem property set from the udev db populated by blkid(8) */
+      goto out;
+    }
+
+  mount_points = udisks_filesystem_get_mount_points (filesystem);
+  if (mount_points == NULL || mount_points[0] == NULL)
+    goto out;
+
+  if (statvfs (mount_points[0], &statvfs_buf) != 0)
+    {
+      g_warning ("Error calling statvfs on path %s: %m", mount_points[0]);
+      goto out;
+    }
+
+  ret = ((gint64) statvfs_buf.f_bfree) * ((gint64) statvfs_buf.f_bsize);
+
+ out:
+  return ret;
+}

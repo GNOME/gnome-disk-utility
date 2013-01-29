@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.7.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-23 13:10+0100\n"
-"PO-Revision-Date: 2013-01-23 13:50+0100\n"
+"POT-Creation-Date: 2013-01-29 18:30+0100\n"
+"PO-Revision-Date: 2013-01-29 18:56+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -39,7 +39,9 @@ msgstr "Håndter stasjoner og media"
 msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
-msgstr "disk;stasjon;volum;harddisk;hdd;disk;cdrom;dvd;partisjon;iso;avtrykk;sikkerhetskopi;gjenopprett;ytelsestest;raid;luks;kryptering;S.M.A.R.T;smart;"
+msgstr ""
+"disk;stasjon;volum;harddisk;hdd;disk;cdrom;dvd;partisjon;iso;avtrykk;"
+"sikkerhetskopi;gjenopprett;ytelsestest;raid;luks;kryptering;S.M.A.R.T;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -148,7 +150,7 @@ msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
-msgstr ""
+msgstr "Ytelsestest består av måling av overføringshastighet på forskjellige områder av enheten i tillegg til å måle hvor lang tid det tar å søke fra et tilfeldig område til et annet. Ta en sikkerhetskopi før du bruker ytelsestest for skriveoperasjoner."
 
 #: ../data/ui/benchmark-dialog.ui.h:13
 msgid "Transfer Rate"
@@ -177,22 +179,32 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use)."
 msgstr ""
-"Ytelsestest av skrivehastighet for en disk krever eksklusiv tilgang til disken (f.eks. kan ikke disker eller partisjoner være montert eller i bruk) og gjøres ved å lese data for så å skrive dem tilbake. Dette betyr at innholdet på disken ikke endres.\n"
+"Ytelsestest av skrivehastighet for en disk krever eksklusiv tilgang til "
+"disken (f.eks. kan ikke disker eller partisjoner være montert eller i bruk) "
+"og gjøres ved å lese data for så å skrive dem tilbake. Dette betyr at "
+"innholdet på disken ikke endres.\n"
 "\n"
-"Hvis det ikke krysses av for dette vil skrivedelen av ytelsestesten ikke utføres og da trenger man ikke eksklusiv tilgang til enheten - altså kan disker og partisjoner være montert og i bruk."
+"Hvis det ikke krysses av for dette vil skrivedelen av ytelsestesten ikke "
+"utføres og da trenger man ikke eksklusiv tilgang til enheten - altså kan "
+"disker og partisjoner være montert og i bruk."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
-msgstr "Antall prøver. Større antall gir et mer nøyaktig bilde av mønster for disktilgang, men tar lengre tid."
+msgstr ""
+"Antall prøver. Større antall gir et mer nøyaktig bilde av mønster for "
+"disktilgang, men tar lengre tid."
 
 #: ../data/ui/benchmark-dialog.ui.h:21
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
-msgstr "Antall MiB (1048576 bytes) som skal leses/skrives for hver prøve. Større prøvestørrelser tenderer mot å gi mer nøyaktige ytelsestester men da tar ytelsestesten lengre tid."
+msgstr ""
+"Antall MiB (1048576 bytes) som skal leses/skrives for hver prøve. Større "
+"prøvestørrelser tenderer mot å gi mer nøyaktige ytelsestester men da tar "
+"ytelsestesten lengre tid."
 
 #: ../data/ui/benchmark-dialog.ui.h:22
 msgid "Access Time"
@@ -206,7 +218,9 @@ msgstr "Antall datapunkter"
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
-msgstr "Antall prøver. Større antall gir jevnere grafer, men ytelsestesten vil ta lengre tid."
+msgstr ""
+"Antall prøver. Større antall gir jevnere grafer, men ytelsestesten vil ta "
+"lengre tid."
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
 msgid "Change Passphrase"
@@ -398,7 +412,7 @@ msgstr "Bruk innstillinger for tidsavbrudd for hvilemodus"
 msgid ""
 "Turn on to configure Standby Timeout at startup and when the disk is "
 "connected"
-msgstr ""
+msgstr "Slå på for å konfigurere tidsavbrudd for hvilemodus ved oppstart og når disken kobles til"
 
 #: ../data/ui/disk-settings-dialog.ui.h:4
 msgid "Enter Standby After"
@@ -414,7 +428,7 @@ msgstr "Innstillinger for avansert strømstyring"
 
 #: ../data/ui/disk-settings-dialog.ui.h:7
 msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr ""
+msgstr "Slå på for å konfigurere APM ved oppstart og når disken kobles til"
 
 #: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "APM Level"
@@ -440,7 +454,7 @@ msgstr ""
 
 #: ../data/ui/disk-settings-dialog.ui.h:13
 msgid "Vendor Recommended"
-msgstr ""
+msgstr "Anbefalt av leverandør"
 
 #: ../data/ui/disk-settings-dialog.ui.h:14
 msgid "AAM Level"
@@ -451,15 +465,16 @@ msgid "_AAM"
 msgstr "_AAM"
 
 #: ../data/ui/disk-settings-dialog.ui.h:16
-#, fuzzy
 msgid "Apply Write Cache Settings"
-msgstr "Innstillinger for stasjon"
+msgstr "Bruk innstillinger for skrivebuffer"
 
 #: ../data/ui/disk-settings-dialog.ui.h:17
 msgid ""
 "Turn on to configure Write Cache setting at startup and when the disk is "
 "connected"
-msgstr "Slå på konfigurasjon av skrivebufferinnstilling ved oppstart og når disken kobles til"
+msgstr ""
+"Slå på konfigurasjon av skrivebufferinnstilling ved oppstart og når disken "
+"kobles til"
 
 #: ../data/ui/disk-settings-dialog.ui.h:18
 msgid "S_etting"
@@ -477,7 +492,9 @@ msgstr "Slå av skrivebuffer"
 msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
-msgstr "Ytelsen bedres ved å slå på skrivebuffer, men gjør systemet mer sårbart for datatap hvis strømmen blir borte"
+msgstr ""
+"Ytelsen bedres ved å slå på skrivebuffer, men gjør systemet mer sårbart for "
+"datatap hvis strømmen blir borte"
 
 #: ../data/ui/disk-settings-dialog.ui.h:22
 msgid "Wr_ite Cache"
@@ -926,11 +943,11 @@ msgstr "Alternat_iver for montering"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:24
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+msgstr "Monteringsoperasjon lagret i filen <b>/etc/fstab</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
+msgstr "Partisjonstype representert som en 32-bit <i>GUID</i>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:6
 msgid ""
@@ -1008,11 +1025,11 @@ msgstr "F_ilsystem"
 msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
-msgstr ""
+msgstr "Egendefinert type filsystem som skal lages. F.eks. <i>btrfs</i>, <i>xfs</i> eller <i>swap</i>"
 
 #: ../data/ui/filesystem-create.ui.h:5
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
+msgstr "Egendefinert type filsystem som skal lages. F.eks. btrfs, xfs eller swap"
 
 #: ../data/ui/filesystem-create.ui.h:8
 msgid "Enter passphrase used to protect the data"
@@ -1021,7 +1038,7 @@ msgstr "Oppgi passordfrase som ble brukt for å beskytte data"
 #: ../data/ui/filesystem-create.ui.h:12 ../data/ui/format-disk-dialog.ui.h:4
 #: ../src/disks/gduerasemultipledisksdialog.c:396
 msgid "_Erase"
-msgstr ""
+msgstr "Sl_ett"
 
 #: ../data/ui/filesystem-create.ui.h:13
 msgid ""
@@ -1033,11 +1050,11 @@ msgstr ""
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
+msgstr "Navn som skal brukes for filsystemet. Dette er nyttig hvis du vil referere til enheten via en symbolsk lenke i katalogen /dev/disk/by-label"
 
 #: ../data/ui/filesystem-create.ui.h:15
 msgid "For example, “My Files” or “Backup Data”"
-msgstr ""
+msgstr "F.eks. «Mine filer» eller «Sikkerhetskopier»"
 
 #: ../data/ui/format-disk-dialog.ui.h:1
 msgid "Format Disk"
@@ -1097,11 +1114,11 @@ msgstr "Stopp selvtest"
 
 #: ../data/ui/smart-dialog.ui.h:5
 msgid "Click to stop the SMART self-test currently in progress"
-msgstr ""
+msgstr "Klikk for å stoppe SMART selvtest som pågår"
 
 #: ../data/ui/smart-dialog.ui.h:6
 msgid "Click to force re-reading SMART data from the hard disk"
-msgstr ""
+msgstr "Klikk for å tvinge ny lesing av SMART-data fra harddisken"
 
 #: ../data/ui/smart-dialog.ui.h:7
 msgid "Powered On"
@@ -1133,7 +1150,7 @@ msgstr "Helhetlig evaluering"
 
 #: ../data/ui/smart-dialog.ui.h:13
 msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr ""
+msgstr "Klikk for å slå av/på hvorvidt SMART er aktiv for harddisken"
 
 #: ../data/ui/smart-dialog.ui.h:14
 msgid "SMART _Attributes"
@@ -1189,16 +1206,16 @@ msgstr ""
 #: ../src/disk-image-mounter/main.c:133
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr ""
+msgstr "Feil ved tilkobling til udisks-tjenesten: %s (%s, %d)"
 
 #: ../src/disk-image-mounter/main.c:141
 msgid "Attach and mount one or more disk image files."
-msgstr ""
+msgstr "Koble til og monter ett eller flere diskbildeavtrykk."
 
 #: ../src/disk-image-mounter/main.c:189
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
-msgstr ""
+msgstr "Kan ikke åpne «%s» - kanskje volumet ikke er montert?"
 
 #: ../src/disk-image-mounter/main.c:196
 #, c-format
@@ -1366,7 +1383,7 @@ msgstr ""
 
 #: ../src/disks/gduatasmartdialog.c:236
 msgid "Number of attempts to calibrate the device"
-msgstr ""
+msgstr "Antall forsøk på å kalibrere enheten"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2007,7 +2024,7 @@ msgstr "Feil ved start av SMART-selvtest"
 
 #: ../src/disks/gduatasmartdialog.c:1432
 msgid "An error occurred when trying toggle whether SMART is enabled"
-msgstr ""
+msgstr "En feil oppsto ved forsøk på å slå av/på SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/disks/gduatasmartdialog.c:1515
@@ -2091,7 +2108,7 @@ msgstr "%s (%s siden)"
 #: ../src/disks/gdubenchmarkdialog.c:708
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
-msgstr ""
+msgstr "Ingen ytelsesdata tilgjengelig"
 
 #: ../src/disks/gdubenchmarkdialog.c:713
 msgctxt "benchmark-updated"
@@ -2102,13 +2119,13 @@ msgstr "Åpner enhet …"
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr ""
+msgstr "Måler overføringshastighet (%2.1f%% fullført) …"
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
-msgstr ""
+msgstr "Måler aksesstid (%2.1f%% fullført) …"
 
 #: ../src/disks/gdubenchmarkdialog.c:787
 msgctxt "benchmarking"
@@ -2217,7 +2234,7 @@ msgstr "/etc/crypttab konfigurasjonsdata er feilutformet"
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
-msgstr ""
+msgstr "Bytte av passord for denne enheten vil også oppdatere passordet som refereres av filen <i>/etc/crypttab</i>"
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
 #: ../src/disks/gducreatefilesystemwidget.c:537
@@ -2255,7 +2272,7 @@ msgstr "Henter DVD-nøkler"
 #: ../src/disks/gducreatediskimagedialog.c:352
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
-msgstr ""
+msgstr "%s ikke lesbar (erstattet med null)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
 #: ../src/disks/gducreatediskimagedialog.c:406
@@ -2269,9 +2286,8 @@ msgstr "Feil ved oppretting av diskbilde"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:476
-#, fuzzy
 msgid "Unrecoverable read errors while creating disk image"
-msgstr "Feil ved oppretting av diskbilde"
+msgstr "Lesefeil som ikke kan gjenopprettes ved oppretting av diskbilde"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -2284,7 +2300,7 @@ msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
-msgstr ""
+msgstr "%2.1f%% (%s) av data på enhet «%s» kunne ikke leses og ble erstattet med tallet null i diskavtrykkfilen som ble opprettet. Dette skjer typisk hvis mediet er slettet eller hvis stasjonen har fysiske skader"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -2450,13 +2466,12 @@ msgid "Error creating RAID array"
 msgstr "Feil ved oppretting av RAID-sett"
 
 #: ../src/disks/gducreateraidarraydialog.c:573
-#, fuzzy
 msgid "Are you sure you want to use the disks for a RAID array?"
-msgstr "Er du sikker på at du vil formatere disken?"
+msgstr "Er du sikker på at du vil bruke diskene i et RAID-sett?"
 
 #: ../src/disks/gducreateraidarraydialog.c:574
 msgid "Existing content on the devices will be erased"
-msgstr ""
+msgstr "Eksisterende innhold på enhetene vil bli slettet"
 
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -2494,20 +2509,20 @@ msgstr "Diskenheter"
 
 #: ../src/disks/gdudevicetreemodel.c:633
 msgid "RAID Arrays"
-msgstr ""
+msgstr "RAID-sett"
 
 #. Translators: Used in the device tree for a RAID Array, the first %s is the size
 #: ../src/disks/gdudevicetreemodel.c:1098
 #, c-format
 msgctxt "md-raid-tree-primary"
 msgid "%s RAID Array"
-msgstr ""
+msgstr "%s RAID-sett"
 
 #. Translators: Used in the device tree for a RAID Array where the size is not known
 #: ../src/disks/gdudevicetreemodel.c:1104
 msgctxt "md-raid-tree-primary"
 msgid "RAID Array"
-msgstr ""
+msgstr "RAID-sett"
 
 #. Translators: Used as a secondary line in device tree for RAID Array.
 #. *              The first %s is the name of the array (e.g. "My RAID Array").
@@ -2615,13 +2630,12 @@ msgid "Loud (Fast)"
 msgstr "Høylydt (rask)"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:154
-#, fuzzy
 msgid "ATA Secure Erase / Enhanced Secure Erase"
-msgstr "ATA forbedret sikker sletting"
+msgstr "ATA sikker sletting / forbedret sikker sletting"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:155
 msgid "If Available, Slow"
-msgstr ""
+msgstr "Hvis tilgjengelig, treg"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:186
 #, c-format
@@ -2762,14 +2776,14 @@ msgstr "Er du sikker på at du vil formatere volumet?"
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
-msgstr ""
+msgstr "Alle data på volumet vil gå tapt, men vil fremdeles kunne gjenopprettes av datagjenopprettingstjenester"
 
 #. Translators: warning used when overwriting data of the volume
 #: ../src/disks/gduformatvolumedialog.c:202
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
-msgstr ""
+msgstr "Alle data på volumet vil bli overskrevet og vil mest sannsynlig ikke kunne gjenopprettes av datagjenopprettingstjenester"
 
 #: ../src/disks/gdufstabdialog.c:154
 #, c-format
@@ -2827,7 +2841,7 @@ msgstr "%s <span size=\"smaller\">(Skrivebeskyttet)</span>"
 
 #: ../src/disks/gdumdraiddisksdialog.c:334
 msgid "An error occurred when removing a disk from the RAID Array"
-msgstr ""
+msgstr "En feil oppsto under fjerning av en disk fra RAID-settet"
 
 #: ../src/disks/gdumdraiddisksdialog.c:372
 msgctxt "mdraid-disks"
@@ -2837,7 +2851,7 @@ msgstr "Er du sikker på at du vil fjerne disken?"
 #: ../src/disks/gdumdraiddisksdialog.c:373
 msgctxt "mdraid-disks"
 msgid "Removing a disk from a RAID array may degrade it"
-msgstr ""
+msgstr "Fjerning av en disk fra RAID-settet kan degradere det"
 
 #: ../src/disks/gdumdraiddisksdialog.c:374
 msgctxt "mdraid-disks"
@@ -2871,7 +2885,7 @@ msgstr "Gjenopprettes"
 #: ../src/disks/gdumdraiddisksdialog.c:646
 msgctxt "mdraid-disks-state"
 msgid "Write-mostly"
-msgstr ""
+msgstr "Mest-skriv"
 
 #. Translators: MD-RAID member state for 'blocked'
 #: ../src/disks/gdumdraiddisksdialog.c:653
@@ -2912,7 +2926,7 @@ msgstr "Feil"
 
 #: ../src/disks/gdumdraiddisksdialog.c:948
 msgid "An error occurred when adding a disk to the RAID Array"
-msgstr ""
+msgstr "En feil oppsto under tillegg av en disk i RAID-settet"
 
 #: ../src/disks/gdumdraiddisksdialog.c:970
 msgctxt "mdraid-disks"
@@ -2927,7 +2941,7 @@ msgstr "Alle eksisterende data på disken vil gå tapt"
 #: ../src/disks/gdumdraiddisksdialog.c:972
 msgctxt "mdraid-disks"
 msgid "_Add"
-msgstr ""
+msgstr "_Legg til"
 
 #. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
 #. *              right size available
@@ -2935,7 +2949,7 @@ msgstr ""
 #: ../src/disks/gdumdraiddisksdialog.c:1150
 msgctxt "mdraid-add"
 msgid "No disks of suitable size available"
-msgstr ""
+msgstr "Ingen disker av passende størrelse tilgjengelig"
 
 #. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
 #. *              disks that can be added to the array
@@ -3085,7 +3099,7 @@ msgstr "Swap"
 #, c-format
 msgctxt "volume-grid"
 msgid "%s [local to %s]"
-msgstr ""
+msgstr "%s [lokal for %s]"
 
 #: ../src/disks/gduwindow.c:730
 msgid "Error deleting loop device"
@@ -3118,53 +3132,53 @@ msgstr ""
 #: ../src/disks/gduwindow.c:1651
 msgctxt "accelerator"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 #. Translators: This is the short-cut to format a disk
 #: ../src/disks/gduwindow.c:1656
 msgctxt "accelerator"
 msgid "<Ctrl>F"
-msgstr ""
+msgstr "<Ctrl>F"
 
 #. Translators: This is the short-cut to view SMART data for a disk
 #: ../src/disks/gduwindow.c:1661
 msgctxt "accelerator"
 msgid "<Ctrl>S"
-msgstr ""
+msgstr "<Ctrl>S"
 
 #. Translators: This is the short-cut to view RAID Disks for a RAID array
 #: ../src/disks/gduwindow.c:1666
 msgctxt "accelerator"
 msgid "<Ctrl>R"
-msgstr ""
+msgstr "<Ctrl>R"
 
 #. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
 #: ../src/disks/gduwindow.c:1671
 msgctxt "accelerator"
 msgid "<Ctrl>E"
-msgstr ""
+msgstr "<Ctrl>E"
 
 #. Translators: This is the short-cut to open the volume gear menu
 #: ../src/disks/gduwindow.c:1676
 msgctxt "accelerator"
 msgid "<Shift>F10"
-msgstr ""
+msgstr "<Shift>F10"
 
 #. Translators: This is the short-cut to format a volume
 #: ../src/disks/gduwindow.c:1683
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
-msgstr ""
+msgstr "<Shift><Ctrl>F"
 
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
 #: ../src/disks/gduwindow.c:2042
-#, fuzzy, c-format
+#, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
-msgstr "%s gjenstår"
+msgstr "%s gjenstår (%s/sek)"
 
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
@@ -3266,13 +3280,13 @@ msgstr "%s, %s"
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d disk mangler"
+msgstr[1] "%d disker mangler"
 
 #: ../src/disks/gduwindow.c:2535
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
-msgstr ""
+msgstr "SETTET ER NEDGRADERT"
 
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
@@ -3297,33 +3311,33 @@ msgstr "Kjører ikke"
 #: ../src/disks/gduwindow.c:2575
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "Dataskrubbing"
 
 #: ../src/disks/gduwindow.c:2580
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
-msgstr ""
+msgstr "Dataskrubbing og reparasjon"
 
 #: ../src/disks/gduwindow.c:2585
 msgctxt "mdraid-state"
 msgid "Resyncing"
-msgstr ""
+msgstr "Synkroniserer på nytt"
 
 #: ../src/disks/gduwindow.c:2589
 msgctxt "mdraid-state"
 msgid "Recovering"
-msgstr ""
+msgstr "Gjenoppretter"
 
 #: ../src/disks/gduwindow.c:2593
 msgctxt "mdraid-state"
 msgid "Frozen"
-msgstr ""
+msgstr "Frosset"
 
 #. Translators: String for conveying the raid array is misconfigured
 #: ../src/disks/gduwindow.c:2609
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr ""
+msgstr "RAID-SETT ER FEILKONFIGURERT"
 
 #. Translators: The specific type of misconfiguration, see
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
@@ -3332,7 +3346,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:2615
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
-msgstr ""
+msgstr "Split-Brain"
 
 #. Translators: Combiner for the RAID split-brain strings.
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
@@ -3352,7 +3366,7 @@ msgstr "%s (%s)"
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #. Translators: Used for MD-RAID sync operation.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
@@ -3384,7 +3398,7 @@ msgstr "Løkkeenheten er tom"
 #: ../src/disks/gduwindow.c:3241
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr ""
+msgstr "%s – %s ledig (%.1f%% full)"
 
 #: ../src/disks/gduwindow.c:3271
 msgctxt "partition type"
@@ -3479,7 +3493,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:3901
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "Dataskrubbing"
 
 #. Translators: Message for data scrubbing dialog
 #: ../src/disks/gduwindow.c:3903
@@ -3514,9 +3528,8 @@ msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 
 #: ../src/disks/gduwindow.c:4047
-#, fuzzy
 msgid "Error powering off drive"
-msgstr "Feil ved montering av filsystem"
+msgstr "Feil ved forsøk på å slå av strømmen på stasjonen"
 
 #. Translators: Heading for powering off a device with multiple drives
 #: ../src/disks/gduwindow.c:4099
@@ -3528,7 +3541,9 @@ msgstr "Er du sikker på at du vil slå av diskene?"
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
-msgstr "Denne operasjonen vil forberede systemet for å slå av og fjerne følgende stasjoner."
+msgstr ""
+"Denne operasjonen vil forberede systemet for å slå av og fjerne følgende "
+"stasjoner."
 
 #: ../src/disks/gduwindow.c:4105
 msgid "_Power Off"

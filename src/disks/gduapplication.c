@@ -11,6 +11,7 @@
 
 #include <glib/gi18n.h>
 
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -112,6 +113,47 @@ gdu_application_ensure_client (GduApplication *app)
  out:
   ;
 }
+
+static UDisksObject *
+gdu_application_object_from_block_device (GduApplication *app,
+                                          const gchar *block_device,
+                                          gchar **error_message)
+{
+  struct stat statbuf;
+  const gchar *crypto_backing_device;
+  UDisksObject *object, *crypto_backing_object;
+  UDisksBlock *block;
+
+  object = NULL;
+
+  if (stat (block_device, &statbuf) != 0)
+    {
+      *error_message = g_strdup_printf (_("Error opening %s: %s\n"), block_device, g_strerror (errno));
+      goto out;
+    }
+
+  block = udisks_client_get_block_for_dev (app->client, statbuf.st_rdev);
+  if (block == NULL)
+    {
+      *error_message = g_strdup_printf (_("Error looking up block device for %s\n"), block_device);
+      goto out;
+    }
+
+  object = UDISKS_OBJECT (g_dbus_interface_dup_object (G_DBUS_INTERFACE (block)));
+  g_object_unref (block);
+
+  crypto_backing_device = udisks_block_get_crypto_backing_device ((udisks_object_peek_block (object)));
+  crypto_backing_object = udisks_client_get_object (app->client, crypto_backing_device);
+  if (crypto_backing_object != NULL)
+    {
+      g_object_unref (object);
+      object = crypto_backing_object;
+    }
+
+ out:
+  return object;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* called in primary instance */
@@ -127,7 +169,7 @@ gdu_application_command_line (GApplication            *_app,
   gint argc;
   gint ret = 1;
   gchar *s;
-  gchar *opt_block_device = NULL;
+  gchar *opt_block_device = NULL, *error_message = NULL;
   gboolean opt_help = FALSE;
   gboolean opt_format = FALSE;
   GOptionEntry opt_entries[] =
@@ -167,29 +209,17 @@ gdu_application_command_line (GApplication            *_app,
       goto out;
     }
 
+  gdu_application_ensure_client (app);
+
   if (opt_block_device != NULL)
     {
-      struct stat statbuf;
-      UDisksBlock *block;
-
-      if (stat (opt_block_device, &statbuf) != 0)
+      object_to_select = gdu_application_object_from_block_device (app, opt_block_device, &error_message);
+      if (object_to_select == NULL)
         {
-          g_application_command_line_print (command_line, _("Error opening %s: %m\n"), opt_block_device);
+          g_application_command_line_print (command_line, "%s", error_message);
+          g_free (error_message);
           goto out;
         }
-
-      gdu_application_ensure_client (app);
-
-      block = udisks_client_get_block_for_dev (app->client, statbuf.st_rdev);
-      if (block == NULL)
-        {
-          g_application_command_line_print (command_line, _("Error looking up block device for %s: %m\n"),
-                                            opt_block_device);
-          goto out;
-        }
-
-      object_to_select = UDISKS_OBJECT (g_dbus_interface_dup_object (G_DBUS_INTERFACE (block)));
-      g_object_unref (block);
     }
 
 

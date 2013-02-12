@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 #include "gduapplication.h"
+#include "gduformatvolumedialog.h"
 #include "gduwindow.h"
 #include "gdulocaljob.h"
 
@@ -128,9 +129,11 @@ gdu_application_command_line (GApplication            *_app,
   gchar *s;
   gchar *opt_block_device = NULL;
   gboolean opt_help = FALSE;
+  gboolean opt_format = FALSE;
   GOptionEntry opt_entries[] =
   {
     {"block-device", 0, 0, G_OPTION_ARG_STRING, &opt_block_device, N_("Select device"), NULL },
+    {"format-device", 0, 0, G_OPTION_ARG_NONE, &opt_format, N_("Format selected device"), NULL },
     {"help", '?', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &opt_help, N_("Show help options"), NULL },
     {NULL}
   };
@@ -155,6 +158,12 @@ gdu_application_command_line (GApplication            *_app,
       g_application_command_line_print (command_line, "%s",  s);
       g_free (s);
       ret = 0;
+      goto out;
+    }
+
+  if (opt_format && opt_block_device == NULL)
+    {
+      g_application_command_line_printerr (command_line, _("--format-device must be used together with --block-device\n"));
       goto out;
     }
 
@@ -183,6 +192,7 @@ gdu_application_command_line (GApplication            *_app,
       g_object_unref (block);
     }
 
+
   if (app->window == NULL)
     {
       g_application_activate (G_APPLICATION (app));
@@ -194,7 +204,11 @@ gdu_application_command_line (GApplication            *_app,
     }
 
   if (object_to_select != NULL)
-    gdu_window_select_object (app->window, object_to_select);
+    {
+      gdu_window_select_object (app->window, object_to_select);
+      if (opt_format)
+        gdu_format_volume_dialog_show (app->window, object_to_select);
+    }
 
 
   ret = 0;

@@ -905,13 +905,14 @@ gdu_utils_get_pretty_uri (GFile *file)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-/* keep in sync with src/disks/gduwindow.c:unuse_data_iterate() */
-
-gboolean
-gdu_utils_is_in_use (UDisksClient *client,
-                     UDisksObject *object)
+static gboolean
+gdu_utils_is_in_use_full (UDisksClient      *client,
+                          UDisksObject      *object,
+                          UDisksFilesystem **filesystem_to_unmount_out,
+                          UDisksEncrypted  **encrypted_to_lock_out)
 {
-  gboolean ret = FALSE;
+  UDisksFilesystem *filesystem_to_unmount = NULL;
+  UDisksEncrypted *encrypted_to_lock = NULL;
   UDisksBlock *block = NULL;
   UDisksDrive *drive = NULL;
   UDisksObject *block_object = NULL;
@@ -919,6 +920,7 @@ gdu_utils_is_in_use (UDisksClient *client,
   GList *partitions = NULL;
   GList *l;
   GList *objects_to_check = NULL;
+  gboolean ret = FALSE;
 
   drive = udisks_object_get_drive (object);
   if (drive != NULL)
@@ -991,8 +993,8 @@ gdu_utils_is_in_use (UDisksClient *client,
           const gchar *const *mount_points = udisks_filesystem_get_mount_points (filesystem_for_object);
           if (g_strv_length ((gchar **) mount_points) > 0)
             {
-              ret = TRUE;
-              goto out;
+              filesystem_to_unmount = g_object_ref (filesystem_for_object);
+              goto victim_found;
             }
         }
 
@@ -1004,21 +1006,244 @@ gdu_utils_is_in_use (UDisksClient *client,
           if (cleartext != NULL)
             {
               g_object_unref (cleartext);
-              ret = TRUE;
-              goto out;
+              encrypted_to_lock = g_object_ref (encrypted_for_object);
+              goto victim_found;
             }
         }
     }
 
- out:
+ victim_found:
+
+  if (filesystem_to_unmount_out != NULL)
+    {
+      *filesystem_to_unmount_out = (filesystem_to_unmount != NULL) ?
+        g_object_ref (filesystem_to_unmount) : NULL;
+      ret = TRUE;
+    }
+  else if (encrypted_to_lock_out != NULL)
+    {
+      *encrypted_to_lock_out = (encrypted_to_lock != NULL) ?
+        g_object_ref (encrypted_to_lock) : NULL;
+      ret = TRUE;
+    }
 
   g_clear_object (&partition_table);
   g_list_free_full (partitions, g_object_unref);
   g_list_free_full (objects_to_check, g_object_unref);
+  g_clear_object (&encrypted_to_lock);
+  g_clear_object (&filesystem_to_unmount);
   g_clear_object (&block_object);
   g_clear_object (&block);
   g_clear_object (&drive);
+
   return ret;
+}
+
+gboolean
+gdu_utils_is_in_use (UDisksClient *client,
+                     UDisksObject *object)
+{
+  return gdu_utils_is_in_use_full (client, object, NULL, NULL);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+typedef struct
+{
+  UDisksClient *client;
+  GtkWindow *parent_window;
+  GList *objects;
+  GList *object_iter;
+  GSimpleAsyncResult *simple;
+  GCancellable *cancellable; /* borrowed ref */
+} UnuseData;
+
+static void
+unuse_data_free (UnuseData *data)
+{
+  g_clear_object (&data->client);
+  g_list_free_full (data->objects, g_object_unref);
+  g_clear_object (&data->simple);
+  g_slice_free (UnuseData, data);
+}
+
+static void
+unuse_data_complete (UnuseData    *data,
+                     const gchar  *error_message,
+                     GError       *error)
+{
+  if (error != NULL)
+    {
+      gdu_utils_show_error (data->parent_window,
+                            error_message,
+                            error);
+      g_simple_async_result_take_error (data->simple, error);
+    }
+  g_simple_async_result_complete_in_idle (data->simple);
+  unuse_data_free (data);
+}
+
+static void unuse_data_iterate (UnuseData *data);
+
+static void
+unuse_unmount_cb (UDisksFilesystem *filesystem,
+                  GAsyncResult     *res,
+                  gpointer          user_data)
+{
+  UnuseData *data = user_data;
+  GError *error = NULL;
+
+  if (!udisks_filesystem_call_unmount_finish (filesystem,
+                                              res,
+                                              &error))
+    {
+      unuse_data_complete (data, _("Error unmounting filesystem"), error);
+    }
+  else
+    {
+      unuse_data_iterate (data);
+    }
+}
+
+static void
+unuse_lock_cb (UDisksEncrypted  *encrypted,
+               GAsyncResult     *res,
+               gpointer          user_data)
+{
+  UnuseData *data = user_data;
+  GError *error = NULL;
+
+  if (!udisks_encrypted_call_lock_finish (encrypted,
+                                          res,
+                                          &error))
+    {
+      unuse_data_complete (data, _("Error locking device"), error);
+    }
+  else
+    {
+      unuse_data_iterate (data);
+    }
+}
+
+static void
+unuse_data_iterate (UnuseData *data)
+{
+  UDisksObject *object;
+  UDisksFilesystem *filesystem_to_unmount = NULL;
+  UDisksEncrypted *encrypted_to_lock = NULL;
+
+  object = UDISKS_OBJECT (data->object_iter->data);
+  gdu_utils_is_in_use_full (data->client, object,
+                            &filesystem_to_unmount, &encrypted_to_lock);
+
+  if (filesystem_to_unmount != NULL)
+    {
+      udisks_filesystem_call_unmount (filesystem_to_unmount,
+                                      g_variant_new ("a{sv}", NULL), /* options */
+                                      data->cancellable, /* cancellable */
+                                      (GAsyncReadyCallback) unuse_unmount_cb,
+                                      data);
+    }
+  else if (encrypted_to_lock != NULL)
+    {
+      udisks_encrypted_call_lock (encrypted_to_lock,
+                                  g_variant_new ("a{sv}", NULL), /* options */
+                                  data->cancellable, /* cancellable */
+                                  (GAsyncReadyCallback) unuse_lock_cb,
+                                  data);
+    }
+  else
+    {
+      /* nothing left to do, move on to next object */
+      data->object_iter = data->object_iter->next;
+      if (data->object_iter != NULL)
+        {
+          unuse_data_iterate (data);
+        }
+      else
+        {
+          /* yay, no objects left, terminate without error */
+          unuse_data_complete (data, NULL, NULL);
+        }
+    }
+
+  g_clear_object (&encrypted_to_lock);
+  g_clear_object (&filesystem_to_unmount);
+}
+
+void
+gdu_utils_ensure_unused_list (UDisksClient         *client,
+                              GtkWindow            *parent_window,
+                              GList                *objects,
+                              GAsyncReadyCallback   callback,
+                              GCancellable         *cancellable,
+                              gpointer              user_data)
+{
+  UnuseData *data;
+
+  g_return_if_fail (objects != NULL);
+  g_return_if_fail (cancellable == NULL || G_IS_CANCELLABLE (cancellable));
+
+  data = g_slice_new0 (UnuseData);
+  data->client = g_object_ref (client);
+  data->parent_window = (parent_window != NULL) ? g_object_ref (parent_window) : NULL;
+  data->objects = g_list_copy (objects);
+  g_list_foreach (data->objects, (GFunc) g_object_ref, NULL);
+  data->object_iter = data->objects;
+  data->cancellable = cancellable;
+  data->simple = g_simple_async_result_new (G_OBJECT (client),
+                                            callback,
+                                            user_data,
+                                            gdu_utils_ensure_unused_list);
+  g_simple_async_result_set_check_cancellable (data->simple, cancellable);
+
+  unuse_data_iterate (data);
+}
+
+gboolean
+gdu_utils_ensure_unused_list_finish (UDisksClient  *client,
+                                     GAsyncResult  *res,
+                                     GError       **error)
+{
+  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+  gboolean ret = FALSE;
+
+  g_return_val_if_fail (G_IS_ASYNC_RESULT (res), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_utils_ensure_unused_list);
+
+  if (g_simple_async_result_propagate_error (simple, error))
+    goto out;
+
+  ret = TRUE;
+
+ out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+void
+gdu_utils_ensure_unused (UDisksClient         *client,
+                         GtkWindow            *parent_window,
+                         UDisksObject         *object,
+                         GAsyncReadyCallback   callback,
+                         GCancellable         *cancellable,
+                         gpointer              user_data)
+{
+  GList *objects;
+  objects = g_list_append (NULL, object);
+  gdu_utils_ensure_unused_list (client, parent_window, objects, callback, cancellable, user_data);
+  g_list_free (objects);
+}
+
+gboolean
+gdu_utils_ensure_unused_finish (UDisksClient  *client,
+                                GAsyncResult  *res,
+                                GError       **error)
+{
+  return gdu_utils_ensure_unused_list_finish (client, res, error);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -73,6 +73,26 @@ gchar *gdu_utils_get_pretty_uri (GFile *file);
 gboolean gdu_utils_is_in_use (UDisksClient *client,
                               UDisksObject *object);
 
+void gdu_utils_ensure_unused (UDisksClient         *client,
+                              GtkWindow            *parent_window,
+                              UDisksObject         *object,
+                              GAsyncReadyCallback   callback,
+                              GCancellable         *cancellable,
+                              gpointer              user_data);
+gboolean gdu_utils_ensure_unused_finish (UDisksClient  *client,
+                                         GAsyncResult  *res,
+                                         GError       **error);
+
+void gdu_utils_ensure_unused_list (UDisksClient         *client,
+                                   GtkWindow            *parent_window,
+                                   GList                *objects,
+                                   GAsyncReadyCallback   callback,
+                                   GCancellable         *cancellable,
+                                   gpointer              user_data);
+gboolean gdu_utils_ensure_unused_list_finish (UDisksClient  *client,
+                                              GAsyncResult  *res,
+                                              GError       **error);
+
 gint64 gdu_utils_get_unused_for_block (UDisksClient *client,
                                        UDisksBlock  *block);
 

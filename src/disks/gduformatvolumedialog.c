@@ -10,6 +10,7 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
+#include <gdk/gdkx.h>
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -22,7 +23,7 @@
 
 typedef struct
 {
-  GduWindow *window;
+  GtkWindow *parent_window;
   UDisksObject *object;
   UDisksBlock *block;
   UDisksDrive *drive;
@@ -37,7 +38,7 @@ typedef struct
 static void
 format_volume_data_free (FormatVolumeData *data)
 {
-  g_object_unref (data->window);
+  g_clear_object (&data->parent_window);
   g_object_unref (data->object);
   g_object_unref (data->block);
   g_clear_object (&data->drive);
@@ -83,14 +84,14 @@ format_cb (GObject      *source_object,
                                         res,
                                         &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window), _("Error formatting volume"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->parent_window), _("Error formatting volume"), error);
       g_error_free (error);
     }
   format_volume_data_free (data);
 }
 
 static void
-ensure_unused_cb (GduWindow     *window,
+ensure_unused_cb (UDisksClient  *client,
                   GAsyncResult  *res,
                   gpointer       user_data)
 {
@@ -101,7 +102,7 @@ ensure_unused_cb (GduWindow     *window,
   const gchar *name;
   const gchar *passphrase;
 
-  if (!gdu_window_ensure_unused_finish (window, res, NULL))
+  if (!gdu_utils_ensure_unused_finish (client, res, NULL))
     {
       format_volume_data_free (data);
       goto out;
@@ -139,27 +140,30 @@ ensure_unused_cb (GduWindow     *window,
   ;
 }
 
-void
-gdu_format_volume_dialog_show (GduWindow    *window,
-                               UDisksObject *object)
+static void
+gdu_format_volume_dialog_show_internal (UDisksClient *client,
+                                        GtkWindow    *parent_window,
+                                        gint          parent_xid,
+                                        UDisksObject *object)
 {
+  GduApplication *app = GDU_APPLICATION (g_application_get_default ());
   FormatVolumeData *data;
   gint response;
 
   data = g_new0 (FormatVolumeData, 1);
-  data->window = g_object_ref (window);
+  data->parent_window = (parent_window != NULL) ? g_object_ref (parent_window) : NULL;
   data->object = g_object_ref (object);
   data->block = udisks_object_get_block (object);
   g_assert (data->block != NULL);
-  data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
+  data->drive = udisks_client_get_drive_for_block (client, data->block);
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget (app,
                                                          "format-volume-dialog.ui",
                                                          "format-volume-dialog",
                                                          &data->builder));
 
   data->contents_box = GTK_WIDGET (gtk_builder_get_object (data->builder, "contents-box"));
-  data->create_filesystem_widget = gdu_create_filesystem_widget_new (gdu_window_get_application (window),
+  data->create_filesystem_widget = gdu_create_filesystem_widget_new (app,
                                                                      data->drive,
                                                                      NULL); /* additional_fstypes */
   gtk_box_pack_start (GTK_BOX (data->contents_box),
@@ -168,7 +172,18 @@ gdu_format_volume_dialog_show (GduWindow    *window,
   g_signal_connect (data->create_filesystem_widget, "notify::has-info",
                     G_CALLBACK (format_volume_property_changed), data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  if (parent_window != NULL)
+    {
+      gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
+    }
+  else if (parent_xid != -1)
+    {
+      GdkWindow *foreign_window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), parent_xid);
+      if (!gtk_widget_get_realized (data->dialog))
+          gtk_widget_realize (data->dialog);
+      gdk_window_set_transient_for (gtk_widget_get_window (data->dialog), foreign_window);
+    }
+
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
 
   format_volume_update (data);
@@ -203,28 +218,46 @@ gdu_format_volume_dialog_show (GduWindow    *window,
         }
 
       objects = g_list_append (NULL, object);
-      if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (data->parent_window),
                                         primary_message,
                                         str->str,
                                         _("_Format"),
                                         NULL, NULL,
-                                        gdu_window_get_client (data->window), objects))
+                                        client, objects))
         {
           g_list_free (objects);
           g_string_free (str, TRUE);
           goto out;
         }
+
       g_list_free (objects);
       g_string_free (str, TRUE);
 
       /* ensure the volume is unused (e.g. unmounted) before formatting it... */
-      gdu_window_ensure_unused (data->window,
-                                data->object,
-                                (GAsyncReadyCallback) ensure_unused_cb,
-                                NULL, /* GCancellable */
-                                data);
+      gdu_utils_ensure_unused (client,
+                               GTK_WINDOW (data->parent_window),
+                               data->object,
+                               (GAsyncReadyCallback) ensure_unused_cb,
+                               NULL, /* GCancellable */
+                               data);
       return;
     }
  out:
   format_volume_data_free (data);
+}
+
+void
+gdu_format_volume_dialog_show_for_xid (UDisksClient *client,
+                                       gint          xid,
+                                       UDisksObject *object)
+{
+  gdu_format_volume_dialog_show_internal (client, NULL, xid, object);
+}
+
+void
+gdu_format_volume_dialog_show (GduWindow    *window,
+                               UDisksObject *object)
+{
+  gdu_format_volume_dialog_show_internal (gdu_window_get_client (window), GTK_WINDOW (window),
+                                          -1, object);
 }

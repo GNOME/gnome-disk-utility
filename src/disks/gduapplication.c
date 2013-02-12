@@ -172,10 +172,12 @@ gdu_application_command_line (GApplication            *_app,
   gchar *opt_block_device = NULL, *error_message = NULL;
   gboolean opt_help = FALSE;
   gboolean opt_format = FALSE;
+  gint opt_xid = -1;
   GOptionEntry opt_entries[] =
   {
     {"block-device", 0, 0, G_OPTION_ARG_STRING, &opt_block_device, N_("Select device"), NULL },
     {"format-device", 0, 0, G_OPTION_ARG_NONE, &opt_format, N_("Format selected device"), NULL },
+    {"xid", 0, 0, G_OPTION_ARG_INT, &opt_xid, N_("Parent window XID for the format dialog"), NULL },
     {"help", '?', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &opt_help, N_("Show help options"), NULL },
     {NULL}
   };
@@ -209,6 +211,12 @@ gdu_application_command_line (GApplication            *_app,
       goto out;
     }
 
+  if (opt_xid != -1 && !opt_format)
+    {
+      g_application_command_line_printerr (command_line, _("--format-device must be specified when using --xid\n"));
+      goto out;
+    }
+
   gdu_application_ensure_client (app);
 
   if (opt_block_device != NULL)
@@ -222,22 +230,28 @@ gdu_application_command_line (GApplication            *_app,
         }
     }
 
+  if (opt_xid == -1)
+    {
+      if (app->window == NULL)
+        {
+          g_application_activate (G_APPLICATION (app));
+        }
+      else
+        {
+          /* TODO: startup notification stuff */
+          gtk_window_present (GTK_WINDOW (app->window));
+        }
 
-  if (app->window == NULL)
-    {
-      g_application_activate (G_APPLICATION (app));
+      if (object_to_select != NULL)
+        {
+          gdu_window_select_object (app->window, object_to_select);
+          if (opt_format)
+            gdu_format_volume_dialog_show (app->window, object_to_select);
+        }
     }
-  else
+  else if (opt_format)
     {
-      /* TODO: startup notification stuff */
-      gtk_window_present (GTK_WINDOW (app->window));
-    }
-
-  if (object_to_select != NULL)
-    {
-      gdu_window_select_object (app->window, object_to_select);
-      if (opt_format)
-        gdu_format_volume_dialog_show (app->window, object_to_select);
+      gdu_format_volume_dialog_show_for_xid (app->client, opt_xid, object_to_select);
     }
 
 

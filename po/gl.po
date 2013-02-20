@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-13 16:49+0100\n"
-"PO-Revision-Date: 2013-01-13 16:56+0200\n"
+"POT-Creation-Date: 2013-02-20 11:08+0100\n"
+"PO-Revision-Date: 2013-02-20 11:12+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: gnome-l10n-gl@gnome.org\n"
 "Language: gl\n"
@@ -46,8 +46,8 @@ msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"disco;unidade;volume;disco duro;hdd;disc;cdrom;dvd;partición;iso;imaxe;respa"
-"ldo;backup;restaurar;rendemento;raid;luks;cifraxe;S.M.A.R.T;smart;"
+"disco;unidade;volume;disco duro;hdd;disc;cdrom;dvd;partición;iso;imaxe;"
+"respaldo;backup;restaurar;rendemento;raid;luks;cifraxe;S.M.A.R.T;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -1296,30 +1296,46 @@ msgstr "Produciuse un erro ao abrir «%s»: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Produciuse un erro ao anexar a imaxe do disco: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Produciuse un erro ao abrir %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Produciuse un erro ao buscar o dispositivo de bloque %s\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Seleccionar dispositivo"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "Formatar o dispositivo seleccionado"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID da xanela pai para o diálogo do formato"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Mostrar as opcións de axuda"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Produciuse un erro ao abrir %s: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device debe usarse xunto con --block-device\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Produciuse un erro ao buscar o dispositivo de bloque %s: m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--format-device debe especificarse ao usarse --xid\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2406,9 +2422,9 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
-"%2.1f%% (%s) dos datos do dispositivo «%s» foron ilexíbeis e substituídos con "
-"ceros no ficheiro de imaxe de disco creado. Isto prodúcese normalmente se "
-"un soporte está raiado ou se hai algún dano físico na unidade"
+"%2.1f%% (%s) dos datos do dispositivo «%s» foron ilexíbeis e substituídos "
+"con ceros no ficheiro de imaxe de disco creado. Isto prodúcese normalmente "
+"se un soporte está raiado ou se hai algún dano físico na unidade"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -2766,7 +2782,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2879,20 +2895,20 @@ msgstr ""
 "medio de servizos de recuperación de datos"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Formatar"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Produciuse un erro ao formatar o volume"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Está seguro de que quere formatar o volume?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2901,7 +2917,7 @@ msgstr ""
 "servizos de recuperación de datos"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3698,7 +3714,7 @@ msgstr "_Acendido"
 msgid "Error mounting filesystem"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
@@ -3767,10 +3783,6 @@ msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "Seleccionouse %d unidade (%s)"
 msgstr[1] "Seleccionouse %d unidades (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Produciuse un erro ao bloquear o dispositivo"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3948,6 +3960,10 @@ msgstr "Banda de réplicas"
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
+
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Produciuse un erro ao bloquear o dispositivo"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403

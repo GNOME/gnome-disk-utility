@@ -1226,7 +1226,7 @@ benchmark_thread (gpointer user_data)
           g_set_error (&error,
                        G_IO_ERROR,
                        g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error pre-reading %s bytes from offset %s"),
+                       C_("benchmarking", "Error pre-reading %s from offset %s"),
                        s, s2);
           g_free (s2);
           g_free (s);

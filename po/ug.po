@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-09 01:27+0000\n"
-"PO-Revision-Date: 2013-02-16 12:59+0900\n"
+"POT-Creation-Date: 2013-02-23 16:49+0000\n"
+"PO-Revision-Date: 2013-02-24 12:58+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: \n"
@@ -1203,30 +1203,49 @@ msgstr "‹%s› نى ئېچىشتا خاتالىق كۆرۈلدى: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "دىسكا تەسۋىرىنى قېتىشتا خاتالىق كۆرۈلدى: %s (%s، %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+#| msgid "Error opening %s: %m\n"
+msgid "Error opening %s: %s\n"
+msgstr "%s نى ئېچىشتا خاتالىق كۆرۈلدى: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+#| msgid "Error looking up block device for %s: %m\n"
+msgid "Error looking up block device for %s\n"
+msgstr "بۆلەك ئۈسكۈنە (block device)  %s نى ئىزدەشتە خاتالىق كۆرۈلدى\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "ئۈسكۈنە تاللاش"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+#| msgid "Select device"
+msgid "Format selected device"
+msgstr "تاللانغان ئۈسكۈنىنى پىچىش"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "پىچىش سۆزلەشكۈسىنىڭ ئاتا كۆزنىكىنىڭ كىملىكى(XID)"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "ياردەم تاللانمىلىرىنى كۆرسەت"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "%s نى ئېچىشتا خاتالىق كۆرۈلدى: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device بىلەن --block-device بىرگە ئىشلىتىلىشى كېرەك\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "بۆلەك ئۈسكۈنە (block device)  %s نى ئىزدەشتە خاتالىق كۆرۈلدى: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--xid ئىشلىتىلگەندە چوقۇم --format-device كۆرسىتىلىشى كېرەك\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2130,9 +2149,11 @@ msgstr "ئېغىش %lld نىڭغا يۆتكىلىشتە خاتالىق كۆرۈ�
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
+#| msgctxt "benchmarking"
+#| msgid "Error reading %s from offset %s"
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "%s بايتنى ئېغىش %s دىن ئالدىن ئوقۇشتا خاتالىق كۆرۈلدى"
+msgid "Error pre-reading %s from offset %s"
+msgstr ""
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2620,7 +2641,7 @@ msgstr "دىسكىدىكى بارلىق سانلىق-مەلۇماتلار يوق
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2718,27 +2739,27 @@ msgid ""
 msgstr "دىسكىدىكى بارلىق سانلىق-مەلۇماتلار قاپلىنىپ يېزىلىدۇ ۋە سانلىق-مەلۇمات ئەسلىگە كەلتۈرۈش مۇلازىمىتىنى ئارقىلىق ئەسلىگە كەلتۈرگىلى بولمايدۇ"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "پىچ(_F)"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "دىسكىنى پىچىۋاتقاندا خاتالىق كۆرۈلدى"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "بۇ دىسكىنى راستلا پىچامسىز؟"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
 msgstr "دىسكىدىكى بارلىق سانلىق-مەلۇماتلار ئۆچۈرۈلىدۇ، بىراق سانلىق-مەلۇمات ئەسلىگە كەلتۈرۈش مۇلازىمىتىنى ئىشلەتسە ئەسلىگە كەلتۈرگىلى بولىدۇ"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3508,7 +3529,7 @@ msgstr "توكىنى ئۇز(_P)"
 msgid "Error mounting filesystem"
 msgstr "ھۆججەت سىستېمىسىنى ئېگەرلەۋاتقاندا خاتالىق كۆرۈلدى"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "ھۆججەت سىستېمىسىنى ئېگەرسىزلەۋاتقاندا خاتالىق كۆرۈلدى"
 
@@ -3576,10 +3597,6 @@ msgstr "ئۈسكۈنە تاللانمىغان(_D)"
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d دانە ئۈسكۈنە تاللانغان(%s)(_D)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "ئۈسكۈنىنى قۇلۇپلاشتا خاتالىق كۆرۈلدى"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3751,6 +3768,10 @@ msgstr "Stripe of Mirrors"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "ئۈسكۈنىنى قۇلۇپلاشتا خاتالىق كۆرۈلدى"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -3794,6 +3815,10 @@ msgstr "دىسكا مەسىلىسىنى كۆزەتكۈ"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "دىسكىلار ۋە ساقلاش ئۈسكۈنىلىرىدىكى مەسىلىلەر ھەققىدە ئاگاھلاندۇرىدۇ"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "%s بايتنى ئېغىش %s دىن ئالدىن ئوقۇشتا خاتالىق كۆرۈلدى"
 
 #~ msgid "Disk Utility"
 #~ msgstr "دىسكا قورالى"

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.3.93\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-30 14:23+0800\n"
-"PO-Revision-Date: 2013-01-28 19:33+0800\n"
+"POT-Creation-Date: 2013-02-27 22:48+0800\n"
+"PO-Revision-Date: 2013-02-27 21:20+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:46
@@ -1245,30 +1245,46 @@ msgstr "開啟 「%s」時發生錯誤：%m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "附加磁碟映像檔時發生錯誤：%s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "開啟 %s 時發生錯誤：%s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "查詢 %s 區塊裝置時發生錯誤\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "選擇裝置"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "格式化選取的裝置"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "格式化對話盒的上層視窗 XID"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "顯示求助的選項"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "開啟  %s 時發生錯誤：%m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device 必須和 --block-device 一起使用\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "查詢 %s 區塊裝置時發生錯誤：%m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "使用 --xid 時必須指定 --format-device\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2186,9 +2202,11 @@ msgid "Error seeking to offset %lld"
 msgstr "搜尋偏移量 %lld 時發生錯誤"
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
-#, c-format
+#, fuzzy, c-format
+#| msgctxt "benchmarking"
+#| msgid "Error reading %s from offset %s"
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
+msgid "Error pre-reading %s from offset %s"
 msgstr "從偏移量 %2$s 預讀 %1$s 位元組時發生錯誤"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
@@ -2681,7 +2699,7 @@ msgstr "選取的磁碟上所有的資料將會消失，但是仍然可能使用
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2785,27 +2803,27 @@ msgid ""
 msgstr "磁碟上所有的資料將會被覆寫，而且可能無法使用資料復原服務來還原"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "格式化(_F)"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "格式化儲存區時發生錯誤"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "確定要格式化此儲存區？"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
 msgstr "儲存區上所有的資料將會消失，但是可能仍然可以使用資料復原服務來還原"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3586,7 +3604,7 @@ msgstr "關閉電源(_P)"
 msgid "Error mounting filesystem"
 msgstr "掛載檔案系統時發生錯誤"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "卸載檔案系統時發生錯誤"
 
@@ -3654,10 +3672,6 @@ msgstr "尚未選取裝置(_D)"
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "已選取 %d 裝置 (%s)[_D]"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "鎖定裝置時發生錯誤"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3829,6 +3843,10 @@ msgstr "鏡射的帶狀式"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "鎖定裝置時發生錯誤"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -3872,6 +3890,10 @@ msgstr "磁碟問題監視器"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "關於磁碟與儲存裝置的警告"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "從偏移量 %2$s 預讀 %1$s 位元組時發生錯誤"
 
 #~ msgid "Attach Disk Image..."
 #~ msgstr "附加磁碟映像檔…"

@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-09 17:40+0000\n"
-"PO-Revision-Date: 2013-02-09 23:02+0200\n"
+"POT-Creation-Date: 2013-02-23 16:49+0000\n"
+"PO-Revision-Date: 2013-03-02 17:27+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -1284,30 +1284,49 @@ msgstr "Klaida atveriant „%s“: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Disko atvaizdžio prikabinimo klaida: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+#| msgid "Error opening %s: %m\n"
+msgid "Error opening %s: %s\n"
+msgstr "Klaida atveriant %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+#| msgid "Error looking up block device for %s: %m\n"
+msgid "Error looking up block device for %s\n"
+msgstr "Klaida ieškant %s blokinio įrenginio\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Pasirinkite įrenginį"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+#| msgid "Select device"
+msgid "Format selected device"
+msgstr "Formatuoti pasirinktą įrenginį"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "Tėvinio lango XID formatavimo dialogui"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Rodyti pagalbos parinktis"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Klaida atveriant %s: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device turi būti naudojama su --block-device\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Klaida iškant %s blokinio įrenginio: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--format-device turi būti nurodytas naudojant --xid\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2261,9 +2280,11 @@ msgstr "Klaida slenkant į poslinkį %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
+#| msgctxt "benchmarking"
+#| msgid "Error reading %s from offset %s"
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Klaida iš anksto nuskaitant %s baitų iš poslinkio %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Klaida skaitant %s iš poslinkio %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2762,7 +2783,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2875,20 +2896,20 @@ msgstr ""
 "atkūrimo tarnybų"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Sužymėti"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Klaida sužymint tomą"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Ar tikrai norite formatuoti tomą?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2897,7 +2918,7 @@ msgstr ""
 "atkūrimo tarnybų"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3687,7 +3708,7 @@ msgstr "Iš_jungti"
 msgid "Error mounting filesystem"
 msgstr "Klaida prijungiant failų sistemą"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Klaida atjungiant failų sistemą"
 
@@ -3757,10 +3778,6 @@ msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "Pasirinktas %d _įrenginys (%s)"
 msgstr[1] "Pasirinkti %d _įrenginiai (%s)"
 msgstr[2] "Pasirinkta %d _įrenginių (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Klaida užrakinant įrenginį"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3946,6 +3963,10 @@ msgstr "Veidrodžių juosta"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Klaida užrakinant įrenginį"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -3989,3 +4010,4 @@ msgstr "Diskū problemų stebyklė"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Įspėja apie diskų ir saugyklos įrenginių problemas"
+

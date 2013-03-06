@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-09 17:40+0000\n"
-"PO-Revision-Date: 2013-01-11 21:23+0530\n"
+"POT-Creation-Date: 2013-02-23 16:49+0000\n"
+"PO-Revision-Date: 2013-03-06 15:03+0530\n"
 "Last-Translator: Nilamdyuti Goswami <ngoswami@redhat.com>\n"
 "Language-Team: Assamese <kde-i18n-doc@kde.org>\n"
 "Language: as_IN\n"
@@ -1299,30 +1299,49 @@ msgstr "'%s' খোলোতে ত্ৰুটি: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "ডিস্ক ছবি সংলগ্ন কৰোতে ত্ৰুটি: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+#| msgid "Error opening %s: %m\n"
+msgid "Error opening %s: %s\n"
+msgstr "%s খোলোতে ত্ৰুটি: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+#| msgid "Error looking up block device for %s: %m\n"
+msgid "Error looking up block device for %s\n"
+msgstr "%s ৰ বাবে খণ্ড ডিভাইচ চাওতে ত্ৰুটি\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "ডিভাইচ বাছক"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+#| msgid "Select device"
+msgid "Format selected device"
+msgstr "নিৰ্বাচিত ডিভাইচ ফৰমেট কৰক"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "ফৰমেট ডাইলগৰ বাবে উপধায়ক উইন্ডো XID"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "সহায় বিকল্পসমূহ দেখুৱাওক"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "%s খোলোতে ত্ৰুটি: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device ক --block-device ৰ সৈতে একেলগে ব্যৱহাৰ কৰিব লাগিব\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "%s ৰ বাবে খণ্ড ডিভাইচ চাওতে ত্ৰুটি: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--format-device ক --xid ব্যৱহাৰ কৰোতে ধাৰ্য্য কৰিব লাগিব\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2269,9 +2288,11 @@ msgstr "অফচেট %lld লে সন্ধান কৰোতে ত্ৰ
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
+#| msgctxt "benchmarking"
+#| msgid "Error reading %s from offset %s"
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "অফচেট %s ৰ পৰা %s বাইট পূৰ্ব-পঢ়োতে ত্ৰুটি"
+msgid "Error pre-reading %s from offset %s"
+msgstr "অফচেট %s ৰ পৰা %s পূৰ্ব-পঢ়োতে ত্ৰুটি"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2778,7 +2799,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2897,20 +2918,20 @@ msgstr ""
 "নাযাব"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "ফৰমেট কৰক (_F)"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "আয়তন ফৰমেট কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "আপুনি আয়তন ফৰমেট কৰিবলে নিশ্চিত নে?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2920,7 +2941,7 @@ msgstr ""
 "যাব"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3714,7 +3735,7 @@ msgstr "বন্ধ কৰক (_P)"
 msgid "Error mounting filesystem"
 msgstr "ফাইলচিস্টেম মাউন্ট কৰোতে ত্ৰুটি"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "ফাইলচিস্টেম আনমাউন্ট কৰোতে ত্ৰুটি"
 
@@ -3783,10 +3804,6 @@ msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d ডিভাইচ নিৰ্বাচন কৰা হৈছে (%s) (_D)"
 msgstr[1] "%d ডিভাইচসমূহ নিৰ্বাচন কৰা হৈছে (%s) (_D)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "ডিভাইচ লক কৰোতে ত্ৰুটি"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3965,6 +3982,10 @@ msgstr "মিৰৰসমূহৰ স্ট্ৰাইপ"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "ডিভাইচ লক কৰোতে ত্ৰুটি"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -4009,3 +4030,6 @@ msgstr "ডিস্কসমূহ সমস্যা পৰ্যবেক্�
 msgid "Warns about problems with disks and storage devices"
 msgstr "ডিস্কসমূহ আৰু সংৰক্ষণ ডিভাইচসমূহৰ সমস্যাৰ বিষয়ে সতৰ্ক কৰে"
 
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "অফচেট %s ৰ পৰা %s বাইট পূৰ্ব-পঢ়োতে ত্ৰুটি"

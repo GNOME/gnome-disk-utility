@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-11 16:16+0000\n"
-"PO-Revision-Date: 2013-01-12 21:12+0100\n"
+"POT-Creation-Date: 2013-03-07 14:35+0000\n"
+"PO-Revision-Date: 2013-03-07 21:18+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: Slovenian\n"
@@ -1297,30 +1297,47 @@ msgstr "Napaka med odpiranjem `%s': %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Napaka med priklapljanjem odtisa diska: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, fuzzy, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Napaka med odpiranjem %s: %m\n"
+
+#: ../src/disks/gduapplication.c:138
+#, fuzzy, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Napaka med iskanjem bločne naprave za %s: %m\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Izbor naprave"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+#, fuzzy
+msgid "Format selected device"
+msgstr "Izbor naprave"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr ""
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Pokaži možnosti pomoči"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Napaka med odpiranjem %s: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr ""
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Napaka med iskanjem bločne naprave za %s: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr ""
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2267,10 +2284,10 @@ msgid "Error seeking to offset %lld"
 msgstr "Iskanje na odmik %lld je spodletelo"
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
-#, c-format
+#, fuzzy, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Napaka predhodnega branja %s bajtov od odmika %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Napaka branja %s od odmika %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2648,7 +2665,7 @@ msgstr "Polje RAID"
 #. *              The second %s is the RAID level (e.g. "RAID-5").
 #.
 #: ../src/disks/gdudevicetreemodel.c:1115
-#, fuzzy, c-format
+#, c-format
 msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
@@ -2758,9 +2775,9 @@ msgid "If Available, Slow"
 msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "Error erasing device %s"
-msgstr "Napaka odpiranja naprave"
+msgstr "Napaka brisanja naprave %s"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:367
 #, fuzzy
@@ -2779,7 +2796,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2894,20 +2911,20 @@ msgstr ""
 "bo mogoče povrniti."
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Formatiraj"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Napaka formatiranja nosilca"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Ali ste prepričani, da želite formatirati nosilec?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2916,7 +2933,7 @@ msgstr ""
 "povrniti preko storitev obnavljanja podatkov."
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3006,10 +3023,9 @@ msgid "_Remove"
 msgstr "_Odstrani"
 
 #: ../src/disks/gdumdraiddisksdialog.c:615
-#, fuzzy
 msgctxt "mdraid-disks-state"
 msgid "FAILED"
-msgstr "ODPOVEDUJE"
+msgstr "SPODLETELO"
 
 #. Translators: MD-RAID member state for 'in_sync'
 #: ../src/disks/gdumdraiddisksdialog.c:622
@@ -3043,17 +3059,16 @@ msgstr ""
 
 #. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
 #: ../src/disks/gdumdraiddisksdialog.c:660
-#, fuzzy, c-format
+#, c-format
 msgctxt "mdraid-disks-state"
 msgid "Unknown (%s)"
 msgstr "Neznano (%s)"
 
 #. Translators: column name for the position of the disk in the RAID array
 #: ../src/disks/gdumdraiddisksdialog.c:744
-#, fuzzy
 msgctxt "mdraid-disks"
 msgid "Position"
-msgstr "Opis"
+msgstr "Položaj"
 
 #. Translators: column name for the disk in the RAID array
 #: ../src/disks/gdumdraiddisksdialog.c:760
@@ -3094,7 +3109,7 @@ msgstr "Vsi obstoječi podatki bodo nepovratno izgubljeni."
 #: ../src/disks/gdumdraiddisksdialog.c:972
 msgctxt "mdraid-disks"
 msgid "_Add"
-msgstr ""
+msgstr "_Dodaj"
 
 #. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
 #. *              right size available
@@ -3291,7 +3306,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:1651
 msgctxt "accelerator"
 msgid "F10"
-msgstr ""
+msgstr "F10"
 
 #. Translators: This is the short-cut to format a disk
 #: ../src/disks/gduwindow.c:1656
@@ -3365,7 +3380,7 @@ msgstr "%s od %s – %s"
 #: ../src/disks/gduwindow.c:2152
 #, c-format
 msgid "%s: %2.1f%%"
-msgstr ""
+msgstr "%s: %2.1f%%"
 
 #: ../src/disks/gduwindow.c:2224 ../src/disks/gduwindow.c:3069
 msgid "Block device is empty"
@@ -3433,10 +3448,10 @@ msgstr "%s, %s in %s"
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
 #: ../src/disks/gduwindow.c:2509
-#, fuzzy, c-format
+#, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
-msgstr "%s, %s in %s"
+msgstr "%s, %s"
 
 #: ../src/disks/gduwindow.c:2529
 #, c-format
@@ -3531,17 +3546,17 @@ msgstr "%s (%s)"
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #. Translators: Used for MD-RAID sync operation.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
 #: ../src/disks/gduwindow.c:2678
-#, fuzzy, c-format
+#, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
-msgstr "Še %s do konca"
+msgstr "Še %s do konca (%s/sec)"
 
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
@@ -3563,7 +3578,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:3241
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr ""
+msgstr "%s — %s prosto (%.1f%% full)"
 
 #: ../src/disks/gduwindow.c:3271
 msgctxt "partition type"
@@ -3573,17 +3588,16 @@ msgstr "Neznano"
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
 #: ../src/disks/gduwindow.c:3299
-#, fuzzy
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
-msgstr "Koren datotečnega sistema"
+msgstr "Koren sistema"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
 #: ../src/disks/gduwindow.c:3307
-#, fuzzy, c-format
+#, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
-msgstr "Da, s priklopno točko %s"
+msgstr "Priklopljeno na %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #: ../src/disks/gduwindow.c:3313
@@ -3605,10 +3619,9 @@ msgstr ""
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: ../src/disks/gduwindow.c:3355
-#, fuzzy
 msgctxt "volume-content-luks"
 msgid "Unlocked"
-msgstr "_Odkleni"
+msgstr "Odklenjeno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: ../src/disks/gduwindow.c:3361
@@ -3636,7 +3649,7 @@ msgstr ""
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
-msgstr ""
+msgstr "%s — %s"
 
 #. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
@@ -3646,7 +3659,7 @@ msgstr ""
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
-msgstr ""
+msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
 #: ../src/disks/gduwindow.c:3504
@@ -3697,15 +3710,13 @@ msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Med poskusom povrnitve in stanja pripravljenosti je prišlo do napake."
 
 #: ../src/disks/gduwindow.c:4047
-#, fuzzy
 msgid "Error powering off drive"
-msgstr "Napaka zapisovanja na napravo"
+msgstr "Napaka izklapljanja pogona"
 
 #. Translators: Heading for powering off a device with multiple drives
 #: ../src/disks/gduwindow.c:4099
-#, fuzzy
 msgid "Are you sure you want to power off the drives?"
-msgstr "Ali ste prepričani, da želite formatirati disk?"
+msgstr "Ali ste prepričani, da želite izklopiti pogone?"
 
 #. Translators: Message for powering off a device with multiple drives
 #: ../src/disks/gduwindow.c:4101
@@ -3722,7 +3733,7 @@ msgstr "Izklopljeno"
 msgid "Error mounting filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Napaka odklapljanja datotečnega sistema"
 
@@ -3747,14 +3758,12 @@ msgid "Error ejecting media"
 msgstr "Napaka izmetavanja nosilca"
 
 #: ../src/disks/gduwindow.c:4495
-#, fuzzy
 msgid "Error starting RAID array"
-msgstr "Napaka začenjanja izmenjevalnega razdelka"
+msgstr "Napaka začenjanja polja RAID"
 
 #: ../src/disks/gduwindow.c:4537
-#, fuzzy
 msgid "Error stopping RAID array"
-msgstr "Napaka zaustavljanja izmenjevalnega razdelka"
+msgstr "Napaka zaustavljanja polja RAID"
 
 #: ../src/disks/gduwindow.c:4624
 msgid "Error locking encrypted device"
@@ -3795,10 +3804,6 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 msgstr[3] ""
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Napaka zaklepanja naprave"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3982,7 +3987,7 @@ msgstr ""
 
 #: ../src/libgdu/gduutils.c:822
 msgid "RAID 10"
-msgstr ""
+msgstr "RAID 10"
 
 #: ../src/libgdu/gduutils.c:823
 msgid "Stripe of Mirrors"
@@ -3992,6 +3997,10 @@ msgstr ""
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
+
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Napaka zaklepanja naprave"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
@@ -4036,3 +4045,7 @@ msgstr "Nadzornik napak diskov"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr ""
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "Napaka predhodnega branja %s bajtov od odmika %s"

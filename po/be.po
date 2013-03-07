@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-09 17:40+0000\n"
+"POT-Creation-Date: 2013-02-23 16:49+0000\n"
 "PO-Revision-Date: 2012-09-14 13:23+0300\n"
 "Last-Translator: Kasia Bondarava <kasia.bondarava@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
@@ -42,7 +42,9 @@ msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"дыск;прывод;том;цвёрды дыск;hdd;cdrom;dvd;раздзел;iso;вобраз;запасная копія;рэзервовая копія;аднаўленне;аднавіць;выпрабаванне;raid;luks;шыфраванне;S.M.A.R.T.;smart;"
+"дыск;прывод;том;цвёрды дыск;hdd;cdrom;dvd;раздзел;iso;вобраз;запасная копія;"
+"рэзервовая копія;аднаўленне;аднавіць;выпрабаванне;raid;luks;шыфраванне;S.M.A."
+"R.T.;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -1298,30 +1300,46 @@ msgstr "Памылка адкрыцця \"%s\": %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Памылка прычэплівання вобразу дыска: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Памылка адкрыцця %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Памылка пошуку блокавага прыстасавання для %s\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Абраць прыстасаванне"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "Адфарматаваць абранае прыстасаванне"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID-ідэнтыфікатар бацькоўскага акна для дыялогавага акенца фарматавання"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Паказаць параметры даведкі"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Памылка адкрыцця %s: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr ""
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Памылка пошуку блокавага прыстасавання для %s: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr ""
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2271,8 +2289,8 @@ msgstr "Памылка зруху ў %lld"
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Памылка папярэдняга чытання %s байтаў са зруху %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Памылка папярэдняга чытання %s са зруху %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2412,9 +2430,9 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
-"%2.1f%% (%s) даных у прыстасаванні \"%s\" аказаліся нечытэльнымі і былі замененыя нулямі "
-"ў створаным файле вобразу дыска. Звычайна так выходзіць, калі носьбіт падрапаны або "
-"сам прывод неяк пашкоджаны"
+"%2.1f%% (%s) даных у прыстасаванні \"%s\" аказаліся нечытэльнымі і былі "
+"замененыя нулямі ў створаным файле вобразу дыска. Звычайна так выходзіць, "
+"калі носьбіт падрапаны або сам прывод неяк пашкоджаны"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -2774,7 +2792,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2888,20 +2906,20 @@ msgstr ""
 "дапамогай адмысловага сэрвісу стане мала рэальным"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Адфарматаваць"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Памылка фарматавання дыскавага тома"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Сапраўды адфарматаваць дыскавы том?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2910,7 +2928,7 @@ msgstr ""
 "recovery services"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3697,7 +3715,7 @@ msgstr "_Выключыць"
 msgid "Error mounting filesystem"
 msgstr "Памылка прымацавання файлавай сістэмы"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Памылка адмацавання файлавай сістэмы"
 
@@ -3767,10 +3785,6 @@ msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "Вылучана %d _прыстасаванне (%s)"
 msgstr[1] "Вылучана %d _прыстасаванні (%s)"
 msgstr[2] "Вылучана %d _прыстасаванняў (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Памылка разблакіравання прыстасавання"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3909,7 +3923,7 @@ msgstr "RAID 0"
 
 #: ../src/libgdu/gduutils.c:793
 msgid "Stripe"
-msgstr ""
+msgstr "Stripe"
 
 #: ../src/libgdu/gduutils.c:798
 msgid "RAID 1"
@@ -3917,7 +3931,7 @@ msgstr "RAID 1"
 
 #: ../src/libgdu/gduutils.c:799
 msgid "Mirror"
-msgstr ""
+msgstr "Mirror"
 
 #: ../src/libgdu/gduutils.c:804
 msgid "RAID 4"
@@ -3933,7 +3947,7 @@ msgstr "RAID 5"
 
 #: ../src/libgdu/gduutils.c:811
 msgid "Distributed Parity"
-msgstr "Размеркаваная парнасць"
+msgstr "Distributed Parity"
 
 #: ../src/libgdu/gduutils.c:816
 msgid "RAID 6"
@@ -3941,7 +3955,7 @@ msgstr "RAID 6"
 
 #: ../src/libgdu/gduutils.c:817
 msgid "Double Distributed Parity"
-msgstr "Двойчы размеркаваная парнасць"
+msgstr "Double Distributed Parity"
 
 #: ../src/libgdu/gduutils.c:822
 msgid "RAID 10"
@@ -3949,12 +3963,16 @@ msgstr "RAID 10"
 
 #: ../src/libgdu/gduutils.c:823
 msgid "Stripe of Mirrors"
-msgstr ""
+msgstr "Stripe of Mirrors"
 
 #: ../src/libgdu/gduutils.c:828
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
+
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Памылка разблакіравання прыстасавання"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403

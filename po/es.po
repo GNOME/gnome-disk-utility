@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-01-13 16:24+0000\n"
-"PO-Revision-Date: 2013-01-14 17:47+0100\n"
+"POT-Creation-Date: 2013-03-07 20:19+0000\n"
+"PO-Revision-Date: 2013-03-08 09:57+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"X-Generator: Gtranslator 2.91.5\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:46
@@ -1300,30 +1300,46 @@ msgstr "Error al abrir «%s»: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Error al acoplar la imagen de disco: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Error al abrir %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Error al buscar el dispositivo de bloque para %s\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Seleccionar dispositivo"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "Formatear el dispositivo seleccionado"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID de la ventana madre para el diálogo de formato"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Mostrar opciones de ayuda"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Error al abrir «%s»: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device debe usarse junto con --block-device\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Error al buscar el dispositivo de bloque para «%s»: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--format-device debe especificarse cuando use --xid\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2270,8 +2286,8 @@ msgstr "Error al buscar hasta el desplazamiento %lld"
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Error en la pre-lectura de %s bytes desde el desplazamiento %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Error al preleer %s desde el desplazamiento %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2771,7 +2787,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2884,20 +2900,20 @@ msgstr ""
 "medio de los servicios de recuperación de datos"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Formato"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Error al formatear el volumen"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "¿Está seguro de que quiere formatear el volumen?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2906,7 +2922,7 @@ msgstr ""
 "de servicios de recuperación de datos"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3704,7 +3720,7 @@ msgstr "_Apagar"
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Error al desmontar el sistema de archivos"
 
@@ -3773,10 +3789,6 @@ msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d dispositivo seleccionado (%s)"
 msgstr[1] "%d _dispositivos seleccionados (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Error al bloquear el dispositivo"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3955,6 +3967,10 @@ msgstr "División de espejos"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Error al bloquear el dispositivo"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -3998,6 +4014,10 @@ msgstr "Monitor de problemas de disco"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Advierte de problemas con discos y dispositivos de almacenamiento"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "Error en la pre-lectura de %s bytes desde el desplazamiento %s"
 
 #~ msgid "Eject media"
 #~ msgstr "Expulsar soporte"

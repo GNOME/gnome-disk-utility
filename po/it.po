@@ -27,9 +27,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-28 21:49+0100\n"
-"PO-Revision-Date: 2013-01-28 21:55+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-03-11 07:44+0000\n"
+"PO-Revision-Date: 2013-03-11 16:28+0100\n"
 "Last-Translator: Milo Casagrande <milo@ubuntu.com>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -138,7 +139,7 @@ msgstr "_Avvia benchmark..."
 
 #: ../data/ui/benchmark-dialog.ui.h:3
 msgid "_Abort Benchmark"
-msgstr "_Blocca benchmark"
+msgstr "_Interrompi benchmark"
 
 #: ../data/ui/benchmark-dialog.ui.h:4
 msgid "Last Benchmarked"
@@ -282,7 +283,7 @@ msgstr "Mostrare passp_hrase"
 #: ../data/ui/filesystem-create.ui.h:11
 msgid "Check this box to see the passphrases entered above"
 msgstr ""
-"Selezionare questa casella per visualizzare le passphrase digitata sopra"
+"Selezionare questa casella per visualizzare le passphrase digitate sopra"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:7
 #: ../data/ui/filesystem-create.ui.h:9
@@ -397,7 +398,7 @@ msgstr "Spazio _libero dopo"
 
 #: ../data/ui/create-partition-dialog.ui.h:17
 msgid "The free space following the partition, in megabytes"
-msgstr "Lo spazio libero dopo la partizione, in mebabyte"
+msgstr "Lo spazio libero dopo la partizione, in megabyte"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
 #: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:39
@@ -430,7 +431,7 @@ msgstr "Numero di dischi"
 
 #: ../data/ui/create-raid-array-dialog.ui.h:8
 msgid "For example, “My RAID Array” or “Backup Data”"
-msgstr "Per esempio «Il mio array RAID» o «Bakcup dati»"
+msgstr "Per esempio «Il mio array RAID» o «Backup dati»"
 
 #: ../data/ui/disk-settings-dialog.ui.h:1
 msgid "Drive Settings"
@@ -643,7 +644,7 @@ msgstr "Valutazione"
 # (ndt) pare un tooltip
 #: ../data/ui/disks.ui.h:26
 msgid "Eject the medium in the drive"
-msgstr "Espelle il supporto nell'unità"
+msgstr "Espelle il supporto dall'unità"
 
 #: ../data/ui/disks.ui.h:27
 msgid "Job"
@@ -1206,7 +1207,7 @@ msgstr "Fare clic per fermare il test automatico SMART in corso"
 
 #: ../data/ui/smart-dialog.ui.h:6
 msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Fare clic per forzare la lettura dei dati SMART dal disco"
+msgstr "Fare clic per forzare la rilettura dei dati SMART dal disco"
 
 #: ../data/ui/smart-dialog.ui.h:7
 msgid "Powered On"
@@ -1317,30 +1318,47 @@ msgstr "Errore nell'aprire «%s»: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Errore nel collegare l'immagine disco %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Errore nell'aprire %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Errore nel cercare il dispositivo a blocchi per %s\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Seleziona dispositivo"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "Formatta dispositivo selezionato"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID della finestra genitore per la finestra di formattazione"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Mostra opzioni di aiuto"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Errore nell'aprire %s: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device deve essere utilizzato assieme a --block-device\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Errore nel cercare il dispositivo a blocchi per %s: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr ""
+"--format-device deve essere specificato quando viene utilizzato --xid\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1516,7 +1534,7 @@ msgstr "Errori non correggibili segnalati"
 
 #: ../src/disks/gduatasmartdialog.c:261
 msgid "Number of errors that could not be recovered using hardware ECC"
-msgstr "Numero di errori che non possono essere corretti dall'ECC hardware"
+msgstr "Numero di errori non corretti dall'ECC hardware"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1908,7 +1926,7 @@ msgstr "Numero di errori ECC non correggibili"
 #.
 #: ../src/disks/gduatasmartdialog.c:560
 msgid "Good Block Rate"
-msgstr "Tasso settori validi"
+msgstr "Tasso blocchi validi"
 
 #: ../src/disks/gduatasmartdialog.c:561
 msgid ""
@@ -1948,12 +1966,12 @@ msgstr "Nessuna descrizione per l'attributo %d"
 #. Translators: Shown in the treeview for a failing attribute
 #: ../src/disks/gduatasmartdialog.c:684
 msgid "FAILING"
-msgstr "Non superato"
+msgstr "GUASTO"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
 #: ../src/disks/gduatasmartdialog.c:693
 msgid "Failed in the past"
-msgstr "Non superato nel passato"
+msgstr "Guastato in passato"
 
 #: ../src/disks/gduatasmartdialog.c:697
 msgid "OK"
@@ -2290,8 +2308,8 @@ msgstr "Errore nel posizionarsi all'offset %lld"
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Errore nel pre-leggere %s byte dall'offset %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Errore nel pre-leggere %s dall'offset %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2418,7 +2436,7 @@ msgstr "Errore nel creare l'immagine disco"
 #: ../src/disks/gducreatediskimagedialog.c:476
 msgid "Unrecoverable read errors while creating disk image"
 msgstr ""
-"Errore non ripristinabile di lettura nella creazione dell'immagine disco"
+"Errori non ripristinabili di lettura nella creazione dell'immagine disco"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -2767,7 +2785,7 @@ msgstr "Basso (lento)"
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:436
 msgid "Loud (Fast)"
-msgstr "Alto (veloce)"
+msgstr "Forte (veloce)"
 
 # (ndt) lasciato non tradotto
 #: ../src/disks/gduerasemultipledisksdialog.c:154
@@ -2799,7 +2817,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2917,20 +2935,20 @@ msgstr ""
 
 # (ndt) pulsante
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Formatta"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Errore nel formattare il volume"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Formattare veramente il volume?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2939,7 +2957,7 @@ msgstr ""
 "attraverso servizi appositi"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3110,7 +3128,7 @@ msgstr "Aggiungere veramente il disco all'array?"
 #: ../src/disks/gdumdraiddisksdialog.c:971
 msgctxt "mdraid-disks"
 msgid "All existing data on the disk will be lost"
-msgstr "Tutti i dati esistenti sul disco saranno persi per sempre"
+msgstr "Tutti i dati esistenti sul disco saranno persi"
 
 #: ../src/disks/gdumdraiddisksdialog.c:972
 msgctxt "mdraid-disks"
@@ -3405,7 +3423,7 @@ msgstr "L'array RAID non è in esecuzione"
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
-msgstr "Array RADI di %s"
+msgstr "Array RAID di %s"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
 #: ../src/disks/gduwindow.c:2355
@@ -3576,7 +3594,7 @@ msgstr "Il dispositivo di loop è vuoto"
 #: ../src/disks/gduwindow.c:3241
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr "%s — %s liberi (%.1f%%)"
+msgstr "%s — %s liberi (%.1f%% utilizzato)"
 
 #: ../src/disks/gduwindow.c:3271
 msgctxt "partition type"
@@ -3588,7 +3606,7 @@ msgstr "Sconosciuto"
 #: ../src/disks/gduwindow.c:3299
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
-msgstr "Root del file system"
+msgstr "File system root"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
 #: ../src/disks/gduwindow.c:3307
@@ -3601,7 +3619,7 @@ msgstr "Montato su %s"
 #: ../src/disks/gduwindow.c:3313
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
-msgstr "Non montanto"
+msgstr "Non montato"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
 #: ../src/disks/gduwindow.c:3336
@@ -3733,7 +3751,7 @@ msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
-"L'operazione preparerà il sistema affinché le seguenti unità vangano spente "
+"L'operazione preparerà il sistema affinché le seguenti unità vengano spente "
 "e rimosse."
 
 #: ../src/disks/gduwindow.c:4105
@@ -3744,7 +3762,7 @@ msgstr "_Spegni"
 msgid "Error mounting filesystem"
 msgstr "Errore nel montare il file system"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Errore nello smontare il file system"
 
@@ -3813,10 +3831,6 @@ msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d _dispositivo selezionato (%s)"
 msgstr[1] "%d _dispositivi selezionati (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Errore nel bloccare il dispositivo"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3997,6 +4011,10 @@ msgstr "Stripe di mirror"
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Errore nel bloccare il dispositivo"
+
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
 msgctxt "notify-smart"
@@ -4007,7 +4025,7 @@ msgstr "Rilevati problemi su disco fisso"
 #: ../src/notify/gdusdmonitor.c:405
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
-msgstr "Un disco fisso potrebbe danneggiarsi."
+msgstr "Un disco fisso potrebbe guastarsi presto."
 
 #. Translators: Text for button in SMART failure notification
 #: ../src/notify/gdusdmonitor.c:409
@@ -4040,3 +4058,7 @@ msgstr "Monitor di problemi sui dischi"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Avvisa riguardo problemi con i dischi e i dispositivi di archiviazione"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "Errore nel pre-leggere %s byte dall'offset %s"

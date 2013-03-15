@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2013-02-23 16:49+0000\n"
-"PO-Revision-Date: 2013-03-14 18:26+0530\n"
+"PO-Revision-Date: 2013-03-15 17:25+0530\n"
 "Last-Translator: Shankar Prasad <svenkate@redhat.com>\n"
 "Language-Team: Kannada <en@li.org>\n"
 "Language: kn\n"
@@ -426,7 +426,7 @@ msgstr "RAID ಮಟ್ಟ (_L)"
 #: ../data/ui/create-raid-array-dialog.ui.h:4
 #| msgid "Unknown Size"
 msgid "Chunk _Size"
-msgstr ""
+msgstr "ಚೂರಿನ _ಗಾತ್ರ"
 
 #: ../data/ui/create-raid-array-dialog.ui.h:6
 #| msgid "Sample Size"
@@ -2156,7 +2156,7 @@ msgstr "SMART ಗೆ ಬೆಂಬಲವಿಲ್ಲ"
 
 #: ../src/disks/gduatasmartdialog.c:911
 msgid "SMART is not enabled"
-msgstr "SMART ಶಕ್ತಗೊಂಡಿಲ್ಲ"
+msgstr "SMART ಸಕ್ರಿಯಗೊಂಡಿಲ್ಲ"
 
 #: ../src/disks/gduatasmartdialog.c:921
 msgid "Self-test in progress"
@@ -2545,6 +2545,10 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
+"%2.1f%% (%s) ನಷ್ಟು ದತ್ತಾಂಶವು (“%s” ನಲ್ಲಿರುವ) ಓದಲು ಅಸಾಧ್ಯವಾಗಿರುತ್ತದೆ ಮತ್ತು "
+"ರಚಿಸಲಾದ ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆ ಕಡತದಲ್ಲಿ ಇದರ ಬದಲಿಗೆ ಸೊನ್ನೆಗಳನ್ನು ಇರಿಸಲಾಗುತ್ತದೆ. "
+"ಮಾಧ್ಯಮವನ್ನು ಉಜ್ಜಲಾಗಿದ್ದರೆ ಅಥವ ಅದಕ್ಕೆ ಯಾವುದೆ ರೀತಿಯ ಭೌತಿಕ ಹಾನಿ ಉಂಟಾಗಿದ್ದಲ್ಲಿ "
+"ಹೀಗೆ ಆಗುವ ಸಾಧ್ಯತೆ ಇದೆ"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -3167,12 +3171,13 @@ msgstr "RAID ವ್ಯೂಹದಿಂದ ಒಂದು ಡಿಸ್ಕನ್ನ�
 #| msgid "Are you sure you want to format the disk?"
 msgctxt "mdraid-disks"
 msgid "Are you sure you want to remove the disk?"
-msgstr "ನೀವು ಡಿಸ್ಕನ್ನು ಖಚಿತವಾಗಿಯೂ ತೆಗೆದುಹಾಕಲು ಖಚಿತವಾಗಿಯೂ ಬಯಸುತ್ತೀರೆ ?"
+msgstr "ನೀವು ಡಿಸ್ಕನ್ನು ಖಚಿತವಾಗಿಯೂ ತೆಗೆದುಹಾಕಲು ಬಯಸುತ್ತೀರೆ ?"
 
 #: ../src/disks/gdumdraiddisksdialog.c:373
 msgctxt "mdraid-disks"
 msgid "Removing a disk from a RAID array may degrade it"
 msgstr ""
+"ಡಿಸ್ಕನ್ನು RAID ವ್ಯೂಹದಿಂದ ತೆಗೆದುಹಾಕಿದಲ್ಲಿ ಅದನ್ನು ಕೆಳಮಟ್ಟಕ್ಕೆ ಇಳಿಸಿದಂತಾಗುತ್ತದೆ"
 
 #: ../src/disks/gdumdraiddisksdialog.c:374
 msgctxt "mdraid-disks"
@@ -3195,12 +3200,11 @@ msgstr "ಹೊಂದಾಣಿಕೆಯಲ್ಲಿ"
 
 #. Translators: MD-RAID member state for 'spare'
 #: ../src/disks/gdumdraiddisksdialog.c:631
-#, fuzzy
 #| msgctxt "Linux MD slave state"
 #| msgid "Spare"
 msgctxt "mdraid-disks-state"
 msgid "Spare"
-msgstr "ಕಾದಿಟ್ಟ"
+msgstr "ಕಾದಿರಿಸಿದ"
 
 #. Translators: MD-RAID member state for 'spare' but is being recovered to
 #: ../src/disks/gdumdraiddisksdialog.c:638
@@ -3263,25 +3267,21 @@ msgid "Errors"
 msgstr "ದೋಷಗಳು"
 
 #: ../src/disks/gdumdraiddisksdialog.c:948
-#, fuzzy
 #| msgid "An error occurred when trying to wake up the drive from standby mode"
 msgid "An error occurred when adding a disk to the RAID Array"
-msgstr ""
-"ಡ್ರೈವ್ ಅನ್ನು ಸ್ಟ್ಯಾಂಡ್‌ಬೈ ಸ್ಥಿತಿಯಿಂದ ಎಚ್ಚರಿಸಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ"
+msgstr "RAID ವ್ಯೂಹಕ್ಕೆ ಒಂದು ಡಿಸ್ಕನ್ನು ಸೇರಿಸುವಲ್ಲಿ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ"
 
 #: ../src/disks/gdumdraiddisksdialog.c:970
-#, fuzzy
 #| msgid "Are you sure you want to format the disk?"
 msgctxt "mdraid-disks"
 msgid "Are you sure you want to add the disk to the array?"
-msgstr "ನೀವು ಡಿಸ್ಕನ್ನು ಖಚಿತವಾಗಿಯೂ ಫಾರ್ಮ್ಯಾಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರೆ ?"
+msgstr "ನೀವು ಡಿಸ್ಕನ್ನು ಖಚಿತವಾಗಿಯೂ ವ್ಯೂಹಕ್ಕೆ ಸೇರಿಸಲು ಬಯಸುತ್ತೀರೆ ?"
 
 #: ../src/disks/gdumdraiddisksdialog.c:971
-#, fuzzy
 #| msgid "All existing data will be lost"
 msgctxt "mdraid-disks"
 msgid "All existing data on the disk will be lost"
-msgstr "ಈಗಿರುವ ಎಲ್ಲಾ ದತ್ತಾಂಶವು ಇಲ್ಲವಾಗುತ್ತವೆ"
+msgstr "ಡಿಸ್ಕಿನಲ್ಲಿ ಈಗಿರುವ ಎಲ್ಲಾ ದತ್ತಾಂಶವು ಇಲ್ಲವಾಗುತ್ತವೆ"
 
 #: ../src/disks/gdumdraiddisksdialog.c:972
 #| msgid "_Add..."
@@ -3293,21 +3293,19 @@ msgstr "ಸೇರಿಸು (_A)"
 #. *              right size available
 #.
 #: ../src/disks/gdumdraiddisksdialog.c:1150
-#, fuzzy
 #| msgid "Whole disk is uninitialized. %s available for use"
 msgctxt "mdraid-add"
 msgid "No disks of suitable size available"
-msgstr "ಸಂಪೂರ್ಣ ಡಿಸ್ಕನ್ನು ಆರಂಭಿಸದೆ ಉಳಿಸಲಾಗಿದೆ. ಬಳಕೆಗೆ %s ಲಭ್ಯವಿದೆ"
+msgstr "ಸೂಕ್ತವಾದ ಗಾತ್ರದ ಯಾವುದೆ ಡಿಸ್ಕುಗಳು ಕಂಡುಬಂದಿಲ್ಲ"
 
 #. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
 #. *              disks that can be added to the array
 #.
 #: ../src/disks/gdumdraiddisksdialog.c:1161
-#, fuzzy
 #| msgid "Select Disk Image to Attach"
 msgctxt "mdraid-add"
 msgid "Select disk to add"
-msgstr "ಲಗತ್ತಿಸಲು ಚಿತ್ರಿಕೆಯನ್ನು ಆರಿಸಿ"
+msgstr "ಸೇರಿಸಲು ಚಿತ್ರಿಕೆಯನ್ನು ಆರಿಸಿ"
 
 #: ../src/disks/gdupartitiondialog.c:355
 msgid "Error setting partition type"
@@ -3346,22 +3344,21 @@ msgid "Cannot restore image of size 0"
 msgstr "0 ಗಾತ್ರದ ಚಿತ್ರಿಕೆಯನ್ನು ಮರಳಿಸ್ಥಾಪಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ"
 
 #: ../src/disks/gdurestorediskimagedialog.c:253
-#, fuzzy, c-format
+#, c-format
 #| msgid "The selected image is %s smaller than the device"
 msgid "The disk image is %s smaller than the target device"
-msgstr "ಆಯ್ಕೆ ಮಾಡಿದ ಸಾಧನವು %s ನಷ್ಟು ಸಣ್ಣದಾಗಿದೆ"
+msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯು ಗುರಿ ಸಾಧನಕ್ಕಿಂತ %s ನಷ್ಟು ಸಣ್ಣದಾಗಿದೆ"
 
 #: ../src/disks/gdurestorediskimagedialog.c:262
-#, fuzzy, c-format
+#, c-format
 #| msgid "The selected image is %s bigger than the device"
 msgid "The disk image is %s bigger than the target device"
-msgstr "ಆಯ್ಕೆ ಮಾಡಿದ ಸಾಧನವು %s ನಷ್ಟು ದೊಡ್ಡದಾಗಿದೆ"
+msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯು ಗುರಿ ಸಾಧನಕ್ಕಿಂತ %s ನಷ್ಟು ದೊಡ್ಡದಾಗಿದೆ"
 
 #: ../src/disks/gdurestorediskimagedialog.c:435
-#, fuzzy
 #| msgid "Error attaching disk image"
 msgid "Error restoring disk image"
-msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಲಗತ್ತಿಸುವಲ್ಲಿ ದೋಷ"
+msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸಸುವಲ್ಲಿ ದೋಷ"
 
 #: ../src/disks/gdurestorediskimagedialog.c:722
 msgid "Error opening file for reading"
@@ -3373,18 +3370,16 @@ msgstr "ಕಡತದ ಗಾತ್ರವನ್ನು ನಿರ್ಧರಿಸು�
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: ../src/disks/gdurestorediskimagedialog.c:749
-#, fuzzy
 #| msgid "Copying data to device..."
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
-msgstr "ದತ್ತಾಂಶವನ್ನು ಸಾಧನಕ್ಕೆ ಪ್ರತಿಮಾಡಲಾಗುತ್ತಿದೆ..."
+msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಸಾಧನಕ್ಕೆ ಪ್ರತಿಮಾಡಲಾಗುತ್ತಿದೆ"
 
 #. Translators: this is the description of the job
 #: ../src/disks/gdurestorediskimagedialog.c:755
-#, fuzzy
 #| msgid "Restore Disk Image..."
 msgid "Restoring Disk Image"
-msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸು..."
+msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಮರಳಿ ಸ್ಥಾಪಿಸಲಾಗುತ್ತಿದೆ"
 
 #: ../src/disks/gdurestorediskimagedialog.c:807
 msgid "Are you sure you want to write the disk image to the device?"
@@ -3637,12 +3632,12 @@ msgstr[0] "%d ಡಿಸ್ಕ್‍"
 msgstr[1] "%d ಡಿಸ್ಕುಗಳು"
 
 #: ../src/disks/gduwindow.c:2500
-#, fuzzy, c-format
+#, c-format
 #| msgctxt "duration-year-to-inf"
 #| msgid "%s, %s and %s"
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
-msgstr "%s, %s ಮತ್ತು %s"
+msgstr "%s, %s ಚೂರು"
 
 #. Translators: Shown in the "RAID Level" field.
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
@@ -3720,14 +3715,13 @@ msgstr "ಸುಸ್ಥಿತಿಗೆ ಬರುತ್ತಿದೆ"
 #: ../src/disks/gduwindow.c:2593
 msgctxt "mdraid-state"
 msgid "Frozen"
-msgstr ""
+msgstr "ತಡೆಹಿಡಿಯಲಾದ"
 
 #. Translators: String for conveying the raid array is misconfigured
 #: ../src/disks/gduwindow.c:2609
-#, fuzzy
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr "RAID ARRAY IS MISCONFIGURED"
+msgstr "RAID ವ್ಯೂಹವನ್ನು ತಪ್ಪಾಗಿ ಸಂರಚಿಸಲಾಗಿದೆ"
 
 #. Translators: The specific type of misconfiguration, see
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
@@ -3736,7 +3730,7 @@ msgstr "RAID ARRAY IS MISCONFIGURED"
 #: ../src/disks/gduwindow.c:2615
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
-msgstr ""
+msgstr "ಸ್ಪ್ಲಿಟ್-ಬ್ರೇನ್"
 
 #. Translators: Combiner for the RAID split-brain strings.
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
@@ -3891,11 +3885,10 @@ msgid "Unallocated Space"
 msgstr "ನಿಯೋಜಿತವಾಗದೆ ಇರುವ ಸ್ಥಳ"
 
 #: ../src/disks/gduwindow.c:3883
-#, fuzzy
 #| msgid "An error occurred when trying to put the drive into standby mode"
 msgid "An error occurred when requesting data redundancy check"
 msgstr ""
-"ಡ್ರೈವ್ ಅನ್ನು ಸ್ಟ್ಯಾಂಡ್‌ಬೈ ಸ್ಥಿತಿಗೆ ಕಳುಹಿಸಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ"
+"ದತ್ತಾಂಶ ಮಿತಿಮೀರಿಕೆಯ (ರಿಡಂಡೆನ್ಸಿ) ಪರೀಕ್ಷೆಗಾಗಿ ಮನವಿ ಸಲ್ಲಿಸುವಾಗ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ"
 
 #. Translators: Heading for data scrubbing dialog
 #: ../src/disks/gduwindow.c:3901
@@ -3916,6 +3909,14 @@ msgid ""
 "the <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>RAID Administration</a> article."
 msgstr ""
+"ಶೇಖರಣಾ ಸಾಧನಗಳು ಯಾವುದೆ ಸಮಯದಲ್ಲಿ ಹಾಳಾದ ಖಂಡಗಳನ್ನು ನಿರ್ಮಿಸುವ ಸಾಧ್ಯವಿರುವುದರಿಂದ, "
+"ಅಂತಹ ಯಾವುದೆ ತಪ್ಪು ಖಂಡಗಳನ್ನು ಮೊದಲೇ ಗುರುತಿಸಲು RAID ವ್ಯೂಹದಲ್ಲಿರುವ ಎಲ್ಲಾ "
+"ಡಿಸ್ಕುಗಳಲ್ಲಿರುವ ಎಲ್ಲಾ ಬ್ಲಾಕ್‌ಗಳನ್ನು ಆಗಾಗ್ಗೆ ಓದುವುದು ಅತ್ಯಗತ್ಯ.\n"
+"\n"
+"RAID ವ್ಯೂಹವು ಕಾರ್ಯಾಚರಣೆಯ ಸಮಯದಲ್ಲಿ ಕೆಲಸ ಮಾಡುತ್ತಿದ್ದರೂ ಸಹ ಅದರ ಕಾರ್ಯನಿರ್ವಹಣೆಯು "
+"ಬದಲಾವಣೆಗೊಳ್ಳಬಹುದು. ದತ್ತಾಂಶ ಚೊಕ್ಕಗೊಳಿಸುವಿಕೆಯ (ಡೇಟಾ ಸ್ಕ್ರಬ್ಬಿಂಗ್) ಕುರಿತಾಗಿನ "
+"ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ <a href='https://raid.wiki.kernel.org/index.php/"
+"RAID_Administration'>RAID Administration</a> ಲೇಖನವನ್ನು ಓದಿ."
 
 #: ../src/disks/gduwindow.c:3908
 #| msgid "_Start"
@@ -3926,7 +3927,7 @@ msgstr "ಆರಂಭಿಸು (_S)"
 #: ../src/disks/gduwindow.c:3909
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
-msgstr ""
+msgstr "ಸಾಧ್ಯವಾದಲ್ಲಿ, ಹೊಂದಿಕೆಯಾಗದ ಖಂಡಗಳನ್ನು ದುರಸ್ತಿ ಮಾಡು (_R)"
 
 #: ../src/disks/gduwindow.c:3956
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -3939,17 +3940,15 @@ msgstr ""
 "ಡ್ರೈವ್ ಅನ್ನು ಸ್ಟ್ಯಾಂಡ್‌ಬೈ ಸ್ಥಿತಿಯಿಂದ ಎಚ್ಚರಿಸಲು ಪ್ರಯತ್ನಿಸುವಾಗ ಒಂದು ದೋಷ ಉಂಟಾಗಿದೆ"
 
 #: ../src/disks/gduwindow.c:4047
-#, fuzzy
 #| msgid "Error writing to device"
 msgid "Error powering off drive"
-msgstr "ಡ್ರೈವ್ ಅನ್ನು ಬರೆಯುವಲ್ಲಿ ದೋಷ"
+msgstr "ಡ್ರೈವ್ ಅನ್ನು ಸ್ಥಗಿತಗೊಳಿಸುವಲ್ಲಿ ದೋಷ"
 
 #. Translators: Heading for powering off a device with multiple drives
 #: ../src/disks/gduwindow.c:4099
-#, fuzzy
 #| msgid "Are you sure you want to format the disk?"
 msgid "Are you sure you want to power off the drives?"
-msgstr "ನೀವು ಡಿಸ್ಕನ್ನು ಖಚಿತವಾಗಿಯೂ ಫಾರ್ಮ್ಯಾಟ್ ಮಾಡಲು ಬಯಸುತ್ತೀರೆ ?"
+msgstr "ನೀವು ಡ್ರೈವ್‌ಗಳನ್ನು ಖಂಡಿತವಾಗಿಯೂ ಸ್ಥಗಿತಗೊಳಿಸಲು ಬಯಸುತ್ತೀರೆ?"
 
 #. Translators: Message for powering off a device with multiple drives
 #: ../src/disks/gduwindow.c:4101
@@ -3957,12 +3956,13 @@ msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
+"ಈ ಕಾರ್ಯದಿಂದಾಗಿ ಈ ಕೆಳಗಿನ ಡ್ರೈವ್‌ಗಳನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಲು ಮತ್ತು ತೆಗೆದುಹಾಕಲು "
+"ವ್ಯವಸ್ಥೆಯನ್ನು ಸಿದ್ಧಗೊಳಿಸುತ್ತದೆ."
 
 #: ../src/disks/gduwindow.c:4105
-#, fuzzy
 #| msgid "Powered On"
 msgid "_Power Off"
-msgstr "ಚಾಲನೆ ಮಾಡಲಾಗಿದೆ"
+msgstr "ಸ್ಥಗಿತಗೊಳಿಸು (_P)"
 
 #: ../src/disks/gduwindow.c:4182
 msgid "Error mounting filesystem"
@@ -4015,10 +4015,9 @@ msgid "Error stopping swap"
 msgstr "swap ಅನ್ನು ನಿಲ್ಲಿಸುವಲ್ಲಿ ದೋಷ"
 
 #: ../src/disks/gduwindow.c:4765
-#, fuzzy
 #| msgid "Error creating component for RAID array"
 msgid "Error setting bitmap for the RAID array"
-msgstr "RAID ವ್ಯೂಹಕ್ಕಾಗಿನ ಘಟಕವನ್ನು ನಿರ್ಮಿಸುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ"
+msgstr "RAID ವ್ಯೂಹಕ್ಕಾಗಿನ ಬಿಟ್‌ಮ್ಯಾಪ್ ಅನ್ನು ಹೊಂದಿಸುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ"
 
 #: ../src/disks/gduwindow.c:4831
 msgid "Error setting autoclear flag"
@@ -4163,11 +4162,10 @@ msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
 #: ../src/libgdu/gduutils.c:702
-#, fuzzy
 #| msgid "Other Devices"
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
-msgstr "ಇತರೆ ಸಾಧನಗಳು"
+msgstr "ಬದಲಾಯಿಸಲ್ಪಡುವ ಸಾಧನಗಳು"
 
 #: ../src/libgdu/gduutils.c:792
 #| msgctxt "RAID level"
@@ -4197,10 +4195,9 @@ msgid "RAID 4"
 msgstr "RAID 4"
 
 #: ../src/libgdu/gduutils.c:805
-#, fuzzy
 #| msgid "Create Partition"
 msgid "Dedicated Parity"
-msgstr "ವಿಭಾಗವನ್ನು ರಚಿಸಿ"
+msgstr "ಮೀಸಲಿಡಲಾದ ಅನುರೂಪತೆ"
 
 #: ../src/libgdu/gduutils.c:810
 #| msgctxt "RAID level"
@@ -4233,11 +4230,10 @@ msgid "RAID 10"
 msgstr "RAID 10"
 
 #: ../src/libgdu/gduutils.c:823
-#, fuzzy
 #| msgctxt "RAID level"
 #| msgid "Stripe of Mirrors (RAID-10)"
 msgid "Stripe of Mirrors"
-msgstr "ಪ್ರತಿಬಿಂಬಗಳ ಸ್ಟ್ರೈಪ್ (RAID-10)"
+msgstr "ಪ್ರತಿಬಿಂಬಗಳ ಸ್ಟ್ರೈಪ್"
 
 #: ../src/libgdu/gduutils.c:828
 #, c-format
@@ -4246,14 +4242,12 @@ msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
 #: ../src/libgdu/gduutils.c:1120
-#, fuzzy
 #| msgid "Error opening device"
 msgid "Error locking device"
-msgstr "ಸಾಧನವನ್ನು ತೆರೆಯುವಲ್ಲಿ ದೋಷ"
+msgstr "ಸಾಧನವನ್ನು ಲಾಕ್ ಮಾಡುವಲ್ಲಿ ದೋಷ"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
-#, fuzzy
 #| msgid "Hard Disk Problems Detected"
 msgctxt "notify-smart"
 msgid "Hard Disk Problems Detected"
@@ -4261,11 +4255,10 @@ msgstr "ಹಾರ್ಡ್ ಡಿಸ್ಕಿನಲ್ಲಿ ತೊಂದರೆ�
 
 #. Translators: This is used as the text of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:405
-#, fuzzy
 #| msgid "A hard disk may be failing"
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
-msgstr "ಹಾರ್ಡ್ ಡಿಸ್ಕ್ ವಿಫಲಗೊಳ್ಳುತ್ತಿರಬಹುದು"
+msgstr "ಹಾರ್ಡ್ ಡಿಸ್ಕ್ ಸದ್ಯದಲ್ಲಿಯೆ ವಿಫಲಗೊಳ್ಳುವ ಸಾಧ್ಯತೆ ಇದೆ."
 
 #. Translators: Text for button in SMART failure notification
 #: ../src/notify/gdusdmonitor.c:409
@@ -4276,17 +4269,16 @@ msgstr "ಪರಿಶೀಲಿಸು"
 
 #. Translators: This is used as the title of the MD-RAID degraded notification
 #: ../src/notify/gdusdmonitor.c:416
-#, fuzzy
 #| msgid "Hard Disk Problems Detected"
 msgctxt "notify-mdraid"
 msgid "RAID Problems Detected"
-msgstr "ಹಾರ್ಡ್ ಡಿಸ್ಕಿನಲ್ಲಿ ತೊಂದರೆಯು ಕಂಡುಬಂದಿದೆ"
+msgstr "RAID ತೊಂದರೆಯು ಕಂಡುಬಂದಿದೆ"
 
 #. Translators: This is used as the text of the MD-RAID degraded notification
 #: ../src/notify/gdusdmonitor.c:418
 msgctxt "notify-mdraid"
 msgid "A RAID array is degraded."
-msgstr ""
+msgstr "ಒಂದು RAID ವ್ಯೂಹವನ್ನು ಕೆಳಗಿಳಿಸಲಾಗುತ್ತದೆ."
 
 #. Translators: Text for button in MD-RAID degraded notification
 #: ../src/notify/gdusdmonitor.c:422
@@ -4296,14 +4288,13 @@ msgid "Examine"
 msgstr "ಪರಿಶೀಲಿಸು"
 
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:1
-#, fuzzy
 #| msgid "Disk Image Mounter"
 msgid "Disks Problem Monitor"
-msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಏರಿಸುವ ಸಾಧನ"
+msgstr "ಡಿಸ್ಕ್‍ ತೊಂದರೆ ಮೇಲ್ವಿಚಾರಕ"
 
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
-msgstr ""
+msgstr "ಡಿಸ್ಕುಗಳು ಮತ್ತು ಶೇಖರಣಾ ಸಾಧನಗಳ ಕುರಿತಾದ ತೊಂದರೆಗಳನ್ನು ವರದಿ ಮಾಡುತ್ತದೆ"
 
 #~ msgid "Attach Disk Image..."
 #~ msgstr "ಡಿಸ್ಕ್‍ ಚಿತ್ರಿಕೆಯನ್ನು ಲಗತ್ತಿಸು..."

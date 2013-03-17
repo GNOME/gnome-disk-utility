@@ -19,22 +19,23 @@
 #
 #
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2009, 2010, 2012, 2013.
-# Christian Kirbach <Christian.Kirbach@gmail.com>, 2009, 2010, 2012.
 # Jakob Kramer <jakob.kramer@gmx.de>, 2010.
 # Paul Seyfert <pseyfert@mathphys.fsk.uni-heidelberg.de>, 2010.
 # Wolfgang Stöggl <c72578@yahoo.de>, 2012.
 # Hedda Peters <hpeters@redhat.com>, 2012.
 # Andre Jonas <nipsky@googlemail.com>, 2013.
+# Christian Kirbach <christian.kirbach@gmail.com>, 2009, 2010, 2012, 2013.
+# Jonatan Zeidler <jonatan_zeidler@hotmail.de>, 2013.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-02-03 03:09+0000\n"
-"PO-Revision-Date: 2013-02-04 20:31+0100\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
-"Language-Team: Deutsch <German <gnome-de@gnome.org>>\n"
+"POT-Creation-Date: 2013-03-12 01:09+0000\n"
+"PO-Revision-Date: 2013-03-12 12:03+0100\n"
+"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -432,9 +433,8 @@ msgid "RAID _Level"
 msgstr "RAID-Level"
 
 #: ../data/ui/create-raid-array-dialog.ui.h:4
-#, fuzzy
 msgid "Chunk _Size"
-msgstr "Chunk-Größe"
+msgstr "Datenblock_größe"
 
 #: ../data/ui/create-raid-array-dialog.ui.h:6
 msgid "Usable Size"
@@ -1007,10 +1007,8 @@ msgid "If checked, the device will be mounted at startup [!noauto]"
 msgstr "Falls aktiviert, wird das Gerät beim Start eingehängt [!noauto]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
-#, fuzzy
-#| msgid "Icon Na_me"
 msgid "S_ymbolic Icon Name"
-msgstr "Symbolna_me"
+msgstr "_Symbolname"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:22
 msgid ""
@@ -1344,30 +1342,46 @@ msgstr "Fehler beim Öffnen von »%s«: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Fehler beim Anhängen des Laufwerksabbilds: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:133
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "Fehler beim Öffnen von %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "Fehler beim Ermitteln des Blockgerätes für %s\n"
+
+#: ../src/disks/gduapplication.c:178
 msgid "Select device"
 msgstr "Gerät wählen"
 
-#: ../src/disks/gduapplication.c:134
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "Ausgewähltes Gerät formatieren"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID des übergeordneten Fensters für den Formatierungsdialog"
+
+#: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Hilfe-Optionen anzeigen"
 
-#: ../src/disks/gduapplication.c:168
-#, c-format
-msgid "Error opening %s: %m\n"
-msgstr "Fehler beim Öffnen von »%s«: %m\n"
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device muss zusammen mit --block-device benutzt werden\n"
 
-#: ../src/disks/gduapplication.c:177
-#, c-format
-msgid "Error looking up block device for %s: %m\n"
-msgstr "Fehler beim Ermitteln des Block-Gerätes für %s: %m\n"
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "--format-device ist erforderlich, um --xid nutzen zu können\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:254
+#: ../src/disks/gduapplication.c:312
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1785,19 +1799,19 @@ msgstr "Wiederholte Anlaufversuche"
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Anzahl der wiederholten Anlaufversuche des Laufwerks"
 
+# http://kb.acronis.com/content/9145
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:437
-#, fuzzy
 msgid "Offline Seek Performance"
-msgstr "Positionierungszeit beim Selbsttest"
+msgstr "Leistungsfähigkeit beim Lesekopfpositionierungs-Selbsttest"
 
 #: ../src/disks/gduatasmartdialog.c:438
-#, fuzzy
-#| msgid "Drive's seek performance during offline operations"
 msgid "Drive’s seek performance during offline operations"
-msgstr "Positionierungszeit des Laufwerks während des Selbsttests"
+msgstr ""
+"Leistungsfähigkeit bei der Lesekopfpositionierung des Laufwerks während des "
+"Selbsttests"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2139,14 +2153,12 @@ msgstr "%s (%s)"
 
 # Vor Versagen?
 #: ../src/disks/gduatasmartdialog.c:1105
-#, fuzzy
 msgid "Pre-Fail"
-msgstr "Pre-Fail"
+msgstr "Frühwarnung"
 
 #: ../src/disks/gduatasmartdialog.c:1107
-#, fuzzy
 msgid "Old-Age"
-msgstr "Old-Age"
+msgstr "Alterserscheinung"
 
 #: ../src/disks/gduatasmartdialog.c:1110
 msgid "Online"
@@ -2319,8 +2331,8 @@ msgstr "Fehler beim Springen zu Position %lld"
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Fehler beim Vorauslesen von %s Bytes von Position %s"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Fehler beim Vorauslesen von %s ab Position %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2828,7 +2840,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:197
+#: ../src/disks/gduformatvolumedialog.c:212
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2944,20 +2956,20 @@ msgstr ""
 "nicht von Datenrettungsdiensten wiederhergestellt werden können"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:209
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_Formatieren"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "Fehler beim Formatieren des Datenträgers"
 
-#: ../src/disks/gduformatvolumedialog.c:191
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "Sind Sie sicher, dass der Datenträger formatiert werden soll?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:195
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2966,7 +2978,7 @@ msgstr ""
 "wahrscheinlich immer noch von Datenrettungsdiensten wiederhergestellt werden"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:202
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -2976,17 +2988,16 @@ msgstr ""
 "können"
 
 #: ../src/disks/gdufstabdialog.c:154
-#, fuzzy, c-format
+#, c-format
 msgid "Matches partition %d of the device with the given vital product data"
 msgstr ""
-"Entspricht Partition %d des Gerätes mit den angegebenen Vital Product Data"
+"Entspricht Partition %d des Gerätes mit den angegebenen Erkennungsdaten (VPD)"
 
 #: ../src/disks/gdufstabdialog.c:157
-#, fuzzy
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr ""
-"Entspricht dem gesamten Laufwerk des Gerätes mit den angegebenen Vital "
-"Product Data"
+"Entspricht dem gesamten Laufwerk des Gerätes mit den angegebenen "
+"Erkennungsdaten (VPD)"
 
 #: ../src/disks/gdufstabdialog.c:162
 #, c-format
@@ -3089,10 +3100,9 @@ msgstr "Beim Wiederherstellen"
 
 #. Translators: MD-RAID member state for 'writemostly'
 #: ../src/disks/gdumdraiddisksdialog.c:646
-#, fuzzy
 msgctxt "mdraid-disks-state"
 msgid "Write-mostly"
-msgstr "Write-mostly"
+msgstr "Zum Schreiben bevorzugt (write-mostly)"
 
 #. Translators: MD-RAID member state for 'blocked'
 #: ../src/disks/gdumdraiddisksdialog.c:653
@@ -3476,12 +3486,10 @@ msgstr[0] "%d Laufwerk"
 msgstr[1] "%d Laufwerke"
 
 #: ../src/disks/gduwindow.c:2500
-#, fuzzy, c-format
-#| msgctxt "duration-year-to-inf"
-#| msgid "%s, %s and %s"
+#, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
-msgstr "%s, %s Chunk"
+msgstr "%s, %s Datenblock"
 
 #. Translators: Shown in the "RAID Level" field.
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
@@ -3562,10 +3570,9 @@ msgstr "RAID-System IST FALSCH KONFIGURIERT"
 #. * for more details
 #.
 #: ../src/disks/gduwindow.c:2615
-#, fuzzy
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
-msgstr "Split-Brain"
+msgstr "Unterbrechung der Zwischenverbindungen (split-brain)"
 
 #. Translators: Combiner for the RAID split-brain strings.
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
@@ -3786,7 +3793,7 @@ msgstr "_Ausschalten"
 msgid "Error mounting filesystem"
 msgstr "Fehler beim Einhängen des Dateisystems"
 
-#: ../src/disks/gduwindow.c:4222 ../src/disks/gduwindow.c:5198
+#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Fehler beim Aushängen des Dateisystems"
 
@@ -3855,10 +3862,6 @@ msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d Gerät ausgewählt (%s)"
 msgstr[1] "%d Geräte ausgewählt (%s)"
-
-#: ../src/disks/gduwindow.c:5218
-msgid "Error locking device"
-msgstr "Fehler beim Sperren des Gerätes"
 
 #: ../src/libgdu/gduutils.c:91
 msgid "All Files"
@@ -3988,10 +3991,10 @@ msgstr "Betroffene Geräte"
 msgid "RAID 0"
 msgstr "RAID 0"
 
+# http://en.wikipedia.org/wiki/Data_striping
 #: ../src/libgdu/gduutils.c:793
-#, fuzzy
 msgid "Stripe"
-msgstr "Stripe"
+msgstr "Datenblockverteilung"
 
 #: ../src/libgdu/gduutils.c:798
 msgid "RAID 1"
@@ -4030,14 +4033,17 @@ msgid "RAID 10"
 msgstr "RAID 10"
 
 #: ../src/libgdu/gduutils.c:823
-#, fuzzy
 msgid "Stripe of Mirrors"
-msgstr "Stripe of Mirrors"
+msgstr "Datenblockverteilung mit Spiegelservern"
 
 #: ../src/libgdu/gduutils.c:828
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
+
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "Fehler beim Sperren des Gerätes"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: ../src/notify/gdusdmonitor.c:403
@@ -4082,6 +4088,10 @@ msgstr "Überwachung von Festplattenproblemen"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Warnungen über Probleme mit Festplatten und Speichergeräten"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "Fehler beim Vorauslesen von %s Bytes von Position %s"
 
 #~ msgid "Eject media"
 #~ msgstr "Medium auswerfen"

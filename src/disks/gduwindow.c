@@ -1652,34 +1652,52 @@ gdu_window_constructed (GObject *object)
   gtk_accel_map_add_entry ("<Disks>/DriveMenu", key, mod);
   gtk_widget_set_accel_path (window->devtab_drive_generic_button, "<Disks>/DriveMenu", accelgroup);
 
-  /* Translators: This is the short-cut to format a disk */
+  /* Translators: This is the short-cut to format a disk.
+   *              The Ctrl modifier must not be translated or parsing will fail.
+   *              You can however change to another English modifier (e.g. <Shift>).
+   */
   gtk_accelerator_parse (C_("accelerator", "<Ctrl>F"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/Format", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_format_disk, "<Disks>/DriveMenu/Format", accelgroup);
 
-  /* Translators: This is the short-cut to view SMART data for a disk */
+  /* Translators: This is the short-cut to view SMART data for a disk.
+   *              The Ctrl modifier must not be translated or parsing will fail.
+   *              You can however change to another English modifier (e.g. <Shift>).
+   */
   gtk_accelerator_parse (C_("accelerator", "<Ctrl>S"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/ViewSmart", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_view_smart, "<Disks>/DriveMenu/ViewSmart", accelgroup);
 
-  /* Translators: This is the short-cut to view RAID Disks for a RAID array */
+  /* Translators: This is the short-cut to view RAID Disks for a RAID array.
+   *              The Ctrl modifier must not be translated or parsing will fail.
+   *              You can however change to another English modifier (e.g. <Shift>).
+   */
   gtk_accelerator_parse (C_("accelerator", "<Ctrl>R"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/MDRaidDisks", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_mdraid_disks, "<Disks>/DriveMenu/MDRaidDisks", accelgroup);
 
-  /* Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk */
+  /* Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+   *              The Ctrl modifier must not be translated or parsing will fail.
+   *              You can however change to another English modifier (e.g. <Shift>).
+   */
   gtk_accelerator_parse (C_("accelerator", "<Ctrl>E"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/Settings", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_disk_settings, "<Disks>/DriveMenu/Settings", accelgroup);
 
-  /* Translators: This is the short-cut to open the volume gear menu */
+  /* Translators: This is the short-cut to open the volume gear menu.
+   *              The Shift modifier must not be translated or parsing will fail.
+   *              You can however change to another English modifier (e.g. <Ctrl>).
+   */
   gtk_accelerator_parse (C_("accelerator", "<Shift>F10"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/VolumeMenu", key, mod);
   gtk_action_set_accel_group (window->devtab_action_generic, accelgroup);
   gtk_action_set_accel_path (window->devtab_action_generic, "<Disks>/VolumeMenu");
   gtk_action_connect_accelerator (window->devtab_action_generic);
 
-  /* Translators: This is the short-cut to format a volume */
+  /* Translators: This is the short-cut to format a volume.
+   *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+   *              You can however change to other English modifiers.
+   */
   gtk_accelerator_parse (C_("accelerator", "<Shift><Ctrl>F"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/VolumeMenu/Format", key, mod);
   gtk_widget_set_accel_path (window->generic_menu_item_format_volume, "<Disks>/VolumeMenu/Format", accelgroup);
@@ -2492,11 +2510,11 @@ update_device_page_for_mdraid (GduWindow      *window,
   if (chunk_size > 0)
     {
       s3 = udisks_client_get_size_for_display (window->client, chunk_size, TRUE, FALSE);
+      s = s2;
       /* Translators: Used to combine number of disks and the chunk size.
        *              The first %s is the number of disks e.g. "3 disks".
        *              The second %s is the chunk size e.g. "512 KiB".
        */
-      s = s2;
       s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
       g_free (s);
       g_free (s3);

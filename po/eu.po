@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu_to_be_translate\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-21 17:02+0100\n"
-"PO-Revision-Date: 2013-02-21 17:41+0100\n"
+"POT-Creation-Date: 2013-03-20 10:36+0100\n"
+"PO-Revision-Date: 2013-03-11 22:57+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "Language: eu\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:46
@@ -41,8 +41,8 @@ msgid ""
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
 "diskoa;unitatea;bolumena;disko gogorra;hdd;diskoa;CD-ROMa;DVDa;partizioa;iso;"
-"irudia;babeskopia;leheneratu;proba-bankua;raid;luks;enkriptazioa;S.M.A.R.T.;sm"
-"art;"
+"irudia;babeskopia;leheneratu;proba-bankua;raid;luks;enkriptazioa;S.M.A.R.T.;"
+"smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -2272,8 +2272,8 @@ msgstr "Errorea %lld desplazamendua bilatzean"
 #: ../src/disks/gdubenchmarkdialog.c:1229
 #, c-format
 msgctxt "benchmarking"
-msgid "Error pre-reading %s bytes from offset %s"
-msgstr "Errorea '%2$s' desplazamenduaren %1$s byte aurre-irakurtzean"
+msgid "Error pre-reading %s from offset %s"
+msgstr "Errorea  '%2$s' desplazamenduaren %1$s aurre-irakurketa lantzean"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2414,9 +2414,8 @@ msgid ""
 "is scratched or if there is physical damage to the drive"
 msgstr ""
 "'%3$s' gailuko datuen %%%1$2.1f (%2$s) ezin da irakurri eta zeroekin "
-"ordeztuko da "
-"disko-irudiaren fitxategia sortzean. Euskarria urratuta edo unitatean kalte "
-"fisikoak daudenean gertatu ohi da"
+"ordeztuko da disko-irudiaren fitxategia sortzean. Euskarria urratuta edo "
+"unitatean kalte fisikoak daudenean gertatu ohi da"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -2619,8 +2618,8 @@ msgid ""
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
 msgstr ""
 "<i>/etc/crypttab</i> fitxategiak erreferentziatutako  pasaesaldia soilik "
-"aldatuko da. Diskoaren pasaesaldia aldatzeko, erabili "
-"<i>Aldatu pasaesaldia…</i>"
+"aldatuko da. Diskoaren pasaesaldia aldatzeko, erabili <i>Aldatu pasaesaldia…"
+"</i>"
 
 #: ../src/disks/gdudevicetreemodel.c:560
 msgid "Disk Drives"
@@ -2784,8 +2783,7 @@ msgid ""
 msgstr ""
 "<b>Aholkua</b>: zure ordenagailu edo disko zaharra birziklatzeko, saltzeko "
 "edo emateko asmoa baduzu, erabili erabat ezabatzen duen mota bat zure "
-"informazio "
-"pribatua esku txarretan eror ez dadin"
+"informazio pribatua esku txarretan eror ez dadin"
 
 #. Translators: warning used when overwriting data on multiple disks
 #: ../src/disks/gduerasemultipledisksdialog.c:378
@@ -2977,7 +2975,7 @@ msgid "Error updating /etc/fstab entry"
 msgstr "Errorea /etc/fstab-en sarrera eguneratzean"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2004
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2022
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(irakurtzeko soilik)</span>"
@@ -3191,7 +3189,7 @@ msgstr "Errorea enkriptatutako gailua desblokeatzean"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Enkriptazioaren pasaesaldia gako-sortatik lortu da"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2755
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2773
 msgid "No Media"
 msgstr "Euskarririk ez"
 
@@ -3279,38 +3277,56 @@ msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
 
-#. Translators: This is the short-cut to format a disk
-#: ../src/disks/gduwindow.c:1656
+#. Translators: This is the short-cut to format a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1659
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
 
-#. Translators: This is the short-cut to view SMART data for a disk
-#: ../src/disks/gduwindow.c:1661
+#. Translators: This is the short-cut to view SMART data for a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1667
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
 
-#. Translators: This is the short-cut to view RAID Disks for a RAID array
-#: ../src/disks/gduwindow.c:1666
+#. Translators: This is the short-cut to view RAID Disks for a RAID array.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1675
 msgctxt "accelerator"
 msgid "<Ctrl>R"
 msgstr "<Ctrl>R"
 
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
-#: ../src/disks/gduwindow.c:1671
+#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1683
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#. Translators: This is the short-cut to open the volume gear menu
-#: ../src/disks/gduwindow.c:1676
+#. Translators: This is the short-cut to open the volume gear menu.
+#. *              The Shift modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Ctrl>).
+#.
+#: ../src/disks/gduwindow.c:1691
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
 
-#. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1683
+#. Translators: This is the short-cut to format a volume.
+#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+#. *              You can however change to other English modifiers.
+#.
+#: ../src/disks/gduwindow.c:1701
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3319,7 +3335,7 @@ msgstr "<Shift><Ctrl>F"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2042
+#: ../src/disks/gduwindow.c:2060
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3328,7 +3344,7 @@ msgstr "%s geratzen da (%s/seg)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2050
+#: ../src/disks/gduwindow.c:2068
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3339,7 +3355,7 @@ msgstr "%s geratzen da"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2065
+#: ../src/disks/gduwindow.c:2083
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s / %s – %s"
@@ -3348,41 +3364,41 @@ msgstr "%s / %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2152
+#: ../src/disks/gduwindow.c:2170
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %%%2.1f"
 
-#: ../src/disks/gduwindow.c:2224 ../src/disks/gduwindow.c:3069
+#: ../src/disks/gduwindow.c:2242 ../src/disks/gduwindow.c:3087
 msgid "Block device is empty"
 msgstr "Blokeen gailua hutsik dago"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2247
+#: ../src/disks/gduwindow.c:2265
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Ezezaguna (%s)"
 
-#: ../src/disks/gduwindow.c:2328
+#: ../src/disks/gduwindow.c:2346
 msgid "RAID array is not running"
 msgstr "RAID matrizea ez da exekutatzen ari"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2349
+#: ../src/disks/gduwindow.c:2367
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "%s RAID matrizea"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2355
+#: ../src/disks/gduwindow.c:2373
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "RAID matrizea"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2381
+#: ../src/disks/gduwindow.c:2399
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "Ez da exekutatzen ari"
@@ -3392,20 +3408,24 @@ msgstr "Ez da exekutatzen ari"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2448
+#: ../src/disks/gduwindow.c:2466
 #, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (%s-ekoa)"
 
-#: ../src/disks/gduwindow.c:2488
+#: ../src/disks/gduwindow.c:2506
 #, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
 msgstr[0] "Disko %d"
 msgstr[1] "%d disko"
 
-#: ../src/disks/gduwindow.c:2500
+#. Translators: Used to combine number of disks and the chunk size.
+#. *              The first %s is the number of disks e.g. "3 disks".
+#. *              The second %s is the chunk size e.g. "512 KiB".
+#.
+#: ../src/disks/gduwindow.c:2518
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
@@ -3415,20 +3435,20 @@ msgstr "%s, %s zatia"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2509
+#: ../src/disks/gduwindow.c:2527
 #, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2529
+#: ../src/disks/gduwindow.c:2547
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
 msgstr[0] "Disko %d falta da"
 msgstr[1] "%d disko falta dira"
 
-#: ../src/disks/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2553
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "MATRIZEA DEGRADATUTA DAGO"
@@ -3436,50 +3456,50 @@ msgstr "MATRIZEA DEGRADATUTA DAGO"
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2539
+#: ../src/disks/gduwindow.c:2557
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2550 ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2568 ../src/disks/gduwindow.c:2584
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "Exekutatzen"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2555
+#: ../src/disks/gduwindow.c:2573
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "Ez da exekutatzen ari"
 
-#: ../src/disks/gduwindow.c:2575
+#: ../src/disks/gduwindow.c:2593
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
 msgstr "Datuen arazketa"
 
-#: ../src/disks/gduwindow.c:2580
+#: ../src/disks/gduwindow.c:2598
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
 msgstr "Datuen arazketa eta konponketa"
 
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2603
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "Birsinkronizatzen"
 
-#: ../src/disks/gduwindow.c:2589
+#: ../src/disks/gduwindow.c:2607
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "Berreskuratzen"
 
-#: ../src/disks/gduwindow.c:2593
+#: ../src/disks/gduwindow.c:2611
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "Izoztuta"
 
 #. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2609
+#: ../src/disks/gduwindow.c:2627
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
 msgstr "RAID MATRIZEA GAIZKI KONFIGURATUTA"
@@ -3488,7 +3508,7 @@ msgstr "RAID MATRIZEA GAIZKI KONFIGURATUTA"
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2633
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
 msgstr "Garun-zatitua"
@@ -3497,7 +3517,7 @@ msgstr "Garun-zatitua"
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
 #. *              The second %s is "Split-Brain" as a hyperlink.
 #.
-#: ../src/disks/gduwindow.c:2621
+#: ../src/disks/gduwindow.c:2639
 #, c-format
 msgctxt "raid-split-brain"
 msgid "%s (%s)"
@@ -3507,7 +3527,7 @@ msgstr "%s (%s)"
 #. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
 #. *              The second is the percentage completed, e.g. '42.5%'
 #.
-#: ../src/disks/gduwindow.c:2651
+#: ../src/disks/gduwindow.c:2669
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
@@ -3517,7 +3537,7 @@ msgstr "%s: %s"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2678
+#: ../src/disks/gduwindow.c:2696
 #, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
@@ -3526,11 +3546,11 @@ msgstr "%s geratzen da (%s/seg)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2858
+#: ../src/disks/gduwindow.c:2876
 msgid "Connected to another seat"
 msgstr "Konektatu beste eserlekura"
 
-#: ../src/disks/gduwindow.c:3002
+#: ../src/disks/gduwindow.c:3020
 msgid "Loop device is empty"
 msgstr "Begiztaren gailua hutsik dago"
 
@@ -3540,67 +3560,67 @@ msgstr "Begiztaren gailua hutsik dago"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3241
+#: ../src/disks/gduwindow.c:3259
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libre (%%%.1f beteta)"
 
-#: ../src/disks/gduwindow.c:3271
+#: ../src/disks/gduwindow.c:3289
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3299
+#: ../src/disks/gduwindow.c:3317
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Fitxategi-sistemaren erroa"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3307
+#: ../src/disks/gduwindow.c:3325
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s(e)n muntatuta"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3313
+#: ../src/disks/gduwindow.c:3331
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Muntatu gabe"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3354
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3342
+#: ../src/disks/gduwindow.c:3360
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ez aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3355
+#: ../src/disks/gduwindow.c:3373
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Desblokeatuta"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3361
+#: ../src/disks/gduwindow.c:3379
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Blokeatuta"
 
-#: ../src/disks/gduwindow.c:3371
+#: ../src/disks/gduwindow.c:3389
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Hedatutako partizioa"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3381
+#: ../src/disks/gduwindow.c:3399
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "Joan matrizera"
@@ -3609,7 +3629,7 @@ msgstr "Joan matrizera"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3386
+#: ../src/disks/gduwindow.c:3404
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3619,29 +3639,29 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:3422
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3504
+#: ../src/disks/gduwindow.c:3522
 msgid "Unallocated Space"
 msgstr "Esleitu gabeko lekua"
 
-#: ../src/disks/gduwindow.c:3883
+#: ../src/disks/gduwindow.c:3901
 msgid "An error occurred when requesting data redundancy check"
 msgstr "Errorea gertatu da datuen errendundantzia begiratzea eskatzean"
 
 #. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3901
+#: ../src/disks/gduwindow.c:3919
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
 msgstr "Datuen arazketa"
 
 #. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3903
+#: ../src/disks/gduwindow.c:3921
 msgctxt "mdraid-scrub-dialog"
 msgid ""
 "As storage devices can develop bad blocks at any time it is valuable to "
@@ -3658,118 +3678,117 @@ msgstr ""
 "irakurtzea halako bloke txarrak garaiz atzemateko.\n"
 "\n"
 "RAID matrizeak funtzionatzen jarraituko du eragiketak irauten duen "
-"bitartean, errendimenduan eragina izango du ordea. Datuen arazketari "
-"buruz gehiago jakiteko, irakurri ingelesezko artikulu hau: "
-"<a href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAIDaren "
-"administrazioa</a>"
+"bitartean, errendimenduan eragina izango du ordea. Datuen arazketari buruz "
+"gehiago jakiteko, irakurri ingelesezko artikulu hau: <a href='https://raid."
+"wiki.kernel.org/index.php/RAID_Administration'>RAIDaren administrazioa</a>"
 
-#: ../src/disks/gduwindow.c:3908
+#: ../src/disks/gduwindow.c:3926
 msgctxt "mdraid-scrub-dialog"
 msgid "_Start"
 msgstr "_Hasi"
 
-#: ../src/disks/gduwindow.c:3909
+#: ../src/disks/gduwindow.c:3927
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
 msgstr "_Konpondu galdutako blokeak (ahal bada)"
 
-#: ../src/disks/gduwindow.c:3956
+#: ../src/disks/gduwindow.c:3974
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Errorea gertatu da unitatea egonean moduan jartzen saiatzean"
 
-#: ../src/disks/gduwindow.c:4002
+#: ../src/disks/gduwindow.c:4020
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Errorea gertatu da unitatea egonean modutik esnatzen saiatzean"
 
-#: ../src/disks/gduwindow.c:4047
+#: ../src/disks/gduwindow.c:4065
 msgid "Error powering off drive"
 msgstr "Errorea unitatea itzaltzean"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4099
+#: ../src/disks/gduwindow.c:4117
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ziur zaude unitateak itzaltzea nahi dituzula?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4101
+#: ../src/disks/gduwindow.c:4119
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Eragiketa honek sistema prestatuko du unitate hauek itzali eta kentzeko"
 
-#: ../src/disks/gduwindow.c:4105
+#: ../src/disks/gduwindow.c:4123
 msgid "_Power Off"
 msgstr "_Itzali"
 
-#: ../src/disks/gduwindow.c:4182
+#: ../src/disks/gduwindow.c:4200
 msgid "Error mounting filesystem"
 msgstr "Errorea fitxategi-sistema muntatzean"
 
-#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
+#: ../src/disks/gduwindow.c:4240 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "Errorea fitxategi-sistema desmuntatzean"
 
-#: ../src/disks/gduwindow.c:4367
+#: ../src/disks/gduwindow.c:4385
 msgid "Error deleting partition"
 msgstr "Errorea partizioa ezabatzean"
 
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:4423
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ziur zaude partizioa ezabatzea nahi duzula?"
 
-#: ../src/disks/gduwindow.c:4406
+#: ../src/disks/gduwindow.c:4424
 msgid "All data on the partition will be lost"
 msgstr "Partizioan dauden datu guztiak galdu egingo dira"
 
-#: ../src/disks/gduwindow.c:4407
+#: ../src/disks/gduwindow.c:4425
 msgid "_Delete"
 msgstr "_Ezabatu"
 
-#: ../src/disks/gduwindow.c:4438
+#: ../src/disks/gduwindow.c:4456
 msgid "Error ejecting media"
 msgstr "Errorea euskarria egoztean"
 
-#: ../src/disks/gduwindow.c:4495
+#: ../src/disks/gduwindow.c:4513
 msgid "Error starting RAID array"
 msgstr "Errorea RAID matrizea abiaraztean"
 
-#: ../src/disks/gduwindow.c:4537
+#: ../src/disks/gduwindow.c:4555
 msgid "Error stopping RAID array"
 msgstr "Errorea RAID matrizea gelditzean"
 
-#: ../src/disks/gduwindow.c:4624
+#: ../src/disks/gduwindow.c:4642
 msgid "Error locking encrypted device"
 msgstr "Errorea enkriptatutako gailua blokeatzean"
 
-#: ../src/disks/gduwindow.c:4689
+#: ../src/disks/gduwindow.c:4707
 msgid "Error starting swap"
 msgstr "Errorea swap abiaraztean"
 
-#: ../src/disks/gduwindow.c:4726
+#: ../src/disks/gduwindow.c:4744
 msgid "Error stopping swap"
 msgstr "Errorea swap gelditzean"
 
-#: ../src/disks/gduwindow.c:4765
+#: ../src/disks/gduwindow.c:4783
 msgid "Error setting bitmap for the RAID array"
 msgstr "Errorea RAID matrizeko bitmapa ezartzean"
 
-#: ../src/disks/gduwindow.c:4831
+#: ../src/disks/gduwindow.c:4849
 msgid "Error setting autoclear flag"
 msgstr "Errorea garbiketa automatikoaren bandera ezartzean"
 
-#: ../src/disks/gduwindow.c:4884 ../src/disks/gduwindow.c:4948
+#: ../src/disks/gduwindow.c:4902 ../src/disks/gduwindow.c:4966
 msgid "Error canceling job"
 msgstr "Errorea lana bertan behera uztean"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:5070
+#: ../src/disks/gduwindow.c:5088
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "Ez da _gailurik hautatu"
 
-#: ../src/disks/gduwindow.c:5080
+#: ../src/disks/gduwindow.c:5098
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
@@ -4000,6 +4019,10 @@ msgstr "Diskoen arazoen monitorea"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Disko eta biltegien gailuen arazoei buruz abisatzen du"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s bytes from offset %s"
+#~ msgstr "Errorea '%2$s' desplazamenduaren %1$s byte aurre-irakurtzean"
 
 #~ msgid "Disk Utility"
 #~ msgstr "Diskoen tresna"

@@ -1,7 +1,7 @@
 # Thai translation for gnome-disk-utility.
-# Copyright (C) 2009-2012 Free Software Foundation, Inc.
+# Copyright (C) 2009-2013 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Akom Chotiphantawanon <knight2000@gmail.com>, 2009, 2012.
+# Akom Chotiphantawanon <knight2000@gmail.com>, 2009, 2012-2013.
 # Sira Nokyoongtong <gumaraa@gmail.com>, 2010.
 # Theppitak Karoonboonyanan <thep@linux.thai.net>, 2010.
 #
@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-09-21 02:30+0000\n"
-"PO-Revision-Date: 2012-09-21 17:15+0700\n"
+"POT-Creation-Date: 2013-03-19 15:27+0000\n"
+"PO-Revision-Date: 2013-03-21 22:15+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -29,14 +29,21 @@ msgstr "โปรแกรมเมานท์อิมเมจของดิ
 msgid "Mount Disk Images"
 msgstr "เมานท์อิมเมจของดิสก์"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/disks/gduwindow.c:1000
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1275
 msgid "Disks"
 msgstr "ดิสก์"
 
 #: ../data/gnome-disks.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "จัดการไดรว์และสื่อ"
+
+#: ../data/gnome-disks.desktop.in.h:3
+msgid ""
+"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
+"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+msgstr ""
+"ดิสก์;ไดรว์;โวลุม;ฮาร์ดดิสก์;hdd;แผ่น;ซีดีรอม;ดีวีดี;พาร์ทิชัน;iso;อิมเมจ;สำรอง;เขียนคืน;"
+"วัดสมรรถนะ;raid;luks;การเข้ารหัสลับ;S.M.A.R.T.;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -50,19 +57,35 @@ msgstr ""
 "ตำแหน่งโดยปริยายสำหรับกล่องโต้ตอบ สร้าง/เขียนคืน อิมเมจของดิสก์ ถ้าปล่อยว่างไว้ จะใช้โฟลเดอร์ "
 "~/เอกสาร"
 
-#: ../data/ui/about-dialog.ui.h:2
-msgid ""
-"Copyright © 2008-2012 Red Hat, Inc.\n"
-"Copyright © 2008-2012 David Zeuthen"
-msgstr ""
-"Copyright © 2008-2012 Red Hat, Inc.\n"
-"Copyright © 2008-2012 David Zeuthen"
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
+msgid "Activation of this plugin"
+msgstr "เรียกทำงานปลั๊กอินนี้"
 
-#: ../data/ui/about-dialog.ui.h:4
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:2
+msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
+msgstr "กำหนดว่าจะเรียกทำงานปลั๊กอินนี้ด้วย gnome-settings-daemon หรือไม่"
+
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:3
+msgid "Priority to use for this plugin"
+msgstr "ลำดับความสำคัญของปลั๊กอินนี้"
+
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
+msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
+msgstr "ลำดับความสำคัญของปลั๊กอินนี้ในคิวการเรียกทำงานของ gnome-settings-daemon"
+
+#: ../data/ui/about-dialog.ui.h:1
+msgid ""
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen"
+msgstr ""
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen"
+
+#: ../data/ui/about-dialog.ui.h:3
 msgid "View, modify and configure disks and media"
 msgstr "ดู แก้ไข และตั้งค่าดิสก์และสื่อเก็บข้อมูล"
 
-#: ../data/ui/about-dialog.ui.h:5
+#: ../data/ui/about-dialog.ui.h:4
 msgid "translator-credits"
 msgstr ""
 "Akom Chotiphantawanon <knight2000@gmail.com>\n"
@@ -70,14 +93,18 @@ msgstr ""
 "Theppitak Karoonboonyanan <thep@linux.thai.net>"
 
 #: ../data/ui/app-menu.ui.h:1
-msgid "Attach Disk _Image..."
-msgstr "แนบ_อิมเมจของดิสก์..."
+msgid "Attach Disk _Image…"
+msgstr "แนบ_อิมเมจของดิสก์…"
 
 #: ../data/ui/app-menu.ui.h:2
+msgid "_Help"
+msgstr "_วิธีใช้"
+
+#: ../data/ui/app-menu.ui.h:3
 msgid "_About Disks"
 msgstr "เ_กี่ยวกับโปรแกรมดิสก์"
 
-#: ../data/ui/app-menu.ui.h:3
+#: ../data/ui/app-menu.ui.h:4
 msgid "_Quit"
 msgstr "_ออก"
 
@@ -86,8 +113,8 @@ msgid "Benchmark"
 msgstr "วัดสมรรถนะ"
 
 #: ../data/ui/benchmark-dialog.ui.h:2
-msgid "_Start Benchmark..."
-msgstr "เ_ริ่มวัดสมรรถนะ..."
+msgid "_Start Benchmark…"
+msgstr "เ_ริ่มวัดสมรรถนะ…"
 
 #: ../data/ui/benchmark-dialog.ui.h:3
 msgid "_Abort Benchmark"
@@ -109,19 +136,23 @@ msgstr "อัตราการเขียนโดยเฉลี่ย"
 msgid "Average Access Time"
 msgstr "เวลาเข้าถึงโดยเฉลี่ย"
 
-#: ../data/ui/benchmark-dialog.ui.h:8
-msgid "Disk Drive or Device"
-msgstr "ดิสก์ไดรว์หรืออุปกรณ์"
+#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:4
+msgid "Disk or Device"
+msgstr "ดิสก์หรืออุปกรณ์"
 
 #: ../data/ui/benchmark-dialog.ui.h:9
 msgid "Sample Size"
 msgstr "ขนาดของตัวอย่างข้อมูล"
 
 #: ../data/ui/benchmark-dialog.ui.h:10
-msgid "_Start Benchmarking..."
-msgstr "เ_ริ่มต้นการวัดสมรรถนะ..."
+msgid "Benchmark Settings"
+msgstr "ตั้งค่าการวัดสมรรถนะ"
 
 #: ../data/ui/benchmark-dialog.ui.h:11
+msgid "_Start Benchmarking…"
+msgstr "เ_ริ่มต้นการวัดสมรรถนะ…"
+
+#: ../data/ui/benchmark-dialog.ui.h:12
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
@@ -131,32 +162,32 @@ msgstr ""
 "รวมถึงการวัดเวลาที่ใช้ในการเลื่อนตำแหน่งจากบริเวณหนึ่งไปยังอีกบริเวณหนึ่ง "
 "กรุณาสำรองข้อมูลสำคัญก่อนวัดสมรรถนะการเขียน"
 
-#: ../data/ui/benchmark-dialog.ui.h:12
+#: ../data/ui/benchmark-dialog.ui.h:13
 msgid "Transfer Rate"
 msgstr "อัตราถ่ายโอนข้อมูล"
 
-#: ../data/ui/benchmark-dialog.ui.h:13
+#: ../data/ui/benchmark-dialog.ui.h:14
 msgid "Number of S_amples"
 msgstr "_จำนวนของตัวอย่างข้อมูล"
 
-#: ../data/ui/benchmark-dialog.ui.h:14
+#: ../data/ui/benchmark-dialog.ui.h:15
 msgid "Sample S_ize (MiB)"
 msgstr "_ขนาดของตัวอย่างข้อมูล (MiB)"
 
-#: ../data/ui/benchmark-dialog.ui.h:15
-msgid "Also perform _write-benchmark"
-msgstr "วัดสมรรถนะการเขีย_นด้วย"
-
 #: ../data/ui/benchmark-dialog.ui.h:16
+msgid "Perform _write-benchmark"
+msgstr "วัดสมรรถนะการเขีย_น"
+
+#: ../data/ui/benchmark-dialog.ui.h:17
 msgid ""
-"Bechmarking the write-rate of a disk requires exclusive access to the disk "
+"Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
 "reading data and then writing it back. As a result, the contents of the disk "
 "is not changed.\n"
 "\n"
 "If not checked, the write-part of the benchmark will not be done but on the "
 "other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use) ."
+"device can be in use)."
 msgstr ""
 "การวัดสมรรถนะการเขียนดิสก์ต้องอาศัยการเข้าถึงดิสก์แบบจำเพาะ (เช่น "
 "จะเมานท์หรือใช้งานดิสก์หรือพาร์ทิชันในดิสก์ไม่ได้) และจะเป็นการอ่านข้อมูลจากดิสก์แล้วเขียนกลับ "
@@ -165,7 +196,7 @@ msgstr ""
 "ถ้าไม่เลือกตัวเลือกนี้ ก็จะไม่วัดสมรรถนะในส่วนของการเขียน "
 "ซึ่งก็ทำให้ไม่ต้องเข้าถึงดิสก์แบบจำเพาะก็ได้ (กล่าวคือ โปรแกรมอื่นยังสามารถใช้ดิสก์หรืออุปกรณ์ได้)"
 
-#: ../data/ui/benchmark-dialog.ui.h:19
+#: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -173,7 +204,7 @@ msgstr ""
 "จำนวนของตัวอย่างข้อมูล จำนวนที่มากจะทำให้ได้ข้อมูลภาพรวมของเวลาเข้าถึงที่แม่นยำยิ่งขึ้น "
 "แต่จะใช้เวลาวัดนานขึ้น"
 
-#: ../data/ui/benchmark-dialog.ui.h:20
+#: ../data/ui/benchmark-dialog.ui.h:21
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
@@ -182,31 +213,31 @@ msgstr ""
 "จำนวน MiB (1,048,576 ไบต์) ที่จะอ่าน/เขียนต่อหนึ่งตัวอย่าง "
 "ขนาดตัวอย่างข้อมูลที่ใหญ่มีแนวโน้มจะให้ผลการวัดที่แม่นยำยิ่งขึ้น แต่ก็แลกกับเวลาที่ใช้ในการวัดที่นานขึ้น"
 
-#: ../data/ui/benchmark-dialog.ui.h:21
+#: ../data/ui/benchmark-dialog.ui.h:22
 msgid "Access Time"
 msgstr "เวลาเข้าถึง"
 
-#: ../data/ui/benchmark-dialog.ui.h:22
+#: ../data/ui/benchmark-dialog.ui.h:23
 msgid "Number of Sampl_es"
 msgstr "จำนวนของ_ตัวอย่างข้อมูล"
 
-#: ../data/ui/benchmark-dialog.ui.h:23
+#: ../data/ui/benchmark-dialog.ui.h:24
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr "จำนวนของตัวอย่างข้อมูล ยิ่งมากยิ่งทำให้ได้เส้นกราฟที่เรียบ แต่ก็จะทำให้ใช้เวลาวัดนานขึ้น"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:1
+msgid "Change Passphrase"
+msgstr "เปลี่ยนวลีรหัสผ่าน"
+
+#: ../data/ui/change-passphrase-dialog.ui.h:2
 #: ../data/ui/edit-dos-partition-dialog.ui.h:2
 #: ../data/ui/edit-filesystem-dialog.ui.h:2
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:2
 #: ../data/ui/edit-partition-dialog.ui.h:2
 msgid "C_hange"
 msgstr "เ_ปลี่ยน"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:2
-msgid "Change Passphrase"
-msgstr "เปลี่ยนวลีรหัสผ่าน"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:3
 msgid "Curr_ent Passphrase"
@@ -217,17 +248,17 @@ msgid "Enter current passphrase used to protect the data"
 msgstr "ป้อนวลีรหัสผ่านปัจจุบันที่ใช้ปกป้องข้อมูล"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:5
-#: ../data/ui/filesystem-create.ui.h:12
+#: ../data/ui/filesystem-create.ui.h:10
 msgid "Sho_w Passphrases"
 msgstr "แ_สดงวลีรหัสผ่าน"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:6
-#: ../data/ui/filesystem-create.ui.h:13
+#: ../data/ui/filesystem-create.ui.h:11
 msgid "Check this box to see the passphrases entered above"
 msgstr "กาช่องนี้เพื่อดูวลีรหัสผ่านที่ป้อนไว้ข้างบน"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:7
-#: ../data/ui/filesystem-create.ui.h:11
+#: ../data/ui/filesystem-create.ui.h:9
 msgid "Confirm passphrase entered above"
 msgstr "ยืนยันวลีรหัสผ่านที่ป้อนไว้ข้างบน"
 
@@ -236,7 +267,7 @@ msgid "Enter new passphrase used to protect the data"
 msgstr "ป้อนวลีรหัสผ่านใหม่ที่จะใช้ปกป้องข้อมูล"
 
 #: ../data/ui/change-passphrase-dialog.ui.h:9
-#: ../data/ui/filesystem-create.ui.h:9
+#: ../data/ui/filesystem-create.ui.h:7
 msgid "C_onfirm Passphrase"
 msgstr "ยื_นยันวลีรหัสผ่าน"
 
@@ -245,35 +276,41 @@ msgid "New _Passphrase"
 msgstr "วลีรหัสผ่านให_ม่"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:1
+msgid "Create Disk Image"
+msgstr "สร้างอิมเมจของดิสก์"
+
+#: ../data/ui/create-disk-image-dialog.ui.h:2
+#: ../data/ui/create-raid-array-dialog.ui.h:5
 #: ../data/ui/edit-crypttab-dialog.ui.h:4
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:2
 msgid "_Name"
 msgstr "_ชื่อ"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:2
-msgid "Save in _folder"
+#: ../data/ui/create-disk-image-dialog.ui.h:3
+msgid "Save in _Folder"
 msgstr "บันทึกในโ_ฟลเดอร์"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:3
+#: ../data/ui/create-disk-image-dialog.ui.h:4
 msgid "Select a Folder"
 msgstr "เลือกโฟลเดอร์"
 
-#: ../data/ui/create-disk-image-dialog.ui.h:4
-msgid "Copying data to disk image..."
-msgstr "กำลังคัดลอกข้อมูลลงในอิมเมจของดิสก์..."
-
 #: ../data/ui/create-disk-image-dialog.ui.h:5
-msgid "_Start Creating..."
-msgstr "เ_ริ่มสร้าง..."
+msgid "Source"
+msgstr "ต้นทาง"
+
+#: ../data/ui/create-disk-image-dialog.ui.h:6
+msgid "_Start Creating…"
+msgstr "เ_ริ่มสร้าง…"
 
 #: ../data/ui/create-partition-dialog.ui.h:1
-msgid "C_reate"
-msgstr "_สร้าง"
-
-#: ../data/ui/create-partition-dialog.ui.h:2
 msgid "Create Partition"
 msgstr "สร้างพาร์ทิชัน"
+
+#: ../data/ui/create-partition-dialog.ui.h:2
+#: ../src/disks/gducreateraidarraydialog.c:575
+msgid "C_reate"
+msgstr "_สร้าง"
 
 #: ../data/ui/create-partition-dialog.ui.h:3
 msgid "Partition _Size"
@@ -284,43 +321,125 @@ msgid "The size of the partition to create, in megabytes"
 msgstr "ขนาดของพาร์ทิชันที่จะสร้าง เป็นเมกะไบต์"
 
 #: ../data/ui/create-partition-dialog.ui.h:5
+msgid "bytes"
+msgstr "ไบต์"
+
+#: ../data/ui/create-partition-dialog.ui.h:6
+msgid "kB"
+msgstr "kB"
+
+#: ../data/ui/create-partition-dialog.ui.h:7
 msgid "MB"
 msgstr "MB"
 
-#: ../data/ui/create-partition-dialog.ui.h:6
+#: ../data/ui/create-partition-dialog.ui.h:8
+msgid "GB"
+msgstr "GB"
+
+#: ../data/ui/create-partition-dialog.ui.h:9
+msgid "TB"
+msgstr "TB"
+
+#: ../data/ui/create-partition-dialog.ui.h:10
+msgid "PB"
+msgstr "PB"
+
+#: ../data/ui/create-partition-dialog.ui.h:11
+msgid "KiB"
+msgstr "KiB"
+
+#: ../data/ui/create-partition-dialog.ui.h:12
+msgid "MiB"
+msgstr "MiB"
+
+#: ../data/ui/create-partition-dialog.ui.h:13
+msgid "GiB"
+msgstr "GiB"
+
+#: ../data/ui/create-partition-dialog.ui.h:14
+msgid "TiB"
+msgstr "TiB"
+
+#: ../data/ui/create-partition-dialog.ui.h:15
+msgid "PiB"
+msgstr "PiB"
+
+#: ../data/ui/create-partition-dialog.ui.h:16
 msgid "Free Space _Following"
 msgstr "เนื้อที่ว่าง_ตามหลัง"
 
-#: ../data/ui/create-partition-dialog.ui.h:7
+#: ../data/ui/create-partition-dialog.ui.h:17
 msgid "The free space following the partition, in megabytes"
 msgstr "เนื้อที่ว่างที่อยู่ถัดจากพาร์ทิชัน เป็นเมกะไบต์"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/create-partition-dialog.ui.h:8 ../data/ui/disks.ui.h:26
+#: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:39
 msgid "Contents"
 msgstr "เนื้อหา"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:1
+msgid "Create RAID Array"
+msgstr "สร้างแอร์เรย์ RAID"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:2
+msgid "C_reate…"
+msgstr "_สร้าง…"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:3
+msgid "RAID _Level"
+msgstr "_ระดับ RAID"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:4
+msgid "Chunk _Size"
+msgstr "_ขนาดก้อนข้อมูล"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:6
+msgid "Usable Size"
+msgstr "ขนาดที่ใช้งานได้"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:7
+msgid "Number of Disks"
+msgstr "จำนวนดิสก์"
+
+#: ../data/ui/create-raid-array-dialog.ui.h:8
+msgid "For example, “My RAID Array” or “Backup Data”"
+msgstr "ตัวอย่างเช่น “My RAID Array” หรือ “Backup Data”"
 
 #: ../data/ui/disk-settings-dialog.ui.h:1
 msgid "Drive Settings"
 msgstr "ตั้งค่าไดรว์"
 
 #: ../data/ui/disk-settings-dialog.ui.h:2
-msgid "_Standby Timeout"
-msgstr "กำหนดเวลา_พักคอย"
+msgid "Apply Standby Timeout Settings"
+msgstr "ใช้ค่ากำหนดเวลาพักคอย"
 
 #: ../data/ui/disk-settings-dialog.ui.h:3
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr "เปิดเพื่อตั้งค่าเวลาพักคอยเมื่อเริ่มระบบและเมื่อเชื่อมต่อดิสก์"
+
+#: ../data/ui/disk-settings-dialog.ui.h:4
 msgid "Enter Standby After"
 msgstr "เข้าสู่โหมดพักคอยหลังจาก"
 
-#: ../data/ui/disk-settings-dialog.ui.h:4
-msgid "_Advanced Power Management"
-msgstr "การจัดการพลังงาน_ขั้นสูง (APM)"
-
 #: ../data/ui/disk-settings-dialog.ui.h:5
+msgid "_Standby"
+msgstr "_พักคอย"
+
+#: ../data/ui/disk-settings-dialog.ui.h:6
+msgid "Apply Advanced Power Management Settings"
+msgstr "ใช้การตั้งค่าการจัดการพลังงานขั้นสูง (APM)"
+
+#: ../data/ui/disk-settings-dialog.ui.h:7
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr "เปิดเพื่อตั้งค่า APM เมื่อเริ่มระบบและเมื่อเชื่อมต่อดิสก์"
+
+#: ../data/ui/disk-settings-dialog.ui.h:8
 msgid "APM Level"
 msgstr "ระดับ APM"
 
-#: ../data/ui/disk-settings-dialog.ui.h:6
+#: ../data/ui/disk-settings-dialog.ui.h:9
 msgid ""
 "Agressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
@@ -328,21 +447,67 @@ msgstr ""
 "การชะลอการหมุนมากเกินไปอาจทำให้ฮาร์ดดิสก์เสื่อมลงเร็วกว่าที่ควร กรุณาตรวจสอบค่า "
 "“จำนวนการเริ่ม/หยุด” ของ SMART เป็นระยะ"
 
-#: ../data/ui/disk-settings-dialog.ui.h:7
-msgid "Automatic Aco_ustic Management"
-msgstr "การจัดการเ_สียงอัตโนมัติ (AAM)"
+#: ../data/ui/disk-settings-dialog.ui.h:10
+msgid "A_PM"
+msgstr "A_PM"
 
-#: ../data/ui/disk-settings-dialog.ui.h:8
+#: ../data/ui/disk-settings-dialog.ui.h:11
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr "ใช้การตั้งค่าการจัดการเสียงอัตโนมัติ (AAM)"
+
+#: ../data/ui/disk-settings-dialog.ui.h:12
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr "เปิดเพื่อตั้งค่า AAM เมื่อเริ่มระบบและเมื่อเชื่อมต่อดิสก์"
+
+#: ../data/ui/disk-settings-dialog.ui.h:13
 msgid "Vendor Recommended"
 msgstr "ค่าที่ผู้ผลิตแนะนำ"
 
-#: ../data/ui/disk-settings-dialog.ui.h:9
+#: ../data/ui/disk-settings-dialog.ui.h:14
 msgid "AAM Level"
 msgstr "ระดับ AAM"
 
+#: ../data/ui/disk-settings-dialog.ui.h:15
+msgid "_AAM"
+msgstr "_AAM"
+
+#: ../data/ui/disk-settings-dialog.ui.h:16
+msgid "Apply Write Cache Settings"
+msgstr "ใช้การตั้งค่าแคชสำหรับเขียน"
+
+#: ../data/ui/disk-settings-dialog.ui.h:17
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr "เปิดเพื่อตั้งค่าแคชสำหรับเขียนเมื่อเริ่มระบบและเมื่อเชื่อมต่อดิสก์"
+
+#: ../data/ui/disk-settings-dialog.ui.h:18
+msgid "S_etting"
+msgstr "_ตั้งค่า"
+
+#: ../data/ui/disk-settings-dialog.ui.h:19
+msgid "Enable Write Cache"
+msgstr "เปิดใช้แคชสำหรับเขียน"
+
+#: ../data/ui/disk-settings-dialog.ui.h:20
+msgid "Disable Write Cache"
+msgstr "ปิดใช้แคชสำหรับเขียน"
+
+#: ../data/ui/disk-settings-dialog.ui.h:21
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+"ประสิทธิภาพจะเพิ่มขึ้นเมื่อเปิดใช้แคชสำหรับเขียน "
+"แต่ก็จะทำให้ระบบเสี่ยงต่อการสูญเสียข้อมูลในกรณีที่ไฟฟ้าขัดข้อง"
+
+#: ../data/ui/disk-settings-dialog.ui.h:22
+msgid "Wr_ite Cache"
+msgstr "แคชสำหรับเ_ขียน"
+
 #: ../data/ui/disks.ui.h:1
-msgid "Create a new partition..."
-msgstr "สร้างพาร์ทิชันใหม่..."
+msgid "Create a new partition"
+msgstr "สร้างพาร์ทิชันใหม่"
 
 #: ../data/ui/disks.ui.h:2
 msgid "Mount the filesystem"
@@ -357,163 +522,212 @@ msgid "Eject the media"
 msgstr "เอาสื่อออก"
 
 #: ../data/ui/disks.ui.h:5
+msgid "Power off the drive"
+msgstr "ปิดไดรว์"
+
+#: ../data/ui/disks.ui.h:6
 msgid "Unlock the encrypted device"
 msgstr "ปลดล็อคอุปกรณ์ที่เข้ารหัสลับ"
 
-#: ../data/ui/disks.ui.h:6
+#: ../data/ui/disks.ui.h:7
 msgid "Activate the swap space"
 msgstr "เปิดใช้พื้นที่สลับ"
 
-#: ../data/ui/disks.ui.h:7
+#: ../data/ui/disks.ui.h:8
 msgid "Deactivate the swap space"
 msgstr "ปิดพื้นที่สลับ"
 
-#: ../data/ui/disks.ui.h:8
+#: ../data/ui/disks.ui.h:9
 msgid "Lock the encrypted device"
 msgstr "ล็อคอุปกรณ์ที่เข้ารหัสลับ"
 
-#: ../data/ui/disks.ui.h:9
-msgid "More actions..."
-msgstr "การกระทำอื่น..."
-
 #: ../data/ui/disks.ui.h:10
-msgid "Delete partition..."
-msgstr "ลบพาร์ทิชัน..."
+msgid "More actions"
+msgstr "การกระทำอื่น"
 
 #: ../data/ui/disks.ui.h:11
-msgid "Attach Disk Image..."
-msgstr "แนบอิมเมจของดิสก์..."
+msgid "Delete partition"
+msgstr "ลบพาร์ทิชัน"
 
 #: ../data/ui/disks.ui.h:12
-msgid "Detach Disk Image"
-msgstr "แยกอิมเมจของดิสก์ออก"
+msgid "Start RAID Array"
+msgstr "เปิดทำงานแอร์เรย์ RAID"
 
 #: ../data/ui/disks.ui.h:13
+msgid "Stop RAID Array"
+msgstr "หยุดแอร์เรย์ RAID"
+
+#: ../data/ui/disks.ui.h:14
+msgid "Detach Loop Device"
+msgstr "แยกอุปกรณ์วนกลับ"
+
+#: ../data/ui/disks.ui.h:15
+msgid "_Devices"
+msgstr "อุป_กรณ์"
+
+#: ../data/ui/disks.ui.h:16
+msgid "Click to select multiple disks to perform operations on"
+msgstr "คลิกเพื่อเลือกดิสก์หลายดิสก์ที่จะดำเนินการ"
+
+#: ../data/ui/disks.ui.h:17
+msgid "Done"
+msgstr "เสร็จ"
+
+#: ../data/ui/disks.ui.h:18
 msgid "Select a device"
 msgstr "เลือกอุปกรณ์"
 
-#: ../data/ui/disks.ui.h:14
+#: ../data/ui/disks.ui.h:19
 msgid "Model"
 msgstr "รุ่น"
 
-#: ../data/ui/disks.ui.h:15
+#: ../data/ui/disks.ui.h:20 ../data/ui/md-raid-disks-dialog.ui.h:2
 msgid "Serial Number"
 msgstr "หมายเลขลำดับ"
 
-#: ../data/ui/disks.ui.h:16
+#: ../data/ui/disks.ui.h:21
 msgid "World Wide Name"
 msgstr "World Wide Name"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:18
+#: ../data/ui/disks.ui.h:23
 msgid "Location"
 msgstr "ตำแหน่ง"
 
-#: ../data/ui/disks.ui.h:19
+#: ../data/ui/disks.ui.h:24
 msgid "Media"
 msgstr "สื่อ"
 
-#: ../data/ui/disks.ui.h:20
-msgid "Size"
-msgstr "ขนาด"
-
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:21 ../src/disks/gduatasmartdialog.c:1503
+#: ../data/ui/disks.ui.h:25 ../data/ui/md-raid-disks-dialog.ui.h:3
+#: ../src/disks/gduatasmartdialog.c:1613
 msgid "Assessment"
 msgstr "การประเมิน"
 
-#: ../data/ui/disks.ui.h:22
-msgid "Eject media"
-msgstr "เอาสื่อออก"
-
-#: ../data/ui/disks.ui.h:23
-msgid "Pending Operation"
-msgstr "การกระทำที่ค้างอยู่"
-
-#: ../data/ui/disks.ui.h:24
-msgid "_Volumes"
-msgstr "โ_วลุม"
+#: ../data/ui/disks.ui.h:26
+msgid "Eject the medium in the drive"
+msgstr "ดันสื่อในไดรว์ออก"
 
 #: ../data/ui/disks.ui.h:27
-msgid "Device"
-msgstr "อุปกรณ์"
+msgid "Job"
+msgstr "งาน"
 
 #: ../data/ui/disks.ui.h:28
-msgid "In Use"
-msgstr "ใช้งานอยู่"
+msgid "Name"
+msgstr "ชื่อ"
 
 #: ../data/ui/disks.ui.h:29
+msgid "RAID Level"
+msgstr "ระดับ RAID"
+
+#: ../data/ui/disks.ui.h:30
+msgid "Size"
+msgstr "ขนาด"
+
+#: ../data/ui/disks.ui.h:31
+msgid "State"
+msgstr "สถานะ"
+
+#: ../data/ui/disks.ui.h:32
 msgid "Auto-clear"
 msgstr "ล้างข้อมูลอัตโนมัติ"
 
-#: ../data/ui/disks.ui.h:30
-msgid "Partition Type"
-msgstr "ชนิดพาร์ทิชัน"
-
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:32
+#: ../data/ui/disks.ui.h:34
 msgid "Backing File"
 msgstr "แฟ้มเบื้องหลัง"
 
-#: ../data/ui/disks.ui.h:33
-msgid "Format Disk..."
-msgstr "ฟอร์แมตดิสก์..."
-
-#: ../data/ui/disks.ui.h:34
-msgid "Create Disk Image..."
-msgstr "สร้างอิมเมจของดิสก์..."
-
 #: ../data/ui/disks.ui.h:35
-msgid "Restore Disk Image..."
-msgstr "เขียนคืนอิมเมจของดิสก์..."
+msgid "Partitioning"
+msgstr "การจัดพาร์ทิชัน"
 
 #: ../data/ui/disks.ui.h:36
-msgid "Benchmark Drive..."
-msgstr "วัดสมรรถนะไดรว์..."
+msgid "Bitmap"
+msgstr "บิตแมป"
 
 #: ../data/ui/disks.ui.h:37
-msgid "SMART Data and Tests..."
-msgstr "ข้อมูล SMART และการทดสอบ..."
+msgid "_Volumes"
+msgstr "โ_วลุม"
 
-#: ../data/ui/disks.ui.h:38
-msgid "Drive Settings..."
-msgstr "ตั้งค่าไดรว์..."
+#: ../data/ui/disks.ui.h:40
+msgid "Device"
+msgstr "อุปกรณ์"
 
-#: ../data/ui/disks.ui.h:39
+#: ../data/ui/disks.ui.h:41
+msgid "Partition Type"
+msgstr "ชนิดพาร์ทิชัน"
+
+#: ../data/ui/disks.ui.h:42
+msgid "Format…"
+msgstr "ฟอร์แมต…"
+
+#: ../data/ui/disks.ui.h:43
+msgid "Create Disk Image…"
+msgstr "สร้างอิมเมจของดิสก์…"
+
+#: ../data/ui/disks.ui.h:44
+msgid "Restore Disk Image…"
+msgstr "เขียนคืนอิมเมจของดิสก์…"
+
+#: ../data/ui/disks.ui.h:45
+msgid "Benchmark…"
+msgstr "วัดสมรรถนะ…"
+
+#: ../data/ui/disks.ui.h:46
+msgid "SMART Data & Self-Tests…"
+msgstr "ข้อมูล SMART และการทดสอบตัวเอง…"
+
+#: ../data/ui/disks.ui.h:47
+msgid "Drive Settings…"
+msgstr "ตั้งค่าไดรว์…"
+
+#: ../data/ui/disks.ui.h:48
 msgid "Standby Now"
 msgstr "พักคอยเดี๋ยวนี้"
 
-#: ../data/ui/disks.ui.h:40
+#: ../data/ui/disks.ui.h:49
 msgid "Wake-Up from Standby"
 msgstr "ปลุกจากพักคอย"
 
-#: ../data/ui/disks.ui.h:41
-msgid "Format..."
-msgstr "ฟอร์แมต..."
+#: ../data/ui/disks.ui.h:50
+msgid "Power Off…"
+msgstr "ปิดเครื่อง…"
 
-#: ../data/ui/disks.ui.h:42
-msgid "Edit Partition Type..."
-msgstr "แก้ไขชนิดพาร์ทิชัน..."
+#: ../data/ui/disks.ui.h:51
+msgid "RAID Disks…"
+msgstr "ดิสก์ RAID…"
 
-#: ../data/ui/disks.ui.h:43
-msgid "Edit Filesystem Label..."
-msgstr "แก้ไขป้ายชื่อระบบแฟ้ม..."
+#: ../data/ui/disks.ui.h:52
+msgid "Start Data Scrubbing…"
+msgstr ""
 
-#: ../data/ui/disks.ui.h:44
-msgid "Change Passphrase..."
-msgstr "เปลี่ยนวลีรหัสผ่าน..."
+#: ../data/ui/disks.ui.h:53
+msgid "Stop Data Scrubbing"
+msgstr ""
 
-#: ../data/ui/disks.ui.h:45
-msgid "Edit Mount Options..."
-msgstr "แก้ไขตัวเลือกของการเมานท์..."
+#: ../data/ui/disks.ui.h:54
+msgid "Edit Partition…"
+msgstr "แก้ไขพาร์ทิชัน…"
 
-#: ../data/ui/disks.ui.h:46
-msgid "Edit Encryption Options..."
-msgstr "แก้ไขตัวเลือกของการเข้ารหัสลับ..."
+#: ../data/ui/disks.ui.h:55
+msgid "Edit Filesystem…"
+msgstr "แก้ไขระบบแฟ้ม…"
 
-#: ../data/ui/disks.ui.h:47
-msgid "Benchmark Volume..."
-msgstr "วัดสมรรถนะโวลุม..."
+#: ../data/ui/disks.ui.h:56
+msgid "Change Passphrase…"
+msgstr "เปลี่ยนวลีรหัสผ่าน…"
+
+#: ../data/ui/disks.ui.h:57
+msgid "Edit Mount Options…"
+msgstr "แก้ไขตัวเลือกของการเมานท์…"
+
+#: ../data/ui/disks.ui.h:58
+msgid "Edit Encryption Options…"
+msgstr "แก้ไขตัวเลือกของการเข้ารหัสลับ…"
+
+#: ../data/ui/disks.ui.h:59
+msgid "Create RAID"
+msgstr "สร้าง RAID"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "Encryption Options"
@@ -564,7 +778,7 @@ msgid ""
 "device"
 msgstr "วลีรหัสผ่านของอุปกรณ์ หรือถ้าปล่อยเป็นค่าว่างไว้ก็จะถามผู้ใช้อีกทีขณะตั้งค่าอุปกรณ์"
 
-#: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:8
+#: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:6
 #: ../data/ui/unlock-device-dialog.ui.h:2
 msgid "_Passphrase"
 msgstr "_วลีรหัสผ่าน"
@@ -639,8 +853,8 @@ msgid ""
 "fstab</b> file"
 msgstr ""
 "ปิด <i>ตัวเลือกของการเมานท์อัตโนมัติ</i> "
-"เพื่อจัดการจุดเมานท์และตัวเลือกของการเมานท์สำหรับอุปกรณ์ ตัวเลือกนี้ตรงกับกับรายการในแฟ้ม "
-"<b>/etc/fstab</b>"
+"เพื่อจัดการจุดเมานท์และตัวเลือกของการเมานท์สำหรับอุปกรณ์ ตัวเลือกนี้ตรงกับกับรายการในแฟ้ม <b>/"
+"etc/fstab</b>"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:4
 msgid "I_dentify As"
@@ -725,10 +939,21 @@ msgid "If checked, the device will be mounted at startup [!noauto]"
 msgstr "ถ้าเลือก อุปกรณ์ก็จะถูกเมานท์เมื่อบูตระบบ [!noauto]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:21
+msgid "S_ymbolic Icon Name"
+msgstr "ชื่อไอคอน_สัญลักษณ์"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:22
+msgid ""
+"If set, the name of the symbolic icon to use in the device in the user "
+"interface [x-gvfs-symbolic-icon=]"
+msgstr ""
+"ถ้ากำหนด จะเป็นชื่อของไอคอนสัญลักษณ์ที่ใช้กับอุปกรณ์นั้นในส่วนติดต่อผู้ใช้ [x-gvfs-symbolic-icon=]"
+
+#: ../data/ui/edit-fstab-dialog.ui.h:23
 msgid "Mount Opt_ions"
 msgstr "ตัวเ_ลือกของการเมานท์"
 
-#: ../data/ui/edit-fstab-dialog.ui.h:22
+#: ../data/ui/edit-fstab-dialog.ui.h:24
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr "ตัวเลือกของการเมานท์ที่เก็บไว้ในแฟ้ม <b>/etc/fstab</b>"
 
@@ -743,8 +968,8 @@ msgid ""
 "directory"
 msgstr ""
 "ชื่อพาร์ทิชัน (ไม่เกิน 36 อักขระยูนิโค้ด) "
-"ชื่อพาร์ทิชันนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี <b>/dev/"
-"disk/by-partlabel</b>"
+"ชื่อพาร์ทิชันนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี <b>/dev/disk/"
+"by-partlabel</b>"
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:7
 msgid "_System partition"
@@ -799,7 +1024,42 @@ msgstr "ไม่เมานท์_อัตโนมัติ"
 msgid "If set, some OSes may not automount the contents of the partition"
 msgstr "ถ้ากำหนด บาง OS จะไม่เมานท์เนื้อหาของพาร์ทิชันโดยอัตโนมัติ"
 
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:1
+msgid "Erase Multiple Disks"
+msgstr "ลบหลายดิสก์"
+
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:2
+msgid "_Erase…"
+msgstr "_ลบ…"
+
+#: ../data/ui/erase-multiple-disks-dialog.ui.h:3
+msgid "Erase _Type"
+msgstr "_ชนิดของการลบ"
+
 #: ../data/ui/filesystem-create.ui.h:3
+msgid "F_ilesystem"
+msgstr "_ระบบแฟ้ม"
+
+#: ../data/ui/filesystem-create.ui.h:4
+msgid ""
+"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+"<i>swap</i>"
+msgstr "กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น <i>btrfs</i>, <i>xfs</i> หรือ <i>swap</i>"
+
+#: ../data/ui/filesystem-create.ui.h:5
+msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+msgstr "กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น btrfs, xfs หรือ swap"
+
+#: ../data/ui/filesystem-create.ui.h:8
+msgid "Enter passphrase used to protect the data"
+msgstr "ป้อนวลีรหัสผ่านที่ใช้ปกป้องข้อมูล"
+
+#: ../data/ui/filesystem-create.ui.h:12 ../data/ui/format-disk-dialog.ui.h:4
+#: ../src/disks/gduerasemultipledisksdialog.c:396
+msgid "_Erase"
+msgstr "_ลบ"
+
+#: ../data/ui/filesystem-create.ui.h:13
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the <b>/dev/disk/by-label</b> directory"
@@ -807,44 +1067,25 @@ msgstr ""
 "ชื่อที่จะใช้สำหรับระบบแฟ้ม ชื่อนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี "
 "<b>/dev/disk/by-label</b>"
 
-#: ../data/ui/filesystem-create.ui.h:4
+#: ../data/ui/filesystem-create.ui.h:14
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory"
 msgstr ""
-"ชื่อที่จะใช้สำหรับระบบแฟ้ม ชื่อนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี "
-"/dev/disk/by-label"
+"ชื่อที่จะใช้สำหรับระบบแฟ้ม ชื่อนี้จะมีประโยชน์ถ้าคุณต้องการอ้างถึงอุปกรณ์ผ่านลิงก์สัญลักษณ์ในไดเรกทอรี /"
+"dev/disk/by-label"
 
-#: ../data/ui/filesystem-create.ui.h:5
-msgid "F_ilesystem"
-msgstr "_ระบบแฟ้ม"
-
-#: ../data/ui/filesystem-create.ui.h:6
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น <i>btrfs</i>, <i>xfs</i> หรือ <i>swap</i>"
-
-#: ../data/ui/filesystem-create.ui.h:7
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr "กำหนดชนิดของระบบแฟ้มที่จะสร้าง เช่น btrfs, xfs หรือ swap"
-
-#: ../data/ui/filesystem-create.ui.h:10
-msgid "Enter passphrase used to protect the data"
-msgstr "ป้อนวลีรหัสผ่านที่ใช้ปกป้องข้อมูล"
-
-#: ../data/ui/filesystem-create.ui.h:14 ../data/ui/format-disk-dialog.ui.h:4
-msgid "_Erase"
-msgstr "_ลบ"
+#: ../data/ui/filesystem-create.ui.h:15
+msgid "For example, “My Files” or “Backup Data”"
+msgstr "ตัวอย่างเช่น “My Files” หรือ “Backup Data”"
 
 #: ../data/ui/format-disk-dialog.ui.h:1
 msgid "Format Disk"
 msgstr "ฟอร์แมตดิสก์"
 
 #: ../data/ui/format-disk-dialog.ui.h:2 ../data/ui/format-volume-dialog.ui.h:2
-msgid "_Format..."
-msgstr "_ฟอร์แมต..."
+msgid "_Format…"
+msgstr "_ฟอร์แมต…"
 
 #: ../data/ui/format-disk-dialog.ui.h:3
 msgid "_Partitioning"
@@ -854,89 +1095,99 @@ msgstr "การจัด_พาร์ทิชัน"
 msgid "Format Volume"
 msgstr "ฟอร์แมตโวลุม"
 
+#: ../data/ui/md-raid-disks-dialog.ui.h:1
+msgid "RAID Disks"
+msgstr "ดิสก์ RAID"
+
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
-msgid "_Image to restore"
-msgstr "_อิมเมจที่เขียนคืน"
+msgid "Restore Disk Image"
+msgstr "เขียนคืนอิมเมจของดิสก์"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:2
+msgid "_Image to Restore"
+msgstr "_อิมเมจที่จะเขียนคืน"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:3
 msgid "Select Disk Image to restore"
 msgstr "เลือกอิมเมจของดิสก์ที่จะเขียนคืน"
 
-#: ../data/ui/restore-disk-image-dialog.ui.h:3
-#: ../src/disks/gdurestorediskimagedialog.c:498
-msgid "Copying data to device..."
-msgstr "กำลังคัดลอกข้อมูลไปยังอุปกรณ์..."
-
 #: ../data/ui/restore-disk-image-dialog.ui.h:4
-msgid "_Start Restoring..."
-msgstr "เ_ริ่มเขียนคืน..."
+msgid "Destination"
+msgstr "ปลายทาง"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:5
+msgid "_Start Restoring…"
+msgstr "เ_ริ่มเขียนคืน…"
 
 #: ../data/ui/smart-dialog.ui.h:1
-msgid "SMART Data"
-msgstr "ข้อมูล SMART"
+msgid "SMART Data & Self-Tests"
+msgstr "ข้อมูล SMART และการทดสอบตัวเอง"
 
 #: ../data/ui/smart-dialog.ui.h:2
-msgid "_Start Self-test..."
+msgid "_Start Self-test"
 msgstr "เ_ริ่มต้นการทดสอบตัวเอง"
 
 #: ../data/ui/smart-dialog.ui.h:3
+msgid "Click to start a SMART self-test"
+msgstr "คลิกเพื่อเริ่มต้นการทดสอบตัวเองของ SMART"
+
+#: ../data/ui/smart-dialog.ui.h:4
 msgid "_Stop Self-test"
 msgstr "_หยุดการทดสอบตัวเอง"
 
-#: ../data/ui/smart-dialog.ui.h:4
+#: ../data/ui/smart-dialog.ui.h:5
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr "คลิกเพื่อหยุดการทดสอบตัวเองของ SMART ที่กำลังดำเนินการอยู่"
+
+#: ../data/ui/smart-dialog.ui.h:6
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr "คลิกเพื่อบังคับอ่านข้อมูล SMART ใหม่จากฮาร์ดดิสก์"
+
+#: ../data/ui/smart-dialog.ui.h:7
 msgid "Powered On"
 msgstr "เปิดทำงาน"
 
-#: ../data/ui/smart-dialog.ui.h:5
+#: ../data/ui/smart-dialog.ui.h:8
 msgid "Updated"
 msgstr "ปรับข้อมูลล่าสุด"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../data/ui/smart-dialog.ui.h:6 ../src/disks/gduatasmartdialog.c:284
-#: ../src/disks/gduatasmartdialog.c:503
+#: ../data/ui/smart-dialog.ui.h:9 ../src/disks/gduatasmartdialog.c:308
+#: ../src/disks/gduatasmartdialog.c:527
 msgid "Temperature"
 msgstr "อุณหภูมิ"
 
-#: ../data/ui/smart-dialog.ui.h:7
+#: ../data/ui/smart-dialog.ui.h:10
 msgid "Self-test Result"
 msgstr "ผลการทดสอบตัวเอง"
 
-#: ../data/ui/smart-dialog.ui.h:8
+#: ../data/ui/smart-dialog.ui.h:11
 msgid "Self-assessment"
 msgstr "การประเมินตัวเอง"
 
-#: ../data/ui/smart-dialog.ui.h:9
+#: ../data/ui/smart-dialog.ui.h:12
 msgid "Overall Assessment"
 msgstr "การประเมินโดยรวม"
 
-#: ../data/ui/smart-dialog.ui.h:10
+#: ../data/ui/smart-dialog.ui.h:13
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr "คลิกเพื่อเปิด-ปิดการใช้ SMART สำหรับฮาร์ดดิสก์"
+
+#: ../data/ui/smart-dialog.ui.h:14
 msgid "SMART _Attributes"
 msgstr "แ_อตทริบิวต์ SMART"
 
-#. Translators: This string is used as the column title in the treeview for the value
-#: ../data/ui/smart-dialog.ui.h:11 ../src/disks/gduatasmartdialog.c:1491
-msgid "Value"
-msgstr "ค่า"
-
-#: ../data/ui/smart-dialog.ui.h:12
-msgid "Type"
-msgstr "ชนิด"
-
-#: ../data/ui/smart-dialog.ui.h:13
-msgid "Description"
-msgstr "คำอธิบาย"
-
-#: ../data/ui/smart-dialog.ui.h:14
+#: ../data/ui/smart-dialog.ui.h:15
 msgid "Short"
 msgstr "แบบสั้น"
 
-#: ../data/ui/smart-dialog.ui.h:15
+#: ../data/ui/smart-dialog.ui.h:16
 msgid "Extended"
 msgstr "แบบขยาย"
 
-#: ../data/ui/smart-dialog.ui.h:16
+#: ../data/ui/smart-dialog.ui.h:17
 msgid "Conveyance"
 msgstr "หลังขนส่ง"
 
@@ -1001,14 +1252,62 @@ msgstr "เกิดข้อผิดพลาดขณะเปิด `%s': %m
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "เกิดข้อผิดพลาดขณะแนบอิมเมจของดิสก์: %s (%s, %d)"
 
+#: ../src/disks/gduapplication.c:131
+#, c-format
+msgid "Error opening %s: %s\n"
+msgstr "เกิดข้อผิดพลาดขณะเปิด %s: %s\n"
+
+#: ../src/disks/gduapplication.c:138
+#, c-format
+msgid "Error looking up block device for %s\n"
+msgstr "เกิดข้อผิดพลาดขณะเปิดหาอุปกรณ์บล็อคสำหรับ %s\n"
+
+#: ../src/disks/gduapplication.c:178
+msgid "Select device"
+msgstr "เลือกอุปกรณ์"
+
+#: ../src/disks/gduapplication.c:179
+msgid "Format selected device"
+msgstr "ฟอร์แมตอุปกรณ์ที่เลือก"
+
+#: ../src/disks/gduapplication.c:180
+msgid "Parent window XID for the format dialog"
+msgstr "XID ของหน้าต่างแม่ของกล่องโต้ตอบฟอร์แมต"
+
+#: ../src/disks/gduapplication.c:181
+msgid "Show help options"
+msgstr "แสดงวิธีใช้ตัวเลือกต่างๆ"
+
+#: ../src/disks/gduapplication.c:210
+msgid "--format-device must be used together with --block-device\n"
+msgstr "--format-device ต้องใช้ร่วมกับ --block-device\n"
+
+#: ../src/disks/gduapplication.c:216
+msgid "--format-device must be specified when using --xid\n"
+msgstr "ต้องระบุ --format-device เมื่อใช้ --xid\n"
+
+#. Translators: Shown in the About dialog to convey version numbers.
+#. *              The first %s is the version of Disks (for example "3.6").
+#. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
+#. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
+#.
+#: ../src/disks/gduapplication.c:312
+#, c-format
+msgid ""
+"gnome-disk-utility %s\n"
+"UDisks %s (built against %d.%d.%d)"
+msgstr ""
+"gnome-disk-utility %s\n"
+"UDisks %s (ประกอบสร้างกับ %d.%d.%d)"
+
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:127
+#: ../src/disks/gduatasmartdialog.c:151
 msgid "Read Error Rate"
 msgstr "อัตราผิดพลาดในการอ่าน"
 
-#: ../src/disks/gduatasmartdialog.c:128
+#: ../src/disks/gduatasmartdialog.c:152
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -1019,160 +1318,160 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:137
+#: ../src/disks/gduatasmartdialog.c:161
 msgid "Throughput Performance"
 msgstr "ประสิทธิภาพการถ่ายข้อมูล"
 
-#: ../src/disks/gduatasmartdialog.c:138
+#: ../src/disks/gduatasmartdialog.c:162
 msgid "Average efficiency of the disk"
 msgstr "ประสิทธิภาพเฉลี่ยของดิสก์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:145
+#: ../src/disks/gduatasmartdialog.c:169
 msgid "Spinup Time"
 msgstr "เวลาเริ่มหมุน"
 
-#: ../src/disks/gduatasmartdialog.c:146
+#: ../src/disks/gduatasmartdialog.c:170
 msgid "Time needed to spin up the disk"
 msgstr "เวลาที่ต้องใช้ในการเริ่มหมุนดิสก์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:153
+#: ../src/disks/gduatasmartdialog.c:177
 msgid "Start/Stop Count"
 msgstr "จำนวนการเริ่ม/หยุด"
 
-#: ../src/disks/gduatasmartdialog.c:154
+#: ../src/disks/gduatasmartdialog.c:178
 msgid "Number of spindle start/stop cycles"
 msgstr "จำนวนรอบของการเริ่ม/หยุดของแกนหมุนดิสก์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:161
+#: ../src/disks/gduatasmartdialog.c:185
 msgid "Reallocated Sector Count"
 msgstr "จำนวนเซ็กเตอร์ที่ถูกจัดสรรใหม่"
 
-#: ../src/disks/gduatasmartdialog.c:162
+#: ../src/disks/gduatasmartdialog.c:186
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
-"verification error, it marks the sector as \"reallocated\" and transfers "
-"data to a special reserved area (spare area)"
+"verification error, it marks the sector as “reallocated” and transfers data "
+"to a special reserved area (spare area)"
 msgstr ""
 "จำนวนของเซ็กเตอร์ที่ถูกจัดตำแหน่งใหม่ เมื่อฮาร์ดดิสก์พบข้อผิดพลาดในการอ่าน/เขียน/ตรวจสอบข้อมูล "
-"ก็จะทำเครื่องหมายเซ็กเตอร์นั้นว่า \"ถูกจัดตำแหน่งใหม่ (reallocated)\" "
+"ก็จะทำเครื่องหมายเซ็กเตอร์นั้นว่า “ถูกจัดตำแหน่งใหม่ (reallocated)” "
 "แล้วถ่ายโอนข้อมูลไปยังพื้นที่พิเศษที่จัดเตรียมไว้ (พื้นที่สำรอง)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:171
+#: ../src/disks/gduatasmartdialog.c:195
 msgid "Read Channel Margin"
 msgstr "ผลต่างของช่องการอ่าน"
 
-#: ../src/disks/gduatasmartdialog.c:172
+#: ../src/disks/gduatasmartdialog.c:196
 msgid "Margin of a channel while reading data."
 msgstr "ผลต่างของช่องข้อมูลขณะอ่านข้อมูล"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:179
+#: ../src/disks/gduatasmartdialog.c:203
 msgid "Seek Error Rate"
 msgstr "อัตราผิดพลาดของการเลื่อนตำแหน่ง"
 
-#: ../src/disks/gduatasmartdialog.c:180
+#: ../src/disks/gduatasmartdialog.c:204
 msgid "Frequency of errors while positioning"
 msgstr "ความถี่ของข้อผิดพลาดขณะเลื่อนตำแหน่ง"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:187
+#: ../src/disks/gduatasmartdialog.c:211
 msgid "Seek Timer Performance"
 msgstr "ประสิทธิภาพของการเลื่อนตำแหน่ง"
 
-#: ../src/disks/gduatasmartdialog.c:188
+#: ../src/disks/gduatasmartdialog.c:212
 msgid "Average efficiency of operations while positioning"
 msgstr "ประสิทธิภาพเฉลี่ยของการทำงานขณะเลื่อนตำแหน่ง"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:195 ../src/disks/gduatasmartdialog.c:520
+#: ../src/disks/gduatasmartdialog.c:219 ../src/disks/gduatasmartdialog.c:544
 msgid "Power-On Hours"
 msgstr "ชั่วโมงที่เปิดทำงาน"
 
-#: ../src/disks/gduatasmartdialog.c:196 ../src/disks/gduatasmartdialog.c:521
+#: ../src/disks/gduatasmartdialog.c:220 ../src/disks/gduatasmartdialog.c:545
 msgid "Number of hours elapsed in the power-on state"
 msgstr "จำนวนชั่วโมงที่ผ่านมาที่อยู่ในสภาวะเปิดทำงาน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:203
+#: ../src/disks/gduatasmartdialog.c:227
 msgid "Spinup Retry Count"
 msgstr "จำนวนการพยายามใหม่ในการเริ่มหมุน"
 
-#: ../src/disks/gduatasmartdialog.c:204
+#: ../src/disks/gduatasmartdialog.c:228
 msgid "Number of retry attempts to spin up"
 msgstr "จำนวนครั้งของความพยายามใหม่ในการเริ่มหมุน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:211
+#: ../src/disks/gduatasmartdialog.c:235
 msgid "Calibration Retry Count"
 msgstr "จำนวนการพยายามใหม่ในการปรับเทียบ"
 
-#: ../src/disks/gduatasmartdialog.c:212
+#: ../src/disks/gduatasmartdialog.c:236
 msgid "Number of attempts to calibrate the device"
 msgstr "จำนวนครั้งของความพยายามใหม่ในการปรับเทียบอุปกรณ์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:219
+#: ../src/disks/gduatasmartdialog.c:243
 msgid "Power Cycle Count"
 msgstr "จำนวนรอบการเปิดทำงาน"
 
-#: ../src/disks/gduatasmartdialog.c:220
+#: ../src/disks/gduatasmartdialog.c:244
 msgid "Number of power-on events"
 msgstr "จำนวนครั้งของการเปิดอุปกรณ์ทำงาน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:227
+#: ../src/disks/gduatasmartdialog.c:251
 msgid "Soft read error rate"
 msgstr "อัตราผิดพลาดในการอ่านจากซอฟต์แวร์"
 
-#: ../src/disks/gduatasmartdialog.c:229
+#: ../src/disks/gduatasmartdialog.c:253
 msgid "Frequency of errors while reading from the disk"
 msgstr "ความถี่ของข้อผิดพลาดขณะอ่านจากดิสก์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:236
+#: ../src/disks/gduatasmartdialog.c:260
 msgid "Reported Uncorrectable Errors"
 msgstr "ข้อผิดพลาดที่ได้รับรายงานว่าแก้ไขไม่ได้"
 
-#: ../src/disks/gduatasmartdialog.c:237
+#: ../src/disks/gduatasmartdialog.c:261
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "จำนวนข้อผิดพลาดที่ไม่สามารถกู้กลับได้ด้วย ECC ของฮาร์ดแวร์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:244
+#: ../src/disks/gduatasmartdialog.c:268
 msgid "High Fly Writes"
 msgstr "การเขียนแบบหัวเขียนลอย"
 
-#: ../src/disks/gduatasmartdialog.c:245
+#: ../src/disks/gduatasmartdialog.c:269
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr "จำนวนครั้งที่หัวเขียนลอยอยู่นอกพิสัยทำการปกติ"
@@ -1180,70 +1479,70 @@ msgstr "จำนวนครั้งที่หัวเขียนลอย
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:252
+#: ../src/disks/gduatasmartdialog.c:276
 msgid "Airflow Temperature"
 msgstr "อุณหภูมิกระแสลม"
 
-#: ../src/disks/gduatasmartdialog.c:253
+#: ../src/disks/gduatasmartdialog.c:277
 msgid "Airflow temperature of the drive"
 msgstr "อุณหภูมิกระแสลมของไดรว์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:260 ../src/disks/gduatasmartdialog.c:430
+#: ../src/disks/gduatasmartdialog.c:284 ../src/disks/gduatasmartdialog.c:454
 msgid "G-sense Error Rate"
 msgstr "อัตราข้อผิดพลาดจาก G-sense"
 
-#: ../src/disks/gduatasmartdialog.c:261
+#: ../src/disks/gduatasmartdialog.c:285
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "ความถี่ของความผิดพลาดที่เกิดจากการกระแทก"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:268 ../src/disks/gduatasmartdialog.c:487
+#: ../src/disks/gduatasmartdialog.c:292 ../src/disks/gduatasmartdialog.c:511
 msgid "Power-off Retract Count"
 msgstr "จำนวนการถอนหัวอ่าน"
 
-#: ../src/disks/gduatasmartdialog.c:269
+#: ../src/disks/gduatasmartdialog.c:293
 msgid "Number of power-off or emergency retract cycles"
 msgstr "จำนวนรอบของการถอนหัวอ่านจากการปิดทำงานหรือเหตุการณ์ฉุกเฉิน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:276 ../src/disks/gduatasmartdialog.c:463
+#: ../src/disks/gduatasmartdialog.c:300 ../src/disks/gduatasmartdialog.c:487
 msgid "Load/Unload Cycle Count"
 msgstr "จำนวนรอบการโหลด/เลิกโหลด"
 
-#: ../src/disks/gduatasmartdialog.c:277
+#: ../src/disks/gduatasmartdialog.c:301
 msgid "Number of cycles into landing zone position"
 msgstr "จำนวนรอบของการเข้าสู่บริเวณทำการของหัวอ่าน-เขียน"
 
-#: ../src/disks/gduatasmartdialog.c:285
+#: ../src/disks/gduatasmartdialog.c:309
 msgid "Current internal temperature of the drive"
 msgstr "อุณหภูมิภายในปัจจุบันของไดรว์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:292
+#: ../src/disks/gduatasmartdialog.c:316
 msgid "Hardware ECC Recovered"
 msgstr "การกู้ข้อมูลกลับด้วย ECC ของฮาร์ดแวร์"
 
-#: ../src/disks/gduatasmartdialog.c:293
+#: ../src/disks/gduatasmartdialog.c:317
 msgid "Number of ECC on-the-fly errors"
 msgstr "จำนวนข้อผิดพลาดที่กู้กลับขณะทำงานโดย ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:300
+#: ../src/disks/gduatasmartdialog.c:324
 msgid "Reallocation Count"
 msgstr "จำนวนครั้งของการจัดสรรใหม่"
 
-#: ../src/disks/gduatasmartdialog.c:301
+#: ../src/disks/gduatasmartdialog.c:325
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -1256,11 +1555,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:311
+#: ../src/disks/gduatasmartdialog.c:335
 msgid "Current Pending Sector Count"
 msgstr "จำนวนเซ็กเตอร์ที่รอจัดตำแหน่งในปัจจุบัน"
 
-#: ../src/disks/gduatasmartdialog.c:312
+#: ../src/disks/gduatasmartdialog.c:336
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -1276,11 +1575,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:323
+#: ../src/disks/gduatasmartdialog.c:347
 msgid "Uncorrectable Sector Count"
 msgstr "จำนวนเซ็กเตอร์ที่กู้คืนไม่ได้"
 
-#: ../src/disks/gduatasmartdialog.c:324
+#: ../src/disks/gduatasmartdialog.c:348
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -1292,22 +1591,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:333
+#: ../src/disks/gduatasmartdialog.c:357
 msgid "UDMA CRC Error Rate"
 msgstr "อัตราข้อผิดพลาด CRC ในโหมด UDMA"
 
-#: ../src/disks/gduatasmartdialog.c:334
+#: ../src/disks/gduatasmartdialog.c:358
 msgid "Number of CRC errors during UDMA mode"
 msgstr "จำนวนข้อผิดพลาด CRC ในระหว่างที่ใช้โหมด UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:341
+#: ../src/disks/gduatasmartdialog.c:365
 msgid "Write Error Rate"
 msgstr "อัตราผิดพลาดในการเขียน"
 
-#: ../src/disks/gduatasmartdialog.c:342
+#: ../src/disks/gduatasmartdialog.c:366
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -1318,117 +1617,117 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:349
+#: ../src/disks/gduatasmartdialog.c:373
 msgid "Soft Read Error Rate"
 msgstr "อัตราผิดพลาดในการอ่านจากซอฟต์แวร์"
 
-#: ../src/disks/gduatasmartdialog.c:350
+#: ../src/disks/gduatasmartdialog.c:374
 msgid "Number of off-track errors"
 msgstr "จำนวนข้อผิดพลาดที่ไม่ได้บันทึกไว้"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:357
+#: ../src/disks/gduatasmartdialog.c:381
 msgid "Data Address Mark Errors"
 msgstr "ข้อผิดพลาดของ Data Address Mark"
 
-#: ../src/disks/gduatasmartdialog.c:358
+#: ../src/disks/gduatasmartdialog.c:382
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "จำนวนข้อผิดพลาดของ Data Address Mark (DAM) (หรือค่าเฉพาะของผู้ผลิต)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:365
+#: ../src/disks/gduatasmartdialog.c:389
 msgid "Run Out Cancel"
 msgstr "จำนวนข้อผิดพลาด ECC"
 
-#: ../src/disks/gduatasmartdialog.c:366
+#: ../src/disks/gduatasmartdialog.c:390
 msgid "Number of ECC errors"
 msgstr "จำนวนข้อผิดพลาด ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:373
+#: ../src/disks/gduatasmartdialog.c:397
 msgid "Soft ECC correction"
 msgstr "การแก้ไขข้อผิดพลาด ECC ด้วยซอฟต์แวร์"
 
-#: ../src/disks/gduatasmartdialog.c:374
+#: ../src/disks/gduatasmartdialog.c:398
 msgid "Number of errors corrected by software ECC"
 msgstr "จำนวนข้อผิดพลาดที่แก้ไขด้วย ECC แบบซอฟต์แวร์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:381
+#: ../src/disks/gduatasmartdialog.c:405
 msgid "Thermal Asperity Rate"
 msgstr "อัตราความรุนแรงของความร้อน"
 
-#: ../src/disks/gduatasmartdialog.c:382
+#: ../src/disks/gduatasmartdialog.c:406
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "จำนวนข้อผิดพลาดจากอัตราความรุนแรงของความร้อน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:389
+#: ../src/disks/gduatasmartdialog.c:413
 msgid "Flying Height"
 msgstr "ความสูงของการลอย"
 
-#: ../src/disks/gduatasmartdialog.c:390
+#: ../src/disks/gduatasmartdialog.c:414
 msgid "Height of heads above the disk surface"
 msgstr "ความสูงของหัวอ่าน-เขียนเหนือผิวดิสก์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:397
+#: ../src/disks/gduatasmartdialog.c:421
 msgid "Spin High Current"
 msgstr "กระแสกระชากสำหรับหมุนดิสก์"
 
-#: ../src/disks/gduatasmartdialog.c:398
+#: ../src/disks/gduatasmartdialog.c:422
 msgid "Amount of high current used to spin up the drive"
 msgstr "ปริมาณกระแสกระชากที่ใช้สำหรับหมุนไดรว์เพื่อเริ่มอ่าน-เขียน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:405
+#: ../src/disks/gduatasmartdialog.c:429
 msgid "Spin Buzz"
 msgstr "การตะกายหมุน"
 
-#: ../src/disks/gduatasmartdialog.c:406
+#: ../src/disks/gduatasmartdialog.c:430
 msgid "Number of buzz routines to spin up the drive"
 msgstr "จำนวนกระบวนการตะเกียกตะกายที่ใช้ในการหมุนไดรว์ด้วยกระแสต่ำ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:413
+#: ../src/disks/gduatasmartdialog.c:437
 msgid "Offline Seek Performance"
 msgstr "ประสิทธิภาพการเลื่อนหัวอ่านขณะออฟไลน์"
 
-#: ../src/disks/gduatasmartdialog.c:414
-msgid "Drive's seek performance during offline operations"
+#: ../src/disks/gduatasmartdialog.c:438
+msgid "Drive’s seek performance during offline operations"
 msgstr "ประสิทธิภาพของไดรว์ในการเลื่อนหัวอ่านขณะทำงานออฟไลน์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:421
+#: ../src/disks/gduatasmartdialog.c:445
 msgid "Disk Shift"
 msgstr "ระยะเลื่อนของดิสก์"
 
-#: ../src/disks/gduatasmartdialog.c:422
+#: ../src/disks/gduatasmartdialog.c:446
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
 "การเลื่อนของดิสก์เป็นไปได้จากการกระแทกอย่างรุนแรงในแหล่งเก็บ หรือจากการตก หรือจากอุณหภูมิสูง"
 
-#: ../src/disks/gduatasmartdialog.c:431
+#: ../src/disks/gduatasmartdialog.c:455
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "จำนวนของความผิดพลาดที่เกิดจากการกระแทก ตามที่ตรวจพบโดยอุปกรณ์ตรวจจับการกระแทก"
@@ -1436,22 +1735,22 @@ msgstr "จำนวนของความผิดพลาดที่เก
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:438
+#: ../src/disks/gduatasmartdialog.c:462
 msgid "Loaded Hours"
 msgstr "ชั่วโมงทำงาน"
 
-#: ../src/disks/gduatasmartdialog.c:439
+#: ../src/disks/gduatasmartdialog.c:463
 msgid "Number of hours in general operational state"
 msgstr "จำนวนชั่วโมงที่อยู่ในสถานะทำงานทั่วไป"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:446
+#: ../src/disks/gduatasmartdialog.c:470
 msgid "Load/Unload Retry Count"
 msgstr "จำนวนครั้งของการพยายามโหลด/เลิกโหลด"
 
-#: ../src/disks/gduatasmartdialog.c:447
+#: ../src/disks/gduatasmartdialog.c:471
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -1461,67 +1760,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:455
+#: ../src/disks/gduatasmartdialog.c:479
 msgid "Load Friction"
 msgstr "ความเสียดทานต่อการทำงาน"
 
-#: ../src/disks/gduatasmartdialog.c:456
+#: ../src/disks/gduatasmartdialog.c:480
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "ภาระในไดรว์อันเกิดจากแรงเสียดทานในชิ้นส่วนจักรกล"
 
-#: ../src/disks/gduatasmartdialog.c:464
+#: ../src/disks/gduatasmartdialog.c:488
 msgid "Total number of load cycles"
 msgstr "จำนวนรอบการโหลดทั้งหมด"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:471
+#: ../src/disks/gduatasmartdialog.c:495
 msgid "Load-in Time"
 msgstr "เวลาในเขตทำการ"
 
-#: ../src/disks/gduatasmartdialog.c:472
+#: ../src/disks/gduatasmartdialog.c:496
 msgid "General time for loading in a drive"
 msgstr "เวลาโดยทั่วไปที่หัวอ่าน-เขียนโหลดลงไดรว์ในบริเวณเก็บข้อมูล"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:479
+#: ../src/disks/gduatasmartdialog.c:503
 msgid "Torque Amplification Count"
 msgstr "จำนวนการขยายทอร์ก"
 
-#: ../src/disks/gduatasmartdialog.c:480
+#: ../src/disks/gduatasmartdialog.c:504
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "ปริมาณความพยายามของโมเมนต์การหมุนของไดรว์"
 
-#: ../src/disks/gduatasmartdialog.c:488
+#: ../src/disks/gduatasmartdialog.c:512
 msgid "Number of power-off retract events"
 msgstr "จำนวนครั้งของการถอนหัวอ่านจากการปิดทำงาน"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:495
+#: ../src/disks/gduatasmartdialog.c:519
 msgid "GMR Head Amplitude"
 msgstr "แอมพลิจูดของหัว GMR"
 
-#: ../src/disks/gduatasmartdialog.c:496
+#: ../src/disks/gduatasmartdialog.c:520
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "แอมพลิจูดของการแกว่งของหัวอ่าน-เขียน (หัว GMR) ขณะทำงาน"
 
-#: ../src/disks/gduatasmartdialog.c:504
+#: ../src/disks/gduatasmartdialog.c:528
 msgid "Temperature of the drive"
 msgstr "อุณหภูมิของไดรว์"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:511
+#: ../src/disks/gduatasmartdialog.c:535
 msgid "Endurance Remaining"
 msgstr "ความทนทานที่ยังเหลือ"
 
-#: ../src/disks/gduatasmartdialog.c:512
+#: ../src/disks/gduatasmartdialog.c:536
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -1532,22 +1831,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:528
+#: ../src/disks/gduatasmartdialog.c:552
 msgid "Uncorrectable ECC Count"
 msgstr "จำนวน ECC ที่แก้ไขไม่ได้"
 
-#: ../src/disks/gduatasmartdialog.c:529
+#: ../src/disks/gduatasmartdialog.c:553
 msgid "Number of uncorrectable ECC errors"
 msgstr "จำนวนข้อผิดพลาด ECC ที่แก้ไขไม่ได้"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:536
+#: ../src/disks/gduatasmartdialog.c:560
 msgid "Good Block Rate"
 msgstr "อัตราบล็อคที่ดี"
 
-#: ../src/disks/gduatasmartdialog.c:537
+#: ../src/disks/gduatasmartdialog.c:561
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -1556,45 +1855,45 @@ msgstr "จำนวนบล็อคสงวนที่ใช้การไ
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:545
+#: ../src/disks/gduatasmartdialog.c:569
 msgid "Head Flying Hours"
 msgstr "ชั่วโมงการเลือนหัวอ่าน-เขียน"
 
-#: ../src/disks/gduatasmartdialog.c:546
+#: ../src/disks/gduatasmartdialog.c:570
 msgid "Time while head is positioning"
 msgstr "เวลาที่หัวอ่าน-เขียนเลื่อนตำแหน่ง"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: ../src/disks/gduatasmartdialog.c:553
+#: ../src/disks/gduatasmartdialog.c:577
 msgid "Read Error Retry Rate"
 msgstr "อัตราการพยายามอ่านใหม่เมื่อผิดพลาด"
 
-#: ../src/disks/gduatasmartdialog.c:554
+#: ../src/disks/gduatasmartdialog.c:578
 msgid "Number of errors while reading from a disk"
 msgstr "จำนวนข้อผิดพลาดขณะอ่านจากดิสก์"
 
-#: ../src/disks/gduatasmartdialog.c:614
+#: ../src/disks/gduatasmartdialog.c:637
 #, c-format
 msgid "No description for attribute %d"
 msgstr "ไม่มีคำอธิบายสำหรับแอตทริบิวต์ %d"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: ../src/disks/gduatasmartdialog.c:665
+#: ../src/disks/gduatasmartdialog.c:684
 msgid "FAILING"
 msgstr "ล้มเหลว"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: ../src/disks/gduatasmartdialog.c:674
+#: ../src/disks/gduatasmartdialog.c:693
 msgid "Failed in the past"
 msgstr "ล้มเหลวในอดีต"
 
-#: ../src/disks/gduatasmartdialog.c:678
+#: ../src/disks/gduatasmartdialog.c:697
 msgid "OK"
 msgstr "เรียบร้อยดี"
 
-#: ../src/disks/gduatasmartdialog.c:705
+#: ../src/disks/gduatasmartdialog.c:724
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -1607,7 +1906,7 @@ msgstr[0] "%d เซ็กเตอร์"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: ../src/disks/gduatasmartdialog.c:717 ../src/disks/gduatasmartdialog.c:929
+#: ../src/disks/gduatasmartdialog.c:736 ../src/disks/gduatasmartdialog.c:869
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -1615,166 +1914,121 @@ msgstr "%.0f° C / %.0f° F"
 #. SK_SMART_ATTRIBUTE_UNIT_UNKNOWN
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * where the value cannot be interpreted
-#: ../src/disks/gduatasmartdialog.c:728
+#. Translators: Shown for normalized values (current, worst, threshold) if the value is
+#. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
+#.
+#: ../src/disks/gduatasmartdialog.c:747 ../src/disks/gduatasmartdialog.c:1117
 msgid "N/A"
 msgstr "N/A"
 
-#. Translators: The first %s is the pretty value (such as '300
-#. * sectors' or '2.5 years' or '53° C / 127° F').
-#. *
-#. * The three %d are the normalized, threshold and worst values -
-#. * these are all decimal numbers.
-#.
-#: ../src/disks/gduatasmartdialog.c:774
-#, c-format
-msgid ""
-"%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
-msgstr ""
-"%s <span size=\"small\">(ปรับฐานแล้ว: %d, ขีดเริ่ม: %d, แย่ที่สุด: %d)</span>"
-
-#. Translators: Please keep "(Pre-Fail)" in English
-#.
-#: ../src/disks/gduatasmartdialog.c:784
-msgid ""
-"Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
-"(Pre-Fail)</span>"
-msgstr ""
-"ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์จะเสียภายใน 24 ชั่วโมง <span size=\"small\">(Pre-Fail)"
-"</span>"
-
-#. Translators: Please keep "(Old-Age)" in English
-#.
-#: ../src/disks/gduatasmartdialog.c:790
-msgid ""
-"Failure is a sign the disk exceeded its intended design life period <span "
-"size=\"small\">(Old-Age)</span>"
-msgstr ""
-"ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์ใช้งานเกินช่วงอายุที่ได้ออกแบบไว้แล้ว <span "
-"size=\"small\">(Old-Age)</span>"
-
-#. Translators: Please keep "(Online)" in English
-#.
-#: ../src/disks/gduatasmartdialog.c:797
-msgid ""
-"Updated every time data is collected <span size=\"small\">(Online)</span>"
-msgstr "ปรับข้อมูลทุกครั้งที่เก็บข้อมูล <span size=\"small\">(Online)</span>"
-
-#. Translators: Please keep "(Not Online)" in English
-#.
-#: ../src/disks/gduatasmartdialog.c:803
-msgid ""
-"Updated only during off-line activities <span size=\"small\">(Not Online)</"
-"span>"
-msgstr "ปรับข้อมูลเฉพาะระหว่างการกระทำออฟไลน์เท่านั้น (Not Online)"
-
-#: ../src/disks/gduatasmartdialog.c:834
+#: ../src/disks/gduatasmartdialog.c:767
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "การทดสอบตัวเองล่าสุดเสร็จเรียบร้อย"
 
-#: ../src/disks/gduatasmartdialog.c:838
+#: ../src/disks/gduatasmartdialog.c:771
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "การทดสอบตัวเองล่าสุดถูกยกเลิก"
 
-#: ../src/disks/gduatasmartdialog.c:842
+#: ../src/disks/gduatasmartdialog.c:775
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "การทดสอบตัวเองล่าสุดถูกขัดจังหวะ"
 
-#: ../src/disks/gduatasmartdialog.c:846
+#: ../src/disks/gduatasmartdialog.c:779
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "การทดสอบตัวเองล่าสุดไม่สมบูรณ์"
 
-#: ../src/disks/gduatasmartdialog.c:850
+#: ../src/disks/gduatasmartdialog.c:783
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "การทดสอบตัวเองล่าสุดล้มเหลว"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: ../src/disks/gduatasmartdialog.c:855
+#: ../src/disks/gduatasmartdialog.c:788
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "การทดสอบตัวเองล่าสุดล้มเหลว (ทางไฟฟ้า)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: ../src/disks/gduatasmartdialog.c:860
+#: ../src/disks/gduatasmartdialog.c:793
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "การทดสอบตัวเองล่าสุดล้มเหลว (เซอร์โว)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: ../src/disks/gduatasmartdialog.c:865
+#: ../src/disks/gduatasmartdialog.c:798
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "การทดสอบตัวเองล่าสุดล้มเหลว (การอ่าน)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: ../src/disks/gduatasmartdialog.c:870
+#: ../src/disks/gduatasmartdialog.c:803
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "การทดสอบตัวเองล่าสุดล้มเหลว (การกระทบกระเทือน)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: ../src/disks/gduatasmartdialog.c:875
+#: ../src/disks/gduatasmartdialog.c:808
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "อยู่ระหว่างทดสอบตัวเอง — เหลืออีก %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: ../src/disks/gduatasmartdialog.c:882
+#: ../src/disks/gduatasmartdialog.c:815
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "ไม่ทราบ (%s)"
 
-#: ../src/disks/gduatasmartdialog.c:905
+#: ../src/disks/gduatasmartdialog.c:840
 #, c-format
 msgid "%s ago"
 msgstr "%sที่แล้ว"
 
-#: ../src/disks/gduatasmartdialog.c:963
+#: ../src/disks/gduatasmartdialog.c:903
 msgid "SMART is not supported"
 msgstr "ไม่รองรับ SMART"
 
-#: ../src/disks/gduatasmartdialog.c:969
+#: ../src/disks/gduatasmartdialog.c:911
 msgid "SMART is not enabled"
 msgstr "ไม่ได้เปิดใช้ SMART"
 
-#: ../src/disks/gduatasmartdialog.c:981
+#: ../src/disks/gduatasmartdialog.c:921
 msgid "Self-test in progress"
 msgstr "อยู่ระหว่างทดสอบตัวเอง"
 
-#: ../src/disks/gduatasmartdialog.c:994 ../src/disks/gduatasmartdialog.c:1003
+#: ../src/disks/gduatasmartdialog.c:934 ../src/disks/gduatasmartdialog.c:943
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "ดิสก์มีทีท่าจะเสียในไม่ช้า"
 
-#: ../src/disks/gduatasmartdialog.c:1026
+#: ../src/disks/gduatasmartdialog.c:966
 msgid "SELF-TEST FAILED"
 msgstr "ทดสอบตัวเองล้มเหลว"
 
-#: ../src/disks/gduatasmartdialog.c:1035
+#: ../src/disks/gduatasmartdialog.c:975
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "ดิสก์มีสภาพดี มีแอตทริบิวต์ล้มเหลว %d แอตทริบิวต์"
 
-#: ../src/disks/gduatasmartdialog.c:1046
+#: ../src/disks/gduatasmartdialog.c:986
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "ดิสก์มีสภาพดี มีเซ็กเตอร์เสีย %d เซ็กเตอร์"
 
-#: ../src/disks/gduatasmartdialog.c:1057
+#: ../src/disks/gduatasmartdialog.c:997
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "ดิสก์มีสภาพดี มีแอตทริบิวต์ที่เคยทดสอบไม่ผ่าน %d รายการ"
 
 #. Otherwise, it's all honky dory
-#: ../src/disks/gduatasmartdialog.c:1066
+#: ../src/disks/gduatasmartdialog.c:1006
 msgid "Disk is OK"
 msgstr "ดิสก์มีสภาพดี"
 
@@ -1782,42 +2036,94 @@ msgstr "ดิสก์มีสภาพดี"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: ../src/disks/gduatasmartdialog.c:1080
+#: ../src/disks/gduatasmartdialog.c:1020
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
+#: ../src/disks/gduatasmartdialog.c:1105
+msgid "Pre-Fail"
+msgstr "ใกล้พัง"
+
+#: ../src/disks/gduatasmartdialog.c:1107
+msgid "Old-Age"
+msgstr "อายุมาก"
+
+#: ../src/disks/gduatasmartdialog.c:1110
+msgid "Online"
+msgstr "ออนไลน์"
+
+#: ../src/disks/gduatasmartdialog.c:1112
+msgid "Offline"
+msgstr "ออฟไลน์"
+
 #. Translators: XXX
-#: ../src/disks/gduatasmartdialog.c:1235
+#: ../src/disks/gduatasmartdialog.c:1221
 msgid "Threshold exceeded"
 msgstr "เกินขีดเริ่ม"
 
 #. Translators: XXX
-#: ../src/disks/gduatasmartdialog.c:1240
+#: ../src/disks/gduatasmartdialog.c:1226
 msgid "Threshold not exceeded"
 msgstr "ไม่เกินขีดเริ่ม"
 
-#: ../src/disks/gduatasmartdialog.c:1299
+#: ../src/disks/gduatasmartdialog.c:1302
 msgid "Error refreshing SMART data"
 msgstr "เกิดข้อผิดพลาดขณะเรียกข้อมูล SMART ใหม่"
 
-#: ../src/disks/gduatasmartdialog.c:1331
+#: ../src/disks/gduatasmartdialog.c:1334
 msgid "Error aborting SMART self-test"
 msgstr "เกิดข้อผิดพลาดขณะยกเลิกการทดสอบตัวเองของ SMART"
 
-#: ../src/disks/gduatasmartdialog.c:1350
+#: ../src/disks/gduatasmartdialog.c:1353
 msgid "Error starting SMART self-test"
 msgstr "เกิดข้อผิดพลาดขณะเริ่มการทดสอบตัวเองของ SMART"
 
+#: ../src/disks/gduatasmartdialog.c:1432
+#, fuzzy
+#| msgid "An error occurred when trying to wake up the drive from standby mode"
+msgid "An error occurred when trying toggle whether SMART is enabled"
+msgstr "เกิดข้อผิดพลาดขณะพยายามปลุกไดรว์จากโหมดพักคอย"
+
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1465
+#: ../src/disks/gduatasmartdialog.c:1515
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1477
+#: ../src/disks/gduatasmartdialog.c:1527
 msgid "Attribute"
 msgstr "แอตทริบิวต์"
+
+#. Translators: This string is used as the column title in the treeview for the value
+#: ../src/disks/gduatasmartdialog.c:1541
+msgid "Value"
+msgstr "ค่า"
+
+#. Translators: This string is used as the column title in the treeview for the normalized value
+#: ../src/disks/gduatasmartdialog.c:1553
+msgid "Normalized"
+msgstr "ปรับฐานแล้ว"
+
+#. Translators: This string is used as the column title in the treeview for the threshold value
+#: ../src/disks/gduatasmartdialog.c:1565
+msgid "Threshold"
+msgstr "ขีดเริ่ม"
+
+#. Translators: This string is used as the column title in the treeview for the worst value
+#: ../src/disks/gduatasmartdialog.c:1577
+msgid "Worst"
+msgstr "แย่ที่สุด"
+
+#. Translators: This string is used as the column title in the treeview for the type
+#: ../src/disks/gduatasmartdialog.c:1589
+msgid "Type"
+msgstr "ชนิด"
+
+#. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
+#: ../src/disks/gduatasmartdialog.c:1601
+msgid "Updates"
+msgstr "ปรับข้อมูล"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
 #: ../src/disks/gdubenchmarkdialog.c:327
@@ -1840,7 +2146,7 @@ msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:954
+#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:864
 #, c-format
 msgid "%d sample"
 msgid_plural "%d samples"
@@ -1864,110 +2170,102 @@ msgstr "ไม่มีข้อมูลการวัดสมรรถนะ
 
 #: ../src/disks/gdubenchmarkdialog.c:713
 msgctxt "benchmark-updated"
-msgid "Opening Device..."
-msgstr "กำลังเปิดอุปกรณ์..."
+msgid "Opening Device…"
+msgstr "กำลังเปิดอุปกรณ์…"
 
 #: ../src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
-msgid "Measuring transfer rate (%2.1f%% complete)..."
-msgstr "กำลังวัดอัตราการถ่ายโอนข้อมูล (เสร็จแล้ว %2.1f%%)..."
+msgid "Measuring transfer rate (%2.1f%% complete)…"
+msgstr "กำลังวัดอัตราการถ่ายโอนข้อมูล (เสร็จแล้ว %2.1f%%)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:724
 #, c-format
 msgctxt "benchmark-updated"
-msgid "Measuring access time (%2.1f%% complete)..."
-msgstr "กำลังวัดเวลาในการเข้าถึง (เสร็จแล้ว %2.1f%%)..."
+msgid "Measuring access time (%2.1f%% complete)…"
+msgstr "กำลังวัดเวลาในการเข้าถึง (เสร็จแล้ว %2.1f%%)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:840
+#: ../src/disks/gdubenchmarkdialog.c:787
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "เกิดข้อผิดพลาด"
 
-#. Translators: The first %s is the partition size (e.g. "10.0 GB") and the two
-#. * following %s are make/model (e.g. "ST 3160A") and description (e.g. "60 GB Hard Disk")
-#.
-#: ../src/disks/gdubenchmarkdialog.c:876
-#, c-format
-msgctxt "benchmark-drive-name"
-msgid "%s partition on %s (%s)"
-msgstr "พาร์ทิชัน %s ใน %s (%s)"
-
-#. Translators: The first %s is the make/model (e.g. "ST 3160A"), the second %s is
-#. * the description (e.g. "60 GB Hard Disk")
-#.
-#: ../src/disks/gdubenchmarkdialog.c:886
-#, c-format
-msgctxt "benchmark-drive-name"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:952
+#: ../src/disks/gdubenchmarkdialog.c:862
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f มิลลิวินาที"
 
-#: ../src/disks/gdubenchmarkdialog.c:1264
+#: ../src/disks/gdubenchmarkdialog.c:1174
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "เกิดข้อผิดพลาดขณะอ่านขนาดของอุปกรณ์: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1274
+#: ../src/disks/gdubenchmarkdialog.c:1184
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "เกิดข้อผิดพลาดขณะอ่านขนาดของเพจ: %m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1307
-#: ../src/disks/gdubenchmarkdialog.c:1326
-#: ../src/disks/gdubenchmarkdialog.c:1362
-#: ../src/disks/gdubenchmarkdialog.c:1381
+#: ../src/disks/gdubenchmarkdialog.c:1218
+#: ../src/disks/gdubenchmarkdialog.c:1281
+#: ../src/disks/gdubenchmarkdialog.c:1300
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "เกิดข้อผิดพลาดขณะเลื่อนไปยังออฟเซต %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1316
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1229
+#, c-format
+msgctxt "benchmarking"
+msgid "Error pre-reading %s from offset %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่านขั้นต้น %s จากออฟเซต %s"
+
+#: ../src/disks/gdubenchmarkdialog.c:1241
+#, c-format
+msgctxt "benchmarking"
+msgid "Error seeking to offset %s"
+msgstr "เกิดข้อผิดพลาดขณะเลื่อนไปยังออฟเซต %s"
+
+#: ../src/disks/gdubenchmarkdialog.c:1255
+#, c-format
+msgctxt "benchmarking"
+msgid "Error reading %s from offset %s"
+msgstr "เกิดข้อผิดพลาดขณะอ่าน %s จากออฟเซต %s"
+
+#: ../src/disks/gdubenchmarkdialog.c:1290
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "เกิดข้อผิดพลาดขณะอ่านขั้นต้น %lld ไบต์ จากออฟเซต %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1337
-#, c-format
-msgctxt "benchmarking"
-msgid "Error reading %d MB from offset %lld"
-msgstr "เกิดข้อผิดพลาดขณะอ่าน %d MB จากออฟเซต %lld"
-
-#: ../src/disks/gdubenchmarkdialog.c:1392
+#: ../src/disks/gdubenchmarkdialog.c:1311
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "เกิดข้อผิดพลาดขณะเขียน %lld ไบต์ ที่ออฟเซต %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1402
+#: ../src/disks/gdubenchmarkdialog.c:1321
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "ต้องการเขียน %lld ไบต์ แต่เขียนได้เพียง %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1412
+#: ../src/disks/gdubenchmarkdialog.c:1331
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "เกิดข้อผิดพลาดขณะ sync (ที่ออฟเซต %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1452
+#: ../src/disks/gdubenchmarkdialog.c:1371
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "เกิดข้อผิดพลาดขณะเลื่อนไปยังออฟเซต %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1464
+#: ../src/disks/gdubenchmarkdialog.c:1383
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1999,7 +2297,7 @@ msgstr ""
 "ด้วย"
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
-#: ../src/disks/gducreatefilesystemwidget.c:540
+#: ../src/disks/gducreatefilesystemwidget.c:537
 msgid "The strength of the passphrase"
 msgstr "ความแน่นหนาของวลีรหัสผ่าน"
 
@@ -2007,78 +2305,118 @@ msgstr "ความแน่นหนาของวลีรหัสผ่า
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/disks/gducreatediskimagedialog.c:212
+#: ../src/disks/gducreatediskimagedialog.c:272
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Disk Image of %s (%s).img"
 
-#: ../src/disks/gducreatediskimagedialog.c:251
-msgid "Error writing to image"
-msgstr "เกิดข้อผิดพลาดขณะเขียนลงในอิมเมจ"
-
-#. Translators: string used for conveying progress of copy operation.
-#. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
-#. * The third %s is the estimated amount of time remaining (ex. "1 minute", "5 minutes" or "Less than a minute").
-#. * The fourth %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+#. Translators: A descriptive string for the sound played when
+#. * there's a read error that's being ignored, see
+#. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: ../src/disks/gducreatediskimagedialog.c:279
-#: ../src/disks/gdurestorediskimagedialog.c:319
-#, c-format
-msgid "%s of %s copied – %s remaining (%s/sec)"
-msgstr "คัดลอกแล้ว %s จาก %s – เหลืออีก %s (%s/วินาที)"
+#: ../src/disks/gducreatediskimagedialog.c:303
+#, fuzzy
+#| msgid "Disk Image Mounter"
+msgid "Disk image read error"
+msgstr "โปรแกรมเมานท์อิมเมจของดิสก์"
 
-#. Translators: string used for convey progress of a copy operation where we don't know time remaining / speed.
-#. * The first two %s are strings with the amount of bytes (ex. "3.4 MB" and "300 MB").
+#: ../src/disks/gducreatediskimagedialog.c:339
+#, fuzzy
+#| msgid "Mount Disk Images"
+msgid "Allocating Disk Image"
+msgstr "เมานท์อิมเมจของดิสก์"
+
+#: ../src/disks/gducreatediskimagedialog.c:343
+msgid "Retrieving DVD keys"
+msgstr ""
+
+#. Translators: Shown when there are read errors and we skip some data.
+#. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:292
-#: ../src/disks/gdurestorediskimagedialog.c:332
+#: ../src/disks/gducreatediskimagedialog.c:352
 #, c-format
-msgid "%s of %s copied"
-msgstr "คัดลอกแล้ว %s จาก %s"
+msgid "%s unreadable (replaced with zeroes)"
+msgstr ""
 
-#: ../src/disks/gducreatediskimagedialog.c:341
-#: ../src/disks/gdurestorediskimagedialog.c:380
-msgid "Error reading from offset %"
-msgstr "เกิดข้อผิดพลาดขณะอ่านจากออฟเซต %"
+#. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
+#: ../src/disks/gducreatediskimagedialog.c:406
+#: ../src/disks/gdurestorediskimagedialog.c:398
+msgid "Disk image copying complete"
+msgstr "คัดลอกอิมเมจของดิสก์เสร็จสมบูรณ์"
 
-#: ../src/disks/gducreatediskimagedialog.c:404
-#: ../src/disks/gdurestorediskimagedialog.c:600
-msgid "Error determining size of device"
-msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของอุปกรณ์"
+#: ../src/disks/gducreatediskimagedialog.c:435
+msgid "Error creating disk image"
+msgstr "เกิดข้อผิดพลาดขณะสร้างอิมเมจของดิสก์"
 
-#: ../src/disks/gducreatediskimagedialog.c:442
-#: ../src/disks/gdurestorediskimagedialog.c:585
-msgid "Error opening device"
-msgstr "เกิดข้อผิดพลาดขณะเปิดอุปกรณ์"
+#. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
+#: ../src/disks/gducreatediskimagedialog.c:476
+#, fuzzy
+#| msgid "Number of errors while reading from a disk"
+msgid "Unrecoverable read errors while creating disk image"
+msgstr "จำนวนข้อผิดพลาดขณะอ่านจากดิสก์"
 
-#: ../src/disks/gducreatediskimagedialog.c:488
-#, c-format
-msgid "A file named \"%s\" already exists.  Do you want to replace it?"
-msgstr "มีแฟ้มชื่อ \"%s\" อยู่ก่อนแล้ว คุณต้องการเขียนทับหรือไม่?"
-
-#: ../src/disks/gducreatediskimagedialog.c:491
+#. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
+#. * The %f is the percentage of unreadable data (ex. 13.0).
+#. * The first %s is the amount of unreadable data (ex. "4.2 MB").
+#. * The second %s is the name of the device (ex "/dev/").
+#.
+#: ../src/disks/gducreatediskimagedialog.c:485
 #, c-format
 msgid ""
-"The file already exists in \"%s\".  Replacing it will overwrite its contents."
-msgstr "มีแฟ้มดังกล่าวอยู่แล้วใน \"%s\" ถ้าเขียนทับก็จะทับเนื้อหาแฟ้มทั้งหมด"
+"%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
+"zeroes in the created disk image file. This typically happens if the medium "
+"is scratched or if there is physical damage to the drive"
+msgstr ""
 
-#: ../src/disks/gducreatediskimagedialog.c:495
+#. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
+#: ../src/disks/gducreatediskimagedialog.c:491
+msgid "_Delete Disk Image File"
+msgstr "_ลบแฟ้มอิมเมจของดิสก์"
+
+#: ../src/disks/gducreatediskimagedialog.c:719
+#: ../src/disks/gdurestorediskimagedialog.c:532
+msgid "Error determining size of device: "
+msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของอุปกรณ์: "
+
+#: ../src/disks/gducreatediskimagedialog.c:726
+#: ../src/disks/gdurestorediskimagedialog.c:539
+#, c-format
+msgid "Device is size 0"
+msgstr ""
+
+#: ../src/disks/gducreatediskimagedialog.c:756
+msgid "Error allocating space for disk image file: "
+msgstr "เกิดข้อผิดพลาดขณะจองพื้นที่สำหรับแฟ้มอิมเมจของดิสก์: "
+
+#: ../src/disks/gducreatediskimagedialog.c:910
+#, c-format
+msgid "A file named “%s” already exists.  Do you want to replace it?"
+msgstr "มีแฟ้มชื่อ “%s” อยู่ก่อนแล้ว คุณต้องการเขียนทับหรือไม่?"
+
+#: ../src/disks/gducreatediskimagedialog.c:913
+#, c-format
+msgid ""
+"The file already exists in “%s”.  Replacing it will overwrite its contents."
+msgstr "มีแฟ้มดังกล่าวอยู่แล้วใน “%s” ถ้าเขียนทับก็จะทับเนื้อหาแฟ้มทั้งหมด"
+
+#: ../src/disks/gducreatediskimagedialog.c:916
 msgid "_Replace"
 msgstr "เขียน_ทับ"
 
-#: ../src/disks/gducreatediskimagedialog.c:538
+#: ../src/disks/gducreatediskimagedialog.c:970
 msgid "Error opening file for writing"
 msgstr "เกิดข้อผิดพลาดขณะเปิดแฟ้มสำหรับเขียน"
 
-#: ../src/disks/gducreatediskimagedialog.c:589
-msgid "Copying data from device..."
-msgstr "กำลังคัดลอกข้อมูลจากอุปกรณ์..."
+#. Translators: Reason why suspend/logout is being inhibited
+#: ../src/disks/gducreatediskimagedialog.c:986
+msgctxt "create-inhibit-message"
+msgid "Copying device to disk image"
+msgstr "กำลังคัดลอกข้อมูลอุปกรณ์ลงในอิมเมจของดิสก์"
 
-#. Translators: This is the window title for the non-modal "Create Disk Image" dialog. The %s is the device.
-#: ../src/disks/gducreatediskimagedialog.c:637
-#, c-format
-msgid "Create Disk Image (%s)"
-msgstr "สร้างอิมเมจของดิสก์ (%s)"
+#. Translators: this is the description of the job
+#: ../src/disks/gducreatediskimagedialog.c:992
+msgid "Creating Disk Image"
+msgstr "สร้างอิมเมจของดิสก์"
 
 #: ../src/disks/gducreatefilesystemwidget.c:379
 #: ../src/disks/gduformatdiskdialog.c:254
@@ -2121,55 +2459,81 @@ msgstr "กำหนดเอง"
 msgid "Enter filesystem type"
 msgstr "ป้อนชนิดของระบบแฟ้ม"
 
-#. Translators: this is the default name for the filesystem
-#: ../src/disks/gducreatefilesystemwidget.c:450
-msgid "New Volume"
-msgstr "โวลุมใหม่"
-
-#: ../src/disks/gducreatefilesystemwidget.c:489
+#: ../src/disks/gducreatefilesystemwidget.c:486
+#: ../src/disks/gduerasemultipledisksdialog.c:131
 #: ../src/disks/gduformatdiskdialog.c:151
-msgid "Don't overwrite existing data"
+msgid "Don’t overwrite existing data"
 msgstr "ไม่ต้องเขียนทับข้อมูลเดิม"
 
-#: ../src/disks/gducreatefilesystemwidget.c:490
+#: ../src/disks/gducreatefilesystemwidget.c:487
+#: ../src/disks/gduerasemultipledisksdialog.c:132
 #: ../src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "เร็ว"
 
-#: ../src/disks/gducreatefilesystemwidget.c:497
+#: ../src/disks/gducreatefilesystemwidget.c:494
+#: ../src/disks/gduerasemultipledisksdialog.c:142
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "เขียนทับข้อมูลที่มีอยู่ด้วยค่าศูนย์"
 
-#: ../src/disks/gducreatefilesystemwidget.c:498
+#: ../src/disks/gducreatefilesystemwidget.c:495
+#: ../src/disks/gduerasemultipledisksdialog.c:143
 #: ../src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "ช้า"
 
-#: ../src/disks/gducreatepartitiondialog.c:201
+#: ../src/disks/gducreatepartitiondialog.c:337
 msgid "Error formatting partition"
 msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตพาร์ทิชัน"
 
-#: ../src/disks/gducreatepartitiondialog.c:229
+#: ../src/disks/gducreatepartitiondialog.c:365
 msgid "Error creating partition"
 msgstr "เกิดข้อผิดพลาดขณะสร้างพาร์ทิชัน"
 
-#: ../src/disks/gducreatepartitiondialog.c:317
+#: ../src/disks/gducreatepartitiondialog.c:455
 msgid "Extended partition"
 msgstr "พาร์ทิชันขยาย"
 
-#: ../src/disks/gducreatepartitiondialog.c:318
+#: ../src/disks/gducreatepartitiondialog.c:456
 msgid "For logical partitions"
 msgstr "สำหรับพาร์ทิชันลอจิคัล"
 
-#: ../src/disks/gducreatepartitiondialog.c:331
+#: ../src/disks/gducreatepartitiondialog.c:469
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr "ไม่สามารถสร้างพาร์ทิชันใหม่ได้ มีพาร์ทิชันไพรมารีครบ 4 พาร์ทิชันแล้ว"
 
-#: ../src/disks/gducreatepartitiondialog.c:335
+#: ../src/disks/gducreatepartitiondialog.c:473
 msgid "This is the last primary partition that can be created."
 msgstr "นี่เป็นพาร์ทิชันไพรมารีสุดท้ายที่จะสามารถสร้างได้"
+
+#: ../src/disks/gducreateraidarraydialog.c:296
+#, c-format
+msgid "%d disk"
+msgid_plural "%d disks"
+msgstr[0] "ดิสก์ %d ดิสก์"
+
+#. Translators: Shown in "Create RAID Array" dialog.
+#. *              The first %s is the number of disks e.g. '3 disks'.
+#. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
+#.
+#: ../src/disks/gducreateraidarraydialog.c:305
+#, c-format
+msgid "%s of %s each"
+msgstr "%s ดิสก์ละ %s"
+
+#: ../src/disks/gducreateraidarraydialog.c:417
+msgid "Error creating RAID array"
+msgstr "เกิดข้อผิดพลาดขณะสร้างแอร์เรย์ RAID"
+
+#: ../src/disks/gducreateraidarraydialog.c:573
+msgid "Are you sure you want to use the disks for a RAID array?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการใช้ดิสก์เหล่านี้สร้างแอร์เรย์ RAID?"
+
+#: ../src/disks/gducreateraidarraydialog.c:574
+msgid "Existing content on the devices will be erased"
+msgstr "เนื้อหาที่มีอยู่ในอุปกรณ์จะถูกลบ"
 
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -2198,123 +2562,195 @@ msgstr "เกิดข้อผิดพลาดขณะปรับข้อ
 #: ../src/disks/gducrypttabdialog.c:493
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
-"changed. To change the on-disk passphrase, use <i>Change Passphrase...</i>"
+"changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
 msgstr ""
 "จะเปลี่ยนเฉพาะวลีรหัสผ่านที่อ้างถึงจากแฟ้ม <i>/etc/crypttab</i> เท่านั้น "
-"หากต้องการเปลี่ยนวลีรหัสผ่านบนดิสก์ ใช้ <i>เปลี่ยนวลีรหัสผ่าน...</i>"
+"หากต้องการเปลี่ยนวลีรหัสผ่านบนดิสก์ ใช้ <i>เปลี่ยนวลีรหัสผ่าน…</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:533
+#: ../src/disks/gdudevicetreemodel.c:560
 msgid "Disk Drives"
 msgstr "ดิสก์ไดรว์"
 
-#: ../src/disks/gdudevicetreemodel.c:942
+#: ../src/disks/gdudevicetreemodel.c:633
+msgid "RAID Arrays"
+msgstr "แอร์เรย์ RAID"
+
+#. Translators: Used in the device tree for a RAID Array, the first %s is the size
+#: ../src/disks/gdudevicetreemodel.c:1098
+#, c-format
+msgctxt "md-raid-tree-primary"
+msgid "%s RAID Array"
+msgstr "แอร์เรย์ RAID %s"
+
+#. Translators: Used in the device tree for a RAID Array where the size is not known
+#: ../src/disks/gdudevicetreemodel.c:1104
+msgctxt "md-raid-tree-primary"
+msgid "RAID Array"
+msgstr "แอร์เรย์ RAID"
+
+#. Translators: Used as a secondary line in device tree for RAID Array.
+#. *              The first %s is the name of the array (e.g. "My RAID Array").
+#. *              The second %s is the RAID level (e.g. "RAID-5").
+#.
+#: ../src/disks/gdudevicetreemodel.c:1115
+#, c-format
+msgctxt "md-raid-tree-secondary"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#: ../src/disks/gdudevicetreemodel.c:1268
 msgid "Other Devices"
 msgstr "อุปกรณ์อื่น"
 
-#. Translators: This is for a /dev/loop device - %s is the size of the device e.g. "230 MB".
-#: ../src/disks/gdudevicetreemodel.c:1047
-#, c-format
-msgid "%s Loop Device"
-msgstr "อุปกรณ์วนกลับ %s"
-
-#. Translators: This is for a block device which we failed to categorize  - %s is
-#. * the size of the device e.g. "230 MB".
-#.
-#: ../src/disks/gdudevicetreemodel.c:1068
-#, c-format
-msgid "%s Block Device"
-msgstr "อุปกรณ์บล็อค %s"
-
-#: ../src/disks/gdudisksettingsdialog.c:264
+#: ../src/disks/gdudisksettingsdialog.c:288
 msgctxt "standby-value"
 msgid "Never"
 msgstr "ไม่ทำ"
 
-#: ../src/disks/gdudisksettingsdialog.c:283
+#: ../src/disks/gdudisksettingsdialog.c:307
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "ผู้จำหน่ายกำหนด"
 
-#: ../src/disks/gdudisksettingsdialog.c:287
+#: ../src/disks/gdudisksettingsdialog.c:311
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "สงวน"
 
-#: ../src/disks/gdudisksettingsdialog.c:308
+#: ../src/disks/gdudisksettingsdialog.c:332
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (ปิดใช้งาน)"
 
-#: ../src/disks/gdudisksettingsdialog.c:312
+#: ../src/disks/gdudisksettingsdialog.c:336
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr "%d (ชะลอดิสก์หมุนได้)"
 
-#: ../src/disks/gdudisksettingsdialog.c:316
+#: ../src/disks/gdudisksettingsdialog.c:340
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr "%d (ห้ามชะลอดิสก์หมุน)"
 
-#: ../src/disks/gdudisksettingsdialog.c:331
+#: ../src/disks/gdudisksettingsdialog.c:355
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (ปิดใช้งาน)"
 
-#: ../src/disks/gdudisksettingsdialog.c:360
+#: ../src/disks/gdudisksettingsdialog.c:384
 msgid "Error setting configuration"
 msgstr "เกิดข้อผิดพลาดขณะตั้งค่าตั้ง"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:390
+#: ../src/disks/gdudisksettingsdialog.c:414
 msgid "Never"
 msgstr "ไม่ทำ"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:392
+#: ../src/disks/gdudisksettingsdialog.c:416
 msgid "5 minutes"
 msgstr "5 นาที"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:394
+#: ../src/disks/gdudisksettingsdialog.c:418
 msgid "10 minutes"
 msgstr "10 นาที"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:396
+#: ../src/disks/gdudisksettingsdialog.c:420
 msgid "15 minutes"
 msgstr "15 นาที"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:398
+#: ../src/disks/gdudisksettingsdialog.c:422
 msgid "3 hours"
 msgstr "3 ชั่วโมง"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:402
+#: ../src/disks/gdudisksettingsdialog.c:426
 msgid "Save Power"
 msgstr "ประหยัดพลังงาน"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
-#: ../src/disks/gdudisksettingsdialog.c:404
+#: ../src/disks/gdudisksettingsdialog.c:428
 msgid "← Spindown"
 msgstr "← ชะลอดิสก์หมุน"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:406
+#: ../src/disks/gdudisksettingsdialog.c:430
 msgid "Perform Better"
 msgstr "เครื่องทำงานเร็วกว่า"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:410
+#: ../src/disks/gdudisksettingsdialog.c:434
 msgid "Quiet (Slow)"
 msgstr "เงียบ (ช้า)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: ../src/disks/gdudisksettingsdialog.c:412
+#: ../src/disks/gdudisksettingsdialog.c:436
 msgid "Loud (Fast)"
 msgstr "ดัง (เร็ว)"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:154
+msgid "ATA Secure Erase / Enhanced Secure Erase"
+msgstr "การลบแบบปลอดภัย / การลบแบบปลอดภัยพิเศษของ ATA"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:155
+msgid "If Available, Slow"
+msgstr "ถ้ามี, ช้า"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:186
+#, c-format
+msgid "Error erasing device %s"
+msgstr "เกิดข้อผิดพลาดขณะลบอุปกรณ์ %s"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:367
+msgid "Are you sure you want to erase the disks?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบดิสก์เหล่านี้?"
+
+#. Translators: warning used for erasure of multiple disks
+#: ../src/disks/gduerasemultipledisksdialog.c:371
+msgid ""
+"All data on the selected disks will be lost but may still be recoverable by "
+"data recovery services"
+msgstr "ข้อมูลทั้งหมดในดิสก์ที่เลือกจะสูญหาย แต่อาจยังกู้คืนได้โดยบริการกู้ข้อมูล"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:373
+#: ../src/disks/gduformatdiskdialog.c:424
+#: ../src/disks/gduformatvolumedialog.c:212
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>คำแนะนำ</b>: ถ้าคุณคิดจะขายหรือมอบคอมพิวเตอร์หรือดิสก์ของคุณให้กับผู้อื่น "
+"คุณควรจะฟอร์แมตด้วยวิธีที่ลบข้อมูลหมดจดกว่านี้ "
+"เพื่อป้องกันไม่ให้ข้อมูลส่วนตัวของคุณตกไปอยู่ในมือของผู้ไม่หวังดี"
+
+#. Translators: warning used when overwriting data on multiple disks
+#: ../src/disks/gduerasemultipledisksdialog.c:378
+msgid ""
+"All data on the selected disks will be overwritten and will likely not be "
+"recoverable by data recovery services"
+msgstr "ข้อมูลทั้งหมดในดิสก์ที่เลือกจะถูกเขียนทับ และอาจจะไม่สามารถกู้คืนได้โดยบริการกู้ข้อมูล"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:384
+#: ../src/disks/gduformatdiskdialog.c:437
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can’t be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>คำเตือน</b>: คำสั่งลบแบบปลอดภัย (Secure Erase) อาจใช้เวลาทำงานนานมาก "
+"โดยไม่สามารถยกเลิกได้ และอาจไม่ทำงานอย่างถูกต้องกับฮาร์ดแวร์บางรุ่น ในกรณีที่เลวร้ายที่สุด "
+"ไดรว์ของคุณอาจใช้การไม่ได้ไปเลย หรือระบบของคุณอาจพังหรือค้าง ก่อนจะดำเนินการต่อไป "
+"กรุณาอ่านบทความเกี่ยวกับ <a href='https://ata.wiki.kernel.org/index.php/"
+"ATA_Secure_Erase'>ATA Secure Erase</a> เพื่อให้แน่ใจว่าคุณเข้าใจความเสี่ยงเหล่านี้"
 
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
@@ -2370,124 +2806,226 @@ msgstr "ว่างเปล่า"
 msgid "Error formatting disk"
 msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตดิสก์"
 
-#: ../src/disks/gduformatdiskdialog.c:385
+#: ../src/disks/gduformatdiskdialog.c:418
 msgid "Are you sure you want to format the disk?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการฟอร์แมตดิสก์นี้?"
 
 #. Translators: warning used for quick format
-#: ../src/disks/gduformatdiskdialog.c:389
+#: ../src/disks/gduformatdiskdialog.c:422
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
-msgstr "ข้อมูลทั้งหมดในดิสก์จะสูญหาย แต่สามารถกู้ได้โดยบริการกู้ข้อมูล"
-
-#: ../src/disks/gduformatdiskdialog.c:391
-#: ../src/disks/gduformatvolumedialog.c:153
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
-"<b>คำแนะนำ</b>: ถ้าคุณคิดจะขายหรือมอบคอมพิวเตอร์หรือดิสก์ของคุณให้กับผู้อื่น "
-"คุณควรจะฟอร์แมตด้วยวิธีที่ลบข้อมูลหมดจดกว่านี้ "
-"เพื่อป้องกันไม่ให้ข้อมูลส่วนตัวของคุณตกไปอยู่ในมือของผู้ไม่หวังดี"
+msgstr "ข้อมูลทั้งหมดในดิสก์จะสูญหาย แต่อาจยังกู้คืนได้โดยบริการกู้ข้อมูล"
 
 #. Translators: warning used when overwriting data
-#: ../src/disks/gduformatdiskdialog.c:396
+#: ../src/disks/gduformatdiskdialog.c:429
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
-msgstr "ข้อมูลทั้งหมดในดิสก์จะถูกเขียนทับ และอาจจะไม่สามารถกู้คืนได้ด้วยบริการกู้ข้อมูล"
+msgstr "ข้อมูลทั้งหมดในดิสก์จะถูกเขียนทับ และอาจจะไม่สามารถกู้คืนได้โดยบริการกู้ข้อมูล"
 
-#: ../src/disks/gduformatdiskdialog.c:404
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can't be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-"<b>คำเตือน</b>: คำสั่งลบแบบปลอดภัย (Secure Erase) อาจใช้เวลาทำงานนานมาก "
-"โดยไม่สามารถยกเลิกได้ และอาจไม่ทำงานอย่างถูกต้องกับฮาร์ดแวร์บางรุ่น ในกรณีที่เลวร้ายที่สุด "
-"ไดรว์ของคุณอาจใช้การไม่ได้ไปเลย หรือระบบของคุณอาจพังหรือค้าง ก่อนจะดำเนินการต่อไป "
-"กรุณาอ่านบทความเกี่ยวกับ <a href='https://ata.wiki.kernel.org/index.php/"
-"ATA_Secure_Erase'>ATA Secure Erase</a> เพื่อให้แน่ใจว่าคุณเข้าใจความเสี่ยงเหล่านี้"
-
-#: ../src/disks/gduformatdiskdialog.c:411
-#: ../src/disks/gduformatvolumedialog.c:164
+#: ../src/disks/gduformatdiskdialog.c:445
+#: ../src/disks/gduformatvolumedialog.c:224
 msgid "_Format"
 msgstr "_ฟอร์แมต"
 
-#: ../src/disks/gduformatvolumedialog.c:86
+#: ../src/disks/gduformatvolumedialog.c:87
 msgid "Error formatting volume"
 msgstr "เกิดข้อผิดพลาดขณะฟอร์แมตโวลุม"
 
-#: ../src/disks/gduformatvolumedialog.c:147
+#: ../src/disks/gduformatvolumedialog.c:206
 msgid "Are you sure you want to format the volume?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการฟอร์แมตโวลุมนี้?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:151
+#: ../src/disks/gduformatvolumedialog.c:210
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
-msgstr "ข้อมูลทั้งหมดบนโวลุมจะสูญหาย แต่สามารถกู้ได้โดยบริการกู้ข้อมูล"
+msgstr "ข้อมูลทั้งหมดบนโวลุมจะสูญหาย แต่อาจยังกู้คืนได้โดยบริการกู้ข้อมูล"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:158
+#: ../src/disks/gduformatvolumedialog.c:217
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
-msgstr "ข้อมูลทั้งหมดในโวลุมจะถูกเขียนทับ และอาจจะไม่สามารถกู้คืนได้ด้วยบริการกู้ข้อมูล"
+msgstr "ข้อมูลทั้งหมดในโวลุมจะถูกเขียนทับ และอาจจะไม่สามารถกู้คืนได้โดยบริการกู้ข้อมูล"
 
-#: ../src/disks/gdufstabdialog.c:152
+#: ../src/disks/gdufstabdialog.c:154
 #, c-format
 msgid "Matches partition %d of the device with the given vital product data"
 msgstr "ตรงกับพาร์ทิชัน %d ของอุปกรณ์ที่มีข้อมูลผลิตภัณฑ์ที่สำคัญตามที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:155
+#: ../src/disks/gdufstabdialog.c:157
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "ตรงกับดิสก์ทั้งลูกของอุปกรณ์ที่มีข้อมูลผลิตภัณฑ์ที่สำคัญตามที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:160
+#: ../src/disks/gdufstabdialog.c:162
 #, c-format
 msgid ""
 "Matches partition %d of any device connected at the given port or address"
 msgstr "ตรงกับพาร์ทิชัน %d ของอุปกรณ์ที่เชื่อมต่อที่พอร์ตหรือแอดเดรสที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:163
+#: ../src/disks/gdufstabdialog.c:165
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr "ตรงกับดิสก์ทั้งลูกของอุปกรณ์ที่เชื่อมต่อที่พอร์ตหรือแอดเดรสที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:167
+#: ../src/disks/gdufstabdialog.c:169
 msgid "Matches any device with the given label"
 msgstr "ตรงกับอุปกรณ์ที่มีป้ายชื่อตามที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:171
+#: ../src/disks/gdufstabdialog.c:173
 msgid "Matches the device with the given UUID"
 msgstr "ตรงกับอุปกรณ์ที่มี UUID ตามที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:175
+#: ../src/disks/gdufstabdialog.c:177
 msgid "Matches the given device"
 msgstr "ตรงกับอุปกรณ์ที่กำหนด"
 
-#: ../src/disks/gdufstabdialog.c:459
+#: ../src/disks/gdufstabdialog.c:462
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr "ระบบอาจจะทำงานไม่ถูกต้อง ถ้าข้อมูลนี้ถูกแก้ไขหรือลบ"
 
-#: ../src/disks/gdufstabdialog.c:518
+#: ../src/disks/gdufstabdialog.c:523
 msgid "Error removing old /etc/fstab entry"
 msgstr "เกิดข้อผิดพลาดขณะลบรายการ /etc/fstab เก่า"
 
-#: ../src/disks/gdufstabdialog.c:574
+#: ../src/disks/gdufstabdialog.c:579
 msgid "Error adding new /etc/fstab entry"
 msgstr "เกิดข้อผิดพลาดขณะเพิ่มราย /etc/fstab ใหม่"
 
-#: ../src/disks/gdufstabdialog.c:598
+#: ../src/disks/gdufstabdialog.c:603
 msgid "Error updating /etc/fstab entry"
 msgstr "เกิดข้อผิดพลาดขณะปรับข้อมูลรายการใน /etc/fstab"
+
+#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2022
+#, c-format
+msgid "%s <span size=\"smaller\">(Read-Only)</span>"
+msgstr "%s <span size=\"smaller\">(อ่านเท่านั้น)</span>"
+
+#: ../src/disks/gdumdraiddisksdialog.c:334
+msgid "An error occurred when removing a disk from the RAID Array"
+msgstr "เกิดข้อผิดพลาดขณะตัดดิสก์ออกจากแอร์เรย์ RAID"
+
+#: ../src/disks/gdumdraiddisksdialog.c:372
+msgctxt "mdraid-disks"
+msgid "Are you sure you want to remove the disk?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการตัดดิสก์นี้ออก?"
+
+#: ../src/disks/gdumdraiddisksdialog.c:373
+msgctxt "mdraid-disks"
+msgid "Removing a disk from a RAID array may degrade it"
+msgstr "การตัดดิสก์ออกจากแอร์เรย์ RAID อาจทำให้ประสิทธิภาพลดลง"
+
+#: ../src/disks/gdumdraiddisksdialog.c:374
+msgctxt "mdraid-disks"
+msgid "_Remove"
+msgstr "_ตัดออก"
+
+#: ../src/disks/gdumdraiddisksdialog.c:615
+msgctxt "mdraid-disks-state"
+msgid "FAILED"
+msgstr "ล้มเหลว"
+
+#. Translators: MD-RAID member state for 'in_sync'
+#: ../src/disks/gdumdraiddisksdialog.c:622
+msgctxt "mdraid-disks-state"
+msgid "In Sync"
+msgstr "ทำงานเรียบร้อย"
+
+#. Translators: MD-RAID member state for 'spare'
+#: ../src/disks/gdumdraiddisksdialog.c:631
+msgctxt "mdraid-disks-state"
+msgid "Spare"
+msgstr "สำรอง"
+
+#. Translators: MD-RAID member state for 'spare' but is being recovered to
+#: ../src/disks/gdumdraiddisksdialog.c:638
+msgctxt "mdraid-disks-state"
+msgid "Recovering"
+msgstr "กำลังกู้คืน"
+
+#. Translators: MD-RAID member state for 'writemostly'
+#: ../src/disks/gdumdraiddisksdialog.c:646
+msgctxt "mdraid-disks-state"
+msgid "Write-mostly"
+msgstr "เขียนเกือบตลอด"
+
+#. Translators: MD-RAID member state for 'blocked'
+#: ../src/disks/gdumdraiddisksdialog.c:653
+msgctxt "mdraid-disks-state"
+msgid "Blocked"
+msgstr "ถูกปิดกั้น"
+
+#. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
+#: ../src/disks/gdumdraiddisksdialog.c:660
+#, c-format
+msgctxt "mdraid-disks-state"
+msgid "Unknown (%s)"
+msgstr "ไม่ทราบ (%s)"
+
+#. Translators: column name for the position of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:744
+msgctxt "mdraid-disks"
+msgid "Position"
+msgstr "ตำแหน่ง"
+
+#. Translators: column name for the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:760
+msgctxt "mdraid-disks"
+msgid "Disk"
+msgstr "ดิสก์"
+
+#. Translators: column name for the state of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:790
+msgctxt "mdraid-disks"
+msgid "State"
+msgstr "สถานะ"
+
+#. Translators: column name for the number of read errors of the disk in the RAID array
+#: ../src/disks/gdumdraiddisksdialog.c:806
+msgctxt "mdraid-disks"
+msgid "Errors"
+msgstr "ข้อผิดพลาด"
+
+#: ../src/disks/gdumdraiddisksdialog.c:948
+msgid "An error occurred when adding a disk to the RAID Array"
+msgstr "เกิดข้อผิดพลาดขณะเพิ่มดิสก์เข้าในแอร์เรย์ RAID"
+
+#: ../src/disks/gdumdraiddisksdialog.c:970
+msgctxt "mdraid-disks"
+msgid "Are you sure you want to add the disk to the array?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องเพิ่มดิสก์นี้เข้าในแอร์เรย์?"
+
+#: ../src/disks/gdumdraiddisksdialog.c:971
+msgctxt "mdraid-disks"
+msgid "All existing data on the disk will be lost"
+msgstr "ข้อมูลเดิมที่มีอยู่ทั้งหมดในดิสก์จะสูญหาย"
+
+#: ../src/disks/gdumdraiddisksdialog.c:972
+msgctxt "mdraid-disks"
+msgid "_Add"
+msgstr "เ_พิ่ม"
+
+#. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
+#. *              right size available
+#.
+#: ../src/disks/gdumdraiddisksdialog.c:1150
+#, fuzzy
+#| msgid "Whole disk is uninitialized. %s available for use"
+msgctxt "mdraid-add"
+msgid "No disks of suitable size available"
+msgstr "ดิสก์ทั้งดิสก์ยังไม่ initialize มีที่ว่าง %s ที่ใช้งานได้"
+
+#. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
+#. *              disks that can be added to the array
+#.
+#: ../src/disks/gdumdraiddisksdialog.c:1161
+msgctxt "mdraid-add"
+msgid "Select disk to add"
+msgstr "เลือกดิสก์ที่จะเพิ่ม"
 
 #: ../src/disks/gdupartitiondialog.c:355
 msgid "Error setting partition type"
@@ -2521,53 +3059,54 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "แน่นหนา"
 
-#: ../src/disks/gdurestorediskimagedialog.c:126
-msgid "Error rescanning device"
-msgstr "เกิดข้อผิดพลาดขณะสแกนอุปกรณ์ซ้ำ"
-
-#: ../src/disks/gdurestorediskimagedialog.c:185
+#: ../src/disks/gdurestorediskimagedialog.c:244
 msgid "Cannot restore image of size 0"
 msgstr "ไม่สามารถเขียนคืนอิมเมจขนาด 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:194
+#: ../src/disks/gdurestorediskimagedialog.c:253
 #, c-format
-msgid "The selected image is %s smaller than the device"
-msgstr "อิมเมจที่เลือกมีขนาดเล็กกว่าอุปกรณ์อยู่ %s"
+msgid "The disk image is %s smaller than the target device"
+msgstr "อิมเมจของดิสก์มีขนาดเล็กกว่าอุปกรณ์ปลายทางอยู่ %s"
 
-#: ../src/disks/gdurestorediskimagedialog.c:203
+#: ../src/disks/gdurestorediskimagedialog.c:262
 #, c-format
-msgid "The selected image is %s bigger than the device"
-msgstr "อิมเมจที่เลือกมีขนาดใหญ่กว่าอุปกรณ์อยู่ %s"
+msgid "The disk image is %s bigger than the target device"
+msgstr "อิมเมจของดิสก์มีขนาดใหญ่กว่าอุปกรณ์ปลายทางอยู่ %s"
 
-#: ../src/disks/gdurestorediskimagedialog.c:292
-msgid "Error writing to device"
-msgstr "เกิดข้อผิดพลาดขณะเขียนลงในอุปกรณ์"
+#: ../src/disks/gdurestorediskimagedialog.c:435
+msgid "Error restoring disk image"
+msgstr "เกิดข้อผิดพลาดขณะเขียนคืนอิมเมจของดิสก์"
 
-#: ../src/disks/gdurestorediskimagedialog.c:443
+#: ../src/disks/gdurestorediskimagedialog.c:722
 msgid "Error opening file for reading"
 msgstr "เกิดข้อผิดพลาดขณะเปิดแฟ้มสำหรับอ่าน"
 
-#: ../src/disks/gdurestorediskimagedialog.c:457
+#: ../src/disks/gdurestorediskimagedialog.c:736
 msgid "Error determing size of file"
 msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของแฟ้ม"
 
-#: ../src/disks/gdurestorediskimagedialog.c:487
+#. Translators: Reason why suspend/logout is being inhibited
+#: ../src/disks/gdurestorediskimagedialog.c:749
+msgctxt "restore-inhibit-message"
+msgid "Copying disk image to device"
+msgstr "กำลังคัดลอกอิมเมจของดิสก์ไปยังอุปกรณ์"
+
+#. Translators: this is the description of the job
+#: ../src/disks/gdurestorediskimagedialog.c:755
+msgid "Restoring Disk Image"
+msgstr "เขียนคืนอิมเมจของดิสก์"
+
+#: ../src/disks/gdurestorediskimagedialog.c:807
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการเขียนอิมเมจของดิสก์ลงในอุปกรณ์?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:488
+#: ../src/disks/gdurestorediskimagedialog.c:808
 msgid "All existing data will be lost"
 msgstr "ข้อมูลเดิมที่มีอยู่ทั้งหมดจะสูญหาย"
 
-#: ../src/disks/gdurestorediskimagedialog.c:489
+#: ../src/disks/gdurestorediskimagedialog.c:809
 msgid "_Restore"
 msgstr "เขียน_คืน"
-
-#. Translators: This is the window title for the non-modal "Restore Disk Image" dialog. The %s is the device.
-#: ../src/disks/gdurestorediskimagedialog.c:551
-#, c-format
-msgid "Restore Disk Image (%s)"
-msgstr "เขียนอิมเมจของดิสก์คืน (%s)"
 
 #: ../src/disks/gduunlockdialog.c:86
 msgid "Error unlocking encrypted device"
@@ -2577,10 +3116,14 @@ msgstr "เกิดข้อผิดพลาดขณะปลดล็อค
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "วลีรหัสผ่านสำหรับเข้ารหัสลับดึงมาจากพวงกุญแจ"
 
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2773
+msgid "No Media"
+msgstr "ไม่มีสื่อ"
+
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1525
+#: ../src/disks/gduvolumegrid.c:1556
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -2589,306 +3132,921 @@ msgstr "พาร์ทิชัน %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1532
+#: ../src/disks/gduvolumegrid.c:1563
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "พาร์ทิชัน %d"
 
-#: ../src/disks/gduvolumegrid.c:1552
-msgid "No Media"
-msgstr "ไม่มีสื่อ"
-
-#: ../src/disks/gduvolumegrid.c:1569
+#: ../src/disks/gduvolumegrid.c:1600
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "ที่ว่าง"
 
-#: ../src/disks/gduvolumegrid.c:1611
+#: ../src/disks/gduvolumegrid.c:1643
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "พาร์ทิชันขยาย"
 
-#: ../src/disks/gduvolumegrid.c:1635
+#: ../src/disks/gduvolumegrid.c:1667
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "ระบบแฟ้ม"
 
-#: ../src/disks/gduvolumegrid.c:1653
+#: ../src/disks/gduvolumegrid.c:1689
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "สลับ"
 
-#: ../src/disks/gduwindow.c:612
+#. Translators: Shown in volume grid for Linux RAID members. Please
+#. *              keep this as short as possible.
+#. *              The first %s is the array name (e.g. 'MirrorOnTheWall').
+#. *              The second %s is the homehost (e.g. 'thinkpad').
+#.
+#: ../src/disks/gduvolumegrid.c:1718
+#, c-format
+msgctxt "volume-grid"
+msgid "%s [local to %s]"
+msgstr "%s [local สำหรับ %s]"
+
+#: ../src/disks/gduwindow.c:730
 msgid "Error deleting loop device"
 msgstr "เกิดข้อผิดพลาดขณะลบอุปกรณ์วนกลับ"
 
-#: ../src/disks/gduwindow.c:683 ../src/disks/gduwindow.c:754
+#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
 msgid "Error attaching disk image"
 msgstr "เกิดข้อผิดพลาดขณะแนบอิมเมจของดิสก์"
 
-#: ../src/disks/gduwindow.c:723
+#: ../src/disks/gduwindow.c:870
 msgid "Select Disk Image to Attach"
 msgstr "เลือกอิมเมจของดิสก์ที่จะแนบ"
 
-#: ../src/disks/gduwindow.c:727
+#: ../src/disks/gduwindow.c:874
 msgid "_Attach"
 msgstr "แ_นบ"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:732
+#: ../src/disks/gduwindow.c:879
 msgid "Set up _read-only loop device"
 msgstr "ตั้งค่าอุปกรณ์วนกลับแบบ_อ่านอย่างเดียว"
 
-#: ../src/disks/gduwindow.c:733
+#: ../src/disks/gduwindow.c:880
 msgid ""
-"If checked, the loop device will be read-only. This is useful if you don't "
+"If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr ""
 "ถ้าเลือก อุปกรณ์วนกลับจะอ่านได้อย่างเดียวเท่านั้น "
 "ซึ่งจะมีประโยชน์ถ้าคุณไม่ต้องการเปลี่ยนแปลงแฟ้มอิมเมจ"
 
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1699
-#, c-format
-msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr "%s <span size=\"smaller\">(อ่านเท่านั้น)</span>"
+#. Translators: This is the short-cut to open the disks/drive gear menu
+#: ../src/disks/gduwindow.c:1651
+msgctxt "accelerator"
+msgid "F10"
+msgstr "F10"
 
-#. Translators: Shown instead of e.g. "10 seconds remaining" when we've passed
-#. * the expected end time...
+#. Translators: This is the short-cut to format a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1731
-msgctxt "job-remaining-exceeded"
-msgid "Almost done..."
-msgstr "เกือบเสร็จแล้ว..."
+#: ../src/disks/gduwindow.c:1659
+msgctxt "accelerator"
+msgid "<Ctrl>F"
+msgstr "<Ctrl>F"
 
-#: ../src/disks/gduwindow.c:1736
+#. Translators: This is the short-cut to view SMART data for a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1667
+msgctxt "accelerator"
+msgid "<Ctrl>S"
+msgstr "<Ctrl>S"
+
+#. Translators: This is the short-cut to view RAID Disks for a RAID array.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1675
+msgctxt "accelerator"
+msgid "<Ctrl>R"
+msgstr "<Ctrl>R"
+
+#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1683
+msgctxt "accelerator"
+msgid "<Ctrl>E"
+msgstr "<Ctrl>E"
+
+#. Translators: This is the short-cut to open the volume gear menu.
+#. *              The Shift modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Ctrl>).
+#.
+#: ../src/disks/gduwindow.c:1691
+msgctxt "accelerator"
+msgid "<Shift>F10"
+msgstr "<Shift>F10"
+
+#. Translators: This is the short-cut to format a volume.
+#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+#. *              You can however change to other English modifiers.
+#.
+#: ../src/disks/gduwindow.c:1701
+msgctxt "accelerator"
+msgid "<Shift><Ctrl>F"
+msgstr "<Shift><Ctrl>F"
+
+#. Translators: Used for job progress.
+#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+#.
+#: ../src/disks/gduwindow.c:2060
+#, c-format
+msgctxt "job-remaining-with-rate"
+msgid "%s remaining (%s/sec)"
+msgstr "เหลืออีก %s (%s/วินาที)"
+
+#. Translators: Used for job progress.
+#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+#.
+#: ../src/disks/gduwindow.c:2068
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
 msgstr "เหลืออีก %s"
 
+#. Translators: Used to convey job progress where the amount of bytes to process is known.
+#. *              The first %s is the amount of bytes processed (ex. "650 MB").
+#. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
+#. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
+#.
+#: ../src/disks/gduwindow.c:2083
+#, c-format
+msgid "%s of %s – %s"
+msgstr "%s จาก %s – %s"
+
+#. Translators: Used in job progress bar.
+#. *              The %s is the job description (e.g. "Erasing Device").
+#. *              The %f is the completion percentage (between 0.0 and 100.0).
+#.
+#: ../src/disks/gduwindow.c:2170
+#, c-format
+msgid "%s: %2.1f%%"
+msgstr "%s: %2.1f%%"
+
+#: ../src/disks/gduwindow.c:2242 ../src/disks/gduwindow.c:3087
+#, fuzzy
+#| msgid "The device is busy"
+msgid "Block device is empty"
+msgstr "อุปกรณ์ไม่ว่าง"
+
+#. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
+#: ../src/disks/gduwindow.c:2265
+#, c-format
+msgctxt "partitioning"
+msgid "Unknown (%s)"
+msgstr "ไม่ทราบ (%s)"
+
+#: ../src/disks/gduwindow.c:2346
+msgid "RAID array is not running"
+msgstr "แอร์เรย์ RAID ไม่ได้ทำงานอยู่"
+
+#. Translators: Used in the main window for a RAID array, the first %s is the size
+#: ../src/disks/gduwindow.c:2367
+#, c-format
+msgctxt "md-raid-window"
+msgid "%s RAID Array"
+msgstr "แอร์เรย์ RAID ขนาด %s"
+
+#. Translators: Used in the main window for a RAID array where the size is not known
+#: ../src/disks/gduwindow.c:2373
+msgctxt "md-raid-window"
+msgid "RAID Array"
+msgstr "แอร์เรย์ RAID"
+
+#. Translators: shown as the device for a RAID array that is not currently running
+#: ../src/disks/gduwindow.c:2399
+msgctxt "mdraid"
+msgid "Not running"
+msgstr "ไม่ทำงาน"
+
+#. Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
+#. *              Search for "homehost" in the mdadm(8) documentation for more information.
+#. *              The first %s is the array name (e.g. "My Raid Disk").
+#. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
+#.
+#: ../src/disks/gduwindow.c:2466
+#, c-format
+msgctxt "mdraid"
+msgid "%s (local to %s)"
+msgstr "%s (local สำหรับ %s)"
+
+#: ../src/disks/gduwindow.c:2506
+#, c-format
+msgid "%d Disk"
+msgid_plural "%d Disks"
+msgstr[0] "ดิสก์ %d ดิสก์"
+
+#. Translators: Used to combine number of disks and the chunk size.
+#. *              The first %s is the number of disks e.g. "3 disks".
+#. *              The second %s is the chunk size e.g. "512 KiB".
+#.
+#: ../src/disks/gduwindow.c:2518
+#, c-format
+msgctxt "mdraid-disks-and-chunk-size"
+msgid "%s, %s Chunk"
+msgstr "%s, ก้อนข้อมูลก้อนละ %s"
+
+#. Translators: Shown in the "RAID Level" field.
+#. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
+#. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
+#.
+#: ../src/disks/gduwindow.c:2527
+#, c-format
+msgctxt "mdraid"
+msgid "%s, %s"
+msgstr "%s, %s"
+
+#: ../src/disks/gduwindow.c:2547
+#, c-format
+msgid "%d disk is missing"
+msgid_plural "%d disks are missing"
+msgstr[0] ""
+
+#: ../src/disks/gduwindow.c:2553
+msgctxt "mdraid"
+msgid "ARRAY IS DEGRADED"
+msgstr "* แอร์เรย์ถูกลดความสามารถ *"
+
+#. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
+#. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
+#.
+#: ../src/disks/gduwindow.c:2557
+#, c-format
+msgctxt "mdraid-degraded"
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#: ../src/disks/gduwindow.c:2568 ../src/disks/gduwindow.c:2584
+msgctxt "mdraid-state"
+msgid "Running"
+msgstr "กำลังทำงาน"
+
+#. Translators: Shown in the 'State' field for MD-RAID when not running
+#: ../src/disks/gduwindow.c:2573
+msgctxt "mdraid-state"
+msgid "Not running"
+msgstr "ไม่ทำงาน"
+
+#: ../src/disks/gduwindow.c:2593
+msgctxt "mdraid-state"
+msgid "Data Scrubbing"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:2598
+msgctxt "mdraid-state"
+msgid "Data Scrubbing and Repair"
+msgstr ""
+
+#: ../src/disks/gduwindow.c:2603
+msgctxt "mdraid-state"
+msgid "Resyncing"
+msgstr "กำลังปรับข้อมูลใหม่ให้ตรง"
+
+#: ../src/disks/gduwindow.c:2607
+msgctxt "mdraid-state"
+msgid "Recovering"
+msgstr "กำลังกู้คืน"
+
+#: ../src/disks/gduwindow.c:2611
+msgctxt "mdraid-state"
+msgid "Frozen"
+msgstr ""
+
+#. Translators: String for conveying the raid array is misconfigured
+#: ../src/disks/gduwindow.c:2627
+msgctxt "raid-split-brain"
+msgid "RAID ARRAY IS MISCONFIGURED"
+msgstr ""
+
+#. Translators: The specific type of misconfiguration, see
+#. * http://en.wikipedia.org/wiki/Split-brain_(computing)
+#. * for more details
+#.
+#: ../src/disks/gduwindow.c:2633
+msgctxt "raid-split-brain"
+msgid "Split-Brain"
+msgstr ""
+
+#. Translators: Combiner for the RAID split-brain strings.
+#. *              The first %s is "SYSTEM IS MISCONFIGURED".
+#. *              The second %s is "Split-Brain" as a hyperlink.
+#.
+#: ../src/disks/gduwindow.c:2639
+#, c-format
+msgctxt "raid-split-brain"
+msgid "%s (%s)"
+msgstr "%s (%s)"
+
+#. Translators: Shown in RAID progress bar.
+#. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
+#. *              The second is the percentage completed, e.g. '42.5%'
+#.
+#: ../src/disks/gduwindow.c:2669
+#, c-format
+msgctxt "raid-state-progress"
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#. Translators: Used for MD-RAID sync operation.
+#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
+#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
+#.
+#: ../src/disks/gduwindow.c:2696
+#, c-format
+msgctxt "mdraid-sync-op"
+msgid "%s remaining (%s/sec)"
+msgstr "เหลืออีก %s (%s/วินาที)"
+
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:1892
+#: ../src/disks/gduwindow.c:2876
 msgid "Connected to another seat"
 msgstr "เชื่อมต่อกับที่นั่งอื่น"
 
-#: ../src/disks/gduwindow.c:2193
+#: ../src/disks/gduwindow.c:3020
+msgid "Loop device is empty"
+msgstr "อุปกรณ์วนกลับว่างเปล่า"
+
+#. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
+#. *              space.
+#. *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
+#. *              The second %s is a short string with the space free (e.g. '43 GB').
+#. *              The %f is the percentage in use (e.g. 62.2).
+#.
+#: ../src/disks/gduwindow.c:3259
+#, c-format
+msgid "%s — %s free (%.1f%% full)"
+msgstr "%s — ว่าง %s (ใช้ไป %.1f%%)"
+
+#: ../src/disks/gduwindow.c:3289
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
-#: ../src/disks/gduwindow.c:2225
-msgid "Extended Partition"
-msgstr "พาร์ทิชันขยาย"
-
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2266
+#: ../src/disks/gduwindow.c:3317
+msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "รากของระบบแฟ้ม"
 
-#. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2274
+#. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
+#: ../src/disks/gduwindow.c:3325
 #, c-format
-msgid "Yes, mounted at %s"
-msgstr "ใช้อยู่ เมานท์ไว้ที่ %s"
+msgctxt "volume-content-fs"
+msgid "Mounted at %s"
+msgstr "เมานท์ไว้ที่ %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#. Translators: Shown if the swap device is not in use next to the "In Use" label
-#. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2280 ../src/disks/gduwindow.c:2316
-#: ../src/disks/gduwindow.c:2342
-msgid "No"
-msgstr "ไม่ได้ใช้"
+#: ../src/disks/gduwindow.c:3331
+msgctxt "volume-content-fs"
+msgid "Not Mounted"
+msgstr "ไม่ได้เมานท์"
 
-#. Translators: Shown if the swap device is in use next to the "In Use" label
-#. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/disks/gduwindow.c:2310 ../src/disks/gduwindow.c:2336
-msgid "Yes"
-msgstr "ใช้อยู่"
+#. Translators: Shown as in-use part of 'Contents' if the swap device is in use
+#: ../src/disks/gduwindow.c:3354
+msgctxt "volume-content-swap"
+msgid "Active"
+msgstr "ใช้งานอยู่"
 
-#. Translators: used to convey free space for partitions - the %s is the
-#. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
+#. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
+#: ../src/disks/gduwindow.c:3360
+msgctxt "volume-content-swap"
+msgid "Not Active"
+msgstr "ไม่ได้ใช้งาน"
+
+#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
+#: ../src/disks/gduwindow.c:3373
+msgctxt "volume-content-luks"
+msgid "Unlocked"
+msgstr "ปลดล็อคแล้ว"
+
+#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
+#: ../src/disks/gduwindow.c:3379
+msgctxt "volume-content-luks"
+msgid "Locked"
+msgstr "ล็อคอยู่"
+
+#: ../src/disks/gduwindow.c:3389
+msgctxt "volume-contents-msdos-ext"
+msgid "Extended Partition"
+msgstr "พาร์ทิชันขยาย"
+
+#. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
+#: ../src/disks/gduwindow.c:3399
+msgctxt "volume-contents-raid"
+msgid "Go To Array"
+msgstr "ไปยังแอร์เรย์"
+
+#. Translators: Shown in the 'Contents' field for a member of an RAID array.
+#. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
+#. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:2470
+#: ../src/disks/gduwindow.c:3404
 #, c-format
-msgid "Unallocated Space (%s)"
-msgstr "พื้นที่ว่าง (%s)"
+msgctxt "volume-contents-raid"
+msgid "%s — %s"
+msgstr "%s — %s"
 
-#. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/disks/gduwindow.c:2475
+#. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
+#. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
+#. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
+#.
+#: ../src/disks/gduwindow.c:3422
+#, c-format
+msgctxt "volume-contents-combiner"
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: used to convey free space for partitions
+#: ../src/disks/gduwindow.c:3522
 msgid "Unallocated Space"
 msgstr "พื้นที่ว่าง"
 
-#: ../src/disks/gduwindow.c:2764
+#: ../src/disks/gduwindow.c:3901
+#, fuzzy
+#| msgid "An error occurred when trying to put the drive into standby mode"
+msgid "An error occurred when requesting data redundancy check"
+msgstr "เกิดข้อผิดพลาดขณะพยายามเปลี่ยนโหมดของไดรว์เป็นโหมดพักคอย"
+
+#. Translators: Heading for data scrubbing dialog
+#: ../src/disks/gduwindow.c:3919
+msgctxt "mdraid-scrub-dialog"
+msgid "Data Scrubbing"
+msgstr ""
+
+#. Translators: Message for data scrubbing dialog
+#: ../src/disks/gduwindow.c:3921
+msgctxt "mdraid-scrub-dialog"
+msgid ""
+"As storage devices can develop bad blocks at any time it is valuable to "
+"regularly read all blocks on all disks in a RAID array so as to catch such "
+"bad blocks early.\n"
+"\n"
+"The RAID array will remain operational for the duration of the operation but "
+"performance will be impacted. For more information about data scrubbing, see "
+"the <a href='https://raid.wiki.kernel.org/index.php/"
+"RAID_Administration'>RAID Administration</a> article."
+msgstr ""
+
+#: ../src/disks/gduwindow.c:3926
+msgctxt "mdraid-scrub-dialog"
+msgid "_Start"
+msgstr "เ_ริ่ม"
+
+#: ../src/disks/gduwindow.c:3927
+msgctxt "mdraid-scrub-dialog"
+msgid "_Repair mismatched blocks, if possible"
+msgstr "_ซ่อมแซมบล็อคที่ไม่ตรงกันถ้าเป็นไปได้"
+
+#: ../src/disks/gduwindow.c:3974
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "เกิดข้อผิดพลาดขณะพยายามเปลี่ยนโหมดของไดรว์เป็นโหมดพักคอย"
 
-#: ../src/disks/gduwindow.c:2810
+#: ../src/disks/gduwindow.c:4020
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "เกิดข้อผิดพลาดขณะพยายามปลุกไดรว์จากโหมดพักคอย"
 
-#: ../src/disks/gduwindow.c:2885
+#: ../src/disks/gduwindow.c:4065
+msgid "Error powering off drive"
+msgstr "เกิดข้อผิดพลาดขณะปิดไดรว์"
+
+#. Translators: Heading for powering off a device with multiple drives
+#: ../src/disks/gduwindow.c:4117
+msgid "Are you sure you want to power off the drives?"
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการปิดไดรว์นี้?"
+
+#. Translators: Message for powering off a device with multiple drives
+#: ../src/disks/gduwindow.c:4119
+msgid ""
+"This operation will prepare the system for the following drives to be "
+"powered down and removed."
+msgstr "การดำเนินการนี้จะเตรียมพร้อมระบบเพื่อปิดและถอดไดรว์ต่อไปนี้ออก"
+
+#: ../src/disks/gduwindow.c:4123
+msgid "_Power Off"
+msgstr "ปิ_ดทำงาน"
+
+#: ../src/disks/gduwindow.c:4200
 msgid "Error mounting filesystem"
 msgstr "เกิดข้อผิดพลาดขณะเมานท์ระบบแฟ้ม"
 
-#: ../src/disks/gduwindow.c:2925
+#: ../src/disks/gduwindow.c:4240 ../src/libgdu/gduutils.c:1100
 msgid "Error unmounting filesystem"
 msgstr "เกิดข้อผิดพลาดขณะเลิกเมานท์ระบบแฟ้ม"
 
-#: ../src/disks/gduwindow.c:3006
+#: ../src/disks/gduwindow.c:4385
 msgid "Error deleting partition"
 msgstr "เกิดข้อผิดพลาดขณะลบพาร์ทิชัน"
 
-#: ../src/disks/gduwindow.c:3022
+#: ../src/disks/gduwindow.c:4423
 msgid "Are you sure you want to delete the partition?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบพาร์ทิชันนี้?"
 
-#: ../src/disks/gduwindow.c:3023
+#: ../src/disks/gduwindow.c:4424
 msgid "All data on the partition will be lost"
 msgstr "ข้อมูลทั้งหมดในพาร์ทิชันจะสูญหาย"
 
-#: ../src/disks/gduwindow.c:3024
+#: ../src/disks/gduwindow.c:4425
 msgid "_Delete"
 msgstr "_ลบ"
 
-#: ../src/disks/gduwindow.c:3055
+#: ../src/disks/gduwindow.c:4456
 msgid "Error ejecting media"
 msgstr "เกิดข้อผิดพลาดขณะเอาสื่อออก"
 
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:4513
+msgid "Error starting RAID array"
+msgstr "เกิดข้อผิดพลาดขณะเริ่มต้นแอร์เรย์ RAID"
+
+#: ../src/disks/gduwindow.c:4555
+msgid "Error stopping RAID array"
+msgstr "เกิดข้อผิดพลาดขณะหยุดแอร์เรย์ RAID"
+
+#: ../src/disks/gduwindow.c:4642
 msgid "Error locking encrypted device"
 msgstr "เกิดข้อผิดพลาดขณะล็อคอุปกรณ์ที่เข้ารหัสลับ"
 
-#: ../src/disks/gduwindow.c:3148
+#: ../src/disks/gduwindow.c:4707
 msgid "Error starting swap"
 msgstr "เกิดข้อผิดพลาดขณะเปิดทำงานพื้นที่สลับ"
 
-#: ../src/disks/gduwindow.c:3185
+#: ../src/disks/gduwindow.c:4744
 msgid "Error stopping swap"
 msgstr "เกิดข้อผิดพลาดขณะหยุดใช้พื้นที่สลับ"
 
-#: ../src/disks/gduwindow.c:3227
+#: ../src/disks/gduwindow.c:4783
+msgid "Error setting bitmap for the RAID array"
+msgstr "เกิดข้อผิดพลาดขณะตั้งค่าบิตแมปสำหรับแอร์เรย์ RAID"
+
+#: ../src/disks/gduwindow.c:4849
 msgid "Error setting autoclear flag"
 msgstr "เกิดข้อผิดพลาดขณะตั้งแฟล็กล้างอัตโนมัติ"
 
-#: ../src/disks/gduwindow.c:3280 ../src/disks/gduwindow.c:3335
+#: ../src/disks/gduwindow.c:4902 ../src/disks/gduwindow.c:4966
 msgid "Error canceling job"
 msgstr "เกิดข้อผิดพลาดขณะยกเลิกงาน"
 
-#: ../src/libgdu/gduutils.c:86
+#. Translators: Shown when no devices are selected but multiple selection is active.
+#.
+#: ../src/disks/gduwindow.c:5088
+msgctxt "multi-disk-menu"
+msgid "No _Devices Selected"
+msgstr "ไม่ได้เลือกอุป_กรณ์ใด"
+
+#: ../src/disks/gduwindow.c:5098
+#, c-format
+msgid "%d _Device Selected (%s)"
+msgid_plural "%d _Devices Selected (%s)"
+msgstr[0] "เลือกอุป_กรณ์ %d ชิ้น (%s)"
+
+#: ../src/libgdu/gduutils.c:91
 msgid "All Files"
 msgstr "ทุกแฟ้ม"
 
-#: ../src/libgdu/gduutils.c:90
+#: ../src/libgdu/gduutils.c:95
 msgid "Disk Images (*.img, *.iso)"
 msgstr "อิมเมจของดิสก์ (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:403
+#: ../src/libgdu/gduutils.c:408
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d ปี"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:410
+#: ../src/libgdu/gduutils.c:415
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d เดือน"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:417
+#: ../src/libgdu/gduutils.c:422
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d วัน"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:424
+#: ../src/libgdu/gduutils.c:429
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ชั่วโมง"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:431
+#: ../src/libgdu/gduutils.c:436
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d นาที"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:438
+#: ../src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d วินาที"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:445
+#: ../src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d มิลลิวินาที"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:509
+#: ../src/libgdu/gduutils.c:514
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s กับอีก %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:519
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:524
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:529
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:535
+#: ../src/libgdu/gduutils.c:540
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
-#: ../src/libgdu/gduutils.c:544
+#: ../src/libgdu/gduutils.c:549
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "ไม่ถึงหนึ่งนาที"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:554
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:555
+#: ../src/libgdu/gduutils.c:560
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
+
+#. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
+#: ../src/libgdu/gduutils.c:702
+msgctxt "confirmation-list-of-devices"
+msgid "Affected Devices"
+msgstr "อุปกรณ์ที่กระทบ"
+
+#: ../src/libgdu/gduutils.c:792
+msgid "RAID 0"
+msgstr "RAID 0"
+
+#: ../src/libgdu/gduutils.c:793
+msgid "Stripe"
+msgstr "ริ้ว"
+
+#: ../src/libgdu/gduutils.c:798
+msgid "RAID 1"
+msgstr "RAID 1"
+
+#: ../src/libgdu/gduutils.c:799
+msgid "Mirror"
+msgstr "สำเนา"
+
+#: ../src/libgdu/gduutils.c:804
+msgid "RAID 4"
+msgstr "RAID 4"
+
+#: ../src/libgdu/gduutils.c:805
+msgid "Dedicated Parity"
+msgstr "เก็บข้อมูลตรวจสอบเฉพาะที่"
+
+#: ../src/libgdu/gduutils.c:810
+msgid "RAID 5"
+msgstr "RAID 5"
+
+#: ../src/libgdu/gduutils.c:811
+msgid "Distributed Parity"
+msgstr "กระจายข้อมูลตรวจสอบ"
+
+#: ../src/libgdu/gduutils.c:816
+msgid "RAID 6"
+msgstr "RAID 6"
+
+#: ../src/libgdu/gduutils.c:817
+msgid "Double Distributed Parity"
+msgstr "กระจายข้อมูลตรวจสอบสองชุด"
+
+#: ../src/libgdu/gduutils.c:822
+msgid "RAID 10"
+msgstr "RAID 10"
+
+#: ../src/libgdu/gduutils.c:823
+msgid "Stripe of Mirrors"
+msgstr "ริ้วสำเนา"
+
+#: ../src/libgdu/gduutils.c:828
+#, c-format
+msgid "RAID (%s)"
+msgstr "RAID (%s)"
+
+#: ../src/libgdu/gduutils.c:1120
+msgid "Error locking device"
+msgstr "เกิดข้อผิดพลาดขณะล็อคอุปกรณ์"
+
+#. Translators: This is used as the title of the SMART failure notification
+#: ../src/notify/gdusdmonitor.c:403
+msgctxt "notify-smart"
+msgid "Hard Disk Problems Detected"
+msgstr "ตรวจพบปัญหาของฮาร์ดดิสก์"
+
+#. Translators: This is used as the text of the SMART failure notification
+#: ../src/notify/gdusdmonitor.c:405
+msgctxt "notify-smart"
+msgid "A hard disk is likely to fail soon."
+msgstr "ฮาร์ดดิสก์หนึ่งมีแนวโน้มจะล้มเหลวในไม่ช้า"
+
+#. Translators: Text for button in SMART failure notification
+#: ../src/notify/gdusdmonitor.c:409
+msgctxt "notify-smart"
+msgid "Examine"
+msgstr "ตรวจสอบ"
+
+#. Translators: This is used as the title of the MD-RAID degraded notification
+#: ../src/notify/gdusdmonitor.c:416
+msgctxt "notify-mdraid"
+msgid "RAID Problems Detected"
+msgstr "ตรวจพบปัญหาของ RAID"
+
+#. Translators: This is used as the text of the MD-RAID degraded notification
+#: ../src/notify/gdusdmonitor.c:418
+msgctxt "notify-mdraid"
+msgid "A RAID array is degraded."
+msgstr "ความสามารถของแอร์เรย์ RAID หนึ่งลดลง"
+
+#. Translators: Text for button in MD-RAID degraded notification
+#: ../src/notify/gdusdmonitor.c:422
+msgctxt "notify-mdraid"
+msgid "Examine"
+msgstr "ตรวจสอบ"
+
+#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:1
+msgid "Disks Problem Monitor"
+msgstr "เฝ้าสังเกตปัญหาของดิสก์"
+
+#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
+msgid "Warns about problems with disks and storage devices"
+msgstr "เตือนเกี่ยวกับปัญหาดิสก์และอุปกรณ์เก็บข้อมูล"
+
+#~ msgid "Attach Disk Image..."
+#~ msgstr "แนบอิมเมจของดิสก์..."
+
+#~ msgid "Eject media"
+#~ msgstr "เอาสื่อออก"
+
+#~ msgid "Pending Operation"
+#~ msgstr "การกระทำที่ค้างอยู่"
+
+#~ msgid "In Use"
+#~ msgstr "ใช้งานอยู่"
+
+#~ msgid "Format Disk..."
+#~ msgstr "ฟอร์แมตดิสก์..."
+
+#~ msgid "Benchmark Drive..."
+#~ msgstr "วัดสมรรถนะไดรว์..."
+
+#~ msgid "Drive Settings..."
+#~ msgstr "ตั้งค่าไดรว์..."
+
+#~ msgid "Format..."
+#~ msgstr "ฟอร์แมต..."
+
+#~ msgid "Edit Partition Type..."
+#~ msgstr "แก้ไขชนิดพาร์ทิชัน..."
+
+#~ msgid "Change Passphrase..."
+#~ msgstr "เปลี่ยนวลีรหัสผ่าน..."
+
+#~ msgid "Benchmark Volume..."
+#~ msgstr "วัดสมรรถนะโวลุม..."
+
+#~ msgid "_Format..."
+#~ msgstr "_ฟอร์แมต..."
+
+#~ msgid "SMART Data"
+#~ msgstr "ข้อมูล SMART"
+
+#~ msgid ""
+#~ "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
+#~ msgstr ""
+#~ "%s <span size=\"small\">(ปรับฐานแล้ว: %d, ขีดเริ่ม: %d, แย่ที่สุด: %d)</span>"
+
+#~ msgid ""
+#~ "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
+#~ "(Pre-Fail)</span>"
+#~ msgstr ""
+#~ "ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์จะเสียภายใน 24 ชั่วโมง <span size=\"small\">(Pre-"
+#~ "Fail)</span>"
+
+#~ msgid ""
+#~ "Failure is a sign the disk exceeded its intended design life period <span "
+#~ "size=\"small\">(Old-Age)</span>"
+#~ msgstr ""
+#~ "ความล้มเหลวเป็นสิ่งบอกเหตุว่าดิสก์ใช้งานเกินช่วงอายุที่ได้ออกแบบไว้แล้ว <span size=\"small"
+#~ "\">(Old-Age)</span>"
+
+#~ msgid ""
+#~ "Updated every time data is collected <span size=\"small\">(Online)</span>"
+#~ msgstr "ปรับข้อมูลทุกครั้งที่เก็บข้อมูล <span size=\"small\">(Online)</span>"
+
+#~ msgid ""
+#~ "Updated only during off-line activities <span size=\"small\">(Not Online)"
+#~ "</span>"
+#~ msgstr "ปรับข้อมูลเฉพาะระหว่างการกระทำออฟไลน์เท่านั้น (Not Online)"
+
+#~ msgctxt "benchmark-drive-name"
+#~ msgid "%s partition on %s (%s)"
+#~ msgstr "พาร์ทิชัน %s ใน %s (%s)"
+
+#~ msgctxt "benchmark-drive-name"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgctxt "benchmarking"
+#~ msgid "Error reading %d MB from offset %lld"
+#~ msgstr "เกิดข้อผิดพลาดขณะอ่าน %d MB จากออฟเซต %lld"
+
+#~ msgid "Error writing to image"
+#~ msgstr "เกิดข้อผิดพลาดขณะเขียนลงในอิมเมจ"
+
+#~ msgid "%s of %s copied – %s remaining (%s/sec)"
+#~ msgstr "คัดลอกแล้ว %s จาก %s – เหลืออีก %s (%s/วินาที)"
+
+#~ msgid "Copying data from device..."
+#~ msgstr "กำลังคัดลอกข้อมูลจากอุปกรณ์..."
+
+#~ msgid "Create Disk Image (%s)"
+#~ msgstr "สร้างอิมเมจของดิสก์ (%s)"
+
+#~ msgid "New Volume"
+#~ msgstr "โวลุมใหม่"
+
+#~ msgid "%s Block Device"
+#~ msgstr "อุปกรณ์บล็อค %s"
+
+#~ msgid "Error rescanning device"
+#~ msgstr "เกิดข้อผิดพลาดขณะสแกนอุปกรณ์ซ้ำ"
+
+#~ msgid "Restore Disk Image (%s)"
+#~ msgstr "เขียนอิมเมจของดิสก์คืน (%s)"
+
+#~ msgctxt "job-remaining-exceeded"
+#~ msgid "Almost done..."
+#~ msgstr "เกือบเสร็จแล้ว..."
+
+#~ msgid "No"
+#~ msgstr "ไม่ได้ใช้"
+
+#~ msgid "Yes"
+#~ msgstr "ใช้อยู่"
+
+#~ msgid "Unallocated Space (%s)"
+#~ msgstr "พื้นที่ว่าง (%s)"
 
 #~ msgid "Disk Utility"
 #~ msgstr "เครื่องมือดิสก์"
@@ -2989,12 +4147,6 @@ msgstr "%s"
 #~ msgid "_Size:"
 #~ msgstr "_ขนาด:"
 
-#~ msgid "Normalized:"
-#~ msgstr "ปรับฐานแล้ว:"
-
-#~ msgid "Worst:"
-#~ msgstr "แย่ที่สุด:"
-
 #~ msgid "Value:"
 #~ msgstr "ค่า:"
 
@@ -3090,9 +4242,6 @@ msgstr "%s"
 
 #~ msgid "Failure is a sign of old age (Old-Age)"
 #~ msgstr "ถ้าล้มเหลวก็เป็นเครื่องหมายว่าดิสก์อายุมากแล้ว (Old-Age)"
-
-#~ msgid "No drive selected"
-#~ msgstr "ไม่ได้เลือกไดรว์ใด"
 
 #~ msgid "SMART data never collected"
 #~ msgstr "ยังไม่มีการเก็บข้อมูล SMART"
@@ -3196,9 +4345,6 @@ msgstr "%s"
 #~ msgid "The selected RAID level"
 #~ msgstr "ระดับ RAID ที่เลือก"
 
-#~ msgid "Name"
-#~ msgstr "ชื่อ"
-
 #~ msgid "The requested name for the array"
 #~ msgstr "ชื่อที่ต้องการสำหรับแอร์เรย์"
 
@@ -3220,20 +4366,11 @@ msgstr "%s"
 #~ msgid "Array of drives to use for the array"
 #~ msgstr "แอร์เรย์ของไดรว์ที่จะใช้สำหรับแอร์เรย์"
 
-#~ msgid "Create RAID Array"
-#~ msgstr "สร้างแอร์เรย์ RAID"
-
 #~ msgid "General"
 #~ msgstr "ทั่วไป"
 
-#~ msgid "RAID _Level:"
-#~ msgstr "_ระดับ RAID:"
-
 #~ msgid "New RAID Array"
 #~ msgstr "แอร์เรย์ RAID ใหม่"
-
-#~ msgid "Stripe S_ize:"
-#~ msgstr "_ขนาด stripe:"
 
 #~ msgid "Array _Size:"
 #~ msgstr "_ขนาดแอร์เรย์:"
@@ -3280,9 +4417,6 @@ msgstr "%s"
 #~ msgid "Flags for the widget"
 #~ msgstr "แฟล็กสำหรับตัววิดเจ็ต"
 
-#~ msgid "Array of selected drives"
-#~ msgstr "แอร์เรย์ของไดรว์ที่เลือก"
-
 #~ msgid "Largest Segment For Selected"
 #~ msgstr "เซ็กเมนต์ที่ใหญ่ที่สุดสำหรับไดรว์ที่เลือก"
 
@@ -3327,9 +4461,6 @@ msgstr "%s"
 
 #~ msgid "A %s volume will be created. Afterwards %s will be available."
 #~ msgstr "จะสร้างโวลุมขนาด %s หลังจากนั้นจะเหลือที่ว่าง %s"
-
-#~ msgid "Whole disk is uninitialized. %s available for use"
-#~ msgstr "ดิสก์ทั้งดิสก์ยังไม่ initialize มีที่ว่าง %s ที่ใช้งานได้"
 
 #~ msgid "%s available for use"
 #~ msgstr "มีที่ว่าง %s ที่ใช้งานได้"
@@ -3425,14 +4556,8 @@ msgstr "%s"
 #~ msgid "Edit components on %s (%s)"
 #~ msgstr "แก้ไของค์ประกอบใน %s (%s)"
 
-#~ msgid "Position"
-#~ msgstr "ตำแหน่ง"
-
 #~ msgid "Component"
 #~ msgstr "องค์ประกอบ"
-
-#~ msgid "State"
-#~ msgstr "สถานะ"
 
 #~ msgid "Position:"
 #~ msgstr "ตำแหน่ง:"
@@ -3475,9 +4600,6 @@ msgstr "%s"
 
 #~ msgid "The operation failed"
 #~ msgstr "ปฏิบัติการล้มเหลว"
-
-#~ msgid "The device is busy"
-#~ msgstr "อุปกรณ์ไม่ว่าง"
 
 #~ msgid "The operation was canceled"
 #~ msgstr "ปฏิบัติการถูกยกเลิก"
@@ -3690,9 +4812,6 @@ msgstr "%s"
 #~ msgid "Drive to show volumes for"
 #~ msgstr "ไดรว์ที่จะแสดงโวลุม"
 
-#~ msgid "RAID Array is not running"
-#~ msgstr "แอร์เรย์ RAID ไม่ได้ทำงานอยู่"
-
 #~ msgid "No Media Detected"
 #~ msgstr "ตรวจไม่พบสื่อ"
 
@@ -3728,9 +4847,6 @@ msgstr "%s"
 
 #~ msgid "%s Hard Disk"
 #~ msgstr "ฮาร์ดดิสก์ขนาด %s"
-
-#~ msgid "Hard Disk"
-#~ msgstr "ฮาร์ดดิสก์"
 
 #~ msgid "%s Solid-State Disk"
 #~ msgstr "ดิสก์โซลิดสเตต %s"
@@ -3798,14 +4914,8 @@ msgstr "%s"
 #~ msgid "%s Array"
 #~ msgstr "แอร์เรย์ %s"
 
-#~ msgid "RAID Array %s (%s)"
-#~ msgstr "แอร์เรย์ RAID %s (%s)"
-
 #~ msgid "RAID device %s"
 #~ msgstr "อุปกรณ์ RAID %s"
-
-#~ msgid "RAID Array"
-#~ msgstr "แอร์เรย์ RAID"
 
 #~ msgctxt "Linux MD slave state"
 #~ msgid "Faulty"
@@ -3816,16 +4926,8 @@ msgstr "%s"
 #~ msgstr "ทำงานตรงกันเต็มที่"
 
 #~ msgctxt "Linux MD slave state"
-#~ msgid "Blocked"
-#~ msgstr "ถูกปิดกั้น"
-
-#~ msgctxt "Linux MD slave state"
 #~ msgid "Partially Synchronized"
 #~ msgstr "ทำงานตรงกันบางส่วน"
-
-#~ msgctxt "Linux MD slave state"
-#~ msgid "Spare"
-#~ msgstr "สำรอง"
 
 #~ msgid "Local Storage"
 #~ msgstr "แหล่งเก็บในเครื่อง"
@@ -4281,18 +5383,6 @@ msgstr "%s"
 #~ msgstr "ดิสก์ตรวจสอบ (RAID-4)"
 
 #~ msgctxt "RAID level"
-#~ msgid "Distributed Parity (RAID-5)"
-#~ msgstr "กระจายข้อมูลตรวจสอบ (RAID-5)"
-
-#~ msgctxt "RAID level"
-#~ msgid "Dual Distributed Parity (RAID-6)"
-#~ msgstr "กระจายข้อมูลตรวจสอบแบบคู่ (RAID-6)"
-
-#~ msgctxt "RAID level"
-#~ msgid "Stripe of Mirrors (RAID-10)"
-#~ msgstr "ริ้วสำเนา (RAID-10)"
-
-#~ msgctxt "RAID level"
 #~ msgid "Concatenated (Linear)"
 #~ msgstr "เชื่อมต่อกัน (เชิงเส้น)"
 
@@ -4542,17 +5632,11 @@ msgstr "%s"
 #~ "or disconnecting the device."
 #~ msgstr "เพื่อป้องกันข้อมูลสูญหาย กรุณารอให้เสร็จสิ้นก่อนที่จะเอาสื่อออกหรือปลดการเชื่อมต่ออุปกรณ์"
 
-#~ msgid "Hard Disk Problems Detected"
-#~ msgstr "ตรวจพบปัญหาของฮาร์ดดิสก์"
-
 #~ msgid "A hard disk is reporting health problems."
 #~ msgstr "ฮาร์ดดิสก์กำลังรายงานปัญหาสุขภาพ"
 
 #~ msgid "Multiple system hard disks are reporting health problems."
 #~ msgstr "ฮาร์ดดิสก์หลายตัวของระบบกำลังรายงานปัญหาสุขภาพ"
-
-#~ msgid "Examine"
-#~ msgstr "ตรวจสอบ"
 
 #~ msgid "Multiple hard disks are reporting health problems."
 #~ msgstr "ฮาร์ดดิสก์หลายตัวกำลังรายงานปัญหาสุขภาพ"
@@ -4603,9 +5687,6 @@ msgstr "%s"
 #~ msgid "Firmware Version:"
 #~ msgstr "รุ่นเฟิร์มแวร์:"
 
-#~ msgid "Write Cache:"
-#~ msgstr "แคชสำหรับเขียน:"
-
 #~ msgid "Rotation Rate:"
 #~ msgstr "อัตราการหมุน:"
 
@@ -4630,9 +5711,6 @@ msgstr "%s"
 #~ msgid "_Eject"
 #~ msgstr "_ดันออก"
 
-#~ msgid "Eject medium from the drive"
-#~ msgstr "ดันสื่อออกจากไดรว์"
-
 #~ msgid "Safe Rem_oval"
 #~ msgstr "เ_อาออกอย่างปลอดภัย"
 
@@ -4653,9 +5731,6 @@ msgstr "%s"
 
 #~ msgid "Fabric:"
 #~ msgstr "ระบบเชื่อมต่อ:"
-
-#~ msgid "Number of Ports:"
-#~ msgstr "จำนวนพอร์ต:"
 
 #~ msgid "Error starting Volume Group"
 #~ msgstr "เกิดข้อผิดพลาดขณะเริ่มทำงานกลุ่มโวลุม"
@@ -4684,17 +5759,11 @@ msgstr "%s"
 #~ msgid "Are you sure you want the remove the Physical Volume?"
 #~ msgstr "คุณแน่ใจหรือไม่ว่าต้องการเอาโวลุมจริงนี้ออก?"
 
-#~ msgid "_Remove"
-#~ msgstr "เ_อาออก"
-
 #~ msgid "Not Running"
 #~ msgstr "ไม่ได้ทำงานอยู่"
 
 #~ msgid "Partially Running"
 #~ msgstr "ทำงานเพียงบางส่วน"
-
-#~ msgid "Running"
-#~ msgstr "กำลังทำงาน"
 
 #~ msgid "Name:"
 #~ msgstr "ชื่อ:"
@@ -4737,20 +5806,12 @@ msgstr "%s"
 #~ msgstr "ไม่ทำงาน ประกอบไว้แค่บางส่วน"
 
 #~ msgctxt "RAID status"
-#~ msgid "Not running"
-#~ msgstr "ไม่ทำงาน"
-
-#~ msgctxt "RAID status"
 #~ msgid "Not running, can only start degraded"
 #~ msgstr "ไม่ทำงาน เปิดทำงานได้แบบลดความสามารถเท่านั้น"
 
 #~ msgctxt "RAID status"
 #~ msgid "Not running, not enough components to start"
 #~ msgstr "ไม่ทำงาน มีองค์ประกอบไม่เพียงพอที่จะทำงานได้"
-
-#~ msgctxt "RAID status"
-#~ msgid "DEGRADED"
-#~ msgstr "ลดความสามารถ"
 
 #~ msgctxt "RAID status"
 #~ msgid "Running"
@@ -4761,16 +5822,8 @@ msgstr "%s"
 #~ msgstr "กำลังจัดรูป"
 
 #~ msgctxt "RAID action"
-#~ msgid "Resyncing"
-#~ msgstr "กำลังปรับข้อมูลใหม่ให้ตรง"
-
-#~ msgctxt "RAID action"
 #~ msgid "Repairing"
 #~ msgstr "กำลังซ่อมแซม"
-
-#~ msgctxt "RAID action"
-#~ msgid "Recovering"
-#~ msgstr "กำลังกู้คืน"
 
 #~ msgctxt "RAID action"
 #~ msgid "Checking"
@@ -4786,9 +5839,6 @@ msgstr "%s"
 #~ msgid "Are you sure you want the RAID Array degraded?"
 #~ msgstr "คุณแน่ใจหรือไม่ว่าต้องการเปิดใช้ RAID แบบบลดความสามารถ?"
 
-#~ msgid "_Start"
-#~ msgstr "เ_ริ่ม"
-
 #~ msgid "Error deleting partition for component in RAID Array"
 #~ msgstr "เกิดข้อผิดพลาดขณะลบพาร์ทิชันสำหรับองค์ประกอบในแอร์เรย์ RAID"
 
@@ -4800,9 +5850,6 @@ msgstr "%s"
 
 #~ msgid "Error adding component to RAID Array"
 #~ msgstr "เกิดข้อผิดพลาดขณะเพิ่มองค์ประกอบเข้าในแอร์เรย์ RAID"
-
-#~ msgid "Error creating component for RAID array"
-#~ msgstr "เกิดข้อผิดพลาดขณะสร้างองค์ประกอบสำหรับแอร์เรย์ RAID"
 
 #~ msgid "Error expanding RAID Array"
 #~ msgstr "เกิดข้อผิดพลาดขณะขยายแอร์เรย์ RAID"
@@ -4816,20 +5863,11 @@ msgstr "%s"
 #~ msgid "Metadata Version:"
 #~ msgstr "รุ่นของข้อมูลกำกับ:"
 
-#~ msgid "Action:"
-#~ msgstr "การกระทำ::"
-
 #~ msgid "Components:"
 #~ msgstr "องค์ประกอบ:"
 
-#~ msgid "St_art RAID Array"
-#~ msgstr "เปิด_ทำงานแอร์เรย์ RAID"
-
 #~ msgid "Bring up the RAID Array"
 #~ msgstr "เปิดทำงานแอร์เรย์ RAID"
-
-#~ msgid "St_op RAID Array"
-#~ msgstr "หยุ_ดแอร์เรย์ RAID"
 
 #~ msgid "Tear down the RAID Array"
 #~ msgstr "ปิดการทำงานของแอร์เรย์ RAID"
@@ -4918,9 +5956,6 @@ msgstr "%s"
 #~ msgid "Partition Flags:"
 #~ msgstr "แฟล็กของพาร์ทิชัน:"
 
-#~ msgid "Available:"
-#~ msgstr "พื้นที่ว่าง:"
-
 #~ msgid "Label:"
 #~ msgstr "ป้ายชื่อ:"
 
@@ -4953,17 +5988,11 @@ msgstr "%s"
 #~ msgid "View files on the volume"
 #~ msgstr "ดูแฟ้มในโวลุม"
 
-#~ msgid "Not Mounted"
-#~ msgstr "ไม่ได้เมานท์"
-
 #~ msgid "Encrypted Volume (Locked)"
 #~ msgstr "โวลุมเข้ารหัสลับ (ล็อคอยู่)"
 
 #~ msgid "Encrypted Volume (Unlocked)"
 #~ msgstr "โวลุมเข้ารหัสลับ (ปลดล็อคแล้ว)"
-
-#~ msgid "Go to array"
-#~ msgstr "ไปยังแอร์เรย์"
 
 #~ msgid "Container for Logical Partitions"
 #~ msgstr "เครื่องบรรจุพาร์ทิชันลอจิคัล"
@@ -5043,9 +6072,6 @@ msgstr "%s"
 #~ msgid "%s — Disk Utility"
 #~ msgstr "%s — เครื่องมือดิสก์"
 
-#~ msgid "Error creating RAID array"
-#~ msgstr "เกิดข้อผิดพลาดขณะสร้างแอร์เรย์ RAID"
-
 #~ msgid "Error connecting to “%s”"
 #~ msgstr "เกิดข้อผิดพลาดขณะเชื่อมต่อไปยัง “%s”"
 
@@ -5069,9 +6095,6 @@ msgstr "%s"
 
 #~ msgid "_Edit"
 #~ msgstr "แ_ก้ไข"
-
-#~ msgid "_Help"
-#~ msgstr "_วิธีใช้"
 
 #~ msgid "Quit"
 #~ msgstr "ออก"
@@ -5111,9 +6134,6 @@ msgstr "%s"
 
 #~ msgid "One or more disks are failing"
 #~ msgstr "มีดิสก์ตั้งแต่หนึ่งดิสก์ขึ้นไปกำลังจะล้มเหลว"
-
-#~ msgid "A hard disk may be failing"
-#~ msgstr "ฮาร์ดดิสก์หนึ่งอาจกำลังล้มเหลว"
 
 #~ msgid ""
 #~ "One or more hard disks report health problems. Click the icon to get more "

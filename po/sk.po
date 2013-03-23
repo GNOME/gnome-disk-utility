@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-19 15:27+0000\n"
-"PO-Revision-Date: 2013-03-10 21:52+0100\n"
+"POT-Creation-Date: 2013-03-23 13:07+0000\n"
+"PO-Revision-Date: 2013-03-23 20:02+0100\n"
 "Last-Translator: Pavol Klačanský <pavol@klacansky.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -544,12 +544,10 @@ msgstr ""
 "jednotky. Prosím, čas od času skontrolujte atribút „Počet zapnutí/vypnutí“ "
 "systému SMART"
 
-# PM: Nebude lepšie "Správa spotreby"
 # tab
 #: ../data/ui/disk-settings-dialog.ui.h:10
-#, fuzzy
 msgid "A_PM"
-msgstr "A_PM"
+msgstr "_Správa spotreby"
 
 # GtkLabel label
 #: ../data/ui/disk-settings-dialog.ui.h:11
@@ -568,20 +566,15 @@ msgstr ""
 msgid "Vendor Recommended"
 msgstr "Odporúčané výrobcom"
 
-# PK: kde to je? nemozeme tam dat Uroven automatickej spravy hlucnosti?
-# PM: APM Level je rozpísané; navrhujem rozpísať aj tu  
 # GtkLabel label
 #: ../data/ui/disk-settings-dialog.ui.h:14
-#, fuzzy
 msgid "AAM Level"
-msgstr "Úroveň AAM"
+msgstr "Úroveň automatickej správy hlučnosti"
 
-# PM: nebude lepšie Správa hluku?
 # tab
 #: ../data/ui/disk-settings-dialog.ui.h:15
-#, fuzzy
 msgid "_AAM"
-msgstr "_AAM"
+msgstr "_Správa hlučnosti"
 
 # GtkDialog title
 #: ../data/ui/disk-settings-dialog.ui.h:16
@@ -870,12 +863,12 @@ msgstr "Disky poľa RAID…"
 # GtkMenuItem label
 #: ../data/ui/disks.ui.h:52
 msgid "Start Data Scrubbing…"
-msgstr ""
+msgstr "Spustiť kontrolu údajov…"
 
 # GtkMenuItem label
 #: ../data/ui/disks.ui.h:53
 msgid "Stop Data Scrubbing"
-msgstr ""
+msgstr "Zastaviť kontrolu údajov"
 
 # GtkMenuItem label
 #: ../data/ui/disks.ui.h:54
@@ -1178,14 +1171,14 @@ msgid "S_ymbolic Icon Name"
 msgstr "Ná_zov symbolickej ikony"
 
 # PM: nedáva mi to akosi zmysel, čo to vlastne robí? Ja to chápem takto: v definícii zariadenia pre používateľské rozhranie
+# PK: podla GUI to je nazov ikony a ta sa potom zobrazi
 # GtkEntry tooltip_text
 #: ../data/ui/edit-fstab-dialog.ui.h:22
-#, fuzzy
 msgid ""
 "If set, the name of the symbolic icon to use in the device in the user "
 "interface [x-gvfs-symbolic-icon=]"
 msgstr ""
-"Ak je nastavené, názov symbolickej ikony sa použije v zariadení v "
+"Ak je nastavené, názov symbolickej ikony, ktorá sa použije pre zariadenie v "
 "používateľskom rozhraní [x-gvfs-symbolic-icon=]"
 
 # GtkLabel label
@@ -1568,11 +1561,10 @@ msgstr "Chyba pri pričleňovaní obrazu disku: %s (%s, %d)"
 msgid "Error opening %s: %s\n"
 msgstr "Chyba pri otváraní %s: %s\n"
 
-# MČ: asi vyskloňovať, prípadne preformulovať.
 #: ../src/disks/gduapplication.c:138
-#, fuzzy, c-format
+#, c-format
 msgid "Error looking up block device for %s\n"
-msgstr "Chyba pri hľadaní blokové zariadenie pre %s\n"
+msgstr "Chyba pri hľadaní blokového zariadenia pre %s\n"
 
 # cmd desc
 #: ../src/disks/gduapplication.c:178
@@ -1584,29 +1576,23 @@ msgstr "Vyberie zariadenie"
 msgid "Format selected device"
 msgstr "Naformátuje vybrané zariadenie"
 
-# PM: dal by som Identifikátor rodičovského okna (XID)
 # cmd desc
 #: ../src/disks/gduapplication.c:180
-#, fuzzy
 msgid "Parent window XID for the format dialog"
-msgstr "XID rodičovského okna pre dialǵové okno formátovania"
+msgstr "Identifikátor rodičovského okna (XID) pre dialógové okno formátovania"
 
 # cmd desc
 #: ../src/disks/gduapplication.c:181
 msgid "Show help options"
 msgstr "Zobrazí voľby pomocníka"
 
-# dal by som na začiatok "Voľba"
 #: ../src/disks/gduapplication.c:210
-#, fuzzy
 msgid "--format-device must be used together with --block-device\n"
-msgstr "--format-device musí byť použitá spolu s --block-device\n"
+msgstr "Voľba --format-device musí byť použitá spolu s --block-device\n"
 
-# dal by som na začiatok "Voľba"
 #: ../src/disks/gduapplication.c:216
-#, fuzzy
 msgid "--format-device must be specified when using --xid\n"
-msgstr "--format-device musí byť zadaná pri použití --xid\n"
+msgstr "Voľba --format-device musí byť zadaná pri použití --xid\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
@@ -1670,12 +1656,10 @@ msgstr "Počet zastavení/roztočení"
 msgid "Number of spindle start/stop cycles"
 msgstr "Počet cyklov roztočenia a zastavenia hriadeľa"
 
-# MČ: iba tu máš preklad „so zmenenou rezerváciou“, inde použivaš „realokovaný“
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:185
-#, fuzzy
 msgid "Reallocated Sector Count"
 msgstr "Počet sektorov so zmenenou rezerváciou"
 
@@ -1686,8 +1670,8 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "Počet premapovaných sektorov. Keď pevný disk narazí na chybu pri čítaní/"
-"zápise/overovaní, označí sektor ako „realokovaný“ a údaje presunie do "
-"špeciálnej rezervovanej oblasti (náhradnej oblasti)"
+"zápise/overovaní, označí sektor ako „reallocated“ (zmenená rezervácia) a "
+"údaje presunie do špeciálnej rezervovanej oblasti (náhradnej oblasti)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1865,7 +1849,7 @@ msgstr "Počet opravených chýb za behu pomocou ECC"
 #.
 #: ../src/disks/gduatasmartdialog.c:324
 msgid "Reallocation Count"
-msgstr "Počet realokácií"
+msgstr "Počet zmien rezervácie"
 
 #: ../src/disks/gduatasmartdialog.c:325
 msgid ""
@@ -1875,7 +1859,7 @@ msgid ""
 msgstr ""
 "Počet operácií premapovania. Nespracovaná hodnota tohoto atribútu "
 "predstavuje celkový počet (úspešných aj neúspešných) pokusov o presunutie "
-"údajov z realokovaných sektorov do náhradnej oblasti"
+"údajov zo sektorov so zmenenou rezerváciou do náhradnej oblasti"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2567,12 +2551,11 @@ msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Chyba pri presune na ofset %lld"
 
-# PM: nepozdáva sa mi preklad pre-reading nie je to prednačítanie?
 #: ../src/disks/gdubenchmarkdialog.c:1229
-#, fuzzy, c-format
+#, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
-msgstr "Chyba pri opätovnom čítaní %s z ofsetu %s"
+msgstr "Chyba pri prednačítaní %s z ofsetu %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
 #, c-format
@@ -2588,10 +2571,10 @@ msgstr "Chyba pri čítaní %s z ofsetu %s"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
 #: ../src/disks/gdubenchmarkdialog.c:1290
-#, fuzzy, c-format
+#, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "Chyba pri opätovnom čítaní %lld bajtov z ofsetu %lld"
+msgstr "Chyba pri prednačítaní %lld bajtov z ofsetu %lld"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
 #: ../src/disks/gdubenchmarkdialog.c:1311
@@ -2717,6 +2700,9 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
+"%2.1f %% (%s) údajov bolo nečitateľných na zariadení „%s“. Vo vytvorenom "
+"obraze disku boli tieto údaje nahradené nulami. Toto sa zvyčajne stáva ak je "
+"nosič poškriabaný alebo ak je jednotka fyzicky poškodená"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -3814,12 +3800,12 @@ msgstr "Nie je spustené"
 #: ../src/disks/gduwindow.c:2593
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "Kontrolujú sa údaje"
 
 #: ../src/disks/gduwindow.c:2598
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
-msgstr ""
+msgstr "Kontrolujú a opravujú sa údaje"
 
 #: ../src/disks/gduwindow.c:2603
 msgctxt "mdraid-state"
@@ -3840,16 +3826,19 @@ msgstr "Zamrznuté"
 #: ../src/disks/gduwindow.c:2627
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr ""
+msgstr "POLE RAID JE ZLE NASTAVENÉ"
 
+# MČ: Možno by som skôr použil poje „rozštiepené“
+# PM: rozštiepené som ale nenašiel v kodifikačných slovníkoch SJ, navrhujem rozpoltené, rozštiepené, nejednotné 
 #. Translators: The specific type of misconfiguration, see
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
 #: ../src/disks/gduwindow.c:2633
+#, fuzzy
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
-msgstr ""
+msgstr "Nezosynchronizované"
 
 #. Translators: Combiner for the RAID split-brain strings.
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
@@ -4000,7 +3989,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:3919
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "Kontrola údajov"
 
 #. Translators: Message for data scrubbing dialog
 #: ../src/disks/gduwindow.c:3921
@@ -4015,6 +4004,14 @@ msgid ""
 "the <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>RAID Administration</a> article."
 msgstr ""
+"Úložné zariadenia môžu časom obsahovať chybné bloky, ktoré je vhodné včas "
+"odhaliť pravidelným čítaním všetkých blokov na všetkých diskoch poľa "
+"RAID.\n"
+"\n"
+"Pole RAID bude počas tejto operácie použitelné ale jeho výkon bude slabší. "
+"Ak sa chcete dozvedieť viac o kontrole údajov, tak si pozrite článok o <a "
+"href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>správe "
+"poľa RAID</a>."
 
 # button
 #: ../src/disks/gduwindow.c:3926

@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-19 15:27+0000\n"
-"PO-Revision-Date: 2013-03-21 22:15+0700\n"
+"POT-Creation-Date: 2013-03-24 20:14+0000\n"
+"PO-Revision-Date: 2013-03-25 15:20+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -699,11 +699,11 @@ msgstr "ดิสก์ RAID…"
 
 #: ../data/ui/disks.ui.h:52
 msgid "Start Data Scrubbing…"
-msgstr ""
+msgstr "เริ่มการ Scrub ข้อมูล…"
 
 #: ../data/ui/disks.ui.h:53
 msgid "Stop Data Scrubbing"
-msgstr ""
+msgstr "หยุดการ Scrub ข้อมูล"
 
 #: ../data/ui/disks.ui.h:54
 msgid "Edit Partition…"
@@ -2080,10 +2080,8 @@ msgid "Error starting SMART self-test"
 msgstr "เกิดข้อผิดพลาดขณะเริ่มการทดสอบตัวเองของ SMART"
 
 #: ../src/disks/gduatasmartdialog.c:1432
-#, fuzzy
-#| msgid "An error occurred when trying to wake up the drive from standby mode"
 msgid "An error occurred when trying toggle whether SMART is enabled"
-msgstr "เกิดข้อผิดพลาดขณะพยายามปลุกไดรว์จากโหมดพักคอย"
+msgstr "เกิดข้อผิดพลาดขณะเปิด-ปิดการใช้ SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/disks/gduatasmartdialog.c:1515
@@ -2315,20 +2313,16 @@ msgstr "Disk Image of %s (%s).img"
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
 #: ../src/disks/gducreatediskimagedialog.c:303
-#, fuzzy
-#| msgid "Disk Image Mounter"
 msgid "Disk image read error"
-msgstr "โปรแกรมเมานท์อิมเมจของดิสก์"
+msgstr "ข้อผิดพลาดของการอ่านอิมเมจของดิสก์"
 
 #: ../src/disks/gducreatediskimagedialog.c:339
-#, fuzzy
-#| msgid "Mount Disk Images"
 msgid "Allocating Disk Image"
-msgstr "เมานท์อิมเมจของดิสก์"
+msgstr "กำลังจองพื้นที่อิมเมจของดิสก์"
 
 #: ../src/disks/gducreatediskimagedialog.c:343
 msgid "Retrieving DVD keys"
-msgstr ""
+msgstr "กำลังดึงข้อมูลกุญแจดีวีดี"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
@@ -2336,7 +2330,7 @@ msgstr ""
 #: ../src/disks/gducreatediskimagedialog.c:352
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
-msgstr ""
+msgstr "ไม่สามารถอ่านข้อมูลได้ %s (แทนที่ด้วยค่าศูนย์)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
 #: ../src/disks/gducreatediskimagedialog.c:406
@@ -2350,10 +2344,8 @@ msgstr "เกิดข้อผิดพลาดขณะสร้างอิ
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:476
-#, fuzzy
-#| msgid "Number of errors while reading from a disk"
 msgid "Unrecoverable read errors while creating disk image"
-msgstr "จำนวนข้อผิดพลาดขณะอ่านจากดิสก์"
+msgstr "ข้อผิดพลาดของการอ่านที่ไม่สามารถกู้คืนได้ขณะสร้างอิมเมจของดิสก์"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -2367,6 +2359,9 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
+"%2.1f%% (%s) ของข้อมูลบนอุปกรณ์ “%s” ไม่สามารถอ่านได้ "
+"และถูกแทนที่ด้วยค่าศูนย์ในแฟ้มอิมเมจของดิสก์ที่สร้างขึ้น โดยปกติแล้ว "
+"เรื่องนี้จะเกิดขึ้นเมื่อสื่อมีรอยขีดข่วน หรือไดรว์เกิดความเสียหายทางกายภาพ"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:491
@@ -2382,7 +2377,7 @@ msgstr "เกิดข้อผิดพลาดขณะพิจารณา
 #: ../src/disks/gdurestorediskimagedialog.c:539
 #, c-format
 msgid "Device is size 0"
-msgstr ""
+msgstr "อุปกรณ์มีขนาดเป็น 0"
 
 #: ../src/disks/gducreatediskimagedialog.c:756
 msgid "Error allocating space for disk image file: "
@@ -3013,11 +3008,9 @@ msgstr "เ_พิ่ม"
 #. *              right size available
 #.
 #: ../src/disks/gdumdraiddisksdialog.c:1150
-#, fuzzy
-#| msgid "Whole disk is uninitialized. %s available for use"
 msgctxt "mdraid-add"
 msgid "No disks of suitable size available"
-msgstr "ดิสก์ทั้งดิสก์ยังไม่ initialize มีที่ว่าง %s ที่ใช้งานได้"
+msgstr "ไม่มีดิสก์ขนาดเหมาะสมที่ใช้งานได้"
 
 #. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
 #. *              disks that can be added to the array
@@ -3297,10 +3290,8 @@ msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
 #: ../src/disks/gduwindow.c:2242 ../src/disks/gduwindow.c:3087
-#, fuzzy
-#| msgid "The device is busy"
 msgid "Block device is empty"
-msgstr "อุปกรณ์ไม่ว่าง"
+msgstr "อุปกรณ์บล็อคว่างเปล่า"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
 #: ../src/disks/gduwindow.c:2265
@@ -3373,7 +3364,7 @@ msgstr "%s, %s"
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
-msgstr[0] ""
+msgstr[0] "ขาดดิสก์ %d ดิสก์"
 
 #: ../src/disks/gduwindow.c:2553
 msgctxt "mdraid"
@@ -3403,12 +3394,12 @@ msgstr "ไม่ทำงาน"
 #: ../src/disks/gduwindow.c:2593
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "กำลัง Scrub ข้อมูล"
 
 #: ../src/disks/gduwindow.c:2598
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
-msgstr ""
+msgstr "กำลัง Scrub และซ่อมแซมข้อมูล"
 
 #: ../src/disks/gduwindow.c:2603
 msgctxt "mdraid-state"
@@ -3423,13 +3414,13 @@ msgstr "กำลังกู้คืน"
 #: ../src/disks/gduwindow.c:2611
 msgctxt "mdraid-state"
 msgid "Frozen"
-msgstr ""
+msgstr "ถูกแช่แข็ง"
 
 #. Translators: String for conveying the raid array is misconfigured
 #: ../src/disks/gduwindow.c:2627
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr ""
+msgstr "* แอร์เรย์ RAID ตั้งค่าผิด *"
 
 #. Translators: The specific type of misconfiguration, see
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
@@ -3438,7 +3429,7 @@ msgstr ""
 #: ../src/disks/gduwindow.c:2633
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
-msgstr ""
+msgstr "ข้อมูลขัดแย้งกัน"
 
 #. Translators: Combiner for the RAID split-brain strings.
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
@@ -3578,16 +3569,14 @@ msgid "Unallocated Space"
 msgstr "พื้นที่ว่าง"
 
 #: ../src/disks/gduwindow.c:3901
-#, fuzzy
-#| msgid "An error occurred when trying to put the drive into standby mode"
 msgid "An error occurred when requesting data redundancy check"
-msgstr "เกิดข้อผิดพลาดขณะพยายามเปลี่ยนโหมดของไดรว์เป็นโหมดพักคอย"
+msgstr "เกิดข้อผิดพลาดขณะร้องขอตรวจสอบการซ้ำข้อมูล"
 
 #. Translators: Heading for data scrubbing dialog
 #: ../src/disks/gduwindow.c:3919
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
-msgstr ""
+msgstr "การ Scrub ข้อมูล"
 
 #. Translators: Message for data scrubbing dialog
 #: ../src/disks/gduwindow.c:3921
@@ -3602,6 +3591,14 @@ msgid ""
 "the <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>RAID Administration</a> article."
 msgstr ""
+"เนื่องจากอุปกรณ์เก็บข้อมูลสามารถเกิดบล็อคเสียขึ้นมาได้ทุกเมื่อ "
+"การอ่านบล็อคข้อมูลทั้งหมดในทุกดิสก์ของแอร์เรย์ RAID "
+"อย่างสม่ำเสมอเพื่อตรวจจับบล็อคเสียดังกล่าวแต่เนิ่นๆ จึงมีความสำคัญ\n"
+"\n"
+"แอร์เรย์ RAID จะยังคงใช้งานได้ในระหว่างการดำเนินการดังกล่าว "
+"แต่ประสิทธิภาพจะกระทบกระเทือนบ้าง ดูข้อมูลเพิ่มเติมเกี่ยวกับการ scrub ข้อมูลได้จากบทความ "
+"<a href='https://raid.wiki.kernel.org/index.php/"
+"RAID_Administration'>RAID Administration</a>"
 
 #: ../src/disks/gduwindow.c:3926
 msgctxt "mdraid-scrub-dialog"

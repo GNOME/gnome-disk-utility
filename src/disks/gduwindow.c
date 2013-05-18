@@ -5165,6 +5165,30 @@ on_overlay_toolbar_create_raid_button_clicked (GtkButton *button,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+typedef struct {
+  GSimpleAsyncResult *simple;
+  GduWindow *window;
+} EnsureListData;
+
+static void
+ensure_list_data_free (EnsureListData *data)
+{
+  g_object_unref (data->window);
+  g_object_unref (data->simple);
+  g_slice_free (EnsureListData, data);
+}
+
+static void
+ensure_list_cb (GObject      *source_object,
+                GAsyncResult *res,
+                gpointer      user_data)
+{
+  EnsureListData *data = user_data;
+  g_simple_async_result_set_op_res_gpointer (data->simple, g_object_ref (res), g_object_unref);
+  g_simple_async_result_complete (data->simple);
+  ensure_list_data_free (data);
+}
+
 void
 gdu_window_ensure_unused_list (GduWindow            *window,
                                GList                *objects,
@@ -5172,7 +5196,19 @@ gdu_window_ensure_unused_list (GduWindow            *window,
                                GCancellable         *cancellable,
                                gpointer              user_data)
 {
-  gdu_utils_ensure_unused_list (window->client, GTK_WINDOW (window), objects, callback, cancellable, user_data);
+  EnsureListData *data = g_slice_new0 (EnsureListData);
+  data->window = g_object_ref (window);
+  data->simple = g_simple_async_result_new (G_OBJECT (window),
+                                            callback,
+                                            user_data,
+                                            gdu_window_ensure_unused_list);
+  g_simple_async_result_set_check_cancellable (data->simple, cancellable);
+  gdu_utils_ensure_unused_list (window->client,
+                                GTK_WINDOW (window),
+                                objects,
+                                ensure_list_cb,
+                                cancellable,
+                                data);
 }
 
 gboolean
@@ -5180,7 +5216,16 @@ gdu_window_ensure_unused_list_finish (GduWindow     *window,
                                       GAsyncResult  *res,
                                       GError       **error)
 {
-  return gdu_utils_ensure_unused_list_finish (window->client, res, error);
+  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+
+  g_return_val_if_fail (G_IS_ASYNC_RESULT (res), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_window_ensure_unused_list);
+
+  return gdu_utils_ensure_unused_list_finish (window->client,
+                                              G_ASYNC_RESULT (g_simple_async_result_get_op_res_gpointer (simple)),
+                                              error);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -5192,7 +5237,9 @@ gdu_window_ensure_unused (GduWindow            *window,
                           GCancellable         *cancellable,
                           gpointer              user_data)
 {
-  gdu_utils_ensure_unused (window->client, GTK_WINDOW (window), object, callback, cancellable, user_data);
+  GList *list = g_list_append (NULL, object);
+  gdu_window_ensure_unused_list (window, list, callback, cancellable, user_data);
+  g_list_free (list);
 }
 
 gboolean
@@ -5200,7 +5247,7 @@ gdu_window_ensure_unused_finish (GduWindow     *window,
                                  GAsyncResult  *res,
                                  GError       **error)
 {
-  return gdu_utils_ensure_unused_finish (window->client, res, error);
+  return gdu_window_ensure_unused_list_finish (window, res, error);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

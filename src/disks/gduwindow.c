@@ -1273,7 +1273,9 @@ gdu_window_constructed (GObject *object)
 
   gtk_widget_reparent (window->main_hpane, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
-  gtk_window_set_default_size (GTK_WINDOW (window), 800, 600);
+  /* Fortunately the window manager resizes the window if it's too tall for the monitor.. so 900 pixels is fine */
+  gtk_window_set_default_size (GTK_WINDOW (window), 800, 900);
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
   gtk_container_set_border_width (GTK_CONTAINER (window), 12);
 
   /* detach overlay toolbar and attach it to the right place - see also update_for_multi_selection() */

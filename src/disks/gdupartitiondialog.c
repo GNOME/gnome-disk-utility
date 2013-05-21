@@ -202,9 +202,16 @@ edit_partition_populate (EditPartitionData *data)
           cur_table_subtype = info->table_subtype;
         }
 
+#if UDISKS_CHECK_VERSION(2, 1, 1)
+      type_for_display = udisks_client_get_partition_type_and_subtype_for_display (client,
+                                                                                   data->partition_table_type,
+                                                                                   info->table_subtype,
+                                                                                   info->type);
+#else
       type_for_display = udisks_client_get_partition_type_for_display (client,
                                                                        data->partition_table_type,
                                                                        info->type);
+#endif
       escaped_type_for_display = g_markup_escape_text (type_for_display, -1);
       s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                            escaped_type_for_display,

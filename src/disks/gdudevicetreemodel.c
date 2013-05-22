@@ -998,17 +998,21 @@ update_drive (GduDeviceTreeModel *model,
       /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
        * of hard-coding the color
        */
-      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
+      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>"
+                           "%s"
                            "<small><span foreground=\"#ff0000\">%s%s</span></small>",
                            udisks_object_info_get_description (info),
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            udisks_object_info_get_name (info),
                            included_device_name != NULL ? included_device_name : "");
     }
   else
     {
-      s = g_strdup_printf ("%s\n"
+      s = g_strdup_printf ("%s"
+                           "%s"
                            "<small>%s%s</small>",
                            udisks_object_info_get_description (info),
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            udisks_object_info_get_name (info),
                            included_device_name != NULL ? included_device_name : "");
     }
@@ -1200,16 +1204,20 @@ update_mdraid (GduDeviceTreeModel *model,
       /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
        * of hard-coding the color
        */
-      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
+      s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>"
+                           "%s"
                            "<small><span foreground=\"#ff0000\">%s</span></small>",
                            desc,
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            desc2);
     }
   else
     {
-      s = g_strdup_printf ("%s\n"
+      s = g_strdup_printf ("%s"
+                           "%s"
                            "<small>%s</small>",
                            desc,
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            desc2);
     }
 
@@ -1442,17 +1450,21 @@ update_block (GduDeviceTreeModel  *model,
     {
       gchar *backing_file_unfused;
       backing_file_unfused = gdu_utils_unfuse_path (loop_backing_file);
-      s = g_strdup_printf ("%s\n"
+      s = g_strdup_printf ("%s"
+                           "%s"
                            "<small>%s</small>",
                            udisks_object_info_get_description (info),
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            backing_file_unfused);
       g_free (backing_file_unfused);
     }
   else
     {
-      s = g_strdup_printf ("%s\n"
+      s = g_strdup_printf ("%s"
+                           "%s"
                            "<small>%s</small>",
                            udisks_object_info_get_description (info),
+                           model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME ? " — " : "\n",
                            preferred_device);
     }
 

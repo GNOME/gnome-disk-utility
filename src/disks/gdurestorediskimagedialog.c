@@ -443,6 +443,7 @@ populate_destination_combobox (DialogData *data)
   combobox = GTK_COMBO_BOX (data->selectable_destination_combobox);
   model = gdu_device_tree_model_new (gdu_window_get_application (data->window),
                                      GDU_DEVICE_TREE_MODEL_FLAGS_FLAT |
+                                     GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME |
                                      GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_DEVICE_NAME |
                                      GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_NONE_ITEM);
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (model),
@@ -453,7 +454,7 @@ populate_destination_combobox (DialogData *data)
 
   renderer = gtk_cell_renderer_pixbuf_new ();
   g_object_set (G_OBJECT (renderer),
-                "stock-size", GTK_ICON_SIZE_DND,
+                "stock-size", GTK_ICON_SIZE_MENU,
                 NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combobox), renderer, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combobox), renderer,

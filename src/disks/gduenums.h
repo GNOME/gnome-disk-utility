@@ -30,6 +30,16 @@ typedef enum
   GDU_POWER_STATE_FLAGS_FAILED            = (1<<2)
 } GduPowerStateFlags;
 
+typedef enum
+{
+  GDU_DEVICE_TREE_MODEL_FLAGS_NONE                = 0,
+  GDU_DEVICE_TREE_MODEL_FLAGS_FLAT                = (1<<0),
+  GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_POWER_STATE  = (1<<1),
+  GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE        = (1<<2),
+  GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_DEVICE_NAME = (1<<3),
+  GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_NONE_ITEM   = (1<<4),
+} GduDeviceTreeModelFlags;
+
 G_END_DECLS
 
 #endif /* __GDU_ENUMS_H__ */

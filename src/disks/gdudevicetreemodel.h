@@ -38,8 +38,10 @@ enum
 };
 
 GType               gdu_device_tree_model_get_type            (void) G_GNUC_CONST;
-GduDeviceTreeModel *gdu_device_tree_model_new                 (GduApplication     *application);
+GduDeviceTreeModel *gdu_device_tree_model_new                 (GduApplication          *application,
+                                                               GduDeviceTreeModelFlags  flags);
 GduApplication     *gdu_device_tree_model_get_application     (GduDeviceTreeModel *model);
+GduDeviceTreeModelFlags gdu_device_tree_model_get_flags       (GduDeviceTreeModel *model);
 gboolean            gdu_device_tree_model_get_iter_for_object (GduDeviceTreeModel *model,
                                                                UDisksObject       *object,
                                                                GtkTreeIter        *iter);

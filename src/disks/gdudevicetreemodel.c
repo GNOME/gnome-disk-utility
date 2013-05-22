@@ -24,6 +24,8 @@ struct _GduDeviceTreeModel
   GduApplication *application;
   UDisksClient *client;
 
+  GduDeviceTreeModelFlags flags;
+
   GList *current_drives;
   GtkTreeIter drive_iter;
   gboolean drive_iter_valid;
@@ -52,7 +54,8 @@ typedef struct
 enum
 {
   PROP_0,
-  PROP_APPLICATION
+  PROP_APPLICATION,
+  PROP_FLAGS
 };
 
 G_DEFINE_TYPE (GduDeviceTreeModel, gdu_device_tree_model, GTK_TYPE_TREE_STORE);
@@ -80,7 +83,8 @@ gdu_device_tree_model_finalize (GObject *object)
 {
   GduDeviceTreeModel *model = GDU_DEVICE_TREE_MODEL (object);
 
-  g_source_remove (model->pefs_timeout_id);
+  if (model->pefs_timeout_id != 0)
+    g_source_remove (model->pefs_timeout_id);
 
   if (model->spinner_timeout != 0)
     g_source_remove (model->spinner_timeout);
@@ -95,7 +99,7 @@ gdu_device_tree_model_finalize (GObject *object)
   g_list_foreach (model->current_mdraids, (GFunc) g_object_unref, NULL);
   g_list_free (model->current_mdraids);
 
-  g_object_unref (model->client);
+  g_object_unref (model->application);
 
   G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->finalize (object);
 }
@@ -119,6 +123,10 @@ gdu_device_tree_model_get_property (GObject    *object,
       g_value_set_object (value, gdu_device_tree_model_get_application (model));
       break;
 
+    case PROP_FLAGS:
+      g_value_set_flags (value, gdu_device_tree_model_get_flags (model));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -138,6 +146,10 @@ gdu_device_tree_model_set_property (GObject      *object,
     case PROP_APPLICATION:
       model->application = g_value_dup_object (value);
       model->client = gdu_application_get_client (model->application);
+      break;
+
+    case PROP_FLAGS:
+      model->flags = g_value_get_flags (value);
       break;
 
     default:
@@ -480,8 +492,22 @@ gdu_device_tree_model_constructed (GObject *object)
                     model);
   coldplug (model);
 
-  model->pefs_timeout_id = g_timeout_add_seconds (5, on_pefs_timeout, model);
-  on_pefs_timeout (model);
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_POWER_STATE)
+    {
+      model->pefs_timeout_id = g_timeout_add_seconds (5, on_pefs_timeout, model);
+      on_pefs_timeout (model);
+    }
+
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_NONE_ITEM)
+    {
+      gtk_tree_store_insert_with_values (GTK_TREE_STORE (model),
+                                         &model->drive_iter,
+                                         NULL, /* GtkTreeIter *parent */
+                                         0,
+                                         GDU_DEVICE_TREE_MODEL_COLUMN_NAME, _("(None)"),
+                                         GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, "00_0select_device",
+                                         -1);
+    }
 
   if (G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_device_tree_model_parent_class)->constructed (object);
@@ -511,11 +537,27 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY |
                                                         G_PARAM_STATIC_STRINGS));
+
+  /**
+   * GduDeviceTreeModel:flags:
+   *
+   * The #GduApplication used by the #GduDeviceTreeModel instance.
+   */
+  g_object_class_install_property (gobject_class,
+                                   PROP_FLAGS,
+                                   g_param_spec_flags ("flags", NULL, NULL,
+                                                       GDU_TYPE_DEVICE_TREE_MODEL_FLAGS,
+                                                       GDU_DEVICE_TREE_MODEL_FLAGS_NONE,
+                                                       G_PARAM_READABLE |
+                                                       G_PARAM_WRITABLE |
+                                                       G_PARAM_CONSTRUCT_ONLY |
+                                                       G_PARAM_STATIC_STRINGS));
 }
 
 /**
  * gdu_device_tree_model_new:
  * @application: A #GduApplication.
+ * @flags: Flags from #GduDeviceTreeModelFlags.
  *
  * Creates a new #GduDeviceTreeModel for viewing the devices belonging to
  * @application.
@@ -523,10 +565,12 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
  * Returns: A #GduDeviceTreeModel. Free with g_object_unref().
  */
 GduDeviceTreeModel *
-gdu_device_tree_model_new (GduApplication *application)
+gdu_device_tree_model_new (GduApplication          *application,
+                           GduDeviceTreeModelFlags  flags)
 {
   return GDU_DEVICE_TREE_MODEL (g_object_new (GDU_TYPE_DEVICE_TREE_MODEL,
                                               "application", application,
+                                              "flags", flags,
                                               NULL));
 }
 
@@ -546,12 +590,30 @@ gdu_device_tree_model_get_application (GduDeviceTreeModel *model)
   return model->application;
 }
 
+/**
+ * gdu_device_tree_model_get_flags:
+ * @model: A #GduDeviceTreeModel.
+ *
+ * Gets the #GduDeviceTreeModelFlags used by @model.
+ *
+ * Returns: The flags that @model was constructed with.
+ */
+GduDeviceTreeModelFlags
+gdu_device_tree_model_get_flags (GduDeviceTreeModel *model)
+{
+  g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), GDU_DEVICE_TREE_MODEL_FLAGS_NONE);
+  return model->flags;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static GtkTreeIter *
 get_drive_header_iter (GduDeviceTreeModel *model)
 {
   gchar *s;
+
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_FLAT)
+    return NULL;
 
   if (model->drive_iter_valid)
     goto out;
@@ -625,6 +687,9 @@ static GtkTreeIter *
 get_mdraid_header_iter (GduDeviceTreeModel *model)
 {
   gchar *s;
+
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_FLAT)
+    return NULL;
 
   if (model->mdraid_iter_valid)
     goto out;
@@ -897,6 +962,7 @@ update_drive (GduDeviceTreeModel *model,
   UDisksObjectInfo *info = NULL;
   UDisksBlock *block = NULL;
   gchar *s = NULL;
+  gchar *included_device_name = NULL;
   gboolean warning = FALSE;
   gboolean jobs_running = FALSE;
   GtkTreeIter iter;
@@ -923,6 +989,9 @@ update_drive (GduDeviceTreeModel *model,
       g_free (s);
     }
 
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_DEVICE_NAME)
+    included_device_name = g_strdup_printf (" (%s)", udisks_block_get_preferred_device (block));
+
   info = udisks_client_get_object_info (model->client, object);
   if (warning)
     {
@@ -930,16 +999,18 @@ update_drive (GduDeviceTreeModel *model,
        * of hard-coding the color
        */
       s = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>\n"
-                           "<small><span foreground=\"#ff0000\">%s</span></small>",
+                           "<small><span foreground=\"#ff0000\">%s%s</span></small>",
                            udisks_object_info_get_description (info),
-                           udisks_object_info_get_name (info));
+                           udisks_object_info_get_name (info),
+                           included_device_name != NULL ? included_device_name : "");
     }
   else
     {
       s = g_strdup_printf ("%s\n"
-                           "<small>%s</small>",
+                           "<small>%s%s</small>",
                            udisks_object_info_get_description (info),
-                           udisks_object_info_get_name (info));
+                           udisks_object_info_get_name (info),
+                           included_device_name != NULL ? included_device_name : "");
     }
 
   jobs_running = drive_has_jobs (model, drive);
@@ -966,7 +1037,7 @@ update_drive (GduDeviceTreeModel *model,
                       -1);
 
   /* update spinner, if jobs are running */
-  if (jobs_running)
+  if (jobs_running && (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE))
     {
       if (model->spinner_timeout == 0)
         {
@@ -978,6 +1049,7 @@ update_drive (GduDeviceTreeModel *model,
   g_clear_object (&block);
   g_clear_object (&info);
   g_free (s);
+  g_free (included_device_name);
   return jobs_running;
 }
 
@@ -1170,7 +1242,7 @@ update_mdraid (GduDeviceTreeModel *model,
                       -1);
 
   /* update spinner, if jobs are running */
-  if (jobs_running)
+  if (jobs_running && (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE))
     {
       if (model->spinner_timeout == 0)
         {
@@ -1260,6 +1332,9 @@ static GtkTreeIter *
 get_block_header_iter (GduDeviceTreeModel *model)
 {
   gchar *s;
+
+  if (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_FLAT)
+    return NULL;
 
   if (model->block_iter_valid)
     goto out;
@@ -1402,7 +1477,7 @@ update_block (GduDeviceTreeModel  *model,
                       -1);
 
   /* update spinner, if jobs are running */
-  if (jobs_running)
+  if (jobs_running && (model->flags & GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE))
     {
       if (model->spinner_timeout == 0)
         {

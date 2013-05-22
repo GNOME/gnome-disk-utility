@@ -1310,7 +1310,9 @@ gdu_window_constructed (GObject *object)
   //gtk_style_context_add_class (context, GTK_STYLE_CLASS_INLINE_TOOLBAR);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_BOTTOM);
 
-  window->model = gdu_device_tree_model_new (window->application);
+  window->model = gdu_device_tree_model_new (window->application,
+                                             GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_POWER_STATE |
+                                             GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE);
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->device_tree_treeview), GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),
@@ -3774,7 +3776,7 @@ on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (window, object);
+  gdu_restore_disk_image_dialog_show (window, object, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3816,7 +3818,7 @@ on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (window, object);
+  gdu_restore_disk_image_dialog_show (window, object, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -18,6 +18,7 @@
 
 #include "gduapplication.h"
 #include "gduformatvolumedialog.h"
+#include "gdurestorediskimagedialog.h"
 #include "gduwindow.h"
 #include "gdulocaljob.h"
 
@@ -172,12 +173,14 @@ gdu_application_command_line (GApplication            *_app,
   gchar *opt_block_device = NULL, *error_message = NULL;
   gboolean opt_help = FALSE;
   gboolean opt_format = FALSE;
+  gchar *opt_restore_disk_image = NULL;
   gint opt_xid = -1;
   GOptionEntry opt_entries[] =
   {
     {"block-device", 0, 0, G_OPTION_ARG_STRING, &opt_block_device, N_("Select device"), NULL },
     {"format-device", 0, 0, G_OPTION_ARG_NONE, &opt_format, N_("Format selected device"), NULL },
     {"xid", 0, 0, G_OPTION_ARG_INT, &opt_xid, N_("Parent window XID for the format dialog"), NULL },
+    {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, &opt_restore_disk_image, N_("Restore disk image"), NULL },
     {"help", '?', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &opt_help, N_("Show help options"), NULL },
     {NULL}
   };
@@ -254,6 +257,10 @@ gdu_application_command_line (GApplication            *_app,
       gdu_format_volume_dialog_show_for_xid (app->client, opt_xid, object_to_select);
     }
 
+  if (opt_restore_disk_image != NULL)
+    {
+      gdu_restore_disk_image_dialog_show (app->window, NULL, opt_restore_disk_image);
+    }
 
   ret = 0;
 
@@ -261,6 +268,7 @@ gdu_application_command_line (GApplication            *_app,
   g_option_context_free (context);
   g_clear_object (&object_to_select);
   g_free (opt_block_device);
+  g_free (opt_restore_disk_image);
   g_strfreev (argv);
   return ret;
 }

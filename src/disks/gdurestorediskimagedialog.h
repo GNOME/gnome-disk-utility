@@ -16,7 +16,8 @@
 G_BEGIN_DECLS
 
 void     gdu_restore_disk_image_dialog_show (GduWindow    *window,
-                                             UDisksObject *object);
+                                             UDisksObject *object,
+                                             const gchar  *disk_image_filename);
 
 G_END_DECLS
 

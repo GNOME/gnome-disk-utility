@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility gnome-2-32\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-05 14:27+0000\n"
-"PO-Revision-Date: 2013-03-04 22:06+0100\n"
+"POT-Creation-Date: 2013-05-22 02:24+0000\n"
+"PO-Revision-Date: 2013-05-29 01:49+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -60,8 +60,8 @@ msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
-"Výchozí umístění v dialogových oknech Vytvoření/obnovení z obrazu disku. "
-"Pokud není zadáno, použije se složka ~/Dokumenty."
+"Výchozí umístění v dialogových oknech Vytvoření obrazu disku/obnovení z "
+"obrazu disku. Pokud není zadáno, použije se složka ~/Dokumenty."
 
 #: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
 msgid "Activation of this plugin"
@@ -685,7 +685,7 @@ msgstr "Vytvořit obraz disku…"
 
 #: ../data/ui/disks.ui.h:44
 msgid "Restore Disk Image…"
-msgstr "Obnovit obraz disku…"
+msgstr "Obnovit z obrazu disku…"
 
 #: ../data/ui/disks.ui.h:45
 msgid "Benchmark…"
@@ -1145,7 +1145,7 @@ msgstr "Disky RAID"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "Restore Disk Image"
-msgstr "Obnovit obraz disku…"
+msgstr "Obnovení z obrazu disku"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:2
 msgid "_Image to Restore"
@@ -1160,6 +1160,14 @@ msgid "Destination"
 msgstr "Cíl"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
+msgid "Image to Restore"
+msgstr "Obraz pro obnovu"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:6
+msgid "Image Size"
+msgstr "Velikost obrazu"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:7
 msgid "_Start Restoring…"
 msgstr "_Spustit obnovu…"
 
@@ -1296,37 +1304,41 @@ msgstr "Chyba při otevírání „%s“: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Chyba při připojování obrazu disku: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:131
+#: ../src/disks/gduapplication.c:132
 #, c-format
 msgid "Error opening %s: %s\n"
 msgstr "Chyba při otevírání %s: %s\n"
 
-#: ../src/disks/gduapplication.c:138
+#: ../src/disks/gduapplication.c:139
 #, c-format
 msgid "Error looking up block device for %s\n"
 msgstr "Chyba při hledání blokového zařízení pro %s\n"
 
-#: ../src/disks/gduapplication.c:178
+#: ../src/disks/gduapplication.c:180
 msgid "Select device"
 msgstr "Vybrat zařízení"
 
-#: ../src/disks/gduapplication.c:179
+#: ../src/disks/gduapplication.c:181
 msgid "Format selected device"
 msgstr "Formátovat vybrané zařízení"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:182
 msgid "Parent window XID for the format dialog"
 msgstr "XID rodičovského okna pro dialogové okno formátování"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:183
+msgid "Restore disk image"
+msgstr "Obnovit z obrazu disku"
+
+#: ../src/disks/gduapplication.c:184
 msgid "Show help options"
 msgstr "Zobrazit nápovědu k volbám"
 
-#: ../src/disks/gduapplication.c:210
+#: ../src/disks/gduapplication.c:213
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device musí být použito dohromady s --block-device\n"
 
-#: ../src/disks/gduapplication.c:216
+#: ../src/disks/gduapplication.c:219
 msgid "--format-device must be specified when using --xid\n"
 msgstr "Když je použito --xid, musí být zadáno --format-device\n"
 
@@ -1335,7 +1347,7 @@ msgstr "Když je použito --xid, musí být zadáno --format-device\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:312
+#: ../src/disks/gduapplication.c:320
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2397,7 +2409,7 @@ msgstr "Nelze přečíst %s (nahrazeno nulami)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
 #: ../src/disks/gducreatediskimagedialog.c:406
-#: ../src/disks/gdurestorediskimagedialog.c:398
+#: ../src/disks/gdurestorediskimagedialog.c:579
 msgid "Disk image copying complete"
 msgstr "Kopírování obrazu disku je hotovo"
 
@@ -2432,12 +2444,12 @@ msgid "_Delete Disk Image File"
 msgstr "Smazat soubor s obrazem _disku"
 
 #: ../src/disks/gducreatediskimagedialog.c:719
-#: ../src/disks/gdurestorediskimagedialog.c:532
+#: ../src/disks/gdurestorediskimagedialog.c:713
 msgid "Error determining size of device: "
 msgstr "Chyba při určování velikosti zařízení: "
 
 #: ../src/disks/gducreatediskimagedialog.c:726
-#: ../src/disks/gdurestorediskimagedialog.c:539
+#: ../src/disks/gdurestorediskimagedialog.c:720
 #, c-format
 msgid "Device is size 0"
 msgstr "Zařízení má velikost 0"
@@ -2627,23 +2639,27 @@ msgstr ""
 "Bude změněno pouze heslo, na které se odkazuje soubor <i>/etc/crypttab</i>. "
 "Ke změně hesla na disku použijte <i>Změnit heslo…</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:560
+#: ../src/disks/gdudevicetreemodel.c:507
+msgid "(None)"
+msgstr "(žádné)"
+
+#: ../src/disks/gdudevicetreemodel.c:622
 msgid "Disk Drives"
 msgstr "Diskové jednotky"
 
-#: ../src/disks/gdudevicetreemodel.c:633
+#: ../src/disks/gdudevicetreemodel.c:698
 msgid "RAID Arrays"
 msgstr "Pole RAID"
 
 #. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1098
+#: ../src/disks/gdudevicetreemodel.c:1170
 #, c-format
 msgctxt "md-raid-tree-primary"
 msgid "%s RAID Array"
 msgstr "Pole RAID %s"
 
 #. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1104
+#: ../src/disks/gdudevicetreemodel.c:1176
 msgctxt "md-raid-tree-primary"
 msgid "RAID Array"
 msgstr "Pole RAID"
@@ -2652,13 +2668,13 @@ msgstr "Pole RAID"
 #. *              The first %s is the name of the array (e.g. "My RAID Array").
 #. *              The second %s is the RAID level (e.g. "RAID-5").
 #.
-#: ../src/disks/gdudevicetreemodel.c:1115
+#: ../src/disks/gdudevicetreemodel.c:1187
 #, c-format
 msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdudevicetreemodel.c:1268
+#: ../src/disks/gdudevicetreemodel.c:1343
 msgid "Other Devices"
 msgstr "Ostatní zařízení"
 
@@ -2983,7 +2999,7 @@ msgid "Error updating /etc/fstab entry"
 msgstr "Chyba při aktualizaci položky v /etc/fstab"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2004
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2026
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(jen ke čtení)</span>"
@@ -3108,15 +3124,15 @@ msgctxt "mdraid-add"
 msgid "Select disk to add"
 msgstr "Vybrat disk pro přidání"
 
-#: ../src/disks/gdupartitiondialog.c:355
+#: ../src/disks/gdupartitiondialog.c:362
 msgid "Error setting partition type"
 msgstr "Chyba při nastavování typu oddílu"
 
-#: ../src/disks/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:376
 msgid "Error setting partition name"
 msgstr "Chyba při nastavování názvu oddílu"
 
-#: ../src/disks/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:390
 msgid "Error setting partition flags"
 msgstr "Chyba při nastavování příznaků oddílu"
 
@@ -3140,52 +3156,52 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "Silné"
 
-#: ../src/disks/gdurestorediskimagedialog.c:244
+#: ../src/disks/gdurestorediskimagedialog.c:271
 msgid "Cannot restore image of size 0"
 msgstr "Nelze obnovit obraz o velikosti 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:253
+#: ../src/disks/gdurestorediskimagedialog.c:280
 #, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "Vybraný obraz disku je o %s menší než cílové zařízení"
 
-#: ../src/disks/gdurestorediskimagedialog.c:262
+#: ../src/disks/gdurestorediskimagedialog.c:289
 #, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "Vybraný obraz disku je o %s větší než cílové zařízení"
 
-#: ../src/disks/gdurestorediskimagedialog.c:435
+#: ../src/disks/gdurestorediskimagedialog.c:616
 msgid "Error restoring disk image"
 msgstr "Chyba při obnově z obrazu disku"
 
-#: ../src/disks/gdurestorediskimagedialog.c:722
+#: ../src/disks/gdurestorediskimagedialog.c:907
 msgid "Error opening file for reading"
 msgstr "Chyba při otevírání souboru pro čtení"
 
-#: ../src/disks/gdurestorediskimagedialog.c:736
+#: ../src/disks/gdurestorediskimagedialog.c:921
 msgid "Error determing size of file"
 msgstr "Chyba při určování velikosti souboru"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gdurestorediskimagedialog.c:749
+#: ../src/disks/gdurestorediskimagedialog.c:934
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopíruje se obraz disku do zařízení"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gdurestorediskimagedialog.c:755
+#: ../src/disks/gdurestorediskimagedialog.c:940
 msgid "Restoring Disk Image"
 msgstr "Obnovuje se z obrazu disku"
 
-#: ../src/disks/gdurestorediskimagedialog.c:807
+#: ../src/disks/gdurestorediskimagedialog.c:995
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Opravdu chcete obraz disku zapsat na zařízení?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:808
+#: ../src/disks/gdurestorediskimagedialog.c:996
 msgid "All existing data will be lost"
 msgstr "Všechna stávající data budou ztracena"
 
-#: ../src/disks/gdurestorediskimagedialog.c:809
+#: ../src/disks/gdurestorediskimagedialog.c:997
 msgid "_Restore"
 msgstr "O_bnovit"
 
@@ -3197,7 +3213,7 @@ msgstr "Chyba při odemykání šifrovaného zařízení"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrovací heslo bylo získáno z klíčenky"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2755
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2777
 msgid "No Media"
 msgstr "Bez média"
 
@@ -3280,43 +3296,61 @@ msgstr ""
 "když nechcete, aby došlo ke změnám v podkladovém souboru."
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1651
+#: ../src/disks/gduwindow.c:1655
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
 
-#. Translators: This is the short-cut to format a disk
-#: ../src/disks/gduwindow.c:1656
+#. Translators: This is the short-cut to format a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1663
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
 
-#. Translators: This is the short-cut to view SMART data for a disk
-#: ../src/disks/gduwindow.c:1661
+#. Translators: This is the short-cut to view SMART data for a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1671
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
 
-#. Translators: This is the short-cut to view RAID Disks for a RAID array
-#: ../src/disks/gduwindow.c:1666
+#. Translators: This is the short-cut to view RAID Disks for a RAID array.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1679
 msgctxt "accelerator"
 msgid "<Ctrl>R"
 msgstr "<Ctrl>R"
 
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
-#: ../src/disks/gduwindow.c:1671
+#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1687
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#. Translators: This is the short-cut to open the volume gear menu
-#: ../src/disks/gduwindow.c:1676
+#. Translators: This is the short-cut to open the volume gear menu.
+#. *              The Shift modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Ctrl>).
+#.
+#: ../src/disks/gduwindow.c:1695
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
 
-#. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1683
+#. Translators: This is the short-cut to format a volume.
+#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+#. *              You can however change to other English modifiers.
+#.
+#: ../src/disks/gduwindow.c:1705
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3325,7 +3359,7 @@ msgstr "<Shift><Ctrl>F"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2042
+#: ../src/disks/gduwindow.c:2064
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3334,7 +3368,7 @@ msgstr "Zbývá %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2050
+#: ../src/disks/gduwindow.c:2072
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3345,7 +3379,7 @@ msgstr "Zbývá %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2065
+#: ../src/disks/gduwindow.c:2087
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s z %s – %s"
@@ -3354,41 +3388,41 @@ msgstr "%s z %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2152
+#: ../src/disks/gduwindow.c:2174
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f %%"
 
-#: ../src/disks/gduwindow.c:2224 ../src/disks/gduwindow.c:3069
+#: ../src/disks/gduwindow.c:2246 ../src/disks/gduwindow.c:3091
 msgid "Block device is empty"
 msgstr "Blokové zařízení je prázdné"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2247
+#: ../src/disks/gduwindow.c:2269
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Neznámý (%s)"
 
-#: ../src/disks/gduwindow.c:2328
+#: ../src/disks/gduwindow.c:2350
 msgid "RAID array is not running"
 msgstr "Pole RAID není v provozu"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2349
+#: ../src/disks/gduwindow.c:2371
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "Pole RAID %s"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2355
+#: ../src/disks/gduwindow.c:2377
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "Pole RAID"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2381
+#: ../src/disks/gduwindow.c:2403
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "Neběží"
@@ -3398,13 +3432,13 @@ msgstr "Neběží"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2448
+#: ../src/disks/gduwindow.c:2470
 #, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (místní k %s)"
 
-#: ../src/disks/gduwindow.c:2488
+#: ../src/disks/gduwindow.c:2510
 #, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
@@ -3412,7 +3446,11 @@ msgstr[0] "%d disk"
 msgstr[1] "%d disky"
 msgstr[2] "%d disků"
 
-#: ../src/disks/gduwindow.c:2500
+#. Translators: Used to combine number of disks and the chunk size.
+#. *              The first %s is the number of disks e.g. "3 disks".
+#. *              The second %s is the chunk size e.g. "512 KiB".
+#.
+#: ../src/disks/gduwindow.c:2522
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
@@ -3422,13 +3460,13 @@ msgstr "%s, blok %s"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2509
+#: ../src/disks/gduwindow.c:2531
 #, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2529
+#: ../src/disks/gduwindow.c:2551
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
@@ -3436,7 +3474,7 @@ msgstr[0] "%d disk chybí"
 msgstr[1] "%d disky chybí"
 msgstr[2] "%d disků chybí"
 
-#: ../src/disks/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2557
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "POLE JE DEGRADOVANÉ"
@@ -3444,50 +3482,50 @@ msgstr "POLE JE DEGRADOVANÉ"
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2539
+#: ../src/disks/gduwindow.c:2561
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2550 ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2572 ../src/disks/gduwindow.c:2588
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "Běží"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2555
+#: ../src/disks/gduwindow.c:2577
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "Neběží"
 
-#: ../src/disks/gduwindow.c:2575
+#: ../src/disks/gduwindow.c:2597
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
 msgstr "Kontrolní průchod dat"
 
-#: ../src/disks/gduwindow.c:2580
+#: ../src/disks/gduwindow.c:2602
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
 msgstr "Kontrolní průchod dat a oprava"
 
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2607
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "Synchronizuje se"
 
-#: ../src/disks/gduwindow.c:2589
+#: ../src/disks/gduwindow.c:2611
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "Zotavuje se"
 
-#: ../src/disks/gduwindow.c:2593
+#: ../src/disks/gduwindow.c:2615
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "Zmrazeno"
 
 #. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2609
+#: ../src/disks/gduwindow.c:2631
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
 msgstr "POLE JE CHYBNĚ NASTAVENÉ"
@@ -3496,7 +3534,7 @@ msgstr "POLE JE CHYBNĚ NASTAVENÉ"
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2637
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
 msgstr "Split-Brain"
@@ -3505,7 +3543,7 @@ msgstr "Split-Brain"
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
 #. *              The second %s is "Split-Brain" as a hyperlink.
 #.
-#: ../src/disks/gduwindow.c:2621
+#: ../src/disks/gduwindow.c:2643
 #, c-format
 msgctxt "raid-split-brain"
 msgid "%s (%s)"
@@ -3515,7 +3553,7 @@ msgstr "%s (%s)"
 #. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
 #. *              The second is the percentage completed, e.g. '42.5%'
 #.
-#: ../src/disks/gduwindow.c:2651
+#: ../src/disks/gduwindow.c:2673
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
@@ -3525,7 +3563,7 @@ msgstr "%s: %s"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2678
+#: ../src/disks/gduwindow.c:2700
 #, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
@@ -3534,11 +3572,11 @@ msgstr "Zbývá %s (%s/s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2858
+#: ../src/disks/gduwindow.c:2880
 msgid "Connected to another seat"
 msgstr "Připojeno do jiného místa"
 
-#: ../src/disks/gduwindow.c:3002
+#: ../src/disks/gduwindow.c:3024
 msgid "Loop device is empty"
 msgstr "Zařízení místní smyčky je prázdné"
 
@@ -3548,67 +3586,67 @@ msgstr "Zařízení místní smyčky je prázdné"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3241
+#: ../src/disks/gduwindow.c:3263
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s volných (%.1f %% obsazeno)"
 
-#: ../src/disks/gduwindow.c:3271
+#: ../src/disks/gduwindow.c:3293
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Neznámý"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3299
+#: ../src/disks/gduwindow.c:3321
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Kořen souborového systému"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3307
+#: ../src/disks/gduwindow.c:3329
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Připojeno v %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3313
+#: ../src/disks/gduwindow.c:3335
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nepřipojeno"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3358
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktivní"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3342
+#: ../src/disks/gduwindow.c:3364
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Neaktivní"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3355
+#: ../src/disks/gduwindow.c:3377
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Odemknuto"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3361
+#: ../src/disks/gduwindow.c:3383
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Zamknuto"
 
-#: ../src/disks/gduwindow.c:3371
+#: ../src/disks/gduwindow.c:3393
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Rozšířený oddíl"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3381
+#: ../src/disks/gduwindow.c:3403
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "Přejít na pole"
@@ -3617,7 +3655,7 @@ msgstr "Přejít na pole"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3386
+#: ../src/disks/gduwindow.c:3408
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3627,29 +3665,29 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:3426
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3504
+#: ../src/disks/gduwindow.c:3526
 msgid "Unallocated Space"
 msgstr "Nepřidělený prostor"
 
-#: ../src/disks/gduwindow.c:3883
+#: ../src/disks/gduwindow.c:3905
 msgid "An error occurred when requesting data redundancy check"
 msgstr "Vyskytla se chyba při požadavku na kontrolu redundantnosti dat"
 
 #. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3901
+#: ../src/disks/gduwindow.c:3923
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
 msgstr "Kontrolní průchod dat"
 
 #. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3903
+#: ../src/disks/gduwindow.c:3925
 msgctxt "mdraid-scrub-dialog"
 msgid ""
 "As storage devices can develop bad blocks at any time it is valuable to "
@@ -3670,112 +3708,112 @@ msgstr ""
 "v článku <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>Správa polí RAID</a> (odkazovaný text je v angličtině)."
 
-#: ../src/disks/gduwindow.c:3908
+#: ../src/disks/gduwindow.c:3930
 msgctxt "mdraid-scrub-dialog"
 msgid "_Start"
 msgstr "_Spustit"
 
-#: ../src/disks/gduwindow.c:3909
+#: ../src/disks/gduwindow.c:3931
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
 msgstr "Op_ravit nesourodé bloky, pokud je možné"
 
-#: ../src/disks/gduwindow.c:3956
+#: ../src/disks/gduwindow.c:3978
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Vyskytla se chyba při pokusu o přechod disku do režimu spánku"
 
-#: ../src/disks/gduwindow.c:4002
+#: ../src/disks/gduwindow.c:4024
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Vyskytla se chyba při pokusu probudit disk z režimu spánku"
 
-#: ../src/disks/gduwindow.c:4047
+#: ../src/disks/gduwindow.c:4069
 msgid "Error powering off drive"
 msgstr "Chyba při vypínání disku"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4099
+#: ../src/disks/gduwindow.c:4121
 msgid "Are you sure you want to power off the drives?"
 msgstr "Opravdu chcete disk vypnout?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4101
+#: ../src/disks/gduwindow.c:4123
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "Tato operace připraví systém k vypnutí a odebrání následujících disků."
 
-#: ../src/disks/gduwindow.c:4105
+#: ../src/disks/gduwindow.c:4127
 msgid "_Power Off"
 msgstr "Vy_pnout"
 
-#: ../src/disks/gduwindow.c:4182
+#: ../src/disks/gduwindow.c:4204
 msgid "Error mounting filesystem"
 msgstr "Chyba při připojování souborového systému"
 
-#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
+#: ../src/disks/gduwindow.c:4244 ../src/libgdu/gduutils.c:1120
 msgid "Error unmounting filesystem"
 msgstr "Chyba při odpojování souborového systému"
 
-#: ../src/disks/gduwindow.c:4367
+#: ../src/disks/gduwindow.c:4389
 msgid "Error deleting partition"
 msgstr "Chyba při mazání oddílu"
 
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:4427
 msgid "Are you sure you want to delete the partition?"
 msgstr "Opravdu chcete oddíl vymazat?"
 
-#: ../src/disks/gduwindow.c:4406
+#: ../src/disks/gduwindow.c:4428
 msgid "All data on the partition will be lost"
 msgstr "Všechna data na oddílu budou ztracena"
 
-#: ../src/disks/gduwindow.c:4407
+#: ../src/disks/gduwindow.c:4429
 msgid "_Delete"
 msgstr "Vy_mazat"
 
-#: ../src/disks/gduwindow.c:4438
+#: ../src/disks/gduwindow.c:4460
 msgid "Error ejecting media"
 msgstr "Chyba při vysouvání média"
 
-#: ../src/disks/gduwindow.c:4495
+#: ../src/disks/gduwindow.c:4517
 msgid "Error starting RAID array"
 msgstr "Chyba při spouštění pole RAID"
 
-#: ../src/disks/gduwindow.c:4537
+#: ../src/disks/gduwindow.c:4559
 msgid "Error stopping RAID array"
 msgstr "Chyba při zastavování pole RAID"
 
-#: ../src/disks/gduwindow.c:4624
+#: ../src/disks/gduwindow.c:4646
 msgid "Error locking encrypted device"
 msgstr "Chyba při zamykání šifrovaného zařízení"
 
-#: ../src/disks/gduwindow.c:4689
+#: ../src/disks/gduwindow.c:4711
 msgid "Error starting swap"
 msgstr "Chyba při spouštění odkládacího oddílu"
 
-#: ../src/disks/gduwindow.c:4726
+#: ../src/disks/gduwindow.c:4748
 msgid "Error stopping swap"
 msgstr "Chyba při zastavování odkládacího oddílu"
 
-#: ../src/disks/gduwindow.c:4765
+#: ../src/disks/gduwindow.c:4787
 msgid "Error setting bitmap for the RAID array"
 msgstr "Chyba při nastavování bitové mapy pro pole RAID"
 
-#: ../src/disks/gduwindow.c:4831
+#: ../src/disks/gduwindow.c:4853
 msgid "Error setting autoclear flag"
 msgstr "Chyba při nastavování příznaku automatického mazání"
 
-#: ../src/disks/gduwindow.c:4884 ../src/disks/gduwindow.c:4948
+#: ../src/disks/gduwindow.c:4906 ../src/disks/gduwindow.c:4970
 msgid "Error canceling job"
 msgstr "Chyba při rušení úlohy"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:5070
+#: ../src/disks/gduwindow.c:5092
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "Není vy_bráno žádné zařízení"
 
-#: ../src/disks/gduwindow.c:5080
+#: ../src/disks/gduwindow.c:5102
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
@@ -3792,7 +3830,7 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "Obrazy disku (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:428
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3801,7 +3839,7 @@ msgstr[1] "%d roky"
 msgstr[2] "%d let"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:435
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3810,7 +3848,7 @@ msgstr[1] "%d měsíce"
 msgstr[2] "%d měsíců"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:442
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3819,7 +3857,7 @@ msgstr[1] "%d dny"
 msgstr[2] "%d dní"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:449
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3828,7 +3866,7 @@ msgstr[1] "%d hodiny"
 msgstr[2] "%d hodin"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:456
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3837,7 +3875,7 @@ msgstr[1] "%d minuty"
 msgstr[2] "%d minut"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:463
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3846,7 +3884,7 @@ msgstr[1] "%d sekundy"
 msgstr[2] "%d sekund"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:470
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3855,119 +3893,119 @@ msgstr[1] "%d milisekundy"
 msgstr[2] "%d milisekund"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:534
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s a %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:539
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:544
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:529
+#: ../src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:560
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s a %s"
 
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:569
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Méně než minuta."
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:574
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:560
+#: ../src/libgdu/gduutils.c:580
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:702
+#: ../src/libgdu/gduutils.c:722
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovlivněná zařízení"
 
-#: ../src/libgdu/gduutils.c:792
+#: ../src/libgdu/gduutils.c:812
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:793
+#: ../src/libgdu/gduutils.c:813
 msgid "Stripe"
 msgstr "Prokládání"
 
-#: ../src/libgdu/gduutils.c:798
+#: ../src/libgdu/gduutils.c:818
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:799
+#: ../src/libgdu/gduutils.c:819
 msgid "Mirror"
 msgstr "Zdrcadlení"
 
-#: ../src/libgdu/gduutils.c:804
+#: ../src/libgdu/gduutils.c:824
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:805
+#: ../src/libgdu/gduutils.c:825
 msgid "Dedicated Parity"
 msgstr "Vyhrazená parita"
 
-#: ../src/libgdu/gduutils.c:810
+#: ../src/libgdu/gduutils.c:830
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:811
+#: ../src/libgdu/gduutils.c:831
 msgid "Distributed Parity"
 msgstr "Rozložená parita"
 
-#: ../src/libgdu/gduutils.c:816
+#: ../src/libgdu/gduutils.c:836
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:817
+#: ../src/libgdu/gduutils.c:837
 msgid "Double Distributed Parity"
 msgstr "Dvojitě rozložená parita"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:842
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:843
 msgid "Stripe of Mirrors"
 msgstr "Prokládání zrcadlení"
 
-#: ../src/libgdu/gduutils.c:828
+#: ../src/libgdu/gduutils.c:848
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1120
+#: ../src/libgdu/gduutils.c:1140
 msgid "Error locking device"
 msgstr "Chyba při zamykání zařízení"
 

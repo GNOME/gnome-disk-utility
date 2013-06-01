@@ -9,6 +9,9 @@
 
 #include "config.h"
 
+#define _GNU_SOURCE
+#include <fcntl.h>
+
 #include <glib/gi18n.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
@@ -727,36 +730,47 @@ copy_thread_func (gpointer user_data)
       goto out;
     }
 
-  /* Allocate space at once to ensure blocks are laid out contigously,
-   * see http://lwn.net/Articles/226710/
+  /* If supported, allocate space at once to ensure blocks are laid
+   * out contigously, see http://lwn.net/Articles/226710/
    */
+#ifdef HAVE_FALLOCATE
   if (G_IS_FILE_DESCRIPTOR_BASED (data->output_file_stream))
     {
       gint output_fd = g_file_descriptor_based_get_fd (G_FILE_DESCRIPTOR_BASED (data->output_file_stream));
       gint rc;
 
-      /* With some filesystems drivers - for example ntfs-3g - posix_fallocate(3) may take a
-       * loong time since it may be implemented as writing zeroes to the file.
-       */
       g_mutex_lock (&data->copy_lock);
       data->allocating_file = TRUE;
       g_mutex_unlock (&data->copy_lock);
       g_idle_add (on_update_job, dialog_data_ref (data));
 
-      rc = posix_fallocate (output_fd, (off_t) 0, (off_t) block_device_size);
+      rc = fallocate (output_fd,
+                      0, /* mode */
+                      (off_t) 0,
+                      (off_t) block_device_size);
+
+      if (rc != 0)
+        {
+          if (errno == ENOSYS || errno == EOPNOTSUPP)
+            {
+              /* If the kernel or filesystem does not support it, too
+               * bad. Just continue.
+               */
+            }
+          else
+            {
+              error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));
+              g_prefix_error (&error, _("Error allocating space for disk image file: "));
+              goto out;
+            }
+        }
 
       g_mutex_lock (&data->copy_lock);
       data->allocating_file = FALSE;
       g_mutex_unlock (&data->copy_lock);
       g_idle_add (on_update_job, dialog_data_ref (data));
-
-      if (rc != 0)
-        {
-          error = g_error_new (G_IO_ERROR, g_io_error_from_errno (rc), "%s", strerror (rc));
-          g_prefix_error (&error, _("Error allocating space for disk image file: "));
-          goto out;
-        }
     }
+#endif
 
   page_size = sysconf (_SC_PAGESIZE);
   buffer_unaligned = g_new0 (guchar, buffer_size + page_size);

@@ -77,6 +77,26 @@ CC_CHECK_CFLAGS_APPEND([                          \
         -fno-strict-aliasing                      \
 ])
 
+AC_MSG_CHECKING([for valid fallocate() function])
+AC_LINK_IFELSE([
+AC_LANG_PROGRAM([[
+#include <unistd.h>
+#include <sys/types.h>
+#include <linux/falloc.h>
+#include <fcntl.h>
+]],[[
+   long ret;
+
+   ret = fallocate(0, FALLOC_FL_KEEP_SIZE, 0xfffffffful, 0xfffffffful);
+
+   if (ret != 0) {
+      return 1;
+   }
+   ]])],[
+AC_MSG_RESULT([yes])
+AC_DEFINE(HAVE_FALLOCATE,1,[Have valid fallocate() function])],[
+AC_MSG_RESULT([no])])
+
 # ***************************
 # Check for required packages
 # ***************************

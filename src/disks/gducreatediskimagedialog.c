@@ -475,7 +475,7 @@ on_success (gpointer user_data)
                                                    /* Translators: Primary message in dialog shown if some data was unreadable while creating a disk image */
                                                    _("Unrecoverable read errors while creating disk image"));
       s = g_format_size (data->num_error_bytes);
-      percentage = 100.0 * ((gdouble) data->num_error_bytes) / ((gdouble) gdu_estimator_get_completed_bytes (data->estimator));
+      percentage = 100.0 * ((gdouble) data->num_error_bytes) / ((gdouble) gdu_estimator_get_target_bytes (data->estimator));
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
                                                   /* Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
                                                    * The %f is the percentage of unreadable data (ex. 13.0).

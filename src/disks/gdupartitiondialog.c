@@ -91,11 +91,11 @@ edit_partition_get (EditPartitionData   *data,
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton)))
         flags |= (1UL<<2);
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->readonly_checkbutton)))
-        flags |= (1UL<<60);
+        flags |= (1ULL<<60);
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->hidden_checkbutton)))
-        flags |= (1UL<<62);
+        flags |= (1ULL<<62);
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->do_not_automount_checkbutton)))
-        flags |= (1UL<<63);
+        flags |= (1ULL<<63);
     }
   else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
     {
@@ -252,9 +252,9 @@ edit_partition_populate (EditPartitionData *data)
       flags = udisks_partition_get_flags (data->partition);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->system_checkbutton),           (flags & (1UL<< 0)) != 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton),         (flags & (1UL<< 2)) != 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->readonly_checkbutton),         (flags & (1UL<<60)) != 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->hidden_checkbutton),           (flags & (1UL<<62)) != 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->do_not_automount_checkbutton), (flags & (1UL<<63)) != 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->readonly_checkbutton),         (flags & (1ULL<<60)) != 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->hidden_checkbutton),           (flags & (1ULL<<62)) != 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->do_not_automount_checkbutton), (flags & (1ULL<<63)) != 0);
     }
   else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
     {

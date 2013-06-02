@@ -293,7 +293,7 @@ populate_partitioning_combobox (FormatDiskData *data)
   /* Default to MBR for removable drives < 2TB... GPT otherwise */
   if (data->drive != NULL &&
       udisks_drive_get_removable (data->drive) &&
-      udisks_drive_get_size (data->drive) < 2 * 1000L*1000L*1000L*1000L)
+      udisks_drive_get_size (data->drive) < (guint64)(2ULL * 1000ULL*1000ULL*1000ULL*1000ULL))
     {
       gtk_combo_box_set_active_id (GTK_COMBO_BOX (data->type_combobox), "dos");
     }

@@ -429,7 +429,7 @@ populate (GduCreateFilesystemWidget *widget)
   if (widget->drive != NULL && udisks_drive_get_removable (widget->drive))
     {
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
-      if (is_flash (widget->drive) || udisks_drive_get_size (widget->drive) < 20L * 1000L*1000L*1000L)
+      if (is_flash (widget->drive) || udisks_drive_get_size (widget->drive) < (guint64)(20ULL * 1000ULL*1000ULL*1000ULL))
         {
           gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "vfat");
         }

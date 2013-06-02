@@ -587,7 +587,7 @@ copy_thread_func (gpointer user_data)
                                     &error))
         {
           g_prefix_error (&error,
-                          "Error reading %" G_GUINT64_FORMAT " bytes from offset %" G_GUINT64_FORMAT ": ",
+                          "Error reading %" G_GSIZE_FORMAT " bytes from offset %" G_GUINT64_FORMAT ": ",
                           num_bytes_to_read,
                           num_bytes_completed);
           goto out;
@@ -595,7 +595,7 @@ copy_thread_func (gpointer user_data)
       if (num_bytes_read != num_bytes_to_read)
         {
           g_set_error (&error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                       "Requested %" G_GUINT64_FORMAT " bytes from offset %" G_GUINT64_FORMAT " but only read %" G_GUINT64_FORMAT " bytes",
+                       "Requested %" G_GSIZE_FORMAT " bytes from offset %" G_GUINT64_FORMAT " but only read %" G_GSIZE_FORMAT " bytes",
                        num_bytes_read,
                        num_bytes_completed,
                        num_bytes_to_read);
@@ -610,7 +610,7 @@ copy_thread_func (gpointer user_data)
             goto copy_write_again;
 
           g_set_error (&error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                       "Error writing %" G_GUINT64_FORMAT " bytes to offset %" G_GUINT64_FORMAT ": %m",
+                       "Error writing %" G_GSIZE_FORMAT " bytes to offset %" G_GUINT64_FORMAT ": %m",
                        num_bytes_read,
                        num_bytes_completed);
           goto out;

@@ -610,7 +610,7 @@ copy_span (int              fd,
                                   error))
     {
       g_prefix_error (error,
-                      "Error writing %" G_GUINT64_FORMAT " bytes to offset %" G_GUINT64_FORMAT ": ",
+                      "Error writing %" G_GSIZE_FORMAT " bytes to offset %" G_GUINT64_FORMAT ": ",
                       num_bytes_to_write,
                       offset);
       goto out;

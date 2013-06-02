@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-24 20:14+0000\n"
-"PO-Revision-Date: 2013-03-25 15:20+0700\n"
+"POT-Creation-Date: 2013-05-22 04:38+0000\n"
+"PO-Revision-Date: 2013-06-02 18:30+0700\n"
 "Last-Translator: Akom Chotiphantawanon <knight2000@gmail.com>\n"
 "Language-Team: Thai <thai-l10n@googlegroups.com>\n"
 "Language: th\n"
@@ -1116,6 +1116,14 @@ msgid "Destination"
 msgstr "ปลายทาง"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
+msgid "Image to Restore"
+msgstr "อิมเมจที่จะเขียนคืน"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:6
+msgid "Image Size"
+msgstr "ขนาดของอิมเมจ"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:7
 msgid "_Start Restoring…"
 msgstr "เ_ริ่มเขียนคืน…"
 
@@ -1252,37 +1260,41 @@ msgstr "เกิดข้อผิดพลาดขณะเปิด `%s': %m
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "เกิดข้อผิดพลาดขณะแนบอิมเมจของดิสก์: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:131
+#: ../src/disks/gduapplication.c:132
 #, c-format
 msgid "Error opening %s: %s\n"
 msgstr "เกิดข้อผิดพลาดขณะเปิด %s: %s\n"
 
-#: ../src/disks/gduapplication.c:138
+#: ../src/disks/gduapplication.c:139
 #, c-format
 msgid "Error looking up block device for %s\n"
 msgstr "เกิดข้อผิดพลาดขณะเปิดหาอุปกรณ์บล็อคสำหรับ %s\n"
 
-#: ../src/disks/gduapplication.c:178
+#: ../src/disks/gduapplication.c:180
 msgid "Select device"
 msgstr "เลือกอุปกรณ์"
 
-#: ../src/disks/gduapplication.c:179
+#: ../src/disks/gduapplication.c:181
 msgid "Format selected device"
 msgstr "ฟอร์แมตอุปกรณ์ที่เลือก"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:182
 msgid "Parent window XID for the format dialog"
 msgstr "XID ของหน้าต่างแม่ของกล่องโต้ตอบฟอร์แมต"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:183
+msgid "Restore disk image"
+msgstr "เขียนคืนอิมเมจของดิสก์"
+
+#: ../src/disks/gduapplication.c:184
 msgid "Show help options"
 msgstr "แสดงวิธีใช้ตัวเลือกต่างๆ"
 
-#: ../src/disks/gduapplication.c:210
+#: ../src/disks/gduapplication.c:213
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device ต้องใช้ร่วมกับ --block-device\n"
 
-#: ../src/disks/gduapplication.c:216
+#: ../src/disks/gduapplication.c:219
 msgid "--format-device must be specified when using --xid\n"
 msgstr "ต้องระบุ --format-device เมื่อใช้ --xid\n"
 
@@ -1291,7 +1303,7 @@ msgstr "ต้องระบุ --format-device เมื่อใช้ --xid\
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:312
+#: ../src/disks/gduapplication.c:320
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2334,7 +2346,7 @@ msgstr "ไม่สามารถอ่านข้อมูลได้ %s (�
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
 #: ../src/disks/gducreatediskimagedialog.c:406
-#: ../src/disks/gdurestorediskimagedialog.c:398
+#: ../src/disks/gdurestorediskimagedialog.c:580
 msgid "Disk image copying complete"
 msgstr "คัดลอกอิมเมจของดิสก์เสร็จสมบูรณ์"
 
@@ -2369,12 +2381,12 @@ msgid "_Delete Disk Image File"
 msgstr "_ลบแฟ้มอิมเมจของดิสก์"
 
 #: ../src/disks/gducreatediskimagedialog.c:719
-#: ../src/disks/gdurestorediskimagedialog.c:532
+#: ../src/disks/gdurestorediskimagedialog.c:714
 msgid "Error determining size of device: "
 msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของอุปกรณ์: "
 
 #: ../src/disks/gducreatediskimagedialog.c:726
-#: ../src/disks/gdurestorediskimagedialog.c:539
+#: ../src/disks/gdurestorediskimagedialog.c:721
 #, c-format
 msgid "Device is size 0"
 msgstr "อุปกรณ์มีขนาดเป็น 0"
@@ -2562,23 +2574,27 @@ msgstr ""
 "จะเปลี่ยนเฉพาะวลีรหัสผ่านที่อ้างถึงจากแฟ้ม <i>/etc/crypttab</i> เท่านั้น "
 "หากต้องการเปลี่ยนวลีรหัสผ่านบนดิสก์ ใช้ <i>เปลี่ยนวลีรหัสผ่าน…</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:560
+#: ../src/disks/gdudevicetreemodel.c:507
+msgid "(None)"
+msgstr "(ไม่มี)"
+
+#: ../src/disks/gdudevicetreemodel.c:622
 msgid "Disk Drives"
 msgstr "ดิสก์ไดรว์"
 
-#: ../src/disks/gdudevicetreemodel.c:633
+#: ../src/disks/gdudevicetreemodel.c:698
 msgid "RAID Arrays"
 msgstr "แอร์เรย์ RAID"
 
 #. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1098
+#: ../src/disks/gdudevicetreemodel.c:1174
 #, c-format
 msgctxt "md-raid-tree-primary"
 msgid "%s RAID Array"
 msgstr "แอร์เรย์ RAID %s"
 
 #. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1104
+#: ../src/disks/gdudevicetreemodel.c:1180
 msgctxt "md-raid-tree-primary"
 msgid "RAID Array"
 msgstr "แอร์เรย์ RAID"
@@ -2587,13 +2603,13 @@ msgstr "แอร์เรย์ RAID"
 #. *              The first %s is the name of the array (e.g. "My RAID Array").
 #. *              The second %s is the RAID level (e.g. "RAID-5").
 #.
-#: ../src/disks/gdudevicetreemodel.c:1115
+#: ../src/disks/gdudevicetreemodel.c:1191
 #, c-format
 msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdudevicetreemodel.c:1268
+#: ../src/disks/gdudevicetreemodel.c:1351
 msgid "Other Devices"
 msgstr "อุปกรณ์อื่น"
 
@@ -2895,7 +2911,7 @@ msgid "Error updating /etc/fstab entry"
 msgstr "เกิดข้อผิดพลาดขณะปรับข้อมูลรายการใน /etc/fstab"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2022
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2026
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(อ่านเท่านั้น)</span>"
@@ -3020,15 +3036,15 @@ msgctxt "mdraid-add"
 msgid "Select disk to add"
 msgstr "เลือกดิสก์ที่จะเพิ่ม"
 
-#: ../src/disks/gdupartitiondialog.c:355
+#: ../src/disks/gdupartitiondialog.c:362
 msgid "Error setting partition type"
 msgstr "เกิดข้อผิดพลาดขณะตั้งค่าชนิดพาร์ทิชัน"
 
-#: ../src/disks/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:376
 msgid "Error setting partition name"
 msgstr "เกิดข้อผิดพลาดขณะตั้งค่าชื่อพาร์ทิชัน"
 
-#: ../src/disks/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:390
 msgid "Error setting partition flags"
 msgstr "เกิดข้อผิดพลาดขณะตั้งค่าแฟล็กพาร์ทิชัน"
 
@@ -3052,52 +3068,52 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "แน่นหนา"
 
-#: ../src/disks/gdurestorediskimagedialog.c:244
+#: ../src/disks/gdurestorediskimagedialog.c:271
 msgid "Cannot restore image of size 0"
 msgstr "ไม่สามารถเขียนคืนอิมเมจขนาด 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:253
+#: ../src/disks/gdurestorediskimagedialog.c:280
 #, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "อิมเมจของดิสก์มีขนาดเล็กกว่าอุปกรณ์ปลายทางอยู่ %s"
 
-#: ../src/disks/gdurestorediskimagedialog.c:262
+#: ../src/disks/gdurestorediskimagedialog.c:289
 #, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "อิมเมจของดิสก์มีขนาดใหญ่กว่าอุปกรณ์ปลายทางอยู่ %s"
 
-#: ../src/disks/gdurestorediskimagedialog.c:435
+#: ../src/disks/gdurestorediskimagedialog.c:617
 msgid "Error restoring disk image"
 msgstr "เกิดข้อผิดพลาดขณะเขียนคืนอิมเมจของดิสก์"
 
-#: ../src/disks/gdurestorediskimagedialog.c:722
+#: ../src/disks/gdurestorediskimagedialog.c:908
 msgid "Error opening file for reading"
 msgstr "เกิดข้อผิดพลาดขณะเปิดแฟ้มสำหรับอ่าน"
 
-#: ../src/disks/gdurestorediskimagedialog.c:736
+#: ../src/disks/gdurestorediskimagedialog.c:922
 msgid "Error determing size of file"
 msgstr "เกิดข้อผิดพลาดขณะพิจารณาขนาดของแฟ้ม"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gdurestorediskimagedialog.c:749
+#: ../src/disks/gdurestorediskimagedialog.c:935
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "กำลังคัดลอกอิมเมจของดิสก์ไปยังอุปกรณ์"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gdurestorediskimagedialog.c:755
+#: ../src/disks/gdurestorediskimagedialog.c:941
 msgid "Restoring Disk Image"
 msgstr "เขียนคืนอิมเมจของดิสก์"
 
-#: ../src/disks/gdurestorediskimagedialog.c:807
+#: ../src/disks/gdurestorediskimagedialog.c:996
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการเขียนอิมเมจของดิสก์ลงในอุปกรณ์?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:808
+#: ../src/disks/gdurestorediskimagedialog.c:997
 msgid "All existing data will be lost"
 msgstr "ข้อมูลเดิมที่มีอยู่ทั้งหมดจะสูญหาย"
 
-#: ../src/disks/gdurestorediskimagedialog.c:809
+#: ../src/disks/gdurestorediskimagedialog.c:998
 msgid "_Restore"
 msgstr "เขียน_คืน"
 
@@ -3109,7 +3125,7 @@ msgstr "เกิดข้อผิดพลาดขณะปลดล็อค
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "วลีรหัสผ่านสำหรับเข้ารหัสลับดึงมาจากพวงกุญแจ"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2773
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2777
 msgid "No Media"
 msgstr "ไม่มีสื่อ"
 
@@ -3192,7 +3208,7 @@ msgstr ""
 "ซึ่งจะมีประโยชน์ถ้าคุณไม่ต้องการเปลี่ยนแปลงแฟ้มอิมเมจ"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1651
+#: ../src/disks/gduwindow.c:1655
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -3201,7 +3217,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1659
+#: ../src/disks/gduwindow.c:1663
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -3210,7 +3226,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1667
+#: ../src/disks/gduwindow.c:1671
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -3219,7 +3235,7 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1675
+#: ../src/disks/gduwindow.c:1679
 msgctxt "accelerator"
 msgid "<Ctrl>R"
 msgstr "<Ctrl>R"
@@ -3228,7 +3244,7 @@ msgstr "<Ctrl>R"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1683
+#: ../src/disks/gduwindow.c:1687
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
@@ -3237,7 +3253,7 @@ msgstr "<Ctrl>E"
 #. *              The Shift modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Ctrl>).
 #.
-#: ../src/disks/gduwindow.c:1691
+#: ../src/disks/gduwindow.c:1695
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -3246,7 +3262,7 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1701
+#: ../src/disks/gduwindow.c:1705
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3255,7 +3271,7 @@ msgstr "<Shift><Ctrl>F"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2060
+#: ../src/disks/gduwindow.c:2064
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3264,7 +3280,7 @@ msgstr "เหลืออีก %s (%s/วินาที)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2068
+#: ../src/disks/gduwindow.c:2072
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3275,7 +3291,7 @@ msgstr "เหลืออีก %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2083
+#: ../src/disks/gduwindow.c:2087
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s จาก %s – %s"
@@ -3284,41 +3300,41 @@ msgstr "%s จาก %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2170
+#: ../src/disks/gduwindow.c:2174
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:2242 ../src/disks/gduwindow.c:3087
+#: ../src/disks/gduwindow.c:2246 ../src/disks/gduwindow.c:3091
 msgid "Block device is empty"
 msgstr "อุปกรณ์บล็อคว่างเปล่า"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2265
+#: ../src/disks/gduwindow.c:2269
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "ไม่ทราบ (%s)"
 
-#: ../src/disks/gduwindow.c:2346
+#: ../src/disks/gduwindow.c:2350
 msgid "RAID array is not running"
 msgstr "แอร์เรย์ RAID ไม่ได้ทำงานอยู่"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2367
+#: ../src/disks/gduwindow.c:2371
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "แอร์เรย์ RAID ขนาด %s"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2373
+#: ../src/disks/gduwindow.c:2377
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "แอร์เรย์ RAID"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2399
+#: ../src/disks/gduwindow.c:2403
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "ไม่ทำงาน"
@@ -3328,13 +3344,13 @@ msgstr "ไม่ทำงาน"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2466
+#: ../src/disks/gduwindow.c:2470
 #, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (local สำหรับ %s)"
 
-#: ../src/disks/gduwindow.c:2506
+#: ../src/disks/gduwindow.c:2510
 #, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
@@ -3344,7 +3360,7 @@ msgstr[0] "ดิสก์ %d ดิสก์"
 #. *              The first %s is the number of disks e.g. "3 disks".
 #. *              The second %s is the chunk size e.g. "512 KiB".
 #.
-#: ../src/disks/gduwindow.c:2518
+#: ../src/disks/gduwindow.c:2522
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
@@ -3354,19 +3370,19 @@ msgstr "%s, ก้อนข้อมูลก้อนละ %s"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2527
+#: ../src/disks/gduwindow.c:2531
 #, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2547
+#: ../src/disks/gduwindow.c:2551
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
 msgstr[0] "ขาดดิสก์ %d ดิสก์"
 
-#: ../src/disks/gduwindow.c:2553
+#: ../src/disks/gduwindow.c:2557
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "* แอร์เรย์ถูกลดความสามารถ *"
@@ -3374,50 +3390,50 @@ msgstr "* แอร์เรย์ถูกลดความสามารถ 
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2557
+#: ../src/disks/gduwindow.c:2561
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2568 ../src/disks/gduwindow.c:2584
+#: ../src/disks/gduwindow.c:2572 ../src/disks/gduwindow.c:2588
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "กำลังทำงาน"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2573
+#: ../src/disks/gduwindow.c:2577
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "ไม่ทำงาน"
 
-#: ../src/disks/gduwindow.c:2593
+#: ../src/disks/gduwindow.c:2597
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
 msgstr "กำลัง Scrub ข้อมูล"
 
-#: ../src/disks/gduwindow.c:2598
+#: ../src/disks/gduwindow.c:2602
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
 msgstr "กำลัง Scrub และซ่อมแซมข้อมูล"
 
-#: ../src/disks/gduwindow.c:2603
+#: ../src/disks/gduwindow.c:2607
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "กำลังปรับข้อมูลใหม่ให้ตรง"
 
-#: ../src/disks/gduwindow.c:2607
+#: ../src/disks/gduwindow.c:2611
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "กำลังกู้คืน"
 
-#: ../src/disks/gduwindow.c:2611
+#: ../src/disks/gduwindow.c:2615
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "ถูกแช่แข็ง"
 
 #. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2627
+#: ../src/disks/gduwindow.c:2631
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
 msgstr "* แอร์เรย์ RAID ตั้งค่าผิด *"
@@ -3426,7 +3442,7 @@ msgstr "* แอร์เรย์ RAID ตั้งค่าผิด *"
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
-#: ../src/disks/gduwindow.c:2633
+#: ../src/disks/gduwindow.c:2637
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
 msgstr "ข้อมูลขัดแย้งกัน"
@@ -3435,7 +3451,7 @@ msgstr "ข้อมูลขัดแย้งกัน"
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
 #. *              The second %s is "Split-Brain" as a hyperlink.
 #.
-#: ../src/disks/gduwindow.c:2639
+#: ../src/disks/gduwindow.c:2643
 #, c-format
 msgctxt "raid-split-brain"
 msgid "%s (%s)"
@@ -3445,7 +3461,7 @@ msgstr "%s (%s)"
 #. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
 #. *              The second is the percentage completed, e.g. '42.5%'
 #.
-#: ../src/disks/gduwindow.c:2669
+#: ../src/disks/gduwindow.c:2673
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
@@ -3455,7 +3471,7 @@ msgstr "%s: %s"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2696
+#: ../src/disks/gduwindow.c:2700
 #, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
@@ -3464,11 +3480,11 @@ msgstr "เหลืออีก %s (%s/วินาที)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2876
+#: ../src/disks/gduwindow.c:2880
 msgid "Connected to another seat"
 msgstr "เชื่อมต่อกับที่นั่งอื่น"
 
-#: ../src/disks/gduwindow.c:3020
+#: ../src/disks/gduwindow.c:3024
 msgid "Loop device is empty"
 msgstr "อุปกรณ์วนกลับว่างเปล่า"
 
@@ -3478,67 +3494,67 @@ msgstr "อุปกรณ์วนกลับว่างเปล่า"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3259
+#: ../src/disks/gduwindow.c:3263
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — ว่าง %s (ใช้ไป %.1f%%)"
 
-#: ../src/disks/gduwindow.c:3289
+#: ../src/disks/gduwindow.c:3293
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "ไม่ทราบ"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3317
+#: ../src/disks/gduwindow.c:3321
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "รากของระบบแฟ้ม"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3325
+#: ../src/disks/gduwindow.c:3329
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "เมานท์ไว้ที่ %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3331
+#: ../src/disks/gduwindow.c:3335
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "ไม่ได้เมานท์"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3354
+#: ../src/disks/gduwindow.c:3358
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "ใช้งานอยู่"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3360
+#: ../src/disks/gduwindow.c:3364
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "ไม่ได้ใช้งาน"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3373
+#: ../src/disks/gduwindow.c:3377
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "ปลดล็อคแล้ว"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3379
+#: ../src/disks/gduwindow.c:3383
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "ล็อคอยู่"
 
-#: ../src/disks/gduwindow.c:3389
+#: ../src/disks/gduwindow.c:3393
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "พาร์ทิชันขยาย"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3399
+#: ../src/disks/gduwindow.c:3403
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "ไปยังแอร์เรย์"
@@ -3547,7 +3563,7 @@ msgstr "ไปยังแอร์เรย์"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:3408
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3557,29 +3573,29 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3422
+#: ../src/disks/gduwindow.c:3426
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3522
+#: ../src/disks/gduwindow.c:3526
 msgid "Unallocated Space"
 msgstr "พื้นที่ว่าง"
 
-#: ../src/disks/gduwindow.c:3901
+#: ../src/disks/gduwindow.c:3905
 msgid "An error occurred when requesting data redundancy check"
 msgstr "เกิดข้อผิดพลาดขณะร้องขอตรวจสอบการซ้ำข้อมูล"
 
 #. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3919
+#: ../src/disks/gduwindow.c:3923
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
 msgstr "การ Scrub ข้อมูล"
 
 #. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3921
+#: ../src/disks/gduwindow.c:3925
 msgctxt "mdraid-scrub-dialog"
 msgid ""
 "As storage devices can develop bad blocks at any time it is valuable to "
@@ -3596,116 +3612,116 @@ msgstr ""
 "อย่างสม่ำเสมอเพื่อตรวจจับบล็อคเสียดังกล่าวแต่เนิ่นๆ จึงมีความสำคัญ\n"
 "\n"
 "แอร์เรย์ RAID จะยังคงใช้งานได้ในระหว่างการดำเนินการดังกล่าว "
-"แต่ประสิทธิภาพจะกระทบกระเทือนบ้าง ดูข้อมูลเพิ่มเติมเกี่ยวกับการ scrub ข้อมูลได้จากบทความ "
-"<a href='https://raid.wiki.kernel.org/index.php/"
-"RAID_Administration'>RAID Administration</a>"
+"แต่ประสิทธิภาพจะกระทบกระเทือนบ้าง ดูข้อมูลเพิ่มเติมเกี่ยวกับการ scrub ข้อมูลได้จากบทความ <a "
+"href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
+"Administration</a>"
 
-#: ../src/disks/gduwindow.c:3926
+#: ../src/disks/gduwindow.c:3930
 msgctxt "mdraid-scrub-dialog"
 msgid "_Start"
 msgstr "เ_ริ่ม"
 
-#: ../src/disks/gduwindow.c:3927
+#: ../src/disks/gduwindow.c:3931
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
 msgstr "_ซ่อมแซมบล็อคที่ไม่ตรงกันถ้าเป็นไปได้"
 
-#: ../src/disks/gduwindow.c:3974
+#: ../src/disks/gduwindow.c:3978
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "เกิดข้อผิดพลาดขณะพยายามเปลี่ยนโหมดของไดรว์เป็นโหมดพักคอย"
 
-#: ../src/disks/gduwindow.c:4020
+#: ../src/disks/gduwindow.c:4024
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "เกิดข้อผิดพลาดขณะพยายามปลุกไดรว์จากโหมดพักคอย"
 
-#: ../src/disks/gduwindow.c:4065
+#: ../src/disks/gduwindow.c:4069
 msgid "Error powering off drive"
 msgstr "เกิดข้อผิดพลาดขณะปิดไดรว์"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4117
+#: ../src/disks/gduwindow.c:4121
 msgid "Are you sure you want to power off the drives?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการปิดไดรว์นี้?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4119
+#: ../src/disks/gduwindow.c:4123
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "การดำเนินการนี้จะเตรียมพร้อมระบบเพื่อปิดและถอดไดรว์ต่อไปนี้ออก"
 
-#: ../src/disks/gduwindow.c:4123
+#: ../src/disks/gduwindow.c:4127
 msgid "_Power Off"
 msgstr "ปิ_ดทำงาน"
 
-#: ../src/disks/gduwindow.c:4200
+#: ../src/disks/gduwindow.c:4204
 msgid "Error mounting filesystem"
 msgstr "เกิดข้อผิดพลาดขณะเมานท์ระบบแฟ้ม"
 
-#: ../src/disks/gduwindow.c:4240 ../src/libgdu/gduutils.c:1100
+#: ../src/disks/gduwindow.c:4244 ../src/libgdu/gduutils.c:1120
 msgid "Error unmounting filesystem"
 msgstr "เกิดข้อผิดพลาดขณะเลิกเมานท์ระบบแฟ้ม"
 
-#: ../src/disks/gduwindow.c:4385
+#: ../src/disks/gduwindow.c:4389
 msgid "Error deleting partition"
 msgstr "เกิดข้อผิดพลาดขณะลบพาร์ทิชัน"
 
-#: ../src/disks/gduwindow.c:4423
+#: ../src/disks/gduwindow.c:4427
 msgid "Are you sure you want to delete the partition?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบพาร์ทิชันนี้?"
 
-#: ../src/disks/gduwindow.c:4424
+#: ../src/disks/gduwindow.c:4428
 msgid "All data on the partition will be lost"
 msgstr "ข้อมูลทั้งหมดในพาร์ทิชันจะสูญหาย"
 
-#: ../src/disks/gduwindow.c:4425
+#: ../src/disks/gduwindow.c:4429
 msgid "_Delete"
 msgstr "_ลบ"
 
-#: ../src/disks/gduwindow.c:4456
+#: ../src/disks/gduwindow.c:4460
 msgid "Error ejecting media"
 msgstr "เกิดข้อผิดพลาดขณะเอาสื่อออก"
 
-#: ../src/disks/gduwindow.c:4513
+#: ../src/disks/gduwindow.c:4517
 msgid "Error starting RAID array"
 msgstr "เกิดข้อผิดพลาดขณะเริ่มต้นแอร์เรย์ RAID"
 
-#: ../src/disks/gduwindow.c:4555
+#: ../src/disks/gduwindow.c:4559
 msgid "Error stopping RAID array"
 msgstr "เกิดข้อผิดพลาดขณะหยุดแอร์เรย์ RAID"
 
-#: ../src/disks/gduwindow.c:4642
+#: ../src/disks/gduwindow.c:4646
 msgid "Error locking encrypted device"
 msgstr "เกิดข้อผิดพลาดขณะล็อคอุปกรณ์ที่เข้ารหัสลับ"
 
-#: ../src/disks/gduwindow.c:4707
+#: ../src/disks/gduwindow.c:4711
 msgid "Error starting swap"
 msgstr "เกิดข้อผิดพลาดขณะเปิดทำงานพื้นที่สลับ"
 
-#: ../src/disks/gduwindow.c:4744
+#: ../src/disks/gduwindow.c:4748
 msgid "Error stopping swap"
 msgstr "เกิดข้อผิดพลาดขณะหยุดใช้พื้นที่สลับ"
 
-#: ../src/disks/gduwindow.c:4783
+#: ../src/disks/gduwindow.c:4787
 msgid "Error setting bitmap for the RAID array"
 msgstr "เกิดข้อผิดพลาดขณะตั้งค่าบิตแมปสำหรับแอร์เรย์ RAID"
 
-#: ../src/disks/gduwindow.c:4849
+#: ../src/disks/gduwindow.c:4853
 msgid "Error setting autoclear flag"
 msgstr "เกิดข้อผิดพลาดขณะตั้งแฟล็กล้างอัตโนมัติ"
 
-#: ../src/disks/gduwindow.c:4902 ../src/disks/gduwindow.c:4966
+#: ../src/disks/gduwindow.c:4906 ../src/disks/gduwindow.c:4970
 msgid "Error canceling job"
 msgstr "เกิดข้อผิดพลาดขณะยกเลิกงาน"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:5088
+#: ../src/disks/gduwindow.c:5092
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "ไม่ได้เลือกอุป_กรณ์ใด"
 
-#: ../src/disks/gduwindow.c:5098
+#: ../src/disks/gduwindow.c:5102
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
@@ -3720,168 +3736,168 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "อิมเมจของดิสก์ (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:428
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d ปี"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:435
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d เดือน"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:442
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d วัน"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:449
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d ชั่วโมง"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:456
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d นาที"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:463
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d วินาที"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:470
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d มิลลิวินาที"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:534
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s กับอีก %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:539
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:544
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:529
+#: ../src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:560
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s กับอีก %s"
 
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:569
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "ไม่ถึงหนึ่งนาที"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:574
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:560
+#: ../src/libgdu/gduutils.c:580
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:702
+#: ../src/libgdu/gduutils.c:722
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "อุปกรณ์ที่กระทบ"
 
-#: ../src/libgdu/gduutils.c:792
+#: ../src/libgdu/gduutils.c:812
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:793
+#: ../src/libgdu/gduutils.c:813
 msgid "Stripe"
 msgstr "ริ้ว"
 
-#: ../src/libgdu/gduutils.c:798
+#: ../src/libgdu/gduutils.c:818
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:799
+#: ../src/libgdu/gduutils.c:819
 msgid "Mirror"
 msgstr "สำเนา"
 
-#: ../src/libgdu/gduutils.c:804
+#: ../src/libgdu/gduutils.c:824
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:805
+#: ../src/libgdu/gduutils.c:825
 msgid "Dedicated Parity"
 msgstr "เก็บข้อมูลตรวจสอบเฉพาะที่"
 
-#: ../src/libgdu/gduutils.c:810
+#: ../src/libgdu/gduutils.c:830
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:811
+#: ../src/libgdu/gduutils.c:831
 msgid "Distributed Parity"
 msgstr "กระจายข้อมูลตรวจสอบ"
 
-#: ../src/libgdu/gduutils.c:816
+#: ../src/libgdu/gduutils.c:836
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:817
+#: ../src/libgdu/gduutils.c:837
 msgid "Double Distributed Parity"
 msgstr "กระจายข้อมูลตรวจสอบสองชุด"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:842
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:843
 msgid "Stripe of Mirrors"
 msgstr "ริ้วสำเนา"
 
-#: ../src/libgdu/gduutils.c:828
+#: ../src/libgdu/gduutils.c:848
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1120
+#: ../src/libgdu/gduutils.c:1140
 msgid "Error locking device"
 msgstr "เกิดข้อผิดพลาดขณะล็อคอุปกรณ์"
 
@@ -3999,10 +4015,6 @@ msgstr "เตือนเกี่ยวกับปัญหาดิสก์
 #~ msgctxt "benchmark-drive-name"
 #~ msgid "%s partition on %s (%s)"
 #~ msgstr "พาร์ทิชัน %s ใน %s (%s)"
-
-#~ msgctxt "benchmark-drive-name"
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
 
 #~ msgctxt "benchmarking"
 #~ msgid "Error reading %d MB from offset %lld"
@@ -5245,7 +5257,7 @@ msgstr "เตือนเกี่ยวกับปัญหาดิสก์
 #~ msgstr "FAT12 ที่ซ่อนไว้ (0x11)"
 
 #~ msgid "Compaq diagnostics (0x12)"
-#~ msgstr "วินิจฉับของ Compaq (0x12)"
+#~ msgstr "วินิจฉัยของ Compaq (0x12)"
 
 #~ msgid "Hidden FAT16 <32M (0x14)"
 #~ msgstr "FAT16 ที่ซ่อนไว้ <32M (0x14)"

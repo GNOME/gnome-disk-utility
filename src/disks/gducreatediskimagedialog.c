@@ -1049,12 +1049,24 @@ on_dialog_response (GtkDialog     *dialog,
     case GTK_RESPONSE_OK:
       if (check_overwrite (data))
         {
-          /* ensure the device is unused (e.g. unmounted) before copying data from it... */
-          gdu_window_ensure_unused (data->window,
-                                    data->object,
-                                    (GAsyncReadyCallback) ensure_unused_cb,
-                                    NULL, /* GCancellable */
-                                    data);
+          /* If it's a optical drive, we don't need to try and
+           * manually unmount etc.  everything as we're attempting to
+           * open it O_RDONLY anyway - see copy_thread_func() for
+           * details.
+           */
+          if (g_str_has_prefix (udisks_block_get_device (data->block), "/dev/sr"))
+            {
+              start_copying (data);
+            }
+          else
+            {
+              /* ensure the device is unused (e.g. unmounted) before copying data from it... */
+              gdu_window_ensure_unused (data->window,
+                                        data->object,
+                                        (GAsyncReadyCallback) ensure_unused_cb,
+                                        NULL, /* GCancellable */
+                                        data);
+            }
         }
       break;
 

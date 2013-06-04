@@ -129,14 +129,14 @@ gdu_application_object_from_block_device (GduApplication *app,
 
   if (stat (block_device, &statbuf) != 0)
     {
-      *error_message = g_strdup_printf (_("Error opening %s: %s\n"), block_device, g_strerror (errno));
+      *error_message = g_strdup_printf (_("Error opening %s: %s"), block_device, g_strerror (errno));
       goto out;
     }
 
   block = udisks_client_get_block_for_dev (app->client, statbuf.st_rdev);
   if (block == NULL)
     {
-      *error_message = g_strdup_printf (_("Error looking up block device for %s\n"), block_device);
+      *error_message = g_strdup_printf (_("Error looking up block device for %s"), block_device);
       goto out;
     }
 
@@ -227,8 +227,19 @@ gdu_application_command_line (GApplication            *_app,
       object_to_select = gdu_application_object_from_block_device (app, opt_block_device, &error_message);
       if (object_to_select == NULL)
         {
-          g_application_command_line_print (command_line, "%s", error_message);
+          g_application_command_line_printerr (command_line, "%s\n", error_message);
           g_free (error_message);
+          goto out;
+        }
+    }
+
+  if (opt_restore_disk_image != NULL)
+    {
+      if (!g_file_test (opt_restore_disk_image, G_FILE_TEST_IS_REGULAR))
+        {
+          g_application_command_line_printerr (command_line,
+                                               "%s does not appear to be a regular file\n",
+                                               opt_restore_disk_image);
           goto out;
         }
     }

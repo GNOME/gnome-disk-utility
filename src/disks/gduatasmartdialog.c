@@ -1429,7 +1429,7 @@ smart_set_enabled_cb (GObject      *source_object,
                                                        &error))
     {
       gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("An error occurred when trying toggle whether SMART is enabled"),
+                            _("An error occurred when trying to toggle whether SMART is enabled"),
                             error);
       g_clear_error (&error);
     }

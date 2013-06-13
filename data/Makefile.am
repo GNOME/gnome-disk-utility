@@ -2,8 +2,17 @@ NULL =
 
 SUBDIRS = ui icons
 
+# TODO: Move gdu-mimetypes.xml to shared-mime-info, see https://bugs.freedesktop.org/show_bug.cgi?id=64845
+mimedir = $(datadir)/mime/packages
+mime_DATA = gdu-mimetypes.xml
+
 desktopdir = $(datadir)/applications
-desktop_in_files = gnome-disks.desktop.in gnome-disk-image-mounter.desktop.in
+desktop_in_files =				\
+	gnome-disks.desktop.in 			\
+	gnome-disk-image-mounter.desktop.in 	\
+	gnome-disk-image-writer.desktop.in	\
+	$(NULL)
+
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 # GSettings schemas
@@ -23,7 +32,14 @@ EXTRA_DIST = 			\
 CLEANFILES = 			\
 	$(gsettings_SCHEMAS)	\
 	$(desktop_DATA)		\
+	$(mime_DATA)		\
 	$(NULL)
+
+install-data-hook:
+	update-mime-database $(datadir)/mime
+
+uninstall-hook:
+	update-mime-database $(datadir)/mime
 
 clean-local :
 	rm -f *~

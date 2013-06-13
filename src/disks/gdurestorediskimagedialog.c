@@ -26,6 +26,7 @@
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 #include "gdudevicetreemodel.h"
+#include "gduxzdecompressor.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -72,8 +73,8 @@ typedef struct
 
   GCancellable *cancellable;
   GOutputStream *block_stream;
-  GFileInputStream *file_input_stream;
-  guint64 file_size;
+  GInputStream *input_stream;
+  guint64 input_size;
 
   guchar *buffer;
   guint64 total_bytes_read;
@@ -187,7 +188,7 @@ dialog_data_unref (DialogData *data)
       g_clear_object (&data->estimator);
 
       g_clear_object (&data->cancellable);
-      g_clear_object (&data->file_input_stream);
+      g_clear_object (&data->input_stream);
       g_clear_object (&data->block_stream);
       g_mutex_clear (&data->copy_lock);
       g_free (data);
@@ -251,24 +252,54 @@ restore_disk_image_update (DialogData *data)
 
   if (restore_file != NULL)
     {
+      gboolean is_xz_compressed = FALSE;
       GFileInfo *info;
       guint64 size;
       gchar *s;
+
       info = g_file_query_info (restore_file,
+                                G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE ","
                                 G_FILE_ATTRIBUTE_STANDARD_SIZE,
                                 G_FILE_QUERY_INFO_NONE,
                                 NULL,
                                 NULL);
+      if (g_str_has_suffix (g_file_info_get_content_type (info), "-xz-compressed"))
+        is_xz_compressed = TRUE;
       size = g_file_info_get_size (info);
       g_object_unref (info);
 
-      image_size_str = udisks_client_get_size_for_display (gdu_window_get_client (data->window), size, FALSE, TRUE);
+      if (is_xz_compressed)
+        {
+          gsize uncompressed_size;
+          uncompressed_size = gdu_xz_decompressor_get_uncompressed_size (restore_file);
+          if (uncompressed_size == 0)
+            {
+              restore_error = g_strdup (_("File does not appear to be XZ compressed"));
+              size = 0;
+            }
+          else
+            {
+              s = udisks_client_get_size_for_display (gdu_window_get_client (data->window), uncompressed_size, FALSE, TRUE);
+              /* Translators: Shown for a compressed disk image in the "Size" field.
+               *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
+               */
+              image_size_str = g_strdup_printf (_("%s when decompressed"), s);
+              g_free (s);
+              size = uncompressed_size;
+            }
+        }
+      else
+        {
+          image_size_str = udisks_client_get_size_for_display (gdu_window_get_client (data->window), size, FALSE, TRUE);
+        }
 
       if (data->block_size > 0)
         {
           if (size == 0)
             {
-              restore_error = g_strdup (_("Cannot restore image of size 0"));
+              /* if size is 0, error may be set already.. */
+              if (restore_error == NULL)
+                restore_error = g_strdup (_("Cannot restore image of size 0"));
             }
           else if (size < data->block_size)
             {
@@ -482,7 +513,9 @@ populate_destination_combobox (DialogData *data)
 static void
 restore_disk_image_populate (DialogData *data)
 {
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->selectable_image_fcbutton), TRUE);
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->selectable_image_fcbutton),
+                                                    TRUE,   /* set file types */
+                                                    TRUE);  /* allow_compressed */
 
   /* Image: Show label if image is known, otherwise show a filechooser button */
   if (data->disk_image_filename != NULL)
@@ -728,7 +761,7 @@ copy_thread_func (gpointer user_data)
   buffer = (guchar*) (((gintptr) (buffer_unaligned + page_size)) & (~(page_size - 1)));
 
   g_mutex_lock (&data->copy_lock);
-  data->estimator = gdu_estimator_new (data->file_size);
+  data->estimator = gdu_estimator_new (data->input_size);
   data->update_id = 0;
   data->start_time_usec = g_get_real_time ();
   g_mutex_unlock (&data->copy_lock);
@@ -737,7 +770,7 @@ copy_thread_func (gpointer user_data)
    * device even if it was only partially read.
    */
   num_bytes_completed = 0;
-  while (num_bytes_completed < data->file_size)
+  while (num_bytes_completed < data->input_size)
     {
       gsize num_bytes_to_read;
       gsize num_bytes_read;
@@ -745,8 +778,8 @@ copy_thread_func (gpointer user_data)
       gint64 now_usec;
 
       num_bytes_to_read = buffer_size;
-      if (num_bytes_to_read + num_bytes_completed > data->file_size)
-        num_bytes_to_read = data->file_size - num_bytes_completed;
+      if (num_bytes_to_read + num_bytes_completed > data->input_size)
+        num_bytes_to_read = data->input_size - num_bytes_completed;
 
       /* Update GUI - but only every 200 ms and only if last update isn't pending */
       g_mutex_lock (&data->copy_lock);
@@ -761,7 +794,7 @@ copy_thread_func (gpointer user_data)
         }
       g_mutex_unlock (&data->copy_lock);
 
-      if (!g_input_stream_read_all (G_INPUT_STREAM (data->file_input_stream),
+      if (!g_input_stream_read_all (data->input_stream,
                                     buffer,
                                     num_bytes_to_read,
                                     &num_bytes_read,
@@ -809,7 +842,7 @@ copy_thread_func (gpointer user_data)
   data->end_time_usec = g_get_real_time ();
 
   /* in either case, close the stream */
-  if (!g_input_stream_close (G_INPUT_STREAM (data->file_input_stream),
+  if (!g_input_stream_close (G_INPUT_STREAM (data->input_stream),
                               NULL, /* cancellable */
                               &error2))
     {
@@ -817,7 +850,7 @@ copy_thread_func (gpointer user_data)
                  error2->message, g_quark_to_string (error2->domain), error2->code);
       g_clear_error (&error2);
     }
-  g_clear_object (&data->file_input_stream);
+  g_clear_object (&data->input_stream);
 
   if (fd != -1 )
     {
@@ -899,10 +932,8 @@ start_copying (DialogData *data)
   else
     file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->selectable_image_fcbutton));
 
-  data->file_input_stream = g_file_read (file,
-                                         NULL,
-                                         &error);
-  if (data->file_input_stream == NULL)
+  data->input_stream = (GInputStream *) g_file_read (file, NULL, &error);
+  if (data->input_stream == NULL)
     {
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
         gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error opening file for reading"), error);
@@ -913,6 +944,7 @@ start_copying (DialogData *data)
 
   error = NULL;
   info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE ","
                             G_FILE_ATTRIBUTE_STANDARD_SIZE,
                             G_FILE_QUERY_INFO_NONE,
                             NULL,
@@ -924,7 +956,22 @@ start_copying (DialogData *data)
       dialog_data_complete_and_unref (data);
       goto out;
     }
-  data->file_size = g_file_info_get_size (info);
+  data->input_size = g_file_info_get_size (info);
+  if (g_str_has_suffix (g_file_info_get_content_type (info), "-xz-compressed"))
+    {
+      GduXzDecompressor *decompressor;
+      GInputStream *decompressed_input_stream;
+
+      data->input_size = gdu_xz_decompressor_get_uncompressed_size (file);
+
+      decompressor = gdu_xz_decompressor_new ();
+      decompressed_input_stream = g_converter_input_stream_new (G_INPUT_STREAM (data->input_stream),
+                                                                G_CONVERTER (decompressor));
+      g_clear_object (&decompressor);
+
+      g_object_unref (data->input_stream);
+      data->input_stream = decompressed_input_stream;
+    }
   g_object_unref (info);
 
   data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),

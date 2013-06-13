@@ -284,7 +284,9 @@ create_disk_image_populate (DialogData *data)
   g_time_zone_unref (tz);
   g_free (now_string);
 
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->folder_fcbutton), FALSE);
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (data->folder_fcbutton),
+                                                    FALSE,   /* set file types */
+                                                    FALSE);  /* allow_compressed */
 
   /* Source label */
   info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);

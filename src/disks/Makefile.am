@@ -52,6 +52,7 @@ gnome_disks_SOURCES = 							\
 	gduerasemultipledisksdialog.h	gduerasemultipledisksdialog.c	\
 	gdudvdsupport.h			gdudvdsupport.c			\
 	gdulocaljob.h			gdulocaljob.c			\
+	gduxzdecompressor.h		gduxzdecompressor.c		\
 	$(enum_built_sources)						\
 	$(NULL)
 
@@ -72,6 +73,7 @@ gnome_disks_CFLAGS = 					\
 	$(PWQUALITY_CFLAGS)				\
 	$(CANBERRA_CFLAGS)				\
 	$(LIBDVDREAD_CFLAGS)				\
+	$(LIBLZMA_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	-lm						\
 	$(NULL)
@@ -85,6 +87,7 @@ gnome_disks_LDADD = 					\
 	$(PWQUALITY_LIBS)				\
 	$(CANBERRA_LIBS)				\
 	$(LIBDVDREAD_LIBS)				\
+	$(LIBLZMA_LIBS)					\
         $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 

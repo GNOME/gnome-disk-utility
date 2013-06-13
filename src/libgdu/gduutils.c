@@ -65,7 +65,8 @@ gdu_utils_has_configuration (UDisksBlock  *block,
 
 void
 gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
-                                                  gboolean        set_file_types)
+                                                  gboolean        set_file_types,
+                                                  gboolean        allow_compressed)
 {
   GtkFileFilter *filter;
   gchar *folder;
@@ -92,8 +93,17 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
       gtk_file_filter_add_pattern (filter, "*");
       gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
       filter = gtk_file_filter_new ();
-      gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
+      if (allow_compressed)
+        gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.img.xz, *.iso)"));
+      else
+        gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
+      gtk_file_filter_add_pattern (filter, "*.raw-disk-image");
       gtk_file_filter_add_pattern (filter, "*.img");
+      if (allow_compressed)
+        {
+          gtk_file_filter_add_pattern (filter, "*.raw-disk-image.xz");
+          gtk_file_filter_add_pattern (filter, "*.img.xz");
+        }
       gtk_file_filter_add_pattern (filter, "*.iso");
       gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
       gtk_file_chooser_set_filter (file_chooser, filter);

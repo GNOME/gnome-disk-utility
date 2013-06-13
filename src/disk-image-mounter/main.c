@@ -83,7 +83,9 @@ do_filechooser (void)
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                         _("_Mount"), GTK_RESPONSE_ACCEPT,
                                         NULL);
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog), TRUE);
+  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog),
+                                                    TRUE,   /* set_file_types */
+                                                    FALSE); /* allow_compressed */
   gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
 
   /* Add a RO check button that defaults to RO */

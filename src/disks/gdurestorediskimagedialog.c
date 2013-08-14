@@ -1030,6 +1030,7 @@ on_dialog_response (GtkDialog     *dialog,
 {
   DialogData *data = user_data;
   GList *objects = NULL;
+  GFile *folder = NULL;
 
   if (data->dialog == NULL)
     goto out;
@@ -1051,7 +1052,8 @@ on_dialog_response (GtkDialog     *dialog,
         }
 
       /* now that we know the user picked a folder, update file chooser settings */
-      gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->selectable_image_fcbutton));
+      folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (data->selectable_image_fcbutton));
+      gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
       /* ensure the device is unused (e.g. unmounted) before copying data to it... */
       gdu_window_ensure_unused (data->window,
@@ -1068,6 +1070,7 @@ on_dialog_response (GtkDialog     *dialog,
     }
  out:
   g_list_free (objects);
+  g_clear_object (&folder);
 }
 
 void

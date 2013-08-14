@@ -115,24 +115,16 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
 
 /* should be called when user chooses file/dir from @file_chooser */
 void
-gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_chooser)
+gdu_utils_file_chooser_for_disk_images_set_default_folder (GFile *folder)
 {
-  const gchar *orig_folder;
-  gchar *cur_folder;
+  gchar *folder_uri;
+  GSettings *settings;
 
-  orig_folder = g_object_get_data (G_OBJECT (file_chooser), "x-gdu-orig-folder");
-  cur_folder = gtk_file_chooser_get_current_folder_uri (file_chooser);
-  /* NOTE: cur_folder may be NULL if e.g. something in "Search" or
-   * "Recently Used" is selected... in that case, do not update
-   * the GSetting
-   */
-  if (cur_folder != NULL && g_strcmp0 (orig_folder, cur_folder) != 0)
-    {
-      GSettings *settings = g_settings_new ("org.gnome.Disks");
-      g_settings_set_string (settings, "image-dir-uri", cur_folder);
-      g_clear_object (&settings);
-    }
-  g_free (cur_folder);
+  folder_uri = g_file_get_uri (folder);
+  settings = g_settings_new ("org.gnome.Disks");
+  g_settings_set_string (settings, "image-dir-uri", folder_uri);
+  g_clear_object (&settings);
+  g_free (folder_uri);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

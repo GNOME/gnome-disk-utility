@@ -22,7 +22,7 @@ void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_choo
                                                        gboolean        set_file_types,
                                                        gboolean        allow_compressed);
 
-void gdu_utils_file_chooser_for_disk_images_update_settings (GtkFileChooser *file_chooser);
+void gdu_utils_file_chooser_for_disk_images_set_default_folder (GFile *folder);
 
 GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
                                       const gchar    *markup,

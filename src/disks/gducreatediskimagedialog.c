@@ -992,7 +992,7 @@ start_copying (DialogData *data)
     }
 
   /* now that we know the user picked a folder, update file chooser settings */
-  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (data->folder_fcbutton));
+  gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
   data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
                                                   GTK_WINDOW (data->dialog),

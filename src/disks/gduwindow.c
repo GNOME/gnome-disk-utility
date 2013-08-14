@@ -858,14 +858,12 @@ void
 gdu_window_show_attach_disk_image (GduWindow *window)
 {
   GtkWidget *dialog;
-  gchar *filename;
-  gint fd;
+  GFile *folder = NULL;
+  gchar *filename = NULL;
+  gint fd = -1;
   GUnixFDList *fd_list;
   GVariantBuilder options_builder;
   GtkWidget *ro_checkbutton;
-
-  filename = NULL;
-  fd = -1;
 
   dialog = gtk_file_chooser_dialog_new (_("Select Disk Image to Attach"),
                                         GTK_WINDOW (window),
@@ -907,7 +905,8 @@ gdu_window_show_attach_disk_image (GduWindow *window)
     }
 
   /* now that we know the user picked a folder, update file chooser settings */
-  gdu_utils_file_chooser_for_disk_images_update_settings (GTK_FILE_CHOOSER (dialog));
+  folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog));
+  gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton)))
@@ -925,6 +924,7 @@ gdu_window_show_attach_disk_image (GduWindow *window)
  out:
   gtk_widget_destroy (dialog);
   g_free (filename);
+  g_clear_object (&folder);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

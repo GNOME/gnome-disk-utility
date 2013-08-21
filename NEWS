@@ -1,4 +1,44 @@
 -------------------------
+gnome-disk-utility 3.9.0
+-------------------------
+
+The gnome-disk-utility project provides the Disks and Disk Image
+Mounter applications for dealing with storage devices and a
+gnome-settings-daemon plug-in for notifying the user about problems
+with storage devices.
+
+Changes since gnome-disk-utility 3.8.1:
+
+Daniel Mustieles (1):
+      Fixed typo in string. Fixes bug #695346
+
+David Zeuthen (16):
+      Bump version to 3.9.0
+      GduWindow: fix ensure_unused() method to pass the right object in callbacks
+      Bump window height to 900 pixels and request window to be centered
+      Use new udisks 2.1.1 API (if available) to show better partition descriptions
+      utils: make unfuse_path() replace $HOME with ~
+      Disks: Add new --restore-disk-image option
+      Don't use two lines in device selection combobox
+      Use fallocate(2) rather than posix_fallocate(3)
+      Use right size when calculating error-percentage when creating disk image
+      Don't unmount CD/DVD discs before creating a disk image of them
+      Verify that the file passed to --restore-disk-image is a regular file
+      Add support for restoring XZ compressed disk images
+      Remove application/x-raw-disk-image{,-xz-compressed} MIME types
+      Fix default folder for disk images
+      Bump udisks2 required version to 2.1.1
+      Update NEWS for release
+
+Jan Alexander Steffens (heftig) (1):
+      Type problems prevent compilation with GCC 4.8 on i686
+
+Updated translations.
+
+David Zeuthen,
+August 20, 2013
+
+-------------------------
 gnome-disk-utility 3.8.1
 -------------------------
 

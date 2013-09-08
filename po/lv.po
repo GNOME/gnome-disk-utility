@@ -5,14 +5,15 @@
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 # Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2010.
-# Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012.
+# Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013.
 # Peteris Krisjanis <pecisk@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-21 15:50+0300\n"
-"PO-Revision-Date: 2013-04-21 15:41+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2013-09-07 17:26+0000\n"
+"PO-Revision-Date: 2013-09-08 15:48+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "X-Launchpad-Export-Date: 2010-05-09 08:28+0000\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
@@ -33,7 +34,18 @@ msgstr "Disku attēlu montētājs"
 msgid "Mount Disk Images"
 msgstr "Montē diska attēlus"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1275
+#: ../data/gnome-disk-image-writer.desktop.in.h:1
+#| msgid "Disk Image Mounter"
+msgid "Disk Image Writer"
+msgstr "Disku attēlu rakstītājs"
+
+#: ../data/gnome-disk-image-writer.desktop.in.h:2
+#| msgctxt "restore-inhibit-message"
+#| msgid "Copying disk image to device"
+msgid "Write Disk Images to Devices"
+msgstr "Raksta diska attēlu uz ierīcēm"
+
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1277
 msgid "Disks"
 msgstr "Diski"
 
@@ -46,8 +58,8 @@ msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"disks;dzinis;sējums;cietais disks;hdd;kompaktdisks;cdrom;dvd;iso;attēls;dubl"
-"ējums;atjaunot;etalonuzdevums;raid;luks;šifrēšana;S.M.A.R.T.;smart;"
+"disks;dzinis;sējums;cietais disks;hdd;kompaktdisks;cdrom;dvd;iso;attēls;"
+"dublējums;atjaunot;etalonuzdevums;raid;luks;šifrēšana;S.M.A.R.T.;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -77,8 +89,7 @@ msgstr "Prioritāte, ko izmantot šim spraudnim"
 #: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
 msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
 msgstr ""
-"Prioritāte, ko izmantot šim spraudnim gnome-settings-daemon startēšanās "
-"rindā"
+"Prioritāte, ko izmantot šim spraudnim gnome-settings-daemon startēšanās rindā"
 
 #: ../data/ui/about-dialog.ui.h:1
 msgid ""
@@ -95,8 +106,8 @@ msgstr "Skatīt, mainīt un konfigurēt diskus un datu nesējus"
 #: ../data/ui/about-dialog.ui.h:4
 msgid "translator-credits"
 msgstr ""
-"Rūdolfs Mazurs <rudolfs.mazurs@gmail.com> Pēteris Krišjānis "
-"<pecisk@gmail.com>"
+"Rūdolfs Mazurs <rudolfs.mazurs@gmail.com> Pēteris Krišjānis <pecisk@gmail."
+"com>"
 
 #: ../data/ui/app-menu.ui.h:1
 msgid "Attach Disk _Image…"
@@ -202,8 +213,8 @@ msgstr ""
 "saturs netiks mainīts.\n"
 "\n"
 "Ja tas nav atzīmēts, veiktspējas mērījumu rakstīšanas daļa netiks izpildīta, "
-"tajā pašā laikā tas nozīmē, ka tiešā piekļuve diskam nav nepieciešama "
-"(disku vai ierīci var izmantot)."
+"tajā pašā laikā tas nozīmē, ka tiešā piekļuve diskam nav nepieciešama (disku "
+"vai ierīci var izmantot)."
 
 #: ../data/ui/benchmark-dialog.ui.h:20
 msgid ""
@@ -220,8 +231,8 @@ msgid ""
 "taking more time."
 msgstr ""
 "Megabaitu (MiB) skaits (1048576 baiti), ko lasīt/rakstīt pie katras nolases. "
-"Lieli nolašu izmēri dod precīzāku veiktspējas novērtējumu, taču tad "
-"veicamie testi aizņem vairāk laika."
+"Lieli nolašu izmēri dod precīzāku veiktspējas novērtējumu, taču tad veicamie "
+"testi aizņem vairāk laika."
 
 #: ../data/ui/benchmark-dialog.ui.h:22
 msgid "Access Time"
@@ -819,8 +830,8 @@ msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
 msgstr ""
-"Ja atzīmēts, papildus autorizācija ir nepieciešama, lai piemontētu ierīci [x"
-"-udisks-auth]"
+"Ja atzīmēts, papildus autorizācija ir nepieciešama, lai piemontētu ierīci [x-"
+"udisks-auth]"
 
 #: ../data/ui/edit-dos-partition-dialog.ui.h:1
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:1
@@ -887,8 +898,8 @@ msgid ""
 "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
-"<b>Speciāla ierīces datne</b> - izmantojiet simboliskās saites "
-"<b>/dev/disk</b> hierarhijā, lai kontrolētu ieraksta mērogu"
+"<b>Speciāla ierīces datne</b> - izmantojiet simboliskās saites <b>/dev/disk</"
+"b> hierarhijā, lai kontrolētu ieraksta mērogu"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:6
 msgid ""
@@ -957,8 +968,8 @@ msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
-"Ja atzīmēts, papildus autorizācija ir nepieciešama, lai piemontētu ierīci [x"
-"-udisks-auth]"
+"Ja atzīmēts, papildus autorizācija ir nepieciešama, lai piemontētu ierīci [x-"
+"udisks-auth]"
 
 #: ../data/ui/edit-fstab-dialog.ui.h:19
 msgid "Mount at _startup"
@@ -1012,9 +1023,9 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
-"Tiek izmantots, lai norādītu ka nodalījums un tā saturs ir nepieciešams "
-"OS/platformai, lai funkcionētu. Ir jāuzmanās, lai neizdzēstu vai "
-"nepārrakstītu tās saturu."
+"Tiek izmantots, lai norādītu ka nodalījums un tā saturs ir nepieciešams OS/"
+"platformai, lai funkcionētu. Ir jāuzmanās, lai neizdzēstu vai nepārrakstītu "
+"tās saturu."
 
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:9
 msgid "Legacy BIOS _Bootable"
@@ -1083,8 +1094,8 @@ msgid ""
 "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
 "<i>swap</i>"
 msgstr ""
-"Pielāgots datņu sistēmas tips, ko izveidot, piemēram, <i>btrfs</i>, "
-"<i>xfs</i> vai <i>swap (maiņvieta)</i> "
+"Pielāgots datņu sistēmas tips, ko izveidot, piemēram, <i>btrfs</i>, <i>xfs</"
+"i> vai <i>swap (maiņvieta)</i> "
 
 #: ../data/ui/filesystem-create.ui.h:5
 msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
@@ -1158,6 +1169,16 @@ msgid "Destination"
 msgstr "Mērķis"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
+#| msgid "_Image to Restore"
+msgid "Image to Restore"
+msgstr "Attēls, ko atjaunot"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:6
+#| msgid "Sample Size"
+msgid "Image Size"
+msgstr "Attēla izmērs"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:7
 msgid "_Start Restoring…"
 msgstr "_Sākt atjaunošanu…"
 
@@ -1183,7 +1204,8 @@ msgstr "Spiediet, lai apturētu pašlaik notiekošo SMART paštestu"
 
 #: ../data/ui/smart-dialog.ui.h:6
 msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Spiediet, lai piespiestu atkārtotu SMART datu nolasīšanu no cietā diska"
+msgstr ""
+"Spiediet, lai piespiestu atkārtotu SMART datu nolasīšanu no cietā diska"
 
 #: ../data/ui/smart-dialog.ui.h:7
 msgid "Powered On"
@@ -1258,11 +1280,11 @@ msgid "_Mount"
 msgstr "_Montēt"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:90
+#: ../src/disk-image-mounter/main.c:92
 msgid "Set up _read-only mount"
 msgstr "Iestatīt _tikai lasāmo montējumu"
 
-#: ../src/disk-image-mounter/main.c:91
+#: ../src/disk-image-mounter/main.c:93
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -1270,61 +1292,68 @@ msgstr ""
 "Ja atzīmēts, montējums būs tikai lasāms. Tas ir noderīgi tad, ja jūs "
 "nevēlaties piesaistīto diska attēlu mainīt."
 
-#: ../src/disk-image-mounter/main.c:133
+#: ../src/disk-image-mounter/main.c:135
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Kļūda savienojoties ar udisks dēmonu: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:141
+#: ../src/disk-image-mounter/main.c:143
 msgid "Attach and mount one or more disk image files."
 msgstr "Pievieno un montē vienu vai vairākas disku attēlu datnes."
 
-#: ../src/disk-image-mounter/main.c:189
+#: ../src/disk-image-mounter/main.c:191
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "Nevar atvērt '%s' - varbūt sējums nav piemontēts?"
 
-#: ../src/disk-image-mounter/main.c:196
+#: ../src/disk-image-mounter/main.c:198
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Kļūda, atverot `%s': %m"
 
-#: ../src/disk-image-mounter/main.c:217
+#: ../src/disk-image-mounter/main.c:219
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Kļūda, pievienojot diska attēlu: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:131
-#, c-format, c-format
-msgid "Error opening %s: %s\n"
-msgstr "Kļūda, atverot %s — %s\n"
+#: ../src/disks/gduapplication.c:132
+#, c-format
+#| msgid "Error opening %s: %s\n"
+msgid "Error opening %s: %s"
+msgstr "Kļūda, atverot %s — %s"
 
-#: ../src/disks/gduapplication.c:138
-#, c-format, c-format
-msgid "Error looking up block device for %s\n"
-msgstr "Kļūda, uzmeklējot %s bloka ierīci\n"
+#: ../src/disks/gduapplication.c:139
+#, c-format
+#| msgid "Error looking up block device for %s\n"
+msgid "Error looking up block device for %s"
+msgstr "Kļūda, uzmeklējot %s bloka ierīci"
 
-#: ../src/disks/gduapplication.c:178
+#: ../src/disks/gduapplication.c:180
 msgid "Select device"
 msgstr "Izvēlieties ierīci"
 
-#: ../src/disks/gduapplication.c:179
+#: ../src/disks/gduapplication.c:181
 msgid "Format selected device"
 msgstr "Formatēt izvēlēto ierīci"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:182
 msgid "Parent window XID for the format dialog"
 msgstr "Vecāka loga XID formāta dialoglodziņam"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:183
+#| msgid "Restore Disk Image"
+msgid "Restore disk image"
+msgstr "Atjaunot diska attēlu"
+
+#: ../src/disks/gduapplication.c:184
 msgid "Show help options"
 msgstr "Rādīt palīdzības opcijas"
 
-#: ../src/disks/gduapplication.c:210
+#: ../src/disks/gduapplication.c:213
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device jāizmanto kopā ar --block-device\n"
 
-#: ../src/disks/gduapplication.c:216
+#: ../src/disks/gduapplication.c:219
 msgid "--format-device must be specified when using --xid\n"
 msgstr "--format-device ir jānorāda, ja izmanto --xid\n"
 
@@ -1333,7 +1362,7 @@ msgstr "--format-device ir jānorāda, ja izmanto --xid\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:312
+#: ../src/disks/gduapplication.c:331
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1403,10 +1432,9 @@ msgid ""
 "verification error, it marks the sector as “reallocated” and transfers data "
 "to a special reserved area (spare area)"
 msgstr ""
-"Sektoru skaits, kuriem mainīta adrese. Kad cietais disks atrod "
-"lasīšanas/rakstīšanas/verifikācijas kļūdu, tas atzīmē sektoru kā "
-"\"reallocated\" (pārdalīts) un pārsūta datus uz rezervētu vietu (rezerves "
-"laukums)"
+"Sektoru skaits, kuriem mainīta adrese. Kad cietais disks atrod lasīšanas/"
+"rakstīšanas/verifikācijas kļūdu, tas atzīmē sektoru kā \"reallocated"
+"\" (pārdalīts) un pārsūta datus uz rezervētu vietu (rezerves laukums)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -2136,7 +2164,8 @@ msgid "Error starting SMART self-test"
 msgstr "Kļūda, sākot SMART paštestu"
 
 #: ../src/disks/gduatasmartdialog.c:1432
-msgid "An error occurred when trying toggle whether SMART is enabled"
+#| msgid "An error occurred when trying toggle whether SMART is enabled"
+msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Notika kļūda, mēģinot pārslēgt SMART novērošanu"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
@@ -2230,13 +2259,13 @@ msgid "Opening Device…"
 msgstr "Atver ierīci…"
 
 #: ../src/disks/gdubenchmarkdialog.c:717
-#, c-format, c-format
+#, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Mēra pārraides ātrumu (%2.1f%% pabeigts)…"
 
 #: ../src/disks/gdubenchmarkdialog.c:724
-#, c-format, c-format
+#, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "Mēra piekļuves laiku (%2.1f%% pabeigts)…"
@@ -2274,19 +2303,19 @@ msgid "Error seeking to offset %lld"
 msgstr "Kļūda, pozicionējoties uz nobīdi %lld"
 
 #: ../src/disks/gdubenchmarkdialog.c:1229
-#, c-format, c-format
+#, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Kļūda, priekšlasot %s no nobīdes %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1241
-#, c-format, c-format
+#, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Kļūda, pozicionējoties uz nobīdi %s"
 
 #: ../src/disks/gdubenchmarkdialog.c:1255
-#, c-format, c-format
+#, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Kļūda, lasot %s no nobīdes %s"
@@ -2349,8 +2378,8 @@ msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
-"Mainot paroli šai ierīcei, tiks atjaunināta parole, kas norādīta "
-"<i>/etc/crypttab</i> datnē."
+"Mainot paroli šai ierīcei, tiks atjaunināta parole, kas norādīta <i>/etc/"
+"crypttab</i> datnē."
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
 #: ../src/disks/gducreatefilesystemwidget.c:537
@@ -2361,7 +2390,7 @@ msgstr "Paroles stiprums"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/disks/gducreatediskimagedialog.c:272
+#: ../src/disks/gducreatediskimagedialog.c:275
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Diska attēls %s (%s).img"
@@ -2370,38 +2399,38 @@ msgstr "Diska attēls %s (%s).img"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: ../src/disks/gducreatediskimagedialog.c:303
+#: ../src/disks/gducreatediskimagedialog.c:308
 msgid "Disk image read error"
 msgstr "Diska attēla lasīšanas kļūda"
 
-#: ../src/disks/gducreatediskimagedialog.c:339
+#: ../src/disks/gducreatediskimagedialog.c:344
 msgid "Allocating Disk Image"
 msgstr "Piešķir diska attēlu"
 
-#: ../src/disks/gducreatediskimagedialog.c:343
+#: ../src/disks/gducreatediskimagedialog.c:348
 msgid "Retrieving DVD keys"
 msgstr "Iegūst DVD atslēgas"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:352
+#: ../src/disks/gducreatediskimagedialog.c:357
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s nav lasāms (tiek aizvietots ar nullēm)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: ../src/disks/gducreatediskimagedialog.c:406
-#: ../src/disks/gdurestorediskimagedialog.c:398
+#: ../src/disks/gducreatediskimagedialog.c:411
+#: ../src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "Disku attēla kopēšana ir pabeigta"
 
-#: ../src/disks/gducreatediskimagedialog.c:435
+#: ../src/disks/gducreatediskimagedialog.c:440
 msgid "Error creating disk image"
 msgstr "Kļūda, veidojot diska attēlu"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:476
+#: ../src/disks/gducreatediskimagedialog.c:481
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Gadījās neatgriezeniska lasīšanas kļūda, veidojot diska attēlu"
 
@@ -2410,7 +2439,7 @@ msgstr "Gadījās neatgriezeniska lasīšanas kļūda, veidojot diska attēlu"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:485
+#: ../src/disks/gducreatediskimagedialog.c:490
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -2418,56 +2447,56 @@ msgid ""
 "is scratched or if there is physical damage to the drive"
 msgstr ""
 "%2.1f%% (%s) no datiem uz ierīces “%s” nebija nolasāmi un tika aizvietoti ar "
-"nullēm izveidotajā diska attēla datnē. Tas parasti notiek, ja datu nesējs "
-"ir saskrāpēts vai arī ir fiziski dziņa bojājumi."
+"nullēm izveidotajā diska attēla datnē. Tas parasti notiek, ja datu nesējs ir "
+"saskrāpēts vai arī ir fiziski dziņa bojājumi."
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:491
+#: ../src/disks/gducreatediskimagedialog.c:496
 msgid "_Delete Disk Image File"
 msgstr "_Dzēst diska attēla datni"
 
-#: ../src/disks/gducreatediskimagedialog.c:719
-#: ../src/disks/gdurestorediskimagedialog.c:532
+#: ../src/disks/gducreatediskimagedialog.c:724
+#: ../src/disks/gdurestorediskimagedialog.c:747
 msgid "Error determining size of device: "
 msgstr "Kļūda, nosakot ierīces izmēru: "
 
-#: ../src/disks/gducreatediskimagedialog.c:726
-#: ../src/disks/gdurestorediskimagedialog.c:539
+#: ../src/disks/gducreatediskimagedialog.c:731
+#: ../src/disks/gdurestorediskimagedialog.c:754
 #, c-format
 msgid "Device is size 0"
 msgstr "Ierīces izmērs ir 0"
 
-#: ../src/disks/gducreatediskimagedialog.c:756
+#: ../src/disks/gducreatediskimagedialog.c:765
 msgid "Error allocating space for disk image file: "
 msgstr "Kļūda, piešķirot vietu diska attēla datnei:"
 
-#: ../src/disks/gducreatediskimagedialog.c:910
-#, c-format, c-format
+#: ../src/disks/gducreatediskimagedialog.c:926
+#, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Datne ar nosaukumu “%s” jau eksistē. Vai jūs vēlaties to aizvietot?"
 
-#: ../src/disks/gducreatediskimagedialog.c:913
-#, c-format, c-format
+#: ../src/disks/gducreatediskimagedialog.c:929
+#, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr "Datne jau eksistē “%s”. Aizvietojot tiks pārrakstīts tās saturs."
 
-#: ../src/disks/gducreatediskimagedialog.c:916
+#: ../src/disks/gducreatediskimagedialog.c:932
 msgid "_Replace"
 msgstr "_Aizvietot"
 
-#: ../src/disks/gducreatediskimagedialog.c:970
+#: ../src/disks/gducreatediskimagedialog.c:986
 msgid "Error opening file for writing"
 msgstr "Kļūda atverot datni rakstīšanai"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:1002
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Kopē ierīci uz diska attēlu"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:992
+#: ../src/disks/gducreatediskimagedialog.c:1008
 msgid "Creating Disk Image"
 msgstr "Izveido diska attēlu"
 
@@ -2562,7 +2591,7 @@ msgid "This is the last primary partition that can be created."
 msgstr "Šis ir pēdējais primārais nodalījums, kas var tikt izveidots."
 
 #: ../src/disks/gducreateraidarraydialog.c:296
-#, c-format, c-format
+#, c-format
 msgid "%d disk"
 msgid_plural "%d disks"
 msgstr[0] "%d disks"
@@ -2574,7 +2603,7 @@ msgstr[2] "%d disku"
 #. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
 #.
 #: ../src/disks/gducreateraidarraydialog.c:305
-#, c-format, c-format
+#, c-format
 msgid "%s of %s each"
 msgstr "%s no %s katrs"
 
@@ -2622,23 +2651,28 @@ msgstr ""
 "Tiks mainīta tikai parole, kas norādīta <i>/etc/crypttab</i> datnē. Lai "
 "mainītu paša diska paroli, izmantojiet <i>Mainīt paroli</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:560
+#: ../src/disks/gdudevicetreemodel.c:507
+#| msgid "None"
+msgid "(None)"
+msgstr "(Nekas)"
+
+#: ../src/disks/gdudevicetreemodel.c:622
 msgid "Disk Drives"
 msgstr "Disku dziņi"
 
-#: ../src/disks/gdudevicetreemodel.c:633
+#: ../src/disks/gdudevicetreemodel.c:698
 msgid "RAID Arrays"
 msgstr "RAID masīvi"
 
 #. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1098
-#, c-format, c-format
+#: ../src/disks/gdudevicetreemodel.c:1174
+#, c-format
 msgctxt "md-raid-tree-primary"
 msgid "%s RAID Array"
 msgstr "%s RAID masīvs"
 
 #. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1104
+#: ../src/disks/gdudevicetreemodel.c:1180
 msgctxt "md-raid-tree-primary"
 msgid "RAID Array"
 msgstr "RAID masīvs"
@@ -2647,13 +2681,13 @@ msgstr "RAID masīvs"
 #. *              The first %s is the name of the array (e.g. "My RAID Array").
 #. *              The second %s is the RAID level (e.g. "RAID-5").
 #.
-#: ../src/disks/gdudevicetreemodel.c:1115
-#, c-format, c-format
+#: ../src/disks/gdudevicetreemodel.c:1191
+#, c-format
 msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdudevicetreemodel.c:1268
+#: ../src/disks/gdudevicetreemodel.c:1351
 msgid "Other Devices"
 msgstr "Citas ierīces"
 
@@ -2757,7 +2791,7 @@ msgid "If Available, Slow"
 msgstr "Ja pieejams, lēns"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:186
-#, c-format, c-format
+#, c-format
 msgid "Error erasing device %s"
 msgstr "Kļūda, dzēšot ierīci %s"
 
@@ -2784,8 +2818,7 @@ msgid ""
 msgstr ""
 "<b>Padoms</b>: Ja jūs plānojat nodot atkritumos pārstrādāšanai, pārdot vai "
 "atdot jūsu veco datoru vai disku, jums vajadzētu izmantot daudz rūpīgāku "
-"dzēšanas paņēmienu, lai jūsu privātā informācija nenokļūtu nepareizajās "
-"rokās"
+"dzēšanas paņēmienu, lai jūsu privātā informācija nenokļūtu nepareizajās rokās"
 
 #. Translators: warning used when overwriting data on multiple disks
 #: ../src/disks/gduerasemultipledisksdialog.c:378
@@ -2937,8 +2970,7 @@ msgstr "Atbilst visam diskam ierīcei ar dotajiem svarīgajiem produkta datiem"
 msgid ""
 "Matches partition %d of any device connected at the given port or address"
 msgstr ""
-"Atbilst sadaļai %d jebkurai ierīcei, kas ir savienota dotajā portā vai "
-"adresē"
+"Atbilst sadaļai %d jebkurai ierīcei, kas ir savienota dotajā portā vai adresē"
 
 #: ../src/disks/gdufstabdialog.c:165
 msgid ""
@@ -2977,8 +3009,7 @@ msgid "Error updating /etc/fstab entry"
 msgstr "Kļūda atjauninot /etc/fstab ierakstu"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2022
-#: ../src/disks/gduwindow.c:2004
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2028
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(tikai lasāms)</span>"
@@ -3039,7 +3070,7 @@ msgstr "Bloķēts"
 
 #. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
 #: ../src/disks/gdumdraiddisksdialog.c:660
-#, c-format, c-format
+#, c-format
 msgctxt "mdraid-disks-state"
 msgid "Unknown (%s)"
 msgstr "Nezināms (%s)"
@@ -3103,15 +3134,15 @@ msgctxt "mdraid-add"
 msgid "Select disk to add"
 msgstr "Izvēlieties diska disku, ko pievienot"
 
-#: ../src/disks/gdupartitiondialog.c:355
+#: ../src/disks/gdupartitiondialog.c:362
 msgid "Error setting partition type"
 msgstr "Kļūda, iestatot nodalījuma tipu"
 
-#: ../src/disks/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:376
 msgid "Error setting partition name"
 msgstr "Kļūda, iestatot nodalījuma nosaukumu"
 
-#: ../src/disks/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:390
 msgid "Error setting partition flags"
 msgstr "Kļūda, iestatot nodalījuma karogus"
 
@@ -3135,54 +3166,66 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "Stipra"
 
-#: ../src/disks/gdurestorediskimagedialog.c:244
+#: ../src/disks/gdurestorediskimagedialog.c:277
+msgid "File does not appear to be XZ compressed"
+msgstr "Šķiet, ka datne nav saspiesta ar XZ"
+
+#. Translators: Shown for a compressed disk image in the "Size" field.
+#. *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
+#.
+#: ../src/disks/gdurestorediskimagedialog.c:286
+#, c-format
+msgid "%s when decompressed"
+msgstr "%s, kad atspiests"
+
+#: ../src/disks/gdurestorediskimagedialog.c:302
 msgid "Cannot restore image of size 0"
 msgstr "Nevar atjaunot attēlu ar izmēru 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:253
-#, c-format, c-format
+#: ../src/disks/gdurestorediskimagedialog.c:311
+#, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "Diska attēls ir par %s mazāks nekā mērķa ierīce"
 
-#: ../src/disks/gdurestorediskimagedialog.c:262
-#, c-format, c-format
+#: ../src/disks/gdurestorediskimagedialog.c:320
+#, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "Diska attēls ir par %s lielāks nekā mērķa ierīce"
 
-#: ../src/disks/gdurestorediskimagedialog.c:435
+#: ../src/disks/gdurestorediskimagedialog.c:650
 msgid "Error restoring disk image"
 msgstr "Kļūda, atjaunojot diska attēlu"
 
-#: ../src/disks/gdurestorediskimagedialog.c:722
+#: ../src/disks/gdurestorediskimagedialog.c:939
 msgid "Error opening file for reading"
 msgstr "Kļūda, atverot datni lasīšanai"
 
-#: ../src/disks/gdurestorediskimagedialog.c:736
+#: ../src/disks/gdurestorediskimagedialog.c:954
 msgid "Error determing size of file"
 msgstr "Kļūda, nosakot datnes izmēru"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gdurestorediskimagedialog.c:749
+#: ../src/disks/gdurestorediskimagedialog.c:982
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopē diska attēlu uz ierīci"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gdurestorediskimagedialog.c:755
+#: ../src/disks/gdurestorediskimagedialog.c:988
 msgid "Restoring Disk Image"
 msgstr "Atjauno diska attēlu"
 
-#: ../src/disks/gdurestorediskimagedialog.c:807
+#: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Vai jūs tiešām vēlaties rakstīt diska attēlu šajā ierīcē?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:808
+#: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
 msgstr "Visi esošie dati tiks zaudēti"
 
-#: ../src/disks/gdurestorediskimagedialog.c:809
+#: ../src/disks/gdurestorediskimagedialog.c:1046
 msgid "_Restore"
-msgstr "_Izņemt"
+msgstr "_Atjaunot"
 
 #: ../src/disks/gduunlockdialog.c:86
 msgid "Error unlocking encrypted device"
@@ -3192,8 +3235,7 @@ msgstr "Kļūda, atslēdzot šifrētu ierīči"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrēšanas parole tika iegūta no saišķa"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2773
-#: ../src/disks/gduwindow.c:2755
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2779
 msgid "No Media"
 msgstr "Nav datu nesēja"
 
@@ -3254,14 +3296,16 @@ msgstr "Kļūda, dzēšot cikla ierīci"
 msgid "Error attaching disk image"
 msgstr "Kļūda, pievienojot diska attēlu"
 
-#: ../src/disks/gduwindow.c:870
+#: ../src/disks/gduwindow.c:868
 msgid "Select Disk Image to Attach"
 msgstr "Izvēlieties diska attēlu, ko pievienot"
 
-#: ../src/disks/gduwindow.c:874
+#: ../src/disks/gduwindow.c:872
 msgid "_Attach"
 msgstr "_Pievienot"
 
+#. set file types
+#. allow_compressed
 #. Add a RO check button that defaults to RO
 #: ../src/disks/gduwindow.c:879
 msgid "Set up _read-only loop device"
@@ -3276,7 +3320,7 @@ msgstr ""
 "nevēlaties piesaistīto datni mainīt."
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1651
+#: ../src/disks/gduwindow.c:1657
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -3285,9 +3329,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#. Translators: This is the short-cut to format a disk
-#: ../src/disks/gduwindow.c:1659
-#: ../src/disks/gduwindow.c:1656
+#: ../src/disks/gduwindow.c:1665
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -3296,9 +3338,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#. Translators: This is the short-cut to view SMART data for a disk
-#: ../src/disks/gduwindow.c:1667
-#: ../src/disks/gduwindow.c:1661
+#: ../src/disks/gduwindow.c:1673
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -3307,9 +3347,7 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#. Translators: This is the short-cut to view RAID Disks for a RAID array
-#: ../src/disks/gduwindow.c:1675
-#: ../src/disks/gduwindow.c:1666
+#: ../src/disks/gduwindow.c:1681
 msgctxt "accelerator"
 msgid "<Ctrl>R"
 msgstr "<Ctrl>R"
@@ -3318,9 +3356,7 @@ msgstr "<Ctrl>R"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
-#: ../src/disks/gduwindow.c:1683
-#: ../src/disks/gduwindow.c:1671
+#: ../src/disks/gduwindow.c:1689
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
@@ -3329,9 +3365,7 @@ msgstr "<Ctrl>E"
 #. *              The Shift modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Ctrl>).
 #.
-#. Translators: This is the short-cut to open the volume gear menu
-#: ../src/disks/gduwindow.c:1691
-#: ../src/disks/gduwindow.c:1676
+#: ../src/disks/gduwindow.c:1697
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -3340,9 +3374,7 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1701
-#: ../src/disks/gduwindow.c:1683
+#: ../src/disks/gduwindow.c:1707
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3351,9 +3383,8 @@ msgstr "<Shift><Ctrl>F"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2060
-#: ../src/disks/gduwindow.c:2042
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2066
+#, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
 msgstr "%s atlikuši (%s/sec)"
@@ -3361,8 +3392,7 @@ msgstr "%s atlikuši (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2068
-#: ../src/disks/gduwindow.c:2050
+#: ../src/disks/gduwindow.c:2074
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3373,9 +3403,8 @@ msgstr "%s atlikuši"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2083
-#: ../src/disks/gduwindow.c:2065
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2089
+#, c-format
 msgid "%s of %s – %s"
 msgstr "%s no %s — %s"
 
@@ -3383,49 +3412,41 @@ msgstr "%s no %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2170
-#: ../src/disks/gduwindow.c:2152
+#: ../src/disks/gduwindow.c:2176
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:2242 ../src/disks/gduwindow.c:3087
-#: ../src/disks/gduwindow.c:2224
-#: ../src/disks/gduwindow.c:3069
+#: ../src/disks/gduwindow.c:2248 ../src/disks/gduwindow.c:3093
 msgid "Block device is empty"
 msgstr "Bloka ierīce ir tukša"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2265
-#: ../src/disks/gduwindow.c:2247
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2271
+#, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Nezināms (%s)"
 
-#: ../src/disks/gduwindow.c:2346
-#: ../src/disks/gduwindow.c:2328
+#: ../src/disks/gduwindow.c:2352
 msgid "RAID array is not running"
 msgstr "RAID masīvs nedarbojas"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2367
-#: ../src/disks/gduwindow.c:2349
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2373
+#, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "%s RAID masīvs"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2373
-#: ../src/disks/gduwindow.c:2355
+#: ../src/disks/gduwindow.c:2379
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "RAID masīvs"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2399
-#: ../src/disks/gduwindow.c:2381
+#: ../src/disks/gduwindow.c:2405
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "Nav palaists"
@@ -3435,16 +3456,14 @@ msgstr "Nav palaists"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2466
-#: ../src/disks/gduwindow.c:2448
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2472
+#, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (lokāls uz %s)"
 
-#: ../src/disks/gduwindow.c:2506
-#: ../src/disks/gduwindow.c:2488
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2512
+#, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
 msgstr[0] "%d disks"
@@ -3455,9 +3474,8 @@ msgstr[2] "%d disku"
 #. *              The first %s is the number of disks e.g. "3 disks".
 #. *              The second %s is the chunk size e.g. "512 KiB".
 #.
-#: ../src/disks/gduwindow.c:2518
-#: ../src/disks/gduwindow.c:2500
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2524
+#, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
 msgstr "%s, %s gabals"
@@ -3466,15 +3484,13 @@ msgstr "%s, %s gabals"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2527
-#: ../src/disks/gduwindow.c:2509
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2533
+#, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2547
-#: ../src/disks/gduwindow.c:2529
+#: ../src/disks/gduwindow.c:2553
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
@@ -3482,8 +3498,7 @@ msgstr[0] "Trūkst %d disks"
 msgstr[1] "Trūkst %d diski"
 msgstr[2] "Trūkst %d disku"
 
-#: ../src/disks/gduwindow.c:2553
-#: ../src/disks/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2559
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "MASĪVS IR DEGRADĒTS"
@@ -3491,60 +3506,50 @@ msgstr "MASĪVS IR DEGRADĒTS"
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2557
-#: ../src/disks/gduwindow.c:2539
+#: ../src/disks/gduwindow.c:2563
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2568 ../src/disks/gduwindow.c:2584
-#: ../src/disks/gduwindow.c:2550
-#: ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2574 ../src/disks/gduwindow.c:2590
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "Darbojas"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2573
-#: ../src/disks/gduwindow.c:2555
+#: ../src/disks/gduwindow.c:2579
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "Nedarbojas"
 
-#: ../src/disks/gduwindow.c:2593
-#: ../src/disks/gduwindow.c:2575
+#: ../src/disks/gduwindow.c:2599
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
 msgstr "Datu birstēšana"
 
-#: ../src/disks/gduwindow.c:2598
-#: ../src/disks/gduwindow.c:2580
+#: ../src/disks/gduwindow.c:2604
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
 msgstr "Datu birstēšana un labošana"
 
-#: ../src/disks/gduwindow.c:2603
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2609
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "Sinhronizējas"
 
-#: ../src/disks/gduwindow.c:2607
-#: ../src/disks/gduwindow.c:2589
+#: ../src/disks/gduwindow.c:2613
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "Atjaunojas"
 
-#: ../src/disks/gduwindow.c:2611
-#: ../src/disks/gduwindow.c:2593
+#: ../src/disks/gduwindow.c:2617
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "Sastindzis"
 
 #. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2627
-#: ../src/disks/gduwindow.c:2609
+#: ../src/disks/gduwindow.c:2633
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
 msgstr "RAIDM MASĪVS IR NEPAREIZI NOKONFIGURĒTS"
@@ -3553,8 +3558,7 @@ msgstr "RAIDM MASĪVS IR NEPAREIZI NOKONFIGURĒTS"
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
-#: ../src/disks/gduwindow.c:2633
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2639
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
 msgstr "Nekoordinēts"
@@ -3563,9 +3567,8 @@ msgstr "Nekoordinēts"
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
 #. *              The second %s is "Split-Brain" as a hyperlink.
 #.
-#: ../src/disks/gduwindow.c:2639
-#: ../src/disks/gduwindow.c:2621
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2645
+#, c-format
 msgctxt "raid-split-brain"
 msgid "%s (%s)"
 msgstr "%s (%s)"
@@ -3574,8 +3577,7 @@ msgstr "%s (%s)"
 #. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
 #. *              The second is the percentage completed, e.g. '42.5%'
 #.
-#: ../src/disks/gduwindow.c:2669
-#: ../src/disks/gduwindow.c:2651
+#: ../src/disks/gduwindow.c:2675
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
@@ -3585,9 +3587,8 @@ msgstr "%s — %s"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2696
-#: ../src/disks/gduwindow.c:2678
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:2702
+#, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
 msgstr "%s atlikuši (%s/sec)"
@@ -3595,13 +3596,11 @@ msgstr "%s atlikuši (%s/sec)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2876
-#: ../src/disks/gduwindow.c:2858
+#: ../src/disks/gduwindow.c:2882
 msgid "Connected to another seat"
 msgstr "Savienots ar citu sēdvietu"
 
-#: ../src/disks/gduwindow.c:3020
-#: ../src/disks/gduwindow.c:3002
+#: ../src/disks/gduwindow.c:3026
 msgid "Loop device is empty"
 msgstr "Cikla ierīce ir aizņemta"
 
@@ -3611,78 +3610,67 @@ msgstr "Cikla ierīce ir aizņemta"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3259
-#: ../src/disks/gduwindow.c:3241
+#: ../src/disks/gduwindow.c:3265
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s brīvs (%.1f%% aizņemts)"
 
-#: ../src/disks/gduwindow.c:3289
-#: ../src/disks/gduwindow.c:3271
+#: ../src/disks/gduwindow.c:3295
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Nezināms"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3317
-#: ../src/disks/gduwindow.c:3299
+#: ../src/disks/gduwindow.c:3323
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Datņu sistēmas sakne"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3325
-#: ../src/disks/gduwindow.c:3307
-#, c-format, c-format
+#: ../src/disks/gduwindow.c:3331
+#, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montēts pie %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3331
-#: ../src/disks/gduwindow.c:3313
+#: ../src/disks/gduwindow.c:3337
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nav montēts"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3354
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3360
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktīvs"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3360
-#: ../src/disks/gduwindow.c:3342
+#: ../src/disks/gduwindow.c:3366
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Nav aktīvs"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3373
-#: ../src/disks/gduwindow.c:3355
+#: ../src/disks/gduwindow.c:3379
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Atbloķēts"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3379
-#: ../src/disks/gduwindow.c:3361
+#: ../src/disks/gduwindow.c:3385
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Bloķēts"
 
-#: ../src/disks/gduwindow.c:3389
-#: ../src/disks/gduwindow.c:3371
+#: ../src/disks/gduwindow.c:3395
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Paplašinātais nodalījums"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3399
-#: ../src/disks/gduwindow.c:3381
+#: ../src/disks/gduwindow.c:3405
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "Iet uz masīvu"
@@ -3691,8 +3679,7 @@ msgstr "Iet uz masīvu"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3404
-#: ../src/disks/gduwindow.c:3386
+#: ../src/disks/gduwindow.c:3410
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3702,34 +3689,29 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3422
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:3428
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3522
-#: ../src/disks/gduwindow.c:3504
+#: ../src/disks/gduwindow.c:3528
 msgid "Unallocated Space"
 msgstr "Neiedalītā vieta"
 
-#: ../src/disks/gduwindow.c:3901
-#: ../src/disks/gduwindow.c:3883
+#: ../src/disks/gduwindow.c:3907
 msgid "An error occurred when requesting data redundancy check"
 msgstr "Notika kļūda, pieprasot datu redundances pārbaudi"
 
 #. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3919
-#: ../src/disks/gduwindow.c:3901
+#: ../src/disks/gduwindow.c:3925
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
 msgstr "Datu birstēšana"
 
 #. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3921
-#: ../src/disks/gduwindow.c:3903
+#: ../src/disks/gduwindow.c:3927
 msgctxt "mdraid-scrub-dialog"
 msgid ""
 "As storage devices can develop bad blocks at any time it is valuable to "
@@ -3746,144 +3728,116 @@ msgstr ""
 "blokus atklātu laicīgi.\n"
 "\n"
 "Šīs darbības laikā RAID paliks darbotiesspējīgs, bet cietīs tā veiktspēja. "
-"Lai uzzinātu vairāk par datu birstēšanu, skatiet <a "
-"href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
-"administrēšanas</a> rakstu."
+"Lai uzzinātu vairāk par datu birstēšanu, skatiet <a href='https://raid.wiki."
+"kernel.org/index.php/RAID_Administration'>RAID administrēšanas</a> rakstu."
 
-#: ../src/disks/gduwindow.c:3926
-#: ../src/disks/gduwindow.c:3908
+#: ../src/disks/gduwindow.c:3932
 msgctxt "mdraid-scrub-dialog"
 msgid "_Start"
 msgstr "_Startēt"
 
-#: ../src/disks/gduwindow.c:3927
-#: ../src/disks/gduwindow.c:3909
+#: ../src/disks/gduwindow.c:3933
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
 msgstr "_Salabot neatbilstošus blokus, ja iespējams"
 
-#: ../src/disks/gduwindow.c:3974
-#: ../src/disks/gduwindow.c:3956
+#: ../src/disks/gduwindow.c:3980
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Notika kļūda, mēģinot iestatīt dzini gaidstāves režīmā"
 
-#: ../src/disks/gduwindow.c:4020
-#: ../src/disks/gduwindow.c:4002
+#: ../src/disks/gduwindow.c:4026
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Notika kļūda, mēģinot pamodināt dzini no gaidstāves režīma"
 
-#: ../src/disks/gduwindow.c:4065
-#: ../src/disks/gduwindow.c:4047
+#: ../src/disks/gduwindow.c:4071
 msgid "Error powering off drive"
 msgstr "Kļūda, izslēdzot ierīci"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4117
-#: ../src/disks/gduwindow.c:4099
+#: ../src/disks/gduwindow.c:4123
 msgid "Are you sure you want to power off the drives?"
 msgstr "Vai tiešām vēlaties izslēgt diskus?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4119
-#: ../src/disks/gduwindow.c:4101
+#: ../src/disks/gduwindow.c:4125
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
-"Šī darbība sagatavos sistēmu, lai varētu izslēgt un izņemt sekojošas "
-"ierīces."
+"Šī darbība sagatavos sistēmu, lai varētu izslēgt un izņemt sekojošas ierīces."
 
-#: ../src/disks/gduwindow.c:4123
-#: ../src/disks/gduwindow.c:4105
+#: ../src/disks/gduwindow.c:4129
 msgid "_Power Off"
 msgstr "_Izslēgt"
 
-#: ../src/disks/gduwindow.c:4200
-#: ../src/disks/gduwindow.c:4182
+#: ../src/disks/gduwindow.c:4206
 msgid "Error mounting filesystem"
 msgstr "Kļūda, montējot datņu sistēmu"
 
-#: ../src/disks/gduwindow.c:4240 ../src/libgdu/gduutils.c:1100
-#: ../src/disks/gduwindow.c:4222
+#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
 msgid "Error unmounting filesystem"
 msgstr "Kļūda, atmontējot datņu sistēmu"
 
-#: ../src/disks/gduwindow.c:4385
-#: ../src/disks/gduwindow.c:4367
+#: ../src/disks/gduwindow.c:4391
 msgid "Error deleting partition"
 msgstr "Kļūda, dzēšot nodalījumu"
 
-#: ../src/disks/gduwindow.c:4423
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:4429
 msgid "Are you sure you want to delete the partition?"
 msgstr "Vai tiešām vēlaties dzēst nodalījumu?"
 
-#: ../src/disks/gduwindow.c:4424
-#: ../src/disks/gduwindow.c:4406
+#: ../src/disks/gduwindow.c:4430
 msgid "All data on the partition will be lost"
 msgstr "Visi dati šajā nodalījumā tiks zaudēti"
 
-#: ../src/disks/gduwindow.c:4425
-#: ../src/disks/gduwindow.c:4407
+#: ../src/disks/gduwindow.c:4431
 msgid "_Delete"
 msgstr "_Dzēst"
 
-#: ../src/disks/gduwindow.c:4456
-#: ../src/disks/gduwindow.c:4438
+#: ../src/disks/gduwindow.c:4462
 msgid "Error ejecting media"
 msgstr "Kļūda, izgrūžot datu nesēju"
 
-#: ../src/disks/gduwindow.c:4513
-#: ../src/disks/gduwindow.c:4495
+#: ../src/disks/gduwindow.c:4519
 msgid "Error starting RAID array"
 msgstr "Kļūda, startējot RAID masīvu"
 
-#: ../src/disks/gduwindow.c:4555
-#: ../src/disks/gduwindow.c:4537
+#: ../src/disks/gduwindow.c:4561
 msgid "Error stopping RAID array"
 msgstr "Kļūda, apturot RAID masīvu"
 
-#: ../src/disks/gduwindow.c:4642
-#: ../src/disks/gduwindow.c:4624
+#: ../src/disks/gduwindow.c:4648
 msgid "Error locking encrypted device"
 msgstr "Kļūda, slēdzot šifrētu ierīci"
 
-#: ../src/disks/gduwindow.c:4707
-#: ../src/disks/gduwindow.c:4689
+#: ../src/disks/gduwindow.c:4713
 msgid "Error starting swap"
 msgstr "Kļūda, palaižot maiņvietu"
 
-#: ../src/disks/gduwindow.c:4744
-#: ../src/disks/gduwindow.c:4726
+#: ../src/disks/gduwindow.c:4750
 msgid "Error stopping swap"
 msgstr "Kļūda, apturot maiņvietu"
 
-#: ../src/disks/gduwindow.c:4783
-#: ../src/disks/gduwindow.c:4765
+#: ../src/disks/gduwindow.c:4789
 msgid "Error setting bitmap for the RAID array"
 msgstr "Kļūda, iestatot bitkarti RAID masīvam"
 
-#: ../src/disks/gduwindow.c:4849
-#: ../src/disks/gduwindow.c:4831
+#: ../src/disks/gduwindow.c:4855
 msgid "Error setting autoclear flag"
 msgstr "Kļūda, iestatot automātiskās attīrīšanas karogu"
 
-#: ../src/disks/gduwindow.c:4902 ../src/disks/gduwindow.c:4966
-#: ../src/disks/gduwindow.c:4884
-#: ../src/disks/gduwindow.c:4948
+#: ../src/disks/gduwindow.c:4908 ../src/disks/gduwindow.c:4972
 msgid "Error canceling job"
 msgstr "Kļūda, atceļot darbu"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:5088
-#: ../src/disks/gduwindow.c:5070
+#: ../src/disks/gduwindow.c:5094
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "_Neviena ierīce nav izvēlēta"
 
-#: ../src/disks/gduwindow.c:5098
-#: ../src/disks/gduwindow.c:5080
+#: ../src/disks/gduwindow.c:5104
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
@@ -3891,16 +3845,38 @@ msgstr[0] "_Izvēlēta %d ierīce (%s)"
 msgstr[1] "_Izvēlētas %d ierīces (%s)"
 msgstr[2] "_Izvēlētas %d ierīces (%s)"
 
-#: ../src/libgdu/gduutils.c:91
+#: ../src/disks/gduxzdecompressor.c:122
+msgid "Invalid compressed data"
+msgstr "Nederīgi saspiestie dati"
+
+#: ../src/disks/gduxzdecompressor.c:129
+msgid "Not enough memory"
+msgstr "Nepietiek atmiņas"
+
+#: ../src/disks/gduxzdecompressor.c:136
+#, c-format
+msgid "Internal error"
+msgstr "Iekšēja kļūda"
+
+#: ../src/disks/gduxzdecompressor.c:151
+msgid "Need more input"
+msgstr "Vajag vairāk ievades"
+
+#: ../src/libgdu/gduutils.c:92
 msgid "All Files"
 msgstr "Visas datnes"
 
-#: ../src/libgdu/gduutils.c:95
+#: ../src/libgdu/gduutils.c:97
+#| msgid "Disk Images (*.img, *.iso)"
+msgid "Disk Images (*.img, *.img.xz, *.iso)"
+msgstr "Disku attēli (*.img, *.img.xz, *.iso)"
+
+#: ../src/libgdu/gduutils.c:99
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Disku attēli (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3909,7 +3885,7 @@ msgstr[1] "%d gadi"
 msgstr[2] "%d gadu"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3918,7 +3894,7 @@ msgstr[1] "%d mēneši"
 msgstr[2] "%d mēnešu"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3927,7 +3903,7 @@ msgstr[1] "%d dienas"
 msgstr[2] "%d dienu"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3936,7 +3912,7 @@ msgstr[1] "%d stundas"
 msgstr[2] "%d stundu"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3945,7 +3921,7 @@ msgstr[1] "%d minūtes"
 msgstr[2] "%d minūšu"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3954,7 +3930,7 @@ msgstr[1] "%d sekundes"
 msgstr[2] "%d sekunžu"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3963,119 +3939,119 @@ msgstr[1] "%d milisekundes"
 msgstr[2] "%d milisekunžu"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s un %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:529
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s un %s"
 
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mazāk kā minūte"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:560
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:702
+#: ../src/libgdu/gduutils.c:724
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ietekmētās ierīces"
 
-#: ../src/libgdu/gduutils.c:792
+#: ../src/libgdu/gduutils.c:814
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:793
+#: ../src/libgdu/gduutils.c:815
 msgid "Stripe"
 msgstr "Josla"
 
-#: ../src/libgdu/gduutils.c:798
+#: ../src/libgdu/gduutils.c:820
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:799
+#: ../src/libgdu/gduutils.c:821
 msgid "Mirror"
 msgstr "Spogulis"
 
-#: ../src/libgdu/gduutils.c:804
+#: ../src/libgdu/gduutils.c:826
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:805
+#: ../src/libgdu/gduutils.c:827
 msgid "Dedicated Parity"
 msgstr "Atvēlētā paritāte"
 
-#: ../src/libgdu/gduutils.c:810
+#: ../src/libgdu/gduutils.c:832
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:811
+#: ../src/libgdu/gduutils.c:833
 msgid "Distributed Parity"
 msgstr "Dalītā paritāte"
 
-#: ../src/libgdu/gduutils.c:816
+#: ../src/libgdu/gduutils.c:838
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:817
+#: ../src/libgdu/gduutils.c:839
 msgid "Double Distributed Parity"
 msgstr "Dubulta dalītā paritāte"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:844
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:845
 msgid "Stripe of Mirrors"
 msgstr "Spoguļu joslas"
 
-#: ../src/libgdu/gduutils.c:828
-#, c-format, c-format
+#: ../src/libgdu/gduutils.c:850
+#, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1120
+#: ../src/libgdu/gduutils.c:1142
 msgid "Error locking device"
 msgstr "Kļūda, bloķējot ierīci"
 
@@ -4165,15 +4141,15 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgid ""
 #~ "%s <span size=\"small\">(Normalized: %d, Threshold: %d, Worst: %d)</span>"
 #~ msgstr ""
-#~ "%s <span size=\"small\">(Normalizētais: %d, slieksnis: %d, sliktākais: %"
-#~ "d)</span>"
+#~ "%s <span size=\"small\">(Normalizētais: %d, slieksnis: %d, sliktākais: %d)"
+#~ "</span>"
 
 #~ msgid ""
 #~ "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
 #~ "(Pre-Fail)</span>"
 #~ msgstr ""
-#~ "Neizdošanās ir zīme, ka disks avarēs nākošo 24 stundu laikā <span "
-#~ "size=\"small\">(Pre-Fail)</span>"
+#~ "Neizdošanās ir zīme, ka disks avarēs nākošo 24 stundu laikā <span size="
+#~ "\"small\">(Pre-Fail)</span>"
 
 #~ msgid ""
 #~ "Failure is a sign the disk exceeded its intended design life period <span "
@@ -4185,8 +4161,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgid ""
 #~ "Updated every time data is collected <span size=\"small\">(Online)</span>"
 #~ msgstr ""
-#~ "Atjaunināt katru reizi, kad informācija tiek savākta <span "
-#~ "size=\"small\">(Tiešsaistē)</span>"
+#~ "Atjaunināt katru reizi, kad informācija tiek savākta <span size=\"small\">"
+#~ "(Tiešsaistē)</span>"
 
 #~ msgid ""
 #~ "Updated only during off-line activities <span size=\"small\">(Not Online)"
@@ -4284,7 +4260,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgstr[2] "%.1f sekunžu"
 
 #~ msgid "Failure is a sign the disk will fail within 24 hours (Pre-Fail)"
-#~ msgstr "Neizdošanās ir zīme, ka disks avarēs nākošo 24 stundu laikā (Pre-Fail)"
+#~ msgstr ""
+#~ "Neizdošanās ir zīme, ka disks avarēs nākošo 24 stundu laikā (Pre-Fail)"
 
 #~ msgid ""
 #~ "Failure is a sign the disk exceeded its intended design life period (Old-"
@@ -4384,7 +4361,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgid ""
 #~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
-#~ "Izvēlieties ierīci, lai izveidotu %s rezerves disku RAID masīvam \"%s\" (%s)"
+#~ "Izvēlieties ierīci, lai izveidotu %s rezerves disku RAID masīvam \"%s"
+#~ "\" (%s)"
 
 #~ msgid "Expand %s"
 #~ msgstr "Paplašināt %s"
@@ -4587,9 +4565,9 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 #~ "protocol."
 #~ msgstr ""
-#~ "Lai pārvaldītu atmiņas iekārtas citos datoros, ievadiet adresi un nospiediet "
-#~ "\"Savienoties\". Savienojums tiks izveidots, izmantojot <i>Secure Shell</i> "
-#~ "protokolu."
+#~ "Lai pārvaldītu atmiņas iekārtas citos datoros, ievadiet adresi un "
+#~ "nospiediet \"Savienoties\". Savienojums tiks izveidots, izmantojot "
+#~ "<i>Secure Shell</i> protokolu."
 
 #~ msgid "The hostname or address to connect to"
 #~ msgstr "Datora vārds vai adrese, ar ko savienoties"
@@ -4751,15 +4729,15 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgid ""
 #~ "Insufficient space: %s is needed but largest contiguous free block is %s."
 #~ msgstr ""
-#~ "Nepietiekama vieta: ir nepieciešami %s, bet lielākais secīgais brīvais bloks "
-#~ "ir %s."
+#~ "Nepietiekama vieta: ir nepieciešami %s, bet lielākais secīgais brīvais "
+#~ "bloks ir %s."
 
 #~ msgid ""
 #~ "The disk will be partitioned and a %s partition will be created. "
 #~ "Afterwards no space will be available."
 #~ msgstr ""
-#~ "Disks tiks sadalīts un tiks izveidota %s sadaļa. Pēc tam vieta vairs nebūs "
-#~ "pieejama."
+#~ "Disks tiks sadalīts un tiks izveidota %s sadaļa. Pēc tam vieta vairs "
+#~ "nebūs pieejama."
 
 #~ msgid ""
 #~ "The disk will be partitioned and a %s partition will be created. "
@@ -5010,9 +4988,9 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "created file system will be owned by you. If not checked, only the super "
 #~ "user can access the file system."
 #~ msgstr ""
-#~ "Izvēlētajai failu sistēmai ir sapratne par failu īpašniekiem. Ja ieķeksēts, "
-#~ "izvēlētā failu sistēma piederēs jums. Ja nav ieķeksēts, tikai administrators "
-#~ "varēs piekļūt failu sistēmai."
+#~ "Izvēlētajai failu sistēmai ir sapratne par failu īpašniekiem. Ja "
+#~ "ieķeksēts, izvēlētā failu sistēma piederēs jums. Ja nav ieķeksēts, tikai "
+#~ "administrators varēs piekļūt failu sistēmai."
 
 #~ msgid "_Encrypt underlying device"
 #~ msgstr "Šifrēt i_erīci"
@@ -5023,8 +5001,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "be compatible if you use the media on other operating systems."
 #~ msgstr ""
 #~ "Šifrēšana aizsargās jūsu datus, bet vajadzēs ievadīt paroli, pirms failu "
-#~ "sistēmu varēs lietot. Tā var samazināt veiktspēju un var nebūt savietojama "
-#~ "ar izvēlēto datu nesēju vai citām operētājsistēmām."
+#~ "sistēmu varēs lietot. Tā var samazināt veiktspēju un var nebūt "
+#~ "savietojama ar izvēlēto datu nesēju vai citām operētājsistēmām."
 
 #~ msgctxt "application name"
 #~ msgid "Bourne Again Shell"
@@ -5091,7 +5069,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgstr "Iz_veidot"
 
 #~ msgid "To create an encrypted device, choose a passphrase to protect it"
-#~ msgstr "Lai izveidotu šifrētu ierīci, izvēlieties paroli, ar ko to aizsargāt"
+#~ msgstr ""
+#~ "Lai izveidotu šifrētu ierīci, izvēlieties paroli, ar ko to aizsargāt"
 
 #~ msgid "To change the passphrase, enter both the current and new passphrase"
 #~ msgstr "Lai nomainītu paroli, ievadiet pašreizējo un jauno paroli"
@@ -5099,7 +5078,8 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ msgid ""
 #~ "Data on this device is stored in an encrypted form protected by a "
 #~ "passphrase"
-#~ msgstr "Dati uz šī sējuma tiek glabāti šifrētā formā un ir aizsargāti ar paroli"
+#~ msgstr ""
+#~ "Dati uz šī sējuma tiek glabāti šifrētā formā un ir aizsargāti ar paroli"
 
 #~ msgid ""
 #~ "Data on this device will be stored in an encrypted form protected by a "
@@ -5851,23 +5831,23 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "A popular format compatible with almost any device or system, typically "
 #~ "used for file exchange."
 #~ msgstr ""
-#~ "Populārs formāts, kurš ir savietojams ar gandrīz jebkuru ierīci vai sistēmu, "
-#~ "parasti izmanto, lai apmainītos ar failiem."
+#~ "Populārs formāts, kurš ir savietojams ar gandrīz jebkuru ierīci vai "
+#~ "sistēmu, parasti izmanto, lai apmainītos ar failiem."
 
 #~ msgid ""
 #~ "This file system is compatible with Linux systems only and provides "
 #~ "classic UNIX file permissions support. This file system does not use a "
 #~ "journal."
 #~ msgstr ""
-#~ "Šī failu sistēma ir savietojama tikai ar Linux sistēmām un piedāvā klasisku "
-#~ "UNIX failu tiesību atbalstu. Failu sistēma neizmanto žurnālu."
+#~ "Šī failu sistēma ir savietojama tikai ar Linux sistēmām un piedāvā "
+#~ "klasisku UNIX failu tiesību atbalstu. Failu sistēma neizmanto žurnālu."
 
 #~ msgid ""
 #~ "This file system is compatible with Linux systems only and provides "
 #~ "classic UNIX file permissions support."
 #~ msgstr ""
-#~ "Šī failu sistēma ir savietojama tikai ar Linux sistēmām un piedāvā klasisku "
-#~ "UNIX failu tiesību atbalstu."
+#~ "Šī failu sistēma ir savietojama tikai ar Linux sistēmām un piedāvā "
+#~ "klasisku UNIX failu tiesību atbalstu."
 
 #~ msgid "Swap area used by the operating system for virtual memory."
 #~ msgstr "Apmaiņas vietu izmanto operētājsistēmas virtuālajai atmiņai."
@@ -5909,16 +5889,16 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "The GUID scheme is compatible with most modern systems but may be "
 #~ "incompatible with some devices and legacy systems."
 #~ msgstr ""
-#~ "GUID shēma ir savietojama ar vairumu moderno sistēmu, bet nav savietojama ar "
-#~ "dažām iekārtām un mantotām sistēmām."
+#~ "GUID shēma ir savietojama ar vairumu moderno sistēmu, bet nav savietojama "
+#~ "ar dažām iekārtām un mantotām sistēmām."
 
 #~ msgid ""
 #~ "Marks the entire disk as unused. Use this option only if you want to "
 #~ "avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 #~ msgstr ""
 #~ "Marķē visu disku kā neizmantotu. Izmantojiet šo opciju tikai tad, ja "
-#~ "vēlaties izvairīties no diska dalīšanas, piemēram, visam diskam vai disketei "
-#~ "/ Zip diskiem."
+#~ "vēlaties izvairīties no diska dalīšanas, piemēram, visam diskam vai "
+#~ "disketei / Zip diskiem."
 
 #~ msgid "%.1f kB/s"
 #~ msgstr "%.1f kB/s"
@@ -6281,8 +6261,9 @@ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
 #~ "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 #~ "perform operations on the drive, use the corresponding multipath object."
 #~ msgstr ""
-#~ "<b>Piezīme:</b> Šis objekts attēlo vienu no vairākiem ceļiem uz ierīci. Lai "
-#~ "veiktu kādas darbības uz diska, izmantojiet atbilstošu vairāku ceļu objektu."
+#~ "<b>Piezīme:</b> Šis objekts attēlo vienu no vairākiem ceļiem uz ierīci. "
+#~ "Lai veiktu kādas darbības uz diska, izmantojiet atbilstošu vairāku ceļu "
+#~ "objektu."
 
 #~ msgid "Firmware Version:"
 #~ msgstr "Programm. versija:"

@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Mads Lundby <lundbymads@gmail.com>, 2009.
 # Ask Hjorth Larsen <asklarsen@gmail.com>, 2009, 10, 12, 13.
+# Kenneth Nielsen <k.nielsen81@gmail.com>, 2013.
 #
 # OBS OBS OBS! RET "VOLUME" TIL I FORHOLD TIL, HVAD DANSKGRUPPEN BLIVER ENIGE OM.
 #
@@ -19,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-16 16:33+0100\n"
-"PO-Revision-Date: 2013-03-16 16:07+0100\n"
-"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
+"POT-Creation-Date: 2013-09-16 00:41+0200\n"
+"PO-Revision-Date: 2013-09-16 00:33+0200\n"
+"Last-Translator: Kenneth Nielsen <k.nielsen81@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +39,15 @@ msgstr "Diskenhedsmonteringsprogram"
 msgid "Mount Disk Images"
 msgstr "Montér diskaftryk"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1275
+#: ../data/gnome-disk-image-writer.desktop.in.h:1
+msgid "Disk Image Writer"
+msgstr "Diskaftryksskriver"
+
+#: ../data/gnome-disk-image-writer.desktop.in.h:2
+msgid "Write Disk Images to Devices"
+msgstr "Skriv diskaftryk til enheder"
+
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1277
 msgid "Disks"
 msgstr "Diske"
 
@@ -1167,6 +1176,14 @@ msgid "Destination"
 msgstr "Destination"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
+msgid "Image to Restore"
+msgstr "Aftryk der skal gendannes"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:6
+msgid "Image Size"
+msgstr "Aftryksstørrelse"
+
+#: ../data/ui/restore-disk-image-dialog.ui.h:7
 msgid "_Start Restoring…"
 msgstr "_Start gendannelse…"
 
@@ -1268,11 +1285,11 @@ msgid "_Mount"
 msgstr "_Montér"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:90
+#: ../src/disk-image-mounter/main.c:92
 msgid "Set up _read-only mount"
 msgstr "Opsæt skrive_beskyttet montering"
 
-#: ../src/disk-image-mounter/main.c:91
+#: ../src/disk-image-mounter/main.c:93
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -1280,61 +1297,65 @@ msgstr ""
 "Hvis afkrydset, vil der blive monteret som skrivebeskyttet. Dette er "
 "nyttigt, hvis du ikke vil have at det underliggende diskaftryk ændres"
 
-#: ../src/disk-image-mounter/main.c:133
+#: ../src/disk-image-mounter/main.c:135
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Fejl ved forbindelse til udisks-dæmon: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:141
+#: ../src/disk-image-mounter/main.c:143
 msgid "Attach and mount one or more disk image files."
 msgstr "Tilkobl og montér en eller flere diskaftryksfiler."
 
-#: ../src/disk-image-mounter/main.c:189
+#: ../src/disk-image-mounter/main.c:191
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "Kan ikke åbne \"%s\" - måske er diskenheden ikke monteret?"
 
-#: ../src/disk-image-mounter/main.c:196
+#: ../src/disk-image-mounter/main.c:198
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Fejl ved åbning af \"%s\": %m"
 
-#: ../src/disk-image-mounter/main.c:217
+#: ../src/disk-image-mounter/main.c:219
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Fejl ved tilkobling af diskaftryk: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:131
+#: ../src/disks/gduapplication.c:132
 #, c-format
-msgid "Error opening %s: %s\n"
-msgstr "Fejl ved åbning af %s: %s\n"
+msgid "Error opening %s: %s"
+msgstr "Fejl ved åbning af %s: %s"
 
-#: ../src/disks/gduapplication.c:138
+#: ../src/disks/gduapplication.c:139
 #, c-format
-msgid "Error looking up block device for %s\n"
-msgstr "Fejl ved opslag af blokenhed for %s\n"
+msgid "Error looking up block device for %s"
+msgstr "Fejl ved opslag af blokenhed for %s"
 
-#: ../src/disks/gduapplication.c:178
+#: ../src/disks/gduapplication.c:180
 msgid "Select device"
 msgstr "Vælg enhed"
 
-#: ../src/disks/gduapplication.c:179
+#: ../src/disks/gduapplication.c:181
 msgid "Format selected device"
 msgstr "Formatér valgte enhed"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:182
 msgid "Parent window XID for the format dialog"
 msgstr "XID for formatdialogvindues ophavsvindue"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:183
+msgid "Restore disk image"
+msgstr "Gendan diskaftryk"
+
+#: ../src/disks/gduapplication.c:184
 msgid "Show help options"
 msgstr "Vis hjælpetilvalg"
 
-#: ../src/disks/gduapplication.c:210
+#: ../src/disks/gduapplication.c:213
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device skal bruges sammen med --block-device\n"
 
-#: ../src/disks/gduapplication.c:216
+#: ../src/disks/gduapplication.c:219
 msgid "--format-device must be specified when using --xid\n"
 msgstr "--format-device skal være givet når der bruges --xid\n"
 
@@ -1343,7 +1364,7 @@ msgstr "--format-device skal være givet når der bruges --xid\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:312
+#: ../src/disks/gduapplication.c:331
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2149,7 +2170,7 @@ msgid "Error starting SMART self-test"
 msgstr "Fejl under start af SMART-selvtest"
 
 #: ../src/disks/gduatasmartdialog.c:1432
-msgid "An error occurred when trying toggle whether SMART is enabled"
+msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Der opstod en fejl ved forsøg på at slå SMART til eller fra"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
@@ -2373,7 +2394,7 @@ msgstr "Styrken af adgangsfrasen"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/disks/gducreatediskimagedialog.c:272
+#: ../src/disks/gducreatediskimagedialog.c:275
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Diskaftryk af %s (%s).img"
@@ -2382,38 +2403,38 @@ msgstr "Diskaftryk af %s (%s).img"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: ../src/disks/gducreatediskimagedialog.c:303
+#: ../src/disks/gducreatediskimagedialog.c:308
 msgid "Disk image read error"
 msgstr "Fejl ved læsning af diskaftryk"
 
-#: ../src/disks/gducreatediskimagedialog.c:339
+#: ../src/disks/gducreatediskimagedialog.c:344
 msgid "Allocating Disk Image"
 msgstr "Allokerer diskaftryk"
 
-#: ../src/disks/gducreatediskimagedialog.c:343
+#: ../src/disks/gducreatediskimagedialog.c:348
 msgid "Retrieving DVD keys"
 msgstr "Henter dvd-nøgler"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:352
+#: ../src/disks/gducreatediskimagedialog.c:357
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s ulæselig (erstattet med nuller)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: ../src/disks/gducreatediskimagedialog.c:406
-#: ../src/disks/gdurestorediskimagedialog.c:398
+#: ../src/disks/gducreatediskimagedialog.c:411
+#: ../src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "Kopiering af diskaftryk fuldført"
 
-#: ../src/disks/gducreatediskimagedialog.c:435
+#: ../src/disks/gducreatediskimagedialog.c:440
 msgid "Error creating disk image"
 msgstr "Fejl ved oprettelse af diskaftryk"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:476
+#: ../src/disks/gducreatediskimagedialog.c:481
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Der opstod urettelige fejl ved oprettelse af diskaftryk"
 
@@ -2422,7 +2443,7 @@ msgstr "Der opstod urettelige fejl ved oprettelse af diskaftryk"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:485
+#: ../src/disks/gducreatediskimagedialog.c:490
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -2434,53 +2455,53 @@ msgstr ""
 "ridset eller hvis drevet er blevet fysisk skadet"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:491
+#: ../src/disks/gducreatediskimagedialog.c:496
 msgid "_Delete Disk Image File"
 msgstr "_Slet diskaftryksfil"
 
-#: ../src/disks/gducreatediskimagedialog.c:719
-#: ../src/disks/gdurestorediskimagedialog.c:532
+#: ../src/disks/gducreatediskimagedialog.c:724
+#: ../src/disks/gdurestorediskimagedialog.c:747
 msgid "Error determining size of device: "
 msgstr "Fejl under bestemmelse af størrelse af enhed: "
 
-#: ../src/disks/gducreatediskimagedialog.c:726
-#: ../src/disks/gdurestorediskimagedialog.c:539
+#: ../src/disks/gducreatediskimagedialog.c:731
+#: ../src/disks/gdurestorediskimagedialog.c:754
 #, c-format
 msgid "Device is size 0"
 msgstr "Enhedens størrelse er 0"
 
-#: ../src/disks/gducreatediskimagedialog.c:756
+#: ../src/disks/gducreatediskimagedialog.c:765
 msgid "Error allocating space for disk image file: "
 msgstr "Fejl ved tildeling af plads til diskaftryksfil: "
 
-#: ../src/disks/gducreatediskimagedialog.c:910
+#: ../src/disks/gducreatediskimagedialog.c:926
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Der findes allerede en fil ved navn “%s”.  Vil du erstatte den?"
 
-#: ../src/disks/gducreatediskimagedialog.c:913
+#: ../src/disks/gducreatediskimagedialog.c:929
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr ""
 "Filen findes allerede i “%s”.  Hvis den erstattes, overskrives dens indhold."
 
-#: ../src/disks/gducreatediskimagedialog.c:916
+#: ../src/disks/gducreatediskimagedialog.c:932
 msgid "_Replace"
 msgstr "_Erstat"
 
-#: ../src/disks/gducreatediskimagedialog.c:970
+#: ../src/disks/gducreatediskimagedialog.c:986
 msgid "Error opening file for writing"
 msgstr "Fejl ved åbning af fil i skrivetilstand"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:1002
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Kopierer enhed til diskaftryk"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:992
+#: ../src/disks/gducreatediskimagedialog.c:1008
 msgid "Creating Disk Image"
 msgstr "Opretter diskaftryk"
 
@@ -2636,23 +2657,27 @@ msgstr ""
 "ændret. For at ændre adgangsfrasen på disken, skal du bruge <i>Ændr "
 "adgangsfrase…</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:560
+#: ../src/disks/gdudevicetreemodel.c:507
+msgid "(None)"
+msgstr "(Ingen)"
+
+#: ../src/disks/gdudevicetreemodel.c:622
 msgid "Disk Drives"
 msgstr "Diskdrev"
 
-#: ../src/disks/gdudevicetreemodel.c:633
+#: ../src/disks/gdudevicetreemodel.c:698
 msgid "RAID Arrays"
 msgstr "RAID-rækker"
 
 #. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1098
+#: ../src/disks/gdudevicetreemodel.c:1174
 #, c-format
 msgctxt "md-raid-tree-primary"
 msgid "%s RAID Array"
 msgstr "%s RAID-række"
 
 #. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1104
+#: ../src/disks/gdudevicetreemodel.c:1180
 msgctxt "md-raid-tree-primary"
 msgid "RAID Array"
 msgstr "RAID-række"
@@ -2661,13 +2686,13 @@ msgstr "RAID-række"
 #. *              The first %s is the name of the array (e.g. "My RAID Array").
 #. *              The second %s is the RAID level (e.g. "RAID-5").
 #.
-#: ../src/disks/gdudevicetreemodel.c:1115
+#: ../src/disks/gdudevicetreemodel.c:1191
 #, c-format
 msgctxt "md-raid-tree-secondary"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdudevicetreemodel.c:1268
+#: ../src/disks/gdudevicetreemodel.c:1351
 msgid "Other Devices"
 msgstr "Andre enheder"
 
@@ -2988,7 +3013,7 @@ msgid "Error updating /etc/fstab entry"
 msgstr "Fejl ved opdatering af indgang i /etc/fstab"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2004
+#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2028
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Skrivebeskyttet)</span>"
@@ -3114,15 +3139,15 @@ msgctxt "mdraid-add"
 msgid "Select disk to add"
 msgstr "Vælg disk at tilføje"
 
-#: ../src/disks/gdupartitiondialog.c:355
+#: ../src/disks/gdupartitiondialog.c:362
 msgid "Error setting partition type"
 msgstr "Fejl under indstilling af partitionstype"
 
-#: ../src/disks/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:376
 msgid "Error setting partition name"
 msgstr "Fejl ved indstilling af partitionsnavn"
 
-#: ../src/disks/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:390
 msgid "Error setting partition flags"
 msgstr "Fejl under indstilling af partitionsflag"
 
@@ -3146,52 +3171,64 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "Stærk"
 
-#: ../src/disks/gdurestorediskimagedialog.c:244
+#: ../src/disks/gdurestorediskimagedialog.c:277
+msgid "File does not appear to be XZ compressed"
+msgstr "Filen ser ikke ud til at være XZ-komprimeret"
+
+#. Translators: Shown for a compressed disk image in the "Size" field.
+#. *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
+#.
+#: ../src/disks/gdurestorediskimagedialog.c:286
+#, c-format
+msgid "%s when decompressed"
+msgstr "%s når ukomprimeret"
+
+#: ../src/disks/gdurestorediskimagedialog.c:302
 msgid "Cannot restore image of size 0"
 msgstr "Kan ikke gendanne aftryk af størrelse 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:253
+#: ../src/disks/gdurestorediskimagedialog.c:311
 #, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "Diskaftrykket er %s mindre end målenheden"
 
-#: ../src/disks/gdurestorediskimagedialog.c:262
+#: ../src/disks/gdurestorediskimagedialog.c:320
 #, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "Diskaftrykket er %s større end målenheden"
 
-#: ../src/disks/gdurestorediskimagedialog.c:435
+#: ../src/disks/gdurestorediskimagedialog.c:650
 msgid "Error restoring disk image"
 msgstr "Fejl ved gendannelse af diskaftryk"
 
-#: ../src/disks/gdurestorediskimagedialog.c:722
+#: ../src/disks/gdurestorediskimagedialog.c:939
 msgid "Error opening file for reading"
 msgstr "Fejl ved åbning af fil i læsetilstand"
 
-#: ../src/disks/gdurestorediskimagedialog.c:736
+#: ../src/disks/gdurestorediskimagedialog.c:954
 msgid "Error determing size of file"
 msgstr "Fejl ved bestemmelse af filstørrelse"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gdurestorediskimagedialog.c:749
+#: ../src/disks/gdurestorediskimagedialog.c:982
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopierer diskaftryk til enhed"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gdurestorediskimagedialog.c:755
+#: ../src/disks/gdurestorediskimagedialog.c:988
 msgid "Restoring Disk Image"
 msgstr "Gendanner diskaftryk"
 
-#: ../src/disks/gdurestorediskimagedialog.c:807
+#: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Er du sikker på, at du vil skrive diskaftrykket til enheden?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:808
+#: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
 msgstr "Alle eksisterende data vil gå tabt"
 
-#: ../src/disks/gdurestorediskimagedialog.c:809
+#: ../src/disks/gdurestorediskimagedialog.c:1046
 msgid "_Restore"
 msgstr "_Gendan"
 
@@ -3203,7 +3240,7 @@ msgstr "Fejl ved oplåsning af krypteret enhed"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Krypteringsadgangsfrasen blev hentet fra nøgleringen"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2755
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2779
 msgid "No Media"
 msgstr "Intet medie"
 
@@ -3264,14 +3301,16 @@ msgstr "Fejl under sletning af løkkeenhed"
 msgid "Error attaching disk image"
 msgstr "Fejl ved tilkobling af diskaftryk"
 
-#: ../src/disks/gduwindow.c:870
+#: ../src/disks/gduwindow.c:868
 msgid "Select Disk Image to Attach"
 msgstr "Vælg diskaftryk der skal tilkobles"
 
-#: ../src/disks/gduwindow.c:874
+#: ../src/disks/gduwindow.c:872
 msgid "_Attach"
 msgstr "_Tilkobl"
 
+#. set file types
+#. allow_compressed
 #. Add a RO check button that defaults to RO
 #: ../src/disks/gduwindow.c:879
 msgid "Set up _read-only loop device"
@@ -3286,43 +3325,61 @@ msgstr ""
 "hvis du ikke vil have at den underliggende fil ændres"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1651
+#: ../src/disks/gduwindow.c:1657
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
 
-#. Translators: This is the short-cut to format a disk
-#: ../src/disks/gduwindow.c:1656
+#. Translators: This is the short-cut to format a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1665
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
 
-#. Translators: This is the short-cut to view SMART data for a disk
-#: ../src/disks/gduwindow.c:1661
+#. Translators: This is the short-cut to view SMART data for a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1673
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
 
-#. Translators: This is the short-cut to view RAID Disks for a RAID array
-#: ../src/disks/gduwindow.c:1666
+#. Translators: This is the short-cut to view RAID Disks for a RAID array.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1681
 msgctxt "accelerator"
 msgid "<Ctrl>R"
 msgstr "<Ctrl>R"
 
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
-#: ../src/disks/gduwindow.c:1671
+#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1689
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#. Translators: This is the short-cut to open the volume gear menu
-#: ../src/disks/gduwindow.c:1676
+#. Translators: This is the short-cut to open the volume gear menu.
+#. *              The Shift modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Ctrl>).
+#.
+#: ../src/disks/gduwindow.c:1697
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
 
-#. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1683
+#. Translators: This is the short-cut to format a volume.
+#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+#. *              You can however change to other English modifiers.
+#.
+#: ../src/disks/gduwindow.c:1707
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
@@ -3331,7 +3388,7 @@ msgstr "<Shift><Ctrl>F"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2042
+#: ../src/disks/gduwindow.c:2066
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3340,7 +3397,7 @@ msgstr "%s tilbage (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2050
+#: ../src/disks/gduwindow.c:2074
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3351,7 +3408,7 @@ msgstr "%s tilbage"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2065
+#: ../src/disks/gduwindow.c:2089
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s af %s – %s"
@@ -3360,41 +3417,41 @@ msgstr "%s af %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2152
+#: ../src/disks/gduwindow.c:2176
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f %%"
 
-#: ../src/disks/gduwindow.c:2224 ../src/disks/gduwindow.c:3069
+#: ../src/disks/gduwindow.c:2248 ../src/disks/gduwindow.c:3093
 msgid "Block device is empty"
 msgstr "Blokenheden er tom"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2247
+#: ../src/disks/gduwindow.c:2271
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Ukendt (%s)"
 
-#: ../src/disks/gduwindow.c:2328
+#: ../src/disks/gduwindow.c:2352
 msgid "RAID array is not running"
 msgstr "RAID-rækken kører ikke"
 
 #. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2349
+#: ../src/disks/gduwindow.c:2373
 #, c-format
 msgctxt "md-raid-window"
 msgid "%s RAID Array"
 msgstr "%s RAID-række"
 
 #. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2355
+#: ../src/disks/gduwindow.c:2379
 msgctxt "md-raid-window"
 msgid "RAID Array"
 msgstr "RAID-række"
 
 #. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2381
+#: ../src/disks/gduwindow.c:2405
 msgctxt "mdraid"
 msgid "Not running"
 msgstr "Kører ikke"
@@ -3404,20 +3461,24 @@ msgstr "Kører ikke"
 #. *              The first %s is the array name (e.g. "My Raid Disk").
 #. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
 #.
-#: ../src/disks/gduwindow.c:2448
+#: ../src/disks/gduwindow.c:2472
 #, c-format
 msgctxt "mdraid"
 msgid "%s (local to %s)"
 msgstr "%s (lokal for %s)"
 
-#: ../src/disks/gduwindow.c:2488
+#: ../src/disks/gduwindow.c:2512
 #, c-format
 msgid "%d Disk"
 msgid_plural "%d Disks"
 msgstr[0] "%d disk"
 msgstr[1] "%d diske"
 
-#: ../src/disks/gduwindow.c:2500
+#. Translators: Used to combine number of disks and the chunk size.
+#. *              The first %s is the number of disks e.g. "3 disks".
+#. *              The second %s is the chunk size e.g. "512 KiB".
+#.
+#: ../src/disks/gduwindow.c:2524
 #, c-format
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
@@ -3427,20 +3488,20 @@ msgstr "%s, %s klump"
 #. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
 #. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
 #.
-#: ../src/disks/gduwindow.c:2509
+#: ../src/disks/gduwindow.c:2533
 #, c-format
 msgctxt "mdraid"
 msgid "%s, %s"
 msgstr "%s, %s"
 
-#: ../src/disks/gduwindow.c:2529
+#: ../src/disks/gduwindow.c:2553
 #, c-format
 msgid "%d disk is missing"
 msgid_plural "%d disks are missing"
 msgstr[0] "%d disk mangler"
 msgstr[1] "%d diske mangler"
 
-#: ../src/disks/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2559
 msgctxt "mdraid"
 msgid "ARRAY IS DEGRADED"
 msgstr "ARRAY ER FORRINGET (DEGRADED)"
@@ -3448,51 +3509,51 @@ msgstr "ARRAY ER FORRINGET (DEGRADED)"
 #. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
 #. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
 #.
-#: ../src/disks/gduwindow.c:2539
+#: ../src/disks/gduwindow.c:2563
 #, c-format
 msgctxt "mdraid-degraded"
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#: ../src/disks/gduwindow.c:2550 ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2574 ../src/disks/gduwindow.c:2590
 msgctxt "mdraid-state"
 msgid "Running"
 msgstr "Kører"
 
 #. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2555
+#: ../src/disks/gduwindow.c:2579
 msgctxt "mdraid-state"
 msgid "Not running"
 msgstr "Kører ikke"
 
 # http://en.wikipedia.org/wiki/Data_scrubbing
-#: ../src/disks/gduwindow.c:2575
+#: ../src/disks/gduwindow.c:2599
 msgctxt "mdraid-state"
 msgid "Data Scrubbing"
 msgstr "\"Data scrubbing\"-fejlrettelse"
 
-#: ../src/disks/gduwindow.c:2580
+#: ../src/disks/gduwindow.c:2604
 msgctxt "mdraid-state"
 msgid "Data Scrubbing and Repair"
 msgstr "\"Data scrubbing\"-fejlrettelse og reparation"
 
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2609
 msgctxt "mdraid-state"
 msgid "Resyncing"
 msgstr "Gensynkroniserer"
 
-#: ../src/disks/gduwindow.c:2589
+#: ../src/disks/gduwindow.c:2613
 msgctxt "mdraid-state"
 msgid "Recovering"
 msgstr "Gendanner"
 
-#: ../src/disks/gduwindow.c:2593
+#: ../src/disks/gduwindow.c:2617
 msgctxt "mdraid-state"
 msgid "Frozen"
 msgstr "Frosset"
 
 #. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2609
+#: ../src/disks/gduwindow.c:2633
 msgctxt "raid-split-brain"
 msgid "RAID ARRAY IS MISCONFIGURED"
 msgstr "RAID-RÆKKE FEJLKONFIGURERET"
@@ -3501,7 +3562,7 @@ msgstr "RAID-RÆKKE FEJLKONFIGURERET"
 #. * http://en.wikipedia.org/wiki/Split-brain_(computing)
 #. * for more details
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2639
 msgctxt "raid-split-brain"
 msgid "Split-Brain"
 msgstr "\"Split-brain\"-fejlkonfiguration"
@@ -3510,7 +3571,7 @@ msgstr "\"Split-brain\"-fejlkonfiguration"
 #. *              The first %s is "SYSTEM IS MISCONFIGURED".
 #. *              The second %s is "Split-Brain" as a hyperlink.
 #.
-#: ../src/disks/gduwindow.c:2621
+#: ../src/disks/gduwindow.c:2645
 #, c-format
 msgctxt "raid-split-brain"
 msgid "%s (%s)"
@@ -3520,7 +3581,7 @@ msgstr "%s (%s)"
 #. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
 #. *              The second is the percentage completed, e.g. '42.5%'
 #.
-#: ../src/disks/gduwindow.c:2651
+#: ../src/disks/gduwindow.c:2675
 #, c-format
 msgctxt "raid-state-progress"
 msgid "%s: %s"
@@ -3530,7 +3591,7 @@ msgstr "%s: %s"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2678
+#: ../src/disks/gduwindow.c:2702
 #, c-format
 msgctxt "mdraid-sync-op"
 msgid "%s remaining (%s/sec)"
@@ -3539,11 +3600,11 @@ msgstr "%s tilbage (%s/sek)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2858
+#: ../src/disks/gduwindow.c:2882
 msgid "Connected to another seat"
 msgstr "Forbundet til at andet sæde"
 
-#: ../src/disks/gduwindow.c:3002
+#: ../src/disks/gduwindow.c:3026
 msgid "Loop device is empty"
 msgstr "Løkkeenheden er tom"
 
@@ -3553,68 +3614,68 @@ msgstr "Løkkeenheden er tom"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3241
+#: ../src/disks/gduwindow.c:3265
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s fri (%.1f %% fuld)"
 
-#: ../src/disks/gduwindow.c:3271
+#: ../src/disks/gduwindow.c:3295
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ukendt"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3299
+#: ../src/disks/gduwindow.c:3323
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Filsystemrod"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3307
+#: ../src/disks/gduwindow.c:3331
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Monteret på %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3313
+#: ../src/disks/gduwindow.c:3337
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ikke monteret"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3360
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktiv"
 
 # Her mener jeg ikke, at vedlæg eller vedhæft kan bruges
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3342
+#: ../src/disks/gduwindow.c:3366
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ikke aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3355
+#: ../src/disks/gduwindow.c:3379
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Låst op"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3361
+#: ../src/disks/gduwindow.c:3385
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Låst"
 
-#: ../src/disks/gduwindow.c:3371
+#: ../src/disks/gduwindow.c:3395
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Udvidet partition"
 
 #. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3381
+#: ../src/disks/gduwindow.c:3405
 msgctxt "volume-contents-raid"
 msgid "Go To Array"
 msgstr "Spring til række"
@@ -3623,7 +3684,7 @@ msgstr "Spring til række"
 #. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
 #. *              The second %s is the hyperlink "Go To Array".
 #.
-#: ../src/disks/gduwindow.c:3386
+#: ../src/disks/gduwindow.c:3410
 #, c-format
 msgctxt "volume-contents-raid"
 msgid "%s — %s"
@@ -3633,29 +3694,29 @@ msgstr "%s — %s"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:3428
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3504
+#: ../src/disks/gduwindow.c:3528
 msgid "Unallocated Space"
 msgstr "Uallokeret område"
 
-#: ../src/disks/gduwindow.c:3883
+#: ../src/disks/gduwindow.c:3907
 msgid "An error occurred when requesting data redundancy check"
 msgstr "Der opstod en fejl forespørgsel om dataredundanstjek"
 
 #. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3901
+#: ../src/disks/gduwindow.c:3925
 msgctxt "mdraid-scrub-dialog"
 msgid "Data Scrubbing"
 msgstr "\"Data scrubbing\"-fejlrettelse"
 
 #. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3903
+#: ../src/disks/gduwindow.c:3927
 msgctxt "mdraid-scrub-dialog"
 msgid ""
 "As storage devices can develop bad blocks at any time it is valuable to "
@@ -3676,129 +3737,150 @@ msgstr ""
 "artiklen <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>RAID Administration</a> (på engelsk)."
 
-#: ../src/disks/gduwindow.c:3908
+#: ../src/disks/gduwindow.c:3932
 msgctxt "mdraid-scrub-dialog"
 msgid "_Start"
 msgstr "_Start"
 
-#: ../src/disks/gduwindow.c:3909
+#: ../src/disks/gduwindow.c:3933
 msgctxt "mdraid-scrub-dialog"
 msgid "_Repair mismatched blocks, if possible"
 msgstr "_Reparér blokke i konflikt, hvis muligt"
 
-#: ../src/disks/gduwindow.c:3956
+#: ../src/disks/gduwindow.c:3980
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Der opstod en fejl ved forsøg på at sætte drevet i hviletilstand"
 
-#: ../src/disks/gduwindow.c:4002
+#: ../src/disks/gduwindow.c:4026
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Der opstod en fejl ved forsøg på at vække drevet fra hviletilstand"
 
-#: ../src/disks/gduwindow.c:4047
+#: ../src/disks/gduwindow.c:4071
 msgid "Error powering off drive"
 msgstr "Fejl under slukning af drev"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4099
+#: ../src/disks/gduwindow.c:4123
 msgid "Are you sure you want to power off the drives?"
 msgstr "Er du sikker på at du vil slukke drevene?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4101
+#: ../src/disks/gduwindow.c:4125
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Denne handling vil forberede systemet på at følgende drev slukkes og fjernes."
 
-#: ../src/disks/gduwindow.c:4105
+#: ../src/disks/gduwindow.c:4129
 msgid "_Power Off"
 msgstr "_Sluk"
 
-#: ../src/disks/gduwindow.c:4182
+#: ../src/disks/gduwindow.c:4206
 msgid "Error mounting filesystem"
 msgstr "Fejl under montering af filsystem"
 
-#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
+#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
 msgid "Error unmounting filesystem"
 msgstr "Fejl under afmontering af filsystem"
 
-#: ../src/disks/gduwindow.c:4367
+#: ../src/disks/gduwindow.c:4391
 msgid "Error deleting partition"
 msgstr "Fejl under sletning af partition"
 
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:4429
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på, at du vil slette partitionen?"
 
-#: ../src/disks/gduwindow.c:4406
+#: ../src/disks/gduwindow.c:4430
 msgid "All data on the partition will be lost"
 msgstr "Alle data på partitionen vil gå tabt"
 
-#: ../src/disks/gduwindow.c:4407
+#: ../src/disks/gduwindow.c:4431
 msgid "_Delete"
 msgstr "_Slet"
 
-#: ../src/disks/gduwindow.c:4438
+#: ../src/disks/gduwindow.c:4462
 msgid "Error ejecting media"
 msgstr "Fejl under forsøg på at skubbe medie ud"
 
-#: ../src/disks/gduwindow.c:4495
+#: ../src/disks/gduwindow.c:4519
 msgid "Error starting RAID array"
 msgstr "Fejl under start af RAID-række"
 
-#: ../src/disks/gduwindow.c:4537
+#: ../src/disks/gduwindow.c:4561
 msgid "Error stopping RAID array"
 msgstr "Fejl under standsning af RAID-række"
 
-#: ../src/disks/gduwindow.c:4624
+#: ../src/disks/gduwindow.c:4648
 msgid "Error locking encrypted device"
 msgstr "Fejl under låsning af krypteret enhed"
 
-#: ../src/disks/gduwindow.c:4689
+#: ../src/disks/gduwindow.c:4713
 msgid "Error starting swap"
 msgstr "Fejl ved start af swap"
 
-#: ../src/disks/gduwindow.c:4726
+#: ../src/disks/gduwindow.c:4750
 msgid "Error stopping swap"
 msgstr "Fejl ved standsning af swap"
 
-#: ../src/disks/gduwindow.c:4765
+#: ../src/disks/gduwindow.c:4789
 msgid "Error setting bitmap for the RAID array"
 msgstr "Fejl ved indstilling af bitmap for RAID-række"
 
-#: ../src/disks/gduwindow.c:4831
+#: ../src/disks/gduwindow.c:4855
 msgid "Error setting autoclear flag"
 msgstr "Fejl ved ændring af autorydningsflag"
 
-#: ../src/disks/gduwindow.c:4884 ../src/disks/gduwindow.c:4948
+#: ../src/disks/gduwindow.c:4908 ../src/disks/gduwindow.c:4972
 msgid "Error canceling job"
 msgstr "Fejl ved annullering af job"
 
 #. Translators: Shown when no devices are selected but multiple selection is active.
 #.
-#: ../src/disks/gduwindow.c:5070
+#: ../src/disks/gduwindow.c:5094
 msgctxt "multi-disk-menu"
 msgid "No _Devices Selected"
 msgstr "Ingen _enheder valgt"
 
-#: ../src/disks/gduwindow.c:5080
+#: ../src/disks/gduwindow.c:5104
 #, c-format
 msgid "%d _Device Selected (%s)"
 msgid_plural "%d _Devices Selected (%s)"
 msgstr[0] "%d _enhed valgt (%s)"
 msgstr[1] "%d _enheder valgt (%s)"
 
-#: ../src/libgdu/gduutils.c:91
+#: ../src/disks/gduxzdecompressor.c:122
+msgid "Invalid compressed data"
+msgstr "Ugyldig komprimeret data"
+
+#: ../src/disks/gduxzdecompressor.c:129
+msgid "Not enough memory"
+msgstr "Ikke hukommelse nok"
+
+#: ../src/disks/gduxzdecompressor.c:136
+#, c-format
+msgid "Internal error"
+msgstr "Intern fejl"
+
+#: ../src/disks/gduxzdecompressor.c:151
+msgid "Need more input"
+msgstr "Behøver mere input"
+
+#: ../src/libgdu/gduutils.c:92
 msgid "All Files"
 msgstr "Alle filer"
 
-#: ../src/libgdu/gduutils.c:95
+#: ../src/libgdu/gduutils.c:97
+msgid "Disk Images (*.img, *.img.xz, *.iso)"
+msgstr "Diskaftryk (*.img, *.img.xz, *.iso)"
+
+#: ../src/libgdu/gduutils.c:99
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Diskaftryk (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3806,7 +3888,7 @@ msgstr[0] "%d år"
 msgstr[1] "%d år"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3814,7 +3896,7 @@ msgstr[0] "%d måned"
 msgstr[1] "%d måneder"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3822,7 +3904,7 @@ msgstr[0] "%d dag"
 msgstr[1] "%d dage"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3830,7 +3912,7 @@ msgstr[0] "%d time"
 msgstr[1] "%d timer"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3838,7 +3920,7 @@ msgstr[0] "%d minut"
 msgstr[1] "%d minutter"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3846,7 +3928,7 @@ msgstr[0] "%d sekund"
 msgstr[1] "%d sekunder"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3854,119 +3936,119 @@ msgstr[0] "%d millisekund"
 msgstr[1] "%d millisekunder"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s og %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:529
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s og %s"
 
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mindre end et minut"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:560
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:702
+#: ../src/libgdu/gduutils.c:724
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Påvirkede enheder"
 
-#: ../src/libgdu/gduutils.c:792
+#: ../src/libgdu/gduutils.c:814
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:793
+#: ../src/libgdu/gduutils.c:815
 msgid "Stripe"
 msgstr "Stribe"
 
-#: ../src/libgdu/gduutils.c:798
+#: ../src/libgdu/gduutils.c:820
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:799
+#: ../src/libgdu/gduutils.c:821
 msgid "Mirror"
 msgstr "Spejl"
 
-#: ../src/libgdu/gduutils.c:804
+#: ../src/libgdu/gduutils.c:826
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:805
+#: ../src/libgdu/gduutils.c:827
 msgid "Dedicated Parity"
 msgstr "Dedikeret paritet"
 
-#: ../src/libgdu/gduutils.c:810
+#: ../src/libgdu/gduutils.c:832
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:811
+#: ../src/libgdu/gduutils.c:833
 msgid "Distributed Parity"
 msgstr "Distribueret paritet"
 
-#: ../src/libgdu/gduutils.c:816
+#: ../src/libgdu/gduutils.c:838
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:817
+#: ../src/libgdu/gduutils.c:839
 msgid "Double Distributed Parity"
 msgstr "Dobbelt distribueret paritet"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:844
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:845
 msgid "Stripe of Mirrors"
 msgstr "Stribe af spejle"
 
-#: ../src/libgdu/gduutils.c:828
+#: ../src/libgdu/gduutils.c:850
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1120
+#: ../src/libgdu/gduutils.c:1142
 msgid "Error locking device"
 msgstr "Fejl ved låsning af enhed"
 

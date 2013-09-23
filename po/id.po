@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-08-05 16:06+0000\n"
-"PO-Revision-Date: 2013-09-04 18:26+0700\n"
+"POT-Creation-Date: 2013-09-07 17:26+0000\n"
+"PO-Revision-Date: 2013-09-23 10:01+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -435,6 +435,8 @@ msgid ""
 "Turn on to configure Standby Timeout at startup and when the disk is "
 "connected"
 msgstr ""
+"Nyalakan untuk menata Tenggat Waktu Siaga saat awal mula dan ketika diska "
+"disambung"
 
 #: ../data/ui/disk-settings-dialog.ui.h:4
 msgid "Enter Standby After"
@@ -719,11 +721,11 @@ msgstr "Diska RAID..."
 
 #: ../data/ui/disks.ui.h:52
 msgid "Start Data Scrubbing…"
-msgstr ""
+msgstr "Mulai Menggosok Data..."
 
 #: ../data/ui/disks.ui.h:53
 msgid "Stop Data Scrubbing"
-msgstr ""
+msgstr "Hentikan Menggosok Data..."
 
 #: ../data/ui/disks.ui.h:54
 msgid "Edit Partition…"
@@ -3048,7 +3050,7 @@ msgstr "Memulihkan"
 #: ../src/disks/gdumdraiddisksdialog.c:646
 msgctxt "mdraid-disks-state"
 msgid "Write-mostly"
-msgstr ""
+msgstr "Kebanyakan-tulis"
 
 #. Translators: MD-RAID member state for 'blocked'
 #: ../src/disks/gdumdraiddisksdialog.c:653
@@ -3203,15 +3205,15 @@ msgstr "Menyalin image diska ke perangkat"
 msgid "Restoring Disk Image"
 msgstr "Memulihkan Image Diska"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1043
+#: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Tulis berkas diska pada perangkat?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1044
+#: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
 msgstr "Semua data akan hilang"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1045
+#: ../src/disks/gdurestorediskimagedialog.c:1046
 msgid "_Restore"
 msgstr "_Kembalikan"
 
@@ -3280,26 +3282,26 @@ msgstr "%s [lokal ke %s]"
 msgid "Error deleting loop device"
 msgstr "Galat menghapus perangkat loop"
 
-#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:903
+#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
 msgid "Error attaching disk image"
 msgstr "Galat mengaitkan berkas diska"
 
-#: ../src/disks/gduwindow.c:870
+#: ../src/disks/gduwindow.c:868
 msgid "Select Disk Image to Attach"
 msgstr "Pilih Berkas Diska untuk Dikaitkan"
 
-#: ../src/disks/gduwindow.c:874
+#: ../src/disks/gduwindow.c:872
 msgid "_Attach"
 msgstr "K_aitkan"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:881
+#: ../src/disks/gduwindow.c:879
 msgid "Set up _read-only loop device"
 msgstr "Siapkan pe_rangkat loop hanya baca"
 
-#: ../src/disks/gduwindow.c:882
+#: ../src/disks/gduwindow.c:880
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -3707,6 +3709,14 @@ msgid ""
 "the <a href='https://raid.wiki.kernel.org/index.php/"
 "RAID_Administration'>RAID Administration</a> article."
 msgstr ""
+"Karena perangkat penyimpanan bisa mengalami blok rusak kapanpun, sangat baik "
+"untuk membaca semua blok pada semua diska pada larik RAID untuk menangkap "
+"blok rusak lebih dini.\n"
+"\n"
+"Larik RAID akan tetap beroperasi selama proses tapi kinerja akan "
+"terpengaruh. Untuk informasi lebih lanjut tentang penggosokan data, lihat "
+"artikel <a href='https://raid.wiki.kernel.org/index.php/"
+"RAID_Administration'>Administrasi RAID</a>."
 
 #: ../src/disks/gduwindow.c:3932
 msgctxt "mdraid-scrub-dialog"
@@ -3752,7 +3762,7 @@ msgstr "_Matikan"
 msgid "Error mounting filesystem"
 msgstr "Galat ketika mengaitkan sistem berkas"
 
-#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1130
+#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
 msgid "Error unmounting filesystem"
 msgstr "Galat ketika melepas kaitan sistem berkas"
 
@@ -3851,168 +3861,168 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "Berkas Diska (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:438
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d tahun"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:445
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d bulan"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:452
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d hari"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:459
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d jam"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:466
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d menit"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:473
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d detik"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:480
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d milidetik"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:544
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s, dan %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s dan %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s dan %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:559
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s dan %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:570
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s dan %s"
 
-#: ../src/libgdu/gduutils.c:579
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Kurang dari satu menit"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:584
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:590
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:732
+#: ../src/libgdu/gduutils.c:724
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Perangkat Yang Terpengaruh"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:814
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:815
 msgid "Stripe"
-msgstr ""
+msgstr "Stripe"
 
-#: ../src/libgdu/gduutils.c:828
+#: ../src/libgdu/gduutils.c:820
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:829
+#: ../src/libgdu/gduutils.c:821
 msgid "Mirror"
 msgstr "Cermin"
 
-#: ../src/libgdu/gduutils.c:834
+#: ../src/libgdu/gduutils.c:826
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:835
+#: ../src/libgdu/gduutils.c:827
 msgid "Dedicated Parity"
 msgstr "Paritas Terdedikasi"
 
-#: ../src/libgdu/gduutils.c:840
+#: ../src/libgdu/gduutils.c:832
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:841
+#: ../src/libgdu/gduutils.c:833
 msgid "Distributed Parity"
 msgstr "Paritas Terdistribusi"
 
-#: ../src/libgdu/gduutils.c:846
+#: ../src/libgdu/gduutils.c:838
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:847
+#: ../src/libgdu/gduutils.c:839
 msgid "Double Distributed Parity"
 msgstr "Paritas Terdistribusi Ganda"
 
-#: ../src/libgdu/gduutils.c:852
+#: ../src/libgdu/gduutils.c:844
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:853
+#: ../src/libgdu/gduutils.c:845
 msgid "Stripe of Mirrors"
-msgstr ""
+msgstr "Stripe dari Cermin"
 
-#: ../src/libgdu/gduutils.c:858
+#: ../src/libgdu/gduutils.c:850
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1150
+#: ../src/libgdu/gduutils.c:1142
 msgid "Error locking device"
 msgstr "Galat ketika mengunci perangkat"
 

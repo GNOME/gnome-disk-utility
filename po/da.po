@@ -3,23 +3,23 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Mads Lundby <lundbymads@gmail.com>, 2009.
 # Ask Hjorth Larsen <asklarsen@gmail.com>, 2009, 10, 12.
-# 
+#
 # OBS OBS OBS! RET "VOLUME" TIL I FORHOLD TIL, HVAD DANSKGRUPPEN BLIVER ENIGE OM.
-# 
+#
 # Indtil videre bruges volume -> diskenhed
-# 
+#
 # Konventioner
 # ------------
-# 
+#
 # array -> række
 # flying-height -> flyvehøjde
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-22 16:22+0100\n"
-"PO-Revision-Date: 2012-03-21 18:35+0100\n"
+"POT-Creation-Date: 2013-10-07 22:44+0200\n"
+"PO-Revision-Date: 2013-10-07 22:38+0200\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -29,7 +29,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/palimpsest.desktop.in.h:1 ../data/ui/about-dialog.ui.h:1
-#: ../src/palimpsest/gduwindow.c:888
+#: ../src/palimpsest/gduwindow.c:897
 msgid "Disks"
 msgstr "Diske"
 
@@ -1651,6 +1651,11 @@ msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "Disk er o.k., én attribut har fejlet tidligere"
 msgstr[1] "Disk er o.k., %d attributter har fejlet tidligere"
 
+#. Otherwise, it's all honky dory
+#: ../src/palimpsest/gduatasmartdialog.c:1195
+msgid "Disk is OK"
+msgstr "Disk er o.k."
+
 #. Translators: Used to convey the status and temperature in one line.
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
@@ -2187,28 +2192,28 @@ msgstr ""
 "hvis du ikke vil have at den underliggende fil ændres"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/palimpsest/gduwindow.c:1515
+#: ../src/palimpsest/gduwindow.c:1524
 #, c-format
 msgid "%s <span size=\"smaller\">(Read-Only)</span>"
 msgstr "%s <span size=\"smaller\">(Skrivebeskyttet)</span>"
 
-#: ../src/palimpsest/gduwindow.c:1822
+#: ../src/palimpsest/gduwindow.c:1831
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ukendt"
 
-#: ../src/palimpsest/gduwindow.c:1849
+#: ../src/palimpsest/gduwindow.c:1858
 msgid "Extended Partition"
 msgstr "Udvidet partition"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/palimpsest/gduwindow.c:1890
+#: ../src/palimpsest/gduwindow.c:1899
 msgid "Filesystem Root"
 msgstr "Filsystemrod"
 
 #. Translators: Shown next to "In Use". The first %s is the mount point, e.g. /media/foobar
-#: ../src/palimpsest/gduwindow.c:1898
+#: ../src/palimpsest/gduwindow.c:1907
 #, c-format
 msgid "Yes, mounted at %s"
 msgstr "Ja, monteret som %s"
@@ -2216,67 +2221,67 @@ msgstr "Ja, monteret som %s"
 #. Translators: Shown when the device is not mounted next to the "In Use" label
 #. Translators: Shown if the swap device is not in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is not unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1904 ../src/palimpsest/gduwindow.c:1940
-#: ../src/palimpsest/gduwindow.c:1966
+#: ../src/palimpsest/gduwindow.c:1913 ../src/palimpsest/gduwindow.c:1949
+#: ../src/palimpsest/gduwindow.c:1975
 msgid "No"
 msgstr "Nej"
 
 #. Translators: Shown if the swap device is in use next to the "In Use" label
 #. Translators: Shown if the encrypted device is unlocked next to the "In Use" label
-#: ../src/palimpsest/gduwindow.c:1934 ../src/palimpsest/gduwindow.c:1960
+#: ../src/palimpsest/gduwindow.c:1943 ../src/palimpsest/gduwindow.c:1969
 msgid "Yes"
 msgstr "Ja"
 
 #. Translators: used to convey free space for partitions - the %s is the
 #. * partition table format e.g. "Master Boot Record" or "GUID Partition Table"
 #.
-#: ../src/palimpsest/gduwindow.c:2039
+#: ../src/palimpsest/gduwindow.c:2048
 #, c-format
 msgid "Unallocated Space (%s)"
 msgstr "Uallokeret område (%s)"
 
 #. Translators: used to convey free space for partitions (partition table format not known)
-#: ../src/palimpsest/gduwindow.c:2044
+#: ../src/palimpsest/gduwindow.c:2053
 msgid "Unallocated Space"
 msgstr "Uallokeret område"
 
-#: ../src/palimpsest/gduwindow.c:2400
+#: ../src/palimpsest/gduwindow.c:2409
 msgid "Error mounting filesystem"
 msgstr "Fejl under montering af filsystem"
 
-#: ../src/palimpsest/gduwindow.c:2440
+#: ../src/palimpsest/gduwindow.c:2449
 msgid "Error unmounting filesystem"
 msgstr "Fejl under afmontering af filsystem"
 
-#: ../src/palimpsest/gduwindow.c:2519
+#: ../src/palimpsest/gduwindow.c:2528
 msgid "Error deleting partition"
 msgstr "Fejl under sletning af partition"
 
-#: ../src/palimpsest/gduwindow.c:2535
+#: ../src/palimpsest/gduwindow.c:2544
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på, at du vil slette partitionen?"
 
-#: ../src/palimpsest/gduwindow.c:2536
+#: ../src/palimpsest/gduwindow.c:2545
 msgid "All data on the partition will be lost"
 msgstr "Alle data på partitionen vil gå tabt"
 
-#: ../src/palimpsest/gduwindow.c:2537
+#: ../src/palimpsest/gduwindow.c:2546
 msgid "_Delete"
 msgstr "_Slet"
 
-#: ../src/palimpsest/gduwindow.c:2568
+#: ../src/palimpsest/gduwindow.c:2577
 msgid "Error ejecting media"
 msgstr "Fejl under forsøg på at skubbe medie ud"
 
-#: ../src/palimpsest/gduwindow.c:2620
+#: ../src/palimpsest/gduwindow.c:2629
 msgid "Error locking encrypted device"
 msgstr "Fejl under låsning af krypteret enhed"
 
-#: ../src/palimpsest/gduwindow.c:2661
+#: ../src/palimpsest/gduwindow.c:2670
 msgid "Error starting swap"
 msgstr "Fejl ved start af swap"
 
-#: ../src/palimpsest/gduwindow.c:2698
+#: ../src/palimpsest/gduwindow.c:2707
 msgid "Error stopping swap"
 msgstr "Fejl ved standsning af swap"
 

@@ -181,7 +181,8 @@ gdu_format_volume_dialog_show_internal (UDisksClient *client,
       GdkWindow *foreign_window = gdk_x11_window_foreign_new_for_display (gdk_display_get_default (), parent_xid);
       if (!gtk_widget_get_realized (data->dialog))
           gtk_widget_realize (data->dialog);
-      gdk_window_set_transient_for (gtk_widget_get_window (data->dialog), foreign_window);
+      if (foreign_window != NULL)
+        gdk_window_set_transient_for (gtk_widget_get_window (data->dialog), foreign_window);
     }
 
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);

@@ -251,7 +251,9 @@ gdu_application_command_line (GApplication            *_app,
     }
   else if (opt_format)
     {
-      gdu_format_volume_dialog_show_for_xid (app->client, opt_xid, object_to_select);
+      g_application_hold (_app);
+      gdu_format_volume_dialog_show_for_xid (app->client, opt_xid, object_to_select,
+                                             (GCallback)g_application_release, _app);
     }
 
 

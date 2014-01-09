@@ -19,7 +19,9 @@ void     gdu_format_volume_dialog_show         (GduWindow    *window,
                                                 UDisksObject *object);
 void     gdu_format_volume_dialog_show_for_xid (UDisksClient *client,
                                                 gint          xid,
-                                                UDisksObject *object);
+                                                UDisksObject *object,
+                                                GCallback     finished_cb,
+                                                gpointer      cb_data);
 
 G_END_DECLS
 

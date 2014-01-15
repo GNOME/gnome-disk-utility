@@ -9,15 +9,15 @@
 # Tommi Vainikainen <thv@iki.fi>, 2010-2011.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2010-2012.
 # Ville-Pekka Vainio <vpvainio@iki.fi>, 2013.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-07-19 12:20+0000\n"
-"PO-Revision-Date: 2013-09-07 15:40+0300\n"
+"POT-Creation-Date: 2013-12-28 02:11+0000\n"
+"PO-Revision-Date: 2014-01-05 19:25+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -39,13 +39,10 @@ msgid "Mount Disk Images"
 msgstr "Liitä levykuvia"
 
 #: ../data/gnome-disk-image-writer.desktop.in.h:1
-#| msgid "Disk Image Mounter"
 msgid "Disk Image Writer"
 msgstr "Levykuvan kirjoittaja"
 
 #: ../data/gnome-disk-image-writer.desktop.in.h:2
-#| msgctxt "restore-inhibit-message"
-#| msgid "Copying disk image to device"
 msgid "Write Disk Images to Devices"
 msgstr "Kirjoita levykuvia laitteille"
 
@@ -128,8 +125,9 @@ msgid "_Help"
 msgstr "_Ohje"
 
 #: ../data/ui/app-menu.ui.h:3
-msgid "_About Disks"
-msgstr "_Tietoja - Levyt"
+#| msgid "_About Disks"
+msgid "_About"
+msgstr "_Tietoja"
 
 #: ../data/ui/app-menu.ui.h:4
 msgid "_Quit"
@@ -1174,12 +1172,10 @@ msgid "Destination"
 msgstr "Kohde"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:5
-#| msgid "_Image to Restore"
 msgid "Image to Restore"
 msgstr "Palautettava levykuva"
 
 #: ../data/ui/restore-disk-image-dialog.ui.h:6
-#| msgid "Sample Size"
 msgid "Image Size"
 msgstr "Levykuvan koko"
 
@@ -1345,7 +1341,6 @@ msgid "Parent window XID for the format dialog"
 msgstr "Alustamisikkunan pääikkunan XID"
 
 #: ../src/disks/gduapplication.c:183
-#| msgid "Restore Disk Image"
 msgid "Restore disk image"
 msgstr "Palauta levykuva"
 
@@ -2662,7 +2657,6 @@ msgstr ""
 "Levyn tuunnulauseen voi muuttaa valitsemalla <i>Vaihda tunnuslause…</i>"
 
 #: ../src/disks/gdudevicetreemodel.c:507
-#| msgid "None"
 msgid "(None)"
 msgstr "(Ei mitään)"
 
@@ -3089,7 +3083,6 @@ msgstr "Tuntematon (%s)"
 
 #. Translators: column name for the position of the disk in the RAID array
 #: ../src/disks/gdumdraiddisksdialog.c:744
-#| msgid "Description"
 msgctxt "mdraid-disks"
 msgid "Position"
 msgstr "Asemointi"
@@ -3143,7 +3136,6 @@ msgstr "Sopivan kokoisia levyjä ei ole käytettävissä"
 #. *              disks that can be added to the array
 #.
 #: ../src/disks/gdumdraiddisksdialog.c:1161
-#| msgid "Select Disk Image to Attach"
 msgctxt "mdraid-add"
 msgid "Select disk to add"
 msgstr "Valitse lisättävä levy"
@@ -3229,15 +3221,15 @@ msgstr "Kopioidaan levykuvaa laitteelle"
 msgid "Restoring Disk Image"
 msgstr "Palautetaan levykuvaa"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1043
+#: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Haluatko varmasti kirjoittaa levykuvan laitteelle?"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1044
+#: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
 msgstr "Kaikki nykyiset tiedot poistetaan"
 
-#: ../src/disks/gdurestorediskimagedialog.c:1045
+#: ../src/disks/gdurestorediskimagedialog.c:1046
 msgid "_Restore"
 msgstr "Pa_lauta"
 
@@ -3306,26 +3298,26 @@ msgstr "%s [kone %s]"
 msgid "Error deleting loop device"
 msgstr "Virhe havaittaessa takaisinkytkentälaitetta"
 
-#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:903
+#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
 msgid "Error attaching disk image"
 msgstr "Virhe liitettäessä levykuvaa"
 
-#: ../src/disks/gduwindow.c:870
+#: ../src/disks/gduwindow.c:868
 msgid "Select Disk Image to Attach"
 msgstr "Valitse liitettävä levykuva"
 
-#: ../src/disks/gduwindow.c:874
+#: ../src/disks/gduwindow.c:872
 msgid "_Attach"
 msgstr "Liit_ä"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:881
+#: ../src/disks/gduwindow.c:879
 msgid "Set up _read-only loop device"
 msgstr "Liitä takaisinkytkentälaite _kirjoitussuojattuna"
 
-#: ../src/disks/gduwindow.c:882
+#: ../src/disks/gduwindow.c:880
 #, fuzzy
 #| msgid ""
 #| "If checked, the loop device will be read-only. This is useful if you "
@@ -3485,7 +3477,6 @@ msgstr "%s (%s)"
 
 #: ../src/disks/gduwindow.c:2512
 #, c-format
-#| msgid "Disks"
 msgid "%d Disk"
 msgid_plural "%d Disks"
 msgstr[0] "%d levy"
@@ -3497,8 +3488,6 @@ msgstr[1] "%d levyä"
 #.
 #: ../src/disks/gduwindow.c:2524
 #, c-format
-#| msgctxt "duration-year-to-inf"
-#| msgid "%s, %s and %s"
 msgctxt "mdraid-disks-and-chunk-size"
 msgid "%s, %s Chunk"
 msgstr "%s, %s lohko"
@@ -3790,7 +3779,7 @@ msgstr "_Sammuta"
 msgid "Error mounting filesystem"
 msgstr "Virhe tiedostojärjestelmää liittäessä"
 
-#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1130
+#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
 msgid "Error unmounting filesystem"
 msgstr "Virhe irrotettaessa tiedostojärjestelmää"
 
@@ -3884,7 +3873,6 @@ msgid "All Files"
 msgstr "Kaikki tiedostot"
 
 #: ../src/libgdu/gduutils.c:97
-#| msgid "Disk Images (*.img, *.iso)"
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Levykuvat (*.img, *.img.xz, *.iso)"
 
@@ -3893,7 +3881,7 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "Levykuvat (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:438
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3901,7 +3889,7 @@ msgstr[0] "%d vuosi"
 msgstr[1] "%d vuotta"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:445
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3909,7 +3897,7 @@ msgstr[0] "%d kuukausi"
 msgstr[1] "%d kuukautta"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:452
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3917,7 +3905,7 @@ msgstr[0] "%d päivä"
 msgstr[1] "%d päivää"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:459
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3925,7 +3913,7 @@ msgstr[0] "%d tunti"
 msgstr[1] "%d tuntia"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:466
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3933,7 +3921,7 @@ msgstr[0] "%d minuutti"
 msgstr[1] "%d minuuttia"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:473
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3941,7 +3929,7 @@ msgstr[0] "%d sekunti"
 msgstr[1] "%d sekuntia"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:480
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3949,122 +3937,121 @@ msgstr[0] "%d millisekunti"
 msgstr[1] "%d millisekuntia"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:544
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s ja %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s and %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s ja %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:559
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s ja %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:570
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s ja %s"
 
-#: ../src/libgdu/gduutils.c:579
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Alle minuutti"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:584
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:590
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:732
+#: ../src/libgdu/gduutils.c:724
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Kohdistuu laitteisiin"
 
-#: ../src/libgdu/gduutils.c:822
+#: ../src/libgdu/gduutils.c:814
 msgid "RAID 0"
 msgstr "RAID 0"
 
-#: ../src/libgdu/gduutils.c:823
+#: ../src/libgdu/gduutils.c:815
 msgid "Stripe"
 msgstr "Lomitus"
 
-#: ../src/libgdu/gduutils.c:828
+#: ../src/libgdu/gduutils.c:820
 msgid "RAID 1"
 msgstr "RAID 1"
 
-#: ../src/libgdu/gduutils.c:829
+#: ../src/libgdu/gduutils.c:821
 msgid "Mirror"
 msgstr "Peilaus"
 
-#: ../src/libgdu/gduutils.c:834
+#: ../src/libgdu/gduutils.c:826
 msgid "RAID 4"
 msgstr "RAID 4"
 
-#: ../src/libgdu/gduutils.c:835
+#: ../src/libgdu/gduutils.c:827
 #, fuzzy
 #| msgid "Create Partition"
 msgid "Dedicated Parity"
 msgstr "Luo osio"
 
-#: ../src/libgdu/gduutils.c:840
+#: ../src/libgdu/gduutils.c:832
 msgid "RAID 5"
 msgstr "RAID 5"
 
-#: ../src/libgdu/gduutils.c:841
+#: ../src/libgdu/gduutils.c:833
 msgid "Distributed Parity"
 msgstr ""
 
-#: ../src/libgdu/gduutils.c:846
+#: ../src/libgdu/gduutils.c:838
 msgid "RAID 6"
 msgstr "RAID 6"
 
-#: ../src/libgdu/gduutils.c:847
+#: ../src/libgdu/gduutils.c:839
 msgid "Double Distributed Parity"
 msgstr ""
 
-#: ../src/libgdu/gduutils.c:852
+#: ../src/libgdu/gduutils.c:844
 msgid "RAID 10"
 msgstr "RAID 10"
 
-#: ../src/libgdu/gduutils.c:853
+#: ../src/libgdu/gduutils.c:845
 msgid "Stripe of Mirrors"
 msgstr "Peilauksen lomitus"
 
-#: ../src/libgdu/gduutils.c:858
+#: ../src/libgdu/gduutils.c:850
 #, c-format
 msgid "RAID (%s)"
 msgstr "RAID (%s)"
 
-#: ../src/libgdu/gduutils.c:1150
-#| msgid "Error opening device"
+#: ../src/libgdu/gduutils.c:1142
 msgid "Error locking device"
 msgstr "Virhe lukittaessa laitetta"
 

@@ -1,98 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.0 on Sat Jan 18 15:06:33 2014 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkActionGroup" id="devtab-actions">
-    <child>
-      <object class="GtkAction" id="devtab-action-partition-create">
-        <property name="tooltip" translatable="yes">Create a new partition</property>
-        <property name="icon_name">list-add-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-mount">
-        <property name="tooltip" translatable="yes">Mount the filesystem</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-unmount">
-        <property name="tooltip" translatable="yes">Unmount the filesystem</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-eject">
-        <property name="tooltip" translatable="yes">Eject the media</property>
-        <property name="icon_name">media-eject-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-power-off">
-        <property name="tooltip" translatable="yes">Power off the drive</property>
-        <property name="icon_name">system-shutdown-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-unlock">
-        <property name="tooltip" translatable="yes">Unlock the encrypted device</property>
-        <property name="icon_name">changes-allow-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-activate-swap">
-        <property name="tooltip" translatable="yes">Activate the swap space</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-deactivate-swap">
-        <property name="tooltip" translatable="yes">Deactivate the swap space</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-lock">
-        <property name="tooltip" translatable="yes">Lock the encrypted device</property>
-        <property name="icon_name">changes-prevent-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-generic">
-        <property name="tooltip" translatable="yes">More actions</property>
-        <property name="icon_name">system-run-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-action-partition-delete">
-        <property name="tooltip" translatable="yes">Delete partition</property>
-        <property name="icon_name">list-remove-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-generic">
-        <property name="tooltip" translatable="yes">More actions</property>
-        <property name="icon_name">emblem-system-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-raid-start">
-        <property name="tooltip" translatable="yes">Start RAID Array</property>
-        <property name="icon_name">media-playback-start-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-raid-stop">
-        <property name="tooltip" translatable="yes">Stop RAID Array</property>
-        <property name="icon_name">media-playback-stop-symbolic</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkAction" id="devtab-drive-action-loop-detach">
-        <property name="tooltip" translatable="yes">Detach Loop Device</property>
-        <property name="icon_name">list-remove-symbolic</property>
-      </object>
-    </child>
-  </object>
+  <!-- interface-requires gtk+ 3.10 -->
   <object class="GtkWindow" id="disks-window">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -102,196 +11,30 @@
       <object class="GtkHPaned" id="main-hpane">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="position">300</property>
+        <property name="position">250</property>
         <property name="position_set">True</property>
         <child>
-          <object class="GtkVBox" id="device-tree-vbox">
+          <object class="GtkScrolledWindow" id="device-tree-scrolledwindow">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_right">6</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">never</property>
+            <property name="min_content_width">0</property>
             <child>
-              <object class="GtkToolbar" id="device-tree-selection-toolbar">
+              <object class="GtkTreeView" id="device-tree-treeview">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="toolbar_style">icons</property>
-                <property name="show_arrow">False</property>
-                <property name="icon_size">1</property>
-                <style>
-                  <class name="menubar"/>
-                </style>
-                <child>
-                  <object class="GtkToolItem" id="device-tree-selection-toolbar-left">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSeparatorToolItem" id="toolbutton2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="draw">False</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkToolItem" id="device-tree-selection-toolbar-center">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkNotebook" id="device-tree-selection-toolbar-center-notebook">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="show_tabs">False</property>
-                        <property name="show_border">False</property>
-                        <child>
-                          <object class="GtkLabel" id="device-tree-selection-toolbar-static-label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">_Devices</property>
-                            <property name="use_underline">True</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                            </attributes>
-                          </object>
-                        </child>
-                        <child type="tab">
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="device-tree-selection-toolbar-label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label">No _Devices Selected</property>
-                            <property name="use_underline">True</property>
-                          </object>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child type="tab">
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child type="tab">
-                          <placeholder/>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSeparatorToolItem" id="toolbutton1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="draw">False</property>
-                  </object>
-                  <packing>
-                    <property name="expand">True</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkToolItem" id="device-tree-selection-toolbar-right">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkBox" id="box2">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkButton" id="device-tree-selection-toolbar-select-button">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <child>
-                              <object class="GtkImage" id="image8">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Click to select multiple disks to perform operations on</property>
-                                <property name="icon_name">object-select-symbolic</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="device-tree-selection-toolbar-done-button">
-                            <property name="label" translatable="yes">Done</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <style>
-                              <class name="suggested-action"/>
-                            </style>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
+                <property name="can_focus">True</property>
+                <property name="headers_visible">False</property>
+                <property name="show_expanders">False</property>
+                <property name="level_indentation">12</property>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection" id="treeview-selection1"/>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkOverlay" id="device-tree-overlay">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkScrolledWindow" id="device-tree-scrolledwindow">
-                    <property name="width_request">300</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="shadow_type">in</property>
-                    <child>
-                      <object class="GtkTreeView" id="device-tree-treeview">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="headers_visible">False</property>
-                        <property name="show_expanders">False</property>
-                        <property name="level_indentation">12</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
           <packing>
-            <property name="resize">True</property>
-            <property name="shrink">False</property>
+            <property name="resize">False</property>
+            <property name="shrink">True</property>
           </packing>
         </child>
         <child>
@@ -299,6 +42,9 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="margin_left">6</property>
+            <property name="margin_right">12</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">12</property>
             <property name="hexpand">True</property>
             <child>
               <object class="GtkAlignment" id="alignment1">
@@ -359,7 +105,7 @@
                   <object class="GtkTable" id="devtab-drive-table">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="n_rows">16</property>
+                    <property name="n_rows">15</property>
                     <property name="n_columns">2</property>
                     <property name="column_spacing">10</property>
                     <child>
@@ -373,8 +119,6 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -392,8 +136,6 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -410,8 +152,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">11</property>
-                        <property name="bottom_attach">12</property>
+                        <property name="top_attach">10</property>
+                        <property name="bottom_attach">11</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -429,8 +171,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">11</property>
-                        <property name="bottom_attach">12</property>
+                        <property name="top_attach">10</property>
+                        <property name="bottom_attach">11</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -447,8 +189,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">12</property>
-                        <property name="bottom_attach">13</property>
+                        <property name="top_attach">11</property>
+                        <property name="bottom_attach">12</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -466,8 +208,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">12</property>
-                        <property name="bottom_attach">13</property>
+                        <property name="top_attach">11</property>
+                        <property name="bottom_attach">12</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -484,8 +226,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">13</property>
-                        <property name="bottom_attach">14</property>
+                        <property name="top_attach">12</property>
+                        <property name="bottom_attach">13</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -503,8 +245,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">13</property>
-                        <property name="bottom_attach">14</property>
+                        <property name="top_attach">12</property>
+                        <property name="bottom_attach">13</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -521,8 +263,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -540,24 +282,11 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">1</property>
+                        <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="devtab-drive-image">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xalign">1</property>
-                        <property name="stock">gtk-harddisk</property>
-                        <property name="icon-size">6</property>
-                      </object>
-                      <packing>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options">GTK_FILL</property>
                       </packing>
                     </child>
                     <child>
@@ -571,8 +300,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">14</property>
-                        <property name="bottom_attach">15</property>
+                        <property name="top_attach">13</property>
+                        <property name="bottom_attach">14</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -590,242 +319,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">14</property>
-                        <property name="bottom_attach">15</property>
-                        <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"/>
-                        <property name="y_padding">4</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkHBox" id="devtab-drive-box">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkVBox" id="devtab-drive-vbox">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <child>
-                              <object class="GtkLabel" id="devtab-drive-desc-label">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="single_line_mode">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="devtab-drive-devices-label">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="hexpand">True</property>
-                                <property name="xalign">0</property>
-                                <property name="selectable">True</property>
-                                <property name="ellipsize">end</property>
-                                <property name="single_line_mode">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButtonBox" id="devtab-drive-buttonbox">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <style>
-                              <class name="linked"/>
-                            </style>
-                            <child>
-                              <object class="GtkButton" id="devtab-drive-power-off-button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-power-off</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <object class="GtkImage" id="image9">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">Power off the drive</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="icon_name">system-shutdown-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">0</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="devtab-drive-eject-button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-eject</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <child>
-                                  <object class="GtkImage" id="image1">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">Eject the medium in the drive</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="icon_name">media-eject-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="devtab-drive-raid-start-button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-raid-start</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <object class="GtkImage" id="image5">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">Start RAID Array</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="icon_name">media-playback-start-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">2</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="devtab-drive-raid-stop-button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-raid-stop</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <object class="GtkImage" id="image6">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">Stop RAID Array</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="icon_name">media-playback-stop-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">3</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="devtab-drive-loop-detach-button">
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-loop-detach</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_underline">True</property>
-                                <child>
-                                  <object class="GtkImage" id="image7">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">Detach Loop Device</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="icon_name">list-remove-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">4</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkMenuButton" id="devtab-drive-generic-button">
-                                <property name="popup">generic-drive-menu</property>
-                                <property name="use_action_appearance">False</property>
-                                <property name="related_action">devtab-drive-action-generic</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="related_action">devtab-drive-action-generic</property>
-                                <property name="use_action_appearance">False</property>
-                                <child>
-                                  <object class="GtkImage" id="image2">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="tooltip_text" translatable="yes">More actions</property>
-                                    <property name="pixel_size">16</property>
-                                    <property name="margin_top">5</property>
-                                    <property name="margin_bottom">5</property>
-                                    <property name="icon_name">emblem-system-symbolic</property>
-                                  </object>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="pack_type">end</property>
-                                <property name="position">10</property>
-                                <property name="non_homogeneous">True</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
+                        <property name="top_attach">13</property>
+                        <property name="bottom_attach">14</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -843,8 +338,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">15</property>
-                        <property name="bottom_attach">16</property>
+                        <property name="top_attach">14</property>
+                        <property name="bottom_attach">15</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options">GTK_FILL</property>
                         <property name="y_padding">4</property>
@@ -925,8 +420,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">15</property>
-                        <property name="bottom_attach">16</property>
+                        <property name="top_attach">14</property>
+                        <property name="bottom_attach">15</property>
                         <property name="y_options"/>
                       </packing>
                     </child>
@@ -941,8 +436,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -960,8 +455,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -979,8 +474,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">8</property>
-                        <property name="bottom_attach">9</property>
+                        <property name="top_attach">7</property>
+                        <property name="bottom_attach">8</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -997,8 +492,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">8</property>
-                        <property name="bottom_attach">9</property>
+                        <property name="top_attach">7</property>
+                        <property name="bottom_attach">8</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1015,8 +510,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1034,8 +529,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1053,8 +548,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">10</property>
-                        <property name="bottom_attach">11</property>
+                        <property name="top_attach">9</property>
+                        <property name="bottom_attach">10</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options">GTK_FILL</property>
                         <property name="y_padding">4</property>
@@ -1109,8 +604,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">10</property>
-                        <property name="bottom_attach">11</property>
+                        <property name="top_attach">9</property>
+                        <property name="bottom_attach">10</property>
                         <property name="y_options"/>
                       </packing>
                     </child>
@@ -1125,8 +620,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">6</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1151,8 +646,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">6</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                       </packing>
@@ -1168,8 +663,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
+                        <property name="top_attach">6</property>
+                        <property name="bottom_attach">7</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1187,8 +682,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
+                        <property name="top_attach">6</property>
+                        <property name="bottom_attach">7</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1205,8 +700,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1224,8 +719,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1242,8 +737,8 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="top_attach">9</property>
-                        <property name="bottom_attach">10</property>
+                        <property name="top_attach">8</property>
+                        <property name="bottom_attach">9</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                         <property name="y_padding">4</property>
@@ -1268,8 +763,8 @@
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">9</property>
-                        <property name="bottom_attach">10</property>
+                        <property name="top_attach">8</property>
+                        <property name="bottom_attach">9</property>
                         <property name="x_options">GTK_FILL</property>
                         <property name="y_options"/>
                       </packing>
@@ -1335,7 +830,6 @@
                                 <property name="icon_size">1</property>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-mount">
-                                    <property name="related_action">devtab-action-mount</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1348,7 +842,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-unmount">
-                                    <property name="related_action">devtab-action-unmount</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1361,7 +854,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-activate-swap">
-                                    <property name="related_action">devtab-action-activate-swap</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1374,7 +866,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-deactivate-swap">
-                                    <property name="related_action">devtab-action-deactivate-swap</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1387,7 +878,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-unlock">
-                                    <property name="related_action">devtab-action-unlock</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1400,7 +890,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-lock">
-                                    <property name="related_action">devtab-action-lock</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1413,7 +902,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-partition-create">
-                                    <property name="related_action">devtab-action-partition-create</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1426,7 +914,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-partition-delete">
-                                    <property name="related_action">devtab-action-partition-delete</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1439,7 +926,6 @@
                                 </child>
                                 <child>
                                   <object class="GtkToolButton" id="toolbutton-generic-menu">
-                                    <property name="related_action">devtab-action-generic</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="use_underline">True</property>
@@ -1770,6 +1256,7 @@
   <object class="GtkMenu" id="generic-drive-menu">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="halign">center</property>
     <child>
       <object class="GtkMenuItem" id="generic-drive-menu-item-format-disk">
         <property name="visible">True</property>
@@ -1885,6 +1372,7 @@
   <object class="GtkMenu" id="generic-menu">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="halign">center</property>
     <child>
       <object class="GtkMenuItem" id="generic-menu-item-format-volume">
         <property name="visible">True</property>
@@ -1972,99 +1460,6 @@
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="label" translatable="yes">Benchmark…</property>
-      </object>
-    </child>
-  </object>
-  <object class="GtkWindow" id="overlay-toolbar-dummy-window">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkToolbar" id="overlay-toolbar">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="toolbar_style">icons</property>
-        <property name="show_arrow">False</property>
-        <property name="icon_size">1</property>
-        <style>
-          <class name="osd"/>
-        </style>
-        <child>
-          <object class="GtkToolItem" id="overlay-toolbar-left">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkBox" id="box1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <style>
-                  <class name="linked"/>
-                </style>
-                <child>
-                  <object class="GtkButton" id="overlay-toolbar-erase-button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <child>
-                      <object class="GtkImage" id="image10">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Click to select multiple disks to perform operations on</property>
-                        <property name="icon_name">edit-clear-all-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="homogeneous">True</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkSeparatorToolItem" id="toolbutton3">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="homogeneous">True</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkToolItem" id="overlay-toolbar-center">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkBox" id="box3">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <child>
-                  <object class="GtkButton" id="overlay-toolbar-create-raid-button">
-                    <property name="label" translatable="yes">Create RAID</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="homogeneous">True</property>
-          </packing>
-        </child>
       </object>
     </child>
   </object>

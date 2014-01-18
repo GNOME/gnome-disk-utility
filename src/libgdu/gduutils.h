@@ -62,10 +62,6 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
 gboolean gdu_utils_is_ntfs_available (void);
 
-gchar *gdu_utils_format_mdraid_level (const gchar *level,
-                                      gboolean     long_desc,
-                                      gboolean     use_markup);
-
 gboolean gdu_util_is_same_size (GList   *blocks,
                                 guint64 *out_min_size);
 

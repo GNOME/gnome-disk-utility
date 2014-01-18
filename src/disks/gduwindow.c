@@ -37,8 +37,6 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdudisksettingsdialog.h"
-#include "gdumdraiddisksdialog.h"
-#include "gducreateraidarraydialog.h"
 #include "gduerasemultipledisksdialog.h"
 #include "gdulocaljob.h"
 
@@ -74,8 +72,6 @@ struct _GduWindow
   GtkWidget *device_tree_scrolledwindow;
   GtkWidget *device_tree_treeview;
 
-  GtkWidget *devtab_drive_raid_start_button;
-  GtkWidget *devtab_drive_raid_stop_button;
   GtkWidget *devtab_drive_loop_detach_button;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_power_off_button;
@@ -99,11 +95,6 @@ struct _GduWindow
   GtkWidget *generic_drive_menu_item_standby_now;
   GtkWidget *generic_drive_menu_item_resume_now;
   GtkWidget *generic_drive_menu_item_power_off;
-  /* MDRaid-specific items */
-  GtkWidget *generic_drive_menu_item_mdraid_sep_1;
-  GtkWidget *generic_drive_menu_item_mdraid_disks;
-  GtkWidget *generic_drive_menu_item_mdraid_start_data_scrubbing;
-  GtkWidget *generic_drive_menu_item_mdraid_stop_data_scrubbing;
 
   GtkWidget *generic_menu;
   GtkWidget *generic_menu_item_configure_fstab;
@@ -117,13 +108,6 @@ struct _GduWindow
   GtkWidget *generic_menu_item_benchmark;
 
   GtkWidget *devtab_loop_autoclear_switch;
-  GtkWidget *devtab_drive_raid_bitmap_switch;
-
-  GtkWidget *devtab_drive_raid_state_label;
-  GtkWidget *devtab_drive_raid_state_grid;
-  GtkWidget *devtab_drive_raid_state_value_label;
-  GtkWidget *devtab_drive_raid_state_progressbar;
-  GtkWidget *devtab_drive_raid_progress_label;
 
   GtkWidget *devtab_drive_job_label;
   GtkWidget *devtab_drive_job_grid;
@@ -169,7 +153,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_toolbar), "devtab-grid-toolbar"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_bitmap_switch), "devtab-drive-raid-bitmap-switch"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
@@ -184,11 +167,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
   {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_power_off), "generic-drive-menu-item-power-off"},
-  /* MDRaid-specific items */
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_sep_1), "generic-drive-menu-item-mdraid-sep-1"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_disks), "generic-drive-menu-item-mdraid-disks"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_start_data_scrubbing), "generic-drive-menu-item-mdraid-start-data-scrubbing"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_mdraid_stop_data_scrubbing), "generic-drive-menu-item-mdraid-stop-data-scrubbing"},
 
   {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
@@ -200,12 +178,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_benchmark), "generic-menu-item-benchmark"},
-
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_label), "devtab-drive-raid-state-label"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_grid), "devtab-drive-raid-state-grid"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_value_label), "devtab-drive-raid-state-value-label"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_state_progressbar), "devtab-drive-raid-state-progressbar"},
-  {G_STRUCT_OFFSET (GduWindow, devtab_drive_raid_progress_label), "devtab-drive-raid-progress-label"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -242,11 +214,9 @@ enum
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef enum {
-  SHOW_FLAGS_DRIVE_BUTTONS_RAID_START       = (1<<0),
-  SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP        = (1<<1),
-  SHOW_FLAGS_DRIVE_BUTTONS_EJECT            = (1<<2),
-  SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF        = (1<<3),
-  SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH      = (1<<4),
+  SHOW_FLAGS_DRIVE_BUTTONS_EJECT            = (1<<0),
+  SHOW_FLAGS_DRIVE_BUTTONS_POWER_OFF        = (1<<1),
+  SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH      = (1<<2),
 } ShowFlagsDriveButtons;
 
 typedef enum
@@ -260,7 +230,6 @@ typedef enum
   SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW           = (1<<6),
   SHOW_FLAGS_DRIVE_MENU_RESUME_NOW            = (1<<7),
   SHOW_FLAGS_DRIVE_MENU_POWER_OFF             = (1<<8),
-  SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS          = (1<<9),
 } ShowFlagsDriveMenu;
 
 typedef enum {
@@ -318,8 +287,6 @@ static void on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_da
 static void on_activate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data);
 static void on_deactivate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data);
 
-static void on_devtab_drive_raid_start_button_clicked (GtkButton *button, gpointer user_data);
-static void on_devtab_drive_raid_stop_button_clicked (GtkButton *button, gpointer user_data);
 static void on_devtab_drive_loop_detach_button_clicked (GtkButton *button, gpointer user_data);
 static void on_devtab_drive_eject_button_clicked (GtkButton *button, gpointer user_data);
 static void on_devtab_drive_power_off_button_clicked (GtkButton *button, gpointer user_data);
@@ -342,12 +309,6 @@ static void on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_ite
                                                            gpointer   user_data);
 static void on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
-static void on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
-                                                     gpointer   user_data);
-static void on_generic_drive_menu_item_mdraid_start_data_scrubbing (GtkMenuItem *menu_item,
-                                                                    gpointer   user_data);
-static void on_generic_drive_menu_item_mdraid_stop_data_scrubbing (GtkMenuItem *menu_item,
-                                                                   gpointer   user_data);
 
 static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
                                                   gpointer   user_data);
@@ -371,10 +332,6 @@ static void on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
 static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
                                                            gpointer    user_data);
-
-static void on_devtab_drive_raid_bitmap_switch_notify_active (GObject    *object,
-                                                              GParamSpec *pspec,
-                                                              gpointer    user_data);
 
 static void on_drive_job_cancel_button_clicked (GtkButton *button,
                                                 gpointer   user_data);
@@ -456,10 +413,6 @@ static void
 update_for_show_flags (GduWindow *window,
                        ShowFlags *show_flags)
 {
-  gtk_widget_set_visible (window->devtab_drive_raid_start_button,
-                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_START);
-  gtk_widget_set_visible (window->devtab_drive_raid_stop_button,
-                          show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP);
   gtk_widget_set_visible (window->devtab_drive_loop_detach_button,
                           show_flags->drive_buttons & SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH);
   gtk_widget_set_visible (window->devtab_drive_eject_button,
@@ -496,10 +449,6 @@ update_for_show_flags (GduWindow *window,
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
                             show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_power_off),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_POWER_OFF);
 
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
@@ -545,25 +494,8 @@ select_object (GduWindow    *window,
     }
   else if (object != NULL)
     {
-      UDisksBlock *block;
-
-      /* that didn't work, maybe it's a block device that is shown as another root object */
-      block = udisks_object_peek_block (object);
-      if (block != NULL)
-        {
-          UDisksObject *mdraid_object;
-          /* MD-RAID */
-          mdraid_object = udisks_client_peek_object (window->client, udisks_block_get_mdraid (block));
-          if (mdraid_object != NULL)
-            {
-              select_object (window, mdraid_object);
-              goto out;
-            }
-        }
-
-      if (object != NULL)
-        g_warning ("Cannot display object with object path %s",
-                   g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
+      g_warning ("Cannot display object with object path %s",
+                 g_dbus_object_get_object_path (G_DBUS_OBJECT (object)));
       goto out;
     }
 
@@ -939,15 +871,7 @@ gdu_window_select_object (GduWindow    *window,
   gboolean ret = FALSE;
   UDisksPartition *partition;
   UDisksPartitionTable *table = NULL;
-  UDisksMDRaid *mdraid = NULL;
   UDisksDrive *drive = NULL;
-
-  mdraid = udisks_object_peek_mdraid (object);
-  if (mdraid != NULL)
-    {
-      select_object (window, object);
-      goto out;
-    }
 
   drive = udisks_object_peek_drive (object);
   if (drive != NULL)
@@ -1049,20 +973,6 @@ create_header (GduWindow *window)
 
   header = gtk_header_bar_new ();
   gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (header), TRUE);
-
-  button = window->devtab_drive_raid_start_button = gtk_button_new ();
-  image = gtk_image_new_from_icon_name ("media-playback-start-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_margin_left (image, 4);
-  gtk_widget_set_margin_right (image, 4);
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-
-  button = window->devtab_drive_raid_stop_button = gtk_button_new ();
-  image = gtk_image_new_from_icon_name ("media-playback-stop-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_widget_set_margin_left (image, 4);
-  gtk_widget_set_margin_right (image, 4);
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
   button = window->devtab_drive_loop_detach_button = gtk_button_new ();
   image = gtk_image_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_MENU);
@@ -1311,14 +1221,6 @@ gdu_window_constructed (GObject *object)
                     window);
 
   /* drive buttons */
-  g_signal_connect (window->devtab_drive_raid_start_button,
-                    "clicked",
-                    G_CALLBACK (on_devtab_drive_raid_start_button_clicked),
-                    window);
-  g_signal_connect (window->devtab_drive_raid_stop_button,
-                    "clicked",
-                    G_CALLBACK (on_devtab_drive_raid_stop_button_clicked),
-                    window);
   g_signal_connect (window->devtab_drive_loop_detach_button,
                     "clicked",
                     G_CALLBACK (on_devtab_drive_loop_detach_button_clicked),
@@ -1369,18 +1271,6 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_drive_menu_item_benchmark),
                     window);
-  g_signal_connect (window->generic_drive_menu_item_mdraid_disks,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_mdraid_disks),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_mdraid_start_data_scrubbing,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_mdraid_start_data_scrubbing),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_mdraid_stop_data_scrubbing,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_mdraid_stop_data_scrubbing),
-                    window);
 
   /* volume menu */
   g_signal_connect (window->generic_menu_item_configure_fstab,
@@ -1424,12 +1314,6 @@ gdu_window_constructed (GObject *object)
   g_signal_connect (window->devtab_loop_autoclear_switch,
                     "notify::active",
                     G_CALLBACK (on_devtab_loop_autoclear_switch_notify_active),
-                    window);
-
-  /* MDRAID's bitmap switch */
-  g_signal_connect (window->devtab_drive_raid_bitmap_switch,
-                    "notify::active",
-                    G_CALLBACK (on_devtab_drive_raid_bitmap_switch_notify_active),
                     window);
 
   /* cancel-button for drive job */
@@ -1481,14 +1365,6 @@ gdu_window_constructed (GObject *object)
   gtk_accelerator_parse (C_("accelerator", "<Ctrl>S"), &key, &mod);
   gtk_accel_map_add_entry ("<Disks>/DriveMenu/ViewSmart", key, mod);
   gtk_widget_set_accel_path (window->generic_drive_menu_item_view_smart, "<Disks>/DriveMenu/ViewSmart", accelgroup);
-
-  /* Translators: This is the short-cut to view RAID Disks for a RAID array.
-   *              The Ctrl modifier must not be translated or parsing will fail.
-   *              You can however change to another English modifier (e.g. <Shift>).
-   */
-  gtk_accelerator_parse (C_("accelerator", "<Ctrl>R"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/DriveMenu/MDRaidDisks", key, mod);
-  gtk_widget_set_accel_path (window->generic_drive_menu_item_mdraid_disks, "<Disks>/DriveMenu/MDRaidDisks", accelgroup);
 
   /* Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
    *              The Ctrl modifier must not be translated or parsing will fail.
@@ -1776,8 +1652,7 @@ update_all (GduWindow *window)
   if (window->current_object != NULL)
     {
       if (udisks_object_peek_drive (window->current_object) != NULL ||
-          udisks_object_peek_block (window->current_object) != NULL ||
-          udisks_object_peek_mdraid (window->current_object) != NULL)
+          udisks_object_peek_block (window->current_object) != NULL)
         {
           page = DETAILS_PAGE_DEVICE;
         }
@@ -2108,433 +1983,6 @@ update_generic_drive_bits (GduWindow      *window,
     {
       update_drive_jobs (window, jobs);
     }
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-update_grid_for_mdraid (GduWindow      *window,
-                        UDisksMDRaid   *mdraid)
-{
-  UDisksBlock *mdraid_block = NULL;
-  UDisksObject *mdraid_block_object = NULL;
-
-  mdraid_block = udisks_client_get_block_for_mdraid (window->client, mdraid);
-  if (mdraid_block != NULL)
-    mdraid_block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (mdraid_block));
-  gdu_volume_grid_set_block_object (GDU_VOLUME_GRID (window->volume_grid), mdraid_block_object);
-  g_clear_object (&mdraid_block_object);
-  g_clear_object (&mdraid_block);
-}
-
-static void
-update_device_page_for_mdraid (GduWindow      *window,
-                               UDisksObject   *object,
-                               UDisksMDRaid   *mdraid,
-                               ShowFlags      *show_flags)
-{
-  UDisksObjectInfo *info = NULL;
-  gchar *s = NULL, *s2, *s3;
-  gchar *desc = NULL;
-  gchar *device_desc = NULL;
-  GList *all_blocks = NULL;
-  UDisksBlock *block = NULL;
-  guint64 size = 0;
-  guint num_devices = 0;
-  gchar *name = NULL;
-  gchar *homehost = NULL;
-  gchar *level_desc = NULL;
-  char hostname[512];
-  GList *jobs = NULL;
-  GList *members = NULL;
-  guint degraded = 0;
-  guint64 chunk_size = 0;
-  const gchar *sync_action;
-  gdouble sync_completed;
-  const gchar *bitmap_location;
-  gchar *degraded_markup = NULL;
-  gchar *raid_state = NULL;
-  gchar *raid_state_extra = NULL;
-  guint64 sync_rate = 0;
-  guint64 sync_remaining_time = 0;
-  gboolean show_stop_data_scrubbing = FALSE;
-  gboolean show_start_data_scrubbing = FALSE;
-
-  gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
-                                       _("RAID array is not running"));
-
-  size = udisks_mdraid_get_size (mdraid);
-  num_devices = udisks_mdraid_get_num_devices (mdraid);
-  block = udisks_client_get_block_for_mdraid (window->client, mdraid);
-  all_blocks = udisks_client_get_all_blocks_for_mdraid (window->client, mdraid);
-  members = udisks_client_get_members_for_mdraid (window->client, mdraid);
-  degraded = udisks_mdraid_get_degraded (mdraid);
-  sync_action = udisks_mdraid_get_sync_action (mdraid);
-  sync_completed = udisks_mdraid_get_sync_completed (mdraid);
-  sync_rate = udisks_mdraid_get_sync_rate (mdraid);
-  sync_remaining_time = udisks_mdraid_get_sync_remaining_time (mdraid);
-  bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
-  chunk_size = udisks_mdraid_get_chunk_size (mdraid);
-
-  info = udisks_client_get_object_info (window->client, object);
-
-  if (size > 0)
-    {
-      s = udisks_client_get_size_for_display (window->client, size, FALSE, FALSE);
-      /* Translators: Used in the main window for a RAID array, the first %s is the size */
-      desc = g_strdup_printf (C_("md-raid-window", "%s RAID Array"), s);
-      g_free (s);
-    }
-  else
-    {
-      /* Translators: Used in the main window for a RAID array where the size is not known  */
-      desc = g_strdup (C_("md-raid-window", "RAID Array"));
-    }
-
-  update_grid_for_mdraid (window, mdraid);
-
-  if (all_blocks != NULL)
-    {
-      GString *str;
-      GList *l;
-      str = g_string_new (NULL);
-      for (l = all_blocks; l != NULL; l = l->next)
-        {
-          UDisksBlock *mdraid_block = UDISKS_BLOCK (l->data);
-          if (str->len > 0)
-            g_string_append_c (str, ' ');
-          s = get_device_file_for_display (mdraid_block);
-          g_string_append (str, s);
-          g_free (s);
-        }
-      device_desc = g_string_free (str, FALSE);
-      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_STOP;
-      show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_MDRAID_DISKS;
-    }
-  else
-    {
-      /* Translators: shown as the device for a RAID array that is not currently running */
-      device_desc = g_strdup (C_("mdraid", "Not running"));
-      show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_RAID_START;
-    }
-
-  jobs = udisks_client_get_jobs_for_object (window->client, object);
-  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
-  update_generic_drive_bits (window, block, jobs, show_flags);
-
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), desc);
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
-
-  gtk_widget_show (window->devtab_drive_generic_button);
-
-  /* -------------------------------------------------- */
-  /* 'Size' field */
-
-  set_size (window,
-            "devtab-drive-size-label",
-            "devtab-drive-size-value-label",
-            size, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-
-  /* -------------------------------------------------- */
-  /* 'Name' field */
-
-  /* figure out hostname of this box */
-  hostname[sizeof hostname - 1] = '\0';
-  if (gethostname (hostname, sizeof hostname - 1) != 0)
-    {
-      g_warning ("Error getting hostname: %m");
-      hostname[0] = '\0';
-    }
-
-  /* figure out the hostname the array is local to */
-  homehost = udisks_mdraid_dup_name (mdraid);
-  s = strstr (homehost, ":");
-  if (s != NULL)
-    {
-      name = g_strdup (s + 1);
-      *s = '\0';
-    }
-  else
-    {
-      name = homehost;
-      homehost = NULL;
-    }
-
-  if (homehost != NULL && strlen (homehost) > 0 && g_strcmp0 (homehost, hostname) != 0)
-    {
-      /* Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
-       *              Search for "homehost" in the mdadm(8) documentation for more information.
-       *              The first %s is the array name (e.g. "My Raid Disk").
-       *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
-       */
-      s = g_strdup_printf (C_("mdraid", "%s (local to %s)"), name, homehost);
-      set_markup (window,
-                  "devtab-drive-arrayname-label",
-                  "devtab-drive-arrayname-value-label",
-                  s, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-      g_free (s);
-    }
-  else
-    {
-      set_markup (window,
-                  "devtab-drive-arrayname-label",
-                  "devtab-drive-arrayname-value-label",
-                  name, SET_MARKUP_FLAGS_HYPHEN_IF_EMPTY);
-    }
-
-  /* -------------------------------------------------- */
-  /* 'Bitmap' field */
-
-  if (strlen (bitmap_location) > 0)
-    {
-      gboolean has_bitmap = FALSE;
-      if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
-        has_bitmap = TRUE;
-
-      set_switch (window,
-                  "devtab-drive-raid-bitmap-label",
-                  "devtab-drive-raid-bitmap-switch-box",
-                  "devtab-drive-raid-bitmap-switch",
-                  has_bitmap);
-    }
-
-  /* -------------------------------------------------- */
-  /* 'Raid Level' field */
-
-  level_desc = gdu_utils_format_mdraid_level (udisks_mdraid_get_level (mdraid), FALSE, FALSE);
-
-  /* Translators: Used to convey the number of required disks for a RAID array
-   *              The %d is the number of required disks.
-   */
-  s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                   "%d Disk",
-                                   "%d Disks",
-                                   (gint) num_devices),
-                        (gint) num_devices);
-  if (chunk_size > 0)
-    {
-      s3 = udisks_client_get_size_for_display (window->client, chunk_size, TRUE, FALSE);
-      s = s2;
-      /* Translators: Used to combine number of disks and the chunk size.
-       *              The first %s is the number of disks e.g. "3 disks".
-       *              The second %s is the chunk size e.g. "512 KiB".
-       */
-      s2 = g_strdup_printf (C_("mdraid-disks-and-chunk-size", "%s, %s Chunk"), s2, s3);
-      g_free (s);
-      g_free (s3);
-    }
-
-  /* Translators: Shown in the "RAID Level" field.
-   *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-   *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
-   */
-  s = g_strdup_printf (C_("mdraid", "%s, %s"),
-                       level_desc,
-                       s2);
-  g_free (s2);
-  set_markup (window,
-              "devtab-drive-raidlevel-label",
-              "devtab-drive-raidlevel-value-label",
-              s, SET_MARKUP_FLAGS_NONE);
-  g_free (s);
-
-  /* -------------------------------------------------- */
-  /* 'State' field */
-
-  degraded_markup = NULL;
-  if (degraded > 0)
-    {
-      /* Translators: Shown in the 'Degraded' field for a degraded RAID array.
-       *              The %d is the number of missing disks (always > 0).
-       */
-      s2 = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
-                                       "%d disk is missing",
-                                       "%d disks are missing",
-                                       (gint) degraded),
-                            (gint) degraded);
-      /* Translators: string shown when the RAID array is degraded. All-caps is used for emphasis */
-      s3 = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
-                            C_("mdraid", "ARRAY IS DEGRADED"));
-      /* Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
-       *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
-       */
-      degraded_markup = g_strdup_printf (C_("mdraid-degraded", "%s — %s"),
-                                         s3, s2);
-      g_free (s2);
-      g_free (s3);
-    }
-
-  if (sync_action == NULL || strlen (sync_action) == 0)
-    {
-      /* could be we're already running but don't have any redundancy built-in */
-      if (block != NULL)
-        {
-          raid_state = g_strdup (C_("mdraid-state", "Running"));
-        }
-      else
-        {
-          /* Translators: Shown in the 'State' field for MD-RAID when not running */
-          raid_state = g_strdup (C_("mdraid-state", "Not running"));
-        }
-    }
-  else
-    {
-      if (degraded_markup != NULL)
-        {
-          raid_state = g_strdup (degraded_markup);
-        }
-      else
-        {
-          raid_state = g_strdup (C_("mdraid-state", "Running"));
-        }
-
-      if (g_strcmp0 (sync_action, "idle") == 0)
-        {
-          show_start_data_scrubbing = TRUE;
-        }
-      else if (g_strcmp0 (sync_action, "check") == 0)
-        {
-          raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing"));
-          show_stop_data_scrubbing = TRUE;
-        }
-      else if (g_strcmp0 (sync_action, "repair") == 0)
-        {
-          raid_state_extra = g_strdup (C_("mdraid-state", "Data Scrubbing and Repair"));
-          show_stop_data_scrubbing = TRUE;
-        }
-      else if (g_strcmp0 (sync_action, "resync") == 0)
-        {
-          raid_state_extra = g_strdup (C_("mdraid-state", "Resyncing"));
-        }
-      else if (g_strcmp0 (sync_action, "recover") == 0)
-        {
-          raid_state_extra = g_strdup (C_("mdraid-state", "Recovering"));
-        }
-      else if (g_strcmp0 (sync_action, "frozen") == 0)
-        {
-          raid_state_extra = g_strdup (C_("mdraid-state", "Frozen"));
-        }
-      else
-        {
-          g_warning ("unhandled sync action %s", sync_action);
-          raid_state_extra = g_strdup (sync_action);
-        }
-    }
-
-  /* If we've detected a split-brain situation, this is more important
-   * to convey than the actual array state
-   */
-  if (g_list_length (all_blocks) > 1)
-    {
-      s = g_strdup_printf ("<span foreground=\"#ff0000\"><b>%s</b></span>",
-                           /* Translators: String for conveying the raid array is misconfigured */
-                           C_("raid-split-brain", "RAID ARRAY IS MISCONFIGURED"));
-      s2 = g_strdup_printf ("<a href='http://en.wikipedia.org/wiki/Split-brain_(computing)'>%s</a>",
-                           /* Translators: The specific type of misconfiguration, see
-                            * http://en.wikipedia.org/wiki/Split-brain_(computing)
-                            * for more details
-                            */
-                            C_("raid-split-brain", "Split-Brain"));
-      g_free (raid_state);
-      /* Translators: Combiner for the RAID split-brain strings.
-       *              The first %s is "SYSTEM IS MISCONFIGURED".
-       *              The second %s is "Split-Brain" as a hyperlink.
-       */
-      raid_state = g_strdup_printf (C_("raid-split-brain", "%s (%s)"), s, s2);
-      g_free (s2);
-      g_free (s);
-    }
-
-  if (sync_completed == 0.0 && sync_rate == 0 && sync_remaining_time == 0)
-    {
-      if (raid_state_extra != NULL)
-        {
-          s = g_strdup_printf ("%s\n%s", raid_state, raid_state_extra);
-          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
-          g_free (s);
-        }
-      else
-        {
-          gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
-        }
-      gtk_widget_hide (window->devtab_drive_raid_state_progressbar);
-    }
-  else
-    {
-      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_state_value_label), raid_state);
-
-      s = g_strdup_printf ("%2.1f%%", 100.0 * sync_completed);
-      if (raid_state_extra != NULL)
-        {
-          /* Translators: Shown in RAID progress bar.
-           *              The first %s is about the operation, e.g. 'Data Scrubbing'.
-           *              The second is the percentage completed, e.g. '42.5%'
-           */
-          s2 = g_strdup_printf (C_("raid-state-progress", "%s: %s"), raid_state_extra, s);
-        }
-      else
-        {
-          s2 = s; s = NULL;
-        }
-      gtk_progress_bar_set_show_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), TRUE);
-      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), s2);
-      g_free (s2);
-      g_free (s);
-
-      gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (window->devtab_drive_raid_state_progressbar), sync_completed);
-
-      gtk_widget_show (window->devtab_drive_raid_state_progressbar);
-    }
-  gtk_widget_show (window->devtab_drive_raid_state_value_label);
-  gtk_widget_show (window->devtab_drive_raid_state_label);
-  gtk_widget_show (window->devtab_drive_raid_state_grid);
-
-  if (sync_remaining_time > 0)
-    {
-      s2 = gdu_utils_format_duration_usec (sync_remaining_time, GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
-      s3 = g_format_size (sync_rate);
-      /* Translators: Used for MD-RAID sync operation.
-       *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-       *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-       */
-      s = g_strdup_printf (C_("mdraid-sync-op", "%s remaining (%s/sec)"), s2, s3);
-      g_free (s3);
-      g_free (s2);
-      s2 = g_strdup_printf ("<small>%s</small>", s);
-      g_free (s);
-      gtk_label_set_markup (GTK_LABEL (window->devtab_drive_raid_progress_label), s2);
-      g_free (s2);
-      gtk_widget_show (window->devtab_drive_raid_progress_label);
-    }
-  else
-    {
-      gtk_widget_hide (window->devtab_drive_raid_progress_label);
-    }
-
-  /* -------------------------------------------------- */
-
-  /* Show MDRaid-specific items */
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_drive_menu_item_mdraid_start_data_scrubbing), show_start_data_scrubbing);
-  gtk_widget_set_visible (GTK_WIDGET (window->generic_drive_menu_item_mdraid_stop_data_scrubbing), show_stop_data_scrubbing);
-
-  /* -------------------------------------------------- */
-
-  g_free (raid_state);
-  g_free (raid_state_extra);
-  g_free (degraded_markup);
-  g_list_free_full (members, g_object_unref);
-  g_list_free_full (jobs, g_object_unref);
-  g_free (level_desc);
-  g_free (homehost);
-  g_free (name);
-  g_free (device_desc);
-  g_free (desc);
-  g_clear_object (&info);
-
-  g_clear_object (&block);
-  g_list_free_full (all_blocks, g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3151,19 +2599,6 @@ update_device_page_for_block (GduWindow          *window,
       else
         {
           s = udisks_client_get_id_for_display (window->client, usage, type, version, TRUE);
-          if (g_strcmp0 (udisks_block_get_mdraid_member (block), "/") != 0)
-            {
-              s2 = g_strdup_printf ("<a href=\"x-udisks://%s\">%s</a>",
-                                    udisks_block_get_mdraid_member (block),
-                                    /* Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array */
-                                    C_("volume-contents-raid", "Go To Array"));
-              /* Translators: Shown in the 'Contents' field for a member of an RAID array.
-               *              The first %s is the usual contents string (e.g. "Linux RAID Member").
-               *              The second %s is the hyperlink "Go To Array".
-               */
-              s3 = g_strdup_printf (C_("volume-contents-raid", "%s — %s"), s, s2);
-              g_free (s); s = s3;
-            }
         }
     }
   else
@@ -3298,11 +2733,9 @@ static void
 device_page_ensure_grid (GduWindow *window)
 {
   UDisksDrive *drive;
-  UDisksMDRaid *mdraid;
   UDisksBlock *block;
 
   drive = udisks_object_peek_drive (window->current_object);
-  mdraid = udisks_object_peek_mdraid (window->current_object);
   block = udisks_object_peek_block (window->current_object);
 
   if (drive != NULL)
@@ -3320,10 +2753,6 @@ device_page_ensure_grid (GduWindow *window)
 
       g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
       g_list_free (blocks);
-    }
-  else if (mdraid != NULL)
-    {
-      /* happens in update_device_page_for_mdraid as the /dev/md* device can come and go */
     }
   else if (block != NULL)
     {
@@ -3365,7 +2794,6 @@ update_device_page (GduWindow      *window,
   GduVolumeGridElementType type;
   UDisksBlock *block;
   UDisksDrive *drive;
-  UDisksMDRaid *mdraid;
   UDisksLoop *loop = NULL;
   guint64 size;
 
@@ -3386,19 +2814,12 @@ update_device_page (GduWindow      *window,
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
   gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_power_off));
 
-  /* Hide all MDRaid-specific menu items - will be turned on again in update_device_page_for_mdraid() */
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_sep_1));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_disks));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_start_data_scrubbing));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_mdraid_stop_data_scrubbing));
-
   /* ensure grid is set to the right volumes */
   device_page_ensure_grid (window);
 
   object = window->current_object;
   block = udisks_object_peek_block (window->current_object);
   drive = udisks_object_peek_drive (window->current_object);
-  mdraid = udisks_object_peek_mdraid (window->current_object);
   if (block != NULL)
     loop = udisks_client_get_loop_for_block (window->client, block);
 
@@ -3407,8 +2828,6 @@ update_device_page (GduWindow      *window,
 
   if (drive != NULL)
     update_device_page_for_drive (window, object, drive, show_flags);
-  else if (mdraid != NULL)
-    update_device_page_for_mdraid (window, object, mdraid, show_flags);
   else if (loop != NULL)
     update_device_page_for_loop (window, object, block, loop, show_flags);
   else
@@ -3623,86 +3042,6 @@ on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_disk_settings_dialog_show (window, window->current_object);
-}
-
-static void
-on_generic_drive_menu_item_mdraid_disks (GtkMenuItem *menu_item,
-                                         gpointer     user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  gdu_mdraid_disks_dialog_show (window, window->current_object);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-request_sync_action_cb (GObject      *source_object,
-                        GAsyncResult *res,
-                        gpointer      user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error = NULL;
-
-  if (!udisks_mdraid_call_request_sync_action_finish (UDISKS_MDRAID (source_object),
-                                                      res,
-                                                      &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("An error occurred when requesting data redundancy check"),
-                            error);
-      g_clear_error (&error);
-    }
-  g_object_unref (window);
-}
-
-static void
-on_generic_drive_menu_item_mdraid_start_data_scrubbing (GtkMenuItem *menu_item,
-                                                        gpointer     user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  UDisksMDRaid *mdraid = udisks_object_peek_mdraid (window->current_object);
-  const gchar *heading;
-  const gchar *message;
-  gboolean opt_repair = TRUE;
-
-  /* Translators: Heading for data scrubbing dialog */
-  heading = C_("mdraid-scrub-dialog", "Data Scrubbing");
-  /* Translators: Message for data scrubbing dialog */
-  message = C_("mdraid-scrub-dialog", "As storage devices can develop bad blocks at any time it is valuable to regularly read all blocks on all disks in a RAID array so as to catch such bad blocks early.\n\nThe RAID array will remain operational for the duration of the operation but performance will be impacted. For more information about data scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID Administration</a> article.");
-
-  if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
-                                    heading,
-                                    message,
-                                    C_("mdraid-scrub-dialog", "_Start"),
-                                    C_("mdraid-scrub-dialog", "_Repair mismatched blocks, if possible"),
-                                    &opt_repair,
-                                    window->client, NULL))
-    goto out;
-
-  udisks_mdraid_call_request_sync_action (mdraid,
-                                          opt_repair ? "repair" : "check",
-                                          g_variant_new ("a{sv}", NULL), /* options */
-                                          NULL, /* cancellable */
-                                          (GAsyncReadyCallback) request_sync_action_cb,
-                                          g_object_ref (window));
-
- out:
-  ;
-}
-
-static void
-on_generic_drive_menu_item_mdraid_stop_data_scrubbing (GtkMenuItem *menu_item,
-                                                       gpointer     user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  UDisksMDRaid *mdraid = udisks_object_peek_mdraid (window->current_object);
-
-  udisks_mdraid_call_request_sync_action (mdraid,
-                                          "idle",
-                                          g_variant_new ("a{sv}", NULL), /* options */
-                                          NULL, /* cancellable */
-                                          (GAsyncReadyCallback) request_sync_action_cb,
-                                          g_object_ref (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -4239,124 +3578,6 @@ on_devtab_drive_eject_button_clicked (GtkButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-mdraid_start_cb (UDisksMDRaid  *mdraid,
-                 GAsyncResult  *res,
-                 gpointer       user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
-
-  error = NULL;
-  if (!udisks_mdraid_call_start_finish (mdraid,
-                                        res,
-                                        &error))
-    {
-      /* TODO: When udisks has a suitable error code - for example MDRAID_CAN_NOT_START_NORMALLY - and
-       * this is returned, put up a dialog with a --force and --run check-boxes.
-       */
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error starting RAID array"),
-                            error);
-      g_error_free (error);
-    }
-  g_object_unref (window);
-}
-
-static void
-on_devtab_drive_raid_start_button_clicked (GtkButton *button,
-                                           gpointer   user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GVariantBuilder options_builder;
-  UDisksMDRaid *mdraid;
-
-  mdraid = udisks_object_peek_mdraid (window->current_object);
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-
-  /* g_variant_builder_add (&options_builder, "{sv}", "start-degraded", g_variant_new_boolean (TRUE)); */
-  udisks_mdraid_call_start (mdraid,
-                            g_variant_builder_end (&options_builder),
-                            NULL, /* cancellable */
-                            (GAsyncReadyCallback) mdraid_start_cb,
-                            g_object_ref (window));
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-mdraid_stop_cb (UDisksMDRaid  *mdraid,
-                GAsyncResult  *res,
-                gpointer       user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
-
-  error = NULL;
-  if (!udisks_mdraid_call_stop_finish (mdraid,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error stopping RAID array"),
-                            error);
-      g_error_free (error);
-    }
-  g_object_unref (window);
-}
-
-static void
-raid_stop_ensure_unused_cb (GduWindow     *window,
-                            GAsyncResult  *res,
-                            gpointer       user_data)
-{
-  UDisksObject *object = UDISKS_OBJECT (user_data);
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
-    {
-      udisks_mdraid_call_stop (udisks_object_peek_mdraid (object),
-                               g_variant_new ("a{sv}", NULL), /* options */
-                               NULL, /* cancellable */
-                               (GAsyncReadyCallback) mdraid_stop_cb,
-                               g_object_ref (window));
-    }
-  g_object_unref (object);
-}
-
-static void
-on_devtab_drive_raid_stop_button_clicked (GtkButton *button,
-                                          gpointer   user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  UDisksMDRaid *mdraid = NULL;
-  UDisksBlock *block_for_mdraid = NULL;
-
-  mdraid = udisks_object_get_mdraid (window->current_object);
-  if (mdraid == NULL)
-    {
-      g_warning ("No MDRaid interface");
-      goto out;
-    }
-
-  block_for_mdraid = udisks_client_get_block_for_mdraid (window->client, mdraid);
-  if (block_for_mdraid == NULL)
-    {
-      g_warning ("No block device for MDRaid object");
-      goto out;
-    }
-
-  gdu_window_ensure_unused (window,
-                            (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block_for_mdraid)),
-                            (GAsyncReadyCallback) raid_stop_ensure_unused_cb,
-                            NULL, /* GCancellable */
-                            g_object_ref (window->current_object));
-
- out:
-  g_clear_object (&block_for_mdraid);
-  g_clear_object (&mdraid);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
 on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
@@ -4505,69 +3726,6 @@ on_deactivate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_dat
                               NULL, /* cancellable */
                               (GAsyncReadyCallback) swapspace_stop_cb,
                               g_object_ref (window));
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-mdraid_set_bitmap_location_cb (UDisksMDRaid  *mdraid,
-                               GAsyncResult  *res,
-                               gpointer       user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
-
-  error = NULL;
-  if (!udisks_mdraid_call_set_bitmap_location_finish (mdraid,
-                                                      res,
-                                                      &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error setting bitmap for the RAID array"),
-                            error);
-      g_error_free (error);
-      /* in case of error, make sure the GtkSwitch:active reverts */
-      update_all (window);
-    }
-  g_object_unref (window);
-}
-
-static void
-on_devtab_drive_raid_bitmap_switch_notify_active (GObject    *gobject,
-                                                  GParamSpec *pspec,
-                                                  gpointer    user_data)
-{
-  GduWindow *window = GDU_WINDOW (user_data);
-  UDisksMDRaid *mdraid;
-  gboolean sw_value = FALSE;
-  const gchar *bitmap_location;
-  gboolean has_bitmap = FALSE;
-
-  mdraid = udisks_object_peek_mdraid (window->current_object);
-
-  bitmap_location = udisks_mdraid_get_bitmap_location (mdraid);
-  if (bitmap_location != NULL && strlen (bitmap_location) > 0 && g_strcmp0 (bitmap_location, "none") != 0)
-    has_bitmap = TRUE;
-
-  sw_value = !! gtk_switch_get_active (GTK_SWITCH (gobject));
-  if (sw_value != (!!has_bitmap))
-    {
-      const gchar *bitmap_location_new_value;
-      GVariantBuilder options_builder;
-
-      if (sw_value)
-        bitmap_location_new_value = "internal";
-      else
-        bitmap_location_new_value = "none";
-
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-      udisks_mdraid_call_set_bitmap_location (mdraid,
-                                              bitmap_location_new_value,
-                                              g_variant_builder_end (&options_builder),
-                                              NULL, /* cancellable */
-                                              (GAsyncReadyCallback) mdraid_set_bitmap_location_cb,
-                                              g_object_ref (window));
-    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

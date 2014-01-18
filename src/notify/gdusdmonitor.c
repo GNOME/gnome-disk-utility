@@ -33,10 +33,6 @@ struct GduSdMonitor {
   /* ATA SMART problems */
   GList *ata_smart_problems;
   NotifyNotification *ata_smart_notification;
-
-  /* MD-RAID problems */
-  GList *mdraid_problems;
-  NotifyNotification *mdraid_notification;
 };
 
 G_DEFINE_TYPE (GduSdMonitor, gdu_sd_monitor, G_TYPE_OBJECT);
@@ -93,9 +89,6 @@ gdu_sd_monitor_finalize (GObject *object)
 
   g_list_free_full (monitor->ata_smart_problems, g_object_unref);
   g_clear_object (&monitor->ata_smart_notification);
-
-  g_list_free_full (monitor->mdraid_problems, g_object_unref);
-  g_clear_object (&monitor->mdraid_notification);
 
   G_OBJECT_CLASS (gdu_sd_monitor_parent_class)->finalize (object);
 }
@@ -257,26 +250,6 @@ on_examine_action_clicked (NotifyNotification  *notification,
             }
         }
     }
-  else if (g_strcmp0 (action, "examine-mdraid") == 0)
-    {
-      if (monitor->mdraid_problems != NULL)
-        {
-          UDisksObject *object = UDISKS_OBJECT (monitor->mdraid_problems->data);
-          if (object != NULL)
-            {
-              UDisksMDRaid *mdraid = udisks_object_peek_mdraid (object);
-              if (mdraid != NULL)
-                {
-                  UDisksBlock *block = udisks_client_get_block_for_mdraid (monitor->client, mdraid);
-                  if (block != NULL)
-                    {
-                      device_file = udisks_block_get_device (block);
-                      g_object_ref (block);
-                    }
-                }
-            }
-        }
-    }
   else
     {
       g_assert_not_reached ();
@@ -372,26 +345,6 @@ check_for_ata_smart_problem (GduSdMonitor  *monitor,
   return ret;
 }
 
-static gboolean
-check_for_mdraid_problem (GduSdMonitor  *monitor,
-                          UDisksObject  *object)
-{
-  gboolean ret = FALSE;
-  UDisksMDRaid *mdraid = NULL;
-
-  mdraid = udisks_object_peek_mdraid (object);
-  if (mdraid == NULL)
-    goto out;
-
-  if (udisks_mdraid_get_degraded (mdraid) == 0)
-    goto out;
-
-  ret = TRUE;
-
- out:
-  return ret;
-}
-
 static void
 update (GduSdMonitor *monitor)
 {
@@ -407,19 +360,6 @@ update (GduSdMonitor *monitor)
                        "examine-smart",
                        /* Translators: Text for button in SMART failure notification */
                        C_("notify-smart", "Examine"));
-
-  update_problems (monitor, &monitor->mdraid_problems, check_for_mdraid_problem);
-  update_notification (monitor,
-                       monitor->mdraid_problems,
-                       &monitor->mdraid_notification,
-                       /* Translators: This is used as the title of the MD-RAID degraded notification */
-                       C_("notify-mdraid", "RAID Problems Detected"),
-                       /* Translators: This is used as the text of the MD-RAID degraded notification */
-                       C_("notify-mdraid", "A RAID array is degraded."),
-                       "gnome-disks",
-                       "examine-mdraid",
-                       /* Translators: Text for button in MD-RAID degraded notification */
-                       C_("notify-mdraid", "Examine"));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

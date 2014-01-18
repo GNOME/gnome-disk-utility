@@ -24,8 +24,6 @@ ui_DATA = 				\
 	app-menu.ui			\
 	benchmark-dialog.ui		\
 	disk-settings-dialog.ui		\
-	md-raid-disks-dialog.ui		\
-	create-raid-array-dialog.ui	\
 	erase-multiple-disks-dialog.ui	\
 	$(NULL)
 

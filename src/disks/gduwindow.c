@@ -1073,7 +1073,8 @@ gdu_window_constructed (GObject *object)
 
   window->model = gdu_device_tree_model_new (window->application,
                                              GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_POWER_STATE |
-                                             GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE);
+                                             GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_PULSE |
+                                             GDU_DEVICE_TREE_MODEL_FLAGS_FLAT);
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (window->device_tree_treeview), GTK_TREE_MODEL (window->model));
   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (window->model),

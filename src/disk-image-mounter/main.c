@@ -23,6 +23,8 @@ static GMainLoop *main_loop = NULL;
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void show_error (const gchar *format, ...) G_GNUC_PRINTF (1, 2);
+
 static void
 show_error (const gchar *format, ...)
 {
@@ -80,7 +82,7 @@ do_filechooser (void)
   dialog = gtk_file_chooser_dialog_new (_("Select Disk Image(s) to Mount"),
                                         NULL, /* parent window */
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
                                         _("_Mount"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog),
@@ -124,7 +126,6 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
-  g_type_init ();
   have_gtk = gtk_init_check (&argc, &argv);
 
   main_loop = g_main_loop_new (NULL, FALSE);

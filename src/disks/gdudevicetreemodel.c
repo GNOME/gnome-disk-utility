@@ -847,6 +847,7 @@ update_drive (GduDeviceTreeModel *model,
   GtkTreeIter iter;
   guint pulse;
   guint64 size = 0;
+  GIcon *icon = NULL;
 
   if (!find_iter_for_object (model,
                              object,
@@ -907,9 +908,13 @@ update_drive (GduDeviceTreeModel *model,
   if (from_timer)
     pulse += 1;
 
+  icon = udisks_object_info_get_media_icon (info);
+  if (icon == NULL)
+    icon = udisks_object_info_get_icon (info);
+
   gtk_tree_store_set (GTK_TREE_STORE (model),
                       &iter,
-                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, udisks_object_info_get_icon (info),
+                      GDU_DEVICE_TREE_MODEL_COLUMN_ICON, icon,
                       GDU_DEVICE_TREE_MODEL_COLUMN_NAME, s,
                       GDU_DEVICE_TREE_MODEL_COLUMN_SORT_KEY, udisks_object_info_get_sort_key (info),
                       GDU_DEVICE_TREE_MODEL_COLUMN_WARNING, warning,

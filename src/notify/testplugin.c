@@ -43,8 +43,6 @@ main (int argc, char *argv[])
   guint name_owner_id = 0;
   GduSdMonitor *monitor = NULL;
 
-  g_type_init ();
-
   notify_init ("test-gdusdplugin");
 
   loop = g_main_loop_new (NULL, FALSE);

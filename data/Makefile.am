@@ -1,6 +1,6 @@
 NULL =
 
-SUBDIRS = ui icons
+SUBDIRS = icons
 
 desktopdir = $(datadir)/applications
 desktop_in_files =				\

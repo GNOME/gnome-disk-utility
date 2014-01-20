@@ -26,8 +26,6 @@ struct _GduApplication
 {
   GtkApplication parent_instance;
 
-  gboolean running_from_source_tree;
-
   UDisksClient *client;
   GduWindow *window;
 
@@ -71,26 +69,6 @@ gdu_application_finalize (GObject *object)
     g_object_unref (app->client);
 
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-/* called in local instance */
-static gboolean
-gdu_application_local_command_line (GApplication    *_app,
-                                    gchar         ***arguments,
-                                    int             *exit_status)
-{
-  GduApplication *app = GDU_APPLICATION (_app);
-
-  /* figure out if running from source tree */
-  if (g_strcmp0 ((*arguments)[0], "./gnome-disks") == 0)
-    app->running_from_source_tree = TRUE;
-
-  /* chain up */
-  return G_APPLICATION_CLASS (gdu_application_parent_class)->local_command_line (_app,
-                                                                                 arguments,
-                                                                                 exit_status);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -410,10 +388,9 @@ gdu_application_class_init (GduApplicationClass *klass)
   gobject_class->finalize = gdu_application_finalize;
 
   application_class = G_APPLICATION_CLASS (klass);
-  application_class->local_command_line = gdu_application_local_command_line;
   application_class->command_line = gdu_application_command_line;
-  application_class->activate           = gdu_application_activate;
-  application_class->startup            = gdu_application_startup;
+  application_class->activate     = gdu_application_activate;
+  application_class->startup      = gdu_application_startup;
 }
 
 GApplication *
@@ -449,14 +426,10 @@ gdu_application_new_widget (GduApplication  *application,
 
   builder = gtk_builder_new ();
 
-  path = g_strdup_printf ("%s/%s",
-                          application->running_from_source_tree ?
-                            "../../data/ui" :
-                            PACKAGE_DATA_DIR "/gnome-disk-utility",
-                          ui_file);
+  path = g_strdup_printf ("/org/gnome/Disks/ui/%s", ui_file);
 
   error = NULL;
-  if (gtk_builder_add_from_file (builder, path, &error) == 0)
+  if (gtk_builder_add_from_resource (builder, path, &error) == 0)
     {
       g_error ("Error loading UI file %s: %s", path, error->message);
       g_error_free (error);

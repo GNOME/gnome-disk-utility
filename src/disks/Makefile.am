@@ -4,6 +4,15 @@ BUILT_SOURCES =
 
 bin_PROGRAMS = gnome-disks
 
+GRESDEPS = $(srcdir)/$1 $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir $(srcdir)/$(dir $1) $(srcdir)/$1)
+
+GRESGEN = $(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target="$@" --sourcedir="$(dir $<)" --generate-source "$<"
+
+disks_resource_deps = $(call GRESDEPS,gnome-disks.gresource.xml)
+resources.c: $(disks_resource_deps)
+	echo $(disks_resource_deps)
+	$(GRESGEN)
+
 gduenumtypes.h: gduenums.h gduenumtypes.h.template
 	( top_builddir=`cd $(top_builddir) && pwd`; 						\
 	 cd $(srcdir) && glib-mkenums --template gduenumtypes.h.template gduenums.h ) > 	\
@@ -20,10 +29,11 @@ enum_built_sources =							\
 	gduenumtypes.h			gduenumtypes.c			\
 	$(NULL)
 
-BUILT_SOURCES += $(enum_built_sources)
+BUILT_SOURCES += $(enum_built_sources) resources.c
 
 gnome_disks_SOURCES = 							\
 					main.c				\
+					resources.c			\
 	gduapplication.h		gduapplication.c		\
 	gdudevicetreemodel.h		gdudevicetreemodel.c		\
 	gdutypes.h							\
@@ -92,6 +102,7 @@ gnome_disks_LDADD = 					\
 EXTRA_DIST = 						\
 	gduenumtypes.h.template				\
 	gduenumtypes.c.template				\
+	$(disks_resource_deps)				\
 	$(NULL)
 
 clean-local :

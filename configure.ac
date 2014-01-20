@@ -129,6 +129,8 @@ AC_SUBST([gsd_plugindir])
 
 GLIB_GSETTINGS
 
+AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
+
 dnl **********************************
 dnl *** Check for libsystemd-login ***
 dnl **********************************
@@ -209,7 +211,6 @@ data/icons/HighContrast/48x48/Makefile
 data/icons/HighContrast/256x256/Makefile
 data/org.gnome.Disks.gschema.xml.in
 data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in
-data/ui/Makefile
 doc/Makefile
 doc/man/Makefile
 ])

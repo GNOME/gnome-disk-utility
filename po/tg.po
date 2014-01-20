@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-12-28 02:11+0000\n"
-"PO-Revision-Date: 2014-01-07 13:45+0500\n"
+"POT-Creation-Date: 2014-01-20 07:29+0000\n"
+"PO-Revision-Date: 2014-01-20 15:01+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: tg\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 1.6.3\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:46
+#: ../src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
 msgstr "Васлгари тасвири диск"
 
@@ -36,7 +36,7 @@ msgstr "Сабти тасвири диск"
 msgid "Write Disk Images to Devices"
 msgstr "Сабти тасвири диск ба дастгоҳ"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1277
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1044
 msgid "Disks"
 msgstr "Дискҳо"
 
@@ -109,7 +109,6 @@ msgid "_Help"
 msgstr "_Кӯмак"
 
 #: ../data/ui/app-menu.ui.h:3
-#| msgid "_About Disks"
 msgid "_About"
 msgstr "_Дар бораи барнома"
 
@@ -145,7 +144,7 @@ msgstr "Суръати умумии навиштан"
 msgid "Average Access Time"
 msgstr "Замони умумии дастрасӣ"
 
-#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:4
+#: ../data/ui/benchmark-dialog.ui.h:8
 msgid "Disk or Device"
 msgstr "Диск ё дастгоҳ"
 
@@ -298,7 +297,6 @@ msgid "Create Disk Image"
 msgstr "Эҷоди тасвири диск"
 
 #: ../data/ui/create-disk-image-dialog.ui.h:2
-#: ../data/ui/create-raid-array-dialog.ui.h:5
 #: ../data/ui/edit-crypttab-dialog.ui.h:4
 #: ../data/ui/edit-gpt-partition-dialog.ui.h:5
 #: ../data/ui/filesystem-create.ui.h:2
@@ -326,7 +324,6 @@ msgid "Create Partition"
 msgstr "Эҷод кардани қисмбандӣ"
 
 #: ../data/ui/create-partition-dialog.ui.h:2
-#: ../src/disks/gducreateraidarraydialog.c:575
 msgid "C_reate"
 msgstr "Эҷод _кардан"
 
@@ -391,37 +388,9 @@ msgid "The free space following the partition, in megabytes"
 msgstr "Фазои холӣ дар идомаи қисмбандӣ, бо мегабайт"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:39
+#: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:18
 msgid "Contents"
 msgstr "Мӯҳтаво"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:1
-msgid "Create RAID Array"
-msgstr "Эҷоди қатори RAID"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:2
-msgid "C_reate…"
-msgstr "Эҷод _кардан..."
-
-#: ../data/ui/create-raid-array-dialog.ui.h:3
-msgid "RAID _Level"
-msgstr "Сатҳи_RAID"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:4
-msgid "Chunk _Size"
-msgstr "Андозаи_Бурда"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:6
-msgid "Usable Size"
-msgstr "Андозаи истифодашаванда"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:7
-msgid "Number of Disks"
-msgstr "Рақами дискҳо"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:8
-msgid "For example, “My RAID Array” or “Backup Data”"
-msgstr "Масалан, “Қатори RAID-и ман” or “Иттилооти  нусхаи эҳтиётӣ”"
 
 #: ../data/ui/disk-settings-dialog.ui.h:1
 msgid "Drive Settings"
@@ -532,228 +501,127 @@ msgid "Wr_ite Cache"
 msgstr "Навиш_тани зерҳофиза"
 
 #: ../data/ui/disks.ui.h:1
-msgid "Create a new partition"
-msgstr "Эҷоди қисмбандии нав"
-
-#: ../data/ui/disks.ui.h:2
-msgid "Mount the filesystem"
-msgstr "Васли системаи файлӣ"
-
-#: ../data/ui/disks.ui.h:3
-msgid "Unmount the filesystem"
-msgstr "Ҷудо кардани системаи файлӣ"
-
-#: ../data/ui/disks.ui.h:4
-msgid "Eject the media"
-msgstr "Баровардани медиа"
-
-#: ../data/ui/disks.ui.h:5
-msgid "Power off the drive"
-msgstr "Хомӯш кардани диск"
-
-#: ../data/ui/disks.ui.h:6
-msgid "Unlock the encrypted device"
-msgstr "Кушодани қулфи дастгоҳи дорои рамз"
-
-#: ../data/ui/disks.ui.h:7
-msgid "Activate the swap space"
-msgstr "Фаъол кардани фазои мубодила"
-
-#: ../data/ui/disks.ui.h:8
-msgid "Deactivate the swap space"
-msgstr "Ғайрифаъол кардани фазои мубодила"
-
-#: ../data/ui/disks.ui.h:9
-msgid "Lock the encrypted device"
-msgstr "Қулф кардани дастгоҳи дорои рамз"
-
-#: ../data/ui/disks.ui.h:10
-msgid "More actions"
-msgstr "Амалҳои бештар"
-
-#: ../data/ui/disks.ui.h:11
-msgid "Delete partition"
-msgstr "Нест кардани қисмбандӣ"
-
-#: ../data/ui/disks.ui.h:12
-msgid "Start RAID Array"
-msgstr "Оғоз кардани қатори RAID"
-
-#: ../data/ui/disks.ui.h:13
-msgid "Stop RAID Array"
-msgstr "Нигоҳ доштани қатори RAID"
-
-#: ../data/ui/disks.ui.h:14
-msgid "Detach Loop Device"
-msgstr "Ҷудо кардани дастгоҳи ҳалқасозӣ"
-
-#: ../data/ui/disks.ui.h:15
-msgid "_Devices"
-msgstr "_Дастгоҳҳо"
-
-#: ../data/ui/disks.ui.h:16
-msgid "Click to select multiple disks to perform operations on"
-msgstr "Барои ба иҷро даровардани амалиёт ба интихоби якчанд диск зер кунед"
-
-#: ../data/ui/disks.ui.h:17
-msgid "Done"
-msgstr "Тайёр"
-
-#: ../data/ui/disks.ui.h:18
 msgid "Select a device"
 msgstr "Интихоб кардани дастгоҳ"
 
-#: ../data/ui/disks.ui.h:19
+#: ../data/ui/disks.ui.h:2
 msgid "Model"
 msgstr "Намуна"
 
-#: ../data/ui/disks.ui.h:20 ../data/ui/md-raid-disks-dialog.ui.h:2
+#: ../data/ui/disks.ui.h:3
 msgid "Serial Number"
 msgstr "Рақами силсилавӣ"
 
-#: ../data/ui/disks.ui.h:21
+#: ../data/ui/disks.ui.h:4
 msgid "World Wide Name"
 msgstr "Номи умумиҷаҳонӣ"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:23
+#: ../data/ui/disks.ui.h:6
 msgid "Location"
 msgstr "Ҷойгиршавӣ"
 
-#: ../data/ui/disks.ui.h:24
+#: ../data/ui/disks.ui.h:7
 msgid "Media"
 msgstr "Медиа"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:25 ../data/ui/md-raid-disks-dialog.ui.h:3
-#: ../src/disks/gduatasmartdialog.c:1613
+#: ../data/ui/disks.ui.h:8 ../src/disks/gduatasmartdialog.c:1613
 msgid "Assessment"
 msgstr "Баҳогузорӣ"
 
-#: ../data/ui/disks.ui.h:26
-msgid "Eject the medium in the drive"
-msgstr "Медиаро аз драйв бароред"
-
-#: ../data/ui/disks.ui.h:27
+#: ../data/ui/disks.ui.h:9
 msgid "Job"
 msgstr "Шуғл"
 
-#: ../data/ui/disks.ui.h:28
+#: ../data/ui/disks.ui.h:10
 msgid "Name"
 msgstr "Ном"
 
-#: ../data/ui/disks.ui.h:29
-msgid "RAID Level"
-msgstr "Сатҳи RAID"
-
-#: ../data/ui/disks.ui.h:30
+#: ../data/ui/disks.ui.h:11
 msgid "Size"
 msgstr "Андоза"
 
-#: ../data/ui/disks.ui.h:31
-msgid "State"
-msgstr "Ноҳия"
-
-#: ../data/ui/disks.ui.h:32
+#: ../data/ui/disks.ui.h:12
 msgid "Auto-clear"
 msgstr "Поксозии худкор"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:34
+#: ../data/ui/disks.ui.h:14
 msgid "Backing File"
 msgstr "Файли эҳтиётӣ"
 
-#: ../data/ui/disks.ui.h:35
+#: ../data/ui/disks.ui.h:15
 msgid "Partitioning"
 msgstr "Амалиёти қимсбандӣ"
 
-#: ../data/ui/disks.ui.h:36
-msgid "Bitmap"
-msgstr "Нақши нуқтавӣ"
-
-#: ../data/ui/disks.ui.h:37
+#: ../data/ui/disks.ui.h:16
 msgid "_Volumes"
 msgstr "_Ҳаҷмҳо"
 
-#: ../data/ui/disks.ui.h:40
+#: ../data/ui/disks.ui.h:19
 msgid "Device"
 msgstr "Дастгоҳ"
 
-#: ../data/ui/disks.ui.h:41
+#: ../data/ui/disks.ui.h:20
 msgid "Partition Type"
 msgstr "Навъи қисмбандӣ"
 
-#: ../data/ui/disks.ui.h:42
+#: ../data/ui/disks.ui.h:21
 msgid "Format…"
 msgstr "Формат..."
 
-#: ../data/ui/disks.ui.h:43
+#: ../data/ui/disks.ui.h:22
 msgid "Create Disk Image…"
 msgstr "Эҷоти тасвири диск..."
 
-#: ../data/ui/disks.ui.h:44
+#: ../data/ui/disks.ui.h:23
 msgid "Restore Disk Image…"
 msgstr "Барқарор кардан тасвири диск..."
 
-#: ../data/ui/disks.ui.h:45
+#: ../data/ui/disks.ui.h:24
 msgid "Benchmark…"
 msgstr "Афзорсанҷӣ..."
 
-#: ../data/ui/disks.ui.h:46
+#: ../data/ui/disks.ui.h:25
 msgid "SMART Data & Self-Tests…"
 msgstr "Иттилооти SMART ва Воситаҳои худсанҷӣ..."
 
-#: ../data/ui/disks.ui.h:47
+#: ../data/ui/disks.ui.h:26
 msgid "Drive Settings…"
 msgstr "Танзимоти драйв..."
 
-#: ../data/ui/disks.ui.h:48
+#: ../data/ui/disks.ui.h:27
 msgid "Standby Now"
 msgstr "Дарҳол омодаи кор"
 
-#: ../data/ui/disks.ui.h:49
+#: ../data/ui/disks.ui.h:28
 msgid "Wake-Up from Standby"
 msgstr "Бедоршавӣ аз омодаи кор"
 
-#: ../data/ui/disks.ui.h:50
+#: ../data/ui/disks.ui.h:29
 msgid "Power Off…"
 msgstr "Хомӯш кардани барқ..."
 
-#: ../data/ui/disks.ui.h:51
-msgid "RAID Disks…"
-msgstr "Дискҳои RAID..."
-
-#: ../data/ui/disks.ui.h:52
-msgid "Start Data Scrubbing…"
-msgstr "Оғози ҷамъоварии иттилоот..."
-
-#: ../data/ui/disks.ui.h:53
-msgid "Stop Data Scrubbing"
-msgstr "Қатъи ҷамъоварии иттилоот"
-
-#: ../data/ui/disks.ui.h:54
+#: ../data/ui/disks.ui.h:30
 msgid "Edit Partition…"
 msgstr "Таҳрири қисмбандӣ"
 
-#: ../data/ui/disks.ui.h:55
+#: ../data/ui/disks.ui.h:31
 msgid "Edit Filesystem…"
 msgstr "Таҳрири системаи файлӣ..."
 
-#: ../data/ui/disks.ui.h:56
+#: ../data/ui/disks.ui.h:32
 msgid "Change Passphrase…"
 msgstr "Тағйири гузарвожа..."
 
-#: ../data/ui/disks.ui.h:57
+#: ../data/ui/disks.ui.h:33
 msgid "Edit Mount Options…"
 msgstr "Таҳрири имконоти васлкунӣ"
 
-#: ../data/ui/disks.ui.h:58
+#: ../data/ui/disks.ui.h:34
 msgid "Edit Encryption Options…"
 msgstr "Таҳрири имконоти рамзгузорӣ..."
-
-#: ../data/ui/disks.ui.h:59
-msgid "Create RAID"
-msgstr "Эҷод кардани RAID"
 
 #: ../data/ui/edit-crypttab-dialog.ui.h:1
 msgid "Encryption Options"
@@ -1149,10 +1017,6 @@ msgstr "_Қисмбандӣ"
 msgid "Format Volume"
 msgstr "Ҳаҷми формат"
 
-#: ../data/ui/md-raid-disks-dialog.ui.h:1
-msgid "RAID Disks"
-msgstr "Дискҳои RAID"
-
 #: ../data/ui/restore-disk-image-dialog.ui.h:1
 msgid "Restore Disk Image"
 msgstr "Барқарор кардани тасвири диск"
@@ -1263,28 +1127,33 @@ msgstr "Барои қулфкушоӣ гузарвожаро зеркунед"
 msgid "_Unlock"
 msgstr "_Кушодан"
 
-#: ../src/disk-image-mounter/main.c:44
+#: ../src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "Хатогӣ ба вучуд омадааст."
 
-#: ../src/disk-image-mounter/main.c:65
+#: ../src/disk-image-mounter/main.c:67
 msgid "Allow writing to the image"
 msgstr "Навиштан дар тасвирҳоро иҷозат диҳед"
 
-#: ../src/disk-image-mounter/main.c:80
+#: ../src/disk-image-mounter/main.c:82
 msgid "Select Disk Image(s) to Mount"
 msgstr "Барои ҷамъ кардан тасвир(ҳо)-и дискро интихоб намоед"
 
-#: ../src/disk-image-mounter/main.c:84
+#: ../src/disk-image-mounter/main.c:85
+#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:725
+msgid "_Cancel"
+msgstr "_Бекор кардан"
+
+#: ../src/disk-image-mounter/main.c:86
 msgid "_Mount"
 msgstr "_Ҷамъ кардан"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:92
+#: ../src/disk-image-mounter/main.c:94
 msgid "Set up _read-only mount"
 msgstr "Танзими ҷамъоварии танҳо-хондан"
 
-#: ../src/disk-image-mounter/main.c:93
+#: ../src/disk-image-mounter/main.c:95
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -1292,26 +1161,26 @@ msgstr ""
 "Агар санҷида шавад, ҷамъоварӣ танҳо-хондан мешавад. Хеле хуб аст, агар шумо "
 "нахоҳед, ки тасвири диски дар поён хобида тағйир ёбад"
 
-#: ../src/disk-image-mounter/main.c:135
+#: ../src/disk-image-mounter/main.c:136
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Хато ба демонҳои udisks:  %s (%s, %d) пайваст мешавад"
 
-#: ../src/disk-image-mounter/main.c:143
+#: ../src/disk-image-mounter/main.c:144
 msgid "Attach and mount one or more disk image files."
 msgstr "Замима ва васл кардани як ё якчанд файлҳои тасвири диск."
 
-#: ../src/disk-image-mounter/main.c:191
+#: ../src/disk-image-mounter/main.c:192
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "`%s' кушода намешавад - шояд ҳаҷм васл нашуда бошад?"
 
-#: ../src/disk-image-mounter/main.c:198
+#: ../src/disk-image-mounter/main.c:199
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "Хатои кушодани `%s': %m"
 
-#: ../src/disk-image-mounter/main.c:219
+#: ../src/disk-image-mounter/main.c:220
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Хатои замима кардани тасвири диск: %s (%s, %d)"
@@ -1359,7 +1228,7 @@ msgstr "--формат-дастгоҳ ҳангоми истифода бояд �
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:331
+#: ../src/disks/gduapplication.c:333
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -2589,35 +2458,6 @@ msgstr ""
 msgid "This is the last primary partition that can be created."
 msgstr "Ин охирин қисмбандии ибтидоӣ аст, ки эҷод шуда метавонад."
 
-#: ../src/disks/gducreateraidarraydialog.c:296
-#, c-format
-msgid "%d disk"
-msgid_plural "%d disks"
-msgstr[0] "%d диск"
-msgstr[1] "%d диск"
-
-#. Translators: Shown in "Create RAID Array" dialog.
-#. *              The first %s is the number of disks e.g. '3 disks'.
-#. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
-#.
-#: ../src/disks/gducreateraidarraydialog.c:305
-#, c-format
-msgid "%s of %s each"
-msgstr "%s аз %s ҳар"
-
-#: ../src/disks/gducreateraidarraydialog.c:417
-msgid "Error creating RAID array"
-msgstr "Хатои эҷоди қатори RAID"
-
-#: ../src/disks/gducreateraidarraydialog.c:573
-msgid "Are you sure you want to use the disks for a RAID array?"
-msgstr ""
-"Шумо боварӣ доред, ки дискҳоро барои қатори RAID истифода бурдан мехоҳед?"
-
-#: ../src/disks/gducreateraidarraydialog.c:574
-msgid "Existing content on the devices will be erased"
-msgstr "Мӯҳтавои мавҷудбуда дар дастгоҳҳо пок мешавад"
-
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
 msgstr "Эҷод мешавад"
@@ -2651,42 +2491,15 @@ msgstr ""
 "меёбад. Барои тағйир додани гузарвожаи рӯи диск, <i>Тағйири Гузарвожа…</i>-"
 "ро истифода баред"
 
-#: ../src/disks/gdudevicetreemodel.c:507
+#: ../src/disks/gdudevicetreemodel.c:496
 msgid "(None)"
 msgstr "(Ҳеҷ)"
 
-#: ../src/disks/gdudevicetreemodel.c:622
+#: ../src/disks/gdudevicetreemodel.c:611
 msgid "Disk Drives"
 msgstr "Драйвҳои диск"
 
-#: ../src/disks/gdudevicetreemodel.c:698
-msgid "RAID Arrays"
-msgstr "Қаторҳои RAID "
-
-#. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1174
-#, c-format
-msgctxt "md-raid-tree-primary"
-msgid "%s RAID Array"
-msgstr "Қатори %s RAID"
-
-#. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1180
-msgctxt "md-raid-tree-primary"
-msgid "RAID Array"
-msgstr "Қатори RAID"
-
-#. Translators: Used as a secondary line in device tree for RAID Array.
-#. *              The first %s is the name of the array (e.g. "My RAID Array").
-#. *              The second %s is the RAID level (e.g. "RAID-5").
-#.
-#: ../src/disks/gdudevicetreemodel.c:1191
-#, c-format
-msgctxt "md-raid-tree-secondary"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#: ../src/disks/gdudevicetreemodel.c:1351
+#: ../src/disks/gdudevicetreemodel.c:1025
 msgid "Other Devices"
 msgstr "Дастгоҳҳои дигар"
 
@@ -2809,7 +2622,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:212
+#: ../src/disks/gduformatvolumedialog.c:222
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2923,20 +2736,20 @@ msgstr ""
 "хидматҳои барқарории иттилоот барқарор намешаванд"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:224
+#: ../src/disks/gduformatvolumedialog.c:234
 msgid "_Format"
 msgstr "_Формат"
 
-#: ../src/disks/gduformatvolumedialog.c:87
+#: ../src/disks/gduformatvolumedialog.c:92
 msgid "Error formatting volume"
 msgstr "Хатои формат кардани баландии садо"
 
-#: ../src/disks/gduformatvolumedialog.c:206
+#: ../src/disks/gduformatvolumedialog.c:216
 msgid "Are you sure you want to format the volume?"
 msgstr "Оё шумо мутмаин ҳастед, ки баландии садоро формат кардан мехоҳед?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:210
+#: ../src/disks/gduformatvolumedialog.c:220
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2945,7 +2758,7 @@ msgstr ""
 "барқарории иттилоот барқарор шуда метавонед"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:217
+#: ../src/disks/gduformatvolumedialog.c:227
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3005,132 +2818,6 @@ msgstr "Хатои илова кардани вурудии нави /etc/fstab"
 #: ../src/disks/gdufstabdialog.c:603
 msgid "Error updating /etc/fstab entry"
 msgstr "Хатои навсозӣ кардани вурудии /etc/fstab"
-
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2028
-#, c-format
-msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr "%s <span size=\"хурдтар\">(Read-Only)</span>"
-
-#: ../src/disks/gdumdraiddisksdialog.c:334
-msgid "An error occurred when removing a disk from the RAID Array"
-msgstr "Хатогӣ ҳангоми гирифтани диск аз қатори RAID рух дод"
-
-#: ../src/disks/gdumdraiddisksdialog.c:372
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to remove the disk?"
-msgstr "Шумо мутмаин ҳастед, ки дискро гирифтан мехоҳед?"
-
-#: ../src/disks/gdumdraiddisksdialog.c:373
-msgctxt "mdraid-disks"
-msgid "Removing a disk from a RAID array may degrade it"
-msgstr "Гирифтани диск аз қатори RAID метавонад онро бесифат кунад"
-
-#: ../src/disks/gdumdraiddisksdialog.c:374
-msgctxt "mdraid-disks"
-msgid "_Remove"
-msgstr "_Тоза кардан"
-
-#: ../src/disks/gdumdraiddisksdialog.c:615
-msgctxt "mdraid-disks-state"
-msgid "FAILED"
-msgstr "ИҶРО НАШУД"
-
-#. Translators: MD-RAID member state for 'in_sync'
-#: ../src/disks/gdumdraiddisksdialog.c:622
-msgctxt "mdraid-disks-state"
-msgid "In Sync"
-msgstr "Дар ҳамоҳангӣ"
-
-#. Translators: MD-RAID member state for 'spare'
-#: ../src/disks/gdumdraiddisksdialog.c:631
-msgctxt "mdraid-disks-state"
-msgid "Spare"
-msgstr "Эҳтиётӣ"
-
-#. Translators: MD-RAID member state for 'spare' but is being recovered to
-#: ../src/disks/gdumdraiddisksdialog.c:638
-msgctxt "mdraid-disks-state"
-msgid "Recovering"
-msgstr "Барқарор шуда истодааст"
-
-#. Translators: MD-RAID member state for 'writemostly'
-#: ../src/disks/gdumdraiddisksdialog.c:646
-msgctxt "mdraid-disks-state"
-msgid "Write-mostly"
-msgstr "Аксаран навиштан"
-
-#. Translators: MD-RAID member state for 'blocked'
-#: ../src/disks/gdumdraiddisksdialog.c:653
-msgctxt "mdraid-disks-state"
-msgid "Blocked"
-msgstr "Манъшуда"
-
-#. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
-#: ../src/disks/gdumdraiddisksdialog.c:660
-#, c-format
-msgctxt "mdraid-disks-state"
-msgid "Unknown (%s)"
-msgstr "Номаълум (%s)"
-
-#. Translators: column name for the position of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:744
-msgctxt "mdraid-disks"
-msgid "Position"
-msgstr "Ҷойгиршавӣ"
-
-#. Translators: column name for the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:760
-msgctxt "mdraid-disks"
-msgid "Disk"
-msgstr "Диск"
-
-#. Translators: column name for the state of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:790
-msgctxt "mdraid-disks"
-msgid "State"
-msgstr "Ноҳия"
-
-#. Translators: column name for the number of read errors of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:806
-msgctxt "mdraid-disks"
-msgid "Errors"
-msgstr "Хатогиҳо"
-
-#: ../src/disks/gdumdraiddisksdialog.c:948
-msgid "An error occurred when adding a disk to the RAID Array"
-msgstr "Хатогӣ ҳангоми илова кардани диск ба қатори RAID рух дод"
-
-#: ../src/disks/gdumdraiddisksdialog.c:970
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to add the disk to the array?"
-msgstr "Шумо мутмаин ҳастед, ки дискро ба қатор илова кардан мехоҳед?"
-
-#: ../src/disks/gdumdraiddisksdialog.c:971
-msgctxt "mdraid-disks"
-msgid "All existing data on the disk will be lost"
-msgstr "Ҳамаи иттилооти мавҷудбуда дар диск гум мешавад"
-
-#: ../src/disks/gdumdraiddisksdialog.c:972
-msgctxt "mdraid-disks"
-msgid "_Add"
-msgstr "_Илова кардан"
-
-#. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
-#. *              right size available
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1150
-msgctxt "mdraid-add"
-msgid "No disks of suitable size available"
-msgstr "Ягон диск бо андозаи мувофиқ вуҷуд надорад"
-
-#. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
-#. *              disks that can be added to the array
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1161
-msgctxt "mdraid-add"
-msgid "Select disk to add"
-msgstr "Интихоби диск барои илова"
 
 #: ../src/disks/gdupartitiondialog.c:362
 msgid "Error setting partition type"
@@ -3234,14 +2921,14 @@ msgstr "Хатои кушодани қулфи дастоҳи дорои рам�
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Гузарвожаи рамзгузорӣ аз ҳалқаи калидӣ бозёбӣ шудааст"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2779
+#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2026
 msgid "No Media"
 msgstr "Медиа нест"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1556
+#: ../src/disks/gduvolumegrid.c:1549
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -3250,67 +2937,56 @@ msgstr "Қисмбандӣ %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1563
+#: ../src/disks/gduvolumegrid.c:1556
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Қисмбандӣ %d"
 
-#: ../src/disks/gduvolumegrid.c:1600
+#: ../src/disks/gduvolumegrid.c:1593
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Фазои озод"
 
-#: ../src/disks/gduvolumegrid.c:1643
+#: ../src/disks/gduvolumegrid.c:1636
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Қисмбандии кашидашуда"
 
-#: ../src/disks/gduvolumegrid.c:1667
+#: ../src/disks/gduvolumegrid.c:1660
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Системаи файл"
 
-#: ../src/disks/gduvolumegrid.c:1689
+#: ../src/disks/gduvolumegrid.c:1682
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Иваз кардан"
 
-#. Translators: Shown in volume grid for Linux RAID members. Please
-#. *              keep this as short as possible.
-#. *              The first %s is the array name (e.g. 'MirrorOnTheWall').
-#. *              The second %s is the homehost (e.g. 'thinkpad').
-#.
-#: ../src/disks/gduvolumegrid.c:1718
-#, c-format
-msgctxt "volume-grid"
-msgid "%s [local to %s]"
-msgstr "%s [вобаста ба %s]"
-
-#: ../src/disks/gduwindow.c:730
+#: ../src/disks/gduwindow.c:584
 msgid "Error deleting loop device"
 msgstr "Дастгоҳи ҳалқаи нест кардани хато"
 
-#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
+#: ../src/disks/gduwindow.c:684 ../src/disks/gduwindow.c:755
 msgid "Error attaching disk image"
 msgstr "Хато тасвири дискро замима менамояд"
 
-#: ../src/disks/gduwindow.c:868
+#: ../src/disks/gduwindow.c:722
 msgid "Select Disk Image to Attach"
 msgstr "Тасвири дискро барои азмима интихоб намоед"
 
-#: ../src/disks/gduwindow.c:872
+#: ../src/disks/gduwindow.c:726
 msgid "_Attach"
 msgstr "_Замима кардан"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:879
+#: ../src/disks/gduwindow.c:733
 msgid "Set up _read-only loop device"
 msgstr "Танзими дастгоҳи ҳалқаи танҳо барои хондан"
 
-#: ../src/disks/gduwindow.c:880
+#: ../src/disks/gduwindow.c:734
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -3319,7 +2995,7 @@ msgstr ""
 "фоидаовар аст, ки шумо тағйир ёфтани файли интихобшударо намехоҳед."
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1657
+#: ../src/disks/gduwindow.c:1350
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -3328,7 +3004,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1665
+#: ../src/disks/gduwindow.c:1358
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -3337,34 +3013,21 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1673
+#: ../src/disks/gduwindow.c:1366
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
-
-#. Translators: This is the short-cut to view RAID Disks for a RAID array.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: ../src/disks/gduwindow.c:1681
-msgctxt "accelerator"
-msgid "<Ctrl>R"
-msgstr "<Ctrl>R"
 
 #. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1689
+#: ../src/disks/gduwindow.c:1374
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#. Translators: This is the short-cut to open the volume gear menu.
-#. *              The Shift modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Ctrl>).
-#.
-#: ../src/disks/gduwindow.c:1697
+#: ../src/disks/gduwindow.c:1389
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -3373,16 +3036,23 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1707
+#: ../src/disks/gduwindow.c:1399
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
+
+#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
+#: ../src/disks/gduwindow.c:1716
+#, c-format
+#| msgid "_Read-Only"
+msgid "%s (Read-Only)"
+msgstr "%s (Танҳо барои хондан)"
 
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2066
+#: ../src/disks/gduwindow.c:1754
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3391,7 +3061,7 @@ msgstr "%s боқӣ монд (%s/сон)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2074
+#: ../src/disks/gduwindow.c:1762
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3402,7 +3072,7 @@ msgstr "%s боқӣ мондааст"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2089
+#: ../src/disks/gduwindow.c:1777
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s аз %s – %s"
@@ -3411,193 +3081,30 @@ msgstr "%s аз %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2176
+#: ../src/disks/gduwindow.c:1864
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:2248 ../src/disks/gduwindow.c:3093
+#: ../src/disks/gduwindow.c:1936 ../src/disks/gduwindow.c:2310
 msgid "Block device is empty"
 msgstr "Дастгоҳи манъ холӣ аст"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2271
+#: ../src/disks/gduwindow.c:1959
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Номаълум (%s)"
 
-#: ../src/disks/gduwindow.c:2352
-msgid "RAID array is not running"
-msgstr "Қатори RAID иҷро нашудааст"
-
-#. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2373
-#, c-format
-msgctxt "md-raid-window"
-msgid "%s RAID Array"
-msgstr "Қатори %s RAID"
-
-#. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2379
-msgctxt "md-raid-window"
-msgid "RAID Array"
-msgstr "Қатори RAID"
-
-#. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2405
-msgctxt "mdraid"
-msgid "Not running"
-msgstr "Иҷро нашудааст"
-
-#. Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
-#. *              Search for "homehost" in the mdadm(8) documentation for more information.
-#. *              The first %s is the array name (e.g. "My Raid Disk").
-#. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
-#.
-#: ../src/disks/gduwindow.c:2472
-#, c-format
-msgctxt "mdraid"
-msgid "%s (local to %s)"
-msgstr "%s (вобаста ба %s)"
-
-#: ../src/disks/gduwindow.c:2512
-#, c-format
-msgid "%d Disk"
-msgid_plural "%d Disks"
-msgstr[0] "%d диск"
-msgstr[1] "%d диск"
-
-#. Translators: Used to combine number of disks and the chunk size.
-#. *              The first %s is the number of disks e.g. "3 disks".
-#. *              The second %s is the chunk size e.g. "512 KiB".
-#.
-#: ../src/disks/gduwindow.c:2524
-#, c-format
-msgctxt "mdraid-disks-and-chunk-size"
-msgid "%s, %s Chunk"
-msgstr "%s, %s Бурда"
-
-#. Translators: Shown in the "RAID Level" field.
-#. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-#. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
-#.
-#: ../src/disks/gduwindow.c:2533
-#, c-format
-msgctxt "mdraid"
-msgid "%s, %s"
-msgstr "%s, %s"
-
-#: ../src/disks/gduwindow.c:2553
-#, c-format
-msgid "%d disk is missing"
-msgid_plural "%d disks are missing"
-msgstr[0] "%d диск мавҷуд нест"
-msgstr[1] "%d дискҳо мавҷуд нестанд"
-
-#: ../src/disks/gduwindow.c:2559
-msgctxt "mdraid"
-msgid "ARRAY IS DEGRADED"
-msgstr "ҚАТОР ВАЙРОН ШУД"
-
-#. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
-#. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
-#.
-#: ../src/disks/gduwindow.c:2563
-#, c-format
-msgctxt "mdraid-degraded"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#: ../src/disks/gduwindow.c:2574 ../src/disks/gduwindow.c:2590
-msgctxt "mdraid-state"
-msgid "Running"
-msgstr "Иҷро шуда истодааст"
-
-#. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2579
-msgctxt "mdraid-state"
-msgid "Not running"
-msgstr "Иҷро намешавад"
-
-#: ../src/disks/gduwindow.c:2599
-msgctxt "mdraid-state"
-msgid "Data Scrubbing"
-msgstr "Хаткашии иттилоот"
-
-#: ../src/disks/gduwindow.c:2604
-msgctxt "mdraid-state"
-msgid "Data Scrubbing and Repair"
-msgstr "Хат кашидан ва ислоҳи иттилоот"
-
-#: ../src/disks/gduwindow.c:2609
-msgctxt "mdraid-state"
-msgid "Resyncing"
-msgstr "Ҳамоҳангсозии такрорӣ"
-
-#: ../src/disks/gduwindow.c:2613
-msgctxt "mdraid-state"
-msgid "Recovering"
-msgstr "Барқарор шуда истодааст"
-
-#: ../src/disks/gduwindow.c:2617
-msgctxt "mdraid-state"
-msgid "Frozen"
-msgstr "Карахт шуд"
-
-#. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2633
-msgctxt "raid-split-brain"
-msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr "ҚАТОРИ RAID КОНФИГУРАТСИЯИ ХАТО ДОРАД"
-
-#. Translators: The specific type of misconfiguration, see
-#. * http://en.wikipedia.org/wiki/Split-brain_(computing)
-#. * for more details
-#.
-#: ../src/disks/gduwindow.c:2639
-msgctxt "raid-split-brain"
-msgid "Split-Brain"
-msgstr "Мағзи тақсимшуда"
-
-#. Translators: Combiner for the RAID split-brain strings.
-#. *              The first %s is "SYSTEM IS MISCONFIGURED".
-#. *              The second %s is "Split-Brain" as a hyperlink.
-#.
-#: ../src/disks/gduwindow.c:2645
-#, c-format
-msgctxt "raid-split-brain"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#. Translators: Shown in RAID progress bar.
-#. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
-#. *              The second is the percentage completed, e.g. '42.5%'
-#.
-#: ../src/disks/gduwindow.c:2675
-#, c-format
-msgctxt "raid-state-progress"
-msgid "%s: %s"
-msgstr "%s: %s"
-
-#. Translators: Used for MD-RAID sync operation.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-#.
-#: ../src/disks/gduwindow.c:2702
-#, c-format
-msgctxt "mdraid-sync-op"
-msgid "%s remaining (%s/sec)"
-msgstr "%s боқӣ монд (%s/sec)"
-
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2882
+#: ../src/disks/gduwindow.c:2114
 msgid "Connected to another seat"
 msgstr "Ба курсии дигар пайваст шуд"
 
-#: ../src/disks/gduwindow.c:3026
+#: ../src/disks/gduwindow.c:2258
 msgid "Loop device is empty"
 msgstr "Дастгоҳи ҳалқавӣ холӣ аст"
 
@@ -3607,158 +3114,100 @@ msgstr "Дастгоҳи ҳалқавӣ холӣ аст"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3265
+#: ../src/disks/gduwindow.c:2468
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s холӣ (%.1f%% пур)"
 
-#: ../src/disks/gduwindow.c:3295
+#: ../src/disks/gduwindow.c:2498
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Номаълум"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3323
+#: ../src/disks/gduwindow.c:2526
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Решаи системаи файл"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3331
+#: ../src/disks/gduwindow.c:2534
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Ба %s васл шудааст"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3337
+#: ../src/disks/gduwindow.c:2540
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ҷудо шудааст"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3360
+#: ../src/disks/gduwindow.c:2563
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Фаъол"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3366
+#: ../src/disks/gduwindow.c:2569
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ғайрифаъол"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3379
+#: ../src/disks/gduwindow.c:2582
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Кушодашуда"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3385
+#: ../src/disks/gduwindow.c:2588
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Қулфшуда"
 
-#: ../src/disks/gduwindow.c:3395
+#: ../src/disks/gduwindow.c:2598
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Қисмбандии густурда"
-
-#. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3405
-msgctxt "volume-contents-raid"
-msgid "Go To Array"
-msgstr "Ба қатор гузаред"
-
-#. Translators: Shown in the 'Contents' field for a member of an RAID array.
-#. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
-#. *              The second %s is the hyperlink "Go To Array".
-#.
-#: ../src/disks/gduwindow.c:3410
-#, c-format
-msgctxt "volume-contents-raid"
-msgid "%s — %s"
-msgstr "%s — %s"
 
 #. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3428
+#: ../src/disks/gduwindow.c:2618
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3528
+#: ../src/disks/gduwindow.c:2718
 msgid "Unallocated Space"
 msgstr "Фазои таъиннашуда"
 
-#: ../src/disks/gduwindow.c:3907
-msgid "An error occurred when requesting data redundancy check"
-msgstr "Хатогӣ ҳангоми дархости иттиллооти санҷиши захиранокӣ рух дод"
-
-#. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3925
-msgctxt "mdraid-scrub-dialog"
-msgid "Data Scrubbing"
-msgstr "Хаткашии иттилоот"
-
-#. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3927
-msgctxt "mdraid-scrub-dialog"
-msgid ""
-"As storage devices can develop bad blocks at any time it is valuable to "
-"regularly read all blocks on all disks in a RAID array so as to catch such "
-"bad blocks early.\n"
-"\n"
-"The RAID array will remain operational for the duration of the operation but "
-"performance will be impacted. For more information about data scrubbing, see "
-"the <a href='https://raid.wiki.kernel.org/index.php/"
-"RAID_Administration'>RAID Administration</a> article."
-msgstr ""
-"Дастгоҳи захира бастаҳои бадр дар ҳар замоне, ки он барои хондани ҳамаи "
-"бастаҳо мувофиқу бошад дар ҳамаи дискҳо дар қатори RAID густариш медиҳад ва "
-"барои қапидани чунин бастаҳои бад барвақт аст.\n"
-"\n"
-"Қатори RAID дар давоми давраи амалиёт амалӣ боқӣ мемонад вале самаранокӣ "
-"коҳиш меёбад. Барои маълумоти бештар оиди хаткашии иттиллот, нигаред ба "
-"мақолаи  <a href='https://raid.wiki.kernel.org/index.php/"
-"RAID_Administration'>RAID Administration</a>"
-
-#: ../src/disks/gduwindow.c:3932
-msgctxt "mdraid-scrub-dialog"
-msgid "_Start"
-msgstr "_Оғоз"
-
-#: ../src/disks/gduwindow.c:3933
-msgctxt "mdraid-scrub-dialog"
-msgid "_Repair mismatched blocks, if possible"
-msgstr "Ислоҳи бастаҳои номувофиқ то ҳадди имкон"
-
-#: ../src/disks/gduwindow.c:3980
+#: ../src/disks/gduwindow.c:3064
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Хатогӣ ҳангоми кӯшиши гузоштани драйвер дар ҳолати омодаи кор рух дод"
 
-#: ../src/disks/gduwindow.c:4026
+#: ../src/disks/gduwindow.c:3110
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Хатогӣ ҳангоми кӯшиши бедор кардани драйвер аз ҳолати омодаи кор рух дод"
 
-#: ../src/disks/gduwindow.c:4071
+#: ../src/disks/gduwindow.c:3155
 msgid "Error powering off drive"
 msgstr "Хатои диски хомӯш кардан"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4123
+#: ../src/disks/gduwindow.c:3207
 msgid "Are you sure you want to power off the drives?"
 msgstr "Оё мутмаин ҳастед, ки драйверҳоро хомӯш кардан мехоҳед?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4125
+#: ../src/disks/gduwindow.c:3209
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -3766,83 +3215,57 @@ msgstr ""
 "Ин амалиёт системаро барои хомӯш кардан ва тоза кардани драйверҳои зерин "
 "омода менамояд."
 
-#: ../src/disks/gduwindow.c:4129
+#: ../src/disks/gduwindow.c:3213
 msgid "_Power Off"
 msgstr "_Хомӯш кардан"
 
-#: ../src/disks/gduwindow.c:4206
+#: ../src/disks/gduwindow.c:3290
 msgid "Error mounting filesystem"
 msgstr "Хатои васлкунии ситемаи файл"
 
-#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
+#: ../src/disks/gduwindow.c:3329 ../src/libgdu/gduutils.c:1050
 msgid "Error unmounting filesystem"
 msgstr "Хатои ҷудокунии ситемаи файл"
 
-#: ../src/disks/gduwindow.c:4391
+#: ../src/disks/gduwindow.c:3471
 msgid "Error deleting partition"
 msgstr "Хатои несткунии қисмбандӣ"
 
-#: ../src/disks/gduwindow.c:4429
+#: ../src/disks/gduwindow.c:3508
 msgid "Are you sure you want to delete the partition?"
 msgstr "Оё шумо боварӣ доред, ки ин қимбандиро нест кардан мехоҳед?"
 
-#: ../src/disks/gduwindow.c:4430
+#: ../src/disks/gduwindow.c:3509
 msgid "All data on the partition will be lost"
 msgstr "Ҳамаи иттилоот дар ин қисмбандӣ гум мешаванд"
 
-#: ../src/disks/gduwindow.c:4431
+#: ../src/disks/gduwindow.c:3510
 msgid "_Delete"
 msgstr "_Нест кардан"
 
-#: ../src/disks/gduwindow.c:4462
+#: ../src/disks/gduwindow.c:3541
 msgid "Error ejecting media"
 msgstr "Хатои баровардани медиа"
 
-#: ../src/disks/gduwindow.c:4519
-msgid "Error starting RAID array"
-msgstr "Хатои оғози қатори RAID"
-
-#: ../src/disks/gduwindow.c:4561
-msgid "Error stopping RAID array"
-msgstr "Хатои қатъи қатори RAID"
-
-#: ../src/disks/gduwindow.c:4648
+#: ../src/disks/gduwindow.c:3608
 msgid "Error locking encrypted device"
 msgstr "Хатои қулф кардани дастгоҳи рамзгузоришуда"
 
-#: ../src/disks/gduwindow.c:4713
+#: ../src/disks/gduwindow.c:3672
 msgid "Error starting swap"
 msgstr "Хатои оғози мубодила"
 
-#: ../src/disks/gduwindow.c:4750
+#: ../src/disks/gduwindow.c:3709
 msgid "Error stopping swap"
 msgstr "Хатои ба охир расонидани мубодила"
 
-#: ../src/disks/gduwindow.c:4789
-msgid "Error setting bitmap for the RAID array"
-msgstr "Нақшаи нуқтагии таннзими хато барои қатори RAID"
-
-#: ../src/disks/gduwindow.c:4855
+#: ../src/disks/gduwindow.c:3751
 msgid "Error setting autoclear flag"
 msgstr "Хатои танзими байрақи худпокшав"
 
-#: ../src/disks/gduwindow.c:4908 ../src/disks/gduwindow.c:4972
+#: ../src/disks/gduwindow.c:3804 ../src/disks/gduwindow.c:3868
 msgid "Error canceling job"
 msgstr "Хатои бекор кардани шуғл"
-
-#. Translators: Shown when no devices are selected but multiple selection is active.
-#.
-#: ../src/disks/gduwindow.c:5094
-msgctxt "multi-disk-menu"
-msgid "No _Devices Selected"
-msgstr "Ҳеҷ _дастгоҳе интихоб нашуд"
-
-#: ../src/disks/gduwindow.c:5104
-#, c-format
-msgid "%d _Device Selected (%s)"
-msgid_plural "%d _Devices Selected (%s)"
-msgstr[0] "%d _Дастгоҳ интихоб шуд (%s)"
-msgstr[1] "%d _Дастгоҳҳо интихоб шуданд (%s)"
 
 #: ../src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -3989,96 +3412,25 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Дастгоҳҳои осебдида"
 
-#: ../src/libgdu/gduutils.c:814
-msgid "RAID 0"
-msgstr "RAID 0"
-
-#: ../src/libgdu/gduutils.c:815
-msgid "Stripe"
-msgstr "Рах"
-
-#: ../src/libgdu/gduutils.c:820
-msgid "RAID 1"
-msgstr "RAID 1"
-
-#: ../src/libgdu/gduutils.c:821
-msgid "Mirror"
-msgstr "Оина"
-
-#: ../src/libgdu/gduutils.c:826
-msgid "RAID 4"
-msgstr "RAID 4"
-
-#: ../src/libgdu/gduutils.c:827
-msgid "Dedicated Parity"
-msgstr "Тавозуни муайяншуда"
-
-#: ../src/libgdu/gduutils.c:832
-msgid "RAID 5"
-msgstr "RAID 5"
-
-#: ../src/libgdu/gduutils.c:833
-msgid "Distributed Parity"
-msgstr "Тавозуни паҳншуда"
-
-#: ../src/libgdu/gduutils.c:838
-msgid "RAID 6"
-msgstr "RAID 6"
-
-#: ../src/libgdu/gduutils.c:839
-msgid "Double Distributed Parity"
-msgstr "Тавозуни таҳияи дугона"
-
-#: ../src/libgdu/gduutils.c:844
-msgid "RAID 10"
-msgstr "RAID 10"
-
-#: ../src/libgdu/gduutils.c:845
-msgid "Stripe of Mirrors"
-msgstr "Рахи оинаҳо"
-
-#: ../src/libgdu/gduutils.c:850
-#, c-format
-msgid "RAID (%s)"
-msgstr "RAID (%s)"
-
-#: ../src/libgdu/gduutils.c:1142
+#: ../src/libgdu/gduutils.c:1070
 msgid "Error locking device"
 msgstr "Хатои қулфи дастгоҳ"
 
 #. Translators: This is used as the title of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:403
+#: ../src/notify/gdusdmonitor.c:356
 msgctxt "notify-smart"
 msgid "Hard Disk Problems Detected"
 msgstr "Мушкилии диски сахт пайдо шуд"
 
 #. Translators: This is used as the text of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:405
+#: ../src/notify/gdusdmonitor.c:358
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
 msgstr "Диски сахт ба зудӣ вайрон мешавад."
 
 #. Translators: Text for button in SMART failure notification
-#: ../src/notify/gdusdmonitor.c:409
+#: ../src/notify/gdusdmonitor.c:362
 msgctxt "notify-smart"
-msgid "Examine"
-msgstr "Санҷиш"
-
-#. Translators: This is used as the title of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:416
-msgctxt "notify-mdraid"
-msgid "RAID Problems Detected"
-msgstr "Мушкилиҳои RAID пайдо шуданд"
-
-#. Translators: This is used as the text of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:418
-msgctxt "notify-mdraid"
-msgid "A RAID array is degraded."
-msgstr "Қатори RAID вайрон шуд"
-
-#. Translators: Text for button in MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:422
-msgctxt "notify-mdraid"
 msgid "Examine"
 msgstr "Санҷиш"
 
@@ -4089,3 +3441,433 @@ msgstr "Намоиши мушкилии дискҳо"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Оиди мушкилишҳои дискҳо ва дастгоҳҳои захиравӣ огоҳӣ медиҳад"
+
+#~ msgid "Create RAID Array"
+#~ msgstr "Эҷоди қатори RAID"
+
+#~ msgid "C_reate…"
+#~ msgstr "Эҷод _кардан..."
+
+#~ msgid "RAID _Level"
+#~ msgstr "Сатҳи_RAID"
+
+#~ msgid "Chunk _Size"
+#~ msgstr "Андозаи_Бурда"
+
+#~ msgid "Usable Size"
+#~ msgstr "Андозаи истифодашаванда"
+
+#~ msgid "Number of Disks"
+#~ msgstr "Рақами дискҳо"
+
+#~ msgid "For example, “My RAID Array” or “Backup Data”"
+#~ msgstr "Масалан, “Қатори RAID-и ман” or “Иттилооти  нусхаи эҳтиётӣ”"
+
+#~ msgid "Create a new partition"
+#~ msgstr "Эҷоди қисмбандии нав"
+
+#~ msgid "Mount the filesystem"
+#~ msgstr "Васли системаи файлӣ"
+
+#~ msgid "Unmount the filesystem"
+#~ msgstr "Ҷудо кардани системаи файлӣ"
+
+#~ msgid "Eject the media"
+#~ msgstr "Баровардани медиа"
+
+#~ msgid "Power off the drive"
+#~ msgstr "Хомӯш кардани диск"
+
+#~ msgid "Unlock the encrypted device"
+#~ msgstr "Кушодани қулфи дастгоҳи дорои рамз"
+
+#~ msgid "Activate the swap space"
+#~ msgstr "Фаъол кардани фазои мубодила"
+
+#~ msgid "Deactivate the swap space"
+#~ msgstr "Ғайрифаъол кардани фазои мубодила"
+
+#~ msgid "Lock the encrypted device"
+#~ msgstr "Қулф кардани дастгоҳи дорои рамз"
+
+#~ msgid "More actions"
+#~ msgstr "Амалҳои бештар"
+
+#~ msgid "Delete partition"
+#~ msgstr "Нест кардани қисмбандӣ"
+
+#~ msgid "Start RAID Array"
+#~ msgstr "Оғоз кардани қатори RAID"
+
+#~ msgid "Stop RAID Array"
+#~ msgstr "Нигоҳ доштани қатори RAID"
+
+#~ msgid "Detach Loop Device"
+#~ msgstr "Ҷудо кардани дастгоҳи ҳалқасозӣ"
+
+#~ msgid "_Devices"
+#~ msgstr "_Дастгоҳҳо"
+
+#~ msgid "Click to select multiple disks to perform operations on"
+#~ msgstr "Барои ба иҷро даровардани амалиёт ба интихоби якчанд диск зер кунед"
+
+#~ msgid "Done"
+#~ msgstr "Тайёр"
+
+#~ msgid "Eject the medium in the drive"
+#~ msgstr "Медиаро аз драйв бароред"
+
+#~ msgid "RAID Level"
+#~ msgstr "Сатҳи RAID"
+
+#~ msgid "State"
+#~ msgstr "Ноҳия"
+
+#~ msgid "Bitmap"
+#~ msgstr "Нақши нуқтавӣ"
+
+#~ msgid "RAID Disks…"
+#~ msgstr "Дискҳои RAID..."
+
+#~ msgid "Start Data Scrubbing…"
+#~ msgstr "Оғози ҷамъоварии иттилоот..."
+
+#~ msgid "Stop Data Scrubbing"
+#~ msgstr "Қатъи ҷамъоварии иттилоот"
+
+#~ msgid "Create RAID"
+#~ msgstr "Эҷод кардани RAID"
+
+#~ msgid "RAID Disks"
+#~ msgstr "Дискҳои RAID"
+
+#~ msgid "%d disk"
+#~ msgid_plural "%d disks"
+#~ msgstr[0] "%d диск"
+#~ msgstr[1] "%d диск"
+
+#~ msgid "%s of %s each"
+#~ msgstr "%s аз %s ҳар"
+
+#~ msgid "Error creating RAID array"
+#~ msgstr "Хатои эҷоди қатори RAID"
+
+#~ msgid "Are you sure you want to use the disks for a RAID array?"
+#~ msgstr ""
+#~ "Шумо боварӣ доред, ки дискҳоро барои қатори RAID истифода бурдан мехоҳед?"
+
+#~ msgid "Existing content on the devices will be erased"
+#~ msgstr "Мӯҳтавои мавҷудбуда дар дастгоҳҳо пок мешавад"
+
+#~ msgid "RAID Arrays"
+#~ msgstr "Қаторҳои RAID "
+
+#~ msgctxt "md-raid-tree-primary"
+#~ msgid "%s RAID Array"
+#~ msgstr "Қатори %s RAID"
+
+#~ msgctxt "md-raid-tree-primary"
+#~ msgid "RAID Array"
+#~ msgstr "Қатори RAID"
+
+#~ msgctxt "md-raid-tree-secondary"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgid "%s <span size=\"smaller\">(Read-Only)</span>"
+#~ msgstr "%s <span size=\"хурдтар\">(Read-Only)</span>"
+
+#~ msgid "An error occurred when removing a disk from the RAID Array"
+#~ msgstr "Хатогӣ ҳангоми гирифтани диск аз қатори RAID рух дод"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to remove the disk?"
+#~ msgstr "Шумо мутмаин ҳастед, ки дискро гирифтан мехоҳед?"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Removing a disk from a RAID array may degrade it"
+#~ msgstr "Гирифтани диск аз қатори RAID метавонад онро бесифат кунад"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "_Remove"
+#~ msgstr "_Тоза кардан"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "FAILED"
+#~ msgstr "ИҶРО НАШУД"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "In Sync"
+#~ msgstr "Дар ҳамоҳангӣ"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Spare"
+#~ msgstr "Эҳтиётӣ"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Recovering"
+#~ msgstr "Барқарор шуда истодааст"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Write-mostly"
+#~ msgstr "Аксаран навиштан"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Blocked"
+#~ msgstr "Манъшуда"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Unknown (%s)"
+#~ msgstr "Номаълум (%s)"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Position"
+#~ msgstr "Ҷойгиршавӣ"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Disk"
+#~ msgstr "Диск"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "State"
+#~ msgstr "Ноҳия"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Errors"
+#~ msgstr "Хатогиҳо"
+
+#~ msgid "An error occurred when adding a disk to the RAID Array"
+#~ msgstr "Хатогӣ ҳангоми илова кардани диск ба қатори RAID рух дод"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to add the disk to the array?"
+#~ msgstr "Шумо мутмаин ҳастед, ки дискро ба қатор илова кардан мехоҳед?"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "All existing data on the disk will be lost"
+#~ msgstr "Ҳамаи иттилооти мавҷудбуда дар диск гум мешавад"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "_Add"
+#~ msgstr "_Илова кардан"
+
+#~ msgctxt "mdraid-add"
+#~ msgid "No disks of suitable size available"
+#~ msgstr "Ягон диск бо андозаи мувофиқ вуҷуд надорад"
+
+#~ msgctxt "mdraid-add"
+#~ msgid "Select disk to add"
+#~ msgstr "Интихоби диск барои илова"
+
+#~ msgctxt "volume-grid"
+#~ msgid "%s [local to %s]"
+#~ msgstr "%s [вобаста ба %s]"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>R"
+#~ msgstr "<Ctrl>R"
+
+#~ msgid "RAID array is not running"
+#~ msgstr "Қатори RAID иҷро нашудааст"
+
+#~ msgctxt "md-raid-window"
+#~ msgid "%s RAID Array"
+#~ msgstr "Қатори %s RAID"
+
+#~ msgctxt "md-raid-window"
+#~ msgid "RAID Array"
+#~ msgstr "Қатори RAID"
+
+#~ msgctxt "mdraid"
+#~ msgid "Not running"
+#~ msgstr "Иҷро нашудааст"
+
+#~ msgctxt "mdraid"
+#~ msgid "%s (local to %s)"
+#~ msgstr "%s (вобаста ба %s)"
+
+#~ msgid "%d Disk"
+#~ msgid_plural "%d Disks"
+#~ msgstr[0] "%d диск"
+#~ msgstr[1] "%d диск"
+
+#~ msgctxt "mdraid-disks-and-chunk-size"
+#~ msgid "%s, %s Chunk"
+#~ msgstr "%s, %s Бурда"
+
+#~ msgctxt "mdraid"
+#~ msgid "%s, %s"
+#~ msgstr "%s, %s"
+
+#~ msgid "%d disk is missing"
+#~ msgid_plural "%d disks are missing"
+#~ msgstr[0] "%d диск мавҷуд нест"
+#~ msgstr[1] "%d дискҳо мавҷуд нестанд"
+
+#~ msgctxt "mdraid"
+#~ msgid "ARRAY IS DEGRADED"
+#~ msgstr "ҚАТОР ВАЙРОН ШУД"
+
+#~ msgctxt "mdraid-degraded"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Running"
+#~ msgstr "Иҷро шуда истодааст"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Not running"
+#~ msgstr "Иҷро намешавад"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Data Scrubbing"
+#~ msgstr "Хаткашии иттилоот"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Data Scrubbing and Repair"
+#~ msgstr "Хат кашидан ва ислоҳи иттилоот"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Resyncing"
+#~ msgstr "Ҳамоҳангсозии такрорӣ"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Recovering"
+#~ msgstr "Барқарор шуда истодааст"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Frozen"
+#~ msgstr "Карахт шуд"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "RAID ARRAY IS MISCONFIGURED"
+#~ msgstr "ҚАТОРИ RAID КОНФИГУРАТСИЯИ ХАТО ДОРАД"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "Split-Brain"
+#~ msgstr "Мағзи тақсимшуда"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgctxt "raid-state-progress"
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgctxt "mdraid-sync-op"
+#~ msgid "%s remaining (%s/sec)"
+#~ msgstr "%s боқӣ монд (%s/sec)"
+
+#~ msgctxt "volume-contents-raid"
+#~ msgid "Go To Array"
+#~ msgstr "Ба қатор гузаред"
+
+#~ msgctxt "volume-contents-raid"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgid "An error occurred when requesting data redundancy check"
+#~ msgstr "Хатогӣ ҳангоми дархости иттиллооти санҷиши захиранокӣ рух дод"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "Data Scrubbing"
+#~ msgstr "Хаткашии иттилоот"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid ""
+#~ "As storage devices can develop bad blocks at any time it is valuable to "
+#~ "regularly read all blocks on all disks in a RAID array so as to catch "
+#~ "such bad blocks early.\n"
+#~ "\n"
+#~ "The RAID array will remain operational for the duration of the operation "
+#~ "but performance will be impacted. For more information about data "
+#~ "scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> article."
+#~ msgstr ""
+#~ "Дастгоҳи захира бастаҳои бадр дар ҳар замоне, ки он барои хондани ҳамаи "
+#~ "бастаҳо мувофиқу бошад дар ҳамаи дискҳо дар қатори RAID густариш медиҳад "
+#~ "ва барои қапидани чунин бастаҳои бад барвақт аст.\n"
+#~ "\n"
+#~ "Қатори RAID дар давоми давраи амалиёт амалӣ боқӣ мемонад вале самаранокӣ "
+#~ "коҳиш меёбад. Барои маълумоти бештар оиди хаткашии иттиллот, нигаред ба "
+#~ "мақолаи  <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a>"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "_Start"
+#~ msgstr "_Оғоз"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "_Repair mismatched blocks, if possible"
+#~ msgstr "Ислоҳи бастаҳои номувофиқ то ҳадди имкон"
+
+#~ msgid "Error starting RAID array"
+#~ msgstr "Хатои оғози қатори RAID"
+
+#~ msgid "Error stopping RAID array"
+#~ msgstr "Хатои қатъи қатори RAID"
+
+#~ msgid "Error setting bitmap for the RAID array"
+#~ msgstr "Нақшаи нуқтагии таннзими хато барои қатори RAID"
+
+#~ msgctxt "multi-disk-menu"
+#~ msgid "No _Devices Selected"
+#~ msgstr "Ҳеҷ _дастгоҳе интихоб нашуд"
+
+#~ msgid "%d _Device Selected (%s)"
+#~ msgid_plural "%d _Devices Selected (%s)"
+#~ msgstr[0] "%d _Дастгоҳ интихоб шуд (%s)"
+#~ msgstr[1] "%d _Дастгоҳҳо интихоб шуданд (%s)"
+
+#~ msgid "RAID 0"
+#~ msgstr "RAID 0"
+
+#~ msgid "Stripe"
+#~ msgstr "Рах"
+
+#~ msgid "RAID 1"
+#~ msgstr "RAID 1"
+
+#~ msgid "Mirror"
+#~ msgstr "Оина"
+
+#~ msgid "RAID 4"
+#~ msgstr "RAID 4"
+
+#~ msgid "Dedicated Parity"
+#~ msgstr "Тавозуни муайяншуда"
+
+#~ msgid "RAID 5"
+#~ msgstr "RAID 5"
+
+#~ msgid "Distributed Parity"
+#~ msgstr "Тавозуни паҳншуда"
+
+#~ msgid "RAID 6"
+#~ msgstr "RAID 6"
+
+#~ msgid "Double Distributed Parity"
+#~ msgstr "Тавозуни таҳияи дугона"
+
+#~ msgid "RAID 10"
+#~ msgstr "RAID 10"
+
+#~ msgid "Stripe of Mirrors"
+#~ msgstr "Рахи оинаҳо"
+
+#~ msgid "RAID (%s)"
+#~ msgstr "RAID (%s)"
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "RAID Problems Detected"
+#~ msgstr "Мушкилиҳои RAID пайдо шуданд"
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "A RAID array is degraded."
+#~ msgstr "Қатори RAID вайрон шуд"
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "Examine"
+#~ msgstr "Санҷиш"

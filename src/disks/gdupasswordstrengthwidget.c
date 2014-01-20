@@ -23,7 +23,7 @@ typedef struct _GduPasswordStrengthWidgetClass GduPasswordStrengthWidgetClass;
 
 struct _GduPasswordStrengthWidget
 {
-  GtkHBox parent;
+  GtkBox parent;
 
   GtkWidget *level_bar;
   GtkWidget *notebook;
@@ -33,7 +33,7 @@ struct _GduPasswordStrengthWidget
 
 struct _GduPasswordStrengthWidgetClass
 {
-  GtkHBoxClass parent_class;
+  GtkBoxClass parent_class;
 };
 
 enum
@@ -42,7 +42,7 @@ enum
   PROP_PASSWORD,
 };
 
-G_DEFINE_TYPE (GduPasswordStrengthWidget, gdu_password_strength_widget, GTK_TYPE_HBOX)
+G_DEFINE_TYPE (GduPasswordStrengthWidget, gdu_password_strength_widget, GTK_TYPE_BOX)
 
 static void
 gdu_password_strength_widget_finalize (GObject *object)

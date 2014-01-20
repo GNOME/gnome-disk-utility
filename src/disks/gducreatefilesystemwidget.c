@@ -23,7 +23,7 @@
 typedef struct _GduCreateFilesystemWidgetClass GduCreateFilesystemWidgetClass;
 struct _GduCreateFilesystemWidget
 {
-  GtkVBox parent;
+  GtkBox parent;
 
   GduApplication  *application;
   UDisksDrive     *drive;
@@ -53,7 +53,7 @@ struct _GduCreateFilesystemWidget
 
 struct _GduCreateFilesystemWidgetClass
 {
-  GtkVBoxClass parent_class;
+  GtkBoxClass parent_class;
 };
 
 enum
@@ -76,7 +76,7 @@ enum
   MODEL_N_COLUMNS,
 };
 
-G_DEFINE_TYPE (GduCreateFilesystemWidget, gdu_create_filesystem_widget, GTK_TYPE_VBOX)
+G_DEFINE_TYPE (GduCreateFilesystemWidget, gdu_create_filesystem_widget, GTK_TYPE_BOX)
 
 static void
 gdu_create_filesystem_widget_finalize (GObject *object)

@@ -722,7 +722,7 @@ gdu_window_show_attach_disk_image (GduWindow *window)
   dialog = gtk_file_chooser_dialog_new (_("Select Disk Image to Attach"),
                                         GTK_WINDOW (window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
                                         _("_Attach"), GTK_RESPONSE_ACCEPT,
                                         NULL);
   gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog),

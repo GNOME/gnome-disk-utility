@@ -2231,7 +2231,8 @@ update_device_page_for_drive (GduWindow      *window,
       else
         gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
     }
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_power_off));
+  if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_POWER_OFF)
+    gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_power_off));
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);

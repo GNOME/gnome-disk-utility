@@ -1129,8 +1129,12 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
   gtk_window_present (GTK_WINDOW (data->dialog));
 
-  gtk_widget_realize (data->selectable_destination_combobox);
-  gtk_widget_grab_focus (data->selectable_destination_combobox);
+  /* The Destination combo-box is only shown if @object is NULL. */
+  if (object == NULL)
+    {
+      gtk_widget_realize (data->selectable_destination_combobox);
+      gtk_widget_grab_focus (data->selectable_destination_combobox);
+    }
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

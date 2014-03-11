@@ -229,8 +229,11 @@ gdu_dvd_support_new  (const gchar *device_file,
           range->end = range->start + rounded_vob_size;
           range->scrambled = TRUE;
 
-          /*g_print ("%s: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n",
-            vob_filename, range->start, range->end, range->scrambled);*/
+          if (G_UNLIKELY (support->debug))
+            {
+              g_print ("%s: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n",
+                       vob_filename, range->start, range->end, range->scrambled);
+            }
 
           scrambled_ranges = g_list_prepend (scrambled_ranges, range);
         }
@@ -240,13 +243,10 @@ gdu_dvd_support_new  (const gchar *device_file,
   if (scrambled_ranges == NULL)
     goto fail;
 
-  /* Otherwise, build an array of ranges
-   *
-   * TODO: ensure ranges are not overlapping
-   */
+  /* Otherwise, sort the ranges... */
   scrambled_ranges = g_list_sort (scrambled_ranges, (GCompareFunc) range_compare_func);
 
-  /* Remove overlapping ranges */
+  /* ... remove overlapping ranges ... */
   prev_range = NULL;
   l = scrambled_ranges;
   while (l != NULL)
@@ -279,6 +279,7 @@ gdu_dvd_support_new  (const gchar *device_file,
       l = next;
     }
 
+  /* ... and build an array of ranges covering the entire disc */
   a = g_array_new (FALSE, /* zero-terminated */
                    FALSE, /* clear */
                    sizeof (Range));

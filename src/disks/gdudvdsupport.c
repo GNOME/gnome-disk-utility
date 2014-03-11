@@ -131,6 +131,7 @@ gdu_dvd_support_new  (const gchar *device_file,
   GList *l;
   guint64 pos;
   GArray *a;
+  Range *prev_range;
 
   /* We use dlopen() to access libdvdcss since it's normally not
    * shipped (so we can't hard-depend on it) but it may be installed
@@ -244,6 +245,40 @@ gdu_dvd_support_new  (const gchar *device_file,
    * TODO: ensure ranges are not overlapping
    */
   scrambled_ranges = g_list_sort (scrambled_ranges, (GCompareFunc) range_compare_func);
+
+  /* Remove overlapping ranges */
+  prev_range = NULL;
+  l = scrambled_ranges;
+  while (l != NULL)
+    {
+      Range *range = l->data;
+      GList *next = l->next;
+
+      if (prev_range != NULL)
+        {
+          if (range->start >= prev_range->end)
+            {
+              prev_range = range;
+            }
+          else
+            {
+              if (G_UNLIKELY (support->debug))
+                {
+                  g_print ("Skipping overlapping range %" G_GUINT64_FORMAT " -> %" G_GUINT64_FORMAT " "
+                           "(Prev %" G_GUINT64_FORMAT " -> %" G_GUINT64_FORMAT ")\n",
+                           range->start, range->end, prev_range->start, prev_range->end);
+                }
+              scrambled_ranges = g_list_delete_link (scrambled_ranges, l);
+              g_free (range);
+            }
+        }
+      else
+        {
+          prev_range = range;
+        }
+      l = next;
+    }
+
   a = g_array_new (FALSE, /* zero-terminated */
                    FALSE, /* clear */
                    sizeof (Range));

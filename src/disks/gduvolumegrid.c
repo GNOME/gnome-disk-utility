@@ -476,7 +476,11 @@ gdu_volume_grid_get_preferred_width (GtkWidget *widget,
       width += element->fixed_width;
     }
 
-  *minimal_width = *natural_width = width;
+  *natural_width = width;
+
+  if (width > 300)
+    width = 300;
+  *minimal_width = width;
 }
 
 static void

@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.3.93\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-01-26 18:05+0000\n"
-"PO-Revision-Date: 2014-02-01 07:15+0800\n"
+"POT-Creation-Date: 2014-03-19 19:45+0000\n"
+"PO-Revision-Date: 2014-03-22 20:01+0800\n"
 "Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
 "Language-Team: Chinese (Hong Kong) <community@linuxhall.org>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.5.3\n"
+"X-Generator: Poedit 1.6.3\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:48
@@ -559,26 +560,23 @@ msgstr "磁頭距離磁碟表面的高度"
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:421
-#, fuzzy
 msgid "Spin High Current"
-msgstr "設定組合的目前堆疊"
+msgstr "啟動磁碟機的高強度電流"
 
 #: ../src/disks/gduatasmartdialog.c:422
 msgid "Amount of high current used to spin up the drive"
-msgstr ""
+msgstr "用於啟動磁碟機的高強度電流總量"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:429
-#, fuzzy
 msgid "Spin Buzz"
-msgstr "微調按鈕"
+msgstr "旋轉蜂鳴聲"
 
 #: ../src/disks/gduatasmartdialog.c:430
-#, fuzzy
 msgid "Number of buzz routines to spin up the drive"
-msgstr "重新嘗試啟動主軸馬達的數量。"
+msgstr "日常啟動磁碟機產生的蜂鳴聲的數值"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -668,7 +666,7 @@ msgstr "扭轉增幅總數"
 
 #: ../src/disks/gduatasmartdialog.c:504
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "磁碟機旋轉力矩的加速次數"
 
 #: ../src/disks/gduatasmartdialog.c:512
 msgid "Number of power-off retract events"
@@ -1493,7 +1491,7 @@ msgstr "節省電源"
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
 #: ../src/disks/gdudisksettingsdialog.c:428
 msgid "← Spindown"
-msgstr ""
+msgstr "← 減速"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
 #: ../src/disks/gdudisksettingsdialog.c:430
@@ -1815,14 +1813,14 @@ msgstr "解鎖已加密裝置時發生錯誤"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "加密密語已從密碼匙圈取回"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2026
+#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2026
 msgid "No Media"
 msgstr "沒有媒體"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1549
+#: ../src/disks/gduvolumegrid.c:1553
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -1831,28 +1829,28 @@ msgstr "分割區 %d：%s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1556
+#: ../src/disks/gduvolumegrid.c:1560
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "分割區 %d"
 
-#: ../src/disks/gduvolumegrid.c:1593
+#: ../src/disks/gduvolumegrid.c:1597
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "可用空間"
 
-#: ../src/disks/gduvolumegrid.c:1636
+#: ../src/disks/gduvolumegrid.c:1640
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "延伸分割區"
 
-#: ../src/disks/gduvolumegrid.c:1660
+#: ../src/disks/gduvolumegrid.c:1664
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "檔案系統"
 
-#: ../src/disks/gduvolumegrid.c:1682
+#: ../src/disks/gduvolumegrid.c:1686
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "置換空間"
@@ -1936,7 +1934,6 @@ msgstr "<Shift><Ctrl>F"
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
 #: ../src/disks/gduwindow.c:1716
 #, c-format
-#| msgid "_Read-Only"
 msgid "%s (Read-Only)"
 msgstr "%s (唯讀)"
 
@@ -2202,7 +2199,6 @@ msgid "_Help"
 msgstr "求助(_H)"
 
 #: ../src/disks/ui/app-menu.ui.h:3
-#| msgid "_About Disks"
 msgid "_About"
 msgstr "關於(_A)"
 
@@ -2506,7 +2502,7 @@ msgstr "APM 層級"
 msgid ""
 "Agressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
+msgstr "強制降低轉速可能會加快磁碟機損耗。請隨時檢查「開始/停止計數」 SMART 屬性"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:10
 msgid "A_PM"
@@ -2910,7 +2906,6 @@ msgid ""
 msgstr "分割區名稱 (最多 36 個萬國碼字符)。如果你想要透過 <b>/dev/disk/by-partlabel</b> 目錄中的符號連結來參照裝置的話會很有用"
 
 #: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:7
-#| msgid "_System partition"
 msgid "_System Partition"
 msgstr "系統分割區(_S)"
 
@@ -3011,7 +3006,8 @@ msgid "_Image to Restore"
 msgstr "要還原的映像檔(_I)"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:3
-msgid "Select Disk Image to restore"
+#| msgid "Select Disk Image to restore"
+msgid "Select Disk Image to Restore"
 msgstr "選擇要還原的磁碟映像檔"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:4
@@ -3019,7 +3015,6 @@ msgid "Destination"
 msgstr "目的地"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:5
-#| msgid "Destination"
 msgid "_Destination"
 msgstr "目的地(_D)"
 
@@ -3750,8 +3745,8 @@ msgstr "關於磁碟與儲存裝置的警告"
 #~ msgstr "%s <span size=\"small\">(一般化：%d，界限：%d，最差：%d)</span>"
 
 #~ msgid ""
-#~ "Failure is a sign the disk will fail within 24 hours <span size=\"small\">"
-#~ "(Pre-Fail)</span>"
+#~ "Failure is a sign the disk will fail within 24 hours <span size=\"small"
+#~ "\">(Pre-Fail)</span>"
 #~ msgstr ""
 #~ "出現失敗是 24 小時內即將產生磁碟毀損的前兆 <span size=\"small\">(預先發生"
 #~ "錯誤)</span>"
@@ -3767,8 +3762,8 @@ msgstr "關於磁碟與儲存裝置的警告"
 #~ msgstr "每次收集資料 <span size=\"small\">(Online)</span> 時更新"
 
 #~ msgid ""
-#~ "Updated only during off-line activities <span size=\"small\">(Not Online)"
-#~ "</span>"
+#~ "Updated only during off-line activities <span size=\"small\">(Not "
+#~ "Online)</span>"
 #~ msgstr "只在離線活動期間 <span size=\"small\">(Not Online)</span>"
 
 #~ msgctxt "benchmark-drive-name"

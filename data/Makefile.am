@@ -4,12 +4,21 @@ SUBDIRS = icons
 
 desktopdir = $(datadir)/applications
 desktop_in_files =				\
-	gnome-disks.desktop.in 			\
+	org.gnome.DiskUtility.desktop.in 			\
 	gnome-disk-image-mounter.desktop.in 	\
 	gnome-disk-image-writer.desktop.in	\
 	$(NULL)
 
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
+dbusservicedir = $(datadir)/dbus-1/services
+dbusservice_DATA = org.gnome.DiskUtility.service
+
+org.gnome.DiskUtility.service: Makefile
+	$(AM_V_GEN) (echo '[D-BUS Service]'; \
+		     echo 'Name=org.gnome.DiskUtility'; \
+		     echo 'Exec=${bindir}/gnome-disks --gapplication-service') > $@.tmp && \
+		     mv $@.tmp $@
 
 # GSettings schemas
 gsettings_SCHEMAS = 						\
@@ -28,6 +37,7 @@ EXTRA_DIST = 			\
 CLEANFILES = 			\
 	$(gsettings_SCHEMAS)	\
 	$(desktop_DATA)		\
+	$(dbusservice_DATA)	\
 	$(NULL)
 
 clean-local :

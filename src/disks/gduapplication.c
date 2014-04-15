@@ -40,10 +40,14 @@ typedef struct
 
 G_DEFINE_TYPE (GduApplication, gdu_application, GTK_TYPE_APPLICATION);
 
+static void gdu_application_set_options (GduApplication *app);
+
 static void
 gdu_application_init (GduApplication *app)
 {
   app->local_jobs = g_hash_table_new (g_direct_hash, g_direct_equal);
+
+  gdu_application_set_options (app);
 }
 
 static void
@@ -135,6 +139,20 @@ gdu_application_object_from_block_device (GduApplication *app,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static GOptionEntry opt_entries[] = {
+    {"block-device", 0, 0, G_OPTION_ARG_STRING, NULL, N_("Select device"), NULL },
+    {"format-device", 0, 0, G_OPTION_ARG_NONE, NULL, N_("Format selected device"), NULL },
+    {"xid", 0, 0, G_OPTION_ARG_INT, NULL, N_("Parent window XID for the format dialog"), NULL },
+    {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, NULL, N_("Restore disk image"), NULL },
+    {NULL}
+};
+
+static void
+gdu_application_set_options (GduApplication *app)
+{
+  g_application_add_main_option_entries (G_APPLICATION (app), opt_entries);
+}
+
 /* called in primary instance */
 static gint
 gdu_application_command_line (GApplication            *_app,
@@ -142,50 +160,22 @@ gdu_application_command_line (GApplication            *_app,
 {
   GduApplication *app = GDU_APPLICATION (_app);
   UDisksObject *object_to_select = NULL;
-  GOptionContext *context;
-  gchar **argv = NULL;
   GError *error = NULL;
-  gint argc;
   gint ret = 1;
-  gchar *s;
-  gchar *opt_block_device = NULL, *error_message = NULL;
-  gboolean opt_help = FALSE;
+  const gchar *opt_block_device = NULL;
+  gchar *error_message = NULL;
   gboolean opt_format = FALSE;
-  gchar *opt_restore_disk_image = NULL;
+  const gchar *opt_restore_disk_image = NULL;
   gint opt_xid = -1;
-  GOptionEntry opt_entries[] =
-  {
-    {"block-device", 0, 0, G_OPTION_ARG_STRING, &opt_block_device, N_("Select device"), NULL },
-    {"format-device", 0, 0, G_OPTION_ARG_NONE, &opt_format, N_("Format selected device"), NULL },
-    {"xid", 0, 0, G_OPTION_ARG_INT, &opt_xid, N_("Parent window XID for the format dialog"), NULL },
-    {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, &opt_restore_disk_image, N_("Restore disk image"), NULL },
-    {"help", '?', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &opt_help, N_("Show help options"), NULL },
-    {NULL}
-  };
+  GVariantDict *options;
 
-  argv = g_application_command_line_get_arguments (command_line, &argc);
+  options = g_application_command_line_get_options_dict (command_line);
 
-  context = g_option_context_new (NULL);
-  /* This is to avoid the primary instance calling exit() when encountering the "--help" option */
-  g_option_context_set_help_enabled (context, FALSE);
-  g_option_context_add_main_entries (context, opt_entries, GETTEXT_PACKAGE);
-
-  if (!g_option_context_parse (context, &argc, &argv, &error))
-    {
-      g_application_command_line_printerr (command_line, "%s\n", error->message);
-      g_clear_error (&error);
-      goto out;
-    }
-
-  if (opt_help)
-    {
-      s = g_option_context_get_help (context, FALSE, NULL);
-      g_application_command_line_print (command_line, "%s",  s);
-      g_free (s);
-      ret = 0;
-      goto out;
-    }
-
+  g_variant_dict_lookup (options, "block-device", "&s", &opt_block_device);
+  g_variant_dict_lookup (options, "format-device", "b", &opt_format);
+  g_variant_dict_lookup (options, "xid", "i", &opt_xid);
+  g_variant_dict_lookup (options, "restore-disk-image", "&s", &opt_restore_disk_image);
+ 
   if (opt_format && opt_block_device == NULL)
     {
       g_application_command_line_printerr (command_line, _("--format-device must be used together with --block-device\n"));
@@ -256,11 +246,7 @@ gdu_application_command_line (GApplication            *_app,
   ret = 0;
 
  out:
-  g_option_context_free (context);
   g_clear_object (&object_to_select);
-  g_free (opt_block_device);
-  g_free (opt_restore_disk_image);
-  g_strfreev (argv);
   return ret;
 }
 

@@ -782,7 +782,6 @@ render_element (GduVolumeGrid *grid,
 
   /* frames */
   gtk_style_context_save (context);
-  gtk_style_context_add_class (context, GTK_STYLE_CLASS_NOTEBOOK);
   gtk_style_context_add_class (context, "gnome-disk-utility-grid");
   gtk_style_context_get_border (context, state, &border);
   sides = GTK_JUNCTION_NONE;

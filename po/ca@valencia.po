@@ -8,18 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-06 22:14+0200\n"
-"PO-Revision-Date: 2013-08-18 22:16+0200\n"
-"Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
+"POT-Creation-Date: 2014-05-09 00:12+0200\n"
+"PO-Revision-Date: 2014-02-26 07:22+0100\n"
+"Last-Translator: Pau Iranzo <paugnu@gmail.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca-XV\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:46
+#: ../src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
 msgstr "Muntador d'imatges de disc"
 
@@ -35,7 +35,7 @@ msgstr "Escriptor d'imatges de disc"
 msgid "Write Disk Images to Devices"
 msgstr "Escriu imatges de disc a dispositius"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1277
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1041
 msgid "Disks"
 msgstr "Discs"
 
@@ -83,1203 +83,33 @@ msgstr ""
 "La prioritat en la cua d'inici per utilitzar este connector del gnome-"
 "settings-daemon"
 
-#: ../data/ui/about-dialog.ui.h:1
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
-msgstr ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
-
-#: ../data/ui/about-dialog.ui.h:3
-msgid "View, modify and configure disks and media"
-msgstr "Visualitzeu, modifiqueu i configureu discs i suports"
-
-#: ../data/ui/about-dialog.ui.h:4
-msgid "translator-credits"
-msgstr "Gil Forcada <gilforcada@guifi.net>"
-
-#: ../data/ui/app-menu.ui.h:1
-msgid "Attach Disk _Image…"
-msgstr "Adjunta una _imatge de disc…"
-
-#: ../data/ui/app-menu.ui.h:2
-msgid "_Help"
-msgstr "A_juda"
-
-#: ../data/ui/app-menu.ui.h:3
-msgid "_About Disks"
-msgstr "_Quant al discs"
-
-#: ../data/ui/app-menu.ui.h:4
-msgid "_Quit"
-msgstr "I_x"
-
-#: ../data/ui/benchmark-dialog.ui.h:1
-msgid "Benchmark"
-msgstr "Test de referència"
-
-#: ../data/ui/benchmark-dialog.ui.h:2
-msgid "_Start Benchmark…"
-msgstr "_Inicia el test de referència…"
-
-#: ../data/ui/benchmark-dialog.ui.h:3
-msgid "_Abort Benchmark"
-msgstr "Interr_omp el test de referència"
-
-#: ../data/ui/benchmark-dialog.ui.h:4
-msgid "Last Benchmarked"
-msgstr "Últim test de referència"
-
-#: ../data/ui/benchmark-dialog.ui.h:5
-msgid "Average Read Rate"
-msgstr "Ràtio de lectura mitjana"
-
-#: ../data/ui/benchmark-dialog.ui.h:6
-msgid "Average Write Rate"
-msgstr "Ràtio d'escriptura mitjana"
-
-#: ../data/ui/benchmark-dialog.ui.h:7
-msgid "Average Access Time"
-msgstr "Temps d'accés mitjà"
-
-#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:4
-msgid "Disk or Device"
-msgstr "Unitat de disc o dispositiu"
-
-#: ../data/ui/benchmark-dialog.ui.h:9
-msgid "Sample Size"
-msgstr "Mida de la mostra"
-
-#: ../data/ui/benchmark-dialog.ui.h:10
-msgid "Benchmark Settings"
-msgstr "Configuració del test de referència"
-
-#: ../data/ui/benchmark-dialog.ui.h:11
-msgid "_Start Benchmarking…"
-msgstr "_Inicia el test de referència…"
-
-#: ../data/ui/benchmark-dialog.ui.h:12
-msgid ""
-"Benchmarking involves measuring the transfer rate on various area of the "
-"device as well as measuring how long it takes to seek from one random area "
-"to another. Please back up important data before using the write benchmark."
-msgstr ""
-"Un test de referència són proves per mesurar la ràtio de transferència de "
-"vàries parts del dispositiu, així com també la mesura de quant de temps "
-"tarda a desplaçar-se d'un punt aleatori a un altre. Feu una còpia de "
-"seguretat de les dades importants abans de fer un test de referència "
-"d'escriptura."
-
-#: ../data/ui/benchmark-dialog.ui.h:13
-msgid "Transfer Rate"
-msgstr "Ràtio de transferència"
-
-#: ../data/ui/benchmark-dialog.ui.h:14
-msgid "Number of S_amples"
-msgstr "Nombre de _mostres"
-
-#: ../data/ui/benchmark-dialog.ui.h:15
-msgid "Sample S_ize (MiB)"
-msgstr "M_ida de la mostra (MiB)"
-
-#: ../data/ui/benchmark-dialog.ui.h:16
-msgid "Perform _write-benchmark"
-msgstr "Fes un test de referència d'_escriptura"
-
-#: ../data/ui/benchmark-dialog.ui.h:17
-msgid ""
-"Benchmarking the write-rate of a disk requires exclusive access to the disk "
-"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
-"reading data and then writing it back. As a result, the contents of the disk "
-"is not changed.\n"
-"\n"
-"If not checked, the write-part of the benchmark will not be done but on the "
-"other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use)."
-msgstr ""
-"Un test de referència per establir el ràtio d'escriptura d'un disc requereix "
-"accés en exclusiu al disc (p. ex. el disc o les seues particions no poden ni "
-"estar muntades ni fer-se servir) i requereix que es puga llegir dades del "
-"disc i després escriure-les. Per tan, les dades del disc no es canvien.\n"
-"\n"
-"Si no es marca, la part del test de referència sobre el ràtio d'escriptura "
-"no es farà i a més a més no farà falta tindre l'accés exclusiu al disc (p. "
-"ex. es pot utilitzar el disc o el dispositiu)."
-
-#: ../data/ui/benchmark-dialog.ui.h:20
-msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr ""
-"Nombre de mostres. Com més gran siga el nombre més acurats seran els patrons "
-"de temps d'accés, però requereix més temps d'execució."
-
-#: ../data/ui/benchmark-dialog.ui.h:21
-msgid ""
-"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
-"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
-"taking more time."
-msgstr ""
-"El nombre de MiB (1048576 bytes) que es llegirà/escriurà per cada mostra. "
-"Unes mides de mostra més gran fan que el resultat siga més precís, amb la "
-"contrapartida de que el test de referència durarà més estona."
-
-#: ../data/ui/benchmark-dialog.ui.h:22
-msgid "Access Time"
-msgstr "Temps d'accés"
-
-#: ../data/ui/benchmark-dialog.ui.h:23
-msgid "Number of Sampl_es"
-msgstr "Nombre de _mostres"
-
-#: ../data/ui/benchmark-dialog.ui.h:24
-msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr ""
-"El nombre de mostres. Com més gran siga el nombre, més suau serà el gràfic, "
-"però el test de referència durarà més estona."
-
-#: ../data/ui/change-passphrase-dialog.ui.h:1
-msgid "Change Passphrase"
-msgstr "Canvi de la contrasenya"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:2
-#: ../data/ui/edit-dos-partition-dialog.ui.h:2
-#: ../data/ui/edit-filesystem-dialog.ui.h:2
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:2
-#: ../data/ui/edit-partition-dialog.ui.h:2
-msgid "C_hange"
-msgstr "_Canvia"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:3
-msgid "Curr_ent Passphrase"
-msgstr "Contrasenya _actual"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:4
-msgid "Enter current passphrase used to protect the data"
-msgstr "Introduïu la contrasenya que protegeix les dades actualment"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:5
-#: ../data/ui/filesystem-create.ui.h:10
-msgid "Sho_w Passphrases"
-msgstr "_Mostra la contrasenya"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:6
-#: ../data/ui/filesystem-create.ui.h:11
-msgid "Check this box to see the passphrases entered above"
-msgstr "Seleccioneu esta casella per veure la contrasenya introduïda"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:7
-#: ../data/ui/filesystem-create.ui.h:9
-msgid "Confirm passphrase entered above"
-msgstr "Confirmeu la contrasenya introduïda"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:8
-msgid "Enter new passphrase used to protect the data"
-msgstr "Introduïu la contrasenya nova per protegir les dades"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:9
-#: ../data/ui/filesystem-create.ui.h:7
-msgid "C_onfirm Passphrase"
-msgstr "_Confirmeu la contrasenya"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:10
-msgid "New _Passphrase"
-msgstr "Contrasenya _nova"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:1
-msgid "Create Disk Image"
-msgstr "Crea una imatge de disc"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:2
-#: ../data/ui/create-raid-array-dialog.ui.h:5
-#: ../data/ui/edit-crypttab-dialog.ui.h:4
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:5
-#: ../data/ui/filesystem-create.ui.h:2
-msgid "_Name"
-msgstr "_Nom"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:3
-msgid "Save in _Folder"
-msgstr "Al_ça a la carpeta"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:4
-msgid "Select a Folder"
-msgstr "Seleccioneu una carpeta"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:5
-msgid "Source"
-msgstr "Font"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:6
-msgid "_Start Creating…"
-msgstr "_Inicia la creació…"
-
-#: ../data/ui/create-partition-dialog.ui.h:1
-msgid "Create Partition"
-msgstr "Creació d'una partició"
-
-#: ../data/ui/create-partition-dialog.ui.h:2
-#: ../src/disks/gducreateraidarraydialog.c:575
-msgid "C_reate"
-msgstr "C_rea"
-
-#: ../data/ui/create-partition-dialog.ui.h:3
-msgid "Partition _Size"
-msgstr "_Mida de la partició"
-
-#: ../data/ui/create-partition-dialog.ui.h:4
-msgid "The size of the partition to create, in megabytes"
-msgstr "La mida de la partició que es crearà, en megabytes"
-
-#: ../data/ui/create-partition-dialog.ui.h:5
-msgid "bytes"
-msgstr "bytes"
-
-#: ../data/ui/create-partition-dialog.ui.h:6
-msgid "kB"
-msgstr "kB"
-
-#: ../data/ui/create-partition-dialog.ui.h:7
-msgid "MB"
-msgstr "MB"
-
-#: ../data/ui/create-partition-dialog.ui.h:8
-msgid "GB"
-msgstr "GB"
-
-#: ../data/ui/create-partition-dialog.ui.h:9
-msgid "TB"
-msgstr "TB"
-
-#: ../data/ui/create-partition-dialog.ui.h:10
-msgid "PB"
-msgstr "PB"
-
-#: ../data/ui/create-partition-dialog.ui.h:11
-msgid "KiB"
-msgstr "KiB"
-
-#: ../data/ui/create-partition-dialog.ui.h:12
-msgid "MiB"
-msgstr "MiB"
-
-#: ../data/ui/create-partition-dialog.ui.h:13
-msgid "GiB"
-msgstr "GiB"
-
-#: ../data/ui/create-partition-dialog.ui.h:14
-msgid "TiB"
-msgstr "TiB"
-
-#: ../data/ui/create-partition-dialog.ui.h:15
-msgid "PiB"
-msgstr "PiB"
-
-#: ../data/ui/create-partition-dialog.ui.h:16
-msgid "Free Space _Following"
-msgstr "Espai lliure _restant"
-
-#: ../data/ui/create-partition-dialog.ui.h:17
-msgid "The free space following the partition, in megabytes"
-msgstr "L'espai lliure contigu a la partició, en megabytes"
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:39
-msgid "Contents"
-msgstr "Contingut"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:1
-msgid "Create RAID Array"
-msgstr "Crea una matriu RAID"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:2
-msgid "C_reate…"
-msgstr "C_rea…"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:3
-msgid "RAID _Level"
-msgstr "_Nivell de RAID"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:4
-msgid "Chunk _Size"
-msgstr "_Mida dels fragments"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:6
-msgid "Usable Size"
-msgstr "Mida utilitzable"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:7
-msgid "Number of Disks"
-msgstr "Nombre de discs"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:8
-msgid "For example, “My RAID Array” or “Backup Data”"
-msgstr "Per exemple: «La meua matriu RAID» o «Còpia de seguretat»"
-
-#: ../data/ui/disk-settings-dialog.ui.h:1
-msgid "Drive Settings"
-msgstr "Paràmetres de la unitat"
-
-#: ../data/ui/disk-settings-dialog.ui.h:2
-msgid "Apply Standby Timeout Settings"
-msgstr "Aplica els paràmetres de temps d'espera en repòs"
-
-#: ../data/ui/disk-settings-dialog.ui.h:3
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-"Activa-ho per configurar el temps d'espera en repòs en iniciar i quan es "
-"connecte el disc"
-
-#: ../data/ui/disk-settings-dialog.ui.h:4
-msgid "Enter Standby After"
-msgstr "Posa en repòs després de"
-
-#: ../data/ui/disk-settings-dialog.ui.h:5
-msgid "_Standby"
-msgstr "En _repòs"
-
-#: ../data/ui/disk-settings-dialog.ui.h:6
-msgid "Apply Advanced Power Management Settings"
-msgstr "Aplica els paràmetres de gestió d'energia avançada"
-
-#: ../data/ui/disk-settings-dialog.ui.h:7
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "Activa-ho per configurar l'APM en iniciar i quan es connecte el disc"
-
-#: ../data/ui/disk-settings-dialog.ui.h:8
-msgid "APM Level"
-msgstr "Nivell d'APM (energia)"
-
-#: ../data/ui/disk-settings-dialog.ui.h:9
-msgid ""
-"Agressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-"Si es força la reducció de les revolucions tant prompte com es puga, pot fer "
-"que la unitat deixi de funcionar abans. Comproveu l'atribut d'SMART "
-"«Comptador d'inici/parada» de tant en tant"
-
-#: ../data/ui/disk-settings-dialog.ui.h:10
-msgid "A_PM"
-msgstr "A_PM"
-
-#: ../data/ui/disk-settings-dialog.ui.h:11
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr "Aplica els paràmetres de gestió acústica automàtica"
-
-#: ../data/ui/disk-settings-dialog.ui.h:12
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr ""
-"Activa-ho per configurar la gestió acústica automàtica en iniciar i quan es "
-"connecte el disc"
-
-#: ../data/ui/disk-settings-dialog.ui.h:13
-msgid "Vendor Recommended"
-msgstr "Recomanat pel fabricant"
-
-#: ../data/ui/disk-settings-dialog.ui.h:14
-msgid "AAM Level"
-msgstr "Nivell d'AAM (acústic)"
-
-#: ../data/ui/disk-settings-dialog.ui.h:15
-msgid "_AAM"
-msgstr "_AAM"
-
-#: ../data/ui/disk-settings-dialog.ui.h:16
-msgid "Apply Write Cache Settings"
-msgstr "Aplica els paràmetres de memòria cau d'escriptura"
-
-#: ../data/ui/disk-settings-dialog.ui.h:17
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-"Activa-ho per configurar els paràmetres de memòria cau d'escriptura en "
-"iniciar i quan es connecte el disc"
-
-#: ../data/ui/disk-settings-dialog.ui.h:18
-msgid "S_etting"
-msgstr "P_aràmetre"
-
-#: ../data/ui/disk-settings-dialog.ui.h:19
-msgid "Enable Write Cache"
-msgstr "Habilita la memòria cau d'escriptura"
-
-#: ../data/ui/disk-settings-dialog.ui.h:20
-msgid "Disable Write Cache"
-msgstr "Inhabilita la memòria cau d'escriptura"
-
-#: ../data/ui/disk-settings-dialog.ui.h:21
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-"Si s'habilita la memòria cau d'escriptura es millora el rendiment, però al "
-"mateix temps el sistema pot perdre dades si hi ha un tall de corrent"
-
-#: ../data/ui/disk-settings-dialog.ui.h:22
-msgid "Wr_ite Cache"
-msgstr "Memòria cau d'_escriptura"
-
-#: ../data/ui/disks.ui.h:1
-msgid "Create a new partition"
-msgstr "Crea una partició nova"
-
-#: ../data/ui/disks.ui.h:2
-msgid "Mount the filesystem"
-msgstr "Munta el sistema de fitxers"
-
-#: ../data/ui/disks.ui.h:3
-msgid "Unmount the filesystem"
-msgstr "Desmunta el sistema de fitxers"
-
-#: ../data/ui/disks.ui.h:4
-msgid "Eject the media"
-msgstr "Expulsa el suport"
-
-#: ../data/ui/disks.ui.h:5
-msgid "Power off the drive"
-msgstr "Para la unitat"
-
-#: ../data/ui/disks.ui.h:6
-msgid "Unlock the encrypted device"
-msgstr "Desbloca el dispositiu encriptat"
-
-#: ../data/ui/disks.ui.h:7
-msgid "Activate the swap space"
-msgstr "Activa l'espai de memòria d'intercanvi"
-
-#: ../data/ui/disks.ui.h:8
-msgid "Deactivate the swap space"
-msgstr "Desactiva l'espai de memòria d'intercanvi"
-
-#: ../data/ui/disks.ui.h:9
-msgid "Lock the encrypted device"
-msgstr "Bloca el dispositiu encriptat"
-
-#: ../data/ui/disks.ui.h:10
-msgid "More actions"
-msgstr "Més accions"
-
-#: ../data/ui/disks.ui.h:11
-msgid "Delete partition"
-msgstr "Suprimeix la partició"
-
-#: ../data/ui/disks.ui.h:12
-msgid "Start RAID Array"
-msgstr "Inicia la matriu RAID"
-
-#: ../data/ui/disks.ui.h:13
-msgid "Stop RAID Array"
-msgstr "Para la matriu RAID"
-
-#: ../data/ui/disks.ui.h:14
-msgid "Detach Loop Device"
-msgstr "Separa el dispositiu de bucle"
-
-#: ../data/ui/disks.ui.h:15
-msgid "_Devices"
-msgstr "_Dispositius"
-
-#: ../data/ui/disks.ui.h:16
-msgid "Click to select multiple disks to perform operations on"
-msgstr "Feu clic per seleccionar diversos discs sobre els que actuar"
-
-#: ../data/ui/disks.ui.h:17
-msgid "Done"
-msgstr "Fet"
-
-#: ../data/ui/disks.ui.h:18
-msgid "Select a device"
-msgstr "Seleccioneu un dispositiu"
-
-#: ../data/ui/disks.ui.h:19
-msgid "Model"
-msgstr "Model"
-
-#: ../data/ui/disks.ui.h:20 ../data/ui/md-raid-disks-dialog.ui.h:2
-msgid "Serial Number"
-msgstr "Número de sèrie"
-
-#: ../data/ui/disks.ui.h:21
-msgid "World Wide Name"
-msgstr "Nom global a tot el món (WWN)"
-
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:23
-msgid "Location"
-msgstr "Ubicació"
-
-#: ../data/ui/disks.ui.h:24
-msgid "Media"
-msgstr "Suport"
-
-#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:25 ../data/ui/md-raid-disks-dialog.ui.h:3
-#: ../src/disks/gduatasmartdialog.c:1613
-msgid "Assessment"
-msgstr "Avaluació"
-
-#: ../data/ui/disks.ui.h:26
-msgid "Eject the medium in the drive"
-msgstr "Expulsa el suport de la unitat"
-
-#: ../data/ui/disks.ui.h:27
-msgid "Job"
-msgstr "Tasca"
-
-#: ../data/ui/disks.ui.h:28
-msgid "Name"
-msgstr "Nom"
-
-#: ../data/ui/disks.ui.h:29
-msgid "RAID Level"
-msgstr "Nivell de RAID"
-
-#: ../data/ui/disks.ui.h:30
-msgid "Size"
-msgstr "Mida"
-
-#: ../data/ui/disks.ui.h:31
-msgid "State"
-msgstr "Estat"
-
-#: ../data/ui/disks.ui.h:32
-msgid "Auto-clear"
-msgstr "Neteja automàtica"
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:34
-msgid "Backing File"
-msgstr "S'està creant una còpia del fitxer"
-
-#: ../data/ui/disks.ui.h:35
-msgid "Partitioning"
-msgstr "Particionat"
-
-#: ../data/ui/disks.ui.h:36
-msgid "Bitmap"
-msgstr "Mapa de bits"
-
-#: ../data/ui/disks.ui.h:37
-msgid "_Volumes"
-msgstr "_Volums"
-
-#: ../data/ui/disks.ui.h:40
-msgid "Device"
-msgstr "Dispositiu"
-
-#: ../data/ui/disks.ui.h:41
-msgid "Partition Type"
-msgstr "Tipus de partició"
-
-#: ../data/ui/disks.ui.h:42
-msgid "Format…"
-msgstr "Formata…"
-
-#: ../data/ui/disks.ui.h:43
-msgid "Create Disk Image…"
-msgstr "Crea una imatge de disc…"
-
-#: ../data/ui/disks.ui.h:44
-msgid "Restore Disk Image…"
-msgstr "Restaura una imatge de disc…"
-
-#: ../data/ui/disks.ui.h:45
-msgid "Benchmark…"
-msgstr "Test de referència…"
-
-#: ../data/ui/disks.ui.h:46
-msgid "SMART Data & Self-Tests…"
-msgstr "Tests i dades de l'SMART…"
-
-#: ../data/ui/disks.ui.h:47
-msgid "Drive Settings…"
-msgstr "Paràmetres de la unitat…"
-
-#: ../data/ui/disks.ui.h:48
-msgid "Standby Now"
-msgstr "Posa en repòs ara"
-
-#: ../data/ui/disks.ui.h:49
-msgid "Wake-Up from Standby"
-msgstr "Desperta del repòs"
-
-#: ../data/ui/disks.ui.h:50
-msgid "Power Off…"
-msgstr "Para…"
-
-#: ../data/ui/disks.ui.h:51
-msgid "RAID Disks…"
-msgstr "Discs de la RAID…"
-
-#: ../data/ui/disks.ui.h:52
-msgid "Start Data Scrubbing…"
-msgstr "Inicia la comprovació de dades…"
-
-#: ../data/ui/disks.ui.h:53
-msgid "Stop Data Scrubbing"
-msgstr "Para la comprovació de dades"
-
-#: ../data/ui/disks.ui.h:54
-msgid "Edit Partition…"
-msgstr "Edita la partició…"
-
-#: ../data/ui/disks.ui.h:55
-msgid "Edit Filesystem…"
-msgstr "Edita el sistema de fitxers…"
-
-#: ../data/ui/disks.ui.h:56
-msgid "Change Passphrase…"
-msgstr "Canvia la contrasenya…"
-
-#: ../data/ui/disks.ui.h:57
-msgid "Edit Mount Options…"
-msgstr "Edita les opcions de muntatge…"
-
-#: ../data/ui/disks.ui.h:58
-msgid "Edit Encryption Options…"
-msgstr "Edita les opcions d'encriptació…"
-
-#: ../data/ui/disks.ui.h:59
-msgid "Create RAID"
-msgstr "Crea una RAID"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:1
-msgid "Encryption Options"
-msgstr "Opcions d'encriptació"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:2
-msgid "_Automatic Encryption Options"
-msgstr "Opcions d'encriptació _automàtica"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:3
-msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
-msgstr ""
-"Desactiveu les <i>Opcions d'encriptació automàtica</i> per gestionar les "
-"opcions d'encriptació i de contrasenya del dispositiu. Les opcions "
-"corresponen a una entrada al fitxer <b>/etc/crypttab</b>"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:5
-msgid "Opt_ions"
-msgstr "_Opcions"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:6
-msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
-"prefixed with <b>/dev/mapper</b>/"
-msgstr ""
-"El nom que es farà servir pel dispositiu desbloquejat - el dispositiu "
-"s'estableix com el nom amb el prefix <b>/dev/mapper</b>/"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:7
-msgid "Options to use when unlocking the device"
-msgstr "Les opcions que s'utilitzaran quan es desbloquegi el dispositiu"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:8
-msgid "Passphrase File"
-msgstr "Fitxer de contrasenya"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:9
-#: ../data/ui/unlock-device-dialog.ui.h:3
-msgid "Sho_w passphrase"
-msgstr "_Mostra la contrasenya"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:10
-msgid ""
-"Passphrase of the device or empty to request from user when setting up the "
-"device"
-msgstr ""
-"La contrasenya del dispositiu, o res, per preguntar-li a l'usuari quan "
-"configuri el dispositiu"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:6
-#: ../data/ui/unlock-device-dialog.ui.h:2
-msgid "_Passphrase"
-msgstr "_Contrasenya"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:12
-msgid "_Unlock at startup"
-msgstr "_Desbloqueja en iniciar"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:13
-msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr ""
-"Si se selecciona es desbloquejarà el dispositiu en iniciar-se [!noauto]"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:14
-msgid "Require additional authori_zation to unlock"
-msgstr "Requereix una autorització _addicional per desbloquejar-lo"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:15
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-"Si se selecciona, es requerirà una autorització addicional per desbloquejar "
-"el dispositiu [x-udisks-auth]"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:1
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:1
-#: ../data/ui/edit-partition-dialog.ui.h:1
-msgid "Edit Partition"
-msgstr "Edita la partició"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:3
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:3
-#: ../data/ui/edit-partition-dialog.ui.h:3 ../data/ui/filesystem-create.ui.h:1
-msgid "_Type"
-msgstr "_Tipus"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:4
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr "El tipus de partició com a enter sense signe de 8 bits"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:5
-msgid "_Bootable"
-msgstr "_Arrencable"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:6
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"Un senyalador que utilitza el carregador de l'arrencada de la plataforma per "
-"decidir d'on s'ha d'iniciar el sistema operatiu. A vegades la partició que "
-"té este senyalador activat se l'anomena partició <i>activa</i>"
-
-#: ../data/ui/edit-filesystem-dialog.ui.h:1
-msgid "Change Filesystem Label"
-msgstr "Canvia l'etiqueta del sistema de fitxers"
-
-#: ../data/ui/edit-filesystem-dialog.ui.h:3
-msgid "_Label"
-msgstr "_Etiqueta"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:1
-msgid "Mount Options"
-msgstr "Opcions de muntatge"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:2
-msgid "_Automatic Mount Options"
-msgstr "Opcions de muntatge _automàtic"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:3
-msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the <b>/etc/"
-"fstab</b> file"
-msgstr ""
-"Desactiveu les <i>Opcions de muntatge automàtic</i> per gestionar el punt de "
-"muntatge i les opcions de muntatge del dispositiu. Les opcions corresponen a "
-"una entrada al fitxer <b>/etc/fstab</b>"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:4
-msgid "I_dentify As"
-msgstr "_Identificat com"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:5
-msgid ""
-"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-"hierarchy to control the scope of the entry"
-msgstr ""
-"El <b>fitxer de dispositiu especial</b> - utilitzeu enllaços simbòlics de la "
-"jerarquia de <b>/dev/disk</b> per controlar l'àmbit de l'entrada"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:6
-msgid ""
-"The special device file - use symlinks in the /dev/disk hierarchy to control "
-"the scope of the entry"
-msgstr ""
-"El fitxer de dispositiu especial - utilitzeu enllaços simbòlics de la "
-"jerarquia /dev/disk per controlar l'àmbit de l'entrada"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:7
-msgid "Mount _Point"
-msgstr "_Punt de muntatge"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:8
-msgid "Filesystem _Type"
-msgstr "_Tipus de sistema de fitxers"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:9
-msgid "The directory to mount the device in"
-msgstr "El directori on muntar-hi el dispositiu"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:10
-msgid "The filesystem type to use"
-msgstr "El tipus de sistema de fitxers a utilitzar"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:11
-msgid "Display _Name"
-msgstr "_Nom que es mostrarà"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:12
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
-"Si s'estableix, serà el nom que s'utilitzarà pel dispositiu a la interfície "
-"d'usuari [x-gvfs-name=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:13
-msgid "Icon Na_me"
-msgstr "_Nom de la icona"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:14
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr ""
-"Si s'estableix, serà el nom de la icona que s'utilitzarà pel dispositiu a la "
-"interfície d'usuari [x-gvfs-icon=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:15
-msgid "Sho_w in user interface"
-msgstr "_Mostra'l a la interfície d'usuari"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:16
-msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [x-gvfs-show]"
-msgstr ""
-"Si està seleccionat, sempre es mostrarà el dispositiu a la interfície "
-"d'usuari siga quin siga el seu directori [x-gvfs-show]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:17
-msgid "Require additional authori_zation to mount"
-msgstr "Requereix una autorit_zació addicional per muntar-lo"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:18
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
-msgstr ""
-"Si està seleccionat, es requerirà una autorització addicional per muntar el "
-"dispositiu [x-udisks-auth]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:19
-msgid "Mount at _startup"
-msgstr "_Munta'l en iniciar"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:20
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Si està seleccionat, es muntarà el dispositiu en iniciar [!noauto]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:21
-msgid "S_ymbolic Icon Name"
-msgstr "Nom de la icona _simbòlica"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:22
-msgid ""
-"If set, the name of the symbolic icon to use in the device in the user "
-"interface [x-gvfs-symbolic-icon=]"
-msgstr ""
-"Si s'estableix, serà el nom de la icona simbòlica que s'utilitzarà pel "
-"dispositiu a la interfície d'usuari [x-gvfs-symbolic-icon=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:23
-msgid "Mount Opt_ions"
-msgstr "_Opcions de muntatge"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:24
-msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr "Les opcions de muntatge guardades al fitxer <b>/etc/fstab</b>"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:4
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "El tipus de partició com a identificador de 32 bits (<i>GUID</i>)"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:6
-msgid ""
-"The partition name (up to 36 unicode characters). This is useful if you want "
-"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
-"directory"
-msgstr ""
-"El nom de la partició (fins a 36 caràcters unicode). Això és útil si voleu "
-"referir-vos als dispositius a través d'enllaços simbòlics al directori <b>/"
-"dev/disk/by-partlabel</b>"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:7
-msgid "_System partition"
-msgstr "Partició de _sistema"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:8
-msgid ""
-"Used to indicate that the partition and its contents are required for the OS/"
-"Platform to function. Special care should be taken to not delete or "
-"overwrite the contents"
-msgstr ""
-"S'utilitza per indicar que la partició i el seu contingut són necessaris "
-"perquè funcione el sistema operatiu/plataforma. S'hauria d'anar amb "
-"precaució per no suprimir-la o sobreescriure'n el contingut"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:9
-msgid "Legacy BIOS _Bootable"
-msgstr "_Arrencable BIOS (llegat)"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:10
-msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
-msgstr ""
-"Arrencable BIOS (llegat). És equivalent al senyalador <i>arrencable</i> del "
-"registre d'arrencada mestre (MBR). Normalment només es fa servir en "
-"particions GPT de sistemes MBR"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:11
-msgid "_Read-Only"
-msgstr "_Només lectura"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:12
-msgid ""
-"If set, some OSes may mount or use the contents of the partition as read-"
-"only instead of read-write"
-msgstr ""
-"Si s'estableix, alguns sistemes operatius muntaran o utilitzaran el "
-"contingut de la partició només en mode lectura en lloc de lectura i "
-"escriptura"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:13
-msgid "H_idden"
-msgstr "_Oculta"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:14
-msgid ""
-"If set, some OSes may hide the contents of the partition in their user "
-"interfaces"
-msgstr ""
-"Si s'estableix, alguns sistemes operatius ocultaran el contingut de la "
-"partició de les interfícies d'usuari"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:15
-msgid "Do Not _Automount"
-msgstr "No la muntis _automàticament"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:16
-msgid "If set, some OSes may not automount the contents of the partition"
-msgstr ""
-"Si s'estableix, alguns sistemes operatius no muntaran automàticament el "
-"contingut de la partició"
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:1
-msgid "Erase Multiple Disks"
-msgstr "Esborra múltiples discs"
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:2
-msgid "_Erase…"
-msgstr "_Esborra…"
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:3
-msgid "Erase _Type"
-msgstr "_Tipus d'esborrat"
-
-#: ../data/ui/filesystem-create.ui.h:3
-msgid "F_ilesystem"
-msgstr "Sistema de _fitxers"
-
-#: ../data/ui/filesystem-create.ui.h:4
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"El tipus de sistema de fitxers que es crearà, p. ex. el <i>btrfs</i>, "
-"l'<i>xfs</i> o el <i>swap</i>"
-
-#: ../data/ui/filesystem-create.ui.h:5
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
-"El tipus de sistema de fitxers que es crearà, p. ex. el btrfs, l'xfs o el "
-"swap"
-
-#: ../data/ui/filesystem-create.ui.h:8
-msgid "Enter passphrase used to protect the data"
-msgstr "Introduïu la contrasenya que es fa servir per protegir les dades"
-
-#: ../data/ui/filesystem-create.ui.h:12 ../data/ui/format-disk-dialog.ui.h:4
-#: ../src/disks/gduerasemultipledisksdialog.c:396
-msgid "_Erase"
-msgstr "_Esborra"
-
-#: ../data/ui/filesystem-create.ui.h:13
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-vos "
-"al dispositiu a través d'un enllaç simbòlic al directori <b>/dev/disk/by-"
-"label</b>"
-
-#: ../data/ui/filesystem-create.ui.h:14
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-vos "
-"al dispositiu a través d'un enllaç simbòlic al directori /dev/disk/by-label"
-
-#: ../data/ui/filesystem-create.ui.h:15
-msgid "For example, “My Files” or “Backup Data”"
-msgstr "Per exemple «Els meus fitxers» o «Còpia de seguretat»"
-
-#: ../data/ui/format-disk-dialog.ui.h:1
-msgid "Format Disk"
-msgstr "Formata el disc"
-
-#: ../data/ui/format-disk-dialog.ui.h:2 ../data/ui/format-volume-dialog.ui.h:2
-msgid "_Format…"
-msgstr "_Formata…"
-
-#: ../data/ui/format-disk-dialog.ui.h:3
-msgid "_Partitioning"
-msgstr "_Particionat"
-
-#: ../data/ui/format-volume-dialog.ui.h:1
-msgid "Format Volume"
-msgstr "Formata el volum"
-
-#: ../data/ui/md-raid-disks-dialog.ui.h:1
-msgid "RAID Disks"
-msgstr "Discs RAID"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:1
-msgid "Restore Disk Image"
-msgstr "Restaura una imatge de disc"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:2
-msgid "_Image to Restore"
-msgstr "_Imatge per restaurar"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:3
-msgid "Select Disk Image to restore"
-msgstr "Seleccioneu la imatge de disc que voleu restaurar"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:4
-msgid "Destination"
-msgstr "Destinació"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:5
-msgid "Image to Restore"
-msgstr "Imatge per restaurar"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:6
-msgid "Image Size"
-msgstr "Mida de la imatge"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:7
-msgid "_Start Restoring…"
-msgstr "_Inicia la restauració…"
-
-#: ../data/ui/smart-dialog.ui.h:1
-msgid "SMART Data & Self-Tests"
-msgstr "Tests i dades de l'SMART"
-
-#: ../data/ui/smart-dialog.ui.h:2
-msgid "_Start Self-test"
-msgstr "_Inicia l'autocomprovació"
-
-#: ../data/ui/smart-dialog.ui.h:3
-msgid "Click to start a SMART self-test"
-msgstr "Feu clic per iniciar una comprovació automàtica de l'SMART"
-
-#: ../data/ui/smart-dialog.ui.h:4
-msgid "_Stop Self-test"
-msgstr "_Atura l'autocomprovació"
-
-#: ../data/ui/smart-dialog.ui.h:5
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr "Feu clic per parar l'autocomprovació de l'SMART actualment en progrés"
-
-#: ../data/ui/smart-dialog.ui.h:6
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Feu clic per forçar la relectura de les dades de l'SMART del disc dur"
-
-#: ../data/ui/smart-dialog.ui.h:7
-msgid "Powered On"
-msgstr "Connectat"
-
-#: ../data/ui/smart-dialog.ui.h:8
-msgid "Updated"
-msgstr "Actualitzat"
-
-#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../data/ui/smart-dialog.ui.h:9 ../src/disks/gduatasmartdialog.c:308
-#: ../src/disks/gduatasmartdialog.c:527
-msgid "Temperature"
-msgstr "Temperatura"
-
-#: ../data/ui/smart-dialog.ui.h:10
-msgid "Self-test Result"
-msgstr "Resultat de l'autocomprovació"
-
-#: ../data/ui/smart-dialog.ui.h:11
-msgid "Self-assessment"
-msgstr "Autoavaluació"
-
-#: ../data/ui/smart-dialog.ui.h:12
-msgid "Overall Assessment"
-msgstr "Avaluació general"
-
-#: ../data/ui/smart-dialog.ui.h:13
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "Feu clic per canviar l'estat d'activació de l'SMART en el disc dur"
-
-#: ../data/ui/smart-dialog.ui.h:14
-msgid "SMART _Attributes"
-msgstr "_Atributs de l'SMART"
-
-#: ../data/ui/smart-dialog.ui.h:15
-msgid "Short"
-msgstr "Curt"
-
-#: ../data/ui/smart-dialog.ui.h:16
-msgid "Extended"
-msgstr "Ampliat"
-
-#: ../data/ui/smart-dialog.ui.h:17
-msgid "Conveyance"
-msgstr "Conformitat"
-
-#: ../data/ui/unlock-device-dialog.ui.h:1
-msgid "Enter passphrase to unlock"
-msgstr "Introduïu la contrasenya per desbloquejar"
-
-#: ../data/ui/unlock-device-dialog.ui.h:4
-msgid "_Unlock"
-msgstr "_Desbloca"
-
-#: ../src/disk-image-mounter/main.c:44
+#: ../src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
-#: ../src/disk-image-mounter/main.c:65
+#: ../src/disk-image-mounter/main.c:67
 msgid "Allow writing to the image"
 msgstr "Permet escriure a la imatge"
 
-#: ../src/disk-image-mounter/main.c:80
+#: ../src/disk-image-mounter/main.c:82
 msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccioneu les imatges de disc a muntar"
 
-#: ../src/disk-image-mounter/main.c:84
+#: ../src/disk-image-mounter/main.c:85
+#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:725
+msgid "_Cancel"
+msgstr "_Cancel·la"
+
+#: ../src/disk-image-mounter/main.c:86
 msgid "_Mount"
 msgstr "_Munta"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:92
+#: ../src/disk-image-mounter/main.c:94
 msgid "Set up _read-only mount"
 msgstr "Configura el muntatge en mode _només lectura"
 
-#: ../src/disk-image-mounter/main.c:93
+#: ../src/disk-image-mounter/main.c:95
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
@@ -1287,66 +117,66 @@ msgstr ""
 "Si es selecciona, el muntatge serà només en mode lectura. Això és útil si no "
 "voleu que es modifiqui la imatge de disc que conté"
 
-#: ../src/disk-image-mounter/main.c:135
+#: ../src/disk-image-mounter/main.c:136
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr ""
 "S'ha produït un error en connectar-se al dimoni de l'udisks: %s (%s, %d)"
 
-#: ../src/disk-image-mounter/main.c:143
+#: ../src/disk-image-mounter/main.c:144
 msgid "Attach and mount one or more disk image files."
 msgstr "Adjunteu i munteu un, o més, fitxers d'imatge de disc."
 
-#: ../src/disk-image-mounter/main.c:191
+#: ../src/disk-image-mounter/main.c:192
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr "S'ha produït un error en obrir «%s». Potser el volum no està muntat?"
 
-#: ../src/disk-image-mounter/main.c:198
+#: ../src/disk-image-mounter/main.c:199
 #, c-format
 msgid "Error opening `%s': %m"
 msgstr "S'ha produït un error en obrir «%s»: %m"
 
-#: ../src/disk-image-mounter/main.c:219
+#: ../src/disk-image-mounter/main.c:220
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "S'ha produït un error en adjuntar la imatge de disc: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:132
+#: ../src/disks/gduapplication.c:110
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "S'ha produït un error en obrir %s: %s"
 
-#: ../src/disks/gduapplication.c:139
+#: ../src/disks/gduapplication.c:117
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "S'ha produït un error en consultar el dispositiu de bloc de %s"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:158
 msgid "Select device"
 msgstr "Seleccioneu el dispositiu"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:159
 msgid "Format selected device"
 msgstr "Formata el dispositiu seleccionat"
 
-#: ../src/disks/gduapplication.c:182
+#: ../src/disks/gduapplication.c:160
 msgid "Parent window XID for the format dialog"
 msgstr "L'XID de la finestra pare del diàleg de formatació"
 
-#: ../src/disks/gduapplication.c:183
+#: ../src/disks/gduapplication.c:161
 msgid "Restore disk image"
 msgstr "Restaura una imatge de disc"
 
-#: ../src/disks/gduapplication.c:184
+#: ../src/disks/gduapplication.c:162
 msgid "Show help options"
 msgstr "Mostra les opcions d'ajuda"
 
-#: ../src/disks/gduapplication.c:213
+#: ../src/disks/gduapplication.c:191
 msgid "--format-device must be used together with --block-device\n"
 msgstr "«--format-device» s'ha d'utilitzar conjuntament amb «--block-device»\n"
 
-#: ../src/disks/gduapplication.c:219
+#: ../src/disks/gduapplication.c:197
 msgid "--format-device must be specified when using --xid\n"
 msgstr "«--format-device» s'ha d'especificar si s'utilitza «--xid»\n"
 
@@ -1355,7 +185,7 @@ msgstr "«--format-device» s'ha d'especificar si s'utilitza «--xid»\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:331
+#: ../src/disks/gduapplication.c:311
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1586,6 +416,14 @@ msgstr "Comptador de cicles de càrrega/descàrrega"
 #: ../src/disks/gduatasmartdialog.c:301
 msgid "Number of cycles into landing zone position"
 msgstr "Nombre de cicles dins de la posició de la zona de cerca"
+
+#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/disks/gduatasmartdialog.c:308 ../src/disks/gduatasmartdialog.c:527
+#: ../src/disks/ui/smart-dialog.ui.h:9
+msgid "Temperature"
+msgstr "Temperatura"
 
 #: ../src/disks/gduatasmartdialog.c:309
 msgid "Current internal temperature of the drive"
@@ -2209,6 +1047,11 @@ msgstr "Tipus"
 msgid "Updates"
 msgstr "Actualitzacions"
 
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../src/disks/gduatasmartdialog.c:1613 ../src/disks/ui/disks.ui.h:8
+msgid "Assessment"
+msgstr "Avaluació"
+
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
 #: ../src/disks/gdubenchmarkdialog.c:327
 #, c-format
@@ -2596,34 +1439,6 @@ msgstr ""
 msgid "This is the last primary partition that can be created."
 msgstr "Esta és l'última partició primària que es pot crear."
 
-#: ../src/disks/gducreateraidarraydialog.c:296
-#, c-format
-msgid "%d disk"
-msgid_plural "%d disks"
-msgstr[0] "%d disc"
-msgstr[1] "%d discs"
-
-#. Translators: Shown in "Create RAID Array" dialog.
-#. *              The first %s is the number of disks e.g. '3 disks'.
-#. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
-#.
-#: ../src/disks/gducreateraidarraydialog.c:305
-#, c-format
-msgid "%s of %s each"
-msgstr "%s de %s cada un"
-
-#: ../src/disks/gducreateraidarraydialog.c:417
-msgid "Error creating RAID array"
-msgstr "S'ha produït un error en crear la matriu RAID"
-
-#: ../src/disks/gducreateraidarraydialog.c:573
-msgid "Are you sure you want to use the disks for a RAID array?"
-msgstr "Segur que voleu fer servir els discs per una matriu RAID?"
-
-#: ../src/disks/gducreateraidarraydialog.c:574
-msgid "Existing content on the devices will be erased"
-msgstr "S'esborrarà el contingut que hi haja en els dispositius"
-
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
 msgstr "Es crearà"
@@ -2657,42 +1472,15 @@ msgstr ""
 "i>. Per canviar la contrasenya del disc utilitzeu <i>Canvia la contrasenya…</"
 "i>"
 
-#: ../src/disks/gdudevicetreemodel.c:507
+#: ../src/disks/gdudevicetreemodel.c:496
 msgid "(None)"
 msgstr "(Cap)"
 
-#: ../src/disks/gdudevicetreemodel.c:622
+#: ../src/disks/gdudevicetreemodel.c:611
 msgid "Disk Drives"
 msgstr "Unitats de disc"
 
-#: ../src/disks/gdudevicetreemodel.c:698
-msgid "RAID Arrays"
-msgstr "Matrius RAID"
-
-#. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1174
-#, c-format
-msgctxt "md-raid-tree-primary"
-msgid "%s RAID Array"
-msgstr "Matriu RAID de %s"
-
-#. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1180
-msgctxt "md-raid-tree-primary"
-msgid "RAID Array"
-msgstr "Matriu RAID"
-
-#. Translators: Used as a secondary line in device tree for RAID Array.
-#. *              The first %s is the name of the array (e.g. "My RAID Array").
-#. *              The second %s is the RAID level (e.g. "RAID-5").
-#.
-#: ../src/disks/gdudevicetreemodel.c:1191
-#, c-format
-msgctxt "md-raid-tree-secondary"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#: ../src/disks/gdudevicetreemodel.c:1351
+#: ../src/disks/gdudevicetreemodel.c:1025
 msgid "Other Devices"
 msgstr "Altres dispositius"
 
@@ -2815,7 +1603,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:212
+#: ../src/disks/gduformatvolumedialog.c:222
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2851,6 +1639,12 @@ msgstr ""
 "l'article sobre l'<a href='https://ata.wiki.kernel.org/index.php/"
 "ATA_Secure_Erase'>esborrat segur d'ATA</a> i assegureu-vos que n'enteneu els "
 "riscs"
+
+#: ../src/disks/gduerasemultipledisksdialog.c:396
+#: ../src/disks/ui/filesystem-create.ui.h:12
+#: ../src/disks/ui/format-disk-dialog.ui.h:4
+msgid "_Erase"
+msgstr "_Esborra"
 
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
@@ -2929,20 +1723,20 @@ msgstr ""
 "recuperar-la amb sistemes de recuperació de dades"
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:224
+#: ../src/disks/gduformatvolumedialog.c:234
 msgid "_Format"
 msgstr "_Formata"
 
-#: ../src/disks/gduformatvolumedialog.c:87
+#: ../src/disks/gduformatvolumedialog.c:92
 msgid "Error formatting volume"
 msgstr "S'ha produït un error en formatar el volum"
 
-#: ../src/disks/gduformatvolumedialog.c:206
+#: ../src/disks/gduformatvolumedialog.c:216
 msgid "Are you sure you want to format the volume?"
 msgstr "Segur que voleu formatar el volum?"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:210
+#: ../src/disks/gduformatvolumedialog.c:220
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -2951,7 +1745,7 @@ msgstr ""
 "sistemes de recuperació de dades"
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:217
+#: ../src/disks/gduformatvolumedialog.c:227
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -3016,141 +1810,15 @@ msgstr "S'ha produït un error en afegir una entrada nova a /etc/fstab"
 msgid "Error updating /etc/fstab entry"
 msgstr "S'ha produït un error en actualitzar una entrada a /etc/fstab"
 
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2028
-#, c-format
-msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr "%s <span size=\"smaller\">(només lectura)</span>"
-
-#: ../src/disks/gdumdraiddisksdialog.c:334
-msgid "An error occurred when removing a disk from the RAID Array"
-msgstr "S'ha produït un error quan s'ha tret un disc de la matriu RAID"
-
-#: ../src/disks/gdumdraiddisksdialog.c:372
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to remove the disk?"
-msgstr "Segur que voleu traure el disc?"
-
-#: ../src/disks/gdumdraiddisksdialog.c:373
-msgctxt "mdraid-disks"
-msgid "Removing a disk from a RAID array may degrade it"
-msgstr "Si es trau un disc de la matriu RAID, esta pot quedar degradada"
-
-#: ../src/disks/gdumdraiddisksdialog.c:374
-msgctxt "mdraid-disks"
-msgid "_Remove"
-msgstr "_Trau"
-
-#: ../src/disks/gdumdraiddisksdialog.c:615
-msgctxt "mdraid-disks-state"
-msgid "FAILED"
-msgstr "FALLA"
-
-#. Translators: MD-RAID member state for 'in_sync'
-#: ../src/disks/gdumdraiddisksdialog.c:622
-msgctxt "mdraid-disks-state"
-msgid "In Sync"
-msgstr "Sincronitzant-se"
-
-#. Translators: MD-RAID member state for 'spare'
-#: ../src/disks/gdumdraiddisksdialog.c:631
-msgctxt "mdraid-disks-state"
-msgid "Spare"
-msgstr "Recanvi"
-
-#. Translators: MD-RAID member state for 'spare' but is being recovered to
-#: ../src/disks/gdumdraiddisksdialog.c:638
-msgctxt "mdraid-disks-state"
-msgid "Recovering"
-msgstr "Recuperant-se"
-
-#. Translators: MD-RAID member state for 'writemostly'
-#: ../src/disks/gdumdraiddisksdialog.c:646
-msgctxt "mdraid-disks-state"
-msgid "Write-mostly"
-msgstr "Majoritàriament d'escriptura"
-
-#. Translators: MD-RAID member state for 'blocked'
-#: ../src/disks/gdumdraiddisksdialog.c:653
-msgctxt "mdraid-disks-state"
-msgid "Blocked"
-msgstr "Bloquejat"
-
-#. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
-#: ../src/disks/gdumdraiddisksdialog.c:660
-#, c-format
-msgctxt "mdraid-disks-state"
-msgid "Unknown (%s)"
-msgstr "Desconegut (%s)"
-
-#. Translators: column name for the position of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:744
-msgctxt "mdraid-disks"
-msgid "Position"
-msgstr "Posició"
-
-#. Translators: column name for the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:760
-msgctxt "mdraid-disks"
-msgid "Disk"
-msgstr "Disc"
-
-#. Translators: column name for the state of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:790
-msgctxt "mdraid-disks"
-msgid "State"
-msgstr "Estat"
-
-#. Translators: column name for the number of read errors of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:806
-msgctxt "mdraid-disks"
-msgid "Errors"
-msgstr "Errors"
-
-#: ../src/disks/gdumdraiddisksdialog.c:948
-msgid "An error occurred when adding a disk to the RAID Array"
-msgstr "S'ha produït un error en afegir un disc a la matriu RAID"
-
-#: ../src/disks/gdumdraiddisksdialog.c:970
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to add the disk to the array?"
-msgstr "Segur que voleu afegir el disc a la matriu?"
-
-#: ../src/disks/gdumdraiddisksdialog.c:971
-msgctxt "mdraid-disks"
-msgid "All existing data on the disk will be lost"
-msgstr "Es perdran totes les dades del disc"
-
-#: ../src/disks/gdumdraiddisksdialog.c:972
-msgctxt "mdraid-disks"
-msgid "_Add"
-msgstr "_Afig"
-
-#. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
-#. *              right size available
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1150
-msgctxt "mdraid-add"
-msgid "No disks of suitable size available"
-msgstr "No hi ha cap disc de la mida necessària disponible"
-
-#. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
-#. *              disks that can be added to the array
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1161
-msgctxt "mdraid-add"
-msgid "Select disk to add"
-msgstr "Seleccioneu el disc per afegir"
-
-#: ../src/disks/gdupartitiondialog.c:362
+#: ../src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
 msgstr "S'ha produït un error en establir el tipus de partició"
 
-#: ../src/disks/gdupartitiondialog.c:376
+#: ../src/disks/gdupartitiondialog.c:365
 msgid "Error setting partition name"
 msgstr "S'ha produït un error en establir el nom de la partició"
 
-#: ../src/disks/gdupartitiondialog.c:390
+#: ../src/disks/gdupartitiondialog.c:379
 msgid "Error setting partition flags"
 msgstr "S'ha produït un error en establir els senyaladors de la partició"
 
@@ -3243,14 +1911,14 @@ msgstr "S'ha produït un error en desblocar el dispositiu encriptat"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "S'ha recuperat la contrasenya d'encriptació de l'anell de claus"
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2779
+#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2023
 msgid "No Media"
 msgstr "Cap suport"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1556
+#: ../src/disks/gduvolumegrid.c:1552
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -3259,67 +1927,56 @@ msgstr "Partició %d: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1563
+#: ../src/disks/gduvolumegrid.c:1559
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Partició %d"
 
-#: ../src/disks/gduvolumegrid.c:1600
+#: ../src/disks/gduvolumegrid.c:1596
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espai lliure"
 
-#: ../src/disks/gduvolumegrid.c:1643
+#: ../src/disks/gduvolumegrid.c:1639
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
 
-#: ../src/disks/gduvolumegrid.c:1667
+#: ../src/disks/gduvolumegrid.c:1663
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Sistema de fitxers"
 
-#: ../src/disks/gduvolumegrid.c:1689
+#: ../src/disks/gduvolumegrid.c:1685
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Memòria intermèdia"
 
-#. Translators: Shown in volume grid for Linux RAID members. Please
-#. *              keep this as short as possible.
-#. *              The first %s is the array name (e.g. 'MirrorOnTheWall').
-#. *              The second %s is the homehost (e.g. 'thinkpad').
-#.
-#: ../src/disks/gduvolumegrid.c:1718
-#, c-format
-msgctxt "volume-grid"
-msgid "%s [local to %s]"
-msgstr "%s [hostatjat a %s]"
-
-#: ../src/disks/gduwindow.c:730
+#: ../src/disks/gduwindow.c:584
 msgid "Error deleting loop device"
 msgstr "S'ha produït un error en suprimir el dispositiu de bucle"
 
-#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
+#: ../src/disks/gduwindow.c:684 ../src/disks/gduwindow.c:755
 msgid "Error attaching disk image"
 msgstr "S'ha produït un error en adjuntar la imatge de disc"
 
-#: ../src/disks/gduwindow.c:868
+#: ../src/disks/gduwindow.c:722
 msgid "Select Disk Image to Attach"
 msgstr "Seleccioneu la imatge de disc a adjuntar"
 
-#: ../src/disks/gduwindow.c:872
+#: ../src/disks/gduwindow.c:726
 msgid "_Attach"
 msgstr "_Adjunta"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:879
+#: ../src/disks/gduwindow.c:733
 msgid "Set up _read-only loop device"
 msgstr "Configura el dispositiu de bucle en mode _només lectura"
 
-#: ../src/disks/gduwindow.c:880
+#: ../src/disks/gduwindow.c:734
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -3328,7 +1985,7 @@ msgstr ""
 "És útil si no voleu que es modifiqui el fitxer que conté"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1657
+#: ../src/disks/gduwindow.c:1347
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -3337,7 +1994,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1665
+#: ../src/disks/gduwindow.c:1355
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -3346,34 +2003,21 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1673
+#: ../src/disks/gduwindow.c:1363
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
-
-#. Translators: This is the short-cut to view RAID Disks for a RAID array.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: ../src/disks/gduwindow.c:1681
-msgctxt "accelerator"
-msgid "<Ctrl>R"
-msgstr "<Ctrl>R"
 
 #. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1689
+#: ../src/disks/gduwindow.c:1371
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#. Translators: This is the short-cut to open the volume gear menu.
-#. *              The Shift modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Ctrl>).
-#.
-#: ../src/disks/gduwindow.c:1697
+#: ../src/disks/gduwindow.c:1386
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Maj>F10"
@@ -3382,16 +2026,22 @@ msgstr "<Maj>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1707
+#: ../src/disks/gduwindow.c:1396
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Ctrl><Maj>F"
+
+#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
+#: ../src/disks/gduwindow.c:1713
+#, c-format
+msgid "%s (Read-Only)"
+msgstr "%s (Només lectura)"
 
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2066
+#: ../src/disks/gduwindow.c:1751
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3400,7 +2050,7 @@ msgstr "Manquen %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2074
+#: ../src/disks/gduwindow.c:1759
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3411,7 +2061,7 @@ msgstr "Manquen %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2089
+#: ../src/disks/gduwindow.c:1774
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s de %s – %s"
@@ -3420,193 +2070,30 @@ msgstr "%s de %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2176
+#: ../src/disks/gduwindow.c:1861
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:2248 ../src/disks/gduwindow.c:3093
+#: ../src/disks/gduwindow.c:1933 ../src/disks/gduwindow.c:2308
 msgid "Block device is empty"
 msgstr "El dispositiu de bloc és buit"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2271
+#: ../src/disks/gduwindow.c:1956
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "Desconeguda (%s)"
 
-#: ../src/disks/gduwindow.c:2352
-msgid "RAID array is not running"
-msgstr "La RAID no està funcionant"
-
-#. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2373
-#, c-format
-msgctxt "md-raid-window"
-msgid "%s RAID Array"
-msgstr "Matriu RAID de %s"
-
-#. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2379
-msgctxt "md-raid-window"
-msgid "RAID Array"
-msgstr "Matriu RAID"
-
-#. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2405
-msgctxt "mdraid"
-msgid "Not running"
-msgstr "No està funcionant"
-
-#. Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
-#. *              Search for "homehost" in the mdadm(8) documentation for more information.
-#. *              The first %s is the array name (e.g. "My Raid Disk").
-#. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
-#.
-#: ../src/disks/gduwindow.c:2472
-#, c-format
-msgctxt "mdraid"
-msgid "%s (local to %s)"
-msgstr "%s (hostatjat a %s)"
-
-#: ../src/disks/gduwindow.c:2512
-#, c-format
-msgid "%d Disk"
-msgid_plural "%d Disks"
-msgstr[0] "%d disc"
-msgstr[1] "%d discs"
-
-#. Translators: Used to combine number of disks and the chunk size.
-#. *              The first %s is the number of disks e.g. "3 disks".
-#. *              The second %s is the chunk size e.g. "512 KiB".
-#.
-#: ../src/disks/gduwindow.c:2524
-#, c-format
-msgctxt "mdraid-disks-and-chunk-size"
-msgid "%s, %s Chunk"
-msgstr "%s, fragments de %s"
-
-#. Translators: Shown in the "RAID Level" field.
-#. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-#. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
-#.
-#: ../src/disks/gduwindow.c:2533
-#, c-format
-msgctxt "mdraid"
-msgid "%s, %s"
-msgstr "%s de %s"
-
-#: ../src/disks/gduwindow.c:2553
-#, c-format
-msgid "%d disk is missing"
-msgid_plural "%d disks are missing"
-msgstr[0] "Manca %d disc"
-msgstr[1] "Manquen %d discs"
-
-#: ../src/disks/gduwindow.c:2559
-msgctxt "mdraid"
-msgid "ARRAY IS DEGRADED"
-msgstr "LA MATRIU ESTÀ DEGRADADA"
-
-#. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
-#. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
-#.
-#: ../src/disks/gduwindow.c:2563
-#, c-format
-msgctxt "mdraid-degraded"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#: ../src/disks/gduwindow.c:2574 ../src/disks/gduwindow.c:2590
-msgctxt "mdraid-state"
-msgid "Running"
-msgstr "En funcionament"
-
-#. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2579
-msgctxt "mdraid-state"
-msgid "Not running"
-msgstr "Sense funcionar"
-
-#: ../src/disks/gduwindow.c:2599
-msgctxt "mdraid-state"
-msgid "Data Scrubbing"
-msgstr "Comprovació de dades"
-
-#: ../src/disks/gduwindow.c:2604
-msgctxt "mdraid-state"
-msgid "Data Scrubbing and Repair"
-msgstr "Comprovació de dades i reparació"
-
-#: ../src/disks/gduwindow.c:2609
-msgctxt "mdraid-state"
-msgid "Resyncing"
-msgstr "S'està resincronitzant"
-
-#: ../src/disks/gduwindow.c:2613
-msgctxt "mdraid-state"
-msgid "Recovering"
-msgstr "S'està recuperant"
-
-#: ../src/disks/gduwindow.c:2617
-msgctxt "mdraid-state"
-msgid "Frozen"
-msgstr "Congelat"
-
-#. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2633
-msgctxt "raid-split-brain"
-msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr "LA MATRIU RAID NO ESTÀ BEN CONFIGURADA"
-
-#. Translators: The specific type of misconfiguration, see
-#. * http://en.wikipedia.org/wiki/Split-brain_(computing)
-#. * for more details
-#.
-#: ../src/disks/gduwindow.c:2639
-msgctxt "raid-split-brain"
-msgid "Split-Brain"
-msgstr "Inconsistència de dades (split-brain)"
-
-#. Translators: Combiner for the RAID split-brain strings.
-#. *              The first %s is "SYSTEM IS MISCONFIGURED".
-#. *              The second %s is "Split-Brain" as a hyperlink.
-#.
-#: ../src/disks/gduwindow.c:2645
-#, c-format
-msgctxt "raid-split-brain"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#. Translators: Shown in RAID progress bar.
-#. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
-#. *              The second is the percentage completed, e.g. '42.5%'
-#.
-#: ../src/disks/gduwindow.c:2675
-#, c-format
-msgctxt "raid-state-progress"
-msgid "%s: %s"
-msgstr "%s: %s"
-
-#. Translators: Used for MD-RAID sync operation.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-#.
-#: ../src/disks/gduwindow.c:2702
-#, c-format
-msgctxt "mdraid-sync-op"
-msgid "%s remaining (%s/sec)"
-msgstr "Manquen %s (%s/s)"
-
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2882
+#: ../src/disks/gduwindow.c:2111
 msgid "Connected to another seat"
 msgstr "Connectat a un altre terminal"
 
-#: ../src/disks/gduwindow.c:3026
+#: ../src/disks/gduwindow.c:2256
 msgid "Loop device is empty"
 msgstr "El dispositiu de bucle és buit"
 
@@ -3616,162 +2103,101 @@ msgstr "El dispositiu de bucle és buit"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3265
+#: ../src/disks/gduwindow.c:2466
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s lliure (%.1f%% en ús)"
 
-#: ../src/disks/gduwindow.c:3295
+#: ../src/disks/gduwindow.c:2496
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconeguda"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3323
+#: ../src/disks/gduwindow.c:2524
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Sistema de fitxers arrel"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3331
+#: ../src/disks/gduwindow.c:2532
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Muntat a %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3337
+#: ../src/disks/gduwindow.c:2538
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Sense muntar"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3360
+#: ../src/disks/gduwindow.c:2561
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3366
+#: ../src/disks/gduwindow.c:2567
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "No actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3379
+#: ../src/disks/gduwindow.c:2580
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Desblocat"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3385
+#: ../src/disks/gduwindow.c:2586
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Blocat"
 
-#: ../src/disks/gduwindow.c:3395
+#: ../src/disks/gduwindow.c:2596
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
-
-#. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3405
-msgctxt "volume-contents-raid"
-msgid "Go To Array"
-msgstr "Vés a la matriu"
-
-#. Translators: Shown in the 'Contents' field for a member of an RAID array.
-#. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
-#. *              The second %s is the hyperlink "Go To Array".
-#.
-#: ../src/disks/gduwindow.c:3410
-#, c-format
-msgctxt "volume-contents-raid"
-msgid "%s — %s"
-msgstr "%s — %s"
 
 #. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3428
+#: ../src/disks/gduwindow.c:2616
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3528
+#: ../src/disks/gduwindow.c:2716
 msgid "Unallocated Space"
 msgstr "Espai no ubicat"
 
-#: ../src/disks/gduwindow.c:3907
-msgid "An error occurred when requesting data redundancy check"
-msgstr ""
-"S'ha produït un error quan s'ha demanat de fer la comprovació de dades "
-"redundants"
-
-#. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3925
-msgctxt "mdraid-scrub-dialog"
-msgid "Data Scrubbing"
-msgstr "Comprovació de dades"
-
-#. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3927
-msgctxt "mdraid-scrub-dialog"
-msgid ""
-"As storage devices can develop bad blocks at any time it is valuable to "
-"regularly read all blocks on all disks in a RAID array so as to catch such "
-"bad blocks early.\n"
-"\n"
-"The RAID array will remain operational for the duration of the operation but "
-"performance will be impacted. For more information about data scrubbing, see "
-"the <a href='https://raid.wiki.kernel.org/index.php/"
-"RAID_Administration'>RAID Administration</a> article."
-msgstr ""
-"Els dispositius d'emmagatzematge poden generar blocs erronis en qualsevol "
-"moment, de manera que és important llegir tots els blocs de tots els discs "
-"de la matriu RAID per tal de descobrir estos blocs erronis l'abans "
-"possible.\n"
-"\n"
-"La matriu RAID continuarà sent funcional durant esta operació però el seu "
-"rendiment disminuirà. Vegeu l'article <a href='https://raid.wiki.kernel.org/"
-"index.php/RAID_Administration'>administració RAID</a> per saber-ne més sobre "
-"la comprovació de dades."
-
-#: ../src/disks/gduwindow.c:3932
-msgctxt "mdraid-scrub-dialog"
-msgid "_Start"
-msgstr "_Inicia"
-
-#: ../src/disks/gduwindow.c:3933
-msgctxt "mdraid-scrub-dialog"
-msgid "_Repair mismatched blocks, if possible"
-msgstr "_Repara els blocs no coincidents, si és possible"
-
-#: ../src/disks/gduwindow.c:3980
+#: ../src/disks/gduwindow.c:3062
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava posar la unitat en mode de repòs"
 
-#: ../src/disks/gduwindow.c:4026
+#: ../src/disks/gduwindow.c:3108
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava despertar la unitat del mode de repòs"
 
-#: ../src/disks/gduwindow.c:4071
+#: ../src/disks/gduwindow.c:3153
 msgid "Error powering off drive"
 msgstr "S'ha produït un error en apagar el dispositiu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4123
+#: ../src/disks/gduwindow.c:3205
 msgid "Are you sure you want to power off the drives?"
 msgstr "Segur que voleu apagar els dispositius?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4125
+#: ../src/disks/gduwindow.c:3207
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -3779,83 +2205,57 @@ msgstr ""
 "Esta operació prepararà el sistema perquè es puguen apagar i traure els "
 "dispositius següents."
 
-#: ../src/disks/gduwindow.c:4129
+#: ../src/disks/gduwindow.c:3211
 msgid "_Power Off"
 msgstr "_Apaga"
 
-#: ../src/disks/gduwindow.c:4206
+#: ../src/disks/gduwindow.c:3288
 msgid "Error mounting filesystem"
 msgstr "S'ha produït un error en muntar el sistema de fitxers"
 
-#: ../src/disks/gduwindow.c:4246 ../src/libgdu/gduutils.c:1122
+#: ../src/disks/gduwindow.c:3327 ../src/libgdu/gduutils.c:1050
 msgid "Error unmounting filesystem"
 msgstr "S'ha produït un error en desmuntar el sistema de fitxers"
 
-#: ../src/disks/gduwindow.c:4391
+#: ../src/disks/gduwindow.c:3469
 msgid "Error deleting partition"
 msgstr "S'ha produït un error en suprimir particions"
 
-#: ../src/disks/gduwindow.c:4429
+#: ../src/disks/gduwindow.c:3506
 msgid "Are you sure you want to delete the partition?"
 msgstr "Segur que voleu suprimir la partició?"
 
-#: ../src/disks/gduwindow.c:4430
+#: ../src/disks/gduwindow.c:3507
 msgid "All data on the partition will be lost"
 msgstr "Es perdran totes les dades de la partició"
 
-#: ../src/disks/gduwindow.c:4431
+#: ../src/disks/gduwindow.c:3508
 msgid "_Delete"
 msgstr "_Suprimeix"
 
-#: ../src/disks/gduwindow.c:4462
+#: ../src/disks/gduwindow.c:3539
 msgid "Error ejecting media"
 msgstr "S'ha produït un error en expulsar el suport"
 
-#: ../src/disks/gduwindow.c:4519
-msgid "Error starting RAID array"
-msgstr "S'ha produït un error en iniciar la matriu RAID"
-
-#: ../src/disks/gduwindow.c:4561
-msgid "Error stopping RAID array"
-msgstr "S'ha produït un error en parar la matriu RAID"
-
-#: ../src/disks/gduwindow.c:4648
+#: ../src/disks/gduwindow.c:3606
 msgid "Error locking encrypted device"
 msgstr "S'ha produït un error en bloquejar el dispositiu encriptat"
 
-#: ../src/disks/gduwindow.c:4713
+#: ../src/disks/gduwindow.c:3670
 msgid "Error starting swap"
 msgstr "S'ha produït un error en iniciar la memòria d'intercanvi"
 
-#: ../src/disks/gduwindow.c:4750
+#: ../src/disks/gduwindow.c:3707
 msgid "Error stopping swap"
 msgstr "S'ha produït un error en parar la memòria d'intercanvi"
 
-#: ../src/disks/gduwindow.c:4789
-msgid "Error setting bitmap for the RAID array"
-msgstr "S'ha produït un error en establir el mapa de bits per la matriu RAID"
-
-#: ../src/disks/gduwindow.c:4855
+#: ../src/disks/gduwindow.c:3749
 msgid "Error setting autoclear flag"
 msgstr "S'ha produït un error en establir el senyalador d'autoneteja"
 
-#: ../src/disks/gduwindow.c:4908 ../src/disks/gduwindow.c:4972
+#: ../src/disks/gduwindow.c:3802 ../src/disks/gduwindow.c:3866
 msgid "Error canceling job"
 msgstr "S'ha produït un error en cancel·lar la tasca"
-
-#. Translators: Shown when no devices are selected but multiple selection is active.
-#.
-#: ../src/disks/gduwindow.c:5094
-msgctxt "multi-disk-menu"
-msgid "No _Devices Selected"
-msgstr "No s'ha seleccionat cap _dispositiu"
-
-#: ../src/disks/gduwindow.c:5104
-#, c-format
-msgid "%d _Device Selected (%s)"
-msgid_plural "%d _Devices Selected (%s)"
-msgstr[0] "%d _dispositiu seleccionat (%s)"
-msgstr[1] "%d _dispositius seleccionats (%s)"
 
 #: ../src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -3873,6 +2273,1009 @@ msgstr "Error intern"
 #: ../src/disks/gduxzdecompressor.c:151
 msgid "Need more input"
 msgstr "Fan falta més dades d'entrada"
+
+#: ../src/disks/ui/about-dialog.ui.h:1
+msgid ""
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen"
+msgstr ""
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen"
+
+#: ../src/disks/ui/about-dialog.ui.h:3
+msgid "View, modify and configure disks and media"
+msgstr "Visualitzeu, modifiqueu i configureu discs i suports"
+
+#: ../src/disks/ui/about-dialog.ui.h:4
+msgid "translator-credits"
+msgstr "Gil Forcada <gilforcada@guifi.net>"
+
+#: ../src/disks/ui/app-menu.ui.h:1
+msgid "Attach Disk _Image…"
+msgstr "Adjunta una _imatge de disc…"
+
+#: ../src/disks/ui/app-menu.ui.h:2
+msgid "_Help"
+msgstr "A_juda"
+
+#: ../src/disks/ui/app-menu.ui.h:3
+msgid "_About"
+msgstr "_Quant a"
+
+#: ../src/disks/ui/app-menu.ui.h:4
+msgid "_Quit"
+msgstr "I_x"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:1
+msgid "Benchmark"
+msgstr "Test de referència"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:2
+msgid "_Start Benchmark…"
+msgstr "_Inicia el test de referència…"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:3
+msgid "_Abort Benchmark"
+msgstr "Interr_omp el test de referència"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:4
+msgid "Last Benchmarked"
+msgstr "Últim test de referència"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:5
+msgid "Average Read Rate"
+msgstr "Ràtio de lectura mitjana"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:6
+msgid "Average Write Rate"
+msgstr "Ràtio d'escriptura mitjana"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:7
+msgid "Average Access Time"
+msgstr "Temps d'accés mitjà"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:8
+msgid "Disk or Device"
+msgstr "Unitat de disc o dispositiu"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:9
+msgid "Sample Size"
+msgstr "Mida de la mostra"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:10
+msgid "Benchmark Settings"
+msgstr "Configuració del test de referència"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:11
+msgid "_Start Benchmarking…"
+msgstr "_Inicia el test de referència…"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:12
+msgid ""
+"Benchmarking involves measuring the transfer rate on various area of the "
+"device as well as measuring how long it takes to seek from one random area "
+"to another. Please back up important data before using the write benchmark."
+msgstr ""
+"Un test de referència són proves per mesurar la ràtio de transferència de "
+"vàries parts del dispositiu, així com també la mesura de quant de temps "
+"tarda a desplaçar-se d'un punt aleatori a un altre. Feu una còpia de "
+"seguretat de les dades importants abans de fer un test de referència "
+"d'escriptura."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:13
+msgid "Transfer Rate"
+msgstr "Ràtio de transferència"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:14
+msgid "Number of S_amples"
+msgstr "Nombre de _mostres"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:15
+msgid "Sample S_ize (MiB)"
+msgstr "M_ida de la mostra (MiB)"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:16
+msgid "Perform _write-benchmark"
+msgstr "Fes un test de referència d'_escriptura"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:17
+msgid ""
+"Benchmarking the write-rate of a disk requires exclusive access to the disk "
+"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
+"reading data and then writing it back. As a result, the contents of the disk "
+"is not changed.\n"
+"\n"
+"If not checked, the write-part of the benchmark will not be done but on the "
+"other hand exclusive access to the device is not needed (e.g. the disk or "
+"device can be in use)."
+msgstr ""
+"Un test de referència per establir el ràtio d'escriptura d'un disc requereix "
+"accés en exclusiu al disc (p. ex. el disc o les seues particions no poden ni "
+"estar muntades ni fer-se servir) i requereix que es puga llegir dades del "
+"disc i després escriure-les. Per tan, les dades del disc no es canvien.\n"
+"\n"
+"Si no es marca, la part del test de referència sobre el ràtio d'escriptura "
+"no es farà i a més a més no farà falta tindre l'accés exclusiu al disc (p. "
+"ex. es pot utilitzar el disc o el dispositiu)."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:20
+msgid ""
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
+msgstr ""
+"Nombre de mostres. Com més gran siga el nombre més acurats seran els patrons "
+"de temps d'accés, però requereix més temps d'execució."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:21
+msgid ""
+"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
+"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
+"taking more time."
+msgstr ""
+"El nombre de MiB (1048576 bytes) que es llegirà/escriurà per cada mostra. "
+"Unes mides de mostra més gran fan que el resultat siga més precís, amb la "
+"contrapartida de que el test de referència durarà més estona."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:22
+msgid "Access Time"
+msgstr "Temps d'accés"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:23
+msgid "Number of Sampl_es"
+msgstr "Nombre de _mostres"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:24
+msgid ""
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
+msgstr ""
+"El nombre de mostres. Com més gran siga el nombre, més suau serà el gràfic, "
+"però el test de referència durarà més estona."
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:1
+msgid "Change Passphrase"
+msgstr "Canvi de la contrasenya"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:2
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:2
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:2
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:2
+#: ../src/disks/ui/edit-partition-dialog.ui.h:2
+msgid "C_hange"
+msgstr "_Canvia"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:3
+msgid "Curr_ent Passphrase"
+msgstr "Contrasenya _actual"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:4
+msgid "Enter current passphrase used to protect the data"
+msgstr "Introduïu la contrasenya que protegeix les dades actualment"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:5
+#: ../src/disks/ui/filesystem-create.ui.h:10
+msgid "Sho_w Passphrases"
+msgstr "_Mostra la contrasenya"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:6
+#: ../src/disks/ui/filesystem-create.ui.h:11
+msgid "Check this box to see the passphrases entered above"
+msgstr "Seleccioneu esta casella per veure la contrasenya introduïda"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:7
+#: ../src/disks/ui/filesystem-create.ui.h:9
+msgid "Confirm passphrase entered above"
+msgstr "Confirmeu la contrasenya introduïda"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:8
+msgid "Enter new passphrase used to protect the data"
+msgstr "Introduïu la contrasenya nova per protegir les dades"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:9
+#: ../src/disks/ui/filesystem-create.ui.h:7
+msgid "C_onfirm Passphrase"
+msgstr "_Confirmeu la contrasenya"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:10
+msgid "New _Passphrase"
+msgstr "Contrasenya _nova"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:1
+msgid "Create Disk Image"
+msgstr "Crea una imatge de disc"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:2
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:4
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:5
+#: ../src/disks/ui/filesystem-create.ui.h:2
+msgid "_Name"
+msgstr "_Nom"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:3
+msgid "Save in _Folder"
+msgstr "Al_ça a la carpeta"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:4
+msgid "Select a Folder"
+msgstr "Seleccioneu una carpeta"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:5
+msgid "Source"
+msgstr "Font"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:6
+msgid "_Start Creating…"
+msgstr "_Inicia la creació…"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:1
+msgid "Create Partition"
+msgstr "Creació d'una partició"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:2
+msgid "C_reate"
+msgstr "C_rea"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:3
+msgid "Partition _Size"
+msgstr "_Mida de la partició"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:4
+msgid "The size of the partition to create, in megabytes"
+msgstr "La mida de la partició que es crearà, en megabytes"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:5
+msgid "bytes"
+msgstr "bytes"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:6
+msgid "kB"
+msgstr "kB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:7
+msgid "MB"
+msgstr "MB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:8
+msgid "GB"
+msgstr "GB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:9
+msgid "TB"
+msgstr "TB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:10
+msgid "PB"
+msgstr "PB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:11
+msgid "KiB"
+msgstr "KiB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:12
+msgid "MiB"
+msgstr "MiB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:13
+msgid "GiB"
+msgstr "GiB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:14
+msgid "TiB"
+msgstr "TiB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:15
+msgid "PiB"
+msgstr "PiB"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:16
+msgid "Free Space _Following"
+msgstr "Espai lliure _restant"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:17
+msgid "The free space following the partition, in megabytes"
+msgstr "L'espai lliure contigu a la partició, en megabytes"
+
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: ../src/disks/ui/create-partition-dialog.ui.h:18
+#: ../src/disks/ui/disks.ui.h:18
+msgid "Contents"
+msgstr "Contingut"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:1
+msgid "Drive Settings"
+msgstr "Paràmetres de la unitat"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:2
+msgid "Apply Standby Timeout Settings"
+msgstr "Aplica els paràmetres de temps d'espera en repòs"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:3
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr ""
+"Activa-ho per configurar el temps d'espera en repòs en iniciar i quan es "
+"connecte el disc"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:4
+msgid "Enter Standby After"
+msgstr "Posa en repòs després de"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:5
+msgid "_Standby"
+msgstr "En _repòs"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:6
+msgid "Apply Advanced Power Management Settings"
+msgstr "Aplica els paràmetres de gestió d'energia avançada"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:7
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr "Activa-ho per configurar l'APM en iniciar i quan es connecte el disc"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:8
+msgid "APM Level"
+msgstr "Nivell d'APM (energia)"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:9
+msgid ""
+"Agressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+"Si es força la reducció de les revolucions tant prompte com es puga, pot fer "
+"que la unitat deixi de funcionar abans. Comproveu l'atribut d'SMART "
+"«Comptador d'inici/parada» de tant en tant"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:10
+msgid "A_PM"
+msgstr "A_PM"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:11
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr "Aplica els paràmetres de gestió acústica automàtica"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:12
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr ""
+"Activa-ho per configurar la gestió acústica automàtica en iniciar i quan es "
+"connecte el disc"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:13
+msgid "Vendor Recommended"
+msgstr "Recomanat pel fabricant"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:14
+msgid "AAM Level"
+msgstr "Nivell d'AAM (acústic)"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:15
+msgid "_AAM"
+msgstr "_AAM"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:16
+msgid "Apply Write Cache Settings"
+msgstr "Aplica els paràmetres de memòria cau d'escriptura"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:17
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+"Activa-ho per configurar els paràmetres de memòria cau d'escriptura en "
+"iniciar i quan es connecte el disc"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:18
+msgid "S_etting"
+msgstr "P_aràmetre"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:19
+msgid "Enable Write Cache"
+msgstr "Habilita la memòria cau d'escriptura"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:20
+msgid "Disable Write Cache"
+msgstr "Inhabilita la memòria cau d'escriptura"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:21
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+"Si s'habilita la memòria cau d'escriptura es millora el rendiment, però al "
+"mateix temps el sistema pot perdre dades si hi ha un tall de corrent"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:22
+msgid "Wr_ite Cache"
+msgstr "Memòria cau d'_escriptura"
+
+#: ../src/disks/ui/disks.ui.h:1
+msgid "Select a device"
+msgstr "Seleccioneu un dispositiu"
+
+#: ../src/disks/ui/disks.ui.h:2
+msgid "Model"
+msgstr "Model"
+
+#: ../src/disks/ui/disks.ui.h:3
+msgid "Serial Number"
+msgstr "Número de sèrie"
+
+#: ../src/disks/ui/disks.ui.h:4
+msgid "World Wide Name"
+msgstr "Nom global a tot el món (WWN)"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: ../src/disks/ui/disks.ui.h:6
+msgid "Location"
+msgstr "Ubicació"
+
+#: ../src/disks/ui/disks.ui.h:7
+msgid "Media"
+msgstr "Suport"
+
+#: ../src/disks/ui/disks.ui.h:9
+msgid "Job"
+msgstr "Tasca"
+
+#: ../src/disks/ui/disks.ui.h:10
+msgid "Name"
+msgstr "Nom"
+
+#: ../src/disks/ui/disks.ui.h:11
+msgid "Size"
+msgstr "Mida"
+
+#: ../src/disks/ui/disks.ui.h:12
+msgid "Auto-clear"
+msgstr "Neteja automàtica"
+
+#. The filename or URI of the file that is used as backing store for the loop device.
+#: ../src/disks/ui/disks.ui.h:14
+msgid "Backing File"
+msgstr "S'està creant una còpia del fitxer"
+
+#: ../src/disks/ui/disks.ui.h:15
+msgid "Partitioning"
+msgstr "Particionat"
+
+#: ../src/disks/ui/disks.ui.h:16
+msgid "_Volumes"
+msgstr "_Volums"
+
+#: ../src/disks/ui/disks.ui.h:19
+msgid "Device"
+msgstr "Dispositiu"
+
+#: ../src/disks/ui/disks.ui.h:20
+msgid "Partition Type"
+msgstr "Tipus de partició"
+
+#: ../src/disks/ui/disks.ui.h:21
+msgid "Format…"
+msgstr "Formata…"
+
+#: ../src/disks/ui/disks.ui.h:22
+msgid "Create Disk Image…"
+msgstr "Crea una imatge de disc…"
+
+#: ../src/disks/ui/disks.ui.h:23
+msgid "Restore Disk Image…"
+msgstr "Restaura una imatge de disc…"
+
+#: ../src/disks/ui/disks.ui.h:24
+msgid "Benchmark…"
+msgstr "Test de referència…"
+
+#: ../src/disks/ui/disks.ui.h:25
+msgid "SMART Data & Self-Tests…"
+msgstr "Tests i dades de l'SMART…"
+
+#: ../src/disks/ui/disks.ui.h:26
+msgid "Drive Settings…"
+msgstr "Paràmetres de la unitat…"
+
+#: ../src/disks/ui/disks.ui.h:27
+msgid "Standby Now"
+msgstr "Posa en repòs ara"
+
+#: ../src/disks/ui/disks.ui.h:28
+msgid "Wake-Up from Standby"
+msgstr "Desperta del repòs"
+
+#: ../src/disks/ui/disks.ui.h:29
+msgid "Power Off…"
+msgstr "Para…"
+
+#: ../src/disks/ui/disks.ui.h:30
+msgid "Edit Partition…"
+msgstr "Edita la partició…"
+
+#: ../src/disks/ui/disks.ui.h:31
+msgid "Edit Filesystem…"
+msgstr "Edita el sistema de fitxers…"
+
+#: ../src/disks/ui/disks.ui.h:32
+msgid "Change Passphrase…"
+msgstr "Canvia la contrasenya…"
+
+#: ../src/disks/ui/disks.ui.h:33
+msgid "Edit Mount Options…"
+msgstr "Edita les opcions de muntatge…"
+
+#: ../src/disks/ui/disks.ui.h:34
+msgid "Edit Encryption Options…"
+msgstr "Edita les opcions d'encriptació…"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:1
+msgid "Encryption Options"
+msgstr "Opcions d'encriptació"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:2
+msgid "_Automatic Encryption Options"
+msgstr "Opcions d'encriptació _automàtica"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:3
+msgid ""
+"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
+"and passphrase for the device. The options correspond to an entry in the <b>/"
+"etc/crypttab</b> file"
+msgstr ""
+"Desactiveu les <i>Opcions d'encriptació automàtica</i> per gestionar les "
+"opcions d'encriptació i de contrasenya del dispositiu. Les opcions "
+"corresponen a una entrada al fitxer <b>/etc/crypttab</b>"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:5
+msgid "Opt_ions"
+msgstr "_Opcions"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:6
+msgid ""
+"The name to use for the unlocked device - the device is set up as the name "
+"prefixed with <b>/dev/mapper</b>/"
+msgstr ""
+"El nom que es farà servir pel dispositiu desbloquejat - el dispositiu "
+"s'estableix com el nom amb el prefix <b>/dev/mapper</b>/"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:7
+msgid "Options to use when unlocking the device"
+msgstr "Les opcions que s'utilitzaran quan es desbloquegi el dispositiu"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:8
+msgid "Passphrase File"
+msgstr "Fitxer de contrasenya"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:9
+#: ../src/disks/ui/unlock-device-dialog.ui.h:3
+msgid "Sho_w passphrase"
+msgstr "_Mostra la contrasenya"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:10
+msgid ""
+"Passphrase of the device or empty to request from user when setting up the "
+"device"
+msgstr ""
+"La contrasenya del dispositiu, o res, per preguntar-li a l'usuari quan "
+"configuri el dispositiu"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:11
+#: ../src/disks/ui/filesystem-create.ui.h:6
+#: ../src/disks/ui/unlock-device-dialog.ui.h:2
+msgid "_Passphrase"
+msgstr "_Contrasenya"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:12
+msgid "_Unlock at startup"
+msgstr "_Desbloqueja en iniciar"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:13
+msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgstr ""
+"Si se selecciona es desbloquejarà el dispositiu en iniciar-se [!noauto]"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:14
+msgid "Require additional authori_zation to unlock"
+msgstr "Requereix una autorització _addicional per desbloquejar-lo"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:15
+msgid ""
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
+msgstr ""
+"Si se selecciona, es requerirà una autorització addicional per desbloquejar "
+"el dispositiu [x-udisks-auth]"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:1
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:1
+#: ../src/disks/ui/edit-partition-dialog.ui.h:1
+msgid "Edit Partition"
+msgstr "Edita la partició"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:3
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:3
+#: ../src/disks/ui/edit-partition-dialog.ui.h:3
+#: ../src/disks/ui/filesystem-create.ui.h:1
+msgid "_Type"
+msgstr "_Tipus"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:4
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr "El tipus de partició com a enter sense signe de 8 bits"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:5
+msgid "_Bootable"
+msgstr "_Arrencable"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:6
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the <i>active</i> partition"
+msgstr ""
+"Un senyalador que utilitza el carregador de l'arrencada de la plataforma per "
+"decidir d'on s'ha d'iniciar el sistema operatiu. A vegades la partició que "
+"té este senyalador activat se l'anomena partició <i>activa</i>"
+
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:1
+msgid "Change Filesystem Label"
+msgstr "Canvia l'etiqueta del sistema de fitxers"
+
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:3
+msgid "_Label"
+msgstr "_Etiqueta"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:1
+msgid "Mount Options"
+msgstr "Opcions de muntatge"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:2
+msgid "_Automatic Mount Options"
+msgstr "Opcions de muntatge _automàtic"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:3
+msgid ""
+"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"options for the device. The options correspond to an entry in the <b>/etc/"
+"fstab</b> file"
+msgstr ""
+"Desactiveu les <i>Opcions de muntatge automàtic</i> per gestionar el punt de "
+"muntatge i les opcions de muntatge del dispositiu. Les opcions corresponen a "
+"una entrada al fitxer <b>/etc/fstab</b>"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:4
+msgid "I_dentify As"
+msgstr "_Identificat com"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:5
+msgid ""
+"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
+"hierarchy to control the scope of the entry"
+msgstr ""
+"El <b>fitxer de dispositiu especial</b> - utilitzeu enllaços simbòlics de la "
+"jerarquia de <b>/dev/disk</b> per controlar l'àmbit de l'entrada"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:6
+msgid ""
+"The special device file - use symlinks in the /dev/disk hierarchy to control "
+"the scope of the entry"
+msgstr ""
+"El fitxer de dispositiu especial - utilitzeu enllaços simbòlics de la "
+"jerarquia /dev/disk per controlar l'àmbit de l'entrada"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:7
+msgid "Mount _Point"
+msgstr "_Punt de muntatge"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:8
+msgid "Filesystem _Type"
+msgstr "_Tipus de sistema de fitxers"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:9
+msgid "The directory to mount the device in"
+msgstr "El directori on muntar-hi el dispositiu"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:10
+msgid "The filesystem type to use"
+msgstr "El tipus de sistema de fitxers a utilitzar"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:11
+msgid "Display _Name"
+msgstr "_Nom que es mostrarà"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:12
+msgid ""
+"If set, the name to use for the device in the user interface [x-gvfs-name=]"
+msgstr ""
+"Si s'estableix, serà el nom que s'utilitzarà pel dispositiu a la interfície "
+"d'usuari [x-gvfs-name=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:13
+msgid "Icon Na_me"
+msgstr "_Nom de la icona"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:14
+msgid ""
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
+msgstr ""
+"Si s'estableix, serà el nom de la icona que s'utilitzarà pel dispositiu a la "
+"interfície d'usuari [x-gvfs-icon=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:15
+msgid "Sho_w in user interface"
+msgstr "_Mostra'l a la interfície d'usuari"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:16
+msgid ""
+"If checked, the device is always shown in the user interface no matter what "
+"its directory is [x-gvfs-show]"
+msgstr ""
+"Si està seleccionat, sempre es mostrarà el dispositiu a la interfície "
+"d'usuari siga quin siga el seu directori [x-gvfs-show]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:17
+msgid "Require additional authori_zation to mount"
+msgstr "Requereix una autorit_zació addicional per muntar-lo"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:18
+msgid ""
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
+msgstr ""
+"Si està seleccionat, es requerirà una autorització addicional per muntar el "
+"dispositiu [x-udisks-auth]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:19
+msgid "Mount at _startup"
+msgstr "_Munta'l en iniciar"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:20
+msgid "If checked, the device will be mounted at startup [!noauto]"
+msgstr "Si està seleccionat, es muntarà el dispositiu en iniciar [!noauto]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:21
+msgid "S_ymbolic Icon Name"
+msgstr "Nom de la icona _simbòlica"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:22
+msgid ""
+"If set, the name of the symbolic icon to use in the device in the user "
+"interface [x-gvfs-symbolic-icon=]"
+msgstr ""
+"Si s'estableix, serà el nom de la icona simbòlica que s'utilitzarà pel "
+"dispositiu a la interfície d'usuari [x-gvfs-symbolic-icon=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:23
+msgid "Mount Opt_ions"
+msgstr "_Opcions de muntatge"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:24
+msgid "The mount options stored in the <b>/etc/fstab</b> file"
+msgstr "Les opcions de muntatge guardades al fitxer <b>/etc/fstab</b>"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:4
+msgid "The partition type represented as a 32-bit <i>GUID</i>"
+msgstr "El tipus de partició com a identificador de 32 bits (<i>GUID</i>)"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:6
+msgid ""
+"The partition name (up to 36 unicode characters). This is useful if you want "
+"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
+"directory"
+msgstr ""
+"El nom de la partició (fins a 36 caràcters unicode). Això és útil si voleu "
+"referir-vos als dispositius a través d'enllaços simbòlics al directori <b>/"
+"dev/disk/by-partlabel</b>"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:7
+msgid "_System Partition"
+msgstr "Partició de _sistema"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:8
+msgid ""
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
+"overwrite the contents"
+msgstr ""
+"S'utilitza per indicar que la partició i el seu contingut són necessaris "
+"perquè funcione el sistema operatiu/plataforma. S'hauria d'anar amb "
+"precaució per no suprimir-la o sobreescriure'n el contingut"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:9
+msgid "Legacy BIOS _Bootable"
+msgstr "_Arrencable BIOS (llegat)"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:10
+msgid ""
+"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
+"i> flag. It is normally only used for GPT partitions on MBR systems"
+msgstr ""
+"Arrencable BIOS (llegat). És equivalent al senyalador <i>arrencable</i> del "
+"registre d'arrencada mestre (MBR). Normalment només es fa servir en "
+"particions GPT de sistemes MBR"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:11
+msgid "Flags"
+msgstr "Indicadors"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:12
+msgid "Hide from _Firmware"
+msgstr "Amaga del _microprogramari"
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:1
+msgid "Erase Multiple Disks"
+msgstr "Esborra múltiples discs"
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:2
+msgid "_Erase…"
+msgstr "_Esborra…"
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:3
+msgid "Erase _Type"
+msgstr "_Tipus d'esborrat"
+
+#: ../src/disks/ui/filesystem-create.ui.h:3
+msgid "F_ilesystem"
+msgstr "Sistema de _fitxers"
+
+#: ../src/disks/ui/filesystem-create.ui.h:4
+msgid ""
+"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+"<i>swap</i>"
+msgstr ""
+"El tipus de sistema de fitxers que es crearà, p. ex. el <i>btrfs</i>, "
+"l'<i>xfs</i> o el <i>swap</i>"
+
+#: ../src/disks/ui/filesystem-create.ui.h:5
+msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+msgstr ""
+"El tipus de sistema de fitxers que es crearà, p. ex. el btrfs, l'xfs o el "
+"swap"
+
+#: ../src/disks/ui/filesystem-create.ui.h:8
+msgid "Enter passphrase used to protect the data"
+msgstr "Introduïu la contrasenya que es fa servir per protegir les dades"
+
+#: ../src/disks/ui/filesystem-create.ui.h:13
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+msgstr ""
+"El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-vos "
+"al dispositiu a través d'un enllaç simbòlic al directori <b>/dev/disk/by-"
+"label</b>"
+
+#: ../src/disks/ui/filesystem-create.ui.h:14
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the /dev/disk/by-label directory"
+msgstr ""
+"El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-vos "
+"al dispositiu a través d'un enllaç simbòlic al directori /dev/disk/by-label"
+
+#: ../src/disks/ui/filesystem-create.ui.h:15
+msgid "For example, “My Files” or “Backup Data”"
+msgstr "Per exemple «Els meus fitxers» o «Còpia de seguretat»"
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:1
+msgid "Format Disk"
+msgstr "Formata el disc"
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:2
+#: ../src/disks/ui/format-volume-dialog.ui.h:2
+msgid "_Format…"
+msgstr "_Formata…"
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:3
+msgid "_Partitioning"
+msgstr "_Particionat"
+
+#: ../src/disks/ui/format-volume-dialog.ui.h:1
+msgid "Format Volume"
+msgstr "Formata el volum"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:1
+msgid "Restore Disk Image"
+msgstr "Restaura una imatge de disc"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:2
+msgid "_Image to Restore"
+msgstr "_Imatge per restaurar"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:3
+msgid "Select Disk Image to Restore"
+msgstr "Seleccioneu la imatge de disc que voleu restaurar"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:4
+msgid "Destination"
+msgstr "Destinació"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:5
+msgid "_Destination"
+msgstr "_Destinació"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:6
+msgid "Image to Restore"
+msgstr "Imatge per restaurar"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:7
+msgid "Image Size"
+msgstr "Mida de la imatge"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:8
+msgid "_Start Restoring…"
+msgstr "_Inicia la restauració…"
+
+#: ../src/disks/ui/smart-dialog.ui.h:1
+msgid "SMART Data & Self-Tests"
+msgstr "Tests i dades de l'SMART"
+
+#: ../src/disks/ui/smart-dialog.ui.h:2
+msgid "_Start Self-test"
+msgstr "_Inicia l'autocomprovació"
+
+#: ../src/disks/ui/smart-dialog.ui.h:3
+msgid "Click to start a SMART self-test"
+msgstr "Feu clic per iniciar una comprovació automàtica de l'SMART"
+
+#: ../src/disks/ui/smart-dialog.ui.h:4
+msgid "_Stop Self-test"
+msgstr "_Atura l'autocomprovació"
+
+#: ../src/disks/ui/smart-dialog.ui.h:5
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr "Feu clic per parar l'autocomprovació de l'SMART actualment en progrés"
+
+#: ../src/disks/ui/smart-dialog.ui.h:6
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr "Feu clic per forçar la relectura de les dades de l'SMART del disc dur"
+
+#: ../src/disks/ui/smart-dialog.ui.h:7
+msgid "Powered On"
+msgstr "Connectat"
+
+#: ../src/disks/ui/smart-dialog.ui.h:8
+msgid "Updated"
+msgstr "Actualitzat"
+
+#: ../src/disks/ui/smart-dialog.ui.h:10
+msgid "Self-test Result"
+msgstr "Resultat de l'autocomprovació"
+
+#: ../src/disks/ui/smart-dialog.ui.h:11
+msgid "Self-assessment"
+msgstr "Autoavaluació"
+
+#: ../src/disks/ui/smart-dialog.ui.h:12
+msgid "Overall Assessment"
+msgstr "Avaluació general"
+
+#: ../src/disks/ui/smart-dialog.ui.h:13
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr "Feu clic per canviar l'estat d'activació de l'SMART en el disc dur"
+
+#: ../src/disks/ui/smart-dialog.ui.h:14
+msgid "SMART _Attributes"
+msgstr "_Atributs de l'SMART"
+
+#: ../src/disks/ui/smart-dialog.ui.h:15
+msgid "Short"
+msgstr "Curt"
+
+#: ../src/disks/ui/smart-dialog.ui.h:16
+msgid "Extended"
+msgstr "Ampliat"
+
+#: ../src/disks/ui/smart-dialog.ui.h:17
+msgid "Conveyance"
+msgstr "Conformitat"
+
+#: ../src/disks/ui/unlock-device-dialog.ui.h:1
+msgid "Enter passphrase to unlock"
+msgstr "Introduïu la contrasenya per desbloquejar"
+
+#: ../src/disks/ui/unlock-device-dialog.ui.h:4
+msgid "_Unlock"
+msgstr "_Desbloca"
 
 #: ../src/libgdu/gduutils.c:92
 msgid "All Files"
@@ -4002,96 +3405,25 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositius afectats"
 
-#: ../src/libgdu/gduutils.c:814
-msgid "RAID 0"
-msgstr "RAID 0"
-
-#: ../src/libgdu/gduutils.c:815
-msgid "Stripe"
-msgstr "Partit"
-
-#: ../src/libgdu/gduutils.c:820
-msgid "RAID 1"
-msgstr "RAID 1"
-
-#: ../src/libgdu/gduutils.c:821
-msgid "Mirror"
-msgstr "Rèplica"
-
-#: ../src/libgdu/gduutils.c:826
-msgid "RAID 4"
-msgstr "RAID 4"
-
-#: ../src/libgdu/gduutils.c:827
-msgid "Dedicated Parity"
-msgstr "Paritat dedicada"
-
-#: ../src/libgdu/gduutils.c:832
-msgid "RAID 5"
-msgstr "RAID 5"
-
-#: ../src/libgdu/gduutils.c:833
-msgid "Distributed Parity"
-msgstr "Paritat distribuïda"
-
-#: ../src/libgdu/gduutils.c:838
-msgid "RAID 6"
-msgstr "RAID 6"
-
-#: ../src/libgdu/gduutils.c:839
-msgid "Double Distributed Parity"
-msgstr "Doble paritat distribuïda"
-
-#: ../src/libgdu/gduutils.c:844
-msgid "RAID 10"
-msgstr "RAID 10"
-
-#: ../src/libgdu/gduutils.c:845
-msgid "Stripe of Mirrors"
-msgstr "Rèpliques partides"
-
-#: ../src/libgdu/gduutils.c:850
-#, c-format
-msgid "RAID (%s)"
-msgstr "RAID (%s)"
-
-#: ../src/libgdu/gduutils.c:1142
+#: ../src/libgdu/gduutils.c:1070
 msgid "Error locking device"
 msgstr "S'ha produït un error en blocar el dispositiu"
 
 #. Translators: This is used as the title of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:403
+#: ../src/notify/gdusdmonitor.c:356
 msgctxt "notify-smart"
 msgid "Hard Disk Problems Detected"
 msgstr "S'ha detectat un problema en un disc dur"
 
 #. Translators: This is used as the text of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:405
+#: ../src/notify/gdusdmonitor.c:358
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
 msgstr "Segurament fallarà un disc dur prompte."
 
 #. Translators: Text for button in SMART failure notification
-#: ../src/notify/gdusdmonitor.c:409
+#: ../src/notify/gdusdmonitor.c:362
 msgctxt "notify-smart"
-msgid "Examine"
-msgstr "Examina"
-
-#. Translators: This is used as the title of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:416
-msgctxt "notify-mdraid"
-msgid "RAID Problems Detected"
-msgstr "S'han detectat problemes a una RAID"
-
-#. Translators: This is used as the text of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:418
-msgctxt "notify-mdraid"
-msgid "A RAID array is degraded."
-msgstr "La matriu RAID està degradada."
-
-#. Translators: Text for button in MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:422
-msgctxt "notify-mdraid"
 msgid "Examine"
 msgstr "Examina"
 
@@ -4102,3 +3434,462 @@ msgstr "Monitor de problemes en els discs"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Avisa de problemes en els discs i en els dispositius d'emmagatzematge"
+
+#~ msgid "Create RAID Array"
+#~ msgstr "Crea una matriu RAID"
+
+#~ msgid "C_reate…"
+#~ msgstr "C_rea…"
+
+#~ msgid "RAID _Level"
+#~ msgstr "_Nivell de RAID"
+
+#~ msgid "Chunk _Size"
+#~ msgstr "_Mida dels fragments"
+
+#~ msgid "Usable Size"
+#~ msgstr "Mida utilitzable"
+
+#~ msgid "Number of Disks"
+#~ msgstr "Nombre de discs"
+
+#~ msgid "For example, “My RAID Array” or “Backup Data”"
+#~ msgstr "Per exemple: «La meva matriu RAID» o «Còpia de seguretat»"
+
+#~ msgid "Create a new partition"
+#~ msgstr "Crea una partició nova"
+
+#~ msgid "Mount the filesystem"
+#~ msgstr "Munta el sistema de fitxers"
+
+#~ msgid "Unmount the filesystem"
+#~ msgstr "Desmunta el sistema de fitxers"
+
+#~ msgid "Eject the media"
+#~ msgstr "Expulsa el suport"
+
+#~ msgid "Power off the drive"
+#~ msgstr "Atura la unitat"
+
+#~ msgid "Unlock the encrypted device"
+#~ msgstr "Desbloca el dispositiu encriptat"
+
+#~ msgid "Activate the swap space"
+#~ msgstr "Activa l'espai de memòria d'intercanvi"
+
+#~ msgid "Deactivate the swap space"
+#~ msgstr "Desactiva l'espai de memòria d'intercanvi"
+
+#~ msgid "Lock the encrypted device"
+#~ msgstr "Bloca el dispositiu encriptat"
+
+#~ msgid "More actions"
+#~ msgstr "Més accions"
+
+#~ msgid "Delete partition"
+#~ msgstr "Suprimeix la partició"
+
+#~ msgid "Start RAID Array"
+#~ msgstr "Inicia la matriu RAID"
+
+#~ msgid "Stop RAID Array"
+#~ msgstr "Atura la matriu RAID"
+
+#~ msgid "Detach Loop Device"
+#~ msgstr "Separa el dispositiu de bucle"
+
+#~ msgid "_Devices"
+#~ msgstr "_Dispositius"
+
+#~ msgid "Click to select multiple disks to perform operations on"
+#~ msgstr "Feu clic per seleccionar diversos discs sobre els que actuar"
+
+#~ msgid "Done"
+#~ msgstr "Fet"
+
+#~ msgid "Eject the medium in the drive"
+#~ msgstr "Expulsa el suport de la unitat"
+
+#~ msgid "RAID Level"
+#~ msgstr "Nivell de RAID"
+
+#~ msgid "State"
+#~ msgstr "Estat"
+
+#~ msgid "Bitmap"
+#~ msgstr "Mapa de bits"
+
+#~ msgid "RAID Disks…"
+#~ msgstr "Discs de la RAID…"
+
+#~ msgid "Start Data Scrubbing…"
+#~ msgstr "Inicia la comprovació de dades…"
+
+#~ msgid "Stop Data Scrubbing"
+#~ msgstr "Atura la comprovació de dades"
+
+#~ msgid "Create RAID"
+#~ msgstr "Crea una RAID"
+
+#~ msgid ""
+#~ "If set, some OSes may mount or use the contents of the partition as read-"
+#~ "only instead of read-write"
+#~ msgstr ""
+#~ "Si s'estableix, alguns sistemes operatius muntaran o utilitzaran el "
+#~ "contingut de la partició només en mode lectura en lloc de lectura i "
+#~ "escriptura"
+
+#~ msgid "H_idden"
+#~ msgstr "_Oculta"
+
+#~ msgid ""
+#~ "If set, some OSes may hide the contents of the partition in their user "
+#~ "interfaces"
+#~ msgstr ""
+#~ "Si s'estableix, alguns sistemes operatius ocultaran el contingut de la "
+#~ "partició de les interfícies d'usuari"
+
+#~ msgid "Do Not _Automount"
+#~ msgstr "No la muntis _automàticament"
+
+#~ msgid "If set, some OSes may not automount the contents of the partition"
+#~ msgstr ""
+#~ "Si s'estableix, alguns sistemes operatius no muntaran automàticament el "
+#~ "contingut de la partició"
+
+#~ msgid "RAID Disks"
+#~ msgstr "Discs RAID"
+
+#~ msgid "%d disk"
+#~ msgid_plural "%d disks"
+#~ msgstr[0] "%d disc"
+#~ msgstr[1] "%d discs"
+
+#~ msgid "%s of %s each"
+#~ msgstr "%s de %s cada un"
+
+#~ msgid "Error creating RAID array"
+#~ msgstr "S'ha produït un error en crear la matriu RAID"
+
+#~ msgid "Are you sure you want to use the disks for a RAID array?"
+#~ msgstr "Segur que voleu fer servir els discs per una matriu RAID?"
+
+#~ msgid "Existing content on the devices will be erased"
+#~ msgstr "S'esborrarà el contingut que hi hagi en els dispositius"
+
+#~ msgid "RAID Arrays"
+#~ msgstr "Matrius RAID"
+
+#~ msgctxt "md-raid-tree-primary"
+#~ msgid "%s RAID Array"
+#~ msgstr "Matriu RAID de %s"
+
+#~ msgctxt "md-raid-tree-primary"
+#~ msgid "RAID Array"
+#~ msgstr "Matriu RAID"
+
+#~ msgctxt "md-raid-tree-secondary"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgid "%s <span size=\"smaller\">(Read-Only)</span>"
+#~ msgstr "%s <span size=\"smaller\">(només lectura)</span>"
+
+#~ msgid "An error occurred when removing a disk from the RAID Array"
+#~ msgstr "S'ha produït un error quan s'ha tret un disc de la matriu RAID"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to remove the disk?"
+#~ msgstr "Segur que voleu treure el disc?"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Removing a disk from a RAID array may degrade it"
+#~ msgstr "Si es treu un disc de la matriu RAID, aquesta pot quedar degradada"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "_Remove"
+#~ msgstr "_Treu"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "FAILED"
+#~ msgstr "FALLA"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "In Sync"
+#~ msgstr "Sincronitzant-se"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Spare"
+#~ msgstr "Recanvi"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Recovering"
+#~ msgstr "Recuperant-se"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Write-mostly"
+#~ msgstr "Majoritàriament d'escriptura"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Blocked"
+#~ msgstr "Bloquejat"
+
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Unknown (%s)"
+#~ msgstr "Desconegut (%s)"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Position"
+#~ msgstr "Posició"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Disk"
+#~ msgstr "Disc"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "State"
+#~ msgstr "Estat"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Errors"
+#~ msgstr "Errors"
+
+#~ msgid "An error occurred when adding a disk to the RAID Array"
+#~ msgstr "S'ha produït un error en afegir un disc a la matriu RAID"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to add the disk to the array?"
+#~ msgstr "Segur que voleu afegir el disc a la matriu?"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "All existing data on the disk will be lost"
+#~ msgstr "Es perdran totes les dades del disc"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "_Add"
+#~ msgstr "_Afegeix"
+
+#~ msgctxt "mdraid-add"
+#~ msgid "No disks of suitable size available"
+#~ msgstr "No hi ha cap disc de la mida necessària disponible"
+
+#~ msgctxt "mdraid-add"
+#~ msgid "Select disk to add"
+#~ msgstr "Seleccioneu el disc per afegir"
+
+#~ msgctxt "volume-grid"
+#~ msgid "%s [local to %s]"
+#~ msgstr "%s [hostatjat a %s]"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>R"
+#~ msgstr "<Ctrl>R"
+
+#~ msgid "RAID array is not running"
+#~ msgstr "La RAID no està funcionant"
+
+#~ msgctxt "md-raid-window"
+#~ msgid "%s RAID Array"
+#~ msgstr "Matriu RAID de %s"
+
+#~ msgctxt "md-raid-window"
+#~ msgid "RAID Array"
+#~ msgstr "Matriu RAID"
+
+#~ msgctxt "mdraid"
+#~ msgid "Not running"
+#~ msgstr "No està funcionant"
+
+#~ msgctxt "mdraid"
+#~ msgid "%s (local to %s)"
+#~ msgstr "%s (hostatjat a %s)"
+
+#~ msgid "%d Disk"
+#~ msgid_plural "%d Disks"
+#~ msgstr[0] "%d disc"
+#~ msgstr[1] "%d discs"
+
+#~ msgctxt "mdraid-disks-and-chunk-size"
+#~ msgid "%s, %s Chunk"
+#~ msgstr "%s, fragments de %s"
+
+#~ msgctxt "mdraid"
+#~ msgid "%s, %s"
+#~ msgstr "%s de %s"
+
+#~ msgid "%d disk is missing"
+#~ msgid_plural "%d disks are missing"
+#~ msgstr[0] "Manca %d disc"
+#~ msgstr[1] "Manquen %d discs"
+
+#~ msgctxt "mdraid"
+#~ msgid "ARRAY IS DEGRADED"
+#~ msgstr "LA MATRIU ESTÀ DEGRADADA"
+
+#~ msgctxt "mdraid-degraded"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Running"
+#~ msgstr "En funcionament"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Not running"
+#~ msgstr "Sense funcionar"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Data Scrubbing"
+#~ msgstr "Comprovació de dades"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Data Scrubbing and Repair"
+#~ msgstr "Comprovació de dades i reparació"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Resyncing"
+#~ msgstr "S'està resincronitzant"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Recovering"
+#~ msgstr "S'està recuperant"
+
+#~ msgctxt "mdraid-state"
+#~ msgid "Frozen"
+#~ msgstr "Congelat"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "RAID ARRAY IS MISCONFIGURED"
+#~ msgstr "LA MATRIU RAID NO ESTÀ BEN CONFIGURADA"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "Split-Brain"
+#~ msgstr "Inconsistència de dades (split-brain)"
+
+#~ msgctxt "raid-split-brain"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgctxt "raid-state-progress"
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#~ msgctxt "mdraid-sync-op"
+#~ msgid "%s remaining (%s/sec)"
+#~ msgstr "Manquen %s (%s/s)"
+
+#~ msgctxt "volume-contents-raid"
+#~ msgid "Go To Array"
+#~ msgstr "Vés a la matriu"
+
+#~ msgctxt "volume-contents-raid"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgid "An error occurred when requesting data redundancy check"
+#~ msgstr ""
+#~ "S'ha produït un error quan s'ha demanat de fer la comprovació de dades "
+#~ "redundants"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "Data Scrubbing"
+#~ msgstr "Comprovació de dades"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid ""
+#~ "As storage devices can develop bad blocks at any time it is valuable to "
+#~ "regularly read all blocks on all disks in a RAID array so as to catch "
+#~ "such bad blocks early.\n"
+#~ "\n"
+#~ "The RAID array will remain operational for the duration of the operation "
+#~ "but performance will be impacted. For more information about data "
+#~ "scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> article."
+#~ msgstr ""
+#~ "Els dispositius d'emmagatzematge poden generar blocs erronis en qualsevol "
+#~ "moment, de manera que és important llegir tots els blocs de tots els "
+#~ "discs de la matriu RAID per tal de descobrir aquests blocs erronis "
+#~ "l'abans possible.\n"
+#~ "\n"
+#~ "La matriu RAID continuarà sent funcional durant aquesta operació però el "
+#~ "seu rendiment disminuirà. Vegeu l'article <a href='https://raid.wiki."
+#~ "kernel.org/index.php/RAID_Administration'>administració RAID</a> per "
+#~ "saber-ne més sobre la comprovació de dades."
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "_Start"
+#~ msgstr "_Inicia"
+
+#~ msgctxt "mdraid-scrub-dialog"
+#~ msgid "_Repair mismatched blocks, if possible"
+#~ msgstr "_Repara els blocs no coincidents, si és possible"
+
+#~ msgid "Error starting RAID array"
+#~ msgstr "S'ha produït un error en iniciar la matriu RAID"
+
+#~ msgid "Error stopping RAID array"
+#~ msgstr "S'ha produït un error en aturar la matriu RAID"
+
+#~ msgid "Error setting bitmap for the RAID array"
+#~ msgstr ""
+#~ "S'ha produït un error en establir el mapa de bits per la matriu RAID"
+
+#~ msgctxt "multi-disk-menu"
+#~ msgid "No _Devices Selected"
+#~ msgstr "No s'ha seleccionat cap _dispositiu"
+
+#~ msgid "%d _Device Selected (%s)"
+#~ msgid_plural "%d _Devices Selected (%s)"
+#~ msgstr[0] "%d _dispositiu seleccionat (%s)"
+#~ msgstr[1] "%d _dispositius seleccionats (%s)"
+
+#~ msgid "RAID 0"
+#~ msgstr "RAID 0"
+
+#~ msgid "Stripe"
+#~ msgstr "Partit"
+
+#~ msgid "RAID 1"
+#~ msgstr "RAID 1"
+
+#~ msgid "Mirror"
+#~ msgstr "Rèplica"
+
+#~ msgid "RAID 4"
+#~ msgstr "RAID 4"
+
+#~ msgid "Dedicated Parity"
+#~ msgstr "Paritat dedicada"
+
+#~ msgid "RAID 5"
+#~ msgstr "RAID 5"
+
+#~ msgid "Distributed Parity"
+#~ msgstr "Paritat distribuïda"
+
+#~ msgid "RAID 6"
+#~ msgstr "RAID 6"
+
+#~ msgid "Double Distributed Parity"
+#~ msgstr "Doble paritat distribuïda"
+
+#~ msgid "RAID 10"
+#~ msgstr "RAID 10"
+
+#~ msgid "Stripe of Mirrors"
+#~ msgstr "Rèpliques partides"
+
+#~ msgid "RAID (%s)"
+#~ msgstr "RAID (%s)"
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "RAID Problems Detected"
+#~ msgstr "S'han detectat problemes a una RAID"
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "A RAID array is degraded."
+#~ msgstr "La matriu RAID està degradada."
+
+#~ msgctxt "notify-mdraid"
+#~ msgid "Examine"
+#~ msgstr "Examina"

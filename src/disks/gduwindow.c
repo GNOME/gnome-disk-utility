@@ -980,8 +980,7 @@ create_header (GduWindow *window)
 
   button = window->devtab_drive_generic_button = gtk_menu_button_new ();
   gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), window->generic_drive_menu);
-  image = gtk_image_new_from_icon_name ("emblem-system-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
   gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
   button = window->devtab_drive_power_off_button = gtk_button_new ();

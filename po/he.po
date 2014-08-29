@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-29 02:43+0300\n"
-"PO-Revision-Date: 2014-08-29 04:39+0300\n"
-"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"PO-Revision-Date: 2014-08-29 05:08+0300\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gnome.org>\n"
 "Language-Team: עברית <>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -982,14 +982,13 @@ msgid "Error starting SMART self-test"
 msgstr "שגיאה בהפעלת בדיקות ה־SMART העצמיות"
 
 #: ../src/disks/gduatasmartdialog.c:1432
-#, fuzzy
 msgid "An error occurred when trying to toggle whether SMART is enabled"
-msgstr "התרחשה שגיאה בעת ניסיון לאפשר/לבטל SMART"
+msgstr "התרחשה שגיאה בעת הפעלת/ביטול בדיקות ה־SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: ../src/disks/gduatasmartdialog.c:1515
 msgid "ID"
-msgstr "מס׳"
+msgstr "מזהה"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
 #: ../src/disks/gduatasmartdialog.c:1527
@@ -1043,7 +1042,7 @@ msgstr "‏%d מ״ב/ש׳"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
-msgstr "‏%3g מילישניות"
+msgstr "‏%3g אלפיות השנייה"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
 #: ../src/disks/gdubenchmarkdialog.c:640
@@ -1237,9 +1236,9 @@ msgstr "מפתחות ה־DVD מתקבלים"
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
 #: ../src/disks/gducreatediskimagedialog.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "%s unreadable (replaced with zeroes)"
-msgstr "נמצאו %s מידע בלי קריא (הוחלף באפסים)"
+msgstr "‏%s לא ניתן לקריאה (הוחלף עם אפסים)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
 #: ../src/disks/gducreatediskimagedialog.c:411
@@ -1253,9 +1252,8 @@ msgstr "שגיאה ביצירת דמות כונן"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:481
-#, fuzzy
 msgid "Unrecoverable read errors while creating disk image"
-msgstr "שגיאה ביצירת דמות כונן"
+msgstr "שגיאת קריאה בלתי הפיכה בעת יצירת דמות הכונן"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -1263,20 +1261,19 @@ msgstr "שגיאה ביצירת דמות כונן"
 #. * The second %s is the name of the device (ex "/dev/").
 #.
 #: ../src/disks/gducreatediskimagedialog.c:490
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
-"נמצאו %2.1f%% (שהם %s) מנתוני הכונן שאינם קריאים והוחלפו באפסים בתמונת הכונן "
-"שנוצרה. הדבר קורה לרוב אם הדיסק שרוט או אם יש נזק פיזי לכונן."
+"נמצאו %2.1f%% (שהם %s) מנתוני ההתקן „%s” שאינם קריאים והוחלפו באפסים בקובץ "
+"דמות הכונן שנוצרה. הדבר קורה לרוב אם הדיסק שרוט או אם יש נזק פיזי לכונן"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:496
-#, fuzzy
 msgid "_Delete Disk Image File"
-msgstr "יצירת דמות כונן"
+msgstr "_מחיקת קובץ דמות הכונן"
 
 #: ../src/disks/gducreatediskimagedialog.c:724
 #: ../src/disks/gdurestorediskimagedialog.c:747
@@ -1290,20 +1287,19 @@ msgid "Device is size 0"
 msgstr "ההתקן הוא בגודל 0"
 
 #: ../src/disks/gducreatediskimagedialog.c:765
-#, fuzzy
 msgid "Error allocating space for disk image file: "
-msgstr "שגיאה ביצירת דמות כונן"
+msgstr "שגיאה בהקצאת מקום לקובץ דמות הכונן: "
 
 #: ../src/disks/gducreatediskimagedialog.c:926
-#, fuzzy, c-format
+#, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "קובץ בשם „%s“ כבר קיים. האם ברצונך להחליף אותו?"
 
 #: ../src/disks/gducreatediskimagedialog.c:929
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr "הקובץ כבר קיים תחת „%s“. החלפתו תשכתב את תוכנו."
+msgstr "הקובץ כבר קיים תחת „%s“. החלפתו תדרוס את תוכנו."
 
 #: ../src/disks/gducreatediskimagedialog.c:932
 msgid "_Replace"
@@ -1321,9 +1317,8 @@ msgstr "התקן מועתק אל דמות כונן"
 
 #. Translators: this is the description of the job
 #: ../src/disks/gducreatediskimagedialog.c:1008
-#, fuzzy
 msgid "Creating Disk Image"
-msgstr "יצירת דמות כונן"
+msgstr "יוצר דמות כונן"
 
 #: ../src/disks/gducreatefilesystemwidget.c:379
 #: ../src/disks/gduformatdiskdialog.c:254
@@ -1440,13 +1435,12 @@ msgid "Error updating /etc/crypttab entry"
 msgstr "שגיאה בעדכון הרשומה ב־‎/etc/crypttab"
 
 #: ../src/disks/gducrypttabdialog.c:493
-#, fuzzy
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
 msgstr ""
 "רק הססמאות המצוינות בקובץ <i>/etc/crypttab</i> ישתנו. על מנת לשנות את הססמה "
-"שעל הדיסק עצמו, השתמש ב<i>שינוי ססמה...</i>"
+"שעל הדיסק עצמו, יש להשתמש ב<i>שינוי ססמה…</i>"
 
 #: ../src/disks/gdudevicetreemodel.c:496
 msgid "(None)"
@@ -2635,13 +2629,12 @@ msgid "Disable Write Cache"
 msgstr "להשבית מטמון כתיבה"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:21
-#, fuzzy
 msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
 msgstr ""
-"הביצועים משתפרים על ידי אפשור שימוש בזיכרון מטמון עבור כתיבה (write "
-"caching), אך הדבר גורם למערכת להיות פגיעה לאיבוד נתונים במקרה של נפילת מתח"
+"הביצועים משתפרים על ידי שימוש בזיכרון מטמון עבור כתיבה, אך הדבר גורם למערכת "
+"להיות פגיעה לאיבוד נתונים במקרה של נפילת מתח"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:22
 msgid "Wr_ite Cache"
@@ -2825,7 +2818,7 @@ msgstr "_שחרור עם ההפעלה"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:13
 msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr "אם תיבה זו מסומנת, ההתקן ישוחרר עם הפעלת המערכת [‎!לא אוטומטי]"
+msgstr "אם תיבה זו מסומנת, ההתקן ישוחרר עם הפעלת המערכת [!noauto]"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:14
 msgid "Require additional authori_zation to unlock"
@@ -2922,7 +2915,7 @@ msgstr "סוג מערכת ה_קבצים"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:9
 msgid "The directory to mount the device in"
-msgstr "התיקייה תחתיה יש לעגון את ההתקן"
+msgstr "התיקייה תחתיה יש לעגן את ההתקן"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:10
 msgid "The filesystem type to use"
@@ -2957,7 +2950,7 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
-"אם מסומן, ההתקן תמיד מוצג בממשק המשתמש, ללא תלות בתיקיה שלו [x-gvfs-show]"
+"אם מסומן, ההתקן תמיד יוצג בממשק המשתמש, ללא תלות בתיקייה שלו [x-gvfs-show]"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:17
 msgid "Require additional authori_zation to mount"
@@ -3106,7 +3099,7 @@ msgstr "ה_פרדה למחיצות"
 
 #: ../src/disks/ui/format-volume-dialog.ui.h:1
 msgid "Format Volume"
-msgstr "פרמוט הכרך %s‏ (%s)"
+msgstr "פרמוט כרך"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:1
 msgid "Restore Disk Image"

@@ -35,6 +35,7 @@ struct _GduCreateFilesystemWidget
   GtkWidget *type_combobox;
   GtkWidget *name_label;
   GtkWidget *name_entry;
+  GtkWidget *name_example;
   GtkWidget *filesystem_label;
   GtkWidget *filesystem_entry;
   GtkWidget *passphrase_label;
@@ -239,11 +240,13 @@ update (GduCreateFilesystemWidget *widget)
     {
       gtk_widget_show (widget->name_label);
       gtk_widget_show (widget->name_entry);
+      gtk_widget_show (widget->name_example);
     }
   else
     {
       gtk_widget_hide (widget->name_label);
       gtk_widget_hide (widget->name_entry);
+      gtk_widget_hide (widget->name_example);
     }
 
   if (show_filesystem_widgets)
@@ -520,6 +523,7 @@ gdu_create_filesystem_widget_constructed (GObject *object)
   widget->name_label = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-label"));
   widget->name_entry = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-entry"));
   g_signal_connect (widget->name_entry, "notify::text", G_CALLBACK (on_property_changed), widget);
+  widget->name_example = GTK_WIDGET (gtk_builder_get_object (widget->builder, "name-example"));
   widget->filesystem_label = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-label"));
   widget->filesystem_entry = GTK_WIDGET (gtk_builder_get_object (widget->builder, "filesystem-entry"));
   g_signal_connect (widget->filesystem_entry, "notify::text", G_CALLBACK (on_property_changed), widget);

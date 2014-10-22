@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-10-06 18:51+0000\n"
-"PO-Revision-Date: 2014-10-21 11:36+0100\n"
+"PO-Revision-Date: 2014-10-22 10:52+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <fur@li.org>\n"
 "Language: fur\n"
@@ -257,9 +257,9 @@ msgid ""
 "verification error, it marks the sector as “reallocated” and transfers data "
 "to a special reserved area (spare area)"
 msgstr ""
-"Conte dai setôrs tornâts a mapâ. Cuant che al ven cjatât un erôr di scriture/"
-"leture/verifiche, il setôr al ven segnât come \"tornât a colocâ\" e i dâts a "
-"vegnin trasferîts intune aree riservade speciâl (clamade \"spare\")"
+"Conte dai setôrs tornâts a colocâ. Cuant che al ven cjatât un erôr di "
+"scriture/leture/verifiche, il setôr al ven segnât come \"tornât a colocâ\" e "
+"i dâts a vegnin trasferîts intune aree riservade speciâl (clamade \"spare\")"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -277,22 +277,22 @@ msgstr "Margjin di un canâl dulinvie le leture dai dâts."
 #.
 #: ../src/disks/gduatasmartdialog.c:203
 msgid "Seek Error Rate"
-msgstr "Tas posizionaments falâts"
+msgstr "Tas plaçaments falâts"
 
 #: ../src/disks/gduatasmartdialog.c:204
 msgid "Frequency of errors while positioning"
-msgstr "Frecuence di erôrs tai posizionaments"
+msgstr "Frecuence di erôrs tai plaçaments"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:211
 msgid "Seek Timer Performance"
-msgstr "Prestazions timp di posizionament"
+msgstr "Prestazions timp di plaçament"
 
 #: ../src/disks/gduatasmartdialog.c:212
 msgid "Average efficiency of operations while positioning"
-msgstr "Eficience medie des operazions intal posizionâ"
+msgstr "Eficience medie des operazions intal plaçâ le testine"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -412,11 +412,11 @@ msgstr "Numar di distudaments o ciclis di tornadis di emergjence de testine"
 #.
 #: ../src/disks/gduatasmartdialog.c:300 ../src/disks/gduatasmartdialog.c:487
 msgid "Load/Unload Cycle Count"
-msgstr ""
+msgstr "Conte ciclis plaçament/jessude"
 
 #: ../src/disks/gduatasmartdialog.c:301
 msgid "Number of cycles into landing zone position"
-msgstr ""
+msgstr "Conte dai ciclis di plaçament inte zone di ripôs dais testinis"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -424,29 +424,31 @@ msgstr ""
 #: ../src/disks/gduatasmartdialog.c:308 ../src/disks/gduatasmartdialog.c:527
 #: ../src/disks/ui/smart-dialog.ui.h:9
 msgid "Temperature"
-msgstr ""
+msgstr "Temperadure"
 
 #: ../src/disks/gduatasmartdialog.c:309
 msgid "Current internal temperature of the drive"
-msgstr ""
+msgstr "Temperadure interne atuâl de unitât"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:316
 msgid "Hardware ECC Recovered"
-msgstr ""
+msgstr "Comedaments ECC hardware"
 
 #: ../src/disks/gduatasmartdialog.c:317
 msgid "Number of ECC on-the-fly errors"
 msgstr ""
+"(Al dipent dal produtôr). Numar di erôrs ECC \"al svol\". Al pues indicâ par "
+"esempli ancje il timp passât tra un une corezion ECC e che altre."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:324
 msgid "Reallocation Count"
-msgstr ""
+msgstr "Conte colocaments tornâts a fâ"
 
 #: ../src/disks/gduatasmartdialog.c:325
 msgid ""
@@ -454,13 +456,16 @@ msgid ""
 "total number of (successful and unsuccessful) attempts to transfer data from "
 "reallocated sectors to a spare area"
 msgstr ""
+"Numars di operazions di colocaments tornâts a fâ. Il valôr grês di chest "
+"atribût al mostre il numar totâl (a bon fin o no) di tentatîfs di spostâ i "
+"dâts dai setôrs tornâts a colocâ a zonis di risierve (spare area)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:335
 msgid "Current Pending Sector Count"
-msgstr ""
+msgstr "Conte setôrs instabii atuâi"
 
 #: ../src/disks/gduatasmartdialog.c:336
 msgid ""
@@ -469,13 +474,18 @@ msgid ""
 "decreased and the sector is not remapped. Read errors on the sector will not "
 "remap the sector, it will only be remapped on a failed write attempt"
 msgstr ""
+"Numar di setôrs che a spietin di sedi tornâts a colocâ. Se il setôr che si à "
+"di tornâ a colocâ al è dopo scrit o let ben, il valôr al ven diminuît e il "
+"setôr a nol ven tornât a colocâ. I erôrs di leture tal setôr a no tornaran a "
+"colocâ il setôr, al vegnarà tornât a colocâ nome tal tentatîf falît di "
+"scriture"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:347
 msgid "Uncorrectable Sector Count"
-msgstr ""
+msgstr "Conte setôrs impussibii di comedâ"
 
 #: ../src/disks/gduatasmartdialog.c:348
 msgid ""
@@ -483,30 +493,35 @@ msgid ""
 "rise in the value of this attribute indicates defects of the disk surface "
 "and/or problems in the mechanical subsystem"
 msgstr ""
+"Numar totâl di erôrs impussibii di comedâ cuant che a si lei/scrîf un setôr. "
+"Un valôr in aument di chest atribût al indiche un difiet dal plan dal disc e/"
+"o un probleme mecanic"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:357
 msgid "UDMA CRC Error Rate"
-msgstr ""
+msgstr "Tas di erôrs UDMA CRC"
 
 #: ../src/disks/gduatasmartdialog.c:358
 msgid "Number of CRC errors during UDMA mode"
-msgstr ""
+msgstr "Numar di erôrs CRC in modalitât UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:365
 msgid "Write Error Rate"
-msgstr ""
+msgstr "Tas scrituris faladis"
 
 #: ../src/disks/gduatasmartdialog.c:366
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
+"Numar di erôrs tal scrivi tal disc o ancje tas di erôr multi zone o ancje "
+"altece de testine"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.

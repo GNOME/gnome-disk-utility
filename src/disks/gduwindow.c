@@ -67,6 +67,7 @@ struct _GduWindow
 
   GtkWidget *header;
 
+  GtkWidget *main_box;
   GtkWidget *main_hpane;
   GtkWidget *details_notebook;
   GtkWidget *device_tree_scrolledwindow;
@@ -141,6 +142,7 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, toolbutton_activate_swap), "toolbutton-activate-swap"},
   {G_STRUCT_OFFSET (GduWindow, toolbutton_deactivate_swap), "toolbutton-deactivate-swap"},
 
+  {G_STRUCT_OFFSET (GduWindow, main_box), "main-box"},
   {G_STRUCT_OFFSET (GduWindow, main_hpane), "main-hpane"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_scrolledwindow), "device-tree-scrolledwindow"},
 
@@ -968,6 +970,29 @@ create_header (GduWindow *window)
   return header;
 }
 
+static gboolean
+in_desktop (const gchar *name)
+{
+    const gchar *desktop_name_list;
+    gchar **names;
+    gboolean in_list = FALSE;
+    gint i;
+
+    desktop_name_list = g_getenv ("XDG_CURRENT_DESKTOP");
+    if (!desktop_name_list)
+        return FALSE;
+
+    names = g_strsplit (desktop_name_list, ":", -1);
+    for (i = 0; names[i] && !in_list; i++)
+      {
+        if (strcmp (names[i], name) == 0)
+            in_list = TRUE;
+      }
+    g_strfreev (names);
+
+    return in_list;
+}
+
 static void
 gdu_window_constructed (GObject *object)
 {
@@ -1000,10 +1025,21 @@ gdu_window_constructed (GObject *object)
     }
 
   window->header = create_header (window);
-  gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
+  if (!in_desktop ("Unity"))
+      gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
+  else
+    {
+      gtk_box_pack_start (GTK_BOX (window->main_box),
+                          GTK_WIDGET (window->header),
+                          FALSE, TRUE, 0);
+      gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (window->header),
+                                            FALSE);
+    }
+
+
   gtk_widget_show_all (window->header);
 
-  gtk_widget_reparent (window->main_hpane, GTK_WIDGET (window));
+  gtk_widget_reparent (window->main_box, GTK_WIDGET (window));
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 700);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);

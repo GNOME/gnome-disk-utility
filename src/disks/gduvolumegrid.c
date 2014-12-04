@@ -810,19 +810,19 @@ render_element (GduVolumeGrid *grid,
     gtk_render_focus (context, cr, x + 2, y + 2, w - 4, h - 4);
   if (element->unused > 0)
     {
+      GtkStyleContext *style;
+      GdkRGBA color;
       gdouble unused_height = element->unused * h / element->size;
-      cairo_pattern_t *gradient;
       cairo_save (cr);
-      gradient = cairo_pattern_create_linear (x, y + unused_height - 10, x, y + unused_height);
-      cairo_pattern_add_color_stop_rgba (gradient, 0.0,  1.0, 1.0, 1.0, 0.25);
-      cairo_pattern_add_color_stop_rgba (gradient, 1.0,  1.0, 1.0, 1.0, 0.00);
-      cairo_set_source (cr, gradient);
-      cairo_pattern_destroy (gradient);
+      style = gtk_widget_get_style_context (GTK_WIDGET (grid));
+      gtk_style_context_lookup_color (style, "theme_base_color", &color);
+      color.alpha = 0.25;
+      gdk_cairo_set_source_rgba (cr, &color);
       cairo_rectangle (cr,
-                       x,
-                       y,
-                       w,
-                       unused_height);
+                       x + 1,
+                       y + 1,
+                       w - 2,
+                       unused_height - 2);
       cairo_fill (cr);
       cairo_restore (cr);
     }

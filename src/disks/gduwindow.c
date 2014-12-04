@@ -789,48 +789,13 @@ static void
 init_css (GduWindow *window)
 {
   GtkCssProvider *provider;
+  GFile *file;
   GError *error;
-  const gchar *css =
-"#devtab-grid-toolbar.toolbar {\n"
-"    border-width: 1px;\n"
-"    border-radius: 3px;\n"
-"    border-style: solid;\n"
-"    background-color: @theme_base_color;\n"
-"}\n"
-"\n"
-".gnome-disk-utility-grid {\n"
-"  border-width: 1px;\n"
-"  border-radius: 3px;\n"
-"  border-style: solid;\n"
-"  border-color: @borders;\n"
-"  background-color: @theme_base_color;\n"
-"}\n"
-"\n"
-".gnome-disk-utility-grid:selected {\n"
-"  background-image: -gtk-gradient(radial,\n"
-"                                  center center, 0,\n"
-"                                  center center, 1,\n"
-"                                  from(@theme_selected_bg_color),\n"
-"                                  to(shade (@theme_selected_bg_color, 0.80)));\n"
-"  -adwaita-focus-border-color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.30);\n"
-"}\n"
-"\n"
-".gnome-disk-utility-grid:selected:backdrop {\n"
-"  background-image: -gtk-gradient(radial,\n"
-"                                  center center, 0,\n"
-"                                  center center, 1,\n"
-"                                  from(@theme_unfocused_selected_bg_color),\n"
-"                                  to(shade (@theme_unfocused_selected_bg_color, 0.80)));\n"
-"  -adwaita-focus-border-color: mix(@theme_unfocused_selected_fg_color, @theme_unfocused_selected_bg_color, 0.30);\n"
-"}\n"
-;
 
   provider = gtk_css_provider_new ();
+  file = g_file_new_for_uri ("resource:///org/gnome/Disks/ui/gdu.css");
   error = NULL;
-  if (!gtk_css_provider_load_from_data (provider,
-                                        css,
-                                        -1,
-                                        &error))
+  if (!gtk_css_provider_load_from_file (provider, file, NULL))
     {
       g_warning ("Can’t parse custom CSS: %s\n", error->message);
       g_error_free (error);
@@ -840,6 +805,8 @@ init_css (GduWindow *window)
   gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)),
                                              GTK_STYLE_PROVIDER (provider),
                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  g_object_unref (file);
   g_object_unref (provider);
 
  out:

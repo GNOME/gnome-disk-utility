@@ -1,0 +1,29 @@
+.gnome-disk-utility-grid {
+	border-width: 1px;
+	border-radius: 3px;
+	border-style: solid;
+	border-color: @borders;
+	background-color: @theme_base_color;
+}
+
+#devtab-grid-toolbar {
+	border-top-width: 1px;
+}
+
+.gnome-disk-utility-grid:selected {
+	background-image: -gtk-gradient(radial,
+	                              center center, 0,
+	                              center center, 1,
+	                              from(@theme_selected_bg_color),
+	                              to(shade (@theme_selected_bg_color, 0.80)));
+	-adwaita-focus-border-color: mix(@theme_selected_fg_color, @theme_selected_bg_color, 0.30);
+}
+
+.gnome-disk-utility-grid:selected:backdrop {
+	background-image: -gtk-gradient(radial,
+	                              center center, 0,
+	                              center center, 1,
+	                              from(@theme_unfocused_selected_bg_color),
+	                              to(shade (@theme_unfocused_selected_bg_color, 0.80)));
+	-adwaita-focus-border-color: mix(@theme_unfocused_selected_fg_color, @theme_unfocused_selected_bg_color, 0.30);
+}

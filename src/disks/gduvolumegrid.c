@@ -1549,14 +1549,14 @@ maybe_add_partition (GduVolumeGrid   *grid,
       /* Translators: This is shown in the volume grid for a partition with a name/label.
        *              The %d is the partition number. The %s is the name
        */
-      s = g_strdup_printf (C_("volume-grid", "Partition %d: %s"), number, name);
+      s = g_strdup_printf (C_("volume-grid", "Partition %u: %s"), number, name);
     }
   else
     {
       /* Translators: This is shown in the volume grid for a partition with no name/label.
        *              The %d is the partition number
        */
-      s = g_strdup_printf (C_("volume-grid", "Partition %d"), number);
+      s = g_strdup_printf (C_("volume-grid", "Partition %u"), number);
     }
   g_ptr_array_add (lines, s);
 

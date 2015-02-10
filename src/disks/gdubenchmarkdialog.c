@@ -416,7 +416,7 @@ on_drawing_area_draw (GtkWidget      *widget,
       x = gx + ceil (n * gw / 10.0);
       y = gy + gh + x_marker_height/2.0;
 
-      s = g_strdup_printf ("%d%%", n * 10);
+      s = g_strdup_printf ("%u%%", n * 10);
 
       cairo_text_extents (cr, s, &te);
 
@@ -652,8 +652,8 @@ format_transfer_rate_and_num_samples (gdouble bytes_per_sec,
 
   s = format_transfer_rate (bytes_per_sec);
   s2 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
-                                     "%d sample",
-                                     "%d samples",
+                                     "%u sample",
+                                     "%u samples",
                                      num_samples),
                         num_samples);
   ret = g_strdup_printf ("%s <small>(%s)</small>", s, s2);
@@ -861,8 +861,8 @@ update_dialog (DialogData *data)
       /* Translators: %d is number of milliseconds and msec means "milli-second" */
       s2 = g_strdup_printf (C_("benchmark-access-time", "%.2f msec"), access_time_avg * 1000.0);
       s3 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
-                                         "%d sample",
-                                         "%d samples",
+                                         "%u sample",
+                                         "%u samples",
                                          data->bm_access_time_samples->len),
                             data->bm_access_time_samples->len);
       s = g_strdup_printf ("%s <small>(%s)</small>", s2, s3);

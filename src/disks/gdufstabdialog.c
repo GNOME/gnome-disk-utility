@@ -146,12 +146,12 @@ update_device_explanation (FstabDialogData *data)
   part_num = 0;
   s = g_strrstr (fsname, "-part");
   if (s != NULL)
-    sscanf (s, "-part%d", &part_num);
+    sscanf (s, "-part%u", &part_num);
 
   if (g_str_has_prefix (fsname, "/dev/disk/by-id/"))
     {
       if (part_num > 0)
-        explanation = g_strdup_printf (_("Matches partition %d of the device with the given vital product data"),
+        explanation = g_strdup_printf (_("Matches partition %u of the device with the given vital product data"),
                                        part_num);
       else
         explanation = g_strdup (_("Matches the whole disk of the device with the given vital product data"));
@@ -159,7 +159,7 @@ update_device_explanation (FstabDialogData *data)
   else if (g_str_has_prefix (fsname, "/dev/disk/by-path/"))
     {
       if (part_num > 0)
-        explanation = g_strdup_printf (_("Matches partition %d of any device connected at the given port or address"),
+        explanation = g_strdup_printf (_("Matches partition %u of any device connected at the given port or address"),
                                        part_num);
       else
         explanation = g_strdup (_("Matches the whole disk of any device connected at the given port or address"));

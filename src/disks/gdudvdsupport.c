@@ -207,7 +207,7 @@ gdu_dvd_support_new  (const gchar *device_file,
             }
           else
             {
-              snprintf (vob_filename, sizeof vob_filename, "/VIDEO_TS/VTS_%02d_%d.VOB", title, part);
+              snprintf (vob_filename, sizeof vob_filename, "/VIDEO_TS/VTS_%02u_%d.VOB", title, part);
             }
 
           vob_sector_offset = UDFFindFile (support->dvd, vob_filename, &vob_size);
@@ -313,7 +313,7 @@ gdu_dvd_support_new  (const gchar *device_file,
       for (n = 0; n < support->num_ranges; n++)
         {
           Range *range = support->ranges + n;
-          g_print ("range %02d: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n",
+          g_print ("range %02u: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n",
                    n, range->start, range->end, range->scrambled);
         }
     }
@@ -405,7 +405,7 @@ gdu_dvd_support_read (GduDVDSupport *support,
 
       if (G_UNLIKELY (support->debug))
         {
-          g_print ("reading %" G_GUINT64_FORMAT " from %" G_GUINT64_FORMAT " (scrambled=%d) from range %d\n",
+          g_print ("reading %" G_GUINT64_FORMAT " from %" G_GUINT64_FORMAT " (scrambled=%d) from range %u\n",
                    num_to_read_in_range, cur_offset, r->scrambled, n);
         }
 

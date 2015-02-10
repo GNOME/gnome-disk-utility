@@ -58,7 +58,7 @@ init_lzma (GduXzDecompressor *decompressor)
                              UINT64_MAX, /* memlimit */
                              0);         /* flags */
   if (ret != LZMA_OK)
-    g_critical ("Error initalizing lzma decoder: %d", ret);
+    g_critical ("Error initalizing lzma decoder: %u", ret);
 }
 
 static void

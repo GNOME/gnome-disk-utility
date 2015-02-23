@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-03-20 19:49+0000\n"
-"PO-Revision-Date: 2014-03-15 17:44+0100\n"
+"POT-Creation-Date: 2015-02-23 19:46+0000\n"
+"PO-Revision-Date: 2015-02-23 21:44+0100\n"
 "Last-Translator: naybnet <naybnet@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -43,7 +43,7 @@ msgstr "Enregistreur d'images disque"
 msgid "Write Disk Images to Devices"
 msgstr "Enregistre les images disque sur les périphériques"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1044
+#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1040
 msgid "Disks"
 msgstr "Disques"
 
@@ -1895,7 +1895,7 @@ msgid "Error opening file for reading"
 msgstr "Erreur lors de l'ouverture du fichier en lecture"
 
 #: ../src/disks/gdurestorediskimagedialog.c:954
-msgid "Error determing size of file"
+msgid "Error determining size of file"
 msgstr "Erreur lors de la détermination de la taille du fichier"
 
 #. Translators: Reason why suspend/logout is being inhibited
@@ -1931,14 +1931,14 @@ msgstr ""
 "La phrase de passe de chiffrement a été récupérée à partir du trousseau de "
 "clés"
 
-#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2026
+#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2022
 msgid "No Media"
 msgstr "Aucun média"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1553
+#: ../src/disks/gduvolumegrid.c:1552
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d: %s"
@@ -1947,28 +1947,28 @@ msgstr "Partition %d : %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1560
+#: ../src/disks/gduvolumegrid.c:1559
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %d"
 msgstr "Partition %d"
 
-#: ../src/disks/gduvolumegrid.c:1597
+#: ../src/disks/gduvolumegrid.c:1596
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espace disponible"
 
-#: ../src/disks/gduvolumegrid.c:1640
+#: ../src/disks/gduvolumegrid.c:1639
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partition étendue"
 
-#: ../src/disks/gduvolumegrid.c:1664
+#: ../src/disks/gduvolumegrid.c:1663
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Système de fichiers"
 
-#: ../src/disks/gduvolumegrid.c:1686
+#: ../src/disks/gduvolumegrid.c:1685
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Swap"
@@ -2005,7 +2005,7 @@ msgstr ""
 "garder intacts les fichiers sous-jacents"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1350
+#: ../src/disks/gduwindow.c:1346
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2014,7 +2014,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1358
+#: ../src/disks/gduwindow.c:1354
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2023,7 +2023,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1366
+#: ../src/disks/gduwindow.c:1362
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2032,12 +2032,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1374
+#: ../src/disks/gduwindow.c:1370
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1389
+#: ../src/disks/gduwindow.c:1385
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2046,13 +2046,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1399
+#: ../src/disks/gduwindow.c:1395
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1716
+#: ../src/disks/gduwindow.c:1712
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (lecture seule)"
@@ -2061,7 +2061,7 @@ msgstr "%s (lecture seule)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1754
+#: ../src/disks/gduwindow.c:1750
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2070,7 +2070,7 @@ msgstr "%s restant (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1762
+#: ../src/disks/gduwindow.c:1758
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2081,7 +2081,7 @@ msgstr "%s restant"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1777
+#: ../src/disks/gduwindow.c:1773
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s de %s – %s"
@@ -2090,17 +2090,17 @@ msgstr "%s de %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1864
+#: ../src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s : %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1936 ../src/disks/gduwindow.c:2311
+#: ../src/disks/gduwindow.c:1932 ../src/disks/gduwindow.c:2307
 msgid "Block device is empty"
 msgstr "Le périphérique bloc est vide"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1959
+#: ../src/disks/gduwindow.c:1955
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2109,11 +2109,11 @@ msgstr "Inconnu (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2114
+#: ../src/disks/gduwindow.c:2110
 msgid "Connected to another seat"
 msgstr "Connecté à un autre emplacement"
 
-#: ../src/disks/gduwindow.c:2259
+#: ../src/disks/gduwindow.c:2255
 msgid "Loop device is empty"
 msgstr "Le périphérique boucle est vide"
 
@@ -2123,61 +2123,61 @@ msgstr "Le périphérique boucle est vide"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2469
+#: ../src/disks/gduwindow.c:2465
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libre (%.1f%% occupé)"
 
-#: ../src/disks/gduwindow.c:2499
+#: ../src/disks/gduwindow.c:2495
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Inconnu"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2527
+#: ../src/disks/gduwindow.c:2523
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Racine du système de fichiers"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2535
+#: ../src/disks/gduwindow.c:2531
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Monté sur %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2541
+#: ../src/disks/gduwindow.c:2537
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Non monté"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2564
+#: ../src/disks/gduwindow.c:2560
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Actif"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2570
+#: ../src/disks/gduwindow.c:2566
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Inactif"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2583
+#: ../src/disks/gduwindow.c:2579
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Déverrouillé"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2589
+#: ../src/disks/gduwindow.c:2585
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: ../src/disks/gduwindow.c:2599
+#: ../src/disks/gduwindow.c:2595
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partition étendue"
@@ -2186,36 +2186,36 @@ msgstr "Partition étendue"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2619
+#: ../src/disks/gduwindow.c:2615
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2719
+#: ../src/disks/gduwindow.c:2715
 msgid "Unallocated Space"
 msgstr "Espace non alloué"
 
-#: ../src/disks/gduwindow.c:3065
+#: ../src/disks/gduwindow.c:3061
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Une erreur est survenue pendant l'essai de mise en veille du disque"
 
-#: ../src/disks/gduwindow.c:3111
+#: ../src/disks/gduwindow.c:3107
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Une erreur est survenue pendant l'essai de sortie de veille du disque"
 
-#: ../src/disks/gduwindow.c:3156
+#: ../src/disks/gduwindow.c:3152
 msgid "Error powering off drive"
 msgstr "Erreur lors de l'extinction du lecteur"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3208
+#: ../src/disks/gduwindow.c:3204
 msgid "Are you sure you want to power off the drives?"
 msgstr "Voulez-vous vraiment éteindre les lecteurs ?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3210
+#: ../src/disks/gduwindow.c:3206
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2223,55 +2223,55 @@ msgstr ""
 "Cette action va préparer le système à éteindre les lecteurs suivants et les "
 "retirer."
 
-#: ../src/disks/gduwindow.c:3214
+#: ../src/disks/gduwindow.c:3210
 msgid "_Power Off"
 msgstr "É_teindre"
 
-#: ../src/disks/gduwindow.c:3291
+#: ../src/disks/gduwindow.c:3287
 msgid "Error mounting filesystem"
 msgstr "Erreur lors du montage du système de fichiers"
 
-#: ../src/disks/gduwindow.c:3330 ../src/libgdu/gduutils.c:1050
+#: ../src/disks/gduwindow.c:3326 ../src/libgdu/gduutils.c:1050
 msgid "Error unmounting filesystem"
 msgstr "Erreur lors du démontage du système de fichiers"
 
-#: ../src/disks/gduwindow.c:3472
+#: ../src/disks/gduwindow.c:3468
 msgid "Error deleting partition"
 msgstr "Erreur lors de la suppression de la partition"
 
-#: ../src/disks/gduwindow.c:3509
+#: ../src/disks/gduwindow.c:3505
 msgid "Are you sure you want to delete the partition?"
 msgstr "Voulez-vous vraiment supprimer la partition ?"
 
-#: ../src/disks/gduwindow.c:3510
+#: ../src/disks/gduwindow.c:3506
 msgid "All data on the partition will be lost"
 msgstr "Toutes les données de la partition seront perdues"
 
-#: ../src/disks/gduwindow.c:3511
+#: ../src/disks/gduwindow.c:3507
 msgid "_Delete"
 msgstr "_Supprimer"
 
-#: ../src/disks/gduwindow.c:3542
+#: ../src/disks/gduwindow.c:3538
 msgid "Error ejecting media"
 msgstr "Erreur lors de l'éjection du média"
 
-#: ../src/disks/gduwindow.c:3609
+#: ../src/disks/gduwindow.c:3605
 msgid "Error locking encrypted device"
 msgstr "Erreur lors du verrouillage du périphérique chiffré"
 
-#: ../src/disks/gduwindow.c:3673
+#: ../src/disks/gduwindow.c:3669
 msgid "Error starting swap"
 msgstr "Erreur lors du démarrage du swap"
 
-#: ../src/disks/gduwindow.c:3710
+#: ../src/disks/gduwindow.c:3706
 msgid "Error stopping swap"
 msgstr "Erreur lors de l'arrêt du swap"
 
-#: ../src/disks/gduwindow.c:3752
+#: ../src/disks/gduwindow.c:3748
 msgid "Error setting autoclear flag"
 msgstr "Erreur lors de la définition du drapeau autoclear"
 
-#: ../src/disks/gduwindow.c:3805 ../src/disks/gduwindow.c:3869
+#: ../src/disks/gduwindow.c:3801 ../src/disks/gduwindow.c:3865
 msgid "Error canceling job"
 msgstr "Erreur lors de l'annulation de la tâche"
 
@@ -2772,8 +2772,8 @@ msgid "Partition Type"
 msgstr "Type de partition"
 
 #: ../src/disks/ui/disks.ui.h:21
-msgid "Format…"
-msgstr "Formater…"
+msgid "Format Disk…"
+msgstr "Formater le disque…"
 
 #: ../src/disks/ui/disks.ui.h:22
 msgid "Create Disk Image…"
@@ -2784,8 +2784,8 @@ msgid "Restore Disk Image…"
 msgstr "Restaurer l'image disque…"
 
 #: ../src/disks/ui/disks.ui.h:24
-msgid "Benchmark…"
-msgstr "Test de performance…"
+msgid "Benchmark Disk…"
+msgstr "Test de performance du disque…"
 
 #: ../src/disks/ui/disks.ui.h:25
 msgid "SMART Data & Self-Tests…"
@@ -2808,24 +2808,40 @@ msgid "Power Off…"
 msgstr "Éteindre…"
 
 #: ../src/disks/ui/disks.ui.h:30
+msgid "Format Partition…"
+msgstr "Formater la partition…"
+
+#: ../src/disks/ui/disks.ui.h:31
 msgid "Edit Partition…"
 msgstr "Modifier la partition…"
 
-#: ../src/disks/ui/disks.ui.h:31
+#: ../src/disks/ui/disks.ui.h:32
 msgid "Edit Filesystem…"
 msgstr "Modifier le système de fichiers…"
 
-#: ../src/disks/ui/disks.ui.h:32
+#: ../src/disks/ui/disks.ui.h:33
 msgid "Change Passphrase…"
 msgstr "Modifier la phrase de passe…"
 
-#: ../src/disks/ui/disks.ui.h:33
+#: ../src/disks/ui/disks.ui.h:34
 msgid "Edit Mount Options…"
 msgstr "Modifier les options de montage…"
 
-#: ../src/disks/ui/disks.ui.h:34
+#: ../src/disks/ui/disks.ui.h:35
 msgid "Edit Encryption Options…"
 msgstr "Modifier les options de chiffrement…"
+
+#: ../src/disks/ui/disks.ui.h:36
+msgid "Create Partition Image…"
+msgstr "Créer une image de la partition…"
+
+#: ../src/disks/ui/disks.ui.h:37
+msgid "Restore Partition Image…"
+msgstr "Restaurer l'image de partition…"
+
+#: ../src/disks/ui/disks.ui.h:38
+msgid "Benchmark Partition…"
+msgstr "Test de performance de la partition…"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:1
 msgid "Encryption Options"
@@ -3459,3 +3475,6 @@ msgstr "Examen des problèmes des disques"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Avertit des problèmes de disques et périphériques de stockage"
+
+#~ msgid "Format…"
+#~ msgstr "Formater…"

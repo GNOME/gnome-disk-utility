@@ -951,7 +951,7 @@ start_copying (DialogData *data)
                             &error);
   if (info == NULL)
     {
-      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determing size of file"), error);
+      gdu_utils_show_error (GTK_WINDOW (data->dialog), _("Error determining size of file"), error);
       g_error_free (error);
       dialog_data_complete_and_unref (data);
       goto out;

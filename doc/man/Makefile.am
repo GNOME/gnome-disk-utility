@@ -18,5 +18,12 @@ EXTRA_DIST= 				\
 	gnome-disk-image-mounter.xml    \
 	$(NULL)
 
+CLEANFILES =	\
+	gnome-disk-image-mounter.1	\
+	gnome-disks.1			\
+	$(NULL)
+
 clean-local:
-	rm -f *~ *.1
+	rm -f *~
+
+-include $(top_srcdir)/git.mk

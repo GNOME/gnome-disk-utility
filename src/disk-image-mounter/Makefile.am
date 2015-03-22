@@ -31,3 +31,5 @@ gnome_disk_image_mounter_LDADD = 			\
 
 clean-local :
 	rm -f *~
+
+-include $(top_srcdir)/git.mk

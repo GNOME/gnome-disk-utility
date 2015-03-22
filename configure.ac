@@ -1,32 +1,27 @@
 AC_INIT([GNOME Disk Utility],[3.14.0],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
 
-AM_INIT_AUTOMAKE([1.9 foreign dist-xz no-dist-gzip tar-ustar])
+AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip tar-ustar])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE([enable])
+AM_SILENT_RULES([yes])
+
+GNOME_DEBUG_CHECK
 
 AC_PROG_CC
-AC_ISC_POSIX
 AC_HEADER_STDC
-AC_PROG_LIBTOOL
 
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-
-# *****
-# GNOME
-# *****
-
-GNOME_COMMON_INIT
-GNOME_DEBUG_CHECK
-GNOME_COMPILE_WARNINGS([maximum])
-GNOME_MAINTAINER_MODE_DEFINES
+LT_PREREQ([2.2])
+LT_INIT
 
 # ***********
 # Compilation
 # ***********
+
+GNOME_COMPILE_WARNINGS([maximum])
 
 CC_CHECK_CFLAGS_APPEND([                          \
         -Waggregate-return                        \

@@ -115,13 +115,8 @@ PKG_CHECK_MODULES(LIBSECRET1, [libsecret-1 >= $LIBSECRET1_REQUIRED])
 PKG_CHECK_MODULES(PWQUALITY, [pwquality >= $PWQUALITY_REQUIRED])
 PKG_CHECK_MODULES(CANBERRA, [libcanberra-gtk3 >= $CANBERRA_REQUIRED])
 PKG_CHECK_MODULES(LIBDVDREAD, [dvdread >= $LIBDVDREAD_REQUIRED])
-<<<<<<< HEAD
-PKG_CHECK_MODULES(GSD_PLUGIN, [gnome-settings-daemon >= $GSD_PLUGIN_REQUIRED])
 PKG_CHECK_MODULES(LIBNOTIFY, [libnotify >= $LIBNOTIFY_REQUIRED])
 PKG_CHECK_MODULES(LIBLZMA, [liblzma >= $LIBLZMA_REQUIRED])
-=======
-PKG_CHECK_MODULES(LIBNOTIFY, [libnotify >= LIBNOTIFY_REQUIRED])
->>>>>>> Avoid needing gsd during build when --disable-gsd-plugin is used
 
 gsd_plugindir='${libdir}/gnome-settings-daemon-3.0'
 AC_SUBST([gsd_plugindir])

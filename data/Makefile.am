@@ -27,15 +27,14 @@ gsettings_SCHEMAS = 						\
 	$(NULL)
 
 @INTLTOOL_DESKTOP_RULE@
-@INTLTOOL_XML_NOMERGE_RULE@
 @GSETTINGS_RULES@
 
 EXTRA_DIST = 			\
 	$(desktop_in_files)	\
+	$(gsettings_SCHEMAS)	\
 	$(NULL)
 
 CLEANFILES = 			\
-	$(gsettings_SCHEMAS)	\
 	$(desktop_DATA)		\
 	$(dbusservice_DATA)	\
 	$(NULL)

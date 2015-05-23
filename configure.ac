@@ -165,11 +165,10 @@ if test -z "$XSLTPROC"; then
   AC_MSG_ERROR([xsltproc is needed])
 fi
 
-IT_PROG_INTLTOOL([$INTLTOOL_REQUIRED])
+IT_PROG_INTLTOOL([0.50.2])
 
 GETTEXT_PACKAGE=gnome-disk-utility
 AC_SUBST([GETTEXT_PACKAGE])
-AM_GLIB_GNU_GETTEXT
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[gettext domain])
 
 AC_SUBST([AM_CPPFLAGS])
@@ -195,8 +194,6 @@ data/icons/hicolor/32x32/Makefile
 data/icons/hicolor/48x48/Makefile
 data/icons/hicolor/256x256/Makefile
 data/icons/hicolor/scalable/Makefile
-data/org.gnome.Disks.gschema.xml.in
-data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in
 doc/Makefile
 doc/man/Makefile
 ])

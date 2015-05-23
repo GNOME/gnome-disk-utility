@@ -17,6 +17,8 @@ AC_HEADER_STDC
 LT_PREREQ([2.2])
 LT_INIT
 
+APPSTREAM_XML
+
 # ***********
 # Compilation
 # ***********

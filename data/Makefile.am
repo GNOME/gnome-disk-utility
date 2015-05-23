@@ -26,15 +26,22 @@ gsettings_SCHEMAS = 						\
 	org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml	\
 	$(NULL)
 
+appstream_in_files = gnome-disks.appdata.xml.in
+appstream_XML = $(appstream_in_files:.xml.in=.xml)
+
+@APPSTREAM_XML_RULES@
 @INTLTOOL_DESKTOP_RULE@
+@INTLTOOL_XML_RULE@
 @GSETTINGS_RULES@
 
 EXTRA_DIST = 			\
+	$(appstream_in_files)	\
 	$(desktop_in_files)	\
 	$(gsettings_SCHEMAS)	\
 	$(NULL)
 
 CLEANFILES = 			\
+	$(appstream_in_files)	\
 	$(desktop_DATA)		\
 	$(dbusservice_DATA)	\
 	$(NULL)

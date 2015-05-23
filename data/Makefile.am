@@ -4,8 +4,8 @@ SUBDIRS = icons
 
 desktopdir = $(datadir)/applications
 desktop_in_files =				\
-	org.gnome.DiskUtility.desktop.in 			\
-	gnome-disk-image-mounter.desktop.in 	\
+	org.gnome.DiskUtility.desktop.in	\
+	gnome-disk-image-mounter.desktop.in	\
 	gnome-disk-image-writer.desktop.in	\
 	$(NULL)
 

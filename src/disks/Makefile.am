@@ -77,7 +77,7 @@ gnome_disks_CFLAGS = 					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
 	$(LIBSECRET1_CFLAGS)				\
-	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
+	$(LIBSYSTEMD_CFLAGS)				\
 	$(PWQUALITY_CFLAGS)				\
 	$(CANBERRA_CFLAGS)				\
 	$(LIBDVDREAD_CFLAGS)				\
@@ -91,7 +91,7 @@ gnome_disks_LDADD = 					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
 	$(LIBSECRET1_LIBS)				\
-	$(LIBSYSTEMD_LOGIN_LIBS)			\
+	$(LIBSYSTEMD_LIBS)				\
 	$(PWQUALITY_LIBS)				\
 	$(CANBERRA_LIBS)				\
 	$(LIBDVDREAD_LIBS)				\

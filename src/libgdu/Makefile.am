@@ -43,7 +43,7 @@ libgdu_la_CFLAGS = 					\
 	$(UDISKS2_CFLAGS)				\
 	$(GTK3_CFLAGS)					\
 	$(LIBSECRET1_CFLAGS)				\
-	$(LIBSYSTEMD_LOGIN_CFLAGS)			\
+	$(LIBSYSTEMD_CFLAGS)				\
 	$(PWQUALITY_CFLAGS)				\
 	$(WARN_CFLAGS)					\
 	-lm						\
@@ -54,7 +54,7 @@ libgdu_la_LIBADD = 					\
 	$(UDISKS2_LIBS)					\
 	$(GTK3_LIBS)					\
 	$(LIBSECRET1_LIBS)				\
-	$(LIBSYSTEMD_LOGIN_LIBS)			\
+	$(LIBSYSTEMD_LIBS)				\
 	$(PWQUALITY_LIBS)				\
 	$(NULL)
 

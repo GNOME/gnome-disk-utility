@@ -125,26 +125,24 @@ GLIB_GSETTINGS
 
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
-dnl **********************************
-dnl *** Check for libsystemd-login ***
-dnl **********************************
+dnl ****************************
+dnl *** Check for libsystemd ***
+dnl ****************************
 
-AC_ARG_ENABLE(libsystemd_login, AS_HELP_STRING([--disable-libsystemd-login],[build without liblibsystemd-login]))
-msg_libsystemd_login=no
-LIBSYSTEMD_LOGIN_LIBS=
-LIBSYSTEMD_LOGIN_CFLAGS=
-LIBSYSTEMD_LOGIN_REQUIRED=44
+AC_ARG_ENABLE(libsystemd, AS_HELP_STRING([--disable-libsystemd], [build without libsystemd]))
+msg_libsystemd=no
+LIBSYSTEMD_REQUIRED=209
 
-if test "x$enable_libsystemd_login" != "xno"; then
-  PKG_CHECK_EXISTS([libsystemd-login >= $LIBSYSTEMD_LOGIN_REQUIRED], msg_libsystemd_login=yes)
+if test "x$enable_libsystemd" != "xno"; then
+  PKG_CHECK_EXISTS([libsystemd >= $LIBSYSTEMD_REQUIRED], msg_libsystemd=yes)
 
-  if test "x$msg_libsystemd_login" = "xyes"; then
-    PKG_CHECK_MODULES([LIBSYSTEMD_LOGIN],[libsystemd-login >= $LIBSYSTEMD_LOGIN_REQUIRED])
-    AC_DEFINE(HAVE_LIBSYSTEMD_LOGIN, 1, [Define to 1 if liblibsystemd_login is available])
+  if test "x$msg_libsystemd" = "xyes"; then
+    PKG_CHECK_MODULES([LIBSYSTEMD], [libsystemd >= $LIBSYSTEMD_REQUIRED])
+    AC_DEFINE(HAVE_LIBSYSTEMD, 1, [Define to 1 if libsystemd is available])
   fi
 fi
 
-AM_CONDITIONAL(USE_LIBSYSTEMD_LOGIN, [test "$msg_libsystemd_login" = "yes"])
+AM_CONDITIONAL(USE_LIBSYSTEMD, [test "$msg_libsystemd" = "yes"])
 
 dnl *************************************
 dnl *** gnome-settings-daemon plug-in ***
@@ -218,7 +216,7 @@ echo "
         sysconfdir:                 ${sysconfdir}
         localstatedir:              ${localstatedir}
 
-        Use libsystem-login:        ${msg_libsystemd_login}
+        Use libsystemd:             ${msg_libsystemd}
         Build g-s-d plug-in:        ${msg_gsd_plugin}
 
         compiler:                   ${CC}

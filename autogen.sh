@@ -3,7 +3,7 @@ srcdir=`dirname $0`
 [ -z "$srcdir" ] && srcdir=.
 
 if [ ! -f "$srcdir/configure.ac" ]; then
- echo "$srcdir doesn't look like source directory for $PKG_NAME" >&2
+ echo "$srcdir doesn't look like source directory for GNOME Disk Utility" >&2
  exit 1
 fi
 

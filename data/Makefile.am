@@ -41,7 +41,7 @@ EXTRA_DIST = 			\
 	$(NULL)
 
 CLEANFILES = 			\
-	$(appstream_in_files)	\
+	$(appstream_XML)	\
 	$(desktop_DATA)		\
 	$(dbusservice_DATA)	\
 	$(NULL)

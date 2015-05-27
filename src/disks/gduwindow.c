@@ -2007,6 +2007,7 @@ update_device_page_for_drive (GduWindow      *window,
   const gchar *our_seat;
   const gchar *serial;
   GList *jobs;
+  gchar *title = NULL;
 
   //g_debug ("In update_device_page_for_drive() - selected=%s",
   //         object != NULL ? g_dbus_object_get_object_path (object) : "<nothing>");
@@ -2042,9 +2043,22 @@ update_device_page_for_drive (GduWindow      *window,
       g_string_append (str, s);
       g_free (s);
     }
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), str->str);
+
+  if (!in_desktop ("Unity"))
+    {
+      gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
+      gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), str->str);
+    }
+  else
+    {
+      title = g_strdup_printf ("%s — %s", udisks_object_info_get_description (info), str->str);
+      gtk_window_set_title (GTK_WINDOW (window), title);
+
+      g_free (title);
+    }
+
   g_string_free (str, TRUE);
+
   gtk_widget_show (window->devtab_drive_generic_button);
 
   str = g_string_new (NULL);
@@ -2253,6 +2267,7 @@ update_device_page_for_loop (GduWindow      *window,
   UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
   gchar *device_desc = NULL;
+  gchar *title = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Loop device is empty"));
@@ -2260,8 +2275,16 @@ update_device_page_for_loop (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+  if (!in_desktop ("Unity"))
+    {
+      gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
+      gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+    }
+  else
+    {
+      title = g_strdup_printf ("%s — %s", udisks_object_info_get_description (info), device_desc);
+      gtk_window_set_title (GTK_WINDOW (window), title);
+    }
 
   gtk_widget_show (window->devtab_drive_generic_button);
 
@@ -2289,6 +2312,7 @@ update_device_page_for_loop (GduWindow      *window,
   /* cleanup */
   g_clear_object (&info);
   g_free (device_desc);
+  g_free (title);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2305,6 +2329,7 @@ update_device_page_for_fake_block (GduWindow      *window,
 {
   UDisksObjectInfo *info = NULL;
   gchar *device_desc = NULL;
+  gchar *title = NULL;
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("Block device is empty"));
@@ -2312,8 +2337,16 @@ update_device_page_for_fake_block (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+  if (!in_desktop ("Unity"))
+    {
+      gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
+      gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+    }
+  else
+    {
+      title = g_strdup_printf ("%s — %s", udisks_object_info_get_description (info), device_desc);
+      gtk_window_set_title (GTK_WINDOW (window), title);
+    }
 
   gtk_widget_show (window->devtab_drive_generic_button);
 
@@ -2322,6 +2355,7 @@ update_device_page_for_fake_block (GduWindow      *window,
   /* cleanup */
   g_clear_object (&info);
   g_free (device_desc);
+  g_free (title);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

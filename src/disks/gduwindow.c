@@ -1034,8 +1034,11 @@ gdu_window_constructed (GObject *object)
                           FALSE, TRUE, 0);
       gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (window->header),
                                             FALSE);
+      context = gtk_widget_get_style_context (GTK_WIDGET (window->header));
+      gtk_style_context_remove_class (context, "header-bar");
+      gtk_style_context_add_class (context, "toolbar");
+      gtk_style_context_add_class (context, "primary-toolbar");
     }
-
 
   gtk_widget_show_all (window->header);
 

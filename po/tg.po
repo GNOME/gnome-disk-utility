@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Tajik Gnome\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-06 18:55+0000\n"
-"PO-Revision-Date: 2015-05-07 10:05+0500\n"
+"POT-Creation-Date: 2015-05-27 19:03+0000\n"
+"PO-Revision-Date: 2015-05-28 11:25+0500\n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: \n"
 "Language: tg\n"
@@ -36,15 +36,42 @@ msgstr "Сабти тасвири диск"
 msgid "Write Disk Images to Devices"
 msgstr "Сабти тасвири диск ба дастгоҳ"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1040
+#: ../data/gnome-disks.appdata.xml.in.h:1
+msgid "GNOME Disks"
+msgstr "Дискҳои GNOME"
+
+#: ../data/gnome-disks.appdata.xml.in.h:2
+msgid "Disk management utility for GNOME"
+msgstr "Барномаи идоракунии диск барои GNOME"
+
+#: ../data/gnome-disks.appdata.xml.in.h:3
+msgid ""
+"Disks provides an easy way to inspect, format, partition, and configure "
+"disks and block devices."
+msgstr ""
+"Барномаи \"Дискҳо\" назорат, формат, қисмбандӣ, танзимкунӣ ва манъкунии "
+"дастгоҳҳоро осон мекунад."
+
+#: ../data/gnome-disks.appdata.xml.in.h:4
+msgid ""
+"Using Disks, you can view SMART data, manage RAID devices, benchmark "
+"physical disks, and image USB sticks. Tasks are executed in the background, "
+"even after the application has been closed by the user."
+msgstr ""
+"Ба воситаи барномаи \"Дискҳо\" шумо метавонед маълумоти SMART-ро бинед, "
+"дастгоҳҳои RAID-ро идора кунед, дискҳои ҷисмониро ишора кунед ва тасвирҳои "
+"драйви USB таҳия намоед. Вазифаҳо дарпасзамина иҷро мешаванд, ҳатто агар "
+"корбар барномаро пӯшад."
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1007
 msgid "Disks"
 msgstr "Дискҳо"
 
-#: ../data/gnome-disks.desktop.in.h:2
+#: ../data/org.gnome.DiskUtility.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Идоракунии драйвҳо ва медиа"
 
-#: ../data/gnome-disks.desktop.in.h:3
+#: ../data/org.gnome.DiskUtility.desktop.in.h:3
 msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
@@ -53,13 +80,13 @@ msgstr ""
 "нусхаи эҳтиётӣ;барқарор кардан;афзорсанҷӣ;raid;luks;рамзгузорӣ;S.M.A.R.T.;"
 "smart;"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+#: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
 msgstr ""
 "Ҷойгиршавии пешфарз барои равзанаҳои гуфтугӯи Эҷод/барқарор кардани тасвири "
 "диск"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+#: ../data/org.gnome.Disks.gschema.xml.h:2
 msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
@@ -67,19 +94,19 @@ msgstr ""
 "Ҷойгиршавии пешфарз барои равзанаҳои гуфтугӯи Эҷод/барқарор кардани тасвири "
 "диск. Агар ҷои холӣ барои ҷувздони ~/Ҳуҷҷатҳо истифода шавад."
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:1
 msgid "Activation of this plugin"
 msgstr "Фаъолшавии ин плагин"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:2
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:2
 msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
 msgstr "Оё ин плагин тавассути gnome-settings-daemon фаъол мешавад ё не"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:3
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:3
 msgid "Priority to use for this plugin"
 msgstr "Бартарӣ дар истифодаи ин плагин"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:4
 msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
 msgstr ""
 "Бартарӣ дар истифодаи ин плагин дар навбати оғози кори gnome-settings-daemon"
@@ -142,41 +169,37 @@ msgstr "Хатои кушодани `%s': %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Хатои замима кардани тасвири диск: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:110
+#: ../src/disks/gduapplication.c:114
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Хатои кушодани %s: %s"
 
-#: ../src/disks/gduapplication.c:117
+#: ../src/disks/gduapplication.c:121
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Хатои ҷустуҷӯи дастгоҳи манъшуда барои %s"
 
-#: ../src/disks/gduapplication.c:158
+#: ../src/disks/gduapplication.c:143
 msgid "Select device"
 msgstr "Интихоб кардани дастгоҳ"
 
-#: ../src/disks/gduapplication.c:159
+#: ../src/disks/gduapplication.c:144
 msgid "Format selected device"
 msgstr "Формат кардани дастгоҳи интихобшуда"
 
-#: ../src/disks/gduapplication.c:160
+#: ../src/disks/gduapplication.c:145
 msgid "Parent window XID for the format dialog"
 msgstr "XID-и равзанаи асосӣ барои равзанаи гуфтугӯи формат"
 
-#: ../src/disks/gduapplication.c:161
+#: ../src/disks/gduapplication.c:146
 msgid "Restore disk image"
 msgstr "Барқарорсозии тасвири диск"
 
-#: ../src/disks/gduapplication.c:162
-msgid "Show help options"
-msgstr "Намоиши имконоти кӯмак"
-
-#: ../src/disks/gduapplication.c:191
+#: ../src/disks/gduapplication.c:181
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--дастгоҳи-формат шояд якҷоя бо --дастгоҳи-манъ истиофда шавад\n"
 
-#: ../src/disks/gduapplication.c:197
+#: ../src/disks/gduapplication.c:187
 msgid "--format-device must be specified when using --xid\n"
 msgstr "--формат-дастгоҳ ҳангоми истифода бояд махсус бошад --xid\n"
 
@@ -185,7 +208,7 @@ msgstr "--формат-дастгоҳ ҳангоми истифода бояд �
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:311
+#: ../src/disks/gduapplication.c:297
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1043,27 +1066,27 @@ msgid "Assessment"
 msgstr "Баҳогузорӣ"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/disks/gdubenchmarkdialog.c:327
+#: ../src/disks/gdubenchmarkdialog.c:328
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d МБ/с"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/disks/gdubenchmarkdialog.c:332
+#: ../src/disks/gdubenchmarkdialog.c:333
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g мс"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: ../src/disks/gdubenchmarkdialog.c:640
+#: ../src/disks/gdubenchmarkdialog.c:641
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:864
+#: ../src/disks/gdubenchmarkdialog.c:656 ../src/disks/gdubenchmarkdialog.c:865
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1075,115 +1098,115 @@ msgstr[1] "%u намуна"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: ../src/disks/gdubenchmarkdialog.c:696
+#: ../src/disks/gdubenchmarkdialog.c:697
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (%s пеш)"
 
-#: ../src/disks/gdubenchmarkdialog.c:708
+#: ../src/disks/gdubenchmarkdialog.c:709
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "Ҳеҷ гуна иттилооти афзорсанҷӣ дастрас намебошад"
 
-#: ../src/disks/gdubenchmarkdialog.c:713
+#: ../src/disks/gdubenchmarkdialog.c:714
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "Кушодани дастгоҳ..."
 
-#: ../src/disks/gdubenchmarkdialog.c:717
+#: ../src/disks/gdubenchmarkdialog.c:718
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Андозагирии меъёри интиқол (%2.1f%% тамом шуд)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:724
+#: ../src/disks/gdubenchmarkdialog.c:725
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "андозагирии замони дастрасӣ (%2.1f%% тамом шуд)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:787
+#: ../src/disks/gdubenchmarkdialog.c:788
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Хатогӣ ба вучуд омадааст"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:862
+#: ../src/disks/gdubenchmarkdialog.c:863
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f миллисония"
 
-#: ../src/disks/gdubenchmarkdialog.c:1174
+#: ../src/disks/gdubenchmarkdialog.c:1175
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Хатои дарёфти андозаи дастгоҳ: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1184
+#: ../src/disks/gdubenchmarkdialog.c:1185
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Хатои дарёфти андозаи саҳифа: %m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1218
-#: ../src/disks/gdubenchmarkdialog.c:1281
-#: ../src/disks/gdubenchmarkdialog.c:1300
+#: ../src/disks/gdubenchmarkdialog.c:1219
+#: ../src/disks/gdubenchmarkdialog.c:1282
+#: ../src/disks/gdubenchmarkdialog.c:1301
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Хатои ҷустуҷӯи ҷобаҷокунии %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1229
+#: ../src/disks/gdubenchmarkdialog.c:1230
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Хатои хондани пешакии %s аз ҷуброни %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1241
+#: ../src/disks/gdubenchmarkdialog.c:1242
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Хатои ҷустуҷӯи ҷобаҷокунии %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1255
+#: ../src/disks/gdubenchmarkdialog.c:1256
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Хатои хондани %s аз ҷобаҷокунии %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1290
+#: ../src/disks/gdubenchmarkdialog.c:1291
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Хатои хондани дубораи %lld байт аз ҷобаҷокунии %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1311
+#: ../src/disks/gdubenchmarkdialog.c:1312
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Хатои навиштани %lld байт дар ҷобаҷокунии %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1321
+#: ../src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Пешбинишуда барои навиштани %lld байт, танҳо %lld: %m навишт"
 
-#: ../src/disks/gdubenchmarkdialog.c:1331
+#: ../src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Хатои ҳамоҳангсозӣ (дар ҷобаҷокунии %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1372
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Хатои ҷустуҷӯи ҷобаҷокунии  %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1383
+#: ../src/disks/gdubenchmarkdialog.c:1384
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1897,7 +1920,7 @@ msgstr "Хатои кушодани қулфи дастоҳи дорои рам�
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Гузарвожаи рамзгузорӣ аз ҳалқаи калидӣ бозёбӣ шудааст"
 
-#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2022
+#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:1989
 msgid "No Media"
 msgstr "Медиа нест"
 
@@ -1971,7 +1994,7 @@ msgstr ""
 "фоидаовар аст, ки шумо тағйир ёфтани файли интихобшударо намехоҳед."
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1346
+#: ../src/disks/gduwindow.c:1313
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -1980,7 +2003,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1354
+#: ../src/disks/gduwindow.c:1321
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -1989,7 +2012,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1362
+#: ../src/disks/gduwindow.c:1329
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -1998,12 +2021,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1370
+#: ../src/disks/gduwindow.c:1337
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1385
+#: ../src/disks/gduwindow.c:1352
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2012,13 +2035,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1395
+#: ../src/disks/gduwindow.c:1362
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1712
+#: ../src/disks/gduwindow.c:1679
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Танҳо барои хондан)"
@@ -2027,7 +2050,7 @@ msgstr "%s (Танҳо барои хондан)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1750
+#: ../src/disks/gduwindow.c:1717
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2036,7 +2059,7 @@ msgstr "%s боқӣ монд (%s/сон)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1758
+#: ../src/disks/gduwindow.c:1725
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2047,7 +2070,7 @@ msgstr "%s боқӣ мондааст"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1773
+#: ../src/disks/gduwindow.c:1740
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s аз %s – %s"
@@ -2056,17 +2079,17 @@ msgstr "%s аз %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1860
+#: ../src/disks/gduwindow.c:1827
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1932 ../src/disks/gduwindow.c:2307
+#: ../src/disks/gduwindow.c:1899 ../src/disks/gduwindow.c:2274
 msgid "Block device is empty"
 msgstr "Дастгоҳи манъ холӣ аст"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1955
+#: ../src/disks/gduwindow.c:1922
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2075,11 +2098,11 @@ msgstr "Номаълум (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2110
+#: ../src/disks/gduwindow.c:2077
 msgid "Connected to another seat"
 msgstr "Ба курсии дигар пайваст шуд"
 
-#: ../src/disks/gduwindow.c:2255
+#: ../src/disks/gduwindow.c:2222
 msgid "Loop device is empty"
 msgstr "Дастгоҳи ҳалқавӣ холӣ аст"
 
@@ -2089,61 +2112,61 @@ msgstr "Дастгоҳи ҳалқавӣ холӣ аст"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2465
+#: ../src/disks/gduwindow.c:2432
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s холӣ (%.1f%% пур)"
 
-#: ../src/disks/gduwindow.c:2495
+#: ../src/disks/gduwindow.c:2462
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Номаълум"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2523
+#: ../src/disks/gduwindow.c:2490
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Решаи системаи файл"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2531
+#: ../src/disks/gduwindow.c:2498
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Ба %s васл шудааст"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2537
+#: ../src/disks/gduwindow.c:2504
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ҷудо шудааст"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2560
+#: ../src/disks/gduwindow.c:2527
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Фаъол"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2533
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ғайрифаъол"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2579
+#: ../src/disks/gduwindow.c:2546
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Кушодашуда"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2552
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Қулфшуда"
 
-#: ../src/disks/gduwindow.c:2595
+#: ../src/disks/gduwindow.c:2562
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Қисмбандии густурда"
@@ -2152,37 +2175,37 @@ msgstr "Қисмбандии густурда"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2582
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2715
+#: ../src/disks/gduwindow.c:2682
 msgid "Unallocated Space"
 msgstr "Фазои таъиннашуда"
 
-#: ../src/disks/gduwindow.c:3061
+#: ../src/disks/gduwindow.c:3028
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Хатогӣ ҳангоми кӯшиши гузоштани драйвер дар ҳолати омодаи кор рух дод"
 
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:3074
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Хатогӣ ҳангоми кӯшиши бедор кардани драйвер аз ҳолати омодаи кор рух дод"
 
-#: ../src/disks/gduwindow.c:3152
+#: ../src/disks/gduwindow.c:3119
 msgid "Error powering off drive"
 msgstr "Хатои диски хомӯш кардан"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3204
+#: ../src/disks/gduwindow.c:3171
 msgid "Are you sure you want to power off the drives?"
 msgstr "Оё мутмаин ҳастед, ки драйверҳоро хомӯш кардан мехоҳед?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3206
+#: ../src/disks/gduwindow.c:3173
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2190,55 +2213,55 @@ msgstr ""
 "Ин амалиёт системаро барои хомӯш кардан ва тоза кардани драйверҳои зерин "
 "омода менамояд."
 
-#: ../src/disks/gduwindow.c:3210
+#: ../src/disks/gduwindow.c:3177
 msgid "_Power Off"
 msgstr "_Хомӯш кардан"
 
-#: ../src/disks/gduwindow.c:3287
+#: ../src/disks/gduwindow.c:3254
 msgid "Error mounting filesystem"
 msgstr "Хатои васлкунии ситемаи файл"
 
-#: ../src/disks/gduwindow.c:3326 ../src/libgdu/gduutils.c:1050
+#: ../src/disks/gduwindow.c:3293 ../src/libgdu/gduutils.c:1049
 msgid "Error unmounting filesystem"
 msgstr "Хатои ҷудокунии ситемаи файл"
 
-#: ../src/disks/gduwindow.c:3468
+#: ../src/disks/gduwindow.c:3435
 msgid "Error deleting partition"
 msgstr "Хатои несткунии қисмбандӣ"
 
-#: ../src/disks/gduwindow.c:3505
+#: ../src/disks/gduwindow.c:3472
 msgid "Are you sure you want to delete the partition?"
 msgstr "Оё шумо боварӣ доред, ки ин қимбандиро нест кардан мехоҳед?"
 
-#: ../src/disks/gduwindow.c:3506
+#: ../src/disks/gduwindow.c:3473
 msgid "All data on the partition will be lost"
 msgstr "Ҳамаи иттилоот дар ин қисмбандӣ гум мешаванд"
 
-#: ../src/disks/gduwindow.c:3507
+#: ../src/disks/gduwindow.c:3474
 msgid "_Delete"
 msgstr "_Нест кардан"
 
-#: ../src/disks/gduwindow.c:3538
+#: ../src/disks/gduwindow.c:3505
 msgid "Error ejecting media"
 msgstr "Хатои баровардани медиа"
 
-#: ../src/disks/gduwindow.c:3605
+#: ../src/disks/gduwindow.c:3572
 msgid "Error locking encrypted device"
 msgstr "Хатои қулф кардани дастгоҳи рамзгузоришуда"
 
-#: ../src/disks/gduwindow.c:3669
+#: ../src/disks/gduwindow.c:3636
 msgid "Error starting swap"
 msgstr "Хатои оғози мубодила"
 
-#: ../src/disks/gduwindow.c:3706
+#: ../src/disks/gduwindow.c:3673
 msgid "Error stopping swap"
 msgstr "Хатои ба охир расонидани мубодила"
 
-#: ../src/disks/gduwindow.c:3748
+#: ../src/disks/gduwindow.c:3715
 msgid "Error setting autoclear flag"
 msgstr "Хатои танзими байрақи худпокшав"
 
-#: ../src/disks/gduwindow.c:3801 ../src/disks/gduwindow.c:3865
+#: ../src/disks/gduwindow.c:3768 ../src/disks/gduwindow.c:3832
 msgid "Error canceling job"
 msgstr "Хатои бекор кардани шуғл"
 
@@ -3295,7 +3318,7 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "Тасвирҳои диск (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:430
+#: ../src/libgdu/gduutils.c:429
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3303,7 +3326,7 @@ msgstr[0] "%d сол"
 msgstr[1] "%d сол"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:437
+#: ../src/libgdu/gduutils.c:436
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3311,7 +3334,7 @@ msgstr[0] "%d моҳ"
 msgstr[1] "%d моҳ"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:444
+#: ../src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3319,7 +3342,7 @@ msgstr[0] "%d рӯз"
 msgstr[1] "%d рӯз"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:451
+#: ../src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3327,7 +3350,7 @@ msgstr[0] "%d соат"
 msgstr[1] "%d соат"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:458
+#: ../src/libgdu/gduutils.c:457
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3335,7 +3358,7 @@ msgstr[0] "%d дақиқа"
 msgstr[1] "%d дақиқа"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:465
+#: ../src/libgdu/gduutils.c:464
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3343,7 +3366,7 @@ msgstr[0] "%d сония"
 msgstr[1] "%d сония"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:472
+#: ../src/libgdu/gduutils.c:471
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3351,66 +3374,66 @@ msgstr[0] "%d миллисония"
 msgstr[1] "%d миллисония"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:536
+#: ../src/libgdu/gduutils.c:535
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s ва %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:541
+#: ../src/libgdu/gduutils.c:540
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s ва %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:546
+#: ../src/libgdu/gduutils.c:545
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s ва %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:551
+#: ../src/libgdu/gduutils.c:550
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s ва %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:562
+#: ../src/libgdu/gduutils.c:561
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s ва %s"
 
-#: ../src/libgdu/gduutils.c:571
+#: ../src/libgdu/gduutils.c:570
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Каматр аз як дақиқа"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:576
+#: ../src/libgdu/gduutils.c:575
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:582
+#: ../src/libgdu/gduutils.c:581
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:724
+#: ../src/libgdu/gduutils.c:723
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Дастгоҳҳои осебдида"
 
-#: ../src/libgdu/gduutils.c:1070
+#: ../src/libgdu/gduutils.c:1069
 msgid "Error locking device"
 msgstr "Хатои қулфи дастгоҳ"
 
@@ -3439,6 +3462,9 @@ msgstr "Намоиши мушкилии дискҳо"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Оиди мушкилишҳои дискҳо ва дастгоҳҳои захиравӣ огоҳӣ медиҳад"
+
+#~ msgid "Show help options"
+#~ msgstr "Намоиши имконоти кӯмак"
 
 #~ msgid "Format…"
 #~ msgstr "Формат..."

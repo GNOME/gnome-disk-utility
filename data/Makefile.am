@@ -26,7 +26,7 @@ gsettings_SCHEMAS = 						\
 	org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml	\
 	$(NULL)
 
-appstream_in_files = gnome-disks.appdata.xml.in
+appstream_in_files = org.gnome.DiskUtility.appdata.xml.in
 appstream_XML = $(appstream_in_files:.xml.in=.xml)
 
 @APPSTREAM_XML_RULES@

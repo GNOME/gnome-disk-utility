@@ -34,6 +34,8 @@ appstream_XML = $(appstream_in_files:.xml.in=.xml)
 @INTLTOOL_XML_RULE@
 @GSETTINGS_RULES@
 
+DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
+
 EXTRA_DIST = 			\
 	$(appstream_in_files)	\
 	$(desktop_in_files)	\

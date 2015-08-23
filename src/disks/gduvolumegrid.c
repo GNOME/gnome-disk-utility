@@ -66,6 +66,15 @@ struct GridElement
   gboolean show_configured;
 };
 
+static GridElement *
+grid_element_new (GduVolumeGridElementType type)
+{
+  GridElement *element = g_new0 (GridElement, 1);
+  element->type = type;
+  element->size_ratio = 1.0;
+  return element;
+}
+
 static void
 grid_element_free (GridElement *element)
 {
@@ -1151,12 +1160,9 @@ maybe_add_crypto (GduVolumeGrid    *grid,
       else
         {
           element->show_padlock_open = TRUE;
-          cleartext_element = g_new0 (GridElement, 1);
-          cleartext_element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
+          cleartext_element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE);
           cleartext_element->parent = element;
-          cleartext_element->size_ratio = 1.0;
           cleartext_element->object = g_object_ref (cleartext_object);
-          cleartext_element->offset = 0;
           cleartext_element->size = udisks_block_get_size (udisks_object_peek_block (cleartext_object));
           grid_element_set_details (grid, cleartext_element);
 
@@ -1214,8 +1220,7 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
 
       if (begin - prev_end > free_space_slack)
         {
-          element = g_new0 (GridElement, 1);
-          element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE;
+          element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE);
           element->parent = parent;
           element->size_ratio = ((gdouble) (begin - prev_end)) / top_size;
           element->prev = prev_element;
@@ -1228,8 +1233,7 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
           grid_element_set_details (grid, element);
         }
 
-      element = g_new0 (GridElement, 1);
-      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
+      element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE);
       element->parent = parent;
       element->size_ratio = ((gdouble) size) / top_size;
       element->object = g_object_ref (object);
@@ -1265,8 +1269,7 @@ recompute_grid_add_partitions (GduVolumeGrid  *grid,
     }
   if (top_size + top_offset - prev_end > free_space_slack)
     {
-      element = g_new0 (GridElement, 1);
-      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE;
+      element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE);
       element->parent = parent;
       element->size_ratio = ((gdouble) (top_size - prev_end)) / top_size;
       element->prev = prev_element;
@@ -1328,11 +1331,7 @@ recompute_grid (GduVolumeGrid *grid)
 
   if (grid->block_object == NULL)
     {
-      element = g_new0 (GridElement, 1);
-      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
-      element->size_ratio = 1.0;
-      element->offset = 0;
-      element->size = 0;
+      element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA);
       if (grid->elements != NULL)
         {
           ((GridElement *) grid->elements->data)->next = element;
@@ -1395,21 +1394,14 @@ recompute_grid (GduVolumeGrid *grid)
           if (drive != NULL && !udisks_drive_get_media_change_detected (drive))
             {
               /* If we can't detect media change, just always assume media */
-              element = g_new0 (GridElement, 1);
-              element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
-              element->size_ratio = 1.0;
-              element->offset = 0;
-              element->size = 0;
+              element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE);
               element->object = g_object_ref (grid->block_object);
               grid->elements = g_list_append (grid->elements, element);
               grid_element_set_details (grid, element);
             }
           else
             {
-              element = g_new0 (GridElement, 1);
-              element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
-              element->size_ratio = 1.0;
-              element->offset = 0;
+              element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA);
               element->size = top_size;
               if (grid->elements != NULL)
                 {
@@ -1424,10 +1416,7 @@ recompute_grid (GduVolumeGrid *grid)
       else
         {
           GridElement *cleartext_element;
-          element = g_new0 (GridElement, 1);
-          element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE;
-          element->size_ratio = 1.0;
-          element->offset = 0;
+          element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE);
           element->size = top_size;
           element->object = g_object_ref (grid->block_object);
           if (grid->elements != NULL)
@@ -1476,11 +1465,7 @@ recompute_grid (GduVolumeGrid *grid)
   /* ensure we have at least one element */
   if (grid->elements == NULL)
     {
-      element = g_new0 (GridElement, 1);
-      element->type = GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA;
-      element->size_ratio = 1.0;
-      element->offset = 0;
-      element->size = 0;
+      element = grid_element_new (GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA);
       grid->elements = g_list_append (NULL, element);
       grid_element_set_details (grid, element);
     }

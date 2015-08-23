@@ -955,16 +955,19 @@ create_header (GduWindow *window)
   button = window->devtab_drive_power_off_button = gtk_button_new ();
   image = gtk_image_new_from_icon_name ("system-shutdown-symbolic", GTK_ICON_SIZE_MENU);
   gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_tooltip_text (button, _("Power off this disk"));
   gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
   button = window->devtab_drive_eject_button = gtk_button_new ();
   image = gtk_image_new_from_icon_name ("media-eject-symbolic", GTK_ICON_SIZE_MENU);
   gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_tooltip_text (button, _("Eject this disk"));
   gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
   button = window->devtab_drive_loop_detach_button = gtk_button_new ();
   image = gtk_image_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_MENU);
   gtk_button_set_image (GTK_BUTTON (button), image);
+  gtk_widget_set_tooltip_text (button, _("Detach this loop device"));
   gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
   return header;

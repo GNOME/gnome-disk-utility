@@ -57,7 +57,7 @@ struct GridElement
   guint height;
   GridEdgeFlags edge_flags;
 
-  gchar *markup;
+  gchar *text;
 
   gboolean show_spinner;
   gboolean show_padlock_open;
@@ -80,7 +80,7 @@ grid_element_free (GridElement *element)
 {
   if (element->object != NULL)
     g_object_unref (element->object);
-  g_free (element->markup);
+  g_free (element->text);
   g_list_foreach (element->embedded_elements, (GFunc) grid_element_free, NULL);
   g_list_free (element->embedded_elements);
 
@@ -765,7 +765,7 @@ render_element (GduVolumeGrid *grid,
   GtkStateFlags state;
   GtkJunctionSides sides;
   GtkBorder border;
-  const gchar *markup;
+  const gchar *text;
 
   animate_spinner = FALSE;
 
@@ -906,10 +906,10 @@ render_element (GduVolumeGrid *grid,
 
   /* text */
   layout = pango_cairo_create_layout (cr);
-  markup = element->markup;
-  if (markup == NULL)
-    markup = grid->no_media_string;
-  pango_layout_set_markup (layout, markup, -1);
+  text = element->text;
+  if (text == NULL)
+    text = grid->no_media_string;
+  pango_layout_set_text (layout, text, -1);
   desc = pango_font_description_from_string ("Sans 7.0");
   pango_layout_set_font_description (layout, desc);
   pango_font_description_free (desc);
@@ -1561,7 +1561,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
       {
-        element->markup = NULL; /* means that grid->no_media_string will be used */
+        element->text = NULL; /* means that grid->no_media_string will be used */
 
         if (grid->block_object != NULL)
           {
@@ -1577,9 +1577,9 @@ grid_element_set_details (GduVolumeGrid  *grid,
       {
         gchar *size_str;
         size_str = udisks_client_get_size_for_display (grid->client, element->size, FALSE, FALSE);
-        element->markup = g_strdup_printf ("%s\n%s",
-                                           C_("volume-grid", "Free Space"),
-                                           size_str);
+        element->text = g_strdup_printf ("%s\n%s",
+                                         C_("volume-grid", "Free Space"),
+                                         size_str);
         g_free (size_str);
       }
       break;
@@ -1689,7 +1689,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
             g_free (type_for_display);
           }
         g_ptr_array_add (lines, NULL);
-        element->markup = g_strjoinv ("\n", (gchar **) lines->pdata);
+        element->text = g_strjoinv ("\n", (gchar **) lines->pdata);
         g_ptr_array_unref (lines);
         g_free (size_str);
       }

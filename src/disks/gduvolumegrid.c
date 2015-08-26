@@ -236,6 +236,7 @@ static void
 gdu_volume_grid_constructed (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
+  AtkObject *accessible;
 
   g_signal_connect (grid->client,
                     "changed",
@@ -252,6 +253,10 @@ gdu_volume_grid_constructed (GObject *object)
       grid->focused = element;
     }
 
+  accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
+  atk_object_set_name (accessible, _("Volumes Grid"));
+  atk_object_set_role (accessible, ATK_ROLE_PANEL);
+
   if (G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed (object);
 }
@@ -263,6 +268,7 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
   gboolean handled;
   GridElement *target;
+  AtkObject *accessible;
 
   handled = FALSE;
 
@@ -341,6 +347,9 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
             g_signal_emit (grid,
                            signals[CHANGED_SIGNAL],
                            0);
+
+            accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
+            atk_object_set_name (accessible, target->text);
           }
         gtk_widget_queue_draw (GTK_WIDGET (grid));
       }
@@ -374,6 +383,7 @@ gdu_volume_grid_button_press_event (GtkWidget      *widget,
                                     GdkEventButton *event)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
+  AtkObject *accessible;
   gboolean handled;
 
   handled = FALSE;
@@ -395,6 +405,9 @@ gdu_volume_grid_button_press_event (GtkWidget      *widget,
                          0);
           gtk_widget_grab_focus (GTK_WIDGET (grid));
           gtk_widget_queue_draw (GTK_WIDGET (grid));
+
+          accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
+          atk_object_set_name (accessible, element->text);
         }
       handled = TRUE;
     }

@@ -233,6 +233,18 @@ gdu_volume_grid_set_property (GObject      *object,
 }
 
 static void
+gdu_volume_grid_set_accessible_name_for_grid_element (GduVolumeGrid *grid, GridElement *element)
+{
+  AtkObject *accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
+  const char *accessible_name;
+
+  accessible_name = element->text ? element->text :
+                                    gdu_volume_grid_get_no_media_string (grid);
+
+  atk_object_set_name (accessible, accessible_name);
+}
+
+static void
 gdu_volume_grid_constructed (GObject *object)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
@@ -245,6 +257,10 @@ gdu_volume_grid_constructed (GObject *object)
 
   recompute_grid (grid);
 
+  accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
+  atk_object_set_role (accessible, ATK_ROLE_PANEL);
+  atk_object_set_name (accessible, _("Volumes Grid"));
+
   /* select the first element */
   if (grid->elements != NULL)
     {
@@ -252,10 +268,6 @@ gdu_volume_grid_constructed (GObject *object)
       grid->selected = element;
       grid->focused = element;
     }
-
-  accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
-  atk_object_set_name (accessible, _("Volumes Grid"));
-  atk_object_set_role (accessible, ATK_ROLE_PANEL);
 
   if (G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed (object);
@@ -268,7 +280,6 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
   gboolean handled;
   GridElement *target;
-  AtkObject *accessible;
 
   handled = FALSE;
 
@@ -348,8 +359,7 @@ gdu_volume_grid_key_press_event (GtkWidget      *widget,
                            signals[CHANGED_SIGNAL],
                            0);
 
-            accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
-            atk_object_set_name (accessible, target->text);
+            gdu_volume_grid_set_accessible_name_for_grid_element (grid, target);
           }
         gtk_widget_queue_draw (GTK_WIDGET (grid));
       }
@@ -383,7 +393,6 @@ gdu_volume_grid_button_press_event (GtkWidget      *widget,
                                     GdkEventButton *event)
 {
   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
-  AtkObject *accessible;
   gboolean handled;
 
   handled = FALSE;
@@ -406,8 +415,7 @@ gdu_volume_grid_button_press_event (GtkWidget      *widget,
           gtk_widget_grab_focus (GTK_WIDGET (grid));
           gtk_widget_queue_draw (GTK_WIDGET (grid));
 
-          accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
-          atk_object_set_name (accessible, element->text);
+          gdu_volume_grid_set_accessible_name_for_grid_element (grid, element);
         }
       handled = TRUE;
     }
@@ -1488,6 +1496,8 @@ recompute_grid (GduVolumeGrid *grid)
     grid->selected = grid->elements->data;
   if (grid->focused == NULL)
     grid->focused = grid->elements->data;
+
+  gdu_volume_grid_set_accessible_name_for_grid_element (grid, grid->selected);
 
   /* queue a redraw */
   gtk_widget_queue_draw (GTK_WIDGET (grid));

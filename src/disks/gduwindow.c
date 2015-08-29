@@ -3971,7 +3971,7 @@ on_activate_link (GtkLabel    *label,
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef struct {
-  GSimpleAsyncResult *simple;
+  GTask *task;
   GduWindow *window;
 } EnsureListData;
 
@@ -3979,7 +3979,7 @@ static void
 ensure_list_data_free (EnsureListData *data)
 {
   g_object_unref (data->window);
-  g_object_unref (data->simple);
+  g_object_unref (data->task);
   g_slice_free (EnsureListData, data);
 }
 
@@ -3989,8 +3989,8 @@ ensure_list_cb (GObject      *source_object,
                 gpointer      user_data)
 {
   EnsureListData *data = user_data;
-  g_simple_async_result_set_op_res_gpointer (data->simple, g_object_ref (res), g_object_unref);
-  g_simple_async_result_complete (data->simple);
+  g_task_set_task_data (data->task, g_object_ref (res), g_object_unref);
+  g_task_return_pointer (data->task, NULL, NULL);
   ensure_list_data_free (data);
 }
 
@@ -4003,11 +4003,10 @@ gdu_window_ensure_unused_list (GduWindow            *window,
 {
   EnsureListData *data = g_slice_new0 (EnsureListData);
   data->window = g_object_ref (window);
-  data->simple = g_simple_async_result_new (G_OBJECT (window),
-                                            callback,
-                                            user_data,
-                                            gdu_window_ensure_unused_list);
-  g_simple_async_result_set_check_cancellable (data->simple, cancellable);
+  data->task = g_task_new (G_OBJECT (window),
+                           cancellable,
+                           callback,
+                           user_data);
   gdu_utils_ensure_unused_list (window->client,
                                 GTK_WINDOW (window),
                                 objects,
@@ -4021,15 +4020,13 @@ gdu_window_ensure_unused_list_finish (GduWindow     *window,
                                       GAsyncResult  *res,
                                       GError       **error)
 {
-  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
+  GTask *task = G_TASK (res);
 
-  g_return_val_if_fail (G_IS_ASYNC_RESULT (res), FALSE);
+  g_return_val_if_fail (G_IS_TASK (res), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_window_ensure_unused_list);
-
   return gdu_utils_ensure_unused_list_finish (window->client,
-                                              G_ASYNC_RESULT (g_simple_async_result_get_op_res_gpointer (simple)),
+                                              G_ASYNC_RESULT (g_task_get_task_data (task)),
                                               error);
 }
 

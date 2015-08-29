@@ -1004,7 +1004,7 @@ typedef struct
   GtkWindow *parent_window;
   GList *objects;
   GList *object_iter;
-  GSimpleAsyncResult *simple;
+  GTask *task;
   GCancellable *cancellable; /* borrowed ref */
 } UnuseData;
 
@@ -1013,7 +1013,7 @@ unuse_data_free (UnuseData *data)
 {
   g_clear_object (&data->client);
   g_list_free_full (data->objects, g_object_unref);
-  g_clear_object (&data->simple);
+  g_clear_object (&data->task);
   g_slice_free (UnuseData, data);
 }
 
@@ -1027,9 +1027,12 @@ unuse_data_complete (UnuseData    *data,
       gdu_utils_show_error (data->parent_window,
                             error_message,
                             error);
-      g_simple_async_result_take_error (data->simple, error);
+      g_task_return_error (data->task, error);
     }
-  g_simple_async_result_complete_in_idle (data->simple);
+  else
+    {
+      g_task_return_pointer (data->task, NULL, NULL);
+    }
   unuse_data_free (data);
 }
 
@@ -1141,11 +1144,10 @@ gdu_utils_ensure_unused_list (UDisksClient         *client,
   g_list_foreach (data->objects, (GFunc) g_object_ref, NULL);
   data->object_iter = data->objects;
   data->cancellable = cancellable;
-  data->simple = g_simple_async_result_new (G_OBJECT (client),
-                                            callback,
-                                            user_data,
-                                            gdu_utils_ensure_unused_list);
-  g_simple_async_result_set_check_cancellable (data->simple, cancellable);
+  data->task = g_task_new (G_OBJECT (client),
+                           cancellable,
+                           callback,
+                           user_data);
 
   unuse_data_iterate (data);
 }
@@ -1155,21 +1157,18 @@ gdu_utils_ensure_unused_list_finish (UDisksClient  *client,
                                      GAsyncResult  *res,
                                      GError       **error)
 {
-  GSimpleAsyncResult *simple = G_SIMPLE_ASYNC_RESULT (res);
-  gboolean ret = FALSE;
+  GTask *task = G_TASK (res);
 
-  g_return_val_if_fail (G_IS_ASYNC_RESULT (res), FALSE);
+  g_return_val_if_fail (G_IS_TASK (res), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  g_warn_if_fail (g_simple_async_result_get_source_tag (simple) == gdu_utils_ensure_unused_list);
+  if (g_task_had_error (task))
+    {
+      g_task_propagate_pointer (task, error);
+      return FALSE;
+    }
 
-  if (g_simple_async_result_propagate_error (simple, error))
-    goto out;
-
-  ret = TRUE;
-
- out:
-  return ret;
+  return TRUE;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

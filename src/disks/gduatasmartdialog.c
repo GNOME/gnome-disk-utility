@@ -1654,6 +1654,8 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
         case 2:
           refresh_do (data);
           break;
+        default:
+          g_assert_not_reached ();
         }
 
       if (response < 0)

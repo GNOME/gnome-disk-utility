@@ -1687,6 +1687,9 @@ update_all (GduWindow *window)
     case DETAILS_PAGE_DEVICE:
       update_device_page (window, &show_flags);
       break;
+
+    default:
+      g_assert_not_reached ();
     }
   update_for_show_flags (window, &show_flags);
 }
@@ -2908,6 +2911,9 @@ update_device_page (GduWindow      *window,
             case GDU_VOLUME_GRID_ELEMENT_TYPE_FREE_SPACE:
               update_device_page_for_free_space (window, object, block, size, show_flags);
               break;
+
+            default:
+              g_assert_not_reached ();
             }
         }
     }

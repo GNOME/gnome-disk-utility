@@ -1579,6 +1579,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
   switch (element->type)
     {
     case GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER:
+    default:
       g_assert_not_reached ();
       break;
 

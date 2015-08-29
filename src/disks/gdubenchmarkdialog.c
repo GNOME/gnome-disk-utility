@@ -748,6 +748,9 @@ update_updated_label (DialogData *data)
       gtk_label_set_markup (GTK_LABEL (data->updated_label), s);
       g_free (s);
       break;
+
+    default:
+      g_assert_not_reached ();
     }
   G_UNLOCK (bm_lock);
 }
@@ -1657,6 +1660,9 @@ gdu_benchmark_dialog_show (GduWindow    *window,
         case 1: /* abort benchmark */
           abort_benchmark (data);
           break;
+
+        default:
+          g_assert_not_reached ();
         }
 
       if (response < 0)

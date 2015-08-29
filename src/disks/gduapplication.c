@@ -160,7 +160,6 @@ gdu_application_command_line (GApplication            *_app,
 {
   GduApplication *app = GDU_APPLICATION (_app);
   UDisksObject *object_to_select = NULL;
-  GError *error = NULL;
   gint ret = 1;
   const gchar *opt_block_device = NULL;
   gchar *error_message = NULL;

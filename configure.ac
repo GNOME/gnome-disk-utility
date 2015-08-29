@@ -23,56 +23,6 @@ LT_INIT
 
 AX_COMPILER_FLAGS([WARN_CFLAGS],[WARN_LDFLAGS])
 
-CC_CHECK_CFLAGS_APPEND([                          \
-        -Waggregate-return                        \
-        -Wall                                     \
-        -W                                        \
-        -Wextra                                   \
-        -Wcast-align                              \
-        -Wdeclaration-after-statement             \
-        -Wendif-labels                            \
-        -Wformat-security                         \
-        -Wimplicit-function-declaration           \
-        -Woverflow                                \
-        -Wformat-nonliteral                       \
-        -Wformat=2                                \
-        -Wimplicit                                \
-        -Winit-self                               \
-        -Wlogical-op                              \
-        -Wmissing-declarations                    \
-        -Wmissing-format-attribute                \
-        -Wmissing-include-dirs                    \
-        -Wmissing-noreturn                        \
-        -Wmissing-prototypes                      \
-        -Wnested-externs                          \
-        -Wno-inline                               \
-        -Wno-long-long                            \
-        -Wno-missing-field-initializers           \
-        -Wno-overlength-strings                   \
-        -Wno-switch-enum                          \
-        -Wno-unused-parameter                     \
-        -Wno-unused-result                        \
-        -Wold-style-definition                    \
-        -Wpacked                                  \
-        -Wpointer-arith                           \
-        -Wshadow                                  \
-        -Wsign-compare                            \
-        -Wstrict-aliasing=2                       \
-        -Wstrict-prototypes                       \
-        -Wundef                                   \
-        -Wuninitialized                           \
-        -Wmaybe-uninitialized                     \
-        -Wunsafe-loop-optimizations               \
-        -Wvla                                     \
-        -Wwrite-strings                           \
-        -fdata-sections                           \
-        -fdiagnostics-show-option                 \
-        -ffast-math                               \
-        -ffunction-sections                       \
-        -fno-common                               \
-        -fno-strict-aliasing                      \
-])
-
 AC_MSG_CHECKING([for valid fallocate() function])
 AC_LINK_IFELSE([
 AC_LANG_PROGRAM([[

@@ -173,7 +173,7 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
 
   label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
   gtk_label_set_markup (GTK_LABEL (label), markup);
@@ -658,7 +658,7 @@ get_widget_for_object (UDisksClient *client,
 
   label = gtk_label_new (udisks_object_info_get_one_liner (info));
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
   g_object_unref (info);
@@ -719,7 +719,7 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
         }
 
       label = gtk_label_new (NULL);
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       /* Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action */
       gtk_label_set_markup (GTK_LABEL (label), C_("confirmation-list-of-devices", "Affected Devices"));
       attrs = pango_attr_list_new ();

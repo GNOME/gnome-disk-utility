@@ -202,7 +202,7 @@ gdu_password_strength_widget_constructed (GObject *object)
       GtkWidget *label;
       gchar *s;
       label = gtk_label_new (NULL);
-      gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
       s = g_strdup_printf ("<small>%s</small>",
                            g_dpgettext2 (NULL, "Password strength", hint_labels[n]));
       gtk_label_set_markup (GTK_LABEL (label), s);

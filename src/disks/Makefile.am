@@ -99,6 +99,10 @@ gnome_disks_LDADD = 					\
         $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 
+gnome_disks_LDFLAGS =					\
+	$(WARN_LDFLAGS)					\
+	$(NULL)
+
 EXTRA_DIST = 						\
 	gduenumtypes.h.template				\
 	gduenumtypes.c.template				\

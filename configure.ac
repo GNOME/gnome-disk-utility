@@ -1,29 +1,27 @@
 AC_INIT([GNOME Disk Utility],[3.17.3],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
 
-AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip tar-ustar])
+AX_IS_RELEASE([git-directory])
 
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 
-AM_MAINTAINER_MODE([enable])
-AM_SILENT_RULES([yes])
-
-GNOME_DEBUG_CHECK
-
 AC_PROG_CC
 AC_HEADER_STDC
 
+AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip tar-ustar])
+AM_MAINTAINER_MODE([enable])
+AM_SILENT_RULES([yes])
+
 LT_PREREQ([2.2])
 LT_INIT
-
-APPSTREAM_XML
 
 # ***********
 # Compilation
 # ***********
 
-GNOME_COMPILE_WARNINGS([maximum])
+AX_COMPILER_FLAGS([WARN_CFLAGS],[WARN_LDFLAGS])
 
 CC_CHECK_CFLAGS_APPEND([                          \
         -Waggregate-return                        \
@@ -123,6 +121,7 @@ PKG_CHECK_MODULES([LIBLZMA], [liblzma >= $LIBLZMA_REQUIRED])
 gsd_plugindir='${libdir}/gnome-settings-daemon-3.0'
 AC_SUBST([gsd_plugindir])
 
+AX_REQUIRE_DEFINED([GLIB_GSETTINGS])
 GLIB_GSETTINGS
 
 AC_PATH_PROG([GLIB_COMPILE_RESOURCES], [glib-compile-resources])
@@ -158,6 +157,13 @@ if test "x$enable_gsd_plugin" != "xno"; then
 fi
 AM_CONDITIONAL([USE_GSD_PLUGIN], [test "$msg_gsd_plugin" = "yes"])
 
+# *******
+# Appdata
+# *******
+
+AX_REQUIRE_DEFINED([APPSTREAM_XML])
+APPSTREAM_XML
+
 # ********************
 # Internationalization
 # ********************
@@ -167,6 +173,7 @@ if test -z "$XSLTPROC"; then
   AC_MSG_ERROR([xsltproc is needed])
 fi
 
+AX_REQUIRE_DEFINED([IT_PROG_INTLTOOL])
 IT_PROG_INTLTOOL([0.50.2])
 
 GETTEXT_PACKAGE=gnome-disk-utility

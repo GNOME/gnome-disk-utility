@@ -49,6 +49,10 @@ libgdu_la_CFLAGS = 					\
 	-lm						\
 	$(NULL)
 
+libgdu_la_LDFLAGS =					\
+	$(WARN_LDFLAGS)					\
+	$(NULL)
+
 libgdu_la_LIBADD = 					\
 	$(GLIB2_LIBS)					\
 	$(UDISKS2_LIBS)					\

@@ -29,6 +29,10 @@ gnome_disk_image_mounter_LDADD = 			\
         $(top_builddir)/src/libgdu/libgdu.la        	\
 	$(NULL)
 
+gnome_disk_image_mounter_LDFLAGS =			\
+	$(WARN_LDFLAGS)					\
+	$(NULL)
+
 clean-local :
 	rm -f *~
 

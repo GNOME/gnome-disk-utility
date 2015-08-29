@@ -175,6 +175,7 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
   gtk_label_set_markup (GTK_LABEL (label), markup);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 

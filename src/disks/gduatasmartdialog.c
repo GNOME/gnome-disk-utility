@@ -1506,7 +1506,6 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   gtk_tree_view_set_model (GTK_TREE_VIEW (data->attributes_treeview),
                            GTK_TREE_MODEL (data->attributes_list));
 
-  gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (data->attributes_treeview), TRUE);
   gtk_tree_view_set_tooltip_column (GTK_TREE_VIEW (data->attributes_treeview), LONG_DESC_COLUMN);
 
   column = gtk_tree_view_column_new ();

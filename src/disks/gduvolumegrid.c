@@ -1537,17 +1537,160 @@ gdu_volume_grid_get_selected_size (GduVolumeGrid *grid)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
-maybe_add_partition (GduVolumeGrid   *grid,
-                     GPtrArray       *lines,
-                     UDisksPartition *partition)
+static gboolean
+any_jobs_running (GduVolumeGrid  *grid,
+                  GridElement    *element)
+{
+  GList *jobs;
+  gboolean result;
+
+  jobs = udisks_client_get_jobs_for_object (grid->client, element->object);
+  jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (grid->application, element->object));
+  result = (jobs != NULL);
+  g_list_free_full (jobs, g_object_unref);
+
+  return result;
+}
+
+static gboolean
+is_block_swap (UDisksBlock *block)
+{
+  const gchar *usage;
+  const gchar *type;
+
+  usage = udisks_block_get_id_usage (block);
+  type = udisks_block_get_id_type (block);
+
+  return g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0;
+}
+
+static gboolean
+is_filesystem_mounted (UDisksFilesystem *filesystem)
+{
+  const gchar *const *mount_points;
+
+  mount_points = udisks_filesystem_get_mount_points (filesystem);
+  return g_strv_length ((gchar **) mount_points) > 0;
+}
+
+static gboolean
+is_extended_partition (UDisksPartition *partition)
+{
+  return partition != NULL && udisks_partition_get_is_container (partition);
+}
+
+/* Check if the block is a drive that cannot report media change
+   (e.g. a floppy drive) */
+static gboolean
+no_media_change_detection (GduVolumeGrid  *grid,
+                           UDisksBlock    *block)
+{
+  UDisksDrive *drive;
+  gboolean result;
+
+  drive = udisks_client_get_drive_for_block (grid->client, block);
+  result = (drive != NULL && !udisks_drive_get_media_change_detected (drive));
+  g_clear_object (&drive);
+
+  return result;
+}
+
+static gboolean
+is_swap_active (UDisksObject *object)
+{
+  UDisksSwapspace *swapspace;
+
+  swapspace = udisks_object_peek_swapspace (object);
+  return (swapspace != NULL) && udisks_swapspace_get_active (swapspace);
+}
+
+static gboolean
+is_block_configured (UDisksBlock *block)
+{
+  return g_variant_n_children (udisks_block_get_configuration (block)) > 0;
+}
+
+/* Return a human-readable string like "84 GB Ext4". Result should
+ * be freed with g_free() */
+static gchar *
+create_common_device_info_string (UDisksClient *client,
+                                  GridElement  *element)
+{
+  const gboolean NO_LONG_STRING = FALSE;
+  const gboolean NO_USE_POW2 = FALSE;
+
+  UDisksBlock *block;
+  UDisksPartition *partition;
+
+  const gchar *usage;
+  const gchar *type;
+  const gchar *version;
+
+  gchar *size_str;
+
+  block = udisks_object_peek_block (element->object);
+  partition = udisks_object_peek_partition (element->object);
+
+  usage = udisks_block_get_id_usage (block);
+  type = udisks_block_get_id_type (block);
+  version = udisks_block_get_id_version (block);
+
+  size_str = udisks_client_get_size_for_display (client,
+                                                 element->size,
+                                                 NO_USE_POW2,
+                                                 NO_LONG_STRING);
+
+  if (is_extended_partition (partition))
+    {
+      return size_str;
+    }
+  else
+    {
+      gchar *type_for_display;
+      gchar *size_with_type_str;
+
+      type_for_display = udisks_client_get_id_for_display (client,
+                                                           usage,
+                                                           type,
+                                                           version,
+                                                           NO_LONG_STRING);
+
+      size_with_type_str = g_strdup_printf ("%s %s", size_str, type_for_display);
+      g_free (type_for_display);
+
+      return size_with_type_str;
+    }
+}
+
+/* Result should be freed with g_free. */
+static gchar *
+create_filesystem_label_string (const gchar *label)
+{
+  if (strlen (label) == 0)
+    return g_strdup (C_("volume-grid", "Filesystem"));
+  else
+    return g_strdup (label);
+}
+
+/* Result should be freed with g_free. */
+static gchar *
+create_swap_label_string (const gchar *label)
+{
+  if (strlen (label) == 0)
+    return g_strdup (C_("volume-grid", "Swap"));
+  else
+    return g_strdup (label);
+}
+
+/* Return a human-readable string that identifies a partition,
+ * e.g. "Partition 7". Result should be freed with g_free. */
+static gchar *
+create_partition_name_string (UDisksPartition *partition)
 {
   const gchar *name;
   guint number;
-  gchar *s;
 
-  if (partition == NULL)
-    goto out;
+  g_assert (partition != NULL);
 
   name = udisks_partition_get_name (partition);
   number = udisks_partition_get_number (partition);
@@ -1557,19 +1700,113 @@ maybe_add_partition (GduVolumeGrid   *grid,
       /* Translators: This is shown in the volume grid for a partition with a name/label.
        *              The %d is the partition number. The %s is the name
        */
-      s = g_strdup_printf (C_("volume-grid", "Partition %u: %s"), number, name);
+      return g_strdup_printf (C_("volume-grid", "Partition %u: %s"), number, name);
     }
   else
     {
       /* Translators: This is shown in the volume grid for a partition with no name/label.
        *              The %d is the partition number
        */
-      s = g_strdup_printf (C_("volume-grid", "Partition %u"), number);
+      return g_strdup_printf (C_("volume-grid", "Partition %u"), number);
     }
-  g_ptr_array_add (lines, s);
+}
 
- out:
-  ;
+static void
+append_partition_name_string (GPtrArray *lines, UDisksPartition *partition)
+{
+  if (partition)
+    g_ptr_array_add (lines, create_partition_name_string (partition));
+}
+
+/* Join an array of strings with newlines. The input lines must not be
+ * used after calling, and the result should be freed with g_free. */
+static gchar *
+consume_array_as_multiline_string (GPtrArray *lines)
+{
+  gchar *result;
+
+  g_ptr_array_add (lines, NULL);
+  result = g_strjoinv ("\n", (gchar **) lines->pdata);
+  g_ptr_array_unref (lines);
+
+  return result;
+}
+
+/* Update text and status for a grid element that represents a device.
+ *
+ * Example of the text:
+ *
+ *   MyCoolName
+ *   Partition 7
+ *   84 GB Ext4
+ *
+ * Also updates status fields such as whether a partition is mounted.
+ */
+static void
+grid_element_set_details_for_device (GduVolumeGrid  *grid,
+                                     GridElement    *element)
+{
+  UDisksBlock *block;
+  const gchar *label;
+  gchar *common_info_str;
+  UDisksFilesystem *filesystem;
+  UDisksPartition *partition;
+  GPtrArray *lines;
+
+  block = udisks_object_peek_block (element->object);
+  filesystem = udisks_object_peek_filesystem (element->object);
+  partition = udisks_object_peek_partition (element->object);
+  label = udisks_block_get_id_label (block);
+
+  lines = g_ptr_array_new_with_free_func (g_free);
+  common_info_str = create_common_device_info_string (grid->client, element);
+
+  if (is_extended_partition (partition))
+    {
+      g_ptr_array_add (lines,
+                       g_strdup (C_("volume-grid", "Extended Partition")));
+      append_partition_name_string (lines, partition);
+      g_ptr_array_add (lines, common_info_str);
+    }
+  else if (filesystem != NULL)
+    {
+      if (no_media_change_detection (grid, block))
+        {
+          /* This is for e.g. /dev/fd0 - if we can't track media
+           * changes then we don't know the size nor usage/type ... so
+           * just print the device name
+           */
+          g_ptr_array_add (lines, udisks_block_dup_preferred_device (block));
+          g_free (common_info_str);
+        }
+      else
+        {
+          g_ptr_array_add (lines, create_filesystem_label_string (label));
+          append_partition_name_string (lines, partition);
+          g_ptr_array_add (lines, common_info_str);
+        }
+
+      element->show_mounted = is_filesystem_mounted (filesystem);
+      element->unused = MAX (0, gdu_utils_get_unused_for_block (grid->client,
+                                                                block));
+    }
+  else if (is_block_swap (block))
+    {
+      g_ptr_array_add (lines, create_swap_label_string (label));
+      append_partition_name_string (lines, partition);
+      g_ptr_array_add (lines, common_info_str);
+
+      element->show_mounted = is_swap_active (element->object);
+    }
+  else
+    {
+      append_partition_name_string (lines, partition);
+      g_ptr_array_add (lines, common_info_str);
+    }
+
+  element->show_configured = is_block_configured (block);
+  element->show_spinner = any_jobs_running (grid, element);
+  element->text = consume_array_as_multiline_string (lines);
 }
 
 static void
@@ -1610,112 +1847,7 @@ grid_element_set_details (GduVolumeGrid  *grid,
 
     case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
       {
-        UDisksBlock *block;
-        gchar *size_str;
-        const gchar *usage;
-        const gchar *type;
-        const gchar *version;
-        const gchar *label;
-        gchar *type_for_display;
-        UDisksFilesystem *filesystem;
-        UDisksPartition *partition;
-        GPtrArray *lines;
-        GList *jobs;
-
-        size_str = udisks_client_get_size_for_display (grid->client, element->size, FALSE, FALSE);
-        block = udisks_object_peek_block (element->object);
-        filesystem = udisks_object_peek_filesystem (element->object);
-        partition = udisks_object_peek_partition (element->object);
-
-        usage = udisks_block_get_id_usage (block);
-        type = udisks_block_get_id_type (block);
-        version = udisks_block_get_id_version (block);
-        label = udisks_block_get_id_label (block);
-
-        lines = g_ptr_array_new_with_free_func (g_free);
-
-        if (g_variant_n_children (udisks_block_get_configuration (block)) > 0)
-          element->show_configured = TRUE;
-
-        jobs = udisks_client_get_jobs_for_object (grid->client, element->object);
-        jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (grid->application, element->object));
-        element->show_spinner = (jobs != NULL);
-        g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
-        g_list_free (jobs);
-
-        if (partition != NULL && udisks_partition_get_is_container (partition))
-          {
-            g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Extended Partition")));
-            maybe_add_partition (grid, lines, partition);
-            g_ptr_array_add (lines, g_strdup (size_str));
-          }
-        else if (filesystem != NULL)
-          {
-            const gchar *const *mount_points;
-            UDisksDrive *drive;
-
-            drive = udisks_client_get_drive_for_block (grid->client, block);
-            if (drive != NULL && !udisks_drive_get_media_change_detected (drive))
-              {
-                /* This is for e.g. /dev/fd0 - e.g. if we can't track media
-                 * changes then we don't know the size nor usage/type ... so
-                 * just print the device name
-                 */
-                g_ptr_array_add (lines, udisks_block_dup_preferred_device (block));
-              }
-            else
-              {
-                type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
-                if (strlen (label) > 0)
-                  g_ptr_array_add (lines, g_strdup (label));
-                else
-                  g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Filesystem")));
-                maybe_add_partition (grid, lines, partition);
-                g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
-                g_free (type_for_display);
-              }
-            g_clear_object (&drive);
-
-            mount_points = udisks_filesystem_get_mount_points (filesystem);
-            if (g_strv_length ((gchar **) mount_points) > 0)
-              element->show_mounted = TRUE;
-
-            element->unused = gdu_utils_get_unused_for_block (grid->client, block);
-            if (element->unused < 0)
-              element->unused = 0;
-          }
-        else if (g_strcmp0 (usage, "other") == 0 && g_strcmp0 (type, "swap") == 0)
-          {
-            UDisksSwapspace *swapspace;
-
-            label = udisks_block_get_id_label (block);
-            type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
-            if (strlen (label) == 0)
-              g_ptr_array_add (lines, g_strdup (C_("volume-grid", "Swap")));
-            else
-              g_ptr_array_add (lines, g_strdup (label));
-            maybe_add_partition (grid, lines, partition);
-            g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
-            g_free (type_for_display);
-
-            swapspace = udisks_object_peek_swapspace (element->object);
-            if (swapspace != NULL)
-              {
-                if (udisks_swapspace_get_active (swapspace))
-                  element->show_mounted = TRUE;
-              }
-          }
-        else
-          {
-            maybe_add_partition (grid, lines, partition);
-            type_for_display = udisks_client_get_id_for_display (grid->client, usage, type, version, FALSE);
-            g_ptr_array_add (lines, g_strdup_printf ("%s %s", size_str, type_for_display));
-            g_free (type_for_display);
-          }
-        g_ptr_array_add (lines, NULL);
-        element->text = g_strjoinv ("\n", (gchar **) lines->pdata);
-        g_ptr_array_unref (lines);
-        g_free (size_str);
+        grid_element_set_details_for_device (grid, element);
       }
       break;
     }

@@ -9,7 +9,7 @@
 # chunk is een 'atomic unit of data', onvertaald laten
 # data scrubbing: gegevenszuivering
 # device: apparaat
-# disk image: schijfimage
+# disk image: schijfimage. Aug 2015: schijfkopie - Hannie
 # drive: schijfstation
 # passphrase: wachtwoord
 # read rate: leessnelheid
@@ -17,18 +17,20 @@
 # startup queue: opstartwachtrij
 # RAID array: RAID-array
 # Standby Timeout: standby-wachttijd
+# S.M.A.R.T. (SMART) staat voor Self-Monitoring, Analysis and Reporting Technology System - Hannie
 #
 # Sander Pientka <cumulus0007@gmail.com>, 2010.
 # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011, 2012, 2015.
 # Wouter Bolsterlee <wbolster@gnome.org>, 2011, 2012.
 # Erwin Poeze <donnut@outlook.com>, 2013, 2014.
+# Nathan Follens <nthn@unseen.is>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-04-02 18:58+0000\n"
-"PO-Revision-Date: 2015-04-03 12:01+0200\n"
+"POT-Creation-Date: 2015-09-02 07:09+0000\n"
+"PO-Revision-Date: 2015-09-02 17:54+0200\n"
 "Last-Translator: Hannie Dumoleyn <hannie@ubuntu-nl.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -41,29 +43,56 @@ msgstr ""
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
-msgstr "Schijfimagekoppelaar"
+msgstr "Schijfkopiekoppelaar"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:2
 msgid "Mount Disk Images"
-msgstr "Schijfimages aankoppelen"
+msgstr "Schijfkopie aankoppelen"
 
 #: ../data/gnome-disk-image-writer.desktop.in.h:1
 msgid "Disk Image Writer"
-msgstr "Schijfimageschrijver"
+msgstr "Schijfkopieschrijver"
 
 #: ../data/gnome-disk-image-writer.desktop.in.h:2
 msgid "Write Disk Images to Devices"
-msgstr "Schijfimages naar apparaten schrijven"
+msgstr "Schijfkopieën naar apparaten schrijven"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1040
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
+msgid "GNOME Disks"
+msgstr "Gnome Schijven"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:2
+msgid "Disk management utility for GNOME"
+msgstr "Hulpprogramma voor schijfbeheer voor Gnome"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:3
+msgid ""
+"Disks provides an easy way to inspect, format, partition, and configure "
+"disks and block devices."
+msgstr ""
+"Met Schijven kunt u op een eenvoudige manier schijven en blokapparaten "
+"inspecteren, formatteren, partitioneren en configureren."
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:4
+msgid ""
+"Using Disks, you can view SMART data, manage RAID devices, benchmark "
+"physical disks, and image USB sticks. Tasks are executed in the background, "
+"even after the application has been closed by the user."
+msgstr ""
+"Met Schijven kunt u SMART-gegevens bekijken, RAID-apparaten beheren, fysieke "
+"schijven benchmarken en schijfkopieën maken van USB-sticks. Taken worden "
+"uitgevoerd op de achtergrond, zelfs nadat de toepassing door de gebruiker is "
+"gesloten."
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
 msgid "Disks"
 msgstr "Schijven"
 
-#: ../data/gnome-disks.desktop.in.h:2
+#: ../data/org.gnome.DiskUtility.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "Schijfstations en media beheren"
 
-#: ../data/gnome-disks.desktop.in.h:3
+#: ../data/org.gnome.DiskUtility.desktop.in.h:3
 msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
@@ -72,34 +101,34 @@ msgstr ""
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;schijf;herstellen;"
 "terugzetten;"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+#: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
 msgstr ""
-"Standaardlocatie voor de dialoogvensters ‘Schijfimage aanmaken/terugzetten’"
+"Standaardlocatie voor de dialoogvensters ‘Schijfkopie aanmaken/terugzetten’"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+#: ../data/org.gnome.Disks.gschema.xml.h:2
 msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
-"Standaardlocatie voor de dialoogvensters ‘Schijfimage aanmaken/terugzetten’. "
+"Standaardlocatie voor de dialoogvensters ‘Schijfkopie aanmaken/terugzetten’. "
 "Als dit leeg is wordt de map ~/Documenten gebruikt."
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:1
 msgid "Activation of this plugin"
 msgstr "Deze plug-in activeren"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:2
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:2
 msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
 msgstr ""
 "Geeft aan of deze plug-in door de gnome-settings-daemon geactiveerd moet "
 "worden"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:3
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:3
 msgid "Priority to use for this plugin"
 msgstr "Te gebruiken prioriteit voor deze plug-in"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:4
 msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
 msgstr ""
 "Te gebruiken prioriteit voor deze plug-in in de opstartwachtrij van de gnome-"
@@ -111,16 +140,16 @@ msgstr "Er is een fout opgetreden"
 
 #: ../src/disk-image-mounter/main.c:67
 msgid "Allow writing to the image"
-msgstr "Schrijven naar het imagebestand toestaan"
+msgstr "Schrijven naar de schijfkopie toestaan"
 
 #: ../src/disk-image-mounter/main.c:82
 msgid "Select Disk Image(s) to Mount"
-msgstr "Te koppelen schijfimage(s) selecteren"
+msgstr "Te koppelen schijfkopie(en) selecteren"
 
 #: ../src/disk-image-mounter/main.c:85
-#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:725
+#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:727
 msgid "_Cancel"
-msgstr "_Geannuleerd"
+msgstr "_Annuleren"
 
 #: ../src/disk-image-mounter/main.c:86
 msgid "_Mount"
@@ -129,7 +158,7 @@ msgstr "_Aankoppelen"
 #. Add a RO check button that defaults to RO
 #: ../src/disk-image-mounter/main.c:94
 msgid "Set up _read-only mount"
-msgstr "Aankoppelen _alleen-lezen instellen"
+msgstr "_Alleen-lezen-aankoppeling instellen"
 
 #: ../src/disk-image-mounter/main.c:95
 msgid ""
@@ -137,7 +166,7 @@ msgid ""
 "the underlying disk image to be modified"
 msgstr ""
 "Als dit is aangevinkt, dan zal de aankoppeling alleen-lezen zijn. Dit is "
-"handig wanneer u niet wilt dat de onderliggende schijfimage gewijzigd wordt"
+"handig wanneer u niet wilt dat de onderliggende schijfkopie gewijzigd wordt"
 
 #: ../src/disk-image-mounter/main.c:136
 #, c-format
@@ -146,7 +175,7 @@ msgstr "Fout bij verbinden met udisks-daemon: %s (%s, %d)"
 
 #: ../src/disk-image-mounter/main.c:144
 msgid "Attach and mount one or more disk image files."
-msgstr "Eén of meer schijfimagebestanden toevoegen en aankoppelen."
+msgstr "Eén of meer schijfkopiebestanden toevoegen en aankoppelen."
 
 #: ../src/disk-image-mounter/main.c:192
 #, c-format
@@ -161,43 +190,39 @@ msgstr "Fout bij openen van ‘%s’: %m"
 #: ../src/disk-image-mounter/main.c:220
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
-msgstr "Fout bij het toevoegen van schijfimage: %s (%s, %d)"
+msgstr "Fout bij het toevoegen van schijfkopie: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:110
+#: ../src/disks/gduapplication.c:114
 #, c-format
 msgid "Error opening %s: %s"
-msgstr "Fout bij openen van ‘%s’: %s"
+msgstr "Fout bij openen van %s: %s"
 
-#: ../src/disks/gduapplication.c:117
+#: ../src/disks/gduapplication.c:121
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Fout bij opzoeken blokapparaat voor %s"
 
-#: ../src/disks/gduapplication.c:158
+#: ../src/disks/gduapplication.c:143
 msgid "Select device"
 msgstr "Een apparaat selecteren"
 
-#: ../src/disks/gduapplication.c:159
+#: ../src/disks/gduapplication.c:144
 msgid "Format selected device"
 msgstr "Geselecteerd apparaat formatteren"
 
-#: ../src/disks/gduapplication.c:160
+#: ../src/disks/gduapplication.c:145
 msgid "Parent window XID for the format dialog"
 msgstr "Oudervenster XID voor het dialoogvenster ‘Formatteren’"
 
-#: ../src/disks/gduapplication.c:161
+#: ../src/disks/gduapplication.c:146
 msgid "Restore disk image"
-msgstr "Schijfimage terugzetten"
+msgstr "Schijfkopie terugzetten"
 
-#: ../src/disks/gduapplication.c:162
-msgid "Show help options"
-msgstr "Hulpopties tonen"
-
-#: ../src/disks/gduapplication.c:191
+#: ../src/disks/gduapplication.c:180
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device moet samen met --block-device gebruikt worden\n"
 
-#: ../src/disks/gduapplication.c:197
+#: ../src/disks/gduapplication.c:186
 msgid "--format-device must be specified when using --xid\n"
 msgstr "--format-device moet opgegeven worden als --xid wordt gebruikt\n"
 
@@ -206,7 +231,7 @@ msgstr "--format-device moet opgegeven worden als --xid wordt gebruikt\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:311
+#: ../src/disks/gduapplication.c:296
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -240,7 +265,7 @@ msgstr "Doorvoersnelheid"
 
 #: ../src/disks/gduatasmartdialog.c:162
 msgid "Average efficiency of the disk"
-msgstr "Gemiddelde snelheid van de schijf"
+msgstr "Gemiddelde efficiëntie van de schijf"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -309,7 +334,7 @@ msgstr "Frequentie van fouten tijdens het positioneren"
 #.
 #: ../src/disks/gduatasmartdialog.c:211
 msgid "Seek Timer Performance"
-msgstr "Zoektimerprestaties"
+msgstr "Zoektijdprestaties"
 
 #: ../src/disks/gduatasmartdialog.c:212
 msgid "Average efficiency of operations while positioning"
@@ -346,7 +371,7 @@ msgstr "Aantal herhaalde calibratiepogingen"
 
 #: ../src/disks/gduatasmartdialog.c:236
 msgid "Number of attempts to calibrate the device"
-msgstr "Aantal herhaalde pogingen om het apparaat te calibreren"
+msgstr "Aantal herhaalde pogingen om het apparaat te kalibreren"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -860,12 +885,12 @@ msgstr "N.v.t."
 #: ../src/disks/gduatasmartdialog.c:767
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
-msgstr "Laatste met succes voltooide zelftest"
+msgstr "De laatste zelftest werd met succes afgerond"
 
 #: ../src/disks/gduatasmartdialog.c:771
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
-msgstr "De laatste zelftest werd geannuleerd"
+msgstr "De laatste zelftest werd afgebroken"
 
 #: ../src/disks/gduatasmartdialog.c:775
 msgctxt "smart-self-test-result"
@@ -927,11 +952,11 @@ msgstr "%s geleden"
 
 #: ../src/disks/gduatasmartdialog.c:903
 msgid "SMART is not supported"
-msgstr "SMART niet ondersteund"
+msgstr "SMART wordt niet ondersteund"
 
 #: ../src/disks/gduatasmartdialog.c:911
 msgid "SMART is not enabled"
-msgstr "SMART niet ingeschakeld"
+msgstr "SMART is niet ingeschakeld"
 
 #: ../src/disks/gduatasmartdialog.c:921
 msgid "Self-test in progress"
@@ -1023,192 +1048,192 @@ msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "De poging om te bepalen of SMART is ingeschakeld is mislukt"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1515
+#: ../src/disks/gduatasmartdialog.c:1514
 msgid "ID"
 msgstr "Id"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1527
+#: ../src/disks/gduatasmartdialog.c:1526
 msgid "Attribute"
 msgstr "Attribuut"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../src/disks/gduatasmartdialog.c:1541
+#: ../src/disks/gduatasmartdialog.c:1540
 msgid "Value"
 msgstr "Waarde"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: ../src/disks/gduatasmartdialog.c:1553
+#: ../src/disks/gduatasmartdialog.c:1552
 msgid "Normalized"
 msgstr "Genormaliseerd"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: ../src/disks/gduatasmartdialog.c:1565
+#: ../src/disks/gduatasmartdialog.c:1564
 msgid "Threshold"
 msgstr "Drempelwaarde"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: ../src/disks/gduatasmartdialog.c:1577
+#: ../src/disks/gduatasmartdialog.c:1576
 msgid "Worst"
 msgstr "Laagst"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: ../src/disks/gduatasmartdialog.c:1589
+#: ../src/disks/gduatasmartdialog.c:1588
 msgid "Type"
 msgstr "Type"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: ../src/disks/gduatasmartdialog.c:1601
+#: ../src/disks/gduatasmartdialog.c:1600
 msgid "Updates"
 msgstr "Bijwerkwijze"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/disks/gduatasmartdialog.c:1613 ../src/disks/ui/disks.ui.h:8
+#: ../src/disks/gduatasmartdialog.c:1612 ../src/disks/ui/disks.ui.h:8
 msgid "Assessment"
 msgstr "Schatting"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/disks/gdubenchmarkdialog.c:327
+#: ../src/disks/gdubenchmarkdialog.c:333
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/disks/gdubenchmarkdialog.c:332
+#: ../src/disks/gdubenchmarkdialog.c:338
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: ../src/disks/gdubenchmarkdialog.c:640
+#: ../src/disks/gdubenchmarkdialog.c:662
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:864
+#: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
 #, c-format
-msgid "%d sample"
-msgid_plural "%d samples"
-msgstr[0] "%d steekproef"
-msgstr[1] "%d steekproeven"
+msgid "%u sample"
+msgid_plural "%u samples"
+msgstr[0] "%u steekproef"
+msgstr[1] "%u steekproeven"
 
 #. Translators: The first %s is the date and time the benchmark took place in the preferred
 #. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: ../src/disks/gdubenchmarkdialog.c:696
+#: ../src/disks/gdubenchmarkdialog.c:718
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (%s geleden)"
 
-#: ../src/disks/gdubenchmarkdialog.c:708
+#: ../src/disks/gdubenchmarkdialog.c:730
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "Geen benchmarkgegevens beschikbaar"
 
-#: ../src/disks/gdubenchmarkdialog.c:713
+#: ../src/disks/gdubenchmarkdialog.c:735
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "Apparaat openen…"
 
-#: ../src/disks/gdubenchmarkdialog.c:717
+#: ../src/disks/gdubenchmarkdialog.c:739
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Bezig met meten van overdrachtssnelheid (%2.1f%% voltooid)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:724
+#: ../src/disks/gdubenchmarkdialog.c:746
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "Bezig met meten van de toegangstijd (%2.1f%% voltooid)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:787
+#: ../src/disks/gdubenchmarkdialog.c:812
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Er is een fout opgetreden"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:862
+#: ../src/disks/gdubenchmarkdialog.c:887
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f ms"
 
-#: ../src/disks/gdubenchmarkdialog.c:1174
+#: ../src/disks/gdubenchmarkdialog.c:1199
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Fout bij het ophalen van de grootte van het apparaat: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1184
+#: ../src/disks/gdubenchmarkdialog.c:1209
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Fout bij het ophalen van de paginagrootte: %m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1218
-#: ../src/disks/gdubenchmarkdialog.c:1281
-#: ../src/disks/gdubenchmarkdialog.c:1300
+#: ../src/disks/gdubenchmarkdialog.c:1243
+#: ../src/disks/gdubenchmarkdialog.c:1306
+#: ../src/disks/gdubenchmarkdialog.c:1325
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Fout bij positioneren van offset %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1229
+#: ../src/disks/gdubenchmarkdialog.c:1254
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Fout bij het vooraf lezen van %s van offset %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1241
+#: ../src/disks/gdubenchmarkdialog.c:1266
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Fout bij positioneren van offset %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1255
+#: ../src/disks/gdubenchmarkdialog.c:1280
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Fout bij het lezen van %s van offset %s"
 
-#: ../src/disks/gdubenchmarkdialog.c:1290
+#: ../src/disks/gdubenchmarkdialog.c:1315
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Fout bij het vooraf lezen van %lld bytes van offset %lld"
 
-#: ../src/disks/gdubenchmarkdialog.c:1311
+#: ../src/disks/gdubenchmarkdialog.c:1336
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Fout bij het schrijven van %lld bytes bij offset %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1321
+#: ../src/disks/gdubenchmarkdialog.c:1346
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Verwachtte %lld bytes te schrijven, slechts %lld geschreven: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1331
+#: ../src/disks/gdubenchmarkdialog.c:1356
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Fout bij het synchroniseren (bij offset %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1396
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Fout bij positioneren van offset %lld: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1383
+#: ../src/disks/gdubenchmarkdialog.c:1408
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1251,7 +1276,7 @@ msgstr "De sterkte van het wachtwoord"
 #: ../src/disks/gducreatediskimagedialog.c:275
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr "Schijfimage van %s (%s).img"
+msgstr "Schijfkopie van %s (%s).img"
 
 #. Translators: A descriptive string for the sound played when
 #. * there's a read error that's being ignored, see
@@ -1259,11 +1284,11 @@ msgstr "Schijfimage van %s (%s).img"
 #.
 #: ../src/disks/gducreatediskimagedialog.c:308
 msgid "Disk image read error"
-msgstr "Lezen schijfimage is mislukt"
+msgstr "Lezen schijfkopie is mislukt"
 
 #: ../src/disks/gducreatediskimagedialog.c:344
 msgid "Allocating Disk Image"
-msgstr "Schijfimage toewijzen"
+msgstr "Schijfkopie toewijzen"
 
 #: ../src/disks/gducreatediskimagedialog.c:348
 msgid "Retrieving DVD keys"
@@ -1281,16 +1306,16 @@ msgstr "%s is onleesbaar (vervangen door nullen)"
 #: ../src/disks/gducreatediskimagedialog.c:411
 #: ../src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
-msgstr "Kopiëren schijfimage is afgerond"
+msgstr "Kopiëren schijfkopie is afgerond"
 
 #: ../src/disks/gducreatediskimagedialog.c:440
 msgid "Error creating disk image"
-msgstr "Aanmaken schijfimage is mislukt"
+msgstr "Aanmaken schijfkopie is mislukt"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:481
 msgid "Unrecoverable read errors while creating disk image"
-msgstr "Onherstelbare leesfouten tijden het aanmaken van een schijfimage"
+msgstr "Onherstelbare leesfouten tijden het aanmaken van een schijfkopie"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -1305,13 +1330,13 @@ msgid ""
 "is scratched or if there is physical damage to the drive"
 msgstr ""
 "%2.1f%% (%s) van de gegevens op apparaat “%s” was onleesbaar en is vervangen "
-"door nullen in het aangemaakte schijfimagebestand. Dit treedt typisch op als "
-"het medium bekrast is of als de schijf fysieke schade heeft. "
+"door nullen in het aangemaakte schijfkopiebestand. Dit gebeurt meestal als "
+"het medium bekrast is of als de schijf fysieke schade heeft."
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: ../src/disks/gducreatediskimagedialog.c:496
 msgid "_Delete Disk Image File"
-msgstr "Schijfimagebestand verwij_deren"
+msgstr "Schijfkopiebestand verwij_deren"
 
 #: ../src/disks/gducreatediskimagedialog.c:724
 #: ../src/disks/gdurestorediskimagedialog.c:747
@@ -1326,7 +1351,7 @@ msgstr "Apparaat heeft grootte 0"
 
 #: ../src/disks/gducreatediskimagedialog.c:765
 msgid "Error allocating space for disk image file: "
-msgstr "Fout bij ruimtetoewijzing voor schijfimagebestand: "
+msgstr "Fout bij ruimtetoewijzing voor schijfkopiebestand: "
 
 #: ../src/disks/gducreatediskimagedialog.c:926
 #, c-format
@@ -1345,20 +1370,20 @@ msgstr ""
 msgid "_Replace"
 msgstr "_Vervangen"
 
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:982
 msgid "Error opening file for writing"
 msgstr "Fout bij het openen van het bestand om te schrijven"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:1002
+#: ../src/disks/gducreatediskimagedialog.c:998
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
-msgstr "Apparaat kopiëren naar schijfimage"
+msgstr "Apparaat kopiëren naar schijfkopie"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:1008
+#: ../src/disks/gducreatediskimagedialog.c:1004
 msgid "Creating Disk Image"
-msgstr "Schijfimage aanmaken"
+msgstr "Schijfkopie aanmaken"
 
 #: ../src/disks/gducreatefilesystemwidget.c:382
 #: ../src/disks/gduformatdiskdialog.c:254
@@ -1766,9 +1791,9 @@ msgstr ""
 
 #: ../src/disks/gdufstabdialog.c:154
 #, c-format
-msgid "Matches partition %d of the device with the given vital product data"
+msgid "Matches partition %u of the device with the given vital product data"
 msgstr ""
-"Komt overeen met partitie %d van het apparaat met de gegeven vitale "
+"Komt overeen met partitie %u van het apparaat met de gegeven vitale "
 "productgegevens"
 
 #: ../src/disks/gdufstabdialog.c:157
@@ -1780,9 +1805,9 @@ msgstr ""
 #: ../src/disks/gdufstabdialog.c:162
 #, c-format
 msgid ""
-"Matches partition %d of any device connected at the given port or address"
+"Matches partition %u of any device connected at the given port or address"
 msgstr ""
-"Komt overeen met partitie %d van elk apparaat aangesloten op de gegeven "
+"Komt overeen met partitie %u van elk apparaat aangesloten op de gegeven "
 "poort of adres"
 
 #: ../src/disks/gdufstabdialog.c:165
@@ -1868,21 +1893,21 @@ msgstr "%s ongecomprimeerd"
 
 #: ../src/disks/gdurestorediskimagedialog.c:302
 msgid "Cannot restore image of size 0"
-msgstr "Kan image met grootte van 0 niet terugzetten"
+msgstr "Kan schijfkopie met grootte van 0 niet terugzetten"
 
 #: ../src/disks/gdurestorediskimagedialog.c:311
 #, c-format
 msgid "The disk image is %s smaller than the target device"
-msgstr "De schijfimage is %s kleiner dan het doelapparaat"
+msgstr "De schijfkopie is %s kleiner dan het doelapparaat"
 
 #: ../src/disks/gdurestorediskimagedialog.c:320
 #, c-format
 msgid "The disk image is %s bigger than the target device"
-msgstr "De schijfimage is %s groter dan het doelapparaat"
+msgstr "De schijfkopie is %s groter dan het doelapparaat"
 
 #: ../src/disks/gdurestorediskimagedialog.c:650
 msgid "Error restoring disk image"
-msgstr "Schijfimage terugzetten is mislukt"
+msgstr "Schijfkopie terugzetten is mislukt"
 
 #: ../src/disks/gdurestorediskimagedialog.c:939
 msgid "Error opening file for reading"
@@ -1896,16 +1921,16 @@ msgstr "Fout bij bepalen van de grootte van het bestand"
 #: ../src/disks/gdurestorediskimagedialog.c:982
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
-msgstr "Schijfimage naar apparaat kopiëren"
+msgstr "Schijfkopie naar apparaat kopiëren"
 
 #. Translators: this is the description of the job
 #: ../src/disks/gdurestorediskimagedialog.c:988
 msgid "Restoring Disk Image"
-msgstr "Schijfimage terugzetten"
+msgstr "Schijfkopie terugzetten"
 
 #: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
-msgstr "Weet u zeker dat u de schijfimage naar het apparaat wilt schrijven?"
+msgstr "Weet u zeker dat u de schijfkopie naar het apparaat wilt schrijven?"
 
 #: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
@@ -1923,72 +1948,77 @@ msgstr "Fout bij ontgrendelen van versleuteld apparaat"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Het versleutelingswachtwoord werd uit de sleutelbos opgehaald"
 
-#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2022
+#: ../src/disks/gduvolumegrid.c:262
+#| msgid "Volume Group"
+msgid "Volumes Grid"
+msgstr "Voluminaraster"
+
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2035
 msgid "No Media"
 msgstr "Geen media"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1552
+#: ../src/disks/gduvolumegrid.c:1560
 #, c-format
 msgctxt "volume-grid"
-msgid "Partition %d: %s"
-msgstr "Partitie %d: %s"
+msgid "Partition %u: %s"
+msgstr "Partitie %u: %s"
 
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1559
+#: ../src/disks/gduvolumegrid.c:1567
 #, c-format
 msgctxt "volume-grid"
-msgid "Partition %d"
-msgstr "Partitie %d"
+msgid "Partition %u"
+msgstr "Partitie %u"
 
-#: ../src/disks/gduvolumegrid.c:1596
+#: ../src/disks/gduvolumegrid.c:1605
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Vrije ruimte"
 
-#: ../src/disks/gduvolumegrid.c:1639
+#: ../src/disks/gduvolumegrid.c:1648
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Uitgebreide partitie"
 
-#: ../src/disks/gduvolumegrid.c:1663
+#: ../src/disks/gduvolumegrid.c:1672
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Bestandssysteem"
 
-#: ../src/disks/gduvolumegrid.c:1685
+#: ../src/disks/gduvolumegrid.c:1694
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Wisselbestand"
 
-#: ../src/disks/gduwindow.c:584
+#: ../src/disks/gduwindow.c:586
 msgid "Error deleting loop device"
 msgstr "Fout bij verwijderen loop device"
 
-#: ../src/disks/gduwindow.c:684 ../src/disks/gduwindow.c:755
+#: ../src/disks/gduwindow.c:686 ../src/disks/gduwindow.c:757
 msgid "Error attaching disk image"
-msgstr "Toevoegen schijfimage"
+msgstr "Toevoegen schijfkopie"
 
-#: ../src/disks/gduwindow.c:722
+#: ../src/disks/gduwindow.c:724
 msgid "Select Disk Image to Attach"
-msgstr "Toe te voegen schijfimage selecteren"
+msgstr "Toe te voegen schijfkopie selecteren"
 
-#: ../src/disks/gduwindow.c:726
+#: ../src/disks/gduwindow.c:728
 msgid "_Attach"
 msgstr "_Toevoegen"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:733
+#: ../src/disks/gduwindow.c:735
 msgid "Set up _read-only loop device"
 msgstr "Lusapparaat op _alleen-lezen instellen"
 
-#: ../src/disks/gduwindow.c:734
+#: ../src/disks/gduwindow.c:736
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -1996,8 +2026,23 @@ msgstr ""
 "Als dit is aangevinkt, dan zal het lusapparaat alleen-lezen zijn. Dit is "
 "handig wanneer u niet wilt dat het onderliggende bestand gewijzigd wordt"
 
+#: ../src/disks/gduwindow.c:958
+#| msgid "Power off the drive"
+msgid "Power off this disk"
+msgstr "Deze schijf uitschakelen"
+
+#: ../src/disks/gduwindow.c:964
+#| msgid "Eject the media"
+msgid "Eject this disk"
+msgstr "Deze schijf uitwerpen"
+
+#: ../src/disks/gduwindow.c:970
+#| msgid "Detach Loop Device"
+msgid "Detach this loop device"
+msgstr "Dit lusapparaat ontkoppelen"
+
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1346
+#: ../src/disks/gduwindow.c:1355
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2006,7 +2051,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1354
+#: ../src/disks/gduwindow.c:1363
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2015,7 +2060,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1362
+#: ../src/disks/gduwindow.c:1371
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2024,12 +2069,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1370
+#: ../src/disks/gduwindow.c:1379
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1385
+#: ../src/disks/gduwindow.c:1394
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2038,13 +2083,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1395
+#: ../src/disks/gduwindow.c:1404
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1712
+#: ../src/disks/gduwindow.c:1724
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (alleen-lezen)"
@@ -2053,7 +2098,7 @@ msgstr "%s (alleen-lezen)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1750
+#: ../src/disks/gduwindow.c:1762
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2062,7 +2107,7 @@ msgstr "nog %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1758
+#: ../src/disks/gduwindow.c:1770
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2073,7 +2118,7 @@ msgstr "nog %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1773
+#: ../src/disks/gduwindow.c:1785
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s van %s – %s"
@@ -2082,17 +2127,17 @@ msgstr "%s van %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1860
+#: ../src/disks/gduwindow.c:1872
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1932 ../src/disks/gduwindow.c:2307
+#: ../src/disks/gduwindow.c:1944 ../src/disks/gduwindow.c:2344
 msgid "Block device is empty"
 msgstr "Blokapparaat is leeg"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1955
+#: ../src/disks/gduwindow.c:1967
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2101,11 +2146,11 @@ msgstr "Onbekend (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2110
+#: ../src/disks/gduwindow.c:2136
 msgid "Connected to another seat"
 msgstr "Verbonden met een andere plaats"
 
-#: ../src/disks/gduwindow.c:2255
+#: ../src/disks/gduwindow.c:2282
 msgid "Loop device is empty"
 msgstr "Lusapparaat is leeg"
 
@@ -2115,61 +2160,61 @@ msgstr "Lusapparaat is leeg"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2465
+#: ../src/disks/gduwindow.c:2511
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s beschikbaar (%.1f%% gebruikt)"
 
-#: ../src/disks/gduwindow.c:2495
+#: ../src/disks/gduwindow.c:2541
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Onbekend"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2523
+#: ../src/disks/gduwindow.c:2569
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Bestandssysteem root"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2531
+#: ../src/disks/gduwindow.c:2577
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Gekoppeld aan %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2537
+#: ../src/disks/gduwindow.c:2583
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Niet aangekoppeld"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2560
+#: ../src/disks/gduwindow.c:2606
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Actief"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2612
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Inactief"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2579
+#: ../src/disks/gduwindow.c:2625
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Ontgrendeld"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2631
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Geblokkeerd"
 
-#: ../src/disks/gduwindow.c:2595
+#: ../src/disks/gduwindow.c:2641
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Uitgebreide partitie"
@@ -2178,36 +2223,36 @@ msgstr "Uitgebreide partitie"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2661
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2715
+#: ../src/disks/gduwindow.c:2761
 msgid "Unallocated Space"
 msgstr "Niet-toegewezen ruimte"
 
-#: ../src/disks/gduwindow.c:3061
+#: ../src/disks/gduwindow.c:3110
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "De poging de schijf in de standby-modus te zetten is mislukt"
 
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:3156
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "De poging de schijf vanuit de standby-modus te activeren is mislukt"
 
-#: ../src/disks/gduwindow.c:3152
+#: ../src/disks/gduwindow.c:3201
 msgid "Error powering off drive"
 msgstr "Uitschakelen station is mislukt"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3204
+#: ../src/disks/gduwindow.c:3253
 msgid "Are you sure you want to power off the drives?"
 msgstr "Weet u zeker dat u de schijven wilt uitschakelen?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3206
+#: ../src/disks/gduwindow.c:3255
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2215,55 +2260,55 @@ msgstr ""
 "Met deze bewerking wordt het systeem voorbereid om de volgende schijven uit "
 "te schakelen en te verwijderen. "
 
-#: ../src/disks/gduwindow.c:3210
+#: ../src/disks/gduwindow.c:3259
 msgid "_Power Off"
 msgstr "_Uitgeschakelen"
 
-#: ../src/disks/gduwindow.c:3287
+#: ../src/disks/gduwindow.c:3336
 msgid "Error mounting filesystem"
 msgstr "Aankoppelen bestandssysteem is mislukt"
 
-#: ../src/disks/gduwindow.c:3326 ../src/libgdu/gduutils.c:1050
+#: ../src/disks/gduwindow.c:3375 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "Afkoppelen bestandssysteem is mislukt"
 
-#: ../src/disks/gduwindow.c:3468
+#: ../src/disks/gduwindow.c:3517
 msgid "Error deleting partition"
 msgstr "Verwijderen van partitie is mislukt"
 
-#: ../src/disks/gduwindow.c:3505
+#: ../src/disks/gduwindow.c:3554
 msgid "Are you sure you want to delete the partition?"
 msgstr "Weet u zeker dat u de partitie wilt verwijderen?"
 
-#: ../src/disks/gduwindow.c:3506
+#: ../src/disks/gduwindow.c:3555
 msgid "All data on the partition will be lost"
 msgstr "Alle gegevens op de partitie zullen verloren gaan"
 
-#: ../src/disks/gduwindow.c:3507
+#: ../src/disks/gduwindow.c:3556
 msgid "_Delete"
 msgstr "Verwij_deren"
 
-#: ../src/disks/gduwindow.c:3538
+#: ../src/disks/gduwindow.c:3587
 msgid "Error ejecting media"
 msgstr "Uitwerpen medium is mislukt"
 
-#: ../src/disks/gduwindow.c:3605
+#: ../src/disks/gduwindow.c:3654
 msgid "Error locking encrypted device"
 msgstr "Fout bij vergrendelen van versleuteld apparaat"
 
-#: ../src/disks/gduwindow.c:3669
+#: ../src/disks/gduwindow.c:3718
 msgid "Error starting swap"
 msgstr "Fout bij starten wisselgeheugen"
 
-#: ../src/disks/gduwindow.c:3706
+#: ../src/disks/gduwindow.c:3755
 msgid "Error stopping swap"
 msgstr "Fout bij stoppen wisselgeheugen"
 
-#: ../src/disks/gduwindow.c:3748
+#: ../src/disks/gduwindow.c:3797
 msgid "Error setting autoclear flag"
 msgstr "Fout bij instellen autoclear-vlag"
 
-#: ../src/disks/gduwindow.c:3801 ../src/disks/gduwindow.c:3865
+#: ../src/disks/gduwindow.c:3850 ../src/disks/gduwindow.c:3914
 msgid "Error canceling job"
 msgstr "Fout bij het annuleren van de taak"
 
@@ -2302,11 +2347,12 @@ msgstr ""
 "Sander Pientka <cumulus0007@gmail.com>\n"
 "Hannie Dumoleyn <hannie@ubuntu-nl.org>\n"
 "Wouter Bolsterlee <wbolster@gnome.org>\n"
-"Erwin Poeze <donnut@outlook.com>"
+"Erwin Poeze <donnut@outlook.com>\n"
+"Nathan Follens"
 
 #: ../src/disks/ui/app-menu.ui.h:1
 msgid "Attach Disk _Image…"
-msgstr "Schijf_image toevoegen…"
+msgstr "Schijf_kopie toevoegen…"
 
 #: ../src/disks/ui/app-menu.ui.h:2
 msgid "_Help"
@@ -2499,7 +2545,7 @@ msgstr "_Nieuw wachtwoord"
 
 #: ../src/disks/ui/create-disk-image-dialog.ui.h:1
 msgid "Create Disk Image"
-msgstr "Schijfimage aanmaken"
+msgstr "Schijfkopie aanmaken"
 
 #: ../src/disks/ui/create-disk-image-dialog.ui.h:2
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:4
@@ -2594,7 +2640,7 @@ msgstr "De vrije ruimte na de partitie in megabytes"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
 #: ../src/disks/ui/create-partition-dialog.ui.h:18
-#: ../src/disks/ui/disks.ui.h:18
+#: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
 msgstr "Inhoud"
 
@@ -2637,8 +2683,11 @@ msgid "APM Level"
 msgstr "APM-niveau"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
+#| msgid ""
+#| "Agressive spin-down may wear out the drive faster than anticipated. "
+#| "Please check the “Start/Stop Count” SMART attribute from time to time"
 msgid ""
-"Agressive spin-down may wear out the drive faster than anticipated. Please "
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
 "Te veel draaien maakt dat de schijf sneller slijt dan verwacht. Controleer "
@@ -2761,83 +2810,128 @@ msgstr "Partitionering"
 msgid "_Volumes"
 msgstr "_Volumen"
 
+#: ../src/disks/ui/disks.ui.h:17
+#| msgid "Delete partition"
+msgid "Mount selected partition"
+msgstr "De geselecteerde partitie aankoppelen"
+
+#: ../src/disks/ui/disks.ui.h:18
+#| msgid "Delete partition"
+msgid "Unmount selected partition"
+msgstr "De geselecteerde partitie afkoppelen"
+
 #: ../src/disks/ui/disks.ui.h:19
+#| msgid "Activate the swap space"
+msgid "Activate selected swap partition"
+msgstr "Geselecteerd wisselbestand activeren"
+
+#: ../src/disks/ui/disks.ui.h:20
+#| msgid "Deactivate the swap space"
+msgid "Deactivate selected swap partition"
+msgstr "Geselecteerd wisselbestand uitschakelen"
+
+#: ../src/disks/ui/disks.ui.h:21
+#| msgid "Unlock the encrypted device"
+msgid "Unlock selected encrypted partition"
+msgstr "Geselecteerde versleutelde partitie toegankelijk maken"
+
+#: ../src/disks/ui/disks.ui.h:22
+#| msgid "Delete the partition"
+msgid "Lock selected encrypted partition"
+msgstr "Geselecteerde versleutelde partitie vergrendelen"
+
+#: ../src/disks/ui/disks.ui.h:23
+#| msgid "Create partition on %s"
+msgid "Create partition in unallocated space"
+msgstr "Partitie aanmaken in niet-toegewezen ruimte"
+
+#: ../src/disks/ui/disks.ui.h:24
+#| msgid "Delete the partition"
+msgid "Delete selected partition"
+msgstr "De geselecteerde partitie verwijderen"
+
+#: ../src/disks/ui/disks.ui.h:25
+#| msgid "No partitioning"
+msgid "Additional partition options"
+msgstr "Extra partitie-opties"
+
+#: ../src/disks/ui/disks.ui.h:28
 msgid "Device"
 msgstr "Apparaat"
 
-#: ../src/disks/ui/disks.ui.h:20
+#: ../src/disks/ui/disks.ui.h:29
 msgid "Partition Type"
 msgstr "Partitietype"
 
-#: ../src/disks/ui/disks.ui.h:21
+#: ../src/disks/ui/disks.ui.h:30
 msgid "Format Disk…"
 msgstr "Schijf formatteren…"
 
-#: ../src/disks/ui/disks.ui.h:22
+#: ../src/disks/ui/disks.ui.h:31
 msgid "Create Disk Image…"
-msgstr "Schijfimage aanmaken…"
+msgstr "Schijfkopie aanmaken…"
 
-#: ../src/disks/ui/disks.ui.h:23
+#: ../src/disks/ui/disks.ui.h:32
 msgid "Restore Disk Image…"
-msgstr "Schijfimage terugzetten…"
+msgstr "Schijfkopie terugzetten…"
 
-#: ../src/disks/ui/disks.ui.h:24
+#: ../src/disks/ui/disks.ui.h:33
 msgid "Benchmark Disk…"
 msgstr "Schijf benchmarken…"
 
-#: ../src/disks/ui/disks.ui.h:25
+#: ../src/disks/ui/disks.ui.h:34
 msgid "SMART Data & Self-Tests…"
 msgstr "SMART-gegevens en zelftests…"
 
-#: ../src/disks/ui/disks.ui.h:26
+#: ../src/disks/ui/disks.ui.h:35
 msgid "Drive Settings…"
 msgstr "Stationsinstellingen..."
 
-#: ../src/disks/ui/disks.ui.h:27
+#: ../src/disks/ui/disks.ui.h:36
 msgid "Standby Now"
 msgstr "Standby nu"
 
-#: ../src/disks/ui/disks.ui.h:28
+#: ../src/disks/ui/disks.ui.h:37
 msgid "Wake-Up from Standby"
 msgstr "Wake-up vanuit stand-by"
 
-#: ../src/disks/ui/disks.ui.h:29
+#: ../src/disks/ui/disks.ui.h:38
 msgid "Power Off…"
 msgstr "Uitschakelen…"
 
-#: ../src/disks/ui/disks.ui.h:30
+#: ../src/disks/ui/disks.ui.h:39
 msgid "Format Partition…"
 msgstr "Partitie formatteren…"
 
-#: ../src/disks/ui/disks.ui.h:31
+#: ../src/disks/ui/disks.ui.h:40
 msgid "Edit Partition…"
 msgstr "Partitie bewerken…"
 
-#: ../src/disks/ui/disks.ui.h:32
+#: ../src/disks/ui/disks.ui.h:41
 msgid "Edit Filesystem…"
 msgstr "Bestandssysteem bewerken…"
 
-#: ../src/disks/ui/disks.ui.h:33
+#: ../src/disks/ui/disks.ui.h:42
 msgid "Change Passphrase…"
 msgstr "Wachtwoord wijzigen…"
 
-#: ../src/disks/ui/disks.ui.h:34
+#: ../src/disks/ui/disks.ui.h:43
 msgid "Edit Mount Options…"
 msgstr "Koppelopties bewerken…"
 
-#: ../src/disks/ui/disks.ui.h:35
+#: ../src/disks/ui/disks.ui.h:44
 msgid "Edit Encryption Options…"
 msgstr "Versleutelopties bewerken…"
 
-#: ../src/disks/ui/disks.ui.h:36
+#: ../src/disks/ui/disks.ui.h:45
 msgid "Create Partition Image…"
-msgstr "Partitie-image aanmaken…"
+msgstr "Partitie-kopie aanmaken…"
 
-#: ../src/disks/ui/disks.ui.h:37
+#: ../src/disks/ui/disks.ui.h:46
 msgid "Restore Partition Image…"
-msgstr "Partitie-image terugzetten…"
+msgstr "Partitie-kopie terugzetten…"
 
-#: ../src/disks/ui/disks.ui.h:38
+#: ../src/disks/ui/disks.ui.h:47
 msgid "Benchmark Partition…"
 msgstr "Partitie benchmarken…"
 
@@ -3210,15 +3304,15 @@ msgstr "Volume formatteren"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:1
 msgid "Restore Disk Image"
-msgstr "Schijfimage terugzetten"
+msgstr "Schijfkopie terugzetten"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:2
 msgid "_Image to Restore"
-msgstr "Terug te zetten _image"
+msgstr "Terug te zetten _schijfkopie"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:3
 msgid "Select Disk Image to Restore"
-msgstr "Terug te zetten image selecteren"
+msgstr "Terug te zetten schijfkopie selecteren"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:4
 msgid "Destination"
@@ -3230,11 +3324,11 @@ msgstr "_Bestemming"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:6
 msgid "Image to Restore"
-msgstr "Terug te zetten image"
+msgstr "Terug te zetten schijfkopie"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:7
 msgid "Image Size"
-msgstr "Imagegrootte"
+msgstr "Schijfkopiegrootte"
 
 #: ../src/disks/ui/restore-disk-image-dialog.ui.h:8
 msgid "_Start Restoring…"
@@ -3318,11 +3412,11 @@ msgstr "Alle bestanden"
 
 #: ../src/libgdu/gduutils.c:97
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
-msgstr "Schijfimages (*.img, *.img.xz, *.iso)"
+msgstr "Schijfkopieën (*.img, *.img.xz, *.iso)"
 
 #: ../src/libgdu/gduutils.c:99
 msgid "Disk Images (*.img, *.iso)"
-msgstr "Schijfimages (*.img, *.iso)"
+msgstr "Schijfkopieën (*.img, *.iso)"
 
 #. Translators: Used for number of years
 #: ../src/libgdu/gduutils.c:430
@@ -3440,7 +3534,7 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Betrokken apparaten"
 
-#: ../src/libgdu/gduutils.c:1070
+#: ../src/libgdu/gduutils.c:1073
 msgid "Error locking device"
 msgstr "Vergrendelen apparaat is mislukt"
 
@@ -3469,6 +3563,9 @@ msgstr "Probleemobservatie schijven"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "Waarschuwingen over problemen met schijven en opslagapparaten"
+
+#~ msgid "Show help options"
+#~ msgstr "Hulpopties tonen"
 
 #~ msgid "Format…"
 #~ msgstr "Formatteren…"
@@ -3503,38 +3600,17 @@ msgstr "Waarschuwingen over problemen met schijven en opslagapparaten"
 #~ msgid "Unmount the filesystem"
 #~ msgstr "Bestandssysteem ontkoppelen"
 
-#~ msgid "Eject the media"
-#~ msgstr "Medium uitwerpen"
-
-#~ msgid "Power off the drive"
-#~ msgstr "De schijf uitschakelen"
-
-#~ msgid "Unlock the encrypted device"
-#~ msgstr "Versleutelde apparaat toegankelijk maken"
-
-#~ msgid "Activate the swap space"
-#~ msgstr "Wisselbestand activeren"
-
-#~ msgid "Deactivate the swap space"
-#~ msgstr "Wisselbestand uitschakelen"
-
 #~ msgid "Lock the encrypted device"
 #~ msgstr "Versleutelde apparaat vergrendelen"
 
 #~ msgid "More actions"
 #~ msgstr "Meer acties"
 
-#~ msgid "Delete partition"
-#~ msgstr "Partitie verwijderen"
-
 #~ msgid "Start RAID Array"
 #~ msgstr "RAID-array starten"
 
 #~ msgid "Stop RAID Array"
 #~ msgstr "RAID-array stoppen"
-
-#~ msgid "Detach Loop Device"
-#~ msgstr "Lusapparaat ontkoppelen"
 
 #~ msgid "_Devices"
 #~ msgstr "_Apparaten"
@@ -4518,9 +4594,6 @@ msgstr "Waarschuwingen over problemen met schijven en opslagapparaten"
 #~ msgid "The requested partition size"
 #~ msgstr "De verzochte partitiegrootte"
 
-#~ msgid "Create partition on %s"
-#~ msgstr "Partitie op %s aanmaken"
-
 #~ msgid "Flags for the widget"
 #~ msgstr "Opties voor het widget"
 
@@ -5089,9 +5162,6 @@ msgstr "Waarschuwingen over problemen met schijven en opslagapparaten"
 
 #~ msgid "LVM2 Logical Volume"
 #~ msgstr "LVM2 logisch volume"
-
-#~ msgid "Volume Group"
-#~ msgstr "Volumegroep"
 
 #~ msgid "%s LVM2 Volume Group"
 #~ msgstr "%s LVM2 volumegroep"
@@ -6464,9 +6534,6 @@ msgstr "Waarschuwingen over problemen met schijven en opslagapparaten"
 
 #~ msgid "Change partition type, label and flags"
 #~ msgstr "Partitietype, -label en -parameters wijzigen"
-
-#~ msgid "Delete the partition"
-#~ msgstr "De partitie verwijderen"
 
 #~ msgid "_Lock Volume"
 #~ msgstr "Volume vergrende_len"

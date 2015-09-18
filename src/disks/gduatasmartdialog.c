@@ -1642,6 +1642,10 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
     {
       gint response;
       response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+
+      if (response < 0)
+        break;
+
       /* Keep in sync with .ui file */
       switch (response)
         {
@@ -1657,9 +1661,6 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
         default:
           g_assert_not_reached ();
         }
-
-      if (response < 0)
-        break;
     }
 
   g_source_remove (timeout_id);

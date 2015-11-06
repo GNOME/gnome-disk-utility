@@ -1,4 +1,4 @@
-AC_INIT([GNOME Disk Utility],[3.18.1],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
+AC_INIT([GNOME Disk Utility],[3.18.2],[https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility],[gnome-disk-utility])
 
 AX_IS_RELEASE([git-directory])
 

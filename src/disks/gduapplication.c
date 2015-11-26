@@ -381,7 +381,6 @@ gdu_application_class_init (GduApplicationClass *klass)
 GApplication *
 gdu_application_new (void)
 {
-  gtk_init (NULL, NULL);
   return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
                                       "application-id", "org.gnome.DiskUtility",
                                       "flags", G_APPLICATION_HANDLES_COMMAND_LINE,

@@ -140,10 +140,10 @@ gdu_application_object_from_block_device (GduApplication *app,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static GOptionEntry opt_entries[] = {
-    {"block-device", 0, 0, G_OPTION_ARG_STRING, NULL, N_("Select device"), NULL },
+    {"block-device", 0, 0, G_OPTION_ARG_STRING, NULL, N_("Select device"), "DEVICE" },
     {"format-device", 0, 0, G_OPTION_ARG_NONE, NULL, N_("Format selected device"), NULL },
-    {"xid", 0, 0, G_OPTION_ARG_INT, NULL, N_("Parent window XID for the format dialog"), NULL },
-    {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, NULL, N_("Restore disk image"), NULL },
+    {"xid", 0, 0, G_OPTION_ARG_INT, NULL, N_("Parent window XID for the format dialog"), "ID" },
+    {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, NULL, N_("Restore disk image"), "FILE" },
     {NULL}
 };
 

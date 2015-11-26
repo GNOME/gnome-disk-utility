@@ -173,7 +173,7 @@ gdu_application_command_line (GApplication            *_app,
   g_variant_dict_lookup (options, "block-device", "&s", &opt_block_device);
   g_variant_dict_lookup (options, "format-device", "b", &opt_format);
   g_variant_dict_lookup (options, "xid", "i", &opt_xid);
-  g_variant_dict_lookup (options, "restore-disk-image", "&s", &opt_restore_disk_image);
+  g_variant_dict_lookup (options, "restore-disk-image", "^&ay", &opt_restore_disk_image);
  
   if (opt_format && opt_block_device == NULL)
     {

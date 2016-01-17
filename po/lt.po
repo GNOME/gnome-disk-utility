@@ -4,15 +4,15 @@
 # Žygimantas Beručka <zygis@gnome.org>, 2009.
 # Rytis Umbrasas <rytumb@gmail.com>, 2009.
 # Gintautas Miliauskas <gintautas@miliauskas.lt>, 2009, 2010.
-# Aurimas Černius <aurisc4@gmail.com>, 2013, 2014, 2015.
+# Aurimas Černius <aurisc4@gmail.com>, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-03 07:12+0000\n"
-"PO-Revision-Date: 2015-09-03 14:59+0300\n"
+"POT-Creation-Date: 2016-01-06 09:01+0000\n"
+"PO-Revision-Date: 2016-01-17 21:38+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -41,7 +41,6 @@ msgid "Write Disk Images to Devices"
 msgstr "Įrašyti diskų atvaizdžius į įrenginius"
 
 #: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
-#| msgid "Disks"
 msgid "GNOME Disks"
 msgstr "GNOME diskai"
 
@@ -65,7 +64,7 @@ msgid ""
 msgstr ""
 "Naudodami diskus galite matyti SMART duomenis, tvarkyti RAID įrenginius, "
 "matuoti fizinius diskus bei kurti USB laikmenų atvaizdžius. Užduotys "
-"vykdomos fone net užvėrus programą."
+"vykdomos fone, netgi užvėrus programą."
 
 #: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
 msgid "Disks"
@@ -1102,8 +1101,6 @@ msgstr "%s/s"
 
 #: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
 #, c-format
-#| msgid "%d sample"
-#| msgid_plural "%d samples"
 msgid "%u sample"
 msgid_plural "%u samples"
 msgstr[0] "%u mėginys"
@@ -1670,7 +1667,7 @@ msgstr "_Išvalyti"
 
 #: ../src/disks/gdufilesystemdialog.c:60
 msgid "Error setting label"
-msgstr "Klaida keičiant etiketę"
+msgstr "Klaida nustatant užrašą"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1777,7 +1774,6 @@ msgstr ""
 
 #: ../src/disks/gdufstabdialog.c:154
 #, c-format
-#| msgid "Matches partition %d of the device with the given vital product data"
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr "Atitinka skirsnį %u įrenginyje su pateiktais produkto duomenimis"
 
@@ -1787,8 +1783,6 @@ msgstr "Atitinka visą diską įrenginys su pateiktais produkto duomenimis"
 
 #: ../src/disks/gdufstabdialog.c:162
 #, c-format
-#| msgid ""
-#| "Matches partition %d of any device connected at the given port or address"
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
@@ -1817,7 +1811,7 @@ msgstr "Atitinka nurodytą įrenginį"
 #: ../src/disks/gdufstabdialog.c:462
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
-"Sistema gali neveikti tinkamai, jei šis šrašas bus pakeistas arba pašalintas."
+"Sistema gali neveikti tinkamai, jei šis įrašas bus pakeistas arba pašalintas."
 
 #: ../src/disks/gdufstabdialog.c:523
 msgid "Error removing old /etc/fstab entry"
@@ -1933,7 +1927,6 @@ msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifravimo slaptažodis buvo gautas iš raktinės"
 
 #: ../src/disks/gduvolumegrid.c:262
-#| msgid "_Volumes"
 msgid "Volumes Grid"
 msgstr "_Tomų tinklelis"
 
@@ -1946,8 +1939,6 @@ msgstr "Nėra laikmenos"
 #.
 #: ../src/disks/gduvolumegrid.c:1560
 #, c-format
-#| msgctxt "volume-grid"
-#| msgid "Partition %d: %s"
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
 msgstr "Skirsnis %u: %s"
@@ -1957,8 +1948,6 @@ msgstr "Skirsnis %u: %s"
 #.
 #: ../src/disks/gduvolumegrid.c:1567
 #, c-format
-#| msgctxt "volume-grid"
-#| msgid "Partition %d"
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Skirsnis %u"
@@ -2023,7 +2012,6 @@ msgid "Eject this disk"
 msgstr "Išstumti šį diską"
 
 #: ../src/disks/gduwindow.c:970
-#| msgid "Error deleting loop device"
 msgid "Detach this loop device"
 msgstr "Atjungti šį ciklinį įrenginį"
 
@@ -2616,7 +2604,7 @@ msgstr "Liko laisvos vietos _pabaigoje"
 msgid "The free space following the partition, in megabytes"
 msgstr "Laisva vieta po skirsnio megabaitais"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#. The contents of the device, for example
 #: ../src/disks/ui/create-partition-dialog.ui.h:18
 #: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
@@ -2628,7 +2616,7 @@ msgstr "Disko nustatymai"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:2
 msgid "Apply Standby Timeout Settings"
-msgstr "Pritaikyti užmigimo delsa nustatymus"
+msgstr "Pritaikyti užmigimo delsos nustatymus"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:3
 msgid ""
@@ -2648,7 +2636,7 @@ msgstr "_Užmigti dabar"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:6
 msgid "Apply Advanced Power Management Settings"
-msgstr "Pritaikyti sudėtingesnis energijos valdymo nustatymus"
+msgstr "Pritaikyti sudėtingesnius energijos valdymo nustatymus"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:7
 msgid "Turn on to configure APM at startup and when the disk is connected"
@@ -2659,9 +2647,6 @@ msgid "APM Level"
 msgstr "APM lygmuo"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
-#| msgid ""
-#| "Agressive spin-down may wear out the drive faster than anticipated. "
-#| "Please check the “Start/Stop Count” SMART attribute from time to time"
 msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
@@ -2702,7 +2687,7 @@ msgid ""
 "Turn on to configure Write Cache setting at startup and when the disk is "
 "connected"
 msgstr ""
-"Įjunkite rašymo podėliui nustatyti paleidžiant ir kai diskas yra prijungtas"
+"Įjunkite rašymo podėliui nustatyti paleidžiant, ir kai diskas yra prijungtas"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:18
 msgid "S_etting"
@@ -2744,7 +2729,7 @@ msgstr "Serijos numeris"
 msgid "World Wide Name"
 msgstr "Pasaulinis pavadinimas"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#. The physical location of the drive, could be
 #: ../src/disks/ui/disks.ui.h:6
 msgid "Location"
 msgstr "Vieta"
@@ -2783,12 +2768,10 @@ msgid "_Volumes"
 msgstr "_Tomai"
 
 #: ../src/disks/ui/disks.ui.h:17
-#| msgid "Extended partition"
 msgid "Mount selected partition"
 msgstr "Prijungti pažymėtą skirsnį"
 
 #: ../src/disks/ui/disks.ui.h:18
-#| msgid "Error deleting partition"
 msgid "Unmount selected partition"
 msgstr "Atjungti pažymėtą skirsnį"
 
@@ -2813,12 +2796,10 @@ msgid "Create partition in unallocated space"
 msgstr "Sukurti skirsnį nepaskirstytoji vietoje"
 
 #: ../src/disks/ui/disks.ui.h:24
-#| msgid "Extended partition"
 msgid "Delete selected partition"
 msgstr "Ištrinti pažymėtą skirsnį"
 
 #: ../src/disks/ui/disks.ui.h:25
-#| msgid "No partitioning"
 msgid "Additional partition options"
 msgstr "Papildomi skirsnių parametrai"
 
@@ -2884,11 +2865,11 @@ msgstr "Keisti slaptažodį..."
 
 #: ../src/disks/ui/disks.ui.h:43
 msgid "Edit Mount Options…"
-msgstr "Keisti prijungimo parinktis..."
+msgstr "Keisti prijungimo parametrus..."
 
 #: ../src/disks/ui/disks.ui.h:44
 msgid "Edit Encryption Options…"
-msgstr "Taisyti šifravimo parinktis..."
+msgstr "Taisyti šifravimo parametrus..."
 
 #: ../src/disks/ui/disks.ui.h:45
 msgid "Create Partition Image…"
@@ -2904,11 +2885,11 @@ msgstr "Matuoti skirsnį…"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:1
 msgid "Encryption Options"
-msgstr "Šifravimo parinktys"
+msgstr "Šifravimo parametrai"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:2
 msgid "_Automatic Encryption Options"
-msgstr "_Automatiniai šifravimo nustatymai"
+msgstr "_Automatinio šifravimo parametrai"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:3
 msgid ""
@@ -2916,13 +2897,13 @@ msgid ""
 "and passphrase for the device. The options correspond to an entry in the <b>/"
 "etc/crypttab</b> file"
 msgstr ""
-"Išjungti <i>Automatinius šifravimo nustatymus</i> įrenginio šifravimo "
-"nustatymams ir slaptažodžiui valdyti. Šie nustatymai atitinka įrašus <b>/etc/"
-"crypttab</b> faile"
+"Išjungti <i>Automatinius šifravimo parametrus</i> įrenginio šifravimo "
+"parametrams ir slaptažodžiui tvarkyti. Šie parametrai atitinka įrašus faile "
+"<b>/etc/crypttab</b>"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:5
 msgid "Opt_ions"
-msgstr "_Nustatymai"
+msgstr "Parametra_i"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:6
 msgid ""
@@ -2934,7 +2915,7 @@ msgstr ""
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:7
 msgid "Options to use when unlocking the device"
-msgstr "Parinktys, naudotinos atrakinant įrenginį"
+msgstr "Parametrai, naudotini atrakinant įrenginį"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:8
 msgid "Passphrase File"
@@ -2950,7 +2931,8 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
-"Įrenginio slaptažodis arba tuščia naudotojo klausimui nustatant įrenginį"
+"Įrenginio slaptažodis arba tuščia, kad, nustatant įrenginį, būtų užklausta "
+"naudotojo"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:11
 #: ../src/disks/ui/filesystem-create.ui.h:6
@@ -3018,11 +3000,11 @@ msgstr "_Etiketė"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:1
 msgid "Mount Options"
-msgstr "Prijungimo parinktys"
+msgstr "Prijungimo parametrai"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:2
 msgid "_Automatic Mount Options"
-msgstr "_Automatinio prijungimo nustatymai"
+msgstr "_Automatinio prijungimo parametrai"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:3
 msgid ""
@@ -3030,9 +3012,9 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"Išjungti <i>Automatinius šifravimo nustatymus</i> įrenginio prijungimo "
-"taškui ir prijungimo nustatymams valdyti. Šie nustatymai atitinka įrašus <b>/"
-"etc/fstab</b> faile"
+"Išjungti <i>Automatinius prijungimo parametrus</i> įrenginio prijungimo "
+"taškui ir prijungimo parametrams tvarkyti. Šie parametrai atitinka įrašus "
+"faile <b>/etc/fstab</b>"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:4
 msgid "I_dentify As"
@@ -3139,11 +3121,11 @@ msgstr ""
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:23
 msgid "Mount Opt_ions"
-msgstr "Prijungimo _nustatymai"
+msgstr "Prijungimo parametra_i"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:24
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr "Prijungimo nustatymai saugomi <b>/etc/fstab</b> faile"
+msgstr "Prijungimo parametrai saugomi <b>/etc/fstab</b> faile"
 
 #: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:4
 msgid "The partition type represented as a 32-bit <i>GUID</i>"

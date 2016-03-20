@@ -20,9 +20,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-10 07:16+0000\n"
-"PO-Revision-Date: 2015-03-14 02:49+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-20 23:12+0100\n"
+"PO-Revision-Date: 2016-03-20 21:48+0100\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -51,7 +51,6 @@ msgid "Write Disk Images to Devices"
 msgstr "Skriv diskaftryk til enheder"
 
 #: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
-#| msgid "Disks"
 msgid "GNOME Disks"
 msgstr "GNOME Diske"
 
@@ -64,8 +63,8 @@ msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
 msgstr ""
-"Diske gør det let at inspicere, formatere, partitionere og konfigurere "
-"diske og blokenheder."
+"Diske gør det let at inspicere, formatere, partitionere og konfigurere diske "
+"og blokenheder."
 
 #: ../data/org.gnome.DiskUtility.appdata.xml.in.h:4
 msgid ""
@@ -87,21 +86,24 @@ msgstr "Håndtering af drev og medier"
 
 #: ../data/org.gnome.DiskUtility.desktop.in.h:3
 msgid ""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
+"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"disk;drev;diskenhed;volumen;harddisk;hdd;disk;cdrom;dvd;partition;iso;aftryk;sikkerhedskopi;gendan;gendannelse;ydelsestest;ydelsesprøve;benchmark;raid;luks;kryptering;S.M.A.R.T.;smart;"
+"disk;drev;diskenhed;volumen;harddisk;hdd;disk;cdrom;dvd;partition;iso;aftryk;"
+"sikkerhedskopi;gendan;gendannelse;ydelsestest;ydelsesprøve;benchmark;raid;"
+"luks;kryptering;S.M.A.R.T.;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
-msgstr "Standardplacering for dialogvinduerne Opret/Gendan diskaftryk"
+msgstr "Standardplacering for dialogerne Opret/Gendan diskaftryk"
 
 #: ../data/org.gnome.Disks.gschema.xml.h:2
 msgid ""
-"Default location for the Create/Restore disk image dialogs. If blank the "
-"~/Documents folder is used."
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
 msgstr ""
-"Standardplacering for dialogvinduerne Opret/Gendan diskaftryk. Hvis ikke "
-"givet, bruges mappen ~/Dokumenter."
+"Standardplacering for dialogerne Opret/Gendan diskaftryk. Hvis ikke givet, "
+"bruges mappen ~/Dokumenter."
 
 #: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:1
 msgid "Activation of this plugin"
@@ -201,7 +203,7 @@ msgstr "Formatér valgte enhed"
 
 #: ../src/disks/gduapplication.c:145
 msgid "Parent window XID for the format dialog"
-msgstr "XID for formatdialogvindues ophavsvindue"
+msgstr "XID for formatdialogens ophavsvindue"
 
 #: ../src/disks/gduapplication.c:146
 msgid "Restore disk image"
@@ -286,13 +288,13 @@ msgstr "Antal omallokerede sektorer"
 
 #: ../src/disks/gduatasmartdialog.c:186
 msgid ""
-"Count of remapped sectors. When the hard drive finds a "
-"read/write/verification error, it marks the sector as “reallocated” and "
-"transfers data to a special reserved area (spare area)"
+"Count of remapped sectors. When the hard drive finds a read/write/"
+"verification error, it marks the sector as “reallocated” and transfers data "
+"to a special reserved area (spare area)"
 msgstr ""
-"Antal genafbildede sektorer. Når harddisken finder en "
-"læse-/skrive-/verifikationsfejl, markerer den sektoren som “omallokeret” og "
-"flytter data til et særligt reserveret område (ekstraområde)"
+"Antal genafbildede sektorer. Når harddisken finder en læse-/skrive-/"
+"verifikationsfejl, markerer den sektoren som “omallokeret” og flytter data "
+"til et særligt reserveret område (ekstraområde)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1105,8 +1107,6 @@ msgstr "%s/s"
 
 #: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
 #, c-format
-#| msgid "%d sample"
-#| msgid_plural "%d samples"
 msgid "%u sample"
 msgid_plural "%u samples"
 msgstr[0] "%u prøve"
@@ -1170,7 +1170,8 @@ msgid "Error getting page size: %m\n"
 msgstr "Fejl ved bestemmelse af sidestørrelse: %m\n"
 
 #: ../src/disks/gdubenchmarkdialog.c:1243
-#: ../src/disks/gdubenchmarkdialog.c:1306 ../src/disks/gdubenchmarkdialog.c:1325
+#: ../src/disks/gdubenchmarkdialog.c:1306
+#: ../src/disks/gdubenchmarkdialog.c:1325
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
@@ -1783,7 +1784,6 @@ msgstr ""
 # ?
 #: ../src/disks/gdufstabdialog.c:154
 #, c-format
-#| msgid "Matches partition %d of the device with the given vital product data"
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr "Matcher partition %u af enheden med de givne livsproduktdata"
 
@@ -1794,8 +1794,6 @@ msgstr "Matcher hele disken på enheden med de givne livsproduktdata"
 
 #: ../src/disks/gdufstabdialog.c:162
 #, c-format
-#| msgid ""
-#| "Matches partition %d of any device connected at the given port or address"
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
@@ -1939,7 +1937,6 @@ msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Krypteringsadgangsfrasen blev hentet fra nøgleringen"
 
 #: ../src/disks/gduvolumegrid.c:262
-#| msgid "Volume Group"
 msgid "Volumes Grid"
 msgstr "Gitter med diskenheder"
 
@@ -1952,8 +1949,6 @@ msgstr "Intet medie"
 #.
 #: ../src/disks/gduvolumegrid.c:1560
 #, c-format
-#| msgctxt "volume-grid"
-#| msgid "Partition %d: %s"
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
 msgstr "Partition %u: %s"
@@ -1963,8 +1958,6 @@ msgstr "Partition %u: %s"
 #.
 #: ../src/disks/gduvolumegrid.c:1567
 #, c-format
-#| msgctxt "volume-grid"
-#| msgid "Partition %d"
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Partition %u"
@@ -2021,17 +2014,14 @@ msgstr ""
 "hvis du ikke vil have at den underliggende fil ændres"
 
 #: ../src/disks/gduwindow.c:958
-#| msgid "Power off the drive"
 msgid "Power off this disk"
 msgstr "Sluk drevet"
 
 #: ../src/disks/gduwindow.c:964
-#| msgid "Eject the media"
 msgid "Eject this disk"
 msgstr "Skub disken ud"
 
 #: ../src/disks/gduwindow.c:970
-#| msgid "Detach Loop Device"
 msgid "Detach this loop device"
 msgstr "Frakobl løkkeenhed"
 
@@ -2629,7 +2619,8 @@ msgid "The free space following the partition, in megabytes"
 msgstr "Den fri plads, der følger efter partitionen, i megabyte"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../src/disks/ui/create-partition-dialog.ui.h:18 ../src/disks/ui/disks.ui.h:27
+#: ../src/disks/ui/create-partition-dialog.ui.h:18
+#: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
 msgstr "Indhold"
 
@@ -2670,9 +2661,6 @@ msgid "APM Level"
 msgstr "APM-niveau"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
-#| msgid ""
-#| "Agressive spin-down may wear out the drive faster than anticipated. "
-#| "Please check the “Start/Stop Count” SMART attribute from time to time"
 msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
@@ -2795,47 +2783,38 @@ msgid "_Volumes"
 msgstr "_Diskenheder"
 
 #: ../src/disks/ui/disks.ui.h:17
-#| msgid "Delete partition"
 msgid "Mount selected partition"
 msgstr "Montér valgte partition"
 
 #: ../src/disks/ui/disks.ui.h:18
-#| msgid "Delete partition"
 msgid "Unmount selected partition"
 msgstr "Afmontér valgte partition"
 
 #: ../src/disks/ui/disks.ui.h:19
-#| msgid "Activate the swap space"
 msgid "Activate selected swap partition"
 msgstr "Aktivér valgte swapområde"
 
 #: ../src/disks/ui/disks.ui.h:20
-#| msgid "Deactivate the swap space"
 msgid "Deactivate selected swap partition"
 msgstr "Deaktivér valgte swapområde"
 
 #: ../src/disks/ui/disks.ui.h:21
-#| msgid "Unlock the encrypted device"
 msgid "Unlock selected encrypted partition"
 msgstr "Lås valgte krypterede enhed op"
 
 #: ../src/disks/ui/disks.ui.h:22
-#| msgid "Delete the partition"
 msgid "Lock selected encrypted partition"
 msgstr "Lås valgte krypterede partion"
 
 #: ../src/disks/ui/disks.ui.h:23
-#| msgid "Create partition on %s"
 msgid "Create partition in unallocated space"
 msgstr "Opret partition på uallokeret plads"
 
 #: ../src/disks/ui/disks.ui.h:24
-#| msgid "Delete the partition"
 msgid "Delete selected partition"
 msgstr "Slet valgte partition"
 
 #: ../src/disks/ui/disks.ui.h:25
-#| msgid "No partitioning"
 msgid "Additional partition options"
 msgstr "Yderligere partitionsindstillinger"
 
@@ -2930,8 +2909,8 @@ msgstr "Indstillinger for _automatisk kryptering"
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:3
 msgid ""
 "Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the "
-"<b>/etc/crypttab</b> file"
+"and passphrase for the device. The options correspond to an entry in the <b>/"
+"etc/crypttab</b> file"
 msgstr ""
 "Slå <i>Indstillinger for automatisk kryptering</i> fra for at håndtere "
 "krypteringsindstillinger og adgangsfrase for enheden. Indstillingerne svarer "
@@ -2990,8 +2969,8 @@ msgstr "Kræv yderligere _godkendelse for at låse op"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:15
 msgid ""
-"If checked, additional authorization is required to unlock the device "
-"[x-udisks-auth]"
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
 msgstr ""
 "Hvis afkrydset, vil der blive krævet yderligere godkendelse for at kunne "
 "låse ennheden op [x-udisks-auth]"
@@ -3046,8 +3025,8 @@ msgstr "Indstillinger for _automatisk montering"
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:3
 msgid ""
 "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the "
-"<b>/etc/fstab</b> file"
+"options for the device. The options correspond to an entry in the <b>/etc/"
+"fstab</b> file"
 msgstr ""
 "Slå <i>Indstillinger for automatisk montering</i> fra for at håndtere "
 "monteringspunkter og -indstillinger for enheden. Indstillingerne svarer til "
@@ -3106,8 +3085,8 @@ msgstr "Ikonna_vn"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:14
 msgid ""
-"If set, the name of the icon to use in the device in the user interface "
-"[x-gvfs-icon=]"
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
 msgstr ""
 "Hvis givet, er dette navnet på ikonet, der skal bruges for enheden i "
 "brugergrænsefladen [x-gvfs-icon=]"
@@ -3130,8 +3109,8 @@ msgstr "Kræv yderligere _godkendelse ved montering"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:18
 msgid ""
-"If checked, additional authorization is required to mount the device "
-"[x-udisks-auth]"
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
 msgstr ""
 "Hvis afkrydset, vil der kræves yderligere godkendelse for at montere enheden "
 "[x-udisks-auth]"
@@ -3175,8 +3154,8 @@ msgid ""
 "directory"
 msgstr ""
 "Partitionsnavnet (op til 36 unicode-tegn). Dette er nyttigt hvis du vil "
-"referere til enheden via en symlænke i kataloget "
-"<b>/dev/disk/by-partlabel</b>"
+"referere til enheden via en symlænke i kataloget <b>/dev/disk/by-partlabel</"
+"b>"
 
 #: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:7
 msgid "_System Partition"
@@ -3184,8 +3163,8 @@ msgstr "_Systempartition"
 
 #: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:8
 msgid ""
-"Used to indicate that the partition and its contents are required for the "
-"OS/Platform to function. Special care should be taken to not delete or "
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
 "Bruges til at angive, at partitionen og dens indhold kræves for at OS'et "
@@ -3199,9 +3178,8 @@ msgstr "Gammel BIOS, _bootbar"
 
 #: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:10
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-"<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-"systems"
+"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
+"i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
 "Gammel BIOS, bootbar. Dette svarer til opstartsflaget <i>bootable</i> i "
 "Master Boot Record. Bruges typisk til GPT-partitioner på MBR-systemet"
@@ -3634,8 +3612,8 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ msgstr "Opret RAID"
 
 #~ msgid ""
-#~ "If set, some OSes may mount or use the contents of the partition as "
-#~ "read-only instead of read-write"
+#~ "If set, some OSes may mount or use the contents of the partition as read-"
+#~ "only instead of read-write"
 #~ msgstr ""
 #~ "Hvis givet, vil visse OS'er montere eller bruge indholdet af partitionen "
 #~ "som skrivebeskyttet i stedet for læse/skrive"
@@ -3903,9 +3881,8 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "\n"
 #~ "The RAID array will remain operational for the duration of the operation "
 #~ "but performance will be impacted. For more information about data "
-#~ "scrubbing, see the <a "
-#~ "href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
-#~ "Administration</a> article."
+#~ "scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> article."
 #~ msgstr ""
 #~ "Da lagerenheder kan få beskadigede blokke når som helst, er det en god "
 #~ "idé jævnligt at læse alle blokke på alle diske i en RAID-række, så "
@@ -3913,9 +3890,8 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "\n"
 #~ "RAID-rækken vil fungere under operationen, men ydelsen vil blive "
 #~ "påvirket. Yderligere information om \"data scrubbing\"-fejlrettelse kan "
-#~ "findes i artiklen <a "
-#~ "href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
-#~ "Administration</a> (på engelsk)."
+#~ "findes i artiklen <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> (på engelsk)."
 
 #~ msgctxt "mdraid-scrub-dialog"
 #~ msgid "_Start"
@@ -4022,24 +3998,24 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "%s <span size=\"small\">(Normeret: %d, tærskel: %d, værste: %d)</span>"
 
 #~ msgid ""
-#~ "Failure is a sign the disk will fail within 24 hours <span "
-#~ "size=\"small\">(Pre-Fail)</span>"
+#~ "Failure is a sign the disk will fail within 24 hours <span size=\"small"
+#~ "\">(Pre-Fail)</span>"
 #~ msgstr ""
-#~ "Fejl er et tegn på at disken vil svigte inden for 24 timer <span "
-#~ "size=\"small\">(Pre-Fail)</span>"
+#~ "Fejl er et tegn på at disken vil svigte inden for 24 timer <span size="
+#~ "\"small\">(Pre-Fail)</span>"
 
 #~ msgid ""
 #~ "Failure is a sign the disk exceeded its intended design life period <span "
 #~ "size=\"small\">(Old-Age)</span>"
 #~ msgstr ""
-#~ "Fejl er et tegn på at disken har overgået sin designlevetid <span "
-#~ "size=\"small\">(Old-Age)</span>"
+#~ "Fejl er et tegn på at disken har overgået sin designlevetid <span size="
+#~ "\"small\">(Old-Age)</span>"
 
 #~ msgid ""
 #~ "Updated every time data is collected <span size=\"small\">(Online)</span>"
 #~ msgstr ""
-#~ "Opdateres hver gang der indsamles data <span "
-#~ "size=\"small\">(Online)</span>"
+#~ "Opdateres hver gang der indsamles data <span size=\"small\">(Online)</"
+#~ "span>"
 
 #~ msgid ""
 #~ "Updated only during off-line activities <span size=\"small\">(Not "
@@ -4156,8 +4132,8 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ msgstr "Fejl er et tegn på disksvigt inden for 24 timer (Pre-Fail)"
 
 #~ msgid ""
-#~ "Failure is a sign the disk exceeded its intended design life period "
-#~ "(Old-Age)"
+#~ "Failure is a sign the disk exceeded its intended design life period (Old-"
+#~ "Age)"
 #~ msgstr ""
 #~ "Fejl er et tegn på at disken af overgået sin designlevetid (Old-Age)"
 
@@ -4328,18 +4304,18 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ msgid ""
 #~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
-#~ "Vælg en disk, der skal oprettes en %s-reserve på, i RAID-rækken \"%s\" "
-#~ "(%s)"
+#~ "Vælg en disk, der skal oprettes en %s-reserve på, i RAID-rækken \"%s"
+#~ "\" (%s)"
 
 #~ msgid "Expand %s"
 #~ msgstr "Udvid %s"
 
 #~ msgid ""
-#~ "Select one or more devices to use %s on for expanding the RAID Array "
-#~ "\"%s\" (%s)"
+#~ "Select one or more devices to use %s on for expanding the RAID Array \"%s"
+#~ "\" (%s)"
 #~ msgstr ""
-#~ "Vælg en eller flere enheder, hvorpå %s skal bruges til at udvide "
-#~ "RAID-rækken \"%s\" (%s)"
+#~ "Vælg en eller flere enheder, hvorpå %s skal bruges til at udvide RAID-"
+#~ "rækken \"%s\" (%s)"
 
 #~ msgid "_Expand"
 #~ msgstr "_Udvid"
@@ -4454,7 +4430,6 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ msgid "Failure is a sign of old age (Old-Age)"
 #~ msgstr "Fejl er et tegn på fremskreden alder (Old-Age)"
 
-#, qt-format
 #~ msgid ""
 #~ "Type: %s\n"
 #~ "Updates: %s\n"
@@ -4700,15 +4675,15 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "The disk will be partitioned and a %s partition will be created. "
 #~ "Afterwards no space will be available."
 #~ msgstr ""
-#~ "Disken vil blive partitioneret, og der vil blive oprettet en "
-#~ "%s-partition. Derefter vil ingen yderligere plads være tilgængelig."
+#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-"
+#~ "partition. Derefter vil ingen yderligere plads være tilgængelig."
 
 #~ msgid ""
 #~ "The disk will be partitioned and a %s partition will be created. "
 #~ "Afterwards %s will be available."
 #~ msgstr ""
-#~ "Disken vil blive partitioneret, og der vil blive oprettet en "
-#~ "%s-partition. Derefter vil %s være tilgængelig."
+#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-"
+#~ "partition. Derefter vil %s være tilgængelig."
 
 #~ msgid ""
 #~ "A %s partition will be created. Afterwards no space will be available."
@@ -4904,9 +4879,6 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 
 #~ msgid "_Details"
 #~ msgstr "_Detaljer"
-
-#~ msgid "Flags specifying the behavior of the dialog"
-#~ msgstr "Tilvalg, der angiver dialogvinduets opførsel"
 
 #~ msgid "Filesystem label"
 #~ msgstr "Filsystemetiket"
@@ -5848,9 +5820,9 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "Simple filesystem with low overhead and UNIX permissions support. Not "
 #~ "widely compatible with operating systems other than Linux and Minix."
 #~ msgstr ""
-#~ "Simpelt filsystem med lav systembyrde og understøttelse af "
-#~ "UNIX-rettigheder. Er ikke bredt understøttet af andre operativsystemer "
-#~ "end Linux og Minix."
+#~ "Simpelt filsystem med lav systembyrde og understøttelse af UNIX-"
+#~ "rettigheder. Er ikke bredt understøttet af andre operativsystemer end "
+#~ "Linux og Minix."
 
 #~ msgid "No file system will be created."
 #~ msgstr "Intet filsystem vil blive oprettet."
@@ -5884,8 +5856,8 @@ msgstr "Advarer om problemer med diske og lagerenheder"
 #~ "avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 #~ msgstr ""
 #~ "Markerer hele disken som ubrugt. Brug kun denne valgmulighed, hvis du vil "
-#~ "undgå at partitionere disken til f.eks. heldiskbrug eller "
-#~ "diskette/zip-diske."
+#~ "undgå at partitionere disken til f.eks. heldiskbrug eller diskette/zip-"
+#~ "diske."
 
 #~ msgid "%.1f kB/s"
 #~ msgstr "%.1f kB/s"

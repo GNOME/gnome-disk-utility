@@ -1,6 +1,6 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Khaled Hosny <khaledhosny@eglug.org>, 2009, 2010, 2011.
+# Khaled Hosny <khaledhosny@eglug.org>, 2009, 2010, 2011, 2016.
 # mohammad alhargan <malham1@hotmail.com>, 2011.
 # سمير حسين <almusalimalmusalimah@gmail.com>, 2011.
 # Abderrahim Kitouni <a.kitouni@gmail.com>, 2011, 2012.
@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-06 20:18+0100\n"
-"PO-Revision-Date: 2012-10-26 08:02+0200\n"
-"Last-Translator: Ibrahim Saed <ibraheem5000@gmail.com>\n"
+"POT-Creation-Date: 2016-04-10 18:31+0200\n"
+"PO-Revision-Date: 2016-04-10 18:34+0200\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -21,1307 +21,177 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 1.0.0-beta1\n"
 "X-Project-Style: gnome\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:46
-#, fuzzy
+#: ../src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
-msgstr "اختر صورة قرص لاستعادتها"
+msgstr "موصّل صور الأقراص"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:2
-#, fuzzy
 msgid "Mount Disk Images"
-msgstr "افصل صورة القرص"
+msgstr "أوصل صور الأقراص"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1275
+#: ../data/gnome-disk-image-writer.desktop.in.h:1
+msgid "Disk Image Writer"
+msgstr "كاتب صور الأقراص"
+
+#: ../data/gnome-disk-image-writer.desktop.in.h:2
+msgid "Write Disk Images to Devices"
+msgstr "اكتب صور الأقراص على الأجهزة"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
+msgid "GNOME Disks"
+msgstr "أقراص جنوم"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:2
+msgid "Disk management utility for GNOME"
+msgstr "أداة جنوم لإدارة الأقراص"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:3
+msgid ""
+"Disks provides an easy way to inspect, format, partition, and configure "
+"disks and block devices."
+msgstr ""
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:4
+msgid ""
+"Using Disks, you can view SMART data, manage RAID devices, benchmark "
+"physical disks, and image USB sticks. Tasks are executed in the background, "
+"even after the application has been closed by the user."
+msgstr ""
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
 msgid "Disks"
 msgstr "الأقراص"
 
-#: ../data/gnome-disks.desktop.in.h:2
+#: ../data/org.gnome.DiskUtility.desktop.in.h:2
 msgid "Manage Drives and Media"
-msgstr "أدِر الأقراص ووسائط التخزين"
+msgstr "أدِر الأقراص و وسائط التخزين"
 
-#: ../data/gnome-disks.desktop.in.h:3
+#: ../data/org.gnome.DiskUtility.desktop.in.h:3
 msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+#: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
 msgstr ""
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+#: ../data/org.gnome.Disks.gschema.xml.h:2
 msgid ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
 msgstr ""
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:1
 msgid "Activation of this plugin"
 msgstr ""
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:2
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:2
 msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
 msgstr ""
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:3
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:3
 msgid "Priority to use for this plugin"
 msgstr ""
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:4
 msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
 msgstr ""
 
-#: ../data/ui/about-dialog.ui.h:1
-#, fuzzy
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
-msgstr ""
-"حقوق النسخ محفوظة © 2008-2012 لشركة Red Hat\n"
-"حقوق النسخ محفوظة © 2008-2012 لديفيد زيوثن"
-
-#: ../data/ui/about-dialog.ui.h:3
-msgid "View, modify and configure disks and media"
-msgstr "لعرض وتعديل وإعداد الأقراص ووسائط التخزين"
-
-#: ../data/ui/about-dialog.ui.h:4
-msgid "translator-credits"
-msgstr ""
-"فريق عربآيز للترجمة http://www.arabeyes.org:\n"
-"خالد حسني\t<khaledhosny@eglug.org>\n"
-"محمد الحرقان\t<malham1@hotmail.com>\n"
-"سمير حسين\t<almusalimalmusalimah@gmail.com>\n"
-"عبد الرحيم قيطوني\t<a.kitouni@gmail.com>\n"
-"os_\t<syriatalk@hotmail.com>\n"
-"إبراهيم سعيد\t<ibraheem5000@gmail.com>"
-
-#: ../data/ui/app-menu.ui.h:1
-#, fuzzy
-msgid "Attach Disk _Image…"
-msgstr "ألحق _صورة قرص..."
-
-#: ../data/ui/app-menu.ui.h:2
-msgid "_Help"
-msgstr "_مساعدة"
-
-#: ../data/ui/app-menu.ui.h:3
-msgid "_About Disks"
-msgstr "_عن الأقراص"
-
-#: ../data/ui/app-menu.ui.h:4
-msgid "_Quit"
-msgstr "ا_خرج"
-
-#: ../data/ui/benchmark-dialog.ui.h:1
-msgid "Benchmark"
-msgstr "قياس الأداء"
-
-#: ../data/ui/benchmark-dialog.ui.h:2
-msgid "_Start Benchmark…"
-msgstr "ا_بدأ قياس الأداء..."
-
-#: ../data/ui/benchmark-dialog.ui.h:3
-msgid "_Abort Benchmark"
-msgstr "_عن قياس الأداء"
-
-#: ../data/ui/benchmark-dialog.ui.h:4
-msgid "Last Benchmarked"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:5
-msgid "Average Read Rate"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:6
-msgid "Average Write Rate"
-msgstr "معدل الكتابة"
-
-#: ../data/ui/benchmark-dialog.ui.h:7
-msgid "Average Access Time"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:8 ../data/ui/md-raid-disks-dialog.ui.h:4
-#, fuzzy
-msgid "Disk or Device"
-msgstr "سواقات القرص"
-
-#: ../data/ui/benchmark-dialog.ui.h:9
-msgid "Sample Size"
-msgstr "حجم العينة"
-
-#: ../data/ui/benchmark-dialog.ui.h:10
-msgid "Benchmark Settings"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:11
-#, fuzzy
-msgid "_Start Benchmarking…"
-msgstr "ا_بدأ قياس الأداء..."
-
-#: ../data/ui/benchmark-dialog.ui.h:12
-msgid ""
-"Benchmarking involves measuring the transfer rate on various area of the "
-"device as well as measuring how long it takes to seek from one random area "
-"to another. Please back up important data before using the write benchmark."
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:13
-msgid "Transfer Rate"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:14
-msgid "Number of S_amples"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:15
-msgid "Sample S_ize (MiB)"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:16
-msgid "Perform _write-benchmark"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:17
-msgid ""
-"Benchmarking the write-rate of a disk requires exclusive access to the disk "
-"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
-"reading data and then writing it back. As a result, the contents of the disk "
-"is not changed.\n"
-"\n"
-"If not checked, the write-part of the benchmark will not be done but on the "
-"other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use)."
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:20
-msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:21
-msgid ""
-"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
-"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
-"taking more time."
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:22
-msgid "Access Time"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:23
-msgid "Number of Sampl_es"
-msgstr ""
-
-#: ../data/ui/benchmark-dialog.ui.h:24
-msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr ""
-
-#: ../data/ui/change-passphrase-dialog.ui.h:1
-msgid "Change Passphrase"
-msgstr "غيّر عبارة السر..."
-
-#: ../data/ui/change-passphrase-dialog.ui.h:2
-#: ../data/ui/edit-dos-partition-dialog.ui.h:2
-#: ../data/ui/edit-filesystem-dialog.ui.h:2
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:2
-#: ../data/ui/edit-partition-dialog.ui.h:2
-msgid "C_hange"
-msgstr "غيّ_ر"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:3
-msgid "Curr_ent Passphrase"
-msgstr "عبارة السرّ ال_حالية"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:4
-msgid "Enter current passphrase used to protect the data"
-msgstr "أدخل عبارة السرّ الحالية التي استُخدمت لحماية البيانات"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:5
-#: ../data/ui/filesystem-create.ui.h:10
-msgid "Sho_w Passphrases"
-msgstr "أ_ظهر عبارات السر"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:6
-#: ../data/ui/filesystem-create.ui.h:11
-msgid "Check this box to see the passphrases entered above"
-msgstr "فعّل هذا الصندوق لكي ترى عبارات السرّ أعلاه"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:7
-#: ../data/ui/filesystem-create.ui.h:9
-msgid "Confirm passphrase entered above"
-msgstr "أكّد عبارة السرّ المدخلة أعلاه"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:8
-msgid "Enter new passphrase used to protect the data"
-msgstr "أدخل عبارة سرّ جديدة لتحمي البيانات"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:9
-#: ../data/ui/filesystem-create.ui.h:7
-msgid "C_onfirm Passphrase"
-msgstr "أ_كّد عبارة السرّ"
-
-#: ../data/ui/change-passphrase-dialog.ui.h:10
-msgid "New _Passphrase"
-msgstr "عبارة سرّ _جديدة"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:1
-#, fuzzy
-msgid "Create Disk Image"
-msgstr "أنشئ صورة قرص..."
-
-#: ../data/ui/create-disk-image-dialog.ui.h:2
-#: ../data/ui/create-raid-array-dialog.ui.h:5
-#: ../data/ui/edit-crypttab-dialog.ui.h:4
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:5
-#: ../data/ui/filesystem-create.ui.h:2
-msgid "_Name"
-msgstr "الاس_م"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:3
-#, fuzzy
-msgid "Save in _Folder"
-msgstr "احفظ _في مجلد"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:4
-msgid "Select a Folder"
-msgstr "اختر مجلّدا"
-
-#: ../data/ui/create-disk-image-dialog.ui.h:5
-msgid "Source"
-msgstr ""
-
-#: ../data/ui/create-disk-image-dialog.ui.h:6
-#, fuzzy
-msgid "_Start Creating…"
-msgstr "ابدأ الإن_شاء..."
-
-#: ../data/ui/create-partition-dialog.ui.h:1
-msgid "Create Partition"
-msgstr "أنشئ قسما"
-
-#: ../data/ui/create-partition-dialog.ui.h:2
-#: ../src/disks/gducreateraidarraydialog.c:575
-msgid "C_reate"
-msgstr "أن_شئ"
-
-#: ../data/ui/create-partition-dialog.ui.h:3
-msgid "Partition _Size"
-msgstr "_حجم القسم"
-
-#: ../data/ui/create-partition-dialog.ui.h:4
-msgid "The size of the partition to create, in megabytes"
-msgstr "حجم القسم المراد إنشاؤه (بالميجا بايت)"
-
-#: ../data/ui/create-partition-dialog.ui.h:5
-msgid "bytes"
-msgstr "بايتات"
-
-#: ../data/ui/create-partition-dialog.ui.h:6
-msgid "kB"
-msgstr "ك.بايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:7
-msgid "MB"
-msgstr "م.بايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:8
-msgid "GB"
-msgstr "قيقابايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:9
-msgid "TB"
-msgstr "ت.بايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:10
-msgid "PB"
-msgstr ""
-
-#: ../data/ui/create-partition-dialog.ui.h:11
-msgid "KiB"
-msgstr ""
-
-#: ../data/ui/create-partition-dialog.ui.h:12
-#, fuzzy
-msgid "MiB"
-msgstr "م.بايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:13
-msgid "GiB"
-msgstr "ج.بايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:14
-msgid "TiB"
-msgstr "تبيبايت"
-
-#: ../data/ui/create-partition-dialog.ui.h:15
-msgid "PiB"
-msgstr ""
-
-#: ../data/ui/create-partition-dialog.ui.h:16
-msgid "Free Space _Following"
-msgstr ""
-
-#: ../data/ui/create-partition-dialog.ui.h:17
-msgid "The free space following the partition, in megabytes"
-msgstr ""
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: ../data/ui/create-partition-dialog.ui.h:18 ../data/ui/disks.ui.h:39
-msgid "Contents"
-msgstr "المحتويات"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:1
-#, fuzzy
-msgid "Create RAID Array"
-msgstr "أنشئ صورة قرص..."
-
-#: ../data/ui/create-raid-array-dialog.ui.h:2
-#, fuzzy
-msgid "C_reate…"
-msgstr "أن_شئ"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:3
-msgid "RAID _Level"
-msgstr "_مستوى RAID"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:4
-msgid "Chunk _Size"
-msgstr "حجم _القطعة"
-
-#: ../data/ui/create-raid-array-dialog.ui.h:6
-msgid "Usable Size"
-msgstr ""
-
-#: ../data/ui/create-raid-array-dialog.ui.h:7
-msgid "Number of Disks"
-msgstr ""
-
-#: ../data/ui/create-raid-array-dialog.ui.h:8
-msgid "For example, “My RAID Array” or “Backup Data”"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:1
-msgid "Drive Settings"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:2
-msgid "Apply Standby Timeout Settings"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:3
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:4
-msgid "Enter Standby After"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:5
-msgid "_Standby"
-msgstr "_انتظر"
-
-#: ../data/ui/disk-settings-dialog.ui.h:6
-#, fuzzy
-msgid "Apply Advanced Power Management Settings"
-msgstr "إدارة طاقة _متقدمة"
-
-#: ../data/ui/disk-settings-dialog.ui.h:7
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:8
-msgid "APM Level"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:9
-msgid ""
-"Agressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:10
-msgid "A_PM"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:11
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:12
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:13
-msgid "Vendor Recommended"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:14
-msgid "AAM Level"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:15
-msgid "_AAM"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:16
-msgid "Apply Write Cache Settings"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:17
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:18
-msgid "S_etting"
-msgstr "ا_لإعداد"
-
-#: ../data/ui/disk-settings-dialog.ui.h:19
-msgid "Enable Write Cache"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:20
-msgid "Disable Write Cache"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:21
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-
-#: ../data/ui/disk-settings-dialog.ui.h:22
-msgid "Wr_ite Cache"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:1
-#, fuzzy
-msgid "Create a new partition"
-msgstr "أنشئ قسما جديدا..."
-
-#: ../data/ui/disks.ui.h:2
-msgid "Mount the filesystem"
-msgstr "ضمّ نظام الملفات"
-
-#: ../data/ui/disks.ui.h:3
-msgid "Unmount the filesystem"
-msgstr "افصل نظام الملفات"
-
-#: ../data/ui/disks.ui.h:4
-msgid "Eject the media"
-msgstr "أخرج الوسط"
-
-#: ../data/ui/disks.ui.h:5
-#, fuzzy
-msgid "Power off the drive"
-msgstr "درجة حرارة محرك الأقراص"
-
-#: ../data/ui/disks.ui.h:6
-msgid "Unlock the encrypted device"
-msgstr "فك قفل القرص المحمي"
-
-#: ../data/ui/disks.ui.h:7
-msgid "Activate the swap space"
-msgstr "فعّل مساحة التبديل"
-
-#: ../data/ui/disks.ui.h:8
-msgid "Deactivate the swap space"
-msgstr "عطّل مساحة التبديل"
-
-#: ../data/ui/disks.ui.h:9
-msgid "Lock the encrypted device"
-msgstr "أقفل القرص المحمي"
-
-#: ../data/ui/disks.ui.h:10
-#, fuzzy
-msgid "More actions"
-msgstr "إجراءات أخرى..."
-
-#: ../data/ui/disks.ui.h:11
-#, fuzzy
-msgid "Delete partition"
-msgstr "احذف القسم..."
-
-#: ../data/ui/disks.ui.h:12
-#, fuzzy
-msgid "Start RAID Array"
-msgstr "البدء في ترتيب مجموعة الأقراص"
-
-#: ../data/ui/disks.ui.h:13
-#, fuzzy
-msgid "Stop RAID Array"
-msgstr "إيقاف ترتيب مجموعة الأقراص"
-
-#: ../data/ui/disks.ui.h:14
-#, fuzzy
-msgid "Detach Loop Device"
-msgstr "الجهاز"
-
-#: ../data/ui/disks.ui.h:15
-#, fuzzy
-msgid "_Devices"
-msgstr "الجهاز"
-
-#: ../data/ui/disks.ui.h:16
-msgid "Click to select multiple disks to perform operations on"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:17
-msgid "Done"
-msgstr "تمّ"
-
-#: ../data/ui/disks.ui.h:18
-msgid "Select a device"
-msgstr "اختر قرصا"
-
-#: ../data/ui/disks.ui.h:19
-msgid "Model"
-msgstr "الطراز"
-
-#: ../data/ui/disks.ui.h:20 ../data/ui/md-raid-disks-dialog.ui.h:2
-msgid "Serial Number"
-msgstr "الرقم التسلسلي"
-
-#: ../data/ui/disks.ui.h:21
-msgid "World Wide Name"
-msgstr "الاسم العالمي"
-
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: ../data/ui/disks.ui.h:23
-msgid "Location"
-msgstr "الموقع"
-
-#: ../data/ui/disks.ui.h:24
-msgid "Media"
-msgstr "قرص"
-
-#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../data/ui/disks.ui.h:25 ../data/ui/md-raid-disks-dialog.ui.h:3
-#: ../src/disks/gduatasmartdialog.c:1613
-msgid "Assessment"
-msgstr "التقييم"
-
-#: ../data/ui/disks.ui.h:26
-#, fuzzy
-msgid "Eject the medium in the drive"
-msgstr "أخرج الوسط"
-
-#: ../data/ui/disks.ui.h:27
-msgid "Job"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:28
-msgid "Name"
-msgstr "الاسم"
-
-#: ../data/ui/disks.ui.h:29
-msgid "RAID Level"
-msgstr "مستوى RAID"
-
-#: ../data/ui/disks.ui.h:30
-msgid "Size"
-msgstr "الحجم"
-
-#: ../data/ui/disks.ui.h:31
-msgid "State"
-msgstr "حالة"
-
-#: ../data/ui/disks.ui.h:32
-msgid "Auto-clear"
-msgstr ""
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: ../data/ui/disks.ui.h:34
-msgid "Backing File"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:35
-#, fuzzy
-msgid "Partitioning"
-msgstr "ت_قسيم"
-
-#: ../data/ui/disks.ui.h:36
-msgid "Bitmap"
-msgstr "نقطية"
-
-#: ../data/ui/disks.ui.h:37
-msgid "_Volumes"
-msgstr "الأ_جزاء"
-
-#: ../data/ui/disks.ui.h:40
-msgid "Device"
-msgstr "الجهاز"
-
-#: ../data/ui/disks.ui.h:41
-msgid "Partition Type"
-msgstr "نوع القسم"
-
-#: ../data/ui/disks.ui.h:42
-msgid "Format…"
-msgstr "_هيّء"
-
-#: ../data/ui/disks.ui.h:43
-#, fuzzy
-msgid "Create Disk Image…"
-msgstr "أنشئ صورة قرص…"
-
-#: ../data/ui/disks.ui.h:44
-#, fuzzy
-msgid "Restore Disk Image…"
-msgstr "استعد صورة قرص..."
-
-#: ../data/ui/disks.ui.h:45
-#, fuzzy
-msgid "Benchmark…"
-msgstr "قياس الأداء"
-
-#: ../data/ui/disks.ui.h:46
-msgid "SMART Data & Self-Tests…"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:47
-#, fuzzy
-msgid "Drive Settings…"
-msgstr "إعدادات المحرّك..."
-
-#: ../data/ui/disks.ui.h:48
-msgid "Standby Now"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:49
-msgid "Wake-Up from Standby"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:50
-#, fuzzy
-msgid "Power Off…"
-msgstr "مشغل"
-
-#: ../data/ui/disks.ui.h:51
-msgid "RAID Disks…"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:52
-msgid "Start Data Scrubbing…"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:53
-msgid "Stop Data Scrubbing"
-msgstr ""
-
-#: ../data/ui/disks.ui.h:54
-#, fuzzy
-msgid "Edit Partition…"
-msgstr "عدّل القسم..."
-
-#: ../data/ui/disks.ui.h:55
-#, fuzzy
-msgid "Edit Filesystem…"
-msgstr "عدّل عنوان نظام الملفات..."
-
-#: ../data/ui/disks.ui.h:56
-#, fuzzy
-msgid "Change Passphrase…"
-msgstr "غيّر عبارة السر..."
-
-#: ../data/ui/disks.ui.h:57
-#, fuzzy
-msgid "Edit Mount Options…"
-msgstr "عدّل خيارات الضمّ..."
-
-#: ../data/ui/disks.ui.h:58
-#, fuzzy
-msgid "Edit Encryption Options…"
-msgstr "عدل خيارات التعمية..."
-
-#: ../data/ui/disks.ui.h:59
-#, fuzzy
-msgid "Create RAID"
-msgstr "أنشئ صورة قرص..."
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:1
-msgid "Encryption Options"
-msgstr "خيارات التشفير"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:2
-msgid "_Automatic Encryption Options"
-msgstr "خيارات الت_عمية آلية"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:3
-msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
-msgstr ""
-"أوقف <i>خيارات التعمية آلية</i> لإدارة خيارات التعمية وعبارة السرّ للقرص. "
-"الخيارات تقابل مدخلة في الملف <b>/etc/crypttab</b>"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:5
-msgid "Opt_ions"
-msgstr "_خيارات"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:6
-msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
-"prefixed with <b>/dev/mapper</b>/"
-msgstr ""
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:7
-msgid "Options to use when unlocking the device"
-msgstr "خيارات لاستخدامها حين يفك قفل الجهاز"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:8
-msgid "Passphrase File"
-msgstr "ملف عبارة السرّ"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:9
-#: ../data/ui/unlock-device-dialog.ui.h:3
-msgid "Sho_w passphrase"
-msgstr "أ_ظهر عبارة السرّ"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:10
-msgid ""
-"Passphrase of the device or empty to request from user when setting up the "
-"device"
-msgstr "عبارة السر للقرص أو اتركها فارغة لطلبها من المستخدم عند إعداد الجهاز"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:11 ../data/ui/filesystem-create.ui.h:6
-#: ../data/ui/unlock-device-dialog.ui.h:2
-msgid "_Passphrase"
-msgstr "عبارة ال_سرّ"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:12
-msgid "_Unlock at startup"
-msgstr "_فك القفل عند بدء التشغيل"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:13
-msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr "إذا تم تفعيله، فسيفكّ قفل القرص عند بدأ التشغيل [!noauto]"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:14
-msgid "Require additional authori_zation to unlock"
-msgstr "يتطلب تصريحات إضافية لفكّ القفل"
-
-#: ../data/ui/edit-crypttab-dialog.ui.h:15
-#, fuzzy
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr "إذا تم تفعيله، استيثاق إضافي سيطلب لفك قفل القرص [x-udisks-auth]"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:1
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:1
-#: ../data/ui/edit-partition-dialog.ui.h:1
-#, fuzzy
-msgid "Edit Partition"
-msgstr "عدل نوع القسم..."
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:3
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:3
-#: ../data/ui/edit-partition-dialog.ui.h:3 ../data/ui/filesystem-create.ui.h:1
-msgid "_Type"
-msgstr "ال_نوع"
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:4
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr ""
-
-#: ../data/ui/edit-dos-partition-dialog.ui.h:5
-msgid "_Bootable"
-msgstr "_قابل للإقلاع"
-
-# flag تعني وسم؟
-#: ../data/ui/edit-dos-partition-dialog.ui.h:6
-#, fuzzy
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"وسم تستخدمه منصة محمل الإقلاع لتحديد أين نظام التشغيل الذي يتوجب التحميل "
-"منه. أحيانا القسم مع هذا الوسم يشير إلى قسم <i>نشط</i>"
-
-#: ../data/ui/edit-filesystem-dialog.ui.h:1
-msgid "Change Filesystem Label"
-msgstr "غيّر عنوان نظام الملفات"
-
-#: ../data/ui/edit-filesystem-dialog.ui.h:3
-msgid "_Label"
-msgstr "ع_نوان"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:1
-msgid "Mount Options"
-msgstr "خيارات الوصل"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:2
-msgid "_Automatic Mount Options"
-msgstr "خيارات الو_صل آلية"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:3
-#, fuzzy
-msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the <b>/etc/"
-"fstab</b> file"
-msgstr ""
-"إيقاف <i>خيارات الضم التلقائي</i> لإدارة خيارات الضم ونقاط الضم  للقرص. "
-"الخيارات ستوافق مدخلة في الملف <b>/etc/fstab</b>"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:4
-msgid "I_dentify As"
-msgstr "م_عرف ك"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:5
-msgid ""
-"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-"hierarchy to control the scope of the entry"
-msgstr ""
-
-#: ../data/ui/edit-fstab-dialog.ui.h:6
-msgid ""
-"The special device file - use symlinks in the /dev/disk hierarchy to control "
-"the scope of the entry"
-msgstr ""
-
-#: ../data/ui/edit-fstab-dialog.ui.h:7
-msgid "Mount _Point"
-msgstr "_نقطة الوصل"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:8
-msgid "Filesystem _Type"
-msgstr "ن_وع نظام الملفات"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:9
-msgid "The directory to mount the device in"
-msgstr "مسار لضم القرص فيه"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:10
-msgid "The filesystem type to use"
-msgstr "نوع نظام الملفات المستخدم"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:11
-msgid "Display _Name"
-msgstr "ا_سم العرض"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:12
-#, fuzzy
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr "إذا تم تعفيله، الاسم لاستخدامه للقرص في واجهة المستخدم [x-gvfs-name=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:13
-msgid "Icon Na_me"
-msgstr "ا_سم الأيقونة"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:14
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr "إذا تم تفعيله، اسم الأيقونة لاستخدامه في واجهة المستخدم [x-gvfs-icon=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:15
-msgid "Sho_w in user interface"
-msgstr "أ_ظهر في واجهة المستخدم"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:16
-msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [x-gvfs-show]"
-msgstr ""
-"إذا تم تفعيله، القرص سيظهر دوما في واجهة المستخدم أيا كان مساره [x-gvfs-show]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:17
-msgid "Require additional authori_zation to mount"
-msgstr "يتطلب ت_صريحات إضافية لوصله"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:18
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
-msgstr "إذا تم تفعيله، فسيتطلب وصل القرص تصريحات إضافية [x-udisks-auth]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:19
-msgid "Mount at _startup"
-msgstr "صل عند بدأ التش_غيل"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:20
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "إذا تم تفعيله، سيوصل القرص عند بدأ التشغيل [!noauto]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:21
-#, fuzzy
-msgid "S_ymbolic Icon Name"
-msgstr "ا_سم الأيقونة"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:22
-#, fuzzy
-msgid ""
-"If set, the name of the symbolic icon to use in the device in the user "
-"interface [x-gvfs-symbolic-icon=]"
-msgstr "إذا تم تفعيله، اسم الأيقونة لاستخدامه في واجهة المستخدم [x-gvfs-icon=]"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:23
-msgid "Mount Opt_ions"
-msgstr "_خيارات الوصل"
-
-#: ../data/ui/edit-fstab-dialog.ui.h:24
-msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:4
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:6
-msgid ""
-"The partition name (up to 36 unicode characters). This is useful if you want "
-"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
-"directory"
-msgstr ""
-"اسم القسم (يمكن أن يصل طوله إلى 36 محارف يونيكود). هذا مفيد إذا أردت أن تشير "
-"للقرص عبر وصلة رمزية في الدليل <b>/dev/disk/by-partlabel</b>"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:7
-msgid "_System partition"
-msgstr "قسم ن_ظام"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:8
-#, fuzzy
-msgid ""
-"Used to indicate that the partition and its contents are required for the OS/"
-"Platform to function. Special care should be taken to not delete or "
-"overwrite the contents"
-msgstr ""
-"يستخدم للإشارة إلى أن القسم ومحتوياته مهمة ل تؤدي منصة نظام التشغيل وظيفتها. "
-"احذر بشدة لكيلا تحذف أو تكتب على محتوياته"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:9
-msgid "Legacy BIOS _Bootable"
-msgstr "قابل للإ_قلاع في بايوس قديم"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:10
-msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
-msgstr ""
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:11
-msgid "_Read-Only"
-msgstr "لل_قراءة فقط"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:12
-#, fuzzy
-msgid ""
-"If set, some OSes may mount or use the contents of the partition as read-"
-"only instead of read-write"
-msgstr ""
-"إذا تم تفعيله، بعض أنظمة التشغيل قد تضم أو تستعمل محتويات القسم كبيانات "
-"للقراءة فقط بدلا عن استخدامها كبيانات قابلة للقراءة والكتابة"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:13
-msgid "H_idden"
-msgstr "م_خفي"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:14
-msgid ""
-"If set, some OSes may hide the contents of the partition in their user "
-"interfaces"
-msgstr ""
-"إذا تم تفعيله، بعض أنظمة التشغيل قد تخفي محتويات القسم في واجهة المستخدم "
-"الخاصة بها"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:15
-msgid "Do Not _Automount"
-msgstr "لا تضم تل_قائيا"
-
-#: ../data/ui/edit-gpt-partition-dialog.ui.h:16
-msgid "If set, some OSes may not automount the contents of the partition"
-msgstr "إذا تم تفعيله، بعض أنظمة التشغيل قد لا تضم محتويات القرص تلقائيا"
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:1
-msgid "Erase Multiple Disks"
-msgstr ""
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:2
-msgid "_Erase…"
-msgstr ""
-
-#: ../data/ui/erase-multiple-disks-dialog.ui.h:3
-#, fuzzy
-msgid "Erase _Type"
-msgstr "ال_نوع"
-
-#: ../data/ui/filesystem-create.ui.h:3
-msgid "F_ilesystem"
-msgstr "ن_ظام ملفات"
-
-#: ../data/ui/filesystem-create.ui.h:4
-#, fuzzy
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"نظام الملفات المخصص لإنشائه مثل <i>btrfs</i> أو  <i>xfs</i> أو <i>swap</i>"
-
-#: ../data/ui/filesystem-create.ui.h:5
-#, fuzzy
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr "نظام الملفات المخصص لإنشائه مثل <i>btrfs</i> أو  <i>xfs</i> أوswap "
-
-#: ../data/ui/filesystem-create.ui.h:8
-msgid "Enter passphrase used to protect the data"
-msgstr "أدخل عبارة سرّ لحماية البيانات"
-
-#: ../data/ui/filesystem-create.ui.h:12 ../data/ui/format-disk-dialog.ui.h:4
-#: ../src/disks/gduerasemultipledisksdialog.c:396
-msgid "_Erase"
-msgstr ""
-
-#: ../data/ui/filesystem-create.ui.h:13
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"الاسم لاستخدامه لنظام الملفات. هذا مفيد إذا كنت ستشير للقرص عبر وصلة رمزية "
-"في الدليل <b>/dev/disk/by-label</b>"
-
-#: ../data/ui/filesystem-create.ui.h:14
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"الاسم لاستخدامه لنظام الملفات. هذا مفيد إذا كنت ستشير للقرص عبر وصلة رمزية "
-"في الدليل /dev/disk/by-label"
-
-#: ../data/ui/filesystem-create.ui.h:15
-msgid "For example, “My Files” or “Backup Data”"
-msgstr ""
-
-#: ../data/ui/format-disk-dialog.ui.h:1
-#, fuzzy
-msgid "Format Disk"
-msgstr "هيئ قسما..."
-
-#: ../data/ui/format-disk-dialog.ui.h:2 ../data/ui/format-volume-dialog.ui.h:2
-#, fuzzy
-msgid "_Format…"
-msgstr "_هيّء"
-
-#: ../data/ui/format-disk-dialog.ui.h:3
-msgid "_Partitioning"
-msgstr "ت_قسيم"
-
-#: ../data/ui/format-volume-dialog.ui.h:1
-#, fuzzy
-msgid "Format Volume"
-msgstr "<big>هيئ القسم</big>"
-
-#: ../data/ui/md-raid-disks-dialog.ui.h:1
-#, fuzzy
-msgid "RAID Disks"
-msgstr "الأقراص"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:1
-#, fuzzy
-msgid "Restore Disk Image"
-msgstr "استعد صورة قرص..."
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:2
-#, fuzzy
-msgid "_Image to Restore"
-msgstr "ص_ورة لكي تستعاد"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:3
-msgid "Select Disk Image to restore"
-msgstr "اختر صورة قرص لاستعادتها"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:4
-msgid "Destination"
-msgstr "الوجهة"
-
-#: ../data/ui/restore-disk-image-dialog.ui.h:5
-msgid "_Start Restoring…"
-msgstr "اب_دأ الاستعادة…"
-
-#: ../data/ui/smart-dialog.ui.h:1
-msgid "SMART Data & Self-Tests"
-msgstr ""
-
-#: ../data/ui/smart-dialog.ui.h:2
-#, fuzzy
-msgid "_Start Self-test"
-msgstr "ا_بدأ الفحص الذاتي..."
-
-#: ../data/ui/smart-dialog.ui.h:3
-msgid "Click to start a SMART self-test"
-msgstr ""
-
-#: ../data/ui/smart-dialog.ui.h:4
-msgid "_Stop Self-test"
-msgstr "أو_قف الفحص الذاتي"
-
-#: ../data/ui/smart-dialog.ui.h:5
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr ""
-
-#: ../data/ui/smart-dialog.ui.h:6
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr ""
-
-#: ../data/ui/smart-dialog.ui.h:7
-#, fuzzy
-msgid "Powered On"
-msgstr "مشغل"
-
-#: ../data/ui/smart-dialog.ui.h:8
-msgid "Updated"
-msgstr "محدث"
-
-#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
-#. * or the next string for a longer explanation.
-#.
-#: ../data/ui/smart-dialog.ui.h:9 ../src/disks/gduatasmartdialog.c:308
-#: ../src/disks/gduatasmartdialog.c:527
-msgid "Temperature"
-msgstr "درجة الحرارة"
-
-#: ../data/ui/smart-dialog.ui.h:10
-msgid "Self-test Result"
-msgstr "نتائج الفحص الذاتي"
-
-#: ../data/ui/smart-dialog.ui.h:11
-msgid "Self-assessment"
-msgstr "التقييم الذاتي"
-
-#: ../data/ui/smart-dialog.ui.h:12
-msgid "Overall Assessment"
-msgstr "التقييم الكلي"
-
-#: ../data/ui/smart-dialog.ui.h:13
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr ""
-
-#: ../data/ui/smart-dialog.ui.h:14
-#, fuzzy
-msgid "SMART _Attributes"
-msgstr "الخاصية"
-
-#: ../data/ui/smart-dialog.ui.h:15
-msgid "Short"
-msgstr "قصيرة"
-
-#: ../data/ui/smart-dialog.ui.h:16
-msgid "Extended"
-msgstr "ممتد"
-
-#: ../data/ui/smart-dialog.ui.h:17
-msgid "Conveyance"
-msgstr ""
-
-#: ../data/ui/unlock-device-dialog.ui.h:1
-msgid "Enter passphrase to unlock"
-msgstr "أدخل العبارة السرّية لفك القفل"
-
-#: ../data/ui/unlock-device-dialog.ui.h:4
-msgid "_Unlock"
-msgstr "ا_فتح القفل"
-
-#: ../src/disk-image-mounter/main.c:44
+#: ../src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "حدث خطأ"
 
-#: ../src/disk-image-mounter/main.c:65
+#: ../src/disk-image-mounter/main.c:67
 msgid "Allow writing to the image"
 msgstr "اسمح بالكتابة إلى الصورة"
 
-#: ../src/disk-image-mounter/main.c:80
-#, fuzzy
+#: ../src/disk-image-mounter/main.c:82
 msgid "Select Disk Image(s) to Mount"
-msgstr "اختر صورة قرص للإلحاق"
+msgstr "اختر صورة قرص لتوصيلها"
 
-#: ../src/disk-image-mounter/main.c:84
+#: ../src/disk-image-mounter/main.c:85
+#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:727
+msgid "_Cancel"
+msgstr "أ_لغِ"
+
+#: ../src/disk-image-mounter/main.c:86
 msgid "_Mount"
-msgstr "_صِل"
+msgstr "أو_صِل"
 
 #. Add a RO check button that defaults to RO
-#: ../src/disk-image-mounter/main.c:90
+#: ../src/disk-image-mounter/main.c:94
 msgid "Set up _read-only mount"
 msgstr ""
 
-#: ../src/disk-image-mounter/main.c:91
+#: ../src/disk-image-mounter/main.c:95
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don't want "
 "the underlying disk image to be modified"
 msgstr ""
 
-#: ../src/disk-image-mounter/main.c:133
+#: ../src/disk-image-mounter/main.c:136
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr ""
 
-#: ../src/disk-image-mounter/main.c:141
+#: ../src/disk-image-mounter/main.c:144
 msgid "Attach and mount one or more disk image files."
 msgstr ""
 
-#: ../src/disk-image-mounter/main.c:189
+#: ../src/disk-image-mounter/main.c:192
 #, c-format
 msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgstr ""
 
-#: ../src/disk-image-mounter/main.c:196
+#: ../src/disk-image-mounter/main.c:199
 #, fuzzy, c-format
 msgid "Error opening `%s': %m"
 msgstr "خطأ أثناء فتح القرص"
 
-#: ../src/disk-image-mounter/main.c:217
+#: ../src/disk-image-mounter/main.c:220
 #, fuzzy, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "خطأ أثناء إلحاق صورة القرص"
 
-#: ../src/disks/gduapplication.c:131
+#: ../src/disks/gduapplication.c:114
 #, fuzzy, c-format
-msgid "Error opening %s: %s\n"
+msgid "Error opening %s: %s"
 msgstr "خطأ أثناء فتح القرص"
 
-#: ../src/disks/gduapplication.c:138
+#: ../src/disks/gduapplication.c:121
 #, fuzzy, c-format
-msgid "Error looking up block device for %s\n"
+msgid "Error looking up block device for %s"
 msgstr "خطأ أثناء قفل القرص المعمّى"
 
-#: ../src/disks/gduapplication.c:178
+#: ../src/disks/gduapplication.c:143
 #, fuzzy
 msgid "Select device"
 msgstr "اختر قرصا"
 
-#: ../src/disks/gduapplication.c:179
+#: ../src/disks/gduapplication.c:144
 #, fuzzy
 msgid "Format selected device"
 msgstr "اختر قرصا"
 
-#: ../src/disks/gduapplication.c:180
+#: ../src/disks/gduapplication.c:145
 msgid "Parent window XID for the format dialog"
 msgstr ""
 
-#: ../src/disks/gduapplication.c:181
-msgid "Show help options"
-msgstr ""
+#: ../src/disks/gduapplication.c:146
+#, fuzzy
+msgid "Restore disk image"
+msgstr "استعد صورة قرص..."
 
-#: ../src/disks/gduapplication.c:210
+#: ../src/disks/gduapplication.c:180
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 
-#: ../src/disks/gduapplication.c:216
+#: ../src/disks/gduapplication.c:186
 msgid "--format-device must be specified when using --xid\n"
 msgstr ""
 
@@ -1330,7 +200,7 @@ msgstr ""
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:312
+#: ../src/disks/gduapplication.c:296
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1555,6 +425,14 @@ msgstr ""
 #: ../src/disks/gduatasmartdialog.c:301
 msgid "Number of cycles into landing zone position"
 msgstr ""
+
+#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: ../src/disks/gduatasmartdialog.c:308 ../src/disks/gduatasmartdialog.c:527
+#: ../src/disks/ui/smart-dialog.ui.h:9
+msgid "Temperature"
+msgstr "درجة الحرارة"
 
 #: ../src/disks/gduatasmartdialog.c:309
 msgid "Current internal temperature of the drive"
@@ -2124,75 +1002,80 @@ msgid "Error starting SMART self-test"
 msgstr ""
 
 #: ../src/disks/gduatasmartdialog.c:1432
-msgid "An error occurred when trying toggle whether SMART is enabled"
+msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr ""
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1515
+#: ../src/disks/gduatasmartdialog.c:1514
 msgid "ID"
 msgstr "المُعرّف"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1527
+#: ../src/disks/gduatasmartdialog.c:1526
 msgid "Attribute"
 msgstr "الخاصية"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../src/disks/gduatasmartdialog.c:1541
+#: ../src/disks/gduatasmartdialog.c:1540
 msgid "Value"
 msgstr "القيمة"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: ../src/disks/gduatasmartdialog.c:1553
+#: ../src/disks/gduatasmartdialog.c:1552
 msgid "Normalized"
 msgstr ""
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: ../src/disks/gduatasmartdialog.c:1565
+#: ../src/disks/gduatasmartdialog.c:1564
 #, fuzzy
 msgid "Threshold"
 msgstr "تم تجاوز العتبة"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: ../src/disks/gduatasmartdialog.c:1577
+#: ../src/disks/gduatasmartdialog.c:1576
 msgid "Worst"
 msgstr ""
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: ../src/disks/gduatasmartdialog.c:1589
+#: ../src/disks/gduatasmartdialog.c:1588
 msgid "Type"
 msgstr "النوع"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: ../src/disks/gduatasmartdialog.c:1601
+#: ../src/disks/gduatasmartdialog.c:1600
 msgid "Updates"
 msgstr "التحديثات"
 
+#. Translators: This string is used as the column title in the treeview for the assessment of the attribute
+#: ../src/disks/gduatasmartdialog.c:1612 ../src/disks/ui/disks.ui.h:8
+msgid "Assessment"
+msgstr "التقييم"
+
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/disks/gdubenchmarkdialog.c:327
+#: ../src/disks/gdubenchmarkdialog.c:333
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr ""
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/disks/gdubenchmarkdialog.c:332
+#: ../src/disks/gdubenchmarkdialog.c:338
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr ""
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: ../src/disks/gdubenchmarkdialog.c:640
+#: ../src/disks/gdubenchmarkdialog.c:662
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:864
+#: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
 #, c-format
-msgid "%d sample"
-msgid_plural "%d samples"
+msgid "%u sample"
+msgid_plural "%u samples"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
@@ -2205,116 +1088,116 @@ msgstr[5] ""
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: ../src/disks/gdubenchmarkdialog.c:696
+#: ../src/disks/gdubenchmarkdialog.c:718
 #, fuzzy, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gdubenchmarkdialog.c:708
+#: ../src/disks/gdubenchmarkdialog.c:730
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "لا تتوفر بيانات قياس أداء"
 
-#: ../src/disks/gdubenchmarkdialog.c:713
+#: ../src/disks/gdubenchmarkdialog.c:735
 #, fuzzy
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "خطأ أثناء فتح القرص"
 
-#: ../src/disks/gdubenchmarkdialog.c:717
+#: ../src/disks/gdubenchmarkdialog.c:739
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:724
+#: ../src/disks/gdubenchmarkdialog.c:746
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:787
+#: ../src/disks/gdubenchmarkdialog.c:812
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr ""
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:862
+#: ../src/disks/gdubenchmarkdialog.c:887
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1174
+#: ../src/disks/gdubenchmarkdialog.c:1199
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "خطأ أثناء تحديد حجم القرص"
 
-#: ../src/disks/gdubenchmarkdialog.c:1184
+#: ../src/disks/gdubenchmarkdialog.c:1209
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "خطأ أثناء إعداد اسم القسم"
 
-#: ../src/disks/gdubenchmarkdialog.c:1218
-#: ../src/disks/gdubenchmarkdialog.c:1281
-#: ../src/disks/gdubenchmarkdialog.c:1300
+#: ../src/disks/gdubenchmarkdialog.c:1243
+#: ../src/disks/gdubenchmarkdialog.c:1306
+#: ../src/disks/gdubenchmarkdialog.c:1325
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "خطأ أثناء تحديد حجم الملف"
 
-#: ../src/disks/gdubenchmarkdialog.c:1229
+#: ../src/disks/gdubenchmarkdialog.c:1254
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "خطأ أثناء تحديد حجم الملف"
 
-#: ../src/disks/gdubenchmarkdialog.c:1241
+#: ../src/disks/gdubenchmarkdialog.c:1266
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "خطأ أثناء تحديد حجم الملف"
 
-#: ../src/disks/gdubenchmarkdialog.c:1255
+#: ../src/disks/gdubenchmarkdialog.c:1280
 #, fuzzy, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "خطأ أثناء تحديد حجم الملف"
 
-#: ../src/disks/gdubenchmarkdialog.c:1290
+#: ../src/disks/gdubenchmarkdialog.c:1315
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1311
+#: ../src/disks/gdubenchmarkdialog.c:1336
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1321
+#: ../src/disks/gdubenchmarkdialog.c:1346
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1331
+#: ../src/disks/gdubenchmarkdialog.c:1356
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1396
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr ""
 
-#: ../src/disks/gdubenchmarkdialog.c:1383
+#: ../src/disks/gdubenchmarkdialog.c:1408
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -2346,7 +1229,7 @@ msgstr ""
 "crypttab</i>"
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
-#: ../src/disks/gducreatefilesystemwidget.c:537
+#: ../src/disks/gducreatefilesystemwidget.c:541
 msgid "The strength of the passphrase"
 msgstr "قوة عبارة السرّ"
 
@@ -2354,7 +1237,7 @@ msgstr "قوة عبارة السرّ"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: ../src/disks/gducreatediskimagedialog.c:272
+#: ../src/disks/gducreatediskimagedialog.c:275
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr ""
@@ -2363,42 +1246,42 @@ msgstr ""
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: ../src/disks/gducreatediskimagedialog.c:303
+#: ../src/disks/gducreatediskimagedialog.c:308
 #, fuzzy
 msgid "Disk image read error"
 msgstr "اختر صورة قرص لاستعادتها"
 
-#: ../src/disks/gducreatediskimagedialog.c:339
+#: ../src/disks/gducreatediskimagedialog.c:344
 #, fuzzy
 msgid "Allocating Disk Image"
 msgstr "افصل صورة القرص"
 
-#: ../src/disks/gducreatediskimagedialog.c:343
+#: ../src/disks/gducreatediskimagedialog.c:348
 msgid "Retrieving DVD keys"
 msgstr ""
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:352
+#: ../src/disks/gducreatediskimagedialog.c:357
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr ""
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: ../src/disks/gducreatediskimagedialog.c:406
-#: ../src/disks/gdurestorediskimagedialog.c:398
+#: ../src/disks/gducreatediskimagedialog.c:411
+#: ../src/disks/gdurestorediskimagedialog.c:613
 #, fuzzy
 msgid "Disk image copying complete"
 msgstr "اختر صورة قرص لاستعادتها"
 
-#: ../src/disks/gducreatediskimagedialog.c:435
+#: ../src/disks/gducreatediskimagedialog.c:440
 #, fuzzy
 msgid "Error creating disk image"
 msgstr "خطأ أثناء إلحاق صورة القرص"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:476
+#: ../src/disks/gducreatediskimagedialog.c:481
 msgid "Unrecoverable read errors while creating disk image"
 msgstr ""
 
@@ -2407,7 +1290,7 @@ msgstr ""
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: ../src/disks/gducreatediskimagedialog.c:485
+#: ../src/disks/gducreatediskimagedialog.c:490
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -2416,121 +1299,121 @@ msgid ""
 msgstr ""
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: ../src/disks/gducreatediskimagedialog.c:491
+#: ../src/disks/gducreatediskimagedialog.c:496
 #, fuzzy
 msgid "_Delete Disk Image File"
 msgstr "افصل صورة القرص"
 
-#: ../src/disks/gducreatediskimagedialog.c:719
-#: ../src/disks/gdurestorediskimagedialog.c:532
+#: ../src/disks/gducreatediskimagedialog.c:724
+#: ../src/disks/gdurestorediskimagedialog.c:747
 #, fuzzy
 msgid "Error determining size of device: "
 msgstr "خطأ أثناء تحديد حجم القرص"
 
-#: ../src/disks/gducreatediskimagedialog.c:726
-#: ../src/disks/gdurestorediskimagedialog.c:539
+#: ../src/disks/gducreatediskimagedialog.c:731
+#: ../src/disks/gdurestorediskimagedialog.c:754
 #, c-format
 msgid "Device is size 0"
 msgstr ""
 
-#: ../src/disks/gducreatediskimagedialog.c:756
+#: ../src/disks/gducreatediskimagedialog.c:765
 #, fuzzy
 msgid "Error allocating space for disk image file: "
 msgstr "خطأ أثناء إلحاق صورة القرص"
 
-#: ../src/disks/gducreatediskimagedialog.c:910
+#: ../src/disks/gducreatediskimagedialog.c:926
 #, fuzzy, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "هناك ملف اسمه \"%s\" موجود بالفعل. هل تريد استبداله؟"
 
-#: ../src/disks/gducreatediskimagedialog.c:913
+#: ../src/disks/gducreatediskimagedialog.c:929
 #, fuzzy, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr "الملف موجود بالفعل في \"%s\". استبداله سيمحو محتويات القديم"
 
-#: ../src/disks/gducreatediskimagedialog.c:916
+#: ../src/disks/gducreatediskimagedialog.c:932
 msgid "_Replace"
 msgstr "ا_ستبدل"
 
-#: ../src/disks/gducreatediskimagedialog.c:970
+#: ../src/disks/gducreatediskimagedialog.c:982
 msgid "Error opening file for writing"
 msgstr "خطأ أثناء فتح الملف للكتابة"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:998
 #, fuzzy
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "ينسخ البيانات إلى صورة القرص..."
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:992
+#: ../src/disks/gducreatediskimagedialog.c:1004
 #, fuzzy
 msgid "Creating Disk Image"
 msgstr "أنشئ صورة قرص..."
 
-#: ../src/disks/gducreatefilesystemwidget.c:379
+#: ../src/disks/gducreatefilesystemwidget.c:382
 #: ../src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "متوافق مع جميع الأنظمة والأجهزة"
 
-#: ../src/disks/gducreatefilesystemwidget.c:380
+#: ../src/disks/gducreatefilesystemwidget.c:383
 msgid "FAT"
 msgstr "‏FAT"
 
-#: ../src/disks/gducreatefilesystemwidget.c:385
+#: ../src/disks/gducreatefilesystemwidget.c:388
 msgid "Compatible with most systems"
 msgstr "متوافق مع أغلب الأنظمة"
 
-#: ../src/disks/gducreatefilesystemwidget.c:386
+#: ../src/disks/gducreatefilesystemwidget.c:389
 msgid "NTFS"
 msgstr "‏NTFS"
 
-#: ../src/disks/gducreatefilesystemwidget.c:391
+#: ../src/disks/gducreatefilesystemwidget.c:394
 msgid "Compatible with Linux systems"
 msgstr "متوافق مع أنظمة لِنُكس"
 
-#: ../src/disks/gducreatefilesystemwidget.c:392
+#: ../src/disks/gducreatefilesystemwidget.c:395
 msgid "Ext4"
 msgstr "‏Ext4"
 
-#: ../src/disks/gducreatefilesystemwidget.c:397
+#: ../src/disks/gducreatefilesystemwidget.c:400
 msgid "Encrypted, compatible with Linux systems"
 msgstr "معمّى، متوافق مع أنظمة لِنُكس"
 
-#: ../src/disks/gducreatefilesystemwidget.c:398
+#: ../src/disks/gducreatefilesystemwidget.c:401
 msgid "LUKS + Ext4"
 msgstr ""
 
-#: ../src/disks/gducreatefilesystemwidget.c:403
+#: ../src/disks/gducreatefilesystemwidget.c:406
 msgid "Custom"
 msgstr "مخصّص"
 
-#: ../src/disks/gducreatefilesystemwidget.c:404
+#: ../src/disks/gducreatefilesystemwidget.c:407
 msgid "Enter filesystem type"
 msgstr "أدخل نوع نظام الملفات"
 
-#: ../src/disks/gducreatefilesystemwidget.c:486
+#: ../src/disks/gducreatefilesystemwidget.c:489
 #: ../src/disks/gduerasemultipledisksdialog.c:131
 #: ../src/disks/gduformatdiskdialog.c:151
 #, fuzzy
 msgid "Don’t overwrite existing data"
 msgstr "لا تكتب على البيانات الموجود"
 
-#: ../src/disks/gducreatefilesystemwidget.c:487
+#: ../src/disks/gducreatefilesystemwidget.c:490
 #: ../src/disks/gduerasemultipledisksdialog.c:132
 #: ../src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "سريع"
 
-#: ../src/disks/gducreatefilesystemwidget.c:494
+#: ../src/disks/gducreatefilesystemwidget.c:497
 #: ../src/disks/gduerasemultipledisksdialog.c:142
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "اكتب على البيانات الموجودة بأصفار"
 
-#: ../src/disks/gducreatefilesystemwidget.c:495
+#: ../src/disks/gducreatefilesystemwidget.c:498
 #: ../src/disks/gduerasemultipledisksdialog.c:143
 #: ../src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
@@ -2560,40 +1443,6 @@ msgstr "لا يمكنك إنشاء قسم جديد. يوجد بالفعل أرب
 #: ../src/disks/gducreatepartitiondialog.c:473
 msgid "This is the last primary partition that can be created."
 msgstr "هذا آخر قسم أولي يمكنك إنشائه."
-
-#: ../src/disks/gducreateraidarraydialog.c:296
-#, c-format
-msgid "%d disk"
-msgid_plural "%d disks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
-
-#. Translators: Shown in "Create RAID Array" dialog.
-#. *              The first %s is the number of disks e.g. '3 disks'.
-#. *              The second %s is the size of the disk e.g. '42 GB' or '3 TB'.
-#.
-#: ../src/disks/gducreateraidarraydialog.c:305
-#, c-format
-msgid "%s of %s each"
-msgstr ""
-
-#: ../src/disks/gducreateraidarraydialog.c:417
-#, fuzzy
-msgid "Error creating RAID array"
-msgstr "خطأ في تشغبل ذاكرة التبدبل"
-
-#: ../src/disks/gducreateraidarraydialog.c:573
-#, fuzzy
-msgid "Are you sure you want to use the disks for a RAID array?"
-msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
-
-#: ../src/disks/gducreateraidarraydialog.c:574
-msgid "Existing content on the devices will be erased"
-msgstr ""
 
 #: ../src/disks/gducrypttabdialog.c:108 ../src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -2628,39 +1477,17 @@ msgstr ""
 "فقط كلمة السر المودعة في الملف <i>/etc/crypttab</i> ستغير. لتغيير كلمة السر "
 "التي هي على القرص، استخدم <i>غير كلمة السر...</i>"
 
-#: ../src/disks/gdudevicetreemodel.c:560
+#: ../src/disks/gdudevicetreemodel.c:496
+#, fuzzy
+msgid "(None)"
+msgstr "لا شيء"
+
+#: ../src/disks/gdudevicetreemodel.c:611
 #, fuzzy
 msgid "Disk Drives"
 msgstr "سواقات القرص"
 
-#: ../src/disks/gdudevicetreemodel.c:633
-msgid "RAID Arrays"
-msgstr ""
-
-#. Translators: Used in the device tree for a RAID Array, the first %s is the size
-#: ../src/disks/gdudevicetreemodel.c:1098
-#, c-format
-msgctxt "md-raid-tree-primary"
-msgid "%s RAID Array"
-msgstr ""
-
-#. Translators: Used in the device tree for a RAID Array where the size is not known
-#: ../src/disks/gdudevicetreemodel.c:1104
-msgctxt "md-raid-tree-primary"
-msgid "RAID Array"
-msgstr ""
-
-#. Translators: Used as a secondary line in device tree for RAID Array.
-#. *              The first %s is the name of the array (e.g. "My RAID Array").
-#. *              The second %s is the RAID level (e.g. "RAID-5").
-#.
-#: ../src/disks/gdudevicetreemodel.c:1115
-#, fuzzy, c-format
-msgctxt "md-raid-tree-secondary"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#: ../src/disks/gdudevicetreemodel.c:1268
+#: ../src/disks/gdudevicetreemodel.c:1025
 msgid "Other Devices"
 msgstr "أجهزة أخرى"
 
@@ -2784,7 +1611,7 @@ msgstr ""
 
 #: ../src/disks/gduerasemultipledisksdialog.c:373
 #: ../src/disks/gduformatdiskdialog.c:424
-#: ../src/disks/gduformatvolumedialog.c:212
+#: ../src/disks/gduformatvolumedialog.c:222
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -2807,6 +1634,12 @@ msgid ""
 "or lock up. Before proceeding, please read the article about <a "
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
+msgstr ""
+
+#: ../src/disks/gduerasemultipledisksdialog.c:396
+#: ../src/disks/ui/filesystem-create.ui.h:12
+#: ../src/disks/ui/format-disk-dialog.ui.h:4
+msgid "_Erase"
 msgstr ""
 
 #: ../src/disks/gdufilesystemdialog.c:60
@@ -2886,27 +1719,27 @@ msgid ""
 msgstr ""
 
 #: ../src/disks/gduformatdiskdialog.c:445
-#: ../src/disks/gduformatvolumedialog.c:224
+#: ../src/disks/gduformatvolumedialog.c:234
 msgid "_Format"
 msgstr "_هيّء"
 
-#: ../src/disks/gduformatvolumedialog.c:87
+#: ../src/disks/gduformatvolumedialog.c:92
 msgid "Error formatting volume"
 msgstr "خطأ أثناء تهيئة الجزء"
 
-#: ../src/disks/gduformatvolumedialog.c:206
+#: ../src/disks/gduformatvolumedialog.c:216
 msgid "Are you sure you want to format the volume?"
 msgstr "هل أنت متأكد أنك تريد تهيئة الجزء؟"
 
 #. Translators: warning used for quick format of the volume
-#: ../src/disks/gduformatvolumedialog.c:210
+#: ../src/disks/gduformatvolumedialog.c:220
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
 msgstr ""
 
 #. Translators: warning used when overwriting data of the volume
-#: ../src/disks/gduformatvolumedialog.c:217
+#: ../src/disks/gduformatvolumedialog.c:227
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -2914,7 +1747,7 @@ msgstr ""
 
 #: ../src/disks/gdufstabdialog.c:154
 #, c-format
-msgid "Matches partition %d of the device with the given vital product data"
+msgid "Matches partition %u of the device with the given vital product data"
 msgstr ""
 
 #: ../src/disks/gdufstabdialog.c:157
@@ -2924,7 +1757,7 @@ msgstr ""
 #: ../src/disks/gdufstabdialog.c:162
 #, c-format
 msgid ""
-"Matches partition %d of any device connected at the given port or address"
+"Matches partition %u of any device connected at the given port or address"
 msgstr ""
 
 #: ../src/disks/gdufstabdialog.c:165
@@ -2960,149 +1793,15 @@ msgstr "خطأ أثناء إضافة مدخلة جديدة إلى ‎/etc/fstab"
 msgid "Error updating /etc/fstab entry"
 msgstr "خطأ أثناء تحديث مدخلة في ‎/etc/fstab"
 
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gdumdraiddisksdialog.c:251 ../src/disks/gduwindow.c:2004
-#, c-format
-msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-msgstr "%s <span size=\"smaller\">(للقراءة فقط)</span>"
-
-#: ../src/disks/gdumdraiddisksdialog.c:334
-msgid "An error occurred when removing a disk from the RAID Array"
-msgstr ""
-
-#: ../src/disks/gdumdraiddisksdialog.c:372
-#, fuzzy
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to remove the disk?"
-msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
-
-#: ../src/disks/gdumdraiddisksdialog.c:373
-msgctxt "mdraid-disks"
-msgid "Removing a disk from a RAID array may degrade it"
-msgstr ""
-
-#: ../src/disks/gdumdraiddisksdialog.c:374
-msgctxt "mdraid-disks"
-msgid "_Remove"
-msgstr ""
-
-#: ../src/disks/gdumdraiddisksdialog.c:615
-#, fuzzy
-msgctxt "mdraid-disks-state"
-msgid "FAILED"
-msgstr "فشل"
-
-#. Translators: MD-RAID member state for 'in_sync'
-#: ../src/disks/gdumdraiddisksdialog.c:622
-msgctxt "mdraid-disks-state"
-msgid "In Sync"
-msgstr ""
-
-#. Translators: MD-RAID member state for 'spare'
-#: ../src/disks/gdumdraiddisksdialog.c:631
-msgctxt "mdraid-disks-state"
-msgid "Spare"
-msgstr ""
-
-#. Translators: MD-RAID member state for 'spare' but is being recovered to
-#: ../src/disks/gdumdraiddisksdialog.c:638
-msgctxt "mdraid-disks-state"
-msgid "Recovering"
-msgstr ""
-
-#. Translators: MD-RAID member state for 'writemostly'
-#: ../src/disks/gdumdraiddisksdialog.c:646
-msgctxt "mdraid-disks-state"
-msgid "Write-mostly"
-msgstr ""
-
-#. Translators: MD-RAID member state for 'blocked'
-#: ../src/disks/gdumdraiddisksdialog.c:653
-#, fuzzy
-msgctxt "mdraid-disks-state"
-msgid "Blocked"
-msgstr "ا_فتح القفل"
-
-#. Translators: MD-RAID member state unknown. The %s is the raw state from sysfs
-#: ../src/disks/gdumdraiddisksdialog.c:660
-#, fuzzy, c-format
-msgctxt "mdraid-disks-state"
-msgid "Unknown (%s)"
-msgstr "غير معروف (%s)"
-
-#. Translators: column name for the position of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:744
-#, fuzzy
-msgctxt "mdraid-disks"
-msgid "Position"
-msgstr "ت_قسيم"
-
-#. Translators: column name for the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:760
-#, fuzzy
-msgctxt "mdraid-disks"
-msgid "Disk"
-msgstr "الأقراص"
-
-#. Translators: column name for the state of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:790
-msgctxt "mdraid-disks"
-msgid "State"
-msgstr ""
-
-#. Translators: column name for the number of read errors of the disk in the RAID array
-#: ../src/disks/gdumdraiddisksdialog.c:806
-msgctxt "mdraid-disks"
-msgid "Errors"
-msgstr ""
-
-#: ../src/disks/gdumdraiddisksdialog.c:948
-msgid "An error occurred when adding a disk to the RAID Array"
-msgstr ""
-
-#: ../src/disks/gdumdraiddisksdialog.c:970
-#, fuzzy
-msgctxt "mdraid-disks"
-msgid "Are you sure you want to add the disk to the array?"
-msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
-
-#: ../src/disks/gdumdraiddisksdialog.c:971
-#, fuzzy
-msgctxt "mdraid-disks"
-msgid "All existing data on the disk will be lost"
-msgstr "كل البيانات الموجودة ستفقد"
-
-#: ../src/disks/gdumdraiddisksdialog.c:972
-msgctxt "mdraid-disks"
-msgid "_Add"
-msgstr "أ_ضف"
-
-#. Translators: Shown in sole item in popup menu for the "+" button when there are no disks of the
-#. *              right size available
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1150
-msgctxt "mdraid-add"
-msgid "No disks of suitable size available"
-msgstr ""
-
-#. Translators: Top-most item in popup menu for the "+" button. Other items in the menu include
-#. *              disks that can be added to the array
-#.
-#: ../src/disks/gdumdraiddisksdialog.c:1161
-#, fuzzy
-msgctxt "mdraid-add"
-msgid "Select disk to add"
-msgstr "اختر صورة قرص للإلحاق"
-
-#: ../src/disks/gdupartitiondialog.c:355
+#: ../src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
 msgstr "خطأ أثناء إعداد نوع القسم"
 
-#: ../src/disks/gdupartitiondialog.c:369
+#: ../src/disks/gdupartitiondialog.c:365
 msgid "Error setting partition name"
 msgstr "خطأ أثناء إعداد اسم القسم"
 
-#: ../src/disks/gdupartitiondialog.c:383
+#: ../src/disks/gdupartitiondialog.c:379
 #, fuzzy
 msgid "Error setting partition flags"
 msgstr "خطأ أثناء إعداد علامات الأقسام"
@@ -3127,56 +1826,68 @@ msgctxt "Password strength"
 msgid "Strong"
 msgstr "قوية"
 
-#: ../src/disks/gdurestorediskimagedialog.c:244
+#: ../src/disks/gdurestorediskimagedialog.c:277
+msgid "File does not appear to be XZ compressed"
+msgstr ""
+
+#. Translators: Shown for a compressed disk image in the "Size" field.
+#. *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
+#.
+#: ../src/disks/gdurestorediskimagedialog.c:286
+#, c-format
+msgid "%s when decompressed"
+msgstr ""
+
+#: ../src/disks/gdurestorediskimagedialog.c:302
 msgid "Cannot restore image of size 0"
 msgstr "لا يمكن استرجاع صورة حجمها 0"
 
-#: ../src/disks/gdurestorediskimagedialog.c:253
+#: ../src/disks/gdurestorediskimagedialog.c:311
 #, fuzzy, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "الصورة المختارة أصغر ب %s من القرص"
 
-#: ../src/disks/gdurestorediskimagedialog.c:262
+#: ../src/disks/gdurestorediskimagedialog.c:320
 #, fuzzy, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "الصورة المختارة أكبر ب %s من القرص"
 
-#: ../src/disks/gdurestorediskimagedialog.c:435
+#: ../src/disks/gdurestorediskimagedialog.c:650
 #, fuzzy
 msgid "Error restoring disk image"
 msgstr "خطأ أثناء إلحاق صورة القرص"
 
-#: ../src/disks/gdurestorediskimagedialog.c:722
+#: ../src/disks/gdurestorediskimagedialog.c:939
 msgid "Error opening file for reading"
 msgstr "خطأ في فتح الملف للقراءة"
 
-#: ../src/disks/gdurestorediskimagedialog.c:736
+#: ../src/disks/gdurestorediskimagedialog.c:954
 #, fuzzy
-msgid "Error determing size of file"
+msgid "Error determining size of file"
 msgstr "خطأ أثناء تحديد حجم الملف"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gdurestorediskimagedialog.c:749
+#: ../src/disks/gdurestorediskimagedialog.c:982
 #, fuzzy
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "ينسخ البيانات للقرص..."
 
 #. Translators: this is the description of the job
-#: ../src/disks/gdurestorediskimagedialog.c:755
+#: ../src/disks/gdurestorediskimagedialog.c:988
 #, fuzzy
 msgid "Restoring Disk Image"
 msgstr "استعد صورة قرص..."
 
-#: ../src/disks/gdurestorediskimagedialog.c:807
+#: ../src/disks/gdurestorediskimagedialog.c:1044
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "هل أنت متأكد من أنك تريد كتابة صورة القرص إلى الجهاز؟"
 
-#: ../src/disks/gdurestorediskimagedialog.c:808
+#: ../src/disks/gdurestorediskimagedialog.c:1045
 msgid "All existing data will be lost"
 msgstr "كل البيانات الموجودة ستفقد"
 
-#: ../src/disks/gdurestorediskimagedialog.c:809
+#: ../src/disks/gdurestorediskimagedialog.c:1046
 msgid "_Restore"
 msgstr "است_عد"
 
@@ -3188,133 +1899,155 @@ msgstr "خطأ أثناء فك قفل قرص معمّى"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr ""
 
-#: ../src/disks/gduvolumegrid.c:536 ../src/disks/gduwindow.c:2755
+#: ../src/disks/gduvolumegrid.c:262
+#, fuzzy
+msgid "Volumes Grid"
+msgstr "الأ_جزاء"
+
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2035
 msgid "No Media"
 msgstr "لا وسائط"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1556
-#, c-format
+#: ../src/disks/gduvolumegrid.c:1560
+#, fuzzy, c-format
 msgctxt "volume-grid"
-msgid "Partition %d: %s"
+msgid "Partition %u: %s"
 msgstr "القسم %d: %s"
 
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1563
-#, c-format
+#: ../src/disks/gduvolumegrid.c:1567
+#, fuzzy, c-format
 msgctxt "volume-grid"
-msgid "Partition %d"
+msgid "Partition %u"
 msgstr "القسم %d"
 
-#: ../src/disks/gduvolumegrid.c:1600
+#: ../src/disks/gduvolumegrid.c:1605
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "المساحة الفارغة"
 
-#: ../src/disks/gduvolumegrid.c:1643
+#: ../src/disks/gduvolumegrid.c:1648
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "قسم ممتد"
 
-#: ../src/disks/gduvolumegrid.c:1667
+#: ../src/disks/gduvolumegrid.c:1672
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "نظام الملفات"
 
-#: ../src/disks/gduvolumegrid.c:1689
+#: ../src/disks/gduvolumegrid.c:1694
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "تبديل"
 
-#. Translators: Shown in volume grid for Linux RAID members. Please
-#. *              keep this as short as possible.
-#. *              The first %s is the array name (e.g. 'MirrorOnTheWall').
-#. *              The second %s is the homehost (e.g. 'thinkpad').
-#.
-#: ../src/disks/gduvolumegrid.c:1718
-#, c-format
-msgctxt "volume-grid"
-msgid "%s [local to %s]"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:730
+#: ../src/disks/gduwindow.c:586
 msgid "Error deleting loop device"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:830 ../src/disks/gduwindow.c:901
+#: ../src/disks/gduwindow.c:686 ../src/disks/gduwindow.c:757
 msgid "Error attaching disk image"
 msgstr "خطأ أثناء إلحاق صورة القرص"
 
-#: ../src/disks/gduwindow.c:870
+#: ../src/disks/gduwindow.c:724
 msgid "Select Disk Image to Attach"
 msgstr "اختر صورة قرص للإلحاق"
 
-#: ../src/disks/gduwindow.c:874
+#: ../src/disks/gduwindow.c:728
 msgid "_Attach"
 msgstr "أ_لحق"
 
+#. set file types
+#. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:879
+#: ../src/disks/gduwindow.c:735
 msgid "Set up _read-only loop device"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:880
+#: ../src/disks/gduwindow.c:736
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr ""
 
+#: ../src/disks/gduwindow.c:958
+#, fuzzy
+msgid "Power off this disk"
+msgstr "درجة حرارة محرك الأقراص"
+
+#: ../src/disks/gduwindow.c:964
+#, fuzzy
+msgid "Eject this disk"
+msgstr "أخرج الوسط"
+
+#: ../src/disks/gduwindow.c:970
+#, fuzzy
+msgid "Detach this loop device"
+msgstr "الجهاز"
+
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1651
+#: ../src/disks/gduwindow.c:1355
 msgctxt "accelerator"
 msgid "F10"
 msgstr ""
 
-#. Translators: This is the short-cut to format a disk
-#: ../src/disks/gduwindow.c:1656
+#. Translators: This is the short-cut to format a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1363
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr ""
 
-#. Translators: This is the short-cut to view SMART data for a disk
-#: ../src/disks/gduwindow.c:1661
+#. Translators: This is the short-cut to view SMART data for a disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1371
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr ""
 
-#. Translators: This is the short-cut to view RAID Disks for a RAID array
-#: ../src/disks/gduwindow.c:1666
-msgctxt "accelerator"
-msgid "<Ctrl>R"
-msgstr ""
-
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk
-#: ../src/disks/gduwindow.c:1671
+#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
+#. *              The Ctrl modifier must not be translated or parsing will fail.
+#. *              You can however change to another English modifier (e.g. <Shift>).
+#.
+#: ../src/disks/gduwindow.c:1379
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr ""
 
-#. Translators: This is the short-cut to open the volume gear menu
-#: ../src/disks/gduwindow.c:1676
+#: ../src/disks/gduwindow.c:1394
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr ""
 
-#. Translators: This is the short-cut to format a volume
-#: ../src/disks/gduwindow.c:1683
+#. Translators: This is the short-cut to format a volume.
+#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
+#. *              You can however change to other English modifiers.
+#.
+#: ../src/disks/gduwindow.c:1404
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr ""
+
+#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
+#: ../src/disks/gduwindow.c:1724
+#, fuzzy, c-format
+msgid "%s (Read-Only)"
+msgstr "لل_قراءة فقط"
 
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:2042
+#: ../src/disks/gduwindow.c:1762
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -3323,7 +2056,7 @@ msgstr ""
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:2050
+#: ../src/disks/gduwindow.c:1770
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -3334,7 +2067,7 @@ msgstr ""
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:2065
+#: ../src/disks/gduwindow.c:1785
 #, fuzzy, c-format
 msgid "%s of %s – %s"
 msgstr "%s (%s)"
@@ -3343,199 +2076,30 @@ msgstr "%s (%s)"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:2152
+#: ../src/disks/gduwindow.c:1872
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:2224 ../src/disks/gduwindow.c:3069
+#: ../src/disks/gduwindow.c:1944 ../src/disks/gduwindow.c:2344
 msgid "Block device is empty"
 msgstr ""
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:2247
+#: ../src/disks/gduwindow.c:1967
 #, fuzzy, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
 msgstr "غير معروف (%s)"
 
-#: ../src/disks/gduwindow.c:2328
-msgid "RAID array is not running"
-msgstr ""
-
-#. Translators: Used in the main window for a RAID array, the first %s is the size
-#: ../src/disks/gduwindow.c:2349
-#, c-format
-msgctxt "md-raid-window"
-msgid "%s RAID Array"
-msgstr ""
-
-#. Translators: Used in the main window for a RAID array where the size is not known
-#: ../src/disks/gduwindow.c:2355
-msgctxt "md-raid-window"
-msgid "RAID Array"
-msgstr ""
-
-#. Translators: shown as the device for a RAID array that is not currently running
-#: ../src/disks/gduwindow.c:2381
-#, fuzzy
-msgctxt "mdraid"
-msgid "Not running"
-msgstr "لا تقسيم"
-
-#. Translators: Shown in the 'Array Name' field when the RAID array is deemed to belong to another machine.
-#. *              Search for "homehost" in the mdadm(8) documentation for more information.
-#. *              The first %s is the array name (e.g. "My Raid Disk").
-#. *              The second %s is the hostname that the RAID array belongs to (e.g. "big-server-042").
-#.
-#: ../src/disks/gduwindow.c:2448
-#, fuzzy, c-format
-msgctxt "mdraid"
-msgid "%s (local to %s)"
-msgstr "%s (%s)"
-
-#: ../src/disks/gduwindow.c:2488
-#, fuzzy, c-format
-msgid "%d Disk"
-msgid_plural "%d Disks"
-msgstr[0] "أقراص"
-msgstr[1] "أقراص"
-msgstr[2] "أقراص"
-msgstr[3] "أقراص"
-msgstr[4] "أقراص"
-msgstr[5] "أقراص"
-
-#: ../src/disks/gduwindow.c:2500
-#, c-format
-msgctxt "mdraid-disks-and-chunk-size"
-msgid "%s, %s Chunk"
-msgstr ""
-
-#. Translators: Shown in the "RAID Level" field.
-#. *              The first %s is the long description of the RAID level e.g. "RAID 6 (Dual Distributed Parity)".
-#. *              The second %s is the number of RAID disks optionally with the chunk size e.g. "8 disks" or "8 disks, 512 KiB Chunk".
-#.
-#: ../src/disks/gduwindow.c:2509
-#, c-format
-msgctxt "mdraid"
-msgid "%s, %s"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2529
-#, c-format
-msgid "%d disk is missing"
-msgid_plural "%d disks are missing"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
-
-#: ../src/disks/gduwindow.c:2535
-msgctxt "mdraid"
-msgid "ARRAY IS DEGRADED"
-msgstr ""
-
-#. Translators: The first %s is the sentence 'ARRAY IS DEGRADED'.
-#. *              The second %s conveys the number of devices missing e.g. "1 disk is missing".
-#.
-#: ../src/disks/gduwindow.c:2539
-#, c-format
-msgctxt "mdraid-degraded"
-msgid "%s — %s"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2550 ../src/disks/gduwindow.c:2566
-msgctxt "mdraid-state"
-msgid "Running"
-msgstr ""
-
-#. Translators: Shown in the 'State' field for MD-RAID when not running
-#: ../src/disks/gduwindow.c:2555
-#, fuzzy
-msgctxt "mdraid-state"
-msgid "Not running"
-msgstr "لا تقسيم"
-
-#: ../src/disks/gduwindow.c:2575
-msgctxt "mdraid-state"
-msgid "Data Scrubbing"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2580
-msgctxt "mdraid-state"
-msgid "Data Scrubbing and Repair"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2585
-msgctxt "mdraid-state"
-msgid "Resyncing"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2589
-msgctxt "mdraid-state"
-msgid "Recovering"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:2593
-msgctxt "mdraid-state"
-msgid "Frozen"
-msgstr ""
-
-#. Translators: String for conveying the raid array is misconfigured
-#: ../src/disks/gduwindow.c:2609
-msgctxt "raid-split-brain"
-msgid "RAID ARRAY IS MISCONFIGURED"
-msgstr ""
-
-#. Translators: The specific type of misconfiguration, see
-#. * http://en.wikipedia.org/wiki/Split-brain_(computing)
-#. * for more details
-#.
-#: ../src/disks/gduwindow.c:2615
-msgctxt "raid-split-brain"
-msgid "Split-Brain"
-msgstr ""
-
-#. Translators: Combiner for the RAID split-brain strings.
-#. *              The first %s is "SYSTEM IS MISCONFIGURED".
-#. *              The second %s is "Split-Brain" as a hyperlink.
-#.
-#: ../src/disks/gduwindow.c:2621
-#, fuzzy, c-format
-msgctxt "raid-split-brain"
-msgid "%s (%s)"
-msgstr "%s (%s)"
-
-#. Translators: Shown in RAID progress bar.
-#. *              The first %s is about the operation, e.g. 'Data Scrubbing'.
-#. *              The second is the percentage completed, e.g. '42.5%'
-#.
-#: ../src/disks/gduwindow.c:2651
-#, c-format
-msgctxt "raid-state-progress"
-msgid "%s: %s"
-msgstr ""
-
-#. Translators: Used for MD-RAID sync operation.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-#.
-#: ../src/disks/gduwindow.c:2678
-#, c-format
-msgctxt "mdraid-sync-op"
-msgid "%s remaining (%s/sec)"
-msgstr ""
-
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2858
+#: ../src/disks/gduwindow.c:2136
 msgid "Connected to another seat"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:3002
+#: ../src/disks/gduwindow.c:2282
 msgid "Loop device is empty"
 msgstr ""
 
@@ -3545,257 +2109,1254 @@ msgstr ""
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:3241
+#: ../src/disks/gduwindow.c:2511
 #, fuzzy, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s (%s)"
 
-#: ../src/disks/gduwindow.c:3271
+#: ../src/disks/gduwindow.c:2541
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "مجهول"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:3299
+#: ../src/disks/gduwindow.c:2569
 #, fuzzy
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "جذر نظام الملفّات"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:3307
+#: ../src/disks/gduwindow.c:2577
 #, fuzzy, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "نعم, مضموم في %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:3313
+#: ../src/disks/gduwindow.c:2583
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr ""
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:2606
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr ""
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:3342
+#: ../src/disks/gduwindow.c:2612
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr ""
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3355
+#: ../src/disks/gduwindow.c:2625
 #, fuzzy
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "ا_فتح القفل"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:3361
+#: ../src/disks/gduwindow.c:2631
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:3371
+#: ../src/disks/gduwindow.c:2641
 #, fuzzy
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "قسم ممتد"
 
-#. Translators: Shown as a hyperlink in the 'Contents' field for a member of an RAID Array
-#: ../src/disks/gduwindow.c:3381
-msgctxt "volume-contents-raid"
-msgid "Go To Array"
-msgstr ""
-
-#. Translators: Shown in the 'Contents' field for a member of an RAID array.
-#. *              The first %s is the usual contents string (e.g. "Linux RAID Member").
-#. *              The second %s is the hyperlink "Go To Array".
-#.
-#: ../src/disks/gduwindow.c:3386
-#, c-format
-msgctxt "volume-contents-raid"
-msgid "%s — %s"
-msgstr ""
-
 #. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:3404
+#: ../src/disks/gduwindow.c:2661
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr ""
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:3504
+#: ../src/disks/gduwindow.c:2761
 msgid "Unallocated Space"
 msgstr "مساحة غير مخصصة"
 
-#: ../src/disks/gduwindow.c:3883
-msgid "An error occurred when requesting data redundancy check"
-msgstr ""
-
-#. Translators: Heading for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3901
-msgctxt "mdraid-scrub-dialog"
-msgid "Data Scrubbing"
-msgstr ""
-
-#. Translators: Message for data scrubbing dialog
-#: ../src/disks/gduwindow.c:3903
-msgctxt "mdraid-scrub-dialog"
-msgid ""
-"As storage devices can develop bad blocks at any time it is valuable to "
-"regularly read all blocks on all disks in a RAID array so as to catch such "
-"bad blocks early.\n"
-"\n"
-"The RAID array will remain operational for the duration of the operation but "
-"performance will be impacted. For more information about data scrubbing, see "
-"the <a href='https://raid.wiki.kernel.org/index.php/"
-"RAID_Administration'>RAID Administration</a> article."
-msgstr ""
-
-#: ../src/disks/gduwindow.c:3908
-msgctxt "mdraid-scrub-dialog"
-msgid "_Start"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:3909
-msgctxt "mdraid-scrub-dialog"
-msgid "_Repair mismatched blocks, if possible"
-msgstr ""
-
-#: ../src/disks/gduwindow.c:3956
+#: ../src/disks/gduwindow.c:3110
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:4002
+#: ../src/disks/gduwindow.c:3156
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:4047
+#: ../src/disks/gduwindow.c:3201
 #, fuzzy
 msgid "Error powering off drive"
 msgstr "خطأ أثناء فتح القرص"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4099
+#: ../src/disks/gduwindow.c:3253
 #, fuzzy
 msgid "Are you sure you want to power off the drives?"
 msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:4101
+#: ../src/disks/gduwindow.c:3255
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 
-#: ../src/disks/gduwindow.c:4105
+#: ../src/disks/gduwindow.c:3259
 #, fuzzy
 msgid "_Power Off"
 msgstr "مشغل"
 
-#: ../src/disks/gduwindow.c:4182
+#: ../src/disks/gduwindow.c:3336
 msgid "Error mounting filesystem"
 msgstr "خطأ في وصل نظام الملفات"
 
-#: ../src/disks/gduwindow.c:4222 ../src/libgdu/gduutils.c:1100
+#: ../src/disks/gduwindow.c:3375 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "خطأ في فصل نظام الملفات"
 
-#: ../src/disks/gduwindow.c:4367
+#: ../src/disks/gduwindow.c:3517
 msgid "Error deleting partition"
 msgstr "خطأ أثناء حذف القسم"
 
-#: ../src/disks/gduwindow.c:4405
+#: ../src/disks/gduwindow.c:3554
 msgid "Are you sure you want to delete the partition?"
 msgstr "أمتأكد أنك تريد حذف القسم؟"
 
-#: ../src/disks/gduwindow.c:4406
+#: ../src/disks/gduwindow.c:3555
 msgid "All data on the partition will be lost"
 msgstr "كل البيانات في هذا القسم ستضيع"
 
-#: ../src/disks/gduwindow.c:4407
+#: ../src/disks/gduwindow.c:3556
 msgid "_Delete"
 msgstr "اح_ذف"
 
-#: ../src/disks/gduwindow.c:4438
+#: ../src/disks/gduwindow.c:3587
 msgid "Error ejecting media"
 msgstr "خطأ في إخراج الوسط"
 
-#: ../src/disks/gduwindow.c:4495
-#, fuzzy
-msgid "Error starting RAID array"
-msgstr "خطأ في تشغبل ذاكرة التبدبل"
-
-#: ../src/disks/gduwindow.c:4537
-#, fuzzy
-msgid "Error stopping RAID array"
-msgstr "خطأ في إيقاف ذاكرة التبديل"
-
-#: ../src/disks/gduwindow.c:4624
+#: ../src/disks/gduwindow.c:3654
 msgid "Error locking encrypted device"
 msgstr "خطأ أثناء قفل القرص المعمّى"
 
-#: ../src/disks/gduwindow.c:4689
+#: ../src/disks/gduwindow.c:3718
 msgid "Error starting swap"
 msgstr "خطأ في تفعيل ذاكرة التبديل"
 
-#: ../src/disks/gduwindow.c:4726
+#: ../src/disks/gduwindow.c:3755
 msgid "Error stopping swap"
 msgstr "خطأ في إيقاف ذاكرة التبديل"
 
-#: ../src/disks/gduwindow.c:4765
-#, fuzzy
-msgid "Error setting bitmap for the RAID array"
-msgstr "خطأ في تشغبل ذاكرة التبدبل"
-
-#: ../src/disks/gduwindow.c:4831
+#: ../src/disks/gduwindow.c:3797
 #, fuzzy
 msgid "Error setting autoclear flag"
 msgstr "خطأ أثناء إعداد علامات الأقسام"
 
-#: ../src/disks/gduwindow.c:4884 ../src/disks/gduwindow.c:4948
+#: ../src/disks/gduwindow.c:3850 ../src/disks/gduwindow.c:3914
 #, fuzzy
 msgid "Error canceling job"
 msgstr "خطأ أثناء إعداد العنوان"
 
-#. Translators: Shown when no devices are selected but multiple selection is active.
-#.
-#: ../src/disks/gduwindow.c:5070
-msgctxt "multi-disk-menu"
-msgid "No _Devices Selected"
+#: ../src/disks/gduxzdecompressor.c:122
+msgid "Invalid compressed data"
 msgstr ""
 
-#: ../src/disks/gduwindow.c:5080
-#, c-format
-msgid "%d _Device Selected (%s)"
-msgid_plural "%d _Devices Selected (%s)"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
-msgstr[3] ""
-msgstr[4] ""
-msgstr[5] ""
+#: ../src/disks/gduxzdecompressor.c:129
+msgid "Not enough memory"
+msgstr ""
 
-#: ../src/libgdu/gduutils.c:91
+#: ../src/disks/gduxzdecompressor.c:136
+#, c-format
+msgid "Internal error"
+msgstr ""
+
+#: ../src/disks/gduxzdecompressor.c:151
+msgid "Need more input"
+msgstr ""
+
+#: ../src/disks/ui/about-dialog.ui.h:1
+#, fuzzy
+msgid ""
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen"
+msgstr ""
+"حقوق النسخ محفوظة © 2008-2012 لشركة Red Hat\n"
+"حقوق النسخ محفوظة © 2008-2012 لديفيد زيوثن"
+
+#: ../src/disks/ui/about-dialog.ui.h:3
+msgid "View, modify and configure disks and media"
+msgstr "لعرض وتعديل وإعداد الأقراص ووسائط التخزين"
+
+#: ../src/disks/ui/about-dialog.ui.h:4
+msgid "translator-credits"
+msgstr ""
+"فريق عربآيز للترجمة http://www.arabeyes.org:\n"
+"خالد حسني\t<khaledhosny@eglug.org>\n"
+"محمد الحرقان\t<malham1@hotmail.com>\n"
+"سمير حسين\t<almusalimalmusalimah@gmail.com>\n"
+"عبد الرحيم قيطوني\t<a.kitouni@gmail.com>\n"
+"os_\t<syriatalk@hotmail.com>\n"
+"إبراهيم سعيد\t<ibraheem5000@gmail.com>"
+
+#: ../src/disks/ui/app-menu.ui.h:1
+#, fuzzy
+msgid "Attach Disk _Image…"
+msgstr "ألحق _صورة قرص..."
+
+#: ../src/disks/ui/app-menu.ui.h:2
+msgid "_Help"
+msgstr "_مساعدة"
+
+#: ../src/disks/ui/app-menu.ui.h:3
+#, fuzzy
+msgid "_About"
+msgstr "_عن الأقراص"
+
+#: ../src/disks/ui/app-menu.ui.h:4
+msgid "_Quit"
+msgstr "ا_خرج"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:1
+msgid "Benchmark"
+msgstr "قياس الأداء"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:2
+msgid "_Start Benchmark…"
+msgstr "ا_بدأ قياس الأداء..."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:3
+msgid "_Abort Benchmark"
+msgstr "_عن قياس الأداء"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:4
+msgid "Last Benchmarked"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:5
+msgid "Average Read Rate"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:6
+msgid "Average Write Rate"
+msgstr "معدل الكتابة"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:7
+msgid "Average Access Time"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:8
+#, fuzzy
+msgid "Disk or Device"
+msgstr "سواقات القرص"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:9
+msgid "Sample Size"
+msgstr "حجم العينة"
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:10
+msgid "Benchmark Settings"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:11
+#, fuzzy
+msgid "_Start Benchmarking…"
+msgstr "ا_بدأ قياس الأداء..."
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:12
+msgid ""
+"Benchmarking involves measuring the transfer rate on various area of the "
+"device as well as measuring how long it takes to seek from one random area "
+"to another. Please back up important data before using the write benchmark."
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:13
+msgid "Transfer Rate"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:14
+msgid "Number of S_amples"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:15
+msgid "Sample S_ize (MiB)"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:16
+msgid "Perform _write-benchmark"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:17
+msgid ""
+"Benchmarking the write-rate of a disk requires exclusive access to the disk "
+"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
+"reading data and then writing it back. As a result, the contents of the disk "
+"is not changed.\n"
+"\n"
+"If not checked, the write-part of the benchmark will not be done but on the "
+"other hand exclusive access to the device is not needed (e.g. the disk or "
+"device can be in use)."
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:20
+msgid ""
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:21
+msgid ""
+"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
+"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
+"taking more time."
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:22
+msgid "Access Time"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:23
+msgid "Number of Sampl_es"
+msgstr ""
+
+#: ../src/disks/ui/benchmark-dialog.ui.h:24
+msgid ""
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
+msgstr ""
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:1
+msgid "Change Passphrase"
+msgstr "غيّر عبارة السر..."
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:2
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:2
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:2
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:2
+#: ../src/disks/ui/edit-partition-dialog.ui.h:2
+msgid "C_hange"
+msgstr "غيّ_ر"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:3
+msgid "Curr_ent Passphrase"
+msgstr "عبارة السرّ ال_حالية"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:4
+msgid "Enter current passphrase used to protect the data"
+msgstr "أدخل عبارة السرّ الحالية التي استُخدمت لحماية البيانات"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:5
+#: ../src/disks/ui/filesystem-create.ui.h:10
+msgid "Sho_w Passphrases"
+msgstr "أ_ظهر عبارات السر"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:6
+#: ../src/disks/ui/filesystem-create.ui.h:11
+msgid "Check this box to see the passphrases entered above"
+msgstr "فعّل هذا الصندوق لكي ترى عبارات السرّ أعلاه"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:7
+#: ../src/disks/ui/filesystem-create.ui.h:9
+msgid "Confirm passphrase entered above"
+msgstr "أكّد عبارة السرّ المدخلة أعلاه"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:8
+msgid "Enter new passphrase used to protect the data"
+msgstr "أدخل عبارة سرّ جديدة لتحمي البيانات"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:9
+#: ../src/disks/ui/filesystem-create.ui.h:7
+msgid "C_onfirm Passphrase"
+msgstr "أ_كّد عبارة السرّ"
+
+#: ../src/disks/ui/change-passphrase-dialog.ui.h:10
+msgid "New _Passphrase"
+msgstr "عبارة سرّ _جديدة"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:1
+#, fuzzy
+msgid "Create Disk Image"
+msgstr "أنشئ صورة قرص..."
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:2
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:4
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:5
+#: ../src/disks/ui/filesystem-create.ui.h:2
+msgid "_Name"
+msgstr "الاس_م"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:3
+#, fuzzy
+msgid "Save in _Folder"
+msgstr "احفظ _في مجلد"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:4
+msgid "Select a Folder"
+msgstr "اختر مجلّدا"
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:5
+msgid "Source"
+msgstr ""
+
+#: ../src/disks/ui/create-disk-image-dialog.ui.h:6
+#, fuzzy
+msgid "_Start Creating…"
+msgstr "ابدأ الإن_شاء..."
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:1
+msgid "Create Partition"
+msgstr "أنشئ قسما"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:2
+msgid "C_reate"
+msgstr "أن_شئ"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:3
+msgid "Partition _Size"
+msgstr "_حجم القسم"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:4
+msgid "The size of the partition to create, in megabytes"
+msgstr "حجم القسم المراد إنشاؤه (بالميجا بايت)"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:5
+msgid "bytes"
+msgstr "بايتات"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:6
+msgid "kB"
+msgstr "ك.بايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:7
+msgid "MB"
+msgstr "م.بايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:8
+msgid "GB"
+msgstr "قيقابايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:9
+msgid "TB"
+msgstr "ت.بايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:10
+msgid "PB"
+msgstr ""
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:11
+msgid "KiB"
+msgstr ""
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:12
+#, fuzzy
+msgid "MiB"
+msgstr "م.بايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:13
+msgid "GiB"
+msgstr "ج.بايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:14
+msgid "TiB"
+msgstr "تبيبايت"
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:15
+msgid "PiB"
+msgstr ""
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:16
+msgid "Free Space _Following"
+msgstr ""
+
+#: ../src/disks/ui/create-partition-dialog.ui.h:17
+msgid "The free space following the partition, in megabytes"
+msgstr ""
+
+#. The contents of the device, for example
+#: ../src/disks/ui/create-partition-dialog.ui.h:18
+#: ../src/disks/ui/disks.ui.h:27
+msgid "Contents"
+msgstr "المحتويات"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:1
+msgid "Drive Settings"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:2
+msgid "Apply Standby Timeout Settings"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:3
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:4
+msgid "Enter Standby After"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:5
+msgid "_Standby"
+msgstr "_انتظر"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:6
+#, fuzzy
+msgid "Apply Advanced Power Management Settings"
+msgstr "إدارة طاقة _متقدمة"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:7
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:8
+msgid "APM Level"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:9
+msgid ""
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:10
+msgid "A_PM"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:11
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:12
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:13
+msgid "Vendor Recommended"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:14
+msgid "AAM Level"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:15
+msgid "_AAM"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:16
+msgid "Apply Write Cache Settings"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:17
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:18
+msgid "S_etting"
+msgstr "ا_لإعداد"
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:19
+msgid "Enable Write Cache"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:20
+msgid "Disable Write Cache"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:21
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+
+#: ../src/disks/ui/disk-settings-dialog.ui.h:22
+msgid "Wr_ite Cache"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:1
+msgid "Select a device"
+msgstr "اختر قرصا"
+
+#: ../src/disks/ui/disks.ui.h:2
+msgid "Model"
+msgstr "الطراز"
+
+#: ../src/disks/ui/disks.ui.h:3
+msgid "Serial Number"
+msgstr "الرقم التسلسلي"
+
+#: ../src/disks/ui/disks.ui.h:4
+msgid "World Wide Name"
+msgstr "الاسم العالمي"
+
+#. The physical location of the drive, could be
+#: ../src/disks/ui/disks.ui.h:6
+msgid "Location"
+msgstr "الموقع"
+
+#: ../src/disks/ui/disks.ui.h:7
+msgid "Media"
+msgstr "قرص"
+
+#: ../src/disks/ui/disks.ui.h:9
+msgid "Job"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:10
+msgid "Name"
+msgstr "الاسم"
+
+#: ../src/disks/ui/disks.ui.h:11
+msgid "Size"
+msgstr "الحجم"
+
+#: ../src/disks/ui/disks.ui.h:12
+msgid "Auto-clear"
+msgstr ""
+
+#. The filename or URI of the file that is used as backing store for the loop device.
+#: ../src/disks/ui/disks.ui.h:14
+msgid "Backing File"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:15
+#, fuzzy
+msgid "Partitioning"
+msgstr "ت_قسيم"
+
+#: ../src/disks/ui/disks.ui.h:16
+msgid "_Volumes"
+msgstr "الأ_جزاء"
+
+#: ../src/disks/ui/disks.ui.h:17
+#, fuzzy
+msgid "Mount selected partition"
+msgstr "احذف القسم..."
+
+#: ../src/disks/ui/disks.ui.h:18
+#, fuzzy
+msgid "Unmount selected partition"
+msgstr "احذف القسم..."
+
+#: ../src/disks/ui/disks.ui.h:19
+#, fuzzy
+msgid "Activate selected swap partition"
+msgstr "فعّل مساحة التبديل"
+
+#: ../src/disks/ui/disks.ui.h:20
+#, fuzzy
+msgid "Deactivate selected swap partition"
+msgstr "عطّل مساحة التبديل"
+
+#: ../src/disks/ui/disks.ui.h:21
+#, fuzzy
+msgid "Unlock selected encrypted partition"
+msgstr "فك قفل القرص المحمي"
+
+#: ../src/disks/ui/disks.ui.h:22
+#, fuzzy
+msgid "Lock selected encrypted partition"
+msgstr "أقفل القرص المحمي"
+
+#: ../src/disks/ui/disks.ui.h:23
+msgid "Create partition in unallocated space"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:24
+#, fuzzy
+msgid "Delete selected partition"
+msgstr "احذف القسم..."
+
+#: ../src/disks/ui/disks.ui.h:25
+#, fuzzy
+msgid "Additional partition options"
+msgstr "لا تقسيم"
+
+#: ../src/disks/ui/disks.ui.h:28
+msgid "Device"
+msgstr "الجهاز"
+
+#: ../src/disks/ui/disks.ui.h:29
+msgid "Partition Type"
+msgstr "نوع القسم"
+
+#: ../src/disks/ui/disks.ui.h:30
+#, fuzzy
+msgid "Format Disk…"
+msgstr "هيئ قسما..."
+
+#: ../src/disks/ui/disks.ui.h:31
+#, fuzzy
+msgid "Create Disk Image…"
+msgstr "أنشئ صورة قرص…"
+
+#: ../src/disks/ui/disks.ui.h:32
+#, fuzzy
+msgid "Restore Disk Image…"
+msgstr "استعد صورة قرص..."
+
+#: ../src/disks/ui/disks.ui.h:33
+#, fuzzy
+msgid "Benchmark Disk…"
+msgstr "قياس الأداء"
+
+#: ../src/disks/ui/disks.ui.h:34
+msgid "SMART Data & Self-Tests…"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:35
+#, fuzzy
+msgid "Drive Settings…"
+msgstr "إعدادات المحرّك..."
+
+#: ../src/disks/ui/disks.ui.h:36
+msgid "Standby Now"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:37
+msgid "Wake-Up from Standby"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:38
+#, fuzzy
+msgid "Power Off…"
+msgstr "مشغل"
+
+#: ../src/disks/ui/disks.ui.h:39
+#, fuzzy
+msgid "Format Partition…"
+msgstr "عدّل القسم..."
+
+#: ../src/disks/ui/disks.ui.h:40
+#, fuzzy
+msgid "Edit Partition…"
+msgstr "عدّل القسم..."
+
+#: ../src/disks/ui/disks.ui.h:41
+#, fuzzy
+msgid "Edit Filesystem…"
+msgstr "عدّل عنوان نظام الملفات..."
+
+#: ../src/disks/ui/disks.ui.h:42
+#, fuzzy
+msgid "Change Passphrase…"
+msgstr "غيّر عبارة السر..."
+
+#: ../src/disks/ui/disks.ui.h:43
+#, fuzzy
+msgid "Edit Mount Options…"
+msgstr "عدّل خيارات الضمّ..."
+
+#: ../src/disks/ui/disks.ui.h:44
+#, fuzzy
+msgid "Edit Encryption Options…"
+msgstr "عدل خيارات التعمية..."
+
+#: ../src/disks/ui/disks.ui.h:45
+#, fuzzy
+msgid "Create Partition Image…"
+msgstr "أنشئ قسما"
+
+#: ../src/disks/ui/disks.ui.h:46
+#, fuzzy
+msgid "Restore Partition Image…"
+msgstr "استعد صورة قرص..."
+
+#: ../src/disks/ui/disks.ui.h:47
+#, fuzzy
+msgid "Benchmark Partition…"
+msgstr "قياس الأداء"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:1
+msgid "Encryption Options"
+msgstr "خيارات التشفير"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:2
+msgid "_Automatic Encryption Options"
+msgstr "خيارات الت_عمية آلية"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:3
+msgid ""
+"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
+"and passphrase for the device. The options correspond to an entry in the <b>/"
+"etc/crypttab</b> file"
+msgstr ""
+"أوقف <i>خيارات التعمية آلية</i> لإدارة خيارات التعمية وعبارة السرّ للقرص. "
+"الخيارات تقابل مدخلة في الملف <b>/etc/crypttab</b>"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:5
+msgid "Opt_ions"
+msgstr "_خيارات"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:6
+msgid ""
+"The name to use for the unlocked device - the device is set up as the name "
+"prefixed with <b>/dev/mapper</b>/"
+msgstr ""
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:7
+msgid "Options to use when unlocking the device"
+msgstr "خيارات لاستخدامها حين يفك قفل الجهاز"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:8
+msgid "Passphrase File"
+msgstr "ملف عبارة السرّ"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:9
+#: ../src/disks/ui/unlock-device-dialog.ui.h:3
+msgid "Sho_w passphrase"
+msgstr "أ_ظهر عبارة السرّ"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:10
+msgid ""
+"Passphrase of the device or empty to request from user when setting up the "
+"device"
+msgstr "عبارة السر للقرص أو اتركها فارغة لطلبها من المستخدم عند إعداد الجهاز"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:11
+#: ../src/disks/ui/filesystem-create.ui.h:6
+#: ../src/disks/ui/unlock-device-dialog.ui.h:2
+msgid "_Passphrase"
+msgstr "عبارة ال_سرّ"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:12
+msgid "_Unlock at startup"
+msgstr "_فك القفل عند بدء التشغيل"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:13
+msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgstr "إذا تم تفعيله، فسيفكّ قفل القرص عند بدأ التشغيل [!noauto]"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:14
+msgid "Require additional authori_zation to unlock"
+msgstr "يتطلب تصريحات إضافية لفكّ القفل"
+
+#: ../src/disks/ui/edit-crypttab-dialog.ui.h:15
+#, fuzzy
+msgid ""
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
+msgstr "إذا تم تفعيله، استيثاق إضافي سيطلب لفك قفل القرص [x-udisks-auth]"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:1
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:1
+#: ../src/disks/ui/edit-partition-dialog.ui.h:1
+#, fuzzy
+msgid "Edit Partition"
+msgstr "عدل نوع القسم..."
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:3
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:3
+#: ../src/disks/ui/edit-partition-dialog.ui.h:3
+#: ../src/disks/ui/filesystem-create.ui.h:1
+msgid "_Type"
+msgstr "ال_نوع"
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:4
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr ""
+
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:5
+msgid "_Bootable"
+msgstr "_قابل للإقلاع"
+
+# flag تعني وسم؟
+#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:6
+#, fuzzy
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the <i>active</i> partition"
+msgstr ""
+"وسم تستخدمه منصة محمل الإقلاع لتحديد أين نظام التشغيل الذي يتوجب التحميل "
+"منه. أحيانا القسم مع هذا الوسم يشير إلى قسم <i>نشط</i>"
+
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:1
+msgid "Change Filesystem Label"
+msgstr "غيّر عنوان نظام الملفات"
+
+#: ../src/disks/ui/edit-filesystem-dialog.ui.h:3
+msgid "_Label"
+msgstr "ع_نوان"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:1
+msgid "Mount Options"
+msgstr "خيارات الوصل"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:2
+msgid "_Automatic Mount Options"
+msgstr "خيارات الو_صل آلية"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:3
+#, fuzzy
+msgid ""
+"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"options for the device. The options correspond to an entry in the <b>/etc/"
+"fstab</b> file"
+msgstr ""
+"إيقاف <i>خيارات الضم التلقائي</i> لإدارة خيارات الضم ونقاط الضم  للقرص. "
+"الخيارات ستوافق مدخلة في الملف <b>/etc/fstab</b>"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:4
+msgid "I_dentify As"
+msgstr "م_عرف ك"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:5
+msgid ""
+"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
+"hierarchy to control the scope of the entry"
+msgstr ""
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:6
+msgid ""
+"The special device file - use symlinks in the /dev/disk hierarchy to control "
+"the scope of the entry"
+msgstr ""
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:7
+msgid "Mount _Point"
+msgstr "_نقطة الوصل"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:8
+msgid "Filesystem _Type"
+msgstr "ن_وع نظام الملفات"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:9
+msgid "The directory to mount the device in"
+msgstr "مسار لضم القرص فيه"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:10
+msgid "The filesystem type to use"
+msgstr "نوع نظام الملفات المستخدم"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:11
+msgid "Display _Name"
+msgstr "ا_سم العرض"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:12
+#, fuzzy
+msgid ""
+"If set, the name to use for the device in the user interface [x-gvfs-name=]"
+msgstr "إذا تم تعفيله، الاسم لاستخدامه للقرص في واجهة المستخدم [x-gvfs-name=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:13
+msgid "Icon Na_me"
+msgstr "ا_سم الأيقونة"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:14
+msgid ""
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
+msgstr "إذا تم تفعيله، اسم الأيقونة لاستخدامه في واجهة المستخدم [x-gvfs-icon=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:15
+msgid "Sho_w in user interface"
+msgstr "أ_ظهر في واجهة المستخدم"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:16
+msgid ""
+"If checked, the device is always shown in the user interface no matter what "
+"its directory is [x-gvfs-show]"
+msgstr ""
+"إذا تم تفعيله، القرص سيظهر دوما في واجهة المستخدم أيا كان مساره [x-gvfs-show]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:17
+msgid "Require additional authori_zation to mount"
+msgstr "يتطلب ت_صريحات إضافية لوصله"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:18
+msgid ""
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
+msgstr "إذا تم تفعيله، فسيتطلب وصل القرص تصريحات إضافية [x-udisks-auth]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:19
+msgid "Mount at _startup"
+msgstr "صل عند بدأ التش_غيل"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:20
+msgid "If checked, the device will be mounted at startup [!noauto]"
+msgstr "إذا تم تفعيله، سيوصل القرص عند بدأ التشغيل [!noauto]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:21
+#, fuzzy
+msgid "S_ymbolic Icon Name"
+msgstr "ا_سم الأيقونة"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:22
+#, fuzzy
+msgid ""
+"If set, the name of the symbolic icon to use in the device in the user "
+"interface [x-gvfs-symbolic-icon=]"
+msgstr "إذا تم تفعيله، اسم الأيقونة لاستخدامه في واجهة المستخدم [x-gvfs-icon=]"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:23
+msgid "Mount Opt_ions"
+msgstr "_خيارات الوصل"
+
+#: ../src/disks/ui/edit-fstab-dialog.ui.h:24
+msgid "The mount options stored in the <b>/etc/fstab</b> file"
+msgstr ""
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:4
+msgid "The partition type represented as a 32-bit <i>GUID</i>"
+msgstr ""
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:6
+msgid ""
+"The partition name (up to 36 unicode characters). This is useful if you want "
+"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
+"directory"
+msgstr ""
+"اسم القسم (يمكن أن يصل طوله إلى 36 محارف يونيكود). هذا مفيد إذا أردت أن تشير "
+"للقرص عبر وصلة رمزية في الدليل <b>/dev/disk/by-partlabel</b>"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:7
+#, fuzzy
+msgid "_System Partition"
+msgstr "قسم ن_ظام"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:8
+#, fuzzy
+msgid ""
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
+"overwrite the contents"
+msgstr ""
+"يستخدم للإشارة إلى أن القسم ومحتوياته مهمة ل تؤدي منصة نظام التشغيل وظيفتها. "
+"احذر بشدة لكيلا تحذف أو تكتب على محتوياته"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:9
+msgid "Legacy BIOS _Bootable"
+msgstr "قابل للإ_قلاع في بايوس قديم"
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:10
+msgid ""
+"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
+"i> flag. It is normally only used for GPT partitions on MBR systems"
+msgstr ""
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:11
+msgid "Flags"
+msgstr ""
+
+#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:12
+msgid "Hide from _Firmware"
+msgstr ""
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:1
+msgid "Erase Multiple Disks"
+msgstr ""
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:2
+msgid "_Erase…"
+msgstr ""
+
+#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:3
+#, fuzzy
+msgid "Erase _Type"
+msgstr "ال_نوع"
+
+#: ../src/disks/ui/filesystem-create.ui.h:3
+msgid "F_ilesystem"
+msgstr "ن_ظام ملفات"
+
+#: ../src/disks/ui/filesystem-create.ui.h:4
+#, fuzzy
+msgid ""
+"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+"<i>swap</i>"
+msgstr ""
+"نظام الملفات المخصص لإنشائه مثل <i>btrfs</i> أو  <i>xfs</i> أو <i>swap</i>"
+
+#: ../src/disks/ui/filesystem-create.ui.h:5
+#, fuzzy
+msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+msgstr "نظام الملفات المخصص لإنشائه مثل <i>btrfs</i> أو  <i>xfs</i> أوswap "
+
+#: ../src/disks/ui/filesystem-create.ui.h:8
+msgid "Enter passphrase used to protect the data"
+msgstr "أدخل عبارة سرّ لحماية البيانات"
+
+#: ../src/disks/ui/filesystem-create.ui.h:13
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+msgstr ""
+"الاسم لاستخدامه لنظام الملفات. هذا مفيد إذا كنت ستشير للقرص عبر وصلة رمزية "
+"في الدليل <b>/dev/disk/by-label</b>"
+
+#: ../src/disks/ui/filesystem-create.ui.h:14
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the /dev/disk/by-label directory"
+msgstr ""
+"الاسم لاستخدامه لنظام الملفات. هذا مفيد إذا كنت ستشير للقرص عبر وصلة رمزية "
+"في الدليل /dev/disk/by-label"
+
+#: ../src/disks/ui/filesystem-create.ui.h:15
+msgid "For example, “My Files” or “Backup Data”"
+msgstr ""
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:1
+#, fuzzy
+msgid "Format Disk"
+msgstr "هيئ قسما..."
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:2
+#: ../src/disks/ui/format-volume-dialog.ui.h:2
+#, fuzzy
+msgid "_Format…"
+msgstr "_هيّء"
+
+#: ../src/disks/ui/format-disk-dialog.ui.h:3
+msgid "_Partitioning"
+msgstr "ت_قسيم"
+
+#: ../src/disks/ui/format-volume-dialog.ui.h:1
+#, fuzzy
+msgid "Format Volume"
+msgstr "<big>هيئ القسم</big>"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:1
+#, fuzzy
+msgid "Restore Disk Image"
+msgstr "استعد صورة قرص..."
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:2
+#, fuzzy
+msgid "_Image to Restore"
+msgstr "ص_ورة لكي تستعاد"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:3
+#, fuzzy
+msgid "Select Disk Image to Restore"
+msgstr "اختر صورة قرص لاستعادتها"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:4
+msgid "Destination"
+msgstr "الوجهة"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:5
+#, fuzzy
+msgid "_Destination"
+msgstr "الوجهة"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:6
+#, fuzzy
+msgid "Image to Restore"
+msgstr "ص_ورة لكي تستعاد"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:7
+#, fuzzy
+msgid "Image Size"
+msgstr "حجم العينة"
+
+#: ../src/disks/ui/restore-disk-image-dialog.ui.h:8
+msgid "_Start Restoring…"
+msgstr "اب_دأ الاستعادة…"
+
+#: ../src/disks/ui/smart-dialog.ui.h:1
+msgid "SMART Data & Self-Tests"
+msgstr ""
+
+#: ../src/disks/ui/smart-dialog.ui.h:2
+#, fuzzy
+msgid "_Start Self-test"
+msgstr "ا_بدأ الفحص الذاتي..."
+
+#: ../src/disks/ui/smart-dialog.ui.h:3
+msgid "Click to start a SMART self-test"
+msgstr ""
+
+#: ../src/disks/ui/smart-dialog.ui.h:4
+msgid "_Stop Self-test"
+msgstr "أو_قف الفحص الذاتي"
+
+#: ../src/disks/ui/smart-dialog.ui.h:5
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr ""
+
+#: ../src/disks/ui/smart-dialog.ui.h:6
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr ""
+
+#: ../src/disks/ui/smart-dialog.ui.h:7
+#, fuzzy
+msgid "Powered On"
+msgstr "مشغل"
+
+#: ../src/disks/ui/smart-dialog.ui.h:8
+msgid "Updated"
+msgstr "محدث"
+
+#: ../src/disks/ui/smart-dialog.ui.h:10
+msgid "Self-test Result"
+msgstr "نتائج الفحص الذاتي"
+
+#: ../src/disks/ui/smart-dialog.ui.h:11
+msgid "Self-assessment"
+msgstr "التقييم الذاتي"
+
+#: ../src/disks/ui/smart-dialog.ui.h:12
+msgid "Overall Assessment"
+msgstr "التقييم الكلي"
+
+#: ../src/disks/ui/smart-dialog.ui.h:13
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr ""
+
+#: ../src/disks/ui/smart-dialog.ui.h:14
+#, fuzzy
+msgid "SMART _Attributes"
+msgstr "الخاصية"
+
+#: ../src/disks/ui/smart-dialog.ui.h:15
+msgid "Short"
+msgstr "قصيرة"
+
+#: ../src/disks/ui/smart-dialog.ui.h:16
+msgid "Extended"
+msgstr "ممتد"
+
+#: ../src/disks/ui/smart-dialog.ui.h:17
+msgid "Conveyance"
+msgstr ""
+
+#: ../src/disks/ui/unlock-device-dialog.ui.h:1
+msgid "Enter passphrase to unlock"
+msgstr "أدخل العبارة السرّية لفك القفل"
+
+#: ../src/disks/ui/unlock-device-dialog.ui.h:4
+msgid "_Unlock"
+msgstr "ا_فتح القفل"
+
+#: ../src/libgdu/gduutils.c:92
 msgid "All Files"
 msgstr "كل الملفات"
 
-#: ../src/libgdu/gduutils.c:95
+#: ../src/libgdu/gduutils.c:97
+#, fuzzy
+msgid "Disk Images (*.img, *.img.xz, *.iso)"
+msgstr "صور القرص (*.img , *.iso)"
+
+#: ../src/libgdu/gduutils.c:99
 msgid "Disk Images (*.img, *.iso)"
 msgstr "صور القرص (*.img , *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:408
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3807,7 +3368,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:415
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3819,7 +3380,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:422
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3831,7 +3392,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3843,7 +3404,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3855,7 +3416,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3867,7 +3428,7 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3879,158 +3440,86 @@ msgstr[4] ""
 msgstr[5] ""
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:514
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr ""
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:519
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr ""
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:524
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr ""
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:529
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr ""
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr ""
 
-#: ../src/libgdu/gduutils.c:549
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "أقل من دقيقة واحدة"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:554
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr ""
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:560
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr ""
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:702
+#: ../src/libgdu/gduutils.c:724
 #, fuzzy
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "أقراص أخرى"
 
-#: ../src/libgdu/gduutils.c:792
-msgid "RAID 0"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:793
-msgid "Stripe"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:798
-msgid "RAID 1"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:799
-msgid "Mirror"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:804
-msgid "RAID 4"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:805
-#, fuzzy
-msgid "Dedicated Parity"
-msgstr "أنشئ قسما"
-
-#: ../src/libgdu/gduutils.c:810
-msgid "RAID 5"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:811
-msgid "Distributed Parity"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:816
-msgid "RAID 6"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:817
-msgid "Double Distributed Parity"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:822
-msgid "RAID 10"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:823
-msgid "Stripe of Mirrors"
-msgstr ""
-
-#: ../src/libgdu/gduutils.c:828
-#, fuzzy, c-format
-msgid "RAID (%s)"
-msgstr "%s (%s)"
-
-#: ../src/libgdu/gduutils.c:1120
+#: ../src/libgdu/gduutils.c:1073
 #, fuzzy
 msgid "Error locking device"
 msgstr "خطأ أثناء فتح القرص"
 
 #. Translators: This is used as the title of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:403
+#: ../src/notify/gdusdmonitor.c:356
 msgctxt "notify-smart"
 msgid "Hard Disk Problems Detected"
 msgstr ""
 
 #. Translators: This is used as the text of the SMART failure notification
-#: ../src/notify/gdusdmonitor.c:405
+#: ../src/notify/gdusdmonitor.c:358
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
 msgstr ""
 
 #. Translators: Text for button in SMART failure notification
-#: ../src/notify/gdusdmonitor.c:409
+#: ../src/notify/gdusdmonitor.c:362
 msgctxt "notify-smart"
-msgid "Examine"
-msgstr ""
-
-#. Translators: This is used as the title of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:416
-msgctxt "notify-mdraid"
-msgid "RAID Problems Detected"
-msgstr ""
-
-#. Translators: This is used as the text of the MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:418
-msgctxt "notify-mdraid"
-msgid "A RAID array is degraded."
-msgstr ""
-
-#. Translators: Text for button in MD-RAID degraded notification
-#: ../src/notify/gdusdmonitor.c:422
-msgctxt "notify-mdraid"
 msgid "Examine"
 msgstr ""
 
@@ -4042,6 +3531,212 @@ msgstr "اختر صورة قرص لاستعادتها"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Create RAID Array"
+#~ msgstr "أنشئ صورة قرص..."
+
+#, fuzzy
+#~ msgid "C_reate…"
+#~ msgstr "أن_شئ"
+
+#~ msgid "RAID _Level"
+#~ msgstr "_مستوى RAID"
+
+#~ msgid "Chunk _Size"
+#~ msgstr "حجم _القطعة"
+
+#, fuzzy
+#~ msgid "Create a new partition"
+#~ msgstr "أنشئ قسما جديدا..."
+
+#~ msgid "Mount the filesystem"
+#~ msgstr "ضمّ نظام الملفات"
+
+#~ msgid "Unmount the filesystem"
+#~ msgstr "افصل نظام الملفات"
+
+#, fuzzy
+#~ msgid "More actions"
+#~ msgstr "إجراءات أخرى..."
+
+#, fuzzy
+#~ msgid "Start RAID Array"
+#~ msgstr "البدء في ترتيب مجموعة الأقراص"
+
+#, fuzzy
+#~ msgid "Stop RAID Array"
+#~ msgstr "إيقاف ترتيب مجموعة الأقراص"
+
+#, fuzzy
+#~ msgid "_Devices"
+#~ msgstr "الجهاز"
+
+#~ msgid "Done"
+#~ msgstr "تمّ"
+
+#, fuzzy
+#~ msgid "Eject the medium in the drive"
+#~ msgstr "أخرج الوسط"
+
+#~ msgid "RAID Level"
+#~ msgstr "مستوى RAID"
+
+#~ msgid "State"
+#~ msgstr "حالة"
+
+#~ msgid "Bitmap"
+#~ msgstr "نقطية"
+
+#~ msgid "Format…"
+#~ msgstr "_هيّء"
+
+#, fuzzy
+#~ msgid "Create RAID"
+#~ msgstr "أنشئ صورة قرص..."
+
+#, fuzzy
+#~ msgid ""
+#~ "If set, some OSes may mount or use the contents of the partition as read-"
+#~ "only instead of read-write"
+#~ msgstr ""
+#~ "إذا تم تفعيله، بعض أنظمة التشغيل قد تضم أو تستعمل محتويات القسم كبيانات "
+#~ "للقراءة فقط بدلا عن استخدامها كبيانات قابلة للقراءة والكتابة"
+
+#~ msgid "H_idden"
+#~ msgstr "م_خفي"
+
+#~ msgid ""
+#~ "If set, some OSes may hide the contents of the partition in their user "
+#~ "interfaces"
+#~ msgstr ""
+#~ "إذا تم تفعيله، بعض أنظمة التشغيل قد تخفي محتويات القسم في واجهة المستخدم "
+#~ "الخاصة بها"
+
+#~ msgid "Do Not _Automount"
+#~ msgstr "لا تضم تل_قائيا"
+
+#~ msgid "If set, some OSes may not automount the contents of the partition"
+#~ msgstr "إذا تم تفعيله، بعض أنظمة التشغيل قد لا تضم محتويات القرص تلقائيا"
+
+#, fuzzy
+#~ msgid "RAID Disks"
+#~ msgstr "الأقراص"
+
+#, fuzzy
+#~ msgid "Error creating RAID array"
+#~ msgstr "خطأ في تشغبل ذاكرة التبدبل"
+
+#, fuzzy
+#~ msgid "Are you sure you want to use the disks for a RAID array?"
+#~ msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
+
+#, fuzzy
+#~ msgctxt "md-raid-tree-secondary"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#~ msgid "%s <span size=\"smaller\">(Read-Only)</span>"
+#~ msgstr "%s <span size=\"smaller\">(للقراءة فقط)</span>"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to remove the disk?"
+#~ msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "FAILED"
+#~ msgstr "فشل"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Blocked"
+#~ msgstr "ا_فتح القفل"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks-state"
+#~ msgid "Unknown (%s)"
+#~ msgstr "غير معروف (%s)"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks"
+#~ msgid "Position"
+#~ msgstr "ت_قسيم"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks"
+#~ msgid "Disk"
+#~ msgstr "الأقراص"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks"
+#~ msgid "Are you sure you want to add the disk to the array?"
+#~ msgstr "هل أنت متأكد من أنك تريد تهيئة القرص؟"
+
+#, fuzzy
+#~ msgctxt "mdraid-disks"
+#~ msgid "All existing data on the disk will be lost"
+#~ msgstr "كل البيانات الموجودة ستفقد"
+
+#~ msgctxt "mdraid-disks"
+#~ msgid "_Add"
+#~ msgstr "أ_ضف"
+
+#, fuzzy
+#~ msgctxt "mdraid-add"
+#~ msgid "Select disk to add"
+#~ msgstr "اختر صورة قرص للإلحاق"
+
+#, fuzzy
+#~ msgctxt "mdraid"
+#~ msgid "Not running"
+#~ msgstr "لا تقسيم"
+
+#, fuzzy
+#~ msgctxt "mdraid"
+#~ msgid "%s (local to %s)"
+#~ msgstr "%s (%s)"
+
+#, fuzzy
+#~ msgid "%d Disk"
+#~ msgid_plural "%d Disks"
+#~ msgstr[0] "أقراص"
+#~ msgstr[1] "أقراص"
+#~ msgstr[2] "أقراص"
+#~ msgstr[3] "أقراص"
+#~ msgstr[4] "أقراص"
+#~ msgstr[5] "أقراص"
+
+#, fuzzy
+#~ msgctxt "mdraid-state"
+#~ msgid "Not running"
+#~ msgstr "لا تقسيم"
+
+#, fuzzy
+#~ msgctxt "raid-split-brain"
+#~ msgid "%s (%s)"
+#~ msgstr "%s (%s)"
+
+#, fuzzy
+#~ msgid "Error starting RAID array"
+#~ msgstr "خطأ في تشغبل ذاكرة التبدبل"
+
+#, fuzzy
+#~ msgid "Error stopping RAID array"
+#~ msgstr "خطأ في إيقاف ذاكرة التبديل"
+
+#, fuzzy
+#~ msgid "Error setting bitmap for the RAID array"
+#~ msgstr "خطأ في تشغبل ذاكرة التبدبل"
+
+#, fuzzy
+#~ msgid "Dedicated Parity"
+#~ msgstr "أنشئ قسما"
+
+#, fuzzy
+#~ msgid "RAID (%s)"
+#~ msgstr "%s (%s)"
 
 #, fuzzy
 #~ msgctxt "benchmarking"
@@ -4090,8 +3785,8 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "Updated only during off-line activities <span size=\"small\">(Not Online)"
-#~ "</span>"
+#~ "Updated only during off-line activities <span size=\"small\">(Not "
+#~ "Online)</span>"
 #~ msgstr "فقط عند عدم الاتصال (Not Online)"
 
 #~ msgctxt "benchmark-drive-name"

@@ -7,16 +7,16 @@
 # Hajime Taira <htaira@redhat.com>, 2012.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2013.
 # Ikuya Awashiro <ikuya@fruitsbasket.info>, 2014.
-# Kentaro KAZUHAMA <kazken3@gmail.com>, 2014.
+# Kentaro KAZUHAMA <kazken3@gmail.com>, 2014, 2015.
 # Tsuji Kento <tuziemon@pclives.org>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-21 19:42+0000\n"
-"PO-Revision-Date: 2015-03-22 08:53+0900\n"
-"Last-Translator: Kentaro KAZUHAMA <kazken3@gmail.com>\n"
+"POT-Creation-Date: 2016-04-17 08:23+0000\n"
+"PO-Revision-Date: 2016-04-17 20:28+0900\n"
+"Last-Translator: sujiniku <sujinikusityuu@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -41,39 +41,57 @@ msgstr "ディスクイメージライター"
 msgid "Write Disk Images to Devices"
 msgstr "ディスクイメージをデバイスに書き込みます"
 
-#: ../data/gnome-disks.desktop.in.h:1 ../src/disks/gduwindow.c:1040
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
+#, fuzzy
+#| msgid "Disks"
+msgid "GNOME Disks"
+msgstr "ディスク"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:2
+msgid "Disk management utility for GNOME"
+msgstr ""
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:3
+msgid "Disks provides an easy way to inspect, format, partition, and configure disks and block devices."
+msgstr "GNOME Disksを使えば、ディスクやブロックデバイスの検査、フォーマット、パーティショニング、設定を簡単に行うことができます。"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:4
+msgid "Using Disks, you can view SMART data, manage RAID devices, benchmark physical disks, and image USB sticks. Tasks are executed in the background, even after the application has been closed by the user."
+msgstr ""
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
 msgid "Disks"
 msgstr "ディスク"
 
-#: ../data/gnome-disks.desktop.in.h:2
+#: ../data/org.gnome.DiskUtility.desktop.in.h:2
 msgid "Manage Drives and Media"
 msgstr "ドライブとメディアの管理"
 
-#: ../data/gnome-disks.desktop.in.h:3
+#: ../data/org.gnome.DiskUtility.desktop.in.h:3
 msgid "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;ドライブ;ボリューム;ハードディスク;パーティション;イメージ;バックアップ;リストア;復旧;修復;ベンチマーク;暗号化;"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:1
+#: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
 msgstr "ディスクイメージの作成/リストアのダイアログのデフォルトの位置"
 
-#: ../data/org.gnome.Disks.gschema.xml.in.in.h:2
+#: ../data/org.gnome.Disks.gschema.xml.h:2
 msgid "Default location for the Create/Restore disk image dialogs. If blank the ~/Documents folder is used."
 msgstr "ディスクイメージの作成/リストアのダイアログのデフォルトの位置 (空欄の場合には ~/Documents フォルダーが使用されます)"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:1
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:1
 msgid "Activation of this plugin"
 msgstr "このプラグインを有効化"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:2
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:2
 msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
 msgstr "このプラグインが gnome-settings-daemon によって有効化されるか否か"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:3
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:3
 msgid "Priority to use for this plugin"
 msgstr "このプラグインを使用する優先度"
 
-#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.in.in.h:4
+#: ../data/org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml.h:4
 msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
 msgstr "gnome-settings-daemon のスタートアップキューの中におけるこのプラグインを使用する優先度"
 
@@ -90,7 +108,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "マウントするディスクイメージを選んでください"
 
 #: ../src/disk-image-mounter/main.c:85
-#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:725
+#: ../src/disks/gducreatediskimagedialog.c:931 ../src/disks/gduwindow.c:727
 msgid "_Cancel"
 msgstr "キャンセル(_C)"
 
@@ -131,41 +149,37 @@ msgstr "デバイス `%s' のオープン中にエラーが発生しました: %
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "ディスクイメージのアタッチ中にエラーが発生しました: %s (%s, %d)"
 
-#: ../src/disks/gduapplication.c:110
+#: ../src/disks/gduapplication.c:114
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "`%s' のオープン中にエラー: %s"
 
-#: ../src/disks/gduapplication.c:117
+#: ../src/disks/gduapplication.c:121
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "ブロックデバイス %s の確認中にエラーが発生しました"
 
-#: ../src/disks/gduapplication.c:158
+#: ../src/disks/gduapplication.c:143
 msgid "Select device"
 msgstr "デバイスを選択"
 
-#: ../src/disks/gduapplication.c:159
+#: ../src/disks/gduapplication.c:144
 msgid "Format selected device"
 msgstr "選択したデバイスを初期化"
 
-#: ../src/disks/gduapplication.c:160
+#: ../src/disks/gduapplication.c:145
 msgid "Parent window XID for the format dialog"
 msgstr "初期化ダイアログ用の親ウィンドウの XID"
 
-#: ../src/disks/gduapplication.c:161
+#: ../src/disks/gduapplication.c:146
 msgid "Restore disk image"
 msgstr "ディスクイメージをリストア"
 
-#: ../src/disks/gduapplication.c:162
-msgid "Show help options"
-msgstr "オプションのヘルプを表示する"
-
-#: ../src/disks/gduapplication.c:191
+#: ../src/disks/gduapplication.c:180
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device は --block-device とともに使う必要があります\n"
 
-#: ../src/disks/gduapplication.c:197
+#: ../src/disks/gduapplication.c:186
 msgid "--format-device must be specified when using --xid\n"
 msgstr "--xid を使う場合は --format-device を指定する必要があります\n"
 
@@ -174,7 +188,7 @@ msgstr "--xid を使う場合は --format-device を指定する必要があり�
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:311
+#: ../src/disks/gduapplication.c:296
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -931,75 +945,77 @@ msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "SMARTを有効に切り替える時にエラーが発生しました"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1515
+#: ../src/disks/gduatasmartdialog.c:1514
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1527
+#: ../src/disks/gduatasmartdialog.c:1526
 msgid "Attribute"
 msgstr "属性"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../src/disks/gduatasmartdialog.c:1541
+#: ../src/disks/gduatasmartdialog.c:1540
 msgid "Value"
 msgstr "値"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: ../src/disks/gduatasmartdialog.c:1553
+#: ../src/disks/gduatasmartdialog.c:1552
 msgid "Normalized"
 msgstr "正規化値"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: ../src/disks/gduatasmartdialog.c:1565
+#: ../src/disks/gduatasmartdialog.c:1564
 msgid "Threshold"
 msgstr "しきい値"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: ../src/disks/gduatasmartdialog.c:1577
+#: ../src/disks/gduatasmartdialog.c:1576
 msgid "Worst"
 msgstr "Worst"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: ../src/disks/gduatasmartdialog.c:1589
+#: ../src/disks/gduatasmartdialog.c:1588
 msgid "Type"
 msgstr "タイプ"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: ../src/disks/gduatasmartdialog.c:1601
+#: ../src/disks/gduatasmartdialog.c:1600
 msgid "Updates"
 msgstr "更新"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/disks/gduatasmartdialog.c:1613 ../src/disks/ui/disks.ui.h:8
+#: ../src/disks/gduatasmartdialog.c:1612 ../src/disks/ui/disks.ui.h:8
 msgid "Assessment"
 msgstr "評価"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: ../src/disks/gdubenchmarkdialog.c:327
+#: ../src/disks/gdubenchmarkdialog.c:333
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: ../src/disks/gdubenchmarkdialog.c:332
+#: ../src/disks/gdubenchmarkdialog.c:338
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: ../src/disks/gdubenchmarkdialog.c:640
+#: ../src/disks/gdubenchmarkdialog.c:662
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:655 ../src/disks/gdubenchmarkdialog.c:864
-#, c-format
-msgid "%d sample"
-msgid_plural "%d samples"
+#: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
+#, fuzzy, c-format
+#| msgid "%d sample"
+#| msgid_plural "%d samples"
+msgid "%u sample"
+msgid_plural "%u samples"
 msgstr[0] "%d 個のサンプル"
 
 #. Translators: The first %s is the date and time the benchmark took place in the preferred
@@ -1007,115 +1023,115 @@ msgstr[0] "%d 個のサンプル"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: ../src/disks/gdubenchmarkdialog.c:696
+#: ../src/disks/gdubenchmarkdialog.c:718
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (%s 前)"
 
-#: ../src/disks/gdubenchmarkdialog.c:708
+#: ../src/disks/gdubenchmarkdialog.c:730
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "ベンチマークデータがありません"
 
-#: ../src/disks/gdubenchmarkdialog.c:713
+#: ../src/disks/gdubenchmarkdialog.c:735
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "デバイスのオープン中…"
 
-#: ../src/disks/gdubenchmarkdialog.c:717
+#: ../src/disks/gdubenchmarkdialog.c:739
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "転送レートを計測中 (%2.1f%% 完了)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:724
+#: ../src/disks/gdubenchmarkdialog.c:746
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "アクセス時間を計測中 (%2.1f%% 完了)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:787
+#: ../src/disks/gdubenchmarkdialog.c:812
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:862
+#: ../src/disks/gdubenchmarkdialog.c:887
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f msec"
 
-#: ../src/disks/gdubenchmarkdialog.c:1174
+#: ../src/disks/gdubenchmarkdialog.c:1199
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "デバイスのサイズを取得中にエラーが発生しました: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1184
+#: ../src/disks/gdubenchmarkdialog.c:1209
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "ページサイズを取得中にエラーが発生しました: %m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1218
-#: ../src/disks/gdubenchmarkdialog.c:1281
-#: ../src/disks/gdubenchmarkdialog.c:1300
+#: ../src/disks/gdubenchmarkdialog.c:1243
+#: ../src/disks/gdubenchmarkdialog.c:1306
+#: ../src/disks/gdubenchmarkdialog.c:1325
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "シーク中(オフセット %lld)にエラーが発生しました"
 
-#: ../src/disks/gdubenchmarkdialog.c:1229
+#: ../src/disks/gdubenchmarkdialog.c:1254
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "%s (オフセット %s)を先読み中にエラーが発生しました"
 
-#: ../src/disks/gdubenchmarkdialog.c:1241
+#: ../src/disks/gdubenchmarkdialog.c:1266
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "オフセット %s をシーク中にエラーが発生しました"
 
-#: ../src/disks/gdubenchmarkdialog.c:1255
+#: ../src/disks/gdubenchmarkdialog.c:1280
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "%s (オフセット %s)を読み込み中にエラーが発生しました"
 
-#: ../src/disks/gdubenchmarkdialog.c:1290
+#: ../src/disks/gdubenchmarkdialog.c:1315
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "%lld バイト先読み中(オフセット %lld)にエラーが発生しました"
 
-#: ../src/disks/gdubenchmarkdialog.c:1311
+#: ../src/disks/gdubenchmarkdialog.c:1336
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "%lld バイト書き込み中にエラーが発生しました (オフセット %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1321
+#: ../src/disks/gdubenchmarkdialog.c:1346
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "期待された %lld バイトの書き込み、%lld バイトだけ書き込みました: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1331
+#: ../src/disks/gdubenchmarkdialog.c:1356
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "同期中にエラーが発生しました (オフセット %lld): %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1371
+#: ../src/disks/gdubenchmarkdialog.c:1396
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "シーク中(オフセット %lld)にエラーが発生しました: %m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1383
+#: ../src/disks/gdubenchmarkdialog.c:1408
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1143,7 +1159,7 @@ msgid "Changing the passphrase for this device, will also update the passphrase 
 msgstr "このデバイスのパスフレーズを更新すると、<i>/etc/crypttab</i> ファイルによって参照されるパスフレーズも更新されます。"
 
 #: ../src/disks/gduchangepassphrasedialog.c:341
-#: ../src/disks/gducreatefilesystemwidget.c:537
+#: ../src/disks/gducreatefilesystemwidget.c:541
 msgid "The strength of the passphrase"
 msgstr "パスフレーズの強度"
 
@@ -1239,81 +1255,81 @@ msgstr "\"%s\" の中にファイルがすでに存在します。その内容�
 msgid "_Replace"
 msgstr "置き換え(_R)"
 
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:982
 msgid "Error opening file for writing"
 msgstr "書き込み用にファイルを開く時にエラーが発生しました"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:1002
+#: ../src/disks/gducreatediskimagedialog.c:998
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "デバイスからディスクイメージへコピー中"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:1008
+#: ../src/disks/gducreatediskimagedialog.c:1004
 msgid "Creating Disk Image"
 msgstr "ディスクイメージを作成中"
 
-#: ../src/disks/gducreatefilesystemwidget.c:379
+#: ../src/disks/gducreatefilesystemwidget.c:382
 #: ../src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "すべてのシステムおよびデバイスと互換"
 
-#: ../src/disks/gducreatefilesystemwidget.c:380
+#: ../src/disks/gducreatefilesystemwidget.c:383
 msgid "FAT"
 msgstr "FAT"
 
-#: ../src/disks/gducreatefilesystemwidget.c:385
+#: ../src/disks/gducreatefilesystemwidget.c:388
 msgid "Compatible with most systems"
 msgstr "ほぼすべてのシステムと互換"
 
-#: ../src/disks/gducreatefilesystemwidget.c:386
+#: ../src/disks/gducreatefilesystemwidget.c:389
 msgid "NTFS"
 msgstr "NTFS"
 
-#: ../src/disks/gducreatefilesystemwidget.c:391
+#: ../src/disks/gducreatefilesystemwidget.c:394
 msgid "Compatible with Linux systems"
 msgstr "Linux システムと互換"
 
-#: ../src/disks/gducreatefilesystemwidget.c:392
+#: ../src/disks/gducreatefilesystemwidget.c:395
 msgid "Ext4"
 msgstr "Ext4"
 
-#: ../src/disks/gducreatefilesystemwidget.c:397
+#: ../src/disks/gducreatefilesystemwidget.c:400
 msgid "Encrypted, compatible with Linux systems"
 msgstr "暗号化、Linux システムと互換"
 
-#: ../src/disks/gducreatefilesystemwidget.c:398
+#: ../src/disks/gducreatefilesystemwidget.c:401
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: ../src/disks/gducreatefilesystemwidget.c:403
+#: ../src/disks/gducreatefilesystemwidget.c:406
 msgid "Custom"
 msgstr "カスタム"
 
-#: ../src/disks/gducreatefilesystemwidget.c:404
+#: ../src/disks/gducreatefilesystemwidget.c:407
 msgid "Enter filesystem type"
 msgstr "ファイルシステム・タイプを入力してください"
 
-#: ../src/disks/gducreatefilesystemwidget.c:486
+#: ../src/disks/gducreatefilesystemwidget.c:489
 #: ../src/disks/gduerasemultipledisksdialog.c:131
 #: ../src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
 msgstr "既存のデータを上書きしない"
 
-#: ../src/disks/gducreatefilesystemwidget.c:487
+#: ../src/disks/gducreatefilesystemwidget.c:490
 #: ../src/disks/gduerasemultipledisksdialog.c:132
 #: ../src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "クイック"
 
-#: ../src/disks/gducreatefilesystemwidget.c:494
+#: ../src/disks/gducreatefilesystemwidget.c:497
 #: ../src/disks/gduerasemultipledisksdialog.c:142
 #: ../src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "既存のデータをゼロで上書きする"
 
-#: ../src/disks/gducreatefilesystemwidget.c:495
+#: ../src/disks/gducreatefilesystemwidget.c:498
 #: ../src/disks/gduerasemultipledisksdialog.c:143
 #: ../src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
@@ -1611,8 +1627,9 @@ msgid "All data on the volume will be overwritten and will likely not be recover
 msgstr "ボリューム内のすべてのデータは上書きされます。データ復旧サービスでもデータを復元できなくなるでしょう。"
 
 #: ../src/disks/gdufstabdialog.c:154
-#, c-format
-msgid "Matches partition %d of the device with the given vital product data"
+#, fuzzy, c-format
+#| msgid "Matches partition %d of the device with the given vital product data"
+msgid "Matches partition %u of the device with the given vital product data"
 msgstr "指定されたバイタルプロダクトデータに一致するデバイス内の %d 個のパーティション"
 
 #: ../src/disks/gdufstabdialog.c:157
@@ -1620,8 +1637,9 @@ msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "指定されたバイタルプロダクトデータに一致するデバイスのディスク"
 
 #: ../src/disks/gdufstabdialog.c:162
-#, c-format
-msgid "Matches partition %d of any device connected at the given port or address"
+#, fuzzy, c-format
+#| msgid "Matches partition %d of any device connected at the given port or address"
+msgid "Matches partition %u of any device connected at the given port or address"
 msgstr "指定されたポートまたはアドレスに接続されたすべてのデバイス内の %d 個のパーティション"
 
 #: ../src/disks/gdufstabdialog.c:165
@@ -1759,77 +1777,101 @@ msgstr "暗号化デバイスのロック解除中にエラーが発生しまし
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "暗号化パスフレーズがキーリングから取り出されました"
 
-#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2022
+#: ../src/disks/gduvolumegrid.c:262
+#, fuzzy
+#| msgid "_Volumes"
+msgid "Volumes Grid"
+msgstr "ボリューム(_V)"
+
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2035
 msgid "No Media"
 msgstr "メディアなし"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1552
-#, c-format
+#: ../src/disks/gduvolumegrid.c:1560
+#, fuzzy, c-format
+#| msgctxt "volume-grid"
+#| msgid "Partition %d: %s"
 msgctxt "volume-grid"
-msgid "Partition %d: %s"
+msgid "Partition %u: %s"
 msgstr "パーティション %d: %s"
 
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1559
-#, c-format
+#: ../src/disks/gduvolumegrid.c:1567
+#, fuzzy, c-format
+#| msgctxt "volume-grid"
+#| msgid "Partition %d"
 msgctxt "volume-grid"
-msgid "Partition %d"
+msgid "Partition %u"
 msgstr "パーティション %d"
 
-#: ../src/disks/gduvolumegrid.c:1596
+#: ../src/disks/gduvolumegrid.c:1605
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "空き領域"
 
-#: ../src/disks/gduvolumegrid.c:1639
+#: ../src/disks/gduvolumegrid.c:1648
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "拡張パーティション"
 
-#: ../src/disks/gduvolumegrid.c:1663
+#: ../src/disks/gduvolumegrid.c:1672
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "ファイルシステム"
 
-#: ../src/disks/gduvolumegrid.c:1685
+#: ../src/disks/gduvolumegrid.c:1694
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Swap"
 
-#: ../src/disks/gduwindow.c:584
+#: ../src/disks/gduwindow.c:586
 msgid "Error deleting loop device"
 msgstr "ループデバイスの削除中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:684 ../src/disks/gduwindow.c:755
+#: ../src/disks/gduwindow.c:686 ../src/disks/gduwindow.c:757
 msgid "Error attaching disk image"
 msgstr "ディスクイメージのアタッチ中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:722
+#: ../src/disks/gduwindow.c:724
 msgid "Select Disk Image to Attach"
 msgstr "アタッチするディスクイメージを選んでください"
 
-#: ../src/disks/gduwindow.c:726
+#: ../src/disks/gduwindow.c:728
 msgid "_Attach"
 msgstr "アタッチ(_A)"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: ../src/disks/gduwindow.c:733
+#: ../src/disks/gduwindow.c:735
 msgid "Set up _read-only loop device"
 msgstr "ループデバイスを読み込み専用に設定(_R)"
 
-#: ../src/disks/gduwindow.c:734
+#: ../src/disks/gduwindow.c:736
 msgid "If checked, the loop device will be read-only. This is useful if you don’t want the underlying file to be modified"
 msgstr "チェックした場合、ループデバイスは読み込み専用となります。基となるファイルを変更されないようにする場合に便利です。"
 
+#: ../src/disks/gduwindow.c:958
+msgid "Power off this disk"
+msgstr "このディスクの電源をオフにします"
+
+#: ../src/disks/gduwindow.c:964
+msgid "Eject this disk"
+msgstr "このディスクを取り出します"
+
+#: ../src/disks/gduwindow.c:970
+#, fuzzy
+#| msgid "Detach Loop Device"
+msgid "Detach this loop device"
+msgstr "ループデバイスをデタッチします"
+
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1346
+#: ../src/disks/gduwindow.c:1355
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -1838,7 +1880,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1354
+#: ../src/disks/gduwindow.c:1363
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -1847,7 +1889,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1362
+#: ../src/disks/gduwindow.c:1371
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -1856,12 +1898,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1370
+#: ../src/disks/gduwindow.c:1379
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1385
+#: ../src/disks/gduwindow.c:1394
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -1870,13 +1912,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1395
+#: ../src/disks/gduwindow.c:1404
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1712
+#: ../src/disks/gduwindow.c:1724
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (読み取り専用)"
@@ -1885,7 +1927,7 @@ msgstr "%s (読み取り専用)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1750
+#: ../src/disks/gduwindow.c:1762
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -1894,7 +1936,7 @@ msgstr "残り %s (%s/秒)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1758
+#: ../src/disks/gduwindow.c:1770
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -1905,7 +1947,7 @@ msgstr "残り %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1773
+#: ../src/disks/gduwindow.c:1785
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s / %s - %s"
@@ -1914,17 +1956,17 @@ msgstr "%s / %s - %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1860
+#: ../src/disks/gduwindow.c:1872
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1932 ../src/disks/gduwindow.c:2307
+#: ../src/disks/gduwindow.c:1944 ../src/disks/gduwindow.c:2344
 msgid "Block device is empty"
 msgstr "ブロックデバイスが空です"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1955
+#: ../src/disks/gduwindow.c:1967
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -1933,11 +1975,11 @@ msgstr "不明 (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2110
+#: ../src/disks/gduwindow.c:2136
 msgid "Connected to another seat"
 msgstr "他の席のユーザーに接続されています"
 
-#: ../src/disks/gduwindow.c:2255
+#: ../src/disks/gduwindow.c:2282
 msgid "Loop device is empty"
 msgstr "Loop デバイスは空です"
 
@@ -1947,61 +1989,61 @@ msgstr "Loop デバイスは空です"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2465
+#: ../src/disks/gduwindow.c:2511
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s - %s 空き (%.1f%% 使用)"
 
-#: ../src/disks/gduwindow.c:2495
+#: ../src/disks/gduwindow.c:2541
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "不明"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2523
+#: ../src/disks/gduwindow.c:2569
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "ファイルシステムルート(/)"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2531
+#: ../src/disks/gduwindow.c:2577
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s にマウント中"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2537
+#: ../src/disks/gduwindow.c:2583
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "マウントされていない"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2560
+#: ../src/disks/gduwindow.c:2606
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "アクティブ"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2612
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "非アクティブ"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2579
+#: ../src/disks/gduwindow.c:2625
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "ロック解除"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2585
+#: ../src/disks/gduwindow.c:2631
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "ロック中"
 
-#: ../src/disks/gduwindow.c:2595
+#: ../src/disks/gduwindow.c:2641
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "拡張パーティション"
@@ -2010,88 +2052,88 @@ msgstr "拡張パーティション"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2615
+#: ../src/disks/gduwindow.c:2661
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2715
+#: ../src/disks/gduwindow.c:2761
 msgid "Unallocated Space"
 msgstr "未割り当て領域"
 
-#: ../src/disks/gduwindow.c:3061
+#: ../src/disks/gduwindow.c:3110
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "ドライブをスタンバイモードにしようとしたときにエラーが発生しました。"
 
-#: ../src/disks/gduwindow.c:3107
+#: ../src/disks/gduwindow.c:3156
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "ドライブをウェイクアップさせようとしたときにエラーが発生しました。"
 
-#: ../src/disks/gduwindow.c:3152
+#: ../src/disks/gduwindow.c:3201
 msgid "Error powering off drive"
 msgstr "ディスクを電源オフ時にエラーが発生しました"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3204
+#: ../src/disks/gduwindow.c:3253
 msgid "Are you sure you want to power off the drives?"
 msgstr "本当にディスクを電源オフしますか?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3206
+#: ../src/disks/gduwindow.c:3255
 msgid "This operation will prepare the system for the following drives to be powered down and removed."
 msgstr "この操作を行うとシステムから次のドライブがパワーダウンされ、除去する準備が行われます。"
 
-#: ../src/disks/gduwindow.c:3210
+#: ../src/disks/gduwindow.c:3259
 msgid "_Power Off"
 msgstr "電源オフ(_P)"
 
-#: ../src/disks/gduwindow.c:3287
+#: ../src/disks/gduwindow.c:3336
 msgid "Error mounting filesystem"
 msgstr "ファイルシステムのマウント中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:3326 ../src/libgdu/gduutils.c:1050
+#: ../src/disks/gduwindow.c:3375 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "ファイルシステムのアンマウント中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:3468
+#: ../src/disks/gduwindow.c:3517
 msgid "Error deleting partition"
 msgstr "パーティションの削除中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:3505
+#: ../src/disks/gduwindow.c:3554
 msgid "Are you sure you want to delete the partition?"
 msgstr "本当にパーティションを削除しますか?"
 
-#: ../src/disks/gduwindow.c:3506
+#: ../src/disks/gduwindow.c:3555
 msgid "All data on the partition will be lost"
 msgstr "このパーティション内のすべてのデータが失われます"
 
-#: ../src/disks/gduwindow.c:3507
+#: ../src/disks/gduwindow.c:3556
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: ../src/disks/gduwindow.c:3538
+#: ../src/disks/gduwindow.c:3587
 msgid "Error ejecting media"
 msgstr "メディアの取り出し中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:3605
+#: ../src/disks/gduwindow.c:3654
 msgid "Error locking encrypted device"
 msgstr "暗号化デバイスのロック中にエラーが発生しました"
 
-#: ../src/disks/gduwindow.c:3669
+#: ../src/disks/gduwindow.c:3718
 msgid "Error starting swap"
 msgstr "swap の開始中にエラー"
 
-#: ../src/disks/gduwindow.c:3706
+#: ../src/disks/gduwindow.c:3755
 msgid "Error stopping swap"
 msgstr "swap の停止中にエラー"
 
-#: ../src/disks/gduwindow.c:3748
+#: ../src/disks/gduwindow.c:3797
 msgid "Error setting autoclear flag"
 msgstr "autoclear フラグの設定中にエラー"
 
-#: ../src/disks/gduwindow.c:3801 ../src/disks/gduwindow.c:3865
+#: ../src/disks/gduwindow.c:3850 ../src/disks/gduwindow.c:3914
 msgid "Error canceling job"
 msgstr "ジョブのキャンセル中にエラー"
 
@@ -2390,9 +2432,9 @@ msgstr "残り空き容量(_F)"
 msgid "The free space following the partition, in megabytes"
 msgstr "パーティション後の空き容量 (MB)"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#. The contents of the device, for example
 #: ../src/disks/ui/create-partition-dialog.ui.h:18
-#: ../src/disks/ui/disks.ui.h:18
+#: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
 msgstr "内容"
 
@@ -2429,7 +2471,9 @@ msgid "APM Level"
 msgstr "APM レベル"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
-msgid "Agressive spin-down may wear out the drive faster than anticipated. Please check the “Start/Stop Count” SMART attribute from time to time"
+#, fuzzy
+#| msgid "Agressive spin-down may wear out the drive faster than anticipated. Please check the “Start/Stop Count” SMART attribute from time to time"
+msgid "Aggressive spin-down may wear out the drive faster than anticipated. Please check the “Start/Stop Count” SMART attribute from time to time"
 msgstr "アグレッシブなスピンダウンはドライブを予想以上に摩耗させる可能性があります。時々、SMARTの \"Start/Stop Count\" 属性をチェックしてください。"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:10
@@ -2478,7 +2522,7 @@ msgstr "書き込みキャッシュを無効化"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:21
 msgid "Performance is increased by enabling write caching, but leaves the system susceptible to data loss in the event of a power failure"
-msgstr "ライトキャッシュを有効にすることでパフォーマンスが向上しますが、しかし、システムが電源障害が発生した場合に影響を受けやすくなります。"
+msgstr "ライトキャッシュを有効にすることでパフォーマンスが向上しますが、しかし、システムに電源障害が発生した場合に影響を受けやすくなります。"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:22
 msgid "Wr_ite Cache"
@@ -2500,7 +2544,7 @@ msgstr "シリアルナンバー"
 msgid "World Wide Name"
 msgstr "World Wide Name"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#. The physical location of the drive, could be
 #: ../src/disks/ui/disks.ui.h:6
 msgid "Location"
 msgstr "物理的な位置"
@@ -2538,83 +2582,127 @@ msgstr "パーティション構成"
 msgid "_Volumes"
 msgstr "ボリューム(_V)"
 
+#: ../src/disks/ui/disks.ui.h:17
+msgid "Mount selected partition"
+msgstr "選択したパーティションをマウントします"
+
+#: ../src/disks/ui/disks.ui.h:18
+msgid "Unmount selected partition"
+msgstr "選択したパーティションをアンマウントします"
+
 #: ../src/disks/ui/disks.ui.h:19
+#, fuzzy
+#| msgid "Activate the swap space"
+msgid "Activate selected swap partition"
+msgstr "スワップ領域を有効にします"
+
+#: ../src/disks/ui/disks.ui.h:20
+#, fuzzy
+#| msgid "Deactivate the swap space"
+msgid "Deactivate selected swap partition"
+msgstr "スワップ領域を無効にします"
+
+#: ../src/disks/ui/disks.ui.h:21
+#, fuzzy
+#| msgid "Unlock the encrypted device"
+msgid "Unlock selected encrypted partition"
+msgstr "暗号化デバイスをロック解除します"
+
+#: ../src/disks/ui/disks.ui.h:22
+#, fuzzy
+#| msgid "Lock the encrypted device"
+msgid "Lock selected encrypted partition"
+msgstr "暗号化デバイスをロックします"
+
+#: ../src/disks/ui/disks.ui.h:23
+msgid "Create partition in unallocated space"
+msgstr ""
+
+#: ../src/disks/ui/disks.ui.h:24
+msgid "Delete selected partition"
+msgstr "選択したパーティションを削除します"
+
+#: ../src/disks/ui/disks.ui.h:25
+msgid "Additional partition options"
+msgstr "パーティションのその他のオプション"
+
+#: ../src/disks/ui/disks.ui.h:28
 msgid "Device"
 msgstr "デバイス"
 
-#: ../src/disks/ui/disks.ui.h:20
+#: ../src/disks/ui/disks.ui.h:29
 msgid "Partition Type"
 msgstr "パーティションタイプ"
 
-#: ../src/disks/ui/disks.ui.h:21
+#: ../src/disks/ui/disks.ui.h:30
 msgid "Format Disk…"
 msgstr "ディスクを初期化…"
 
-#: ../src/disks/ui/disks.ui.h:22
+#: ../src/disks/ui/disks.ui.h:31
 msgid "Create Disk Image…"
 msgstr "ディスクイメージを作成…"
 
-#: ../src/disks/ui/disks.ui.h:23
+#: ../src/disks/ui/disks.ui.h:32
 msgid "Restore Disk Image…"
 msgstr "ディスクイメージをリストア…"
 
-#: ../src/disks/ui/disks.ui.h:24
+#: ../src/disks/ui/disks.ui.h:33
 msgid "Benchmark Disk…"
 msgstr "ディスクのベンチマーク…"
 
-#: ../src/disks/ui/disks.ui.h:25
+#: ../src/disks/ui/disks.ui.h:34
 msgid "SMART Data & Self-Tests…"
 msgstr "SMART のデータとセルフテスト…"
 
-#: ../src/disks/ui/disks.ui.h:26
+#: ../src/disks/ui/disks.ui.h:35
 msgid "Drive Settings…"
 msgstr "ドライブの設定…"
 
-#: ../src/disks/ui/disks.ui.h:27
+#: ../src/disks/ui/disks.ui.h:36
 msgid "Standby Now"
 msgstr "いますぐスタンバイ"
 
-#: ../src/disks/ui/disks.ui.h:28
+#: ../src/disks/ui/disks.ui.h:37
 msgid "Wake-Up from Standby"
 msgstr "スタンバイからのウェイクアップ"
 
-#: ../src/disks/ui/disks.ui.h:29
+#: ../src/disks/ui/disks.ui.h:38
 msgid "Power Off…"
 msgstr "電源オフ…"
 
-#: ../src/disks/ui/disks.ui.h:30
+#: ../src/disks/ui/disks.ui.h:39
 msgid "Format Partition…"
 msgstr "パーティションを初期化…"
 
-#: ../src/disks/ui/disks.ui.h:31
+#: ../src/disks/ui/disks.ui.h:40
 msgid "Edit Partition…"
 msgstr "パーティションを編集…"
 
-#: ../src/disks/ui/disks.ui.h:32
+#: ../src/disks/ui/disks.ui.h:41
 msgid "Edit Filesystem…"
 msgstr "ファイルシステムを編集…"
 
-#: ../src/disks/ui/disks.ui.h:33
+#: ../src/disks/ui/disks.ui.h:42
 msgid "Change Passphrase…"
 msgstr "パスフレーズを変更…"
 
-#: ../src/disks/ui/disks.ui.h:34
+#: ../src/disks/ui/disks.ui.h:43
 msgid "Edit Mount Options…"
 msgstr "マウントオプションの編集…"
 
-#: ../src/disks/ui/disks.ui.h:35
+#: ../src/disks/ui/disks.ui.h:44
 msgid "Edit Encryption Options…"
 msgstr "暗号化オプションを編集…"
 
-#: ../src/disks/ui/disks.ui.h:36
+#: ../src/disks/ui/disks.ui.h:45
 msgid "Create Partition Image…"
 msgstr "パーティションイメージを作成…"
 
-#: ../src/disks/ui/disks.ui.h:37
+#: ../src/disks/ui/disks.ui.h:46
 msgid "Restore Partition Image…"
 msgstr "パーティションイメージをリストア…"
 
-#: ../src/disks/ui/disks.ui.h:38
+#: ../src/disks/ui/disks.ui.h:47
 msgid "Benchmark Partition…"
 msgstr "パーティションのベンチマーク…"
 
@@ -3120,7 +3208,7 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "影響を受けるデバイス"
 
-#: ../src/libgdu/gduutils.c:1070
+#: ../src/libgdu/gduutils.c:1073
 msgid "Error locking device"
 msgstr "デバイスのロック中にエラー"
 
@@ -3149,6 +3237,9 @@ msgstr "ディスク問題モニター"
 #: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
 msgid "Warns about problems with disks and storage devices"
 msgstr "ディスクやストレージデバイスの問題に関する警告"
+
+#~ msgid "Show help options"
+#~ msgstr "オプションのヘルプを表示する"
 
 #~ msgid "Format…"
 #~ msgstr "初期化…"
@@ -3183,38 +3274,14 @@ msgstr "ディスクやストレージデバイスの問題に関する警告"
 #~ msgid "Unmount the filesystem"
 #~ msgstr "ファイルシステムをアンマウントします"
 
-#~ msgid "Eject the media"
-#~ msgstr "メディアを取り出します"
-
-#~ msgid "Power off the drive"
-#~ msgstr "ドライブの電源をオフにします"
-
-#~ msgid "Unlock the encrypted device"
-#~ msgstr "暗号化デバイスをロック解除します"
-
-#~ msgid "Activate the swap space"
-#~ msgstr "スワップ領域を有効にします"
-
-#~ msgid "Deactivate the swap space"
-#~ msgstr "スワップ領域を無効にします"
-
-#~ msgid "Lock the encrypted device"
-#~ msgstr "暗号化デバイスをロックします"
-
 #~ msgid "More actions"
 #~ msgstr "詳細操作"
-
-#~ msgid "Delete partition"
-#~ msgstr "パーティションを削除します"
 
 #~ msgid "Start RAID Array"
 #~ msgstr "RAID アレイを開始します"
 
 #~ msgid "Stop RAID Array"
 #~ msgstr "RAID アレイを停止します"
-
-#~ msgid "Detach Loop Device"
-#~ msgstr "ループデバイスをデタッチします"
 
 #~ msgid "_Devices"
 #~ msgstr "デバイス(_D)"

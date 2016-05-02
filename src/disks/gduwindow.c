@@ -1344,6 +1344,11 @@ gdu_window_constructed (GObject *object)
   gtk_widget_grab_focus (window->device_tree_treeview);
   update_all (window);
 
+  /* attach the generic menu to the toplevel window for correct placement */
+  gtk_menu_attach_to_widget (GTK_MENU (window->generic_menu),
+                             GTK_WIDGET (window),
+                             NULL);
+
   /* TODO: would be better to have all this in the .ui file - no idea
    * why it doesn't work - accelerator support in GTK+ seems extremely
    * confusing and flaky :-(

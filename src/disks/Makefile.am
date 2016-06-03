@@ -66,7 +66,11 @@ gnome_disks_SOURCES = 							\
 
 gnome_disks_CPPFLAGS = 					\
 	-I$(top_srcdir)/src/				\
+	-I$(top_srcdir)/src/disks			\
+	-I$(top_srcdir)/src/libgdu			\
 	-I$(top_builddir)/src/				\
+	-I$(top_builddir)/src/disks			\
+	-I$(top_builddir)/src/libgdu			\
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
 	-DG_LOG_DOMAIN=\"GNOME-Disks\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\

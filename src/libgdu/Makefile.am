@@ -32,7 +32,9 @@ libgdu_la_SOURCES = 							\
 
 libgdu_la_CPPFLAGS = 					\
 	-I$(top_srcdir)/src/				\
+	-I$(top_srcdir)/src/libgdu			\
 	-I$(top_builddir)/src/				\
+	-I$(top_srcdir)/src/libgdu			\
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
 	-DG_LOG_DOMAIN=\"libgdu\"			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\

@@ -9,7 +9,9 @@ gnome_disk_image_mounter_SOURCES = 			\
 
 gnome_disk_image_mounter_CPPFLAGS = 			\
 	-I$(top_srcdir)/src/				\
+	-I$(top_srcdir)/src/libgdu			\
 	-I$(top_builddir)/src/				\
+	-I$(top_builddir)/src/libgdu			\
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\"		\
 	-DG_LOG_DOMAIN=\"gnome-disk-image-mounter\"	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\

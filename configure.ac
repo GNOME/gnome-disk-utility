@@ -8,7 +8,6 @@ AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 
 AC_PROG_CC
-AC_HEADER_STDC
 
 AM_INIT_AUTOMAKE([1.11 foreign dist-xz no-dist-gzip tar-ustar])
 AM_MAINTAINER_MODE([enable])

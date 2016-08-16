@@ -6,15 +6,15 @@
 # Barış Çiçek <baris@teamforce.name.tr>, 2009.
 # Osman Karagöz <osmank3@gmail.com>, 2012, 2014.
 # Gökhan Gurbetoğlu <ggurbet@gmail.com>, 2014.
-# Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015.
+# Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-05 19:11+0000\n"
-"PO-Revision-Date: 2015-09-06 07:00+0300\n"
+"POT-Creation-Date: 2016-08-16 10:26+0000\n"
+"PO-Revision-Date: 2016-08-16 21:59+0300\n"
 "Last-Translator: Muhammet Kara <muhammetk@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -68,7 +68,15 @@ msgstr ""
 "Uygulama kullanıcı tarafından kapatıldıktan sonra bile görevler arka planda "
 "yerine getirilir."
 
-#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:5
+msgid "An easy way to manage your disks"
+msgstr "Disklerinizi yönetmenin kolay yolu"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:6
+msgid "The GNOME Project"
+msgstr "GNOME Projesi"
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1051
 msgid "Disks"
 msgstr "Diskler"
 
@@ -1921,11 +1929,10 @@ msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Şifreleme parolası anahtarlıktan alındı"
 
 #: ../src/disks/gduvolumegrid.c:262
-#| msgid "_Volumes"
 msgid "Volumes Grid"
 msgstr "Birimler Tablosu"
 
-#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2035
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2042
 msgid "No Media"
 msgstr "Ortam yok"
 
@@ -2007,12 +2014,11 @@ msgid "Eject this disk"
 msgstr "Bu diski çıkart"
 
 #: ../src/disks/gduwindow.c:970
-#| msgid "Error deleting loop device"
 msgid "Detach this loop device"
 msgstr "Bu döngü aygıtını ayır"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1355
+#: ../src/disks/gduwindow.c:1362
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2021,7 +2027,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1363
+#: ../src/disks/gduwindow.c:1370
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2030,7 +2036,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1371
+#: ../src/disks/gduwindow.c:1378
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2039,12 +2045,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1379
+#: ../src/disks/gduwindow.c:1386
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1394
+#: ../src/disks/gduwindow.c:1401
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2053,13 +2059,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1404
+#: ../src/disks/gduwindow.c:1411
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1724
+#: ../src/disks/gduwindow.c:1731
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Salt Okunur)"
@@ -2068,7 +2074,7 @@ msgstr "%s (Salt Okunur)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1762
+#: ../src/disks/gduwindow.c:1769
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2077,7 +2083,7 @@ msgstr "%s kaldı (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1770
+#: ../src/disks/gduwindow.c:1777
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2088,7 +2094,7 @@ msgstr "%s kaldı"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1785
+#: ../src/disks/gduwindow.c:1792
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s/%s – %s"
@@ -2097,17 +2103,17 @@ msgstr "%s/%s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1872
+#: ../src/disks/gduwindow.c:1879
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %%%2.1f"
 
-#: ../src/disks/gduwindow.c:1944 ../src/disks/gduwindow.c:2344
+#: ../src/disks/gduwindow.c:1951 ../src/disks/gduwindow.c:2351
 msgid "Block device is empty"
 msgstr "Blok aygıtı boş"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1967
+#: ../src/disks/gduwindow.c:1974
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2116,11 +2122,11 @@ msgstr "Bilinmiyor (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2136
+#: ../src/disks/gduwindow.c:2143
 msgid "Connected to another seat"
 msgstr "Başka bir yuvaya bağlandı"
 
-#: ../src/disks/gduwindow.c:2282
+#: ../src/disks/gduwindow.c:2289
 msgid "Loop device is empty"
 msgstr "Döngü aygıtı boş"
 
@@ -2130,61 +2136,61 @@ msgstr "Döngü aygıtı boş"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2511
+#: ../src/disks/gduwindow.c:2518
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s boş (%%%.1f dolu)"
 
-#: ../src/disks/gduwindow.c:2541
+#: ../src/disks/gduwindow.c:2548
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2569
+#: ../src/disks/gduwindow.c:2576
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Kök Dosya Sistemi"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2577
+#: ../src/disks/gduwindow.c:2584
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s noktasına bağlandı"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2583
+#: ../src/disks/gduwindow.c:2590
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Bağlı Değil"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2606
+#: ../src/disks/gduwindow.c:2613
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Etkin"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2612
+#: ../src/disks/gduwindow.c:2619
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Etkin Değil"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2625
+#: ../src/disks/gduwindow.c:2632
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Kilidi Açık"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2631
+#: ../src/disks/gduwindow.c:2638
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Kilitli"
 
-#: ../src/disks/gduwindow.c:2641
+#: ../src/disks/gduwindow.c:2648
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Uzatılmış Bölüm"
@@ -2193,36 +2199,36 @@ msgstr "Uzatılmış Bölüm"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2661
+#: ../src/disks/gduwindow.c:2668
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2761
+#: ../src/disks/gduwindow.c:2768
 msgid "Unallocated Space"
 msgstr "Ayrılmamış Alan"
 
-#: ../src/disks/gduwindow.c:3110
+#: ../src/disks/gduwindow.c:3117
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Sürücüyü bekleme kipine alırken bir hata oluştu"
 
-#: ../src/disks/gduwindow.c:3156
+#: ../src/disks/gduwindow.c:3163
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Sürücüyü bekleme kipinden uyandırırken bir hata oluştu"
 
-#: ../src/disks/gduwindow.c:3201
+#: ../src/disks/gduwindow.c:3208
 msgid "Error powering off drive"
 msgstr "Sürücü kapatılırken hata oluştu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3253
+#: ../src/disks/gduwindow.c:3260
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sürücülerin gücünü kapatmak istediğinizden emin misiniz?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3255
+#: ../src/disks/gduwindow.c:3262
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2230,55 +2236,55 @@ msgstr ""
 "Bu işlem aşağıdaki sürücülerin kapatılması ve kaldırılması için sistemi "
 "hazırlar"
 
-#: ../src/disks/gduwindow.c:3259
+#: ../src/disks/gduwindow.c:3266
 msgid "_Power Off"
 msgstr "G_ücü Kapat"
 
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3343
 msgid "Error mounting filesystem"
 msgstr "Dosya sistemi bağlamada hata"
 
-#: ../src/disks/gduwindow.c:3375 ../src/libgdu/gduutils.c:1053
+#: ../src/disks/gduwindow.c:3382 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "Dosya sistemi ayırmada hata"
 
-#: ../src/disks/gduwindow.c:3517
+#: ../src/disks/gduwindow.c:3524
 msgid "Error deleting partition"
 msgstr "Bölümleme silinirken hata"
 
-#: ../src/disks/gduwindow.c:3554
+#: ../src/disks/gduwindow.c:3561
 msgid "Are you sure you want to delete the partition?"
 msgstr "Bölümü silmek istediğinizden emin misiniz?"
 
-#: ../src/disks/gduwindow.c:3555
+#: ../src/disks/gduwindow.c:3562
 msgid "All data on the partition will be lost"
 msgstr "Bölümdeki tüm veriler kaybedilecek"
 
-#: ../src/disks/gduwindow.c:3556
+#: ../src/disks/gduwindow.c:3563
 msgid "_Delete"
 msgstr "_Sil"
 
-#: ../src/disks/gduwindow.c:3587
+#: ../src/disks/gduwindow.c:3594
 msgid "Error ejecting media"
 msgstr "Ortam çıkarmada hata"
 
-#: ../src/disks/gduwindow.c:3654
+#: ../src/disks/gduwindow.c:3661
 msgid "Error locking encrypted device"
 msgstr "Şifrelenmiş aygıt kilitlenirken hata"
 
-#: ../src/disks/gduwindow.c:3718
+#: ../src/disks/gduwindow.c:3725
 msgid "Error starting swap"
 msgstr "Takas bölümü başlatmada hata"
 
-#: ../src/disks/gduwindow.c:3755
+#: ../src/disks/gduwindow.c:3762
 msgid "Error stopping swap"
 msgstr "Takas bölümü durdurmada hata"
 
-#: ../src/disks/gduwindow.c:3797
+#: ../src/disks/gduwindow.c:3804
 msgid "Error setting autoclear flag"
 msgstr "Otomatik temizle (autoclear) bayrağı ayarlanırken hata"
 
-#: ../src/disks/gduwindow.c:3850 ../src/disks/gduwindow.c:3914
+#: ../src/disks/gduwindow.c:3857 ../src/disks/gduwindow.c:3921
 msgid "Error canceling job"
 msgstr "İş iptal edilirken hata"
 
@@ -2315,7 +2321,7 @@ msgstr "Diskleri ve ortamları görüntüle, değiştir ve düzenle"
 msgid "translator-credits"
 msgstr ""
 "Barış Çiçek <baris@teamforce.name.tr>\n"
-"Muhammet Kara <muhammet.k@gmail.com>\n"
+"Muhammet Kara <muhammetk@gmail.com>\n"
 "Osman Karagöz <osmank3@gmail.com>"
 
 #: ../src/disks/ui/app-menu.ui.h:1
@@ -2599,7 +2605,7 @@ msgstr "_Takip Eden Boş Alan"
 msgid "The free space following the partition, in megabytes"
 msgstr "Bölümü takip eden boş alan, megabayt olarak"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#. The contents of the device, for example
 #: ../src/disks/ui/create-partition-dialog.ui.h:18
 #: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
@@ -2642,9 +2648,6 @@ msgid "APM Level"
 msgstr "APM Düzeyi"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
-#| msgid ""
-#| "Agressive spin-down may wear out the drive faster than anticipated. "
-#| "Please check the “Start/Stop Count” SMART attribute from time to time"
 msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
@@ -2727,7 +2730,7 @@ msgstr "Seri Numarası"
 msgid "World Wide Name"
 msgstr "Dünya Genelindeki Adı (WWN)"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#. The physical location of the drive, could be
 #: ../src/disks/ui/disks.ui.h:6
 msgid "Location"
 msgstr "Konum"
@@ -2766,12 +2769,10 @@ msgid "_Volumes"
 msgstr "_Birimler"
 
 #: ../src/disks/ui/disks.ui.h:17
-#| msgid "Extended partition"
 msgid "Mount selected partition"
 msgstr "Seçilen bölümü bağla"
 
 #: ../src/disks/ui/disks.ui.h:18
-#| msgid "Error deleting partition"
 msgid "Unmount selected partition"
 msgstr "Seçilen bölümün bağını kaldır"
 
@@ -2796,12 +2797,10 @@ msgid "Create partition in unallocated space"
 msgstr "Ayrılmamış alanda yeni bölüm oluştur"
 
 #: ../src/disks/ui/disks.ui.h:24
-#| msgid "Extended partition"
 msgid "Delete selected partition"
 msgstr "Seçili bölümü sil"
 
 #: ../src/disks/ui/disks.ui.h:25
-#| msgid "No partitioning"
 msgid "Additional partition options"
 msgstr "Ek bölümleme seçenekleri"
 

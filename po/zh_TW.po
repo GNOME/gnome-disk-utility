@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.3.93\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-25 13:14+0800\n"
-"PO-Revision-Date: 2015-08-25 13:21+0800\n"
-"Last-Translator: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>\n"
+"POT-Creation-Date: 2016-08-16 10:26+0000\n"
+"PO-Revision-Date: 2016-10-09 22:24+0800\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: ../data/gnome-disk-image-mounter.desktop.in.h:1
 #: ../src/disk-image-mounter/main.c:48
@@ -60,7 +60,15 @@ msgstr ""
 "使用 Disks，您可以檢視 SMART 資料、管理 RAID 裝置、物理磁碟的評測，以及製作 "
 "USB 隨身碟映像檔。工作會在背景執行，即使使用者關閉程式也一樣。"
 
-#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:5
+msgid "An easy way to manage your disks"
+msgstr "輕鬆管理您的磁碟"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:6
+msgid "The GNOME Project"
+msgstr "GNOME 專案"
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1051
 msgid "Disks"
 msgstr "磁碟"
 
@@ -188,11 +196,11 @@ msgstr "格式化對話盒的上層視窗 XID"
 msgid "Restore disk image"
 msgstr "還原磁碟映像檔"
 
-#: ../src/disks/gduapplication.c:181
+#: ../src/disks/gduapplication.c:180
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device 必須和 --block-device 一起使用\n"
 
-#: ../src/disks/gduapplication.c:187
+#: ../src/disks/gduapplication.c:186
 msgid "--format-device must be specified when using --xid\n"
 msgstr "使用 --xid 時必須指定 --format-device\n"
 
@@ -201,7 +209,7 @@ msgstr "使用 --xid 時必須指定 --format-device\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: ../src/disks/gduapplication.c:297
+#: ../src/disks/gduapplication.c:296
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -992,47 +1000,47 @@ msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "當嘗試切換 SMART 啟用時發生錯誤"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: ../src/disks/gduatasmartdialog.c:1515
+#: ../src/disks/gduatasmartdialog.c:1514
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: ../src/disks/gduatasmartdialog.c:1527
+#: ../src/disks/gduatasmartdialog.c:1526
 msgid "Attribute"
 msgstr "屬性"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: ../src/disks/gduatasmartdialog.c:1541
+#: ../src/disks/gduatasmartdialog.c:1540
 msgid "Value"
 msgstr "數值"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: ../src/disks/gduatasmartdialog.c:1553
+#: ../src/disks/gduatasmartdialog.c:1552
 msgid "Normalized"
 msgstr "正常化"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: ../src/disks/gduatasmartdialog.c:1565
+#: ../src/disks/gduatasmartdialog.c:1564
 msgid "Threshold"
 msgstr "臨界值"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: ../src/disks/gduatasmartdialog.c:1577
+#: ../src/disks/gduatasmartdialog.c:1576
 msgid "Worst"
 msgstr "最差"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: ../src/disks/gduatasmartdialog.c:1589
+#: ../src/disks/gduatasmartdialog.c:1588
 msgid "Type"
 msgstr "類型"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: ../src/disks/gduatasmartdialog.c:1601
+#: ../src/disks/gduatasmartdialog.c:1600
 msgid "Updates"
 msgstr "更新"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/disks/gduatasmartdialog.c:1613 ../src/disks/ui/disks.ui.h:8
+#: ../src/disks/gduatasmartdialog.c:1612 ../src/disks/ui/disks.ui.h:8
 msgid "Assessment"
 msgstr "評估"
 
@@ -1057,7 +1065,7 @@ msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:886
+#: ../src/disks/gdubenchmarkdialog.c:677 ../src/disks/gdubenchmarkdialog.c:889
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1096,87 +1104,87 @@ msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "測量存取時間 (已完成 %2.1f%%)…"
 
-#: ../src/disks/gdubenchmarkdialog.c:809
+#: ../src/disks/gdubenchmarkdialog.c:812
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "有錯誤發生"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: ../src/disks/gdubenchmarkdialog.c:884
+#: ../src/disks/gdubenchmarkdialog.c:887
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f 毫秒"
 
-#: ../src/disks/gdubenchmarkdialog.c:1196
+#: ../src/disks/gdubenchmarkdialog.c:1199
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "取得裝置大小時發生錯誤：%m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1206
+#: ../src/disks/gdubenchmarkdialog.c:1209
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "取得分頁大小時發生錯誤：%m\n"
 
-#: ../src/disks/gdubenchmarkdialog.c:1240
-#: ../src/disks/gdubenchmarkdialog.c:1303
-#: ../src/disks/gdubenchmarkdialog.c:1322
+#: ../src/disks/gdubenchmarkdialog.c:1243
+#: ../src/disks/gdubenchmarkdialog.c:1306
+#: ../src/disks/gdubenchmarkdialog.c:1325
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "搜尋偏移量 %lld 時發生錯誤"
 
-#: ../src/disks/gdubenchmarkdialog.c:1251
+#: ../src/disks/gdubenchmarkdialog.c:1254
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "從偏移量 %2$s 預讀 %1$s 時發生錯誤"
 
-#: ../src/disks/gdubenchmarkdialog.c:1263
+#: ../src/disks/gdubenchmarkdialog.c:1266
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "搜尋偏移量 %s 時發生錯誤"
 
-#: ../src/disks/gdubenchmarkdialog.c:1277
+#: ../src/disks/gdubenchmarkdialog.c:1280
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "從偏移量 %s 讀取 %s 時發生錯誤"
 
-#: ../src/disks/gdubenchmarkdialog.c:1312
+#: ../src/disks/gdubenchmarkdialog.c:1315
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "從偏移量 %2$lld 預讀 %1$lld 位元組時發生錯誤"
 
-#: ../src/disks/gdubenchmarkdialog.c:1333
+#: ../src/disks/gdubenchmarkdialog.c:1336
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "寫入 %lld 位元組於補償 %lld 時發生錯誤：%m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1343
+#: ../src/disks/gdubenchmarkdialog.c:1346
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "預期寫入 %lld 位元組，只寫入 %lld：%m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1353
+#: ../src/disks/gdubenchmarkdialog.c:1356
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "同步 (於偏移量 %lld) 時發生錯誤：%m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1393
+#: ../src/disks/gdubenchmarkdialog.c:1396
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "搜尋偏移量 %lld 時發生錯誤：%m"
 
-#: ../src/disks/gdubenchmarkdialog.c:1405
+#: ../src/disks/gdubenchmarkdialog.c:1408
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1308,18 +1316,18 @@ msgstr "該檔案已存在於「%s」。取代它會覆蓋它的內容。"
 msgid "_Replace"
 msgstr "取代(_R)"
 
-#: ../src/disks/gducreatediskimagedialog.c:986
+#: ../src/disks/gducreatediskimagedialog.c:982
 msgid "Error opening file for writing"
 msgstr "開啟檔案供寫入時發生錯誤"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: ../src/disks/gducreatediskimagedialog.c:1002
+#: ../src/disks/gducreatediskimagedialog.c:998
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "正在複製裝置到磁碟映像檔"
 
 #. Translators: this is the description of the job
-#: ../src/disks/gducreatediskimagedialog.c:1008
+#: ../src/disks/gducreatediskimagedialog.c:1004
 msgid "Creating Disk Image"
 msgstr "建立磁碟映像檔"
 
@@ -1859,14 +1867,20 @@ msgstr "解鎖已加密裝置時發生錯誤"
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "加密密語已從鑰匙圈取回"
 
-#: ../src/disks/gduvolumegrid.c:540 ../src/disks/gduwindow.c:2032
+#: ../src/disks/gduvolumegrid.c:262
+#, fuzzy
+#| msgid "_Volumes"
+msgid "Volumes Grid"
+msgstr "儲存區(_V)"
+
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2042
 msgid "No Media"
 msgstr "沒有媒體"
 
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1552
+#: ../src/disks/gduvolumegrid.c:1560
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -1875,28 +1889,28 @@ msgstr "分割區 %u：%s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1559
+#: ../src/disks/gduvolumegrid.c:1567
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "分割區 %u"
 
-#: ../src/disks/gduvolumegrid.c:1596
+#: ../src/disks/gduvolumegrid.c:1605
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "可用空間"
 
-#: ../src/disks/gduvolumegrid.c:1639
+#: ../src/disks/gduvolumegrid.c:1648
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "延伸分割區"
 
-#: ../src/disks/gduvolumegrid.c:1663
+#: ../src/disks/gduvolumegrid.c:1672
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "檔案系統"
 
-#: ../src/disks/gduvolumegrid.c:1685
+#: ../src/disks/gduvolumegrid.c:1694
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "置換空間"
@@ -1945,7 +1959,7 @@ msgid "Detach this loop device"
 msgstr "分離這個迴圈裝置"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1355
+#: ../src/disks/gduwindow.c:1362
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -1954,7 +1968,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1363
+#: ../src/disks/gduwindow.c:1370
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -1963,7 +1977,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1371
+#: ../src/disks/gduwindow.c:1378
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -1972,12 +1986,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1379
+#: ../src/disks/gduwindow.c:1386
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1394
+#: ../src/disks/gduwindow.c:1401
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -1986,13 +2000,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1404
+#: ../src/disks/gduwindow.c:1411
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1721
+#: ../src/disks/gduwindow.c:1731
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (唯讀)"
@@ -2001,7 +2015,7 @@ msgstr "%s (唯讀)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1759
+#: ../src/disks/gduwindow.c:1769
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2010,7 +2024,7 @@ msgstr "%s 剩餘 (%s/秒)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1767
+#: ../src/disks/gduwindow.c:1777
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2021,7 +2035,7 @@ msgstr "剩下 %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1782
+#: ../src/disks/gduwindow.c:1792
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s / %s – %s"
@@ -2030,17 +2044,17 @@ msgstr "%s / %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1869
+#: ../src/disks/gduwindow.c:1879
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1941 ../src/disks/gduwindow.c:2341
+#: ../src/disks/gduwindow.c:1951 ../src/disks/gduwindow.c:2351
 msgid "Block device is empty"
 msgstr "區塊裝置是空的"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1964
+#: ../src/disks/gduwindow.c:1974
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2049,11 +2063,11 @@ msgstr "不明 (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2133
+#: ../src/disks/gduwindow.c:2143
 msgid "Connected to another seat"
 msgstr "連接到另一席"
 
-#: ../src/disks/gduwindow.c:2279
+#: ../src/disks/gduwindow.c:2289
 msgid "Loop device is empty"
 msgstr "Loop 裝置是空的"
 
@@ -2063,61 +2077,61 @@ msgstr "Loop 裝置是空的"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2508
+#: ../src/disks/gduwindow.c:2518
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s 剩餘 (%.1f%% 滿)"
 
-#: ../src/disks/gduwindow.c:2538
+#: ../src/disks/gduwindow.c:2548
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "不明"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2566
+#: ../src/disks/gduwindow.c:2576
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "檔案系統根"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2574
+#: ../src/disks/gduwindow.c:2584
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "已掛載於 %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2580
+#: ../src/disks/gduwindow.c:2590
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "未掛載"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2603
+#: ../src/disks/gduwindow.c:2613
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "使用中"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2609
+#: ../src/disks/gduwindow.c:2619
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "未使用"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2622
+#: ../src/disks/gduwindow.c:2632
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "已解鎖"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2628
+#: ../src/disks/gduwindow.c:2638
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "已鎖定"
 
-#: ../src/disks/gduwindow.c:2638
+#: ../src/disks/gduwindow.c:2648
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "延伸分割區"
@@ -2126,90 +2140,90 @@ msgstr "延伸分割區"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2658
+#: ../src/disks/gduwindow.c:2668
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2758
+#: ../src/disks/gduwindow.c:2768
 msgid "Unallocated Space"
 msgstr "未配置的空間"
 
-#: ../src/disks/gduwindow.c:3104
+#: ../src/disks/gduwindow.c:3117
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "當嘗試讓磁碟機進入待命模式時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3150
+#: ../src/disks/gduwindow.c:3163
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "當嘗試讓磁碟機從待命模式喚醒時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3195
+#: ../src/disks/gduwindow.c:3208
 msgid "Error powering off drive"
 msgstr "關閉磁碟電源時發生錯誤"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3247
+#: ../src/disks/gduwindow.c:3260
 msgid "Are you sure you want to power off the drives?"
 msgstr "確定要關閉磁碟機的電源？"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3249
+#: ../src/disks/gduwindow.c:3262
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "這個操作會讓系統準備使下列磁碟機關閉電源與移除。"
 
-#: ../src/disks/gduwindow.c:3253
+#: ../src/disks/gduwindow.c:3266
 msgid "_Power Off"
 msgstr "關閉電源(_P)"
 
-#: ../src/disks/gduwindow.c:3330
+#: ../src/disks/gduwindow.c:3343
 msgid "Error mounting filesystem"
 msgstr "掛載檔案系統時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3369 ../src/libgdu/gduutils.c:1049
+#: ../src/disks/gduwindow.c:3382 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "卸載檔案系統時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3511
+#: ../src/disks/gduwindow.c:3524
 msgid "Error deleting partition"
 msgstr "刪除分割區時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3548
+#: ../src/disks/gduwindow.c:3561
 msgid "Are you sure you want to delete the partition?"
 msgstr "確定要刪除此分割區？"
 
-#: ../src/disks/gduwindow.c:3549
+#: ../src/disks/gduwindow.c:3562
 msgid "All data on the partition will be lost"
 msgstr "分割區上的所有資料將會消失"
 
-#: ../src/disks/gduwindow.c:3550
+#: ../src/disks/gduwindow.c:3563
 msgid "_Delete"
 msgstr "刪除(_D)"
 
-#: ../src/disks/gduwindow.c:3581
+#: ../src/disks/gduwindow.c:3594
 msgid "Error ejecting media"
 msgstr "退出媒體時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3648
+#: ../src/disks/gduwindow.c:3661
 msgid "Error locking encrypted device"
 msgstr "鎖定加密的裝置時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3712
+#: ../src/disks/gduwindow.c:3725
 msgid "Error starting swap"
 msgstr "啟動置換區時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3749
+#: ../src/disks/gduwindow.c:3762
 msgid "Error stopping swap"
 msgstr "停止置換區時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3791
+#: ../src/disks/gduwindow.c:3804
 msgid "Error setting autoclear flag"
 msgstr "設定 autoclear 旗標時發生錯誤"
 
-#: ../src/disks/gduwindow.c:3844 ../src/disks/gduwindow.c:3908
+#: ../src/disks/gduwindow.c:3857 ../src/disks/gduwindow.c:3921
 msgid "Error canceling job"
 msgstr "取消工作時發生錯誤"
 
@@ -2526,7 +2540,7 @@ msgstr "後端的可用空間(_F)"
 msgid "The free space following the partition, in megabytes"
 msgstr "在分割區後的剩餘空間，以 MB 計"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#. The contents of the device, for example
 #: ../src/disks/ui/create-partition-dialog.ui.h:18
 #: ../src/disks/ui/disks.ui.h:27
 msgid "Contents"
@@ -2567,8 +2581,12 @@ msgid "APM Level"
 msgstr "APM 層級"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:9
+#, fuzzy
+#| msgid ""
+#| "Agressive spin-down may wear out the drive faster than anticipated. "
+#| "Please check the “Start/Stop Count” SMART attribute from time to time"
 msgid ""
-"Agressive spin-down may wear out the drive faster than anticipated. Please "
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
 "強制降低轉速可能會加快磁碟機損耗。請隨時檢查「開始/停止計數」 SMART 屬性"
@@ -2646,7 +2664,7 @@ msgstr "序號"
 msgid "World Wide Name"
 msgstr "世界性名稱(WWN)"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#. The physical location of the drive, could be
 #: ../src/disks/ui/disks.ui.h:6
 msgid "Location"
 msgstr "位置"
@@ -3257,115 +3275,115 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "磁碟映像檔 (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: ../src/libgdu/gduutils.c:429
+#: ../src/libgdu/gduutils.c:430
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d 年"
 
 #. Translators: Used for number of months
-#: ../src/libgdu/gduutils.c:436
+#: ../src/libgdu/gduutils.c:437
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d 月"
 
 #. Translators: Used for number of days
-#: ../src/libgdu/gduutils.c:443
+#: ../src/libgdu/gduutils.c:444
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 日"
 
 #. Translators: Used for number of hours
-#: ../src/libgdu/gduutils.c:450
+#: ../src/libgdu/gduutils.c:451
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 時"
 
 #. Translators: Used for number of minutes
-#: ../src/libgdu/gduutils.c:457
+#: ../src/libgdu/gduutils.c:458
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分"
 
 #. Translators: Used for number of seconds
-#: ../src/libgdu/gduutils.c:464
+#: ../src/libgdu/gduutils.c:465
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
 #. Translators: Used for number of milli-seconds
-#: ../src/libgdu/gduutils.c:471
+#: ../src/libgdu/gduutils.c:472
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d 毫秒"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: ../src/libgdu/gduutils.c:535
+#: ../src/libgdu/gduutils.c:536
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: ../src/libgdu/gduutils.c:540
+#: ../src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: ../src/libgdu/gduutils.c:545
+#: ../src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: ../src/libgdu/gduutils.c:550
+#: ../src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: ../src/libgdu/gduutils.c:561
+#: ../src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s %s"
 
-#: ../src/libgdu/gduutils.c:570
+#: ../src/libgdu/gduutils.c:571
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "少於一分鐘"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: ../src/libgdu/gduutils.c:575
+#: ../src/libgdu/gduutils.c:576
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: ../src/libgdu/gduutils.c:581
+#: ../src/libgdu/gduutils.c:582
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: ../src/libgdu/gduutils.c:723
+#: ../src/libgdu/gduutils.c:724
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "受影響的裝置"
 
-#: ../src/libgdu/gduutils.c:1069
+#: ../src/libgdu/gduutils.c:1073
 msgid "Error locking device"
 msgstr "鎖定裝置時發生錯誤"
 

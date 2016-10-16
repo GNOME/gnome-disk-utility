@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
-# Kjartan Maraas <kmaraas@gnome.org>, 2009-2015.
+# Kjartan Maraas <kmaraas@gnome.org>, 2009-2016.
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility 3.17.x\n"
+"Project-Id-Version: gnome-disk-utility 3.22.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-07 19:41+0200\n"
-"PO-Revision-Date: 2015-09-07 19:44+0200\n"
+"POT-Creation-Date: 2016-10-16 11:53+0200\n"
+"PO-Revision-Date: 2016-10-16 11:54+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -61,7 +61,15 @@ msgstr ""
 "fysiske disker og lage bilder av USB-minnepinner. Oppgaver kjøres i "
 "bakgrunnen, selv etter at programmet er lukket av bruker."
 
-#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1049
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:5
+msgid "An easy way to manage your disks"
+msgstr "En enkel måte å håndtere diskene dine"
+
+#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:6
+msgid "The GNOME Project"
+msgstr "GNOME prosjektet"
+
+#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1051
 msgid "Disks"
 msgstr "Disker"
 
@@ -1922,7 +1930,7 @@ msgstr "Passordfrase for kryptering ble hentet fra nøkkelringen"
 msgid "Volumes Grid"
 msgstr "Volumrutenett"
 
-#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2035
+#: ../src/disks/gduvolumegrid.c:570 ../src/disks/gduwindow.c:2042
 msgid "No Media"
 msgstr "Ingen media"
 
@@ -2008,7 +2016,7 @@ msgid "Detach this loop device"
 msgstr "Koble fra denne løkkeenheten"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: ../src/disks/gduwindow.c:1355
+#: ../src/disks/gduwindow.c:1362
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2017,7 +2025,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1363
+#: ../src/disks/gduwindow.c:1370
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2026,7 +2034,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1371
+#: ../src/disks/gduwindow.c:1378
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2035,12 +2043,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: ../src/disks/gduwindow.c:1379
+#: ../src/disks/gduwindow.c:1386
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: ../src/disks/gduwindow.c:1394
+#: ../src/disks/gduwindow.c:1401
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2049,13 +2057,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: ../src/disks/gduwindow.c:1404
+#: ../src/disks/gduwindow.c:1411
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: ../src/disks/gduwindow.c:1724
+#: ../src/disks/gduwindow.c:1731
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Skrivebeskyttet)"
@@ -2064,7 +2072,7 @@ msgstr "%s (Skrivebeskyttet)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: ../src/disks/gduwindow.c:1762
+#: ../src/disks/gduwindow.c:1769
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2073,7 +2081,7 @@ msgstr "%s gjenstår (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: ../src/disks/gduwindow.c:1770
+#: ../src/disks/gduwindow.c:1777
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2084,7 +2092,7 @@ msgstr "%s gjenstår"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: ../src/disks/gduwindow.c:1785
+#: ../src/disks/gduwindow.c:1792
 #, c-format
 msgid "%s of %s – %s"
 msgstr "%s av %s – %s"
@@ -2093,17 +2101,17 @@ msgstr "%s av %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: ../src/disks/gduwindow.c:1872
+#: ../src/disks/gduwindow.c:1879
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: ../src/disks/gduwindow.c:1944 ../src/disks/gduwindow.c:2344
+#: ../src/disks/gduwindow.c:1951 ../src/disks/gduwindow.c:2351
 msgid "Block device is empty"
 msgstr "Blokkenhet er tom"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: ../src/disks/gduwindow.c:1967
+#: ../src/disks/gduwindow.c:1974
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2112,11 +2120,11 @@ msgstr "Ukjent (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: ../src/disks/gduwindow.c:2136
+#: ../src/disks/gduwindow.c:2143
 msgid "Connected to another seat"
 msgstr "Tilkoblet et annet sete"
 
-#: ../src/disks/gduwindow.c:2282
+#: ../src/disks/gduwindow.c:2289
 msgid "Loop device is empty"
 msgstr "Løkkeenheten er tom"
 
@@ -2126,61 +2134,61 @@ msgstr "Løkkeenheten er tom"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: ../src/disks/gduwindow.c:2511
+#: ../src/disks/gduwindow.c:2518
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s – %s ledig (%.1f%% full)"
 
-#: ../src/disks/gduwindow.c:2541
+#: ../src/disks/gduwindow.c:2548
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ukjent"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: ../src/disks/gduwindow.c:2569
+#: ../src/disks/gduwindow.c:2576
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Rot for filsystem"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: ../src/disks/gduwindow.c:2577
+#: ../src/disks/gduwindow.c:2584
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montert på %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: ../src/disks/gduwindow.c:2583
+#: ../src/disks/gduwindow.c:2590
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ikke montert"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: ../src/disks/gduwindow.c:2606
+#: ../src/disks/gduwindow.c:2613
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: ../src/disks/gduwindow.c:2612
+#: ../src/disks/gduwindow.c:2619
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ikke aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2625
+#: ../src/disks/gduwindow.c:2632
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Ikke låst"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: ../src/disks/gduwindow.c:2631
+#: ../src/disks/gduwindow.c:2638
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Låst"
 
-#: ../src/disks/gduwindow.c:2641
+#: ../src/disks/gduwindow.c:2648
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Utvidet partisjon"
@@ -2189,36 +2197,36 @@ msgstr "Utvidet partisjon"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: ../src/disks/gduwindow.c:2661
+#: ../src/disks/gduwindow.c:2668
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s – %s"
 
 #. Translators: used to convey free space for partitions
-#: ../src/disks/gduwindow.c:2761
+#: ../src/disks/gduwindow.c:2768
 msgid "Unallocated Space"
 msgstr "Ikke allokert plass"
 
-#: ../src/disks/gduwindow.c:3110
+#: ../src/disks/gduwindow.c:3117
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Det oppstod en feil da enheten skulle settes i hvilemodus"
 
-#: ../src/disks/gduwindow.c:3156
+#: ../src/disks/gduwindow.c:3163
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Det oppstod en feil da enheten skulle vekkes fra hvilemodus"
 
-#: ../src/disks/gduwindow.c:3201
+#: ../src/disks/gduwindow.c:3208
 msgid "Error powering off drive"
 msgstr "Feil ved forsøk på å slå av strømmen på stasjonen"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3253
+#: ../src/disks/gduwindow.c:3260
 msgid "Are you sure you want to power off the drives?"
 msgstr "Er du sikker på at du vil slå av diskene?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: ../src/disks/gduwindow.c:3255
+#: ../src/disks/gduwindow.c:3262
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2226,55 +2234,55 @@ msgstr ""
 "Denne operasjonen vil forberede systemet for å slå av og fjerne følgende "
 "stasjoner."
 
-#: ../src/disks/gduwindow.c:3259
+#: ../src/disks/gduwindow.c:3266
 msgid "_Power Off"
 msgstr "_Slå av"
 
-#: ../src/disks/gduwindow.c:3336
+#: ../src/disks/gduwindow.c:3343
 msgid "Error mounting filesystem"
 msgstr "Feil ved montering av filsystem"
 
-#: ../src/disks/gduwindow.c:3375 ../src/libgdu/gduutils.c:1053
+#: ../src/disks/gduwindow.c:3382 ../src/libgdu/gduutils.c:1053
 msgid "Error unmounting filesystem"
 msgstr "Feil ved avmontering av filsystem"
 
-#: ../src/disks/gduwindow.c:3517
+#: ../src/disks/gduwindow.c:3524
 msgid "Error deleting partition"
 msgstr "Feil ved sletting av partisjon"
 
-#: ../src/disks/gduwindow.c:3554
+#: ../src/disks/gduwindow.c:3561
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på at du vil slette partisjonen?"
 
-#: ../src/disks/gduwindow.c:3555
+#: ../src/disks/gduwindow.c:3562
 msgid "All data on the partition will be lost"
 msgstr "Alle data på partisjonen vil gå tapt"
 
-#: ../src/disks/gduwindow.c:3556
+#: ../src/disks/gduwindow.c:3563
 msgid "_Delete"
 msgstr "_Slett"
 
-#: ../src/disks/gduwindow.c:3587
+#: ../src/disks/gduwindow.c:3594
 msgid "Error ejecting media"
 msgstr "Feil ved utløsing av medie"
 
-#: ../src/disks/gduwindow.c:3654
+#: ../src/disks/gduwindow.c:3661
 msgid "Error locking encrypted device"
 msgstr "Feil under låsing av kryptert enhet"
 
-#: ../src/disks/gduwindow.c:3718
+#: ../src/disks/gduwindow.c:3725
 msgid "Error starting swap"
 msgstr "Feil ved oppstart av swap"
 
-#: ../src/disks/gduwindow.c:3755
+#: ../src/disks/gduwindow.c:3762
 msgid "Error stopping swap"
 msgstr "Feil ved stopp av swap"
 
-#: ../src/disks/gduwindow.c:3797
+#: ../src/disks/gduwindow.c:3804
 msgid "Error setting autoclear flag"
 msgstr "Klarte ikke å sette flagg for automatisk tømming"
 
-#: ../src/disks/gduwindow.c:3850 ../src/disks/gduwindow.c:3914
+#: ../src/disks/gduwindow.c:3857 ../src/disks/gduwindow.c:3921
 msgid "Error canceling job"
 msgstr "Feil ved avbryting av jobb"
 
@@ -2641,7 +2649,9 @@ msgstr "Nivå for strømstyring"
 msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
-msgstr "Agressiv nedspinning kan slite ut disken fortere enn antatt. Vennligist sjekk SMART-attributten «Start/stopp teller» av og til"
+msgstr ""
+"Agressiv nedspinning kan slite ut disken fortere enn antatt. Vennligist "
+"sjekk SMART-attributten «Start/stopp teller» av og til"
 
 #: ../src/disks/ui/disk-settings-dialog.ui.h:10
 msgid "A_PM"

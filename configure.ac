@@ -67,9 +67,6 @@ PKG_CHECK_MODULES([LIBDVDREAD], [dvdread >= $LIBDVDREAD_REQUIRED])
 PKG_CHECK_MODULES([LIBNOTIFY], [libnotify >= $LIBNOTIFY_REQUIRED])
 PKG_CHECK_MODULES([LIBLZMA], [liblzma >= $LIBLZMA_REQUIRED])
 
-gsd_plugindir='${libdir}/gnome-settings-daemon-3.0'
-AC_SUBST([gsd_plugindir])
-
 AX_REQUIRE_DEFINED([GLIB_GSETTINGS])
 GLIB_GSETTINGS
 
@@ -102,7 +99,6 @@ AC_ARG_ENABLE([gsd_plugin], AS_HELP_STRING([--disable-gsd-plugin],[don't build g
 msg_gsd_plugin=no
 if test "x$enable_gsd_plugin" != "xno"; then
   msg_gsd_plugin=yes
-  PKG_CHECK_MODULES([GSD_PLUGIN], [gnome-settings-daemon >= GSD_PLUGIN_REQUIRED])
 fi
 AM_CONDITIONAL([USE_GSD_PLUGIN], [test "$msg_gsd_plugin" = "yes"])
 

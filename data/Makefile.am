@@ -31,7 +31,7 @@ appstream_XML = $(appstream_in_files:.xml.in=.xml)
 
 @APPSTREAM_XML_RULES@
 @INTLTOOL_DESKTOP_RULE@
-@INTLTOOL_XML_NOMERGE_RULE@
+@INTLTOOL_XML_RULE@
 @GSETTINGS_RULES@
 
 DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check

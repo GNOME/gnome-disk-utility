@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-09 00:14+0200\n"
-"PO-Revision-Date: 2016-09-09 00:15+0200\n"
+"POT-Creation-Date: 2016-11-10 14:49+0100\n"
+"PO-Revision-Date: 2016-11-10 14:50+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -149,7 +149,7 @@ msgstr "Punktu montowania tylko do _odczytu"
 
 #: ../src/disk-image-mounter/main.c:95
 msgid ""
-"If checked, the mount will be read-only. This is useful if you don't want "
+"If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
 msgstr ""
 "Jeśli jest zaznaczone, to punkt montowania będzie tylko do odczytu. Jest to "
@@ -166,12 +166,12 @@ msgstr "Podłącza lub montuje jeden lub więcej plików obrazów dysków."
 
 #: ../src/disk-image-mounter/main.c:192
 #, c-format
-msgid "Cannot open `%s' - maybe the volume isn't mounted?"
+msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "Nie można otworzyć „%s”. Wolumin nie jest zamontowany?"
 
 #: ../src/disk-image-mounter/main.c:199
 #, c-format
-msgid "Error opening `%s': %m"
+msgid "Error opening “%s”: %m"
 msgstr "Błąd podczas otwierania „%s”: %m"
 
 #: ../src/disk-image-mounter/main.c:220
@@ -1943,10 +1943,20 @@ msgstr "Siatka woluminów"
 msgid "No Media"
 msgstr "Brak nośnika"
 
+#: ../src/disks/gduvolumegrid.c:1670
+msgctxt "volume-grid"
+msgid "Filesystem"
+msgstr "System plików"
+
+#: ../src/disks/gduvolumegrid.c:1680
+msgctxt "volume-grid"
+msgid "Swap"
+msgstr "Obszar wymiany"
+
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1560
+#: ../src/disks/gduvolumegrid.c:1703
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -1955,31 +1965,21 @@ msgstr "Partycja %u: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1567
+#: ../src/disks/gduvolumegrid.c:1710
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Partycja %u"
 
-#: ../src/disks/gduvolumegrid.c:1605
-msgctxt "volume-grid"
-msgid "Free Space"
-msgstr "Wolne miejsce"
-
-#: ../src/disks/gduvolumegrid.c:1648
+#: ../src/disks/gduvolumegrid.c:1767
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partycja rozszerzona"
 
-#: ../src/disks/gduvolumegrid.c:1672
+#: ../src/disks/gduvolumegrid.c:1842
 msgctxt "volume-grid"
-msgid "Filesystem"
-msgstr "System plików"
-
-#: ../src/disks/gduvolumegrid.c:1694
-msgctxt "volume-grid"
-msgid "Swap"
-msgstr "Obszar wymiany"
+msgid "Free Space"
+msgstr "Wolne miejsce"
 
 #: ../src/disks/gduwindow.c:586
 msgid "Error deleting loop device"
@@ -2103,8 +2103,8 @@ msgstr "Pozostało: %s"
 #.
 #: ../src/disks/gduwindow.c:1792
 #, c-format
-msgid "%s of %s – %s"
-msgstr "%s z %s – %s"
+msgid "%s of %s — %s"
+msgstr "%s z %s — %s"
 
 #. Translators: Used in job progress bar.
 #. *              The %s is the job description (e.g. "Erasing Device").
@@ -2926,7 +2926,7 @@ msgstr "Op_cje"
 
 #: ../src/disks/ui/edit-crypttab-dialog.ui.h:6
 msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
+"The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
 "Nazwa używana dla odblokowanego urządzenia — urządzenie jest ustawione jako "
@@ -3044,7 +3044,7 @@ msgstr "I_dentyfikowanie jako"
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:5
 msgid ""
-"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
+"The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
 "<b>Specjalny plik urządzenia</b> — należy użyć dowiązań symbolicznych "
@@ -3052,7 +3052,7 @@ msgstr ""
 
 #: ../src/disks/ui/edit-fstab-dialog.ui.h:6
 msgid ""
-"The special device file - use symlinks in the /dev/disk hierarchy to control "
+"The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
 "Specjalny plik urządzenia — należy użyć dowiązań symbolicznych w katalogu /"
@@ -3528,11 +3528,3 @@ msgstr "Dysk twardy niedługo może ulec awarii."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Sprawdź"
-
-#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:1
-msgid "Disks Problem Monitor"
-msgstr "Monitor problemów dysków"
-
-#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
-msgid "Warns about problems with disks and storage devices"
-msgstr "Ostrzega o problemach z dyskami i urządzeniami pamięci masowych"

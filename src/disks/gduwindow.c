@@ -1789,7 +1789,7 @@ get_job_progress_text (GduWindow *window,
            *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
            *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
            */
-          s = g_strdup_printf (_("%s of %s – %s"), s2, s3, s);
+          s = g_strdup_printf (_("%s of %s — %s"), s2, s3, s);
           g_free (tmp);
           g_free (s3);
           g_free (s2);

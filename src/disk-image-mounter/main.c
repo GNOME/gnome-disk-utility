@@ -92,7 +92,7 @@ do_filechooser (void)
 
   /* Add a RO check button that defaults to RO */
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only mount"));
-  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the mount will be read-only. This is useful if you don't want the underlying disk image to be modified"));
+  gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the mount will be read-only. This is useful if you don’t want the underlying disk image to be modified"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), !opt_writable);
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
@@ -189,14 +189,14 @@ main (int argc, char *argv[])
 
       if (filename == NULL)
         {
-          show_error (_("Cannot open `%s' - maybe the volume isn't mounted?"), uri);
+          show_error (_("Cannot open “%s” — maybe the volume isn’t mounted?"), uri);
           goto done_with_image;
         }
 
       fd = open (filename, opt_writable ? O_RDWR : O_RDONLY);
       if (fd == -1)
         {
-          show_error (_("Error opening `%s': %m"), filename);
+          show_error (_("Error opening “%s”: %m"), filename);
           goto done_with_image;
         }
 

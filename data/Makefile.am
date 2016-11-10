@@ -11,6 +11,9 @@ desktop_in_files =				\
 
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
+$(desktop_DATA): $(desktop_in_files)
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+
 dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = org.gnome.DiskUtility.service
 
@@ -26,13 +29,16 @@ gsettings_SCHEMAS = 						\
 	org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml	\
 	$(NULL)
 
+@GSETTINGS_RULES@
+
 appstream_in_files = org.gnome.DiskUtility.appdata.xml.in
 appstream_XML = $(appstream_in_files:.xml.in=.xml)
 
+$(appstream_XML): $(appstream_in_files)
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
+
 @APPSTREAM_XML_RULES@
-@INTLTOOL_DESKTOP_RULE@
-@INTLTOOL_XML_RULE@
-@GSETTINGS_RULES@
+
 
 DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
 

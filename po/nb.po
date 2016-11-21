@@ -6,10 +6,10 @@
 # Torstein Adolf Winterseth <kvikende@fsfe.org>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility 3.22.x\n"
+"Project-Id-Version: gnome-disk-utility 3.23.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-16 11:53+0200\n"
-"PO-Revision-Date: 2016-10-16 11:54+0200\n"
+"POT-Creation-Date: 2016-11-21 08:25+0100\n"
+"PO-Revision-Date: 2016-11-21 08:26+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -17,73 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: ../data/gnome-disk-image-mounter.desktop.in.h:1
-#: ../src/disk-image-mounter/main.c:48
-msgid "Disk Image Mounter"
-msgstr "Montering av diskbilde"
-
-#: ../data/gnome-disk-image-mounter.desktop.in.h:2
-msgid "Mount Disk Images"
-msgstr "Monter diskbilder"
-
-#: ../data/gnome-disk-image-writer.desktop.in.h:1
-msgid "Disk Image Writer"
-msgstr "Skriving av diskbilde"
-
-#: ../data/gnome-disk-image-writer.desktop.in.h:2
-msgid "Write Disk Images to Devices"
-msgstr "Skriv diskbilder til enheter"
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:1
-msgid "GNOME Disks"
-msgstr "GNOME disker"
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:2
-msgid "Disk management utility for GNOME"
-msgstr "Diskhåndteringsverktøy for GNOME"
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:3
-msgid ""
-"Disks provides an easy way to inspect, format, partition, and configure "
-"disks and block devices."
-msgstr ""
-"Disker gir deg en enkel måte å se på, formatere, partisjonere og konfigurere "
-"disker og andre blokkenheter."
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:4
-msgid ""
-"Using Disks, you can view SMART data, manage RAID devices, benchmark "
-"physical disks, and image USB sticks. Tasks are executed in the background, "
-"even after the application has been closed by the user."
-msgstr ""
-"Med Disker kan du vise SMART-data, håndtere RAID-enheter, sjekke ytelse på "
-"fysiske disker og lage bilder av USB-minnepinner. Oppgaver kjøres i "
-"bakgrunnen, selv etter at programmet er lukket av bruker."
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:5
-msgid "An easy way to manage your disks"
-msgstr "En enkel måte å håndtere diskene dine"
-
-#: ../data/org.gnome.DiskUtility.appdata.xml.in.h:6
-msgid "The GNOME Project"
-msgstr "GNOME prosjektet"
-
-#: ../data/org.gnome.DiskUtility.desktop.in.h:1 ../src/disks/gduwindow.c:1051
-msgid "Disks"
-msgstr "Disker"
-
-#: ../data/org.gnome.DiskUtility.desktop.in.h:2
-msgid "Manage Drives and Media"
-msgstr "Håndter stasjoner og media"
-
-#: ../data/org.gnome.DiskUtility.desktop.in.h:3
-msgid ""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
-"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
-msgstr ""
-"disk;stasjon;volum;harddisk;hdd;disk;cdrom;dvd;partisjon;iso;avtrykk;"
-"sikkerhetskopi;gjenopprett;ytelsestest;raid;luks;kryptering;S.M.A.R.T;smart;"
 
 #: ../data/org.gnome.Disks.gschema.xml.h:1
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -119,6 +52,10 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Det oppstod en feil"
 
+#: ../src/disk-image-mounter/main.c:48
+msgid "Disk Image Mounter"
+msgstr "Montering av diskbilde"
+
 #: ../src/disk-image-mounter/main.c:67
 msgid "Allow writing to the image"
 msgstr "Tillat å skrive til bildet"
@@ -143,7 +80,7 @@ msgstr "Sett opp sk_rivebeskyttet montering"
 
 #: ../src/disk-image-mounter/main.c:95
 msgid ""
-"If checked, the mount will be read-only. This is useful if you don't want "
+"If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
 msgstr ""
 "Monteres skrivebeskyttet hvis avkrysset. Dette er nyttig hvis du ikke ønsker "
@@ -160,12 +97,12 @@ msgstr "Koble til og monter ett eller flere diskbildeavtrykk."
 
 #: ../src/disk-image-mounter/main.c:192
 #, c-format
-msgid "Cannot open `%s' - maybe the volume isn't mounted?"
-msgstr "Kan ikke åpne «%s» - kanskje volumet ikke er montert?"
+msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
+msgstr "Kan ikke åpne «%s» – kanskje volumet ikke er montert?"
 
 #: ../src/disk-image-mounter/main.c:199
 #, c-format
-msgid "Error opening `%s': %m"
+msgid "Error opening “%s”: %m"
 msgstr "Feil ved åpning av «%s»: %m"
 
 #: ../src/disk-image-mounter/main.c:220
@@ -451,7 +388,6 @@ msgstr "Hvor mange ganger hodene har plassert seg i «landingssone»"
 #. * or the next string for a longer explanation.
 #.
 #: ../src/disks/gduatasmartdialog.c:308 ../src/disks/gduatasmartdialog.c:527
-#: ../src/disks/ui/smart-dialog.ui.h:9
 msgid "Temperature"
 msgstr "Temperatur"
 
@@ -1071,7 +1007,7 @@ msgid "Updates"
 msgstr "Oppdateringer"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: ../src/disks/gduatasmartdialog.c:1612 ../src/disks/ui/disks.ui.h:8
+#: ../src/disks/gduatasmartdialog.c:1612
 msgid "Assessment"
 msgstr "Evaluering"
 
@@ -1659,8 +1595,6 @@ msgstr ""
 "for at du forstår risikoen som forbindes med sikker sletting"
 
 #: ../src/disks/gduerasemultipledisksdialog.c:396
-#: ../src/disks/ui/filesystem-create.ui.h:12
-#: ../src/disks/ui/format-disk-dialog.ui.h:4
 msgid "_Erase"
 msgstr "Sl_ett"
 
@@ -1934,10 +1868,20 @@ msgstr "Volumrutenett"
 msgid "No Media"
 msgstr "Ingen media"
 
+#: ../src/disks/gduvolumegrid.c:1670
+msgctxt "volume-grid"
+msgid "Filesystem"
+msgstr "Filsystem"
+
+#: ../src/disks/gduvolumegrid.c:1680
+msgctxt "volume-grid"
+msgid "Swap"
+msgstr "Swap"
+
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: ../src/disks/gduvolumegrid.c:1560
+#: ../src/disks/gduvolumegrid.c:1703
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -1946,31 +1890,21 @@ msgstr "Partisjon %u: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: ../src/disks/gduvolumegrid.c:1567
+#: ../src/disks/gduvolumegrid.c:1710
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Partisjon %u"
 
-#: ../src/disks/gduvolumegrid.c:1605
-msgctxt "volume-grid"
-msgid "Free Space"
-msgstr "Ledig plass."
-
-#: ../src/disks/gduvolumegrid.c:1648
+#: ../src/disks/gduvolumegrid.c:1767
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Utvidet partisjon"
 
-#: ../src/disks/gduvolumegrid.c:1672
+#: ../src/disks/gduvolumegrid.c:1842
 msgctxt "volume-grid"
-msgid "Filesystem"
-msgstr "Filsystem"
-
-#: ../src/disks/gduvolumegrid.c:1694
-msgctxt "volume-grid"
-msgid "Swap"
-msgstr "Swap"
+msgid "Free Space"
+msgstr "Ledig plass."
 
 #: ../src/disks/gduwindow.c:586
 msgid "Error deleting loop device"
@@ -2014,6 +1948,10 @@ msgstr "Løs ut denne disken"
 #: ../src/disks/gduwindow.c:970
 msgid "Detach this loop device"
 msgstr "Koble fra denne løkkeenheten"
+
+#: ../src/disks/gduwindow.c:1051
+msgid "Disks"
+msgstr "Disker"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
 #: ../src/disks/gduwindow.c:1362
@@ -2094,7 +2032,7 @@ msgstr "%s gjenstår"
 #.
 #: ../src/disks/gduwindow.c:1792
 #, c-format
-msgid "%s of %s – %s"
+msgid "%s of %s — %s"
 msgstr "%s av %s – %s"
 
 #. Translators: Used in job progress bar.
@@ -2303,1054 +2241,6 @@ msgstr "Intern feil"
 msgid "Need more input"
 msgstr "Trenger mer inndata"
 
-#: ../src/disks/ui/about-dialog.ui.h:1
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
-msgstr ""
-"Opphavsrett © 2008-2013 Red Hat, Inc.\n"
-"Opphavsrett © 2008-2013 David Zeuthen"
-
-#: ../src/disks/ui/about-dialog.ui.h:3
-msgid "View, modify and configure disks and media"
-msgstr "Vis, endre og konfigurer disker og medier"
-
-#: ../src/disks/ui/about-dialog.ui.h:4
-msgid "translator-credits"
-msgstr "Kjartan Maraas <kmaraas@gnome.org>"
-
-#: ../src/disks/ui/app-menu.ui.h:1
-msgid "Attach Disk _Image…"
-msgstr "Koble til diskb_ilde …"
-
-#: ../src/disks/ui/app-menu.ui.h:2
-msgid "_Help"
-msgstr "_Hjelp"
-
-#: ../src/disks/ui/app-menu.ui.h:3
-msgid "_About"
-msgstr "_Om"
-
-#: ../src/disks/ui/app-menu.ui.h:4
-msgid "_Quit"
-msgstr "A_vslutt"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:1
-msgid "Benchmark"
-msgstr "Ytelsestest"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:2
-msgid "_Start Benchmark…"
-msgstr "_Start ytelsestest …"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:3
-msgid "_Abort Benchmark"
-msgstr "_Avbryt ytelsestest"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:4
-msgid "Last Benchmarked"
-msgstr "Siste ytelsestest"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:5
-msgid "Average Read Rate"
-msgstr "Gjennomsnittlig leserate"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:6
-msgid "Average Write Rate"
-msgstr "Gjennomsnittlig skriverate"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:7
-msgid "Average Access Time"
-msgstr "Gjennomsnittlig aksesstid"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:8
-msgid "Disk or Device"
-msgstr "Disk eller enhet"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:9
-msgid "Sample Size"
-msgstr "Størrelse på prøve"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:10
-msgid "Benchmark Settings"
-msgstr "Innstillinger for ytelsestest"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:11
-msgid "_Start Benchmarking…"
-msgstr "_Start ytelsestest …"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:12
-msgid ""
-"Benchmarking involves measuring the transfer rate on various area of the "
-"device as well as measuring how long it takes to seek from one random area "
-"to another. Please back up important data before using the write benchmark."
-msgstr ""
-"Ytelsestest består av måling av overføringshastighet på forskjellige områder "
-"av enheten i tillegg til å måle hvor lang tid det tar å søke fra et "
-"tilfeldig område til et annet. Ta en sikkerhetskopi før du bruker "
-"ytelsestest for skriveoperasjoner."
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:13
-msgid "Transfer Rate"
-msgstr "Overføringshastighet"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:14
-msgid "Number of S_amples"
-msgstr "Antall _datapunkter"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:15
-msgid "Sample S_ize (MiB)"
-msgstr "Størrelse _på datapunkt (MiB)"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:16
-msgid "Perform _write-benchmark"
-msgstr "Utfør _ytelsestest for skriving"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:17
-msgid ""
-"Benchmarking the write-rate of a disk requires exclusive access to the disk "
-"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
-"reading data and then writing it back. As a result, the contents of the disk "
-"is not changed.\n"
-"\n"
-"If not checked, the write-part of the benchmark will not be done but on the "
-"other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use)."
-msgstr ""
-"Ytelsestest av skrivehastighet for en disk krever eksklusiv tilgang til "
-"disken (f.eks. kan ikke disker eller partisjoner være montert eller i bruk) "
-"og gjøres ved å lese data for så å skrive dem tilbake. Dette betyr at "
-"innholdet på disken ikke endres.\n"
-"\n"
-"Hvis det ikke krysses av for dette vil skrivedelen av ytelsestesten ikke "
-"utføres og da trenger man ikke eksklusiv tilgang til enheten - altså kan "
-"disker og partisjoner være montert og i bruk."
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:20
-msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr ""
-"Antall prøver. Større antall gir et mer nøyaktig bilde av mønster for "
-"disktilgang, men tar lengre tid."
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:21
-msgid ""
-"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
-"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
-"taking more time."
-msgstr ""
-"Antall MiB (1048576 bytes) som skal leses/skrives for hver prøve. Større "
-"prøvestørrelser tenderer mot å gi mer nøyaktige ytelsestester men da tar "
-"ytelsestesten lengre tid."
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:22
-msgid "Access Time"
-msgstr "Aksesstid"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:23
-msgid "Number of Sampl_es"
-msgstr "Antall datapunkter"
-
-#: ../src/disks/ui/benchmark-dialog.ui.h:24
-msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr ""
-"Antall prøver. Større antall gir jevnere grafer, men ytelsestesten vil ta "
-"lengre tid."
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:1
-msgid "Change Passphrase"
-msgstr "Bytt passordfrase"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:2
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:2
-#: ../src/disks/ui/edit-filesystem-dialog.ui.h:2
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:2
-#: ../src/disks/ui/edit-partition-dialog.ui.h:2
-msgid "C_hange"
-msgstr "E_ndre"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:3
-msgid "Curr_ent Passphrase"
-msgstr "Nåvær_ende passordfrase"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:4
-msgid "Enter current passphrase used to protect the data"
-msgstr "Oppgi passordfrasen som brukes for å beskytte data"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:5
-#: ../src/disks/ui/filesystem-create.ui.h:10
-msgid "Sho_w Passphrases"
-msgstr "_Vis passordfraser"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:6
-#: ../src/disks/ui/filesystem-create.ui.h:11
-msgid "Check this box to see the passphrases entered above"
-msgstr "Kryss av i denne boksen for å se passordfrasene som oppgis over"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:7
-#: ../src/disks/ui/filesystem-create.ui.h:9
-msgid "Confirm passphrase entered above"
-msgstr "Bekreft passordfrasen som ble oppgitt over"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:8
-msgid "Enter new passphrase used to protect the data"
-msgstr "Oppgi ny passordfrase som skal brukes for å beskytte data"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:9
-#: ../src/disks/ui/filesystem-create.ui.h:7
-msgid "C_onfirm Passphrase"
-msgstr "Bek_reft passordfrase"
-
-#: ../src/disks/ui/change-passphrase-dialog.ui.h:10
-msgid "New _Passphrase"
-msgstr "Ny _passordfrase"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:1
-msgid "Create Disk Image"
-msgstr "Lag diskbilde"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:2
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:4
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:5
-#: ../src/disks/ui/filesystem-create.ui.h:2
-msgid "_Name"
-msgstr "_Navn"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:3
-msgid "Save in _Folder"
-msgstr "Lagre i _mappe"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:4
-msgid "Select a Folder"
-msgstr "Velg en mappe"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:5
-msgid "Source"
-msgstr "Kilde"
-
-#: ../src/disks/ui/create-disk-image-dialog.ui.h:6
-msgid "_Start Creating…"
-msgstr "_Start oppretting …"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:1
-msgid "Create Partition"
-msgstr "Lag partisjon"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:2
-msgid "C_reate"
-msgstr "Opp_rett"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:3
-msgid "Partition _Size"
-msgstr "_Størrelse på partisjon"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:4
-msgid "The size of the partition to create, in megabytes"
-msgstr "Størrelse på partisjon som skal lages i megabyte"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:5
-msgid "bytes"
-msgstr "bytes"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:6
-msgid "kB"
-msgstr "kB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:7
-msgid "MB"
-msgstr "MB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:8
-msgid "GB"
-msgstr "GB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:9
-msgid "TB"
-msgstr "TB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:10
-msgid "PB"
-msgstr "PB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:11
-msgid "KiB"
-msgstr "KiB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:12
-msgid "MiB"
-msgstr "MiB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:13
-msgid "GiB"
-msgstr "GiB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:14
-msgid "TiB"
-msgstr "TiB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:15
-msgid "PiB"
-msgstr "PiB"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:16
-msgid "Free Space _Following"
-msgstr "Ledig plass _etter"
-
-#: ../src/disks/ui/create-partition-dialog.ui.h:17
-msgid "The free space following the partition, in megabytes"
-msgstr "Ledig plass etter partisjonering i megabyte"
-
-#. The contents of the device, for example
-#: ../src/disks/ui/create-partition-dialog.ui.h:18
-#: ../src/disks/ui/disks.ui.h:27
-msgid "Contents"
-msgstr "Innhold"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:1
-msgid "Drive Settings"
-msgstr "Innstillinger for stasjon"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:2
-msgid "Apply Standby Timeout Settings"
-msgstr "Bruk innstillinger for tidsavbrudd for hvilemodus"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:3
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-"Slå på for å konfigurere tidsavbrudd for hvilemodus ved oppstart og når "
-"disken kobles til"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:4
-msgid "Enter Standby After"
-msgstr "Gå i hvilemodus etter"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:5
-msgid "_Standby"
-msgstr "_Hvilemodus"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:6
-msgid "Apply Advanced Power Management Settings"
-msgstr "Innstillinger for avansert strømstyring"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:7
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "Slå på for å konfigurere APM ved oppstart og når disken kobles til"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:8
-msgid "APM Level"
-msgstr "Nivå for strømstyring"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:9
-msgid ""
-"Aggressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-"Agressiv nedspinning kan slite ut disken fortere enn antatt. Vennligist "
-"sjekk SMART-attributten «Start/stopp teller» av og til"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:10
-msgid "A_PM"
-msgstr "A_PM"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:11
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr "Bruk Automatic Acoustic Management innstillinger"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:12
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "Slå på for å konfigurere AAM ved oppstart og når disken kobles til"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:13
-msgid "Vendor Recommended"
-msgstr "Anbefalt av leverandør"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:14
-msgid "AAM Level"
-msgstr "AAM-nivå"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:15
-msgid "_AAM"
-msgstr "_AAM"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:16
-msgid "Apply Write Cache Settings"
-msgstr "Bruk innstillinger for skrivebuffer"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:17
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-"Slå på konfigurasjon av skrivebufferinnstilling ved oppstart og når disken "
-"kobles til"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:18
-msgid "S_etting"
-msgstr "_Innstilling"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:19
-msgid "Enable Write Cache"
-msgstr "Slå på skrivebuffer"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:20
-msgid "Disable Write Cache"
-msgstr "Slå av skrivebuffer"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:21
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-"Ytelsen bedres ved å slå på skrivebuffer, men gjør systemet mer sårbart for "
-"datatap hvis strømmen blir borte"
-
-#: ../src/disks/ui/disk-settings-dialog.ui.h:22
-msgid "Wr_ite Cache"
-msgstr "Skr_ivebuffer"
-
-#: ../src/disks/ui/disks.ui.h:1
-msgid "Select a device"
-msgstr "Velg en enhet"
-
-#: ../src/disks/ui/disks.ui.h:2
-msgid "Model"
-msgstr "Modell"
-
-#: ../src/disks/ui/disks.ui.h:3
-msgid "Serial Number"
-msgstr "Serienummer"
-
-#: ../src/disks/ui/disks.ui.h:4
-msgid "World Wide Name"
-msgstr "World Wide Name"
-
-#. The physical location of the drive, could be
-#: ../src/disks/ui/disks.ui.h:6
-msgid "Location"
-msgstr "Lokasjon"
-
-#: ../src/disks/ui/disks.ui.h:7
-msgid "Media"
-msgstr "Media"
-
-#: ../src/disks/ui/disks.ui.h:9
-msgid "Job"
-msgstr "Jobb"
-
-#: ../src/disks/ui/disks.ui.h:10
-msgid "Name"
-msgstr "Navn"
-
-#: ../src/disks/ui/disks.ui.h:11
-msgid "Size"
-msgstr "Størrelse"
-
-#: ../src/disks/ui/disks.ui.h:12
-msgid "Auto-clear"
-msgstr "Tøm automatisk"
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: ../src/disks/ui/disks.ui.h:14
-msgid "Backing File"
-msgstr "Underliggende fil"
-
-#: ../src/disks/ui/disks.ui.h:15
-msgid "Partitioning"
-msgstr "Partisjonering"
-
-#: ../src/disks/ui/disks.ui.h:16
-msgid "_Volumes"
-msgstr "_Volum"
-
-#: ../src/disks/ui/disks.ui.h:17
-msgid "Mount selected partition"
-msgstr "Monter valgt partisjon"
-
-#: ../src/disks/ui/disks.ui.h:18
-msgid "Unmount selected partition"
-msgstr "Avmonter valgt partisjon"
-
-#: ../src/disks/ui/disks.ui.h:19
-msgid "Activate selected swap partition"
-msgstr "Aktiver valgt swappartisjon"
-
-#: ../src/disks/ui/disks.ui.h:20
-msgid "Deactivate selected swap partition"
-msgstr "Deaktiver valgt swappartisjon"
-
-#: ../src/disks/ui/disks.ui.h:21
-msgid "Unlock selected encrypted partition"
-msgstr "Lås opp valgt kryptert partisjon"
-
-#: ../src/disks/ui/disks.ui.h:22
-msgid "Lock selected encrypted partition"
-msgstr "Lås valgt kryptert partisjon"
-
-#: ../src/disks/ui/disks.ui.h:23
-msgid "Create partition in unallocated space"
-msgstr "Lag partisjon fra uallokert plass"
-
-#: ../src/disks/ui/disks.ui.h:24
-msgid "Delete selected partition"
-msgstr "Slett valgt partisjon"
-
-#: ../src/disks/ui/disks.ui.h:25
-msgid "Additional partition options"
-msgstr "Ekstra alternativer for partisjon"
-
-#: ../src/disks/ui/disks.ui.h:28
-msgid "Device"
-msgstr "Enhet"
-
-#: ../src/disks/ui/disks.ui.h:29
-msgid "Partition Type"
-msgstr "Type partisjon"
-
-#: ../src/disks/ui/disks.ui.h:30
-msgid "Format Disk…"
-msgstr "Formater disk …"
-
-#: ../src/disks/ui/disks.ui.h:31
-msgid "Create Disk Image…"
-msgstr "Lag diskbilde …"
-
-#: ../src/disks/ui/disks.ui.h:32
-msgid "Restore Disk Image…"
-msgstr "Gjenopprett diskbilde …"
-
-#: ../src/disks/ui/disks.ui.h:33
-msgid "Benchmark Disk…"
-msgstr "Kjør ytelsestest på disk …"
-
-#: ../src/disks/ui/disks.ui.h:34
-msgid "SMART Data & Self-Tests…"
-msgstr "SMART-data og selvtester …"
-
-#: ../src/disks/ui/disks.ui.h:35
-msgid "Drive Settings…"
-msgstr "Innstillinger for stasjon …"
-
-#: ../src/disks/ui/disks.ui.h:36
-msgid "Standby Now"
-msgstr "Hvilemodus nå"
-
-#: ../src/disks/ui/disks.ui.h:37
-msgid "Wake-Up from Standby"
-msgstr "Våkne fra hvilemodus"
-
-#: ../src/disks/ui/disks.ui.h:38
-msgid "Power Off…"
-msgstr "Slå av …"
-
-#: ../src/disks/ui/disks.ui.h:39
-msgid "Format Partition…"
-msgstr "Formater partisjon …"
-
-#: ../src/disks/ui/disks.ui.h:40
-msgid "Edit Partition…"
-msgstr "Rediger partisjon …"
-
-#: ../src/disks/ui/disks.ui.h:41
-msgid "Edit Filesystem…"
-msgstr "Rediger filsystem …"
-
-#: ../src/disks/ui/disks.ui.h:42
-msgid "Change Passphrase…"
-msgstr "Bytt passordfrase …"
-
-#: ../src/disks/ui/disks.ui.h:43
-msgid "Edit Mount Options…"
-msgstr "Rediger alternativer for montering …"
-
-#: ../src/disks/ui/disks.ui.h:44
-msgid "Edit Encryption Options…"
-msgstr "Rediger alternativer for kryptering …"
-
-#: ../src/disks/ui/disks.ui.h:45
-msgid "Create Partition Image…"
-msgstr "Lag partisjonsbilde …"
-
-#: ../src/disks/ui/disks.ui.h:46
-msgid "Restore Partition Image…"
-msgstr "Gjenopprett partisjonsbilde …"
-
-#: ../src/disks/ui/disks.ui.h:47
-msgid "Benchmark Partition…"
-msgstr "Kjør ytelsestest på partisjon …"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:1
-msgid "Encryption Options"
-msgstr "Alternativer for kryptering"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:2
-msgid "_Automatic Encryption Options"
-msgstr "_Automatiske krypteringsvalg"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:3
-msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
-msgstr ""
-"Slå av <i>Automatiske krypteringsvalg</i> for å håndtere krypteringsvalg og "
-"passordfrase for enheten. Alternativene samsvarer med en oppføring i filen "
-"<b>/etc/crypttab</b>"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:5
-msgid "Opt_ions"
-msgstr "Alternat_iver"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:6
-msgid ""
-"The name to use for the unlocked device - the device is set up as the name "
-"prefixed with <b>/dev/mapper</b>/"
-msgstr ""
-"Navn som brukes for opplåst enhet - enheten settes opp som navnet prefikset "
-"med <b>/dev/mapper</b>"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:7
-msgid "Options to use when unlocking the device"
-msgstr "Alternativer som skal brukes ved opplåsing av enhet"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:8
-msgid "Passphrase File"
-msgstr "Fil for passordfrase"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:9
-#: ../src/disks/ui/unlock-device-dialog.ui.h:3
-msgid "Sho_w passphrase"
-msgstr "_Vis passordfrase"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:10
-msgid ""
-"Passphrase of the device or empty to request from user when setting up the "
-"device"
-msgstr ""
-"Passordfrase for enheten eller tom for å spørre bruker når enheten blir satt "
-"opp"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:11
-#: ../src/disks/ui/filesystem-create.ui.h:6
-#: ../src/disks/ui/unlock-device-dialog.ui.h:2
-msgid "_Passphrase"
-msgstr "_Passordfrase"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:12
-msgid "_Unlock at startup"
-msgstr "Lås _opp ved oppstart"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:13
-msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr "Kryss av her for at enheten skal være ulåst ved oppstart [!noauto]"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:14
-msgid "Require additional authori_zation to unlock"
-msgstr "Krev ekstra autori_sering for å låse opp"
-
-#: ../src/disks/ui/edit-crypttab-dialog.ui.h:15
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-"Hvis dette er valgt, må brukeren autentisere seg for å låse opp enheten [x-"
-"udisks-auth]"
-
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:1
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:1
-#: ../src/disks/ui/edit-partition-dialog.ui.h:1
-msgid "Edit Partition"
-msgstr "Rediger partisjon"
-
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:3
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:3
-#: ../src/disks/ui/edit-partition-dialog.ui.h:3
-#: ../src/disks/ui/filesystem-create.ui.h:1
-msgid "_Type"
-msgstr "_Type"
-
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:4
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Partisjonstype som et 8-bit heltall uten fortegn"
-
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:5
-msgid "_Bootable"
-msgstr "O_ppstartbar"
-
-#: ../src/disks/ui/edit-dos-partition-dialog.ui.h:6
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"Et flagg som brukes av oppstartslasteren Platform for å finne ut hvor "
-"operativsystemet skal lastes inn fra. Partisjonen med dette flagget regnes "
-"som den <i>aktive</i> partisjonen av enkelte systemer"
-
-#: ../src/disks/ui/edit-filesystem-dialog.ui.h:1
-msgid "Change Filesystem Label"
-msgstr "Rediger etikett for filsystem"
-
-#: ../src/disks/ui/edit-filesystem-dialog.ui.h:3
-msgid "_Label"
-msgstr "_Etikett"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:1
-msgid "Mount Options"
-msgstr "Alternativer for montering"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:2
-msgid "_Automatic Mount Options"
-msgstr "_Automatiske monteringsvalg"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:3
-msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the <b>/etc/"
-"fstab</b> file"
-msgstr ""
-"Skru av <i>Automatiske monteringsvalg</i> for å håndtere monteringspunkter "
-"og -valg for enheten. Valgene svarer til en oppføring i fila <b>/etc/fstab</"
-"b>"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:4
-msgid "I_dentify As"
-msgstr "I_dentifiser som"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:5
-msgid ""
-"The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-"hierarchy to control the scope of the entry"
-msgstr ""
-"<b>Spesiell enhetsfil</b>. Bruk symbolske lenker i </b>/dev/disk</b>-"
-"mappehierarkiet for å styre omfang av oppføringer"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:6
-msgid ""
-"The special device file - use symlinks in the /dev/disk hierarchy to control "
-"the scope of the entry"
-msgstr ""
-"<b>Spesiell enhetsfil</b>. Bruk symbolske lenker i «/dev/disk»-"
-"mappehierarkiet for å styre omfang av oppføringer"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:7
-msgid "Mount _Point"
-msgstr "Monterings_punkt"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:8
-msgid "Filesystem _Type"
-msgstr "_Type filsystem"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:9
-msgid "The directory to mount the device in"
-msgstr "Hvilken mappe enheten skal monteres i"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:10
-msgid "The filesystem type to use"
-msgstr "Type filsystem som skal brukes"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:11
-msgid "Display _Name"
-msgstr "Visnings_navn"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:12
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
-"Hvis dette er valgt, angir det enhetsnavnet som skal brukes på enheten i "
-"brukergrensesnittet [x-gvfs-name=]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:13
-msgid "Icon Na_me"
-msgstr "_Navn på ikon"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:14
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr ""
-"Hvis dette er valgt, angir det ikonnavnet som skal brukes på enheten i "
-"brukergrensesnittet [x-gvfs-icon=]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:15
-msgid "Sho_w in user interface"
-msgstr "_Vis i brukergrensesnittet"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:16
-msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [x-gvfs-show]"
-msgstr ""
-"Hvis dette er valgt, vises enheten alltid i brukergrensesnittet uansett "
-"hvor(-dan) den er montert [x-gvfs-show]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:17
-msgid "Require additional authori_zation to mount"
-msgstr "Krev ekstra autori_sasjon for å montere"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:18
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
-msgstr ""
-"Hvis dette er valgt, må brukeren autentisere seg for å montere enheten [x-"
-"udisks-auth]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:19
-msgid "Mount at _startup"
-msgstr "Monter ved opp_start"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:20
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Enheten vil bli montert ved oppstart hvis avkrysset [!noauto]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:21
-msgid "S_ymbolic Icon Name"
-msgstr "S_ymbolsk navn på ikon"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:22
-msgid ""
-"If set, the name of the symbolic icon to use in the device in the user "
-"interface [x-gvfs-symbolic-icon=]"
-msgstr ""
-"Hvis dette er valgt, bestemmes navnet på det symbolske ikonet for enheten i "
-"brukergrensesnittet [x-gvfs-symbolic-icon=]"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:23
-msgid "Mount Opt_ions"
-msgstr "Alternat_iver for montering"
-
-#: ../src/disks/ui/edit-fstab-dialog.ui.h:24
-msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr "Monteringsoperasjon lagret i filen <b>/etc/fstab</b>"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:4
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Partisjonstype representert som en 32-bit <i>GUID</i>"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:6
-msgid ""
-"The partition name (up to 36 unicode characters). This is useful if you want "
-"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
-"directory"
-msgstr ""
-"Navnet på partisjonen (opp til 36 unicode-tegn). Dette er nyttig hvis du "
-"ønsker å referere partisjonen via en symbolsk lenke i katalogen <b>/dev/disk/"
-"by-partlabel</b>"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:7
-msgid "_System Partition"
-msgstr "_Systempartisjon"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:8
-msgid ""
-"Used to indicate that the partition and its contents are required for the OS/"
-"Platform to function. Special care should be taken to not delete or "
-"overwrite the contents"
-msgstr ""
-"Brukes for å vise at partisjonen og innholdet på den må være tilstede for at "
-"operativsystemet skal fungere. Du bør passe spesielt godt på at innholdet "
-"ikke slettes eller overskrives"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:9
-msgid "Legacy BIOS _Bootable"
-msgstr "Gammel _BIOS-oppstartbar"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:10
-msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
-msgstr ""
-"Oppstartsdisk for gammel BIOS-type. Dette tilsvarer <i>bootable</i>-"
-"statusflagg i en Master Boot Record, og brukes normalt bare på GPT-"
-"partisjoner som kjører på MBR-baserte systemer"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:11
-msgid "Flags"
-msgstr "Flagg"
-
-#: ../src/disks/ui/edit-gpt-partition-dialog.ui.h:12
-msgid "Hide from _Firmware"
-msgstr "Skjul fra _fastvare"
-
-#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:1
-msgid "Erase Multiple Disks"
-msgstr "Slett flere disker"
-
-#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:2
-msgid "_Erase…"
-msgstr "Sl_ett …"
-
-#: ../src/disks/ui/erase-multiple-disks-dialog.ui.h:3
-msgid "Erase _Type"
-msgstr "_Type sletting"
-
-#: ../src/disks/ui/filesystem-create.ui.h:3
-msgid "F_ilesystem"
-msgstr "F_ilsystem"
-
-#: ../src/disks/ui/filesystem-create.ui.h:4
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"Egendefinert type filsystem som skal lages. F.eks. <i>btrfs</i>, <i>xfs</i> "
-"eller <i>swap</i>"
-
-#: ../src/disks/ui/filesystem-create.ui.h:5
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
-"Egendefinert type filsystem som skal lages. F.eks. btrfs, xfs eller swap"
-
-#: ../src/disks/ui/filesystem-create.ui.h:8
-msgid "Enter passphrase used to protect the data"
-msgstr "Oppgi passordfrase som ble brukt for å beskytte data"
-
-#: ../src/disks/ui/filesystem-create.ui.h:13
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"Selvvalgt navn på filsystemet. Dette er nyttig hvis du vil henvise til "
-"enheten via en symbolsk lenke i mappa <b>/dev/disk/by-label</b>"
-
-#: ../src/disks/ui/filesystem-create.ui.h:14
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"Navn som skal brukes for filsystemet. Dette er nyttig hvis du vil referere "
-"til enheten via en symbolsk lenke i katalogen /dev/disk/by-label"
-
-#: ../src/disks/ui/filesystem-create.ui.h:15
-msgid "For example, “My Files” or “Backup Data”"
-msgstr "F.eks. «Mine filer» eller «Sikkerhetskopier»"
-
-#: ../src/disks/ui/format-disk-dialog.ui.h:1
-msgid "Format Disk"
-msgstr "Formater disk"
-
-#: ../src/disks/ui/format-disk-dialog.ui.h:2
-#: ../src/disks/ui/format-volume-dialog.ui.h:2
-msgid "_Format…"
-msgstr "_Formater …"
-
-#: ../src/disks/ui/format-disk-dialog.ui.h:3
-msgid "_Partitioning"
-msgstr "_Partisjonering"
-
-#: ../src/disks/ui/format-volume-dialog.ui.h:1
-msgid "Format Volume"
-msgstr "Formater volum"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:1
-msgid "Restore Disk Image"
-msgstr "Gjenopprett diskbilde"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:2
-msgid "_Image to Restore"
-msgstr "B_ilde som skal gjenopprettes"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:3
-msgid "Select Disk Image to Restore"
-msgstr "Velg diskbilde som skal gjenopprettes"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:4
-msgid "Destination"
-msgstr "Mål"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:5
-msgid "_Destination"
-msgstr "_Mål"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:6
-msgid "Image to Restore"
-msgstr "Bilde som skal gjenopprettes"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:7
-msgid "Image Size"
-msgstr "Størrelse på bilde"
-
-#: ../src/disks/ui/restore-disk-image-dialog.ui.h:8
-msgid "_Start Restoring…"
-msgstr "_Start gjenoppretting …"
-
-#: ../src/disks/ui/smart-dialog.ui.h:1
-msgid "SMART Data & Self-Tests"
-msgstr "SMART-data og selvtester"
-
-#: ../src/disks/ui/smart-dialog.ui.h:2
-msgid "_Start Self-test"
-msgstr "_Start selvtest"
-
-#: ../src/disks/ui/smart-dialog.ui.h:3
-msgid "Click to start a SMART self-test"
-msgstr "Klikk for start av SMART-selvtest"
-
-#: ../src/disks/ui/smart-dialog.ui.h:4
-msgid "_Stop Self-test"
-msgstr "Stopp selvtest"
-
-#: ../src/disks/ui/smart-dialog.ui.h:5
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr "Klikk for å stoppe SMART selvtest som pågår"
-
-#: ../src/disks/ui/smart-dialog.ui.h:6
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Klikk for å tvinge ny lesing av SMART-data fra harddisken"
-
-#: ../src/disks/ui/smart-dialog.ui.h:7
-msgid "Powered On"
-msgstr "Slått på"
-
-#: ../src/disks/ui/smart-dialog.ui.h:8
-msgid "Updated"
-msgstr "Oppdatert"
-
-#: ../src/disks/ui/smart-dialog.ui.h:10
-msgid "Self-test Result"
-msgstr "Resultat fra selvtest"
-
-#: ../src/disks/ui/smart-dialog.ui.h:11
-msgid "Self-assessment"
-msgstr "Selvevaluering"
-
-#: ../src/disks/ui/smart-dialog.ui.h:12
-msgid "Overall Assessment"
-msgstr "Helhetlig evaluering"
-
-#: ../src/disks/ui/smart-dialog.ui.h:13
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "Klikk for å slå av/på hvorvidt SMART er aktiv for harddisken"
-
-#: ../src/disks/ui/smart-dialog.ui.h:14
-msgid "SMART _Attributes"
-msgstr "SMART-_attributter"
-
-#: ../src/disks/ui/smart-dialog.ui.h:15
-msgid "Short"
-msgstr "Kort"
-
-#: ../src/disks/ui/smart-dialog.ui.h:16
-msgid "Extended"
-msgstr "Utvidet"
-
-#: ../src/disks/ui/smart-dialog.ui.h:17
-msgid "Conveyance"
-msgstr "Overføring"
-
-#: ../src/disks/ui/unlock-device-dialog.ui.h:1
-msgid "Enter passphrase to unlock"
-msgstr "Oppgi passordfrase for å låse opp"
-
-#: ../src/disks/ui/unlock-device-dialog.ui.h:4
-msgid "_Unlock"
-msgstr "Lås _opp"
-
 #: ../src/libgdu/gduutils.c:92
 msgid "All Files"
 msgstr "Alle filer"
@@ -3501,10 +2391,863 @@ msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Undesøk"
 
-#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:1
-msgid "Disks Problem Monitor"
-msgstr "Overvåking av diskproblemer"
+#~ msgid "Mount Disk Images"
+#~ msgstr "Monter diskbilder"
 
-#: ../src/notify/gdu-sd-plugin.gnome-settings-plugin.in.h:2
-msgid "Warns about problems with disks and storage devices"
-msgstr "Advarer om problemer med disker og lagringsenheter"
+#~ msgid "Disk Image Writer"
+#~ msgstr "Skriving av diskbilde"
+
+#~ msgid "Write Disk Images to Devices"
+#~ msgstr "Skriv diskbilder til enheter"
+
+#~ msgid "GNOME Disks"
+#~ msgstr "GNOME disker"
+
+#~ msgid "Disk management utility for GNOME"
+#~ msgstr "Diskhåndteringsverktøy for GNOME"
+
+#~ msgid ""
+#~ "Disks provides an easy way to inspect, format, partition, and configure "
+#~ "disks and block devices."
+#~ msgstr ""
+#~ "Disker gir deg en enkel måte å se på, formatere, partisjonere og "
+#~ "konfigurere disker og andre blokkenheter."
+
+#~ msgid ""
+#~ "Using Disks, you can view SMART data, manage RAID devices, benchmark "
+#~ "physical disks, and image USB sticks. Tasks are executed in the "
+#~ "background, even after the application has been closed by the user."
+#~ msgstr ""
+#~ "Med Disker kan du vise SMART-data, håndtere RAID-enheter, sjekke ytelse "
+#~ "på fysiske disker og lage bilder av USB-minnepinner. Oppgaver kjøres i "
+#~ "bakgrunnen, selv etter at programmet er lukket av bruker."
+
+#~ msgid "An easy way to manage your disks"
+#~ msgstr "En enkel måte å håndtere diskene dine"
+
+#~ msgid "The GNOME Project"
+#~ msgstr "GNOME prosjektet"
+
+#~ msgid "Manage Drives and Media"
+#~ msgstr "Håndter stasjoner og media"
+
+#~ msgid ""
+#~ "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
+#~ "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+#~ msgstr ""
+#~ "disk;stasjon;volum;harddisk;hdd;disk;cdrom;dvd;partisjon;iso;avtrykk;"
+#~ "sikkerhetskopi;gjenopprett;ytelsestest;raid;luks;kryptering;S.M.A.R.T;"
+#~ "smart;"
+
+#~ msgid ""
+#~ "Copyright © 2008-2013 Red Hat, Inc.\n"
+#~ "Copyright © 2008-2013 David Zeuthen"
+#~ msgstr ""
+#~ "Opphavsrett © 2008-2013 Red Hat, Inc.\n"
+#~ "Opphavsrett © 2008-2013 David Zeuthen"
+
+#~ msgid "View, modify and configure disks and media"
+#~ msgstr "Vis, endre og konfigurer disker og medier"
+
+#~ msgid "translator-credits"
+#~ msgstr "Kjartan Maraas <kmaraas@gnome.org>"
+
+#~ msgid "Attach Disk _Image…"
+#~ msgstr "Koble til diskb_ilde …"
+
+#~ msgid "_Help"
+#~ msgstr "_Hjelp"
+
+#~ msgid "_About"
+#~ msgstr "_Om"
+
+#~ msgid "_Quit"
+#~ msgstr "A_vslutt"
+
+#~ msgid "Benchmark"
+#~ msgstr "Ytelsestest"
+
+#~ msgid "_Start Benchmark…"
+#~ msgstr "_Start ytelsestest …"
+
+#~ msgid "_Abort Benchmark"
+#~ msgstr "_Avbryt ytelsestest"
+
+#~ msgid "Last Benchmarked"
+#~ msgstr "Siste ytelsestest"
+
+#~ msgid "Average Read Rate"
+#~ msgstr "Gjennomsnittlig leserate"
+
+#~ msgid "Average Write Rate"
+#~ msgstr "Gjennomsnittlig skriverate"
+
+#~ msgid "Average Access Time"
+#~ msgstr "Gjennomsnittlig aksesstid"
+
+#~ msgid "Disk or Device"
+#~ msgstr "Disk eller enhet"
+
+#~ msgid "Sample Size"
+#~ msgstr "Størrelse på prøve"
+
+#~ msgid "Benchmark Settings"
+#~ msgstr "Innstillinger for ytelsestest"
+
+#~ msgid "_Start Benchmarking…"
+#~ msgstr "_Start ytelsestest …"
+
+#~ msgid ""
+#~ "Benchmarking involves measuring the transfer rate on various area of the "
+#~ "device as well as measuring how long it takes to seek from one random "
+#~ "area to another. Please back up important data before using the write "
+#~ "benchmark."
+#~ msgstr ""
+#~ "Ytelsestest består av måling av overføringshastighet på forskjellige "
+#~ "områder av enheten i tillegg til å måle hvor lang tid det tar å søke fra "
+#~ "et tilfeldig område til et annet. Ta en sikkerhetskopi før du bruker "
+#~ "ytelsestest for skriveoperasjoner."
+
+#~ msgid "Transfer Rate"
+#~ msgstr "Overføringshastighet"
+
+#~ msgid "Number of S_amples"
+#~ msgstr "Antall _datapunkter"
+
+#~ msgid "Sample S_ize (MiB)"
+#~ msgstr "Størrelse _på datapunkt (MiB)"
+
+#~ msgid "Perform _write-benchmark"
+#~ msgstr "Utfør _ytelsestest for skriving"
+
+#~ msgid ""
+#~ "Benchmarking the write-rate of a disk requires exclusive access to the "
+#~ "disk (e.g. the disk or its partitions cannot be mounted or in use) and "
+#~ "involves reading data and then writing it back. As a result, the contents "
+#~ "of the disk is not changed.\n"
+#~ "\n"
+#~ "If not checked, the write-part of the benchmark will not be done but on "
+#~ "the other hand exclusive access to the device is not needed (e.g. the "
+#~ "disk or device can be in use)."
+#~ msgstr ""
+#~ "Ytelsestest av skrivehastighet for en disk krever eksklusiv tilgang til "
+#~ "disken (f.eks. kan ikke disker eller partisjoner være montert eller i "
+#~ "bruk) og gjøres ved å lese data for så å skrive dem tilbake. Dette betyr "
+#~ "at innholdet på disken ikke endres.\n"
+#~ "\n"
+#~ "Hvis det ikke krysses av for dette vil skrivedelen av ytelsestesten ikke "
+#~ "utføres og da trenger man ikke eksklusiv tilgang til enheten - altså kan "
+#~ "disker og partisjoner være montert og i bruk."
+
+#~ msgid ""
+#~ "Number of samples. Bigger number produces a more accurate picture of "
+#~ "access time patterns but takes more time."
+#~ msgstr ""
+#~ "Antall prøver. Større antall gir et mer nøyaktig bilde av mønster for "
+#~ "disktilgang, men tar lengre tid."
+
+#~ msgid ""
+#~ "The number of MiB (1048576 bytes) to read/write for each sample. Big "
+#~ "sample sizes tend to produce more accurate benchmarks at the cost of the "
+#~ "benchmark taking more time."
+#~ msgstr ""
+#~ "Antall MiB (1048576 bytes) som skal leses/skrives for hver prøve. Større "
+#~ "prøvestørrelser tenderer mot å gi mer nøyaktige ytelsestester men da tar "
+#~ "ytelsestesten lengre tid."
+
+#~ msgid "Access Time"
+#~ msgstr "Aksesstid"
+
+#~ msgid "Number of Sampl_es"
+#~ msgstr "Antall datapunkter"
+
+#~ msgid ""
+#~ "Number of samples. Bigger number produces more smooth graphs but the "
+#~ "benchmark will take more time."
+#~ msgstr ""
+#~ "Antall prøver. Større antall gir jevnere grafer, men ytelsestesten vil ta "
+#~ "lengre tid."
+
+#~ msgid "Change Passphrase"
+#~ msgstr "Bytt passordfrase"
+
+#~ msgid "C_hange"
+#~ msgstr "E_ndre"
+
+#~ msgid "Curr_ent Passphrase"
+#~ msgstr "Nåvær_ende passordfrase"
+
+#~ msgid "Enter current passphrase used to protect the data"
+#~ msgstr "Oppgi passordfrasen som brukes for å beskytte data"
+
+#~ msgid "Sho_w Passphrases"
+#~ msgstr "_Vis passordfraser"
+
+#~ msgid "Check this box to see the passphrases entered above"
+#~ msgstr "Kryss av i denne boksen for å se passordfrasene som oppgis over"
+
+#~ msgid "Confirm passphrase entered above"
+#~ msgstr "Bekreft passordfrasen som ble oppgitt over"
+
+#~ msgid "Enter new passphrase used to protect the data"
+#~ msgstr "Oppgi ny passordfrase som skal brukes for å beskytte data"
+
+#~ msgid "C_onfirm Passphrase"
+#~ msgstr "Bek_reft passordfrase"
+
+#~ msgid "New _Passphrase"
+#~ msgstr "Ny _passordfrase"
+
+#~ msgid "Create Disk Image"
+#~ msgstr "Lag diskbilde"
+
+#~ msgid "_Name"
+#~ msgstr "_Navn"
+
+#~ msgid "Save in _Folder"
+#~ msgstr "Lagre i _mappe"
+
+#~ msgid "Select a Folder"
+#~ msgstr "Velg en mappe"
+
+#~ msgid "Source"
+#~ msgstr "Kilde"
+
+#~ msgid "_Start Creating…"
+#~ msgstr "_Start oppretting …"
+
+#~ msgid "Create Partition"
+#~ msgstr "Lag partisjon"
+
+#~ msgid "C_reate"
+#~ msgstr "Opp_rett"
+
+#~ msgid "Partition _Size"
+#~ msgstr "_Størrelse på partisjon"
+
+#~ msgid "The size of the partition to create, in megabytes"
+#~ msgstr "Størrelse på partisjon som skal lages i megabyte"
+
+#~ msgid "bytes"
+#~ msgstr "bytes"
+
+#~ msgid "kB"
+#~ msgstr "kB"
+
+#~ msgid "MB"
+#~ msgstr "MB"
+
+#~ msgid "GB"
+#~ msgstr "GB"
+
+#~ msgid "TB"
+#~ msgstr "TB"
+
+#~ msgid "PB"
+#~ msgstr "PB"
+
+#~ msgid "KiB"
+#~ msgstr "KiB"
+
+#~ msgid "MiB"
+#~ msgstr "MiB"
+
+#~ msgid "GiB"
+#~ msgstr "GiB"
+
+#~ msgid "TiB"
+#~ msgstr "TiB"
+
+#~ msgid "PiB"
+#~ msgstr "PiB"
+
+#~ msgid "Free Space _Following"
+#~ msgstr "Ledig plass _etter"
+
+#~ msgid "The free space following the partition, in megabytes"
+#~ msgstr "Ledig plass etter partisjonering i megabyte"
+
+#~ msgid "Contents"
+#~ msgstr "Innhold"
+
+#~ msgid "Drive Settings"
+#~ msgstr "Innstillinger for stasjon"
+
+#~ msgid "Apply Standby Timeout Settings"
+#~ msgstr "Bruk innstillinger for tidsavbrudd for hvilemodus"
+
+#~ msgid ""
+#~ "Turn on to configure Standby Timeout at startup and when the disk is "
+#~ "connected"
+#~ msgstr ""
+#~ "Slå på for å konfigurere tidsavbrudd for hvilemodus ved oppstart og når "
+#~ "disken kobles til"
+
+#~ msgid "Enter Standby After"
+#~ msgstr "Gå i hvilemodus etter"
+
+#~ msgid "_Standby"
+#~ msgstr "_Hvilemodus"
+
+#~ msgid "Apply Advanced Power Management Settings"
+#~ msgstr "Innstillinger for avansert strømstyring"
+
+#~ msgid "Turn on to configure APM at startup and when the disk is connected"
+#~ msgstr "Slå på for å konfigurere APM ved oppstart og når disken kobles til"
+
+#~ msgid "APM Level"
+#~ msgstr "Nivå for strømstyring"
+
+#~ msgid ""
+#~ "Aggressive spin-down may wear out the drive faster than anticipated. "
+#~ "Please check the “Start/Stop Count” SMART attribute from time to time"
+#~ msgstr ""
+#~ "Agressiv nedspinning kan slite ut disken fortere enn antatt. Vennligist "
+#~ "sjekk SMART-attributten «Start/stopp teller» av og til"
+
+#~ msgid "A_PM"
+#~ msgstr "A_PM"
+
+#~ msgid "Apply Automatic Acoustic Management Settings"
+#~ msgstr "Bruk Automatic Acoustic Management innstillinger"
+
+#~ msgid "Turn on to configure AAM at startup and when the disk is connected"
+#~ msgstr "Slå på for å konfigurere AAM ved oppstart og når disken kobles til"
+
+#~ msgid "Vendor Recommended"
+#~ msgstr "Anbefalt av leverandør"
+
+#~ msgid "AAM Level"
+#~ msgstr "AAM-nivå"
+
+#~ msgid "_AAM"
+#~ msgstr "_AAM"
+
+#~ msgid "Apply Write Cache Settings"
+#~ msgstr "Bruk innstillinger for skrivebuffer"
+
+#~ msgid ""
+#~ "Turn on to configure Write Cache setting at startup and when the disk is "
+#~ "connected"
+#~ msgstr ""
+#~ "Slå på konfigurasjon av skrivebufferinnstilling ved oppstart og når "
+#~ "disken kobles til"
+
+#~ msgid "S_etting"
+#~ msgstr "_Innstilling"
+
+#~ msgid "Enable Write Cache"
+#~ msgstr "Slå på skrivebuffer"
+
+#~ msgid "Disable Write Cache"
+#~ msgstr "Slå av skrivebuffer"
+
+#~ msgid ""
+#~ "Performance is increased by enabling write caching, but leaves the system "
+#~ "susceptible to data loss in the event of a power failure"
+#~ msgstr ""
+#~ "Ytelsen bedres ved å slå på skrivebuffer, men gjør systemet mer sårbart "
+#~ "for datatap hvis strømmen blir borte"
+
+#~ msgid "Wr_ite Cache"
+#~ msgstr "Skr_ivebuffer"
+
+#~ msgid "Select a device"
+#~ msgstr "Velg en enhet"
+
+#~ msgid "Model"
+#~ msgstr "Modell"
+
+#~ msgid "Serial Number"
+#~ msgstr "Serienummer"
+
+#~ msgid "World Wide Name"
+#~ msgstr "World Wide Name"
+
+#~ msgid "Location"
+#~ msgstr "Lokasjon"
+
+#~ msgid "Media"
+#~ msgstr "Media"
+
+#~ msgid "Job"
+#~ msgstr "Jobb"
+
+#~ msgid "Name"
+#~ msgstr "Navn"
+
+#~ msgid "Size"
+#~ msgstr "Størrelse"
+
+#~ msgid "Auto-clear"
+#~ msgstr "Tøm automatisk"
+
+#~ msgid "Backing File"
+#~ msgstr "Underliggende fil"
+
+#~ msgid "Partitioning"
+#~ msgstr "Partisjonering"
+
+#~ msgid "_Volumes"
+#~ msgstr "_Volum"
+
+#~ msgid "Mount selected partition"
+#~ msgstr "Monter valgt partisjon"
+
+#~ msgid "Unmount selected partition"
+#~ msgstr "Avmonter valgt partisjon"
+
+#~ msgid "Activate selected swap partition"
+#~ msgstr "Aktiver valgt swappartisjon"
+
+#~ msgid "Deactivate selected swap partition"
+#~ msgstr "Deaktiver valgt swappartisjon"
+
+#~ msgid "Unlock selected encrypted partition"
+#~ msgstr "Lås opp valgt kryptert partisjon"
+
+#~ msgid "Lock selected encrypted partition"
+#~ msgstr "Lås valgt kryptert partisjon"
+
+#~ msgid "Create partition in unallocated space"
+#~ msgstr "Lag partisjon fra uallokert plass"
+
+#~ msgid "Delete selected partition"
+#~ msgstr "Slett valgt partisjon"
+
+#~ msgid "Additional partition options"
+#~ msgstr "Ekstra alternativer for partisjon"
+
+#~ msgid "Device"
+#~ msgstr "Enhet"
+
+#~ msgid "Partition Type"
+#~ msgstr "Type partisjon"
+
+#~ msgid "Format Disk…"
+#~ msgstr "Formater disk …"
+
+#~ msgid "Create Disk Image…"
+#~ msgstr "Lag diskbilde …"
+
+#~ msgid "Restore Disk Image…"
+#~ msgstr "Gjenopprett diskbilde …"
+
+#~ msgid "Benchmark Disk…"
+#~ msgstr "Kjør ytelsestest på disk …"
+
+#~ msgid "SMART Data & Self-Tests…"
+#~ msgstr "SMART-data og selvtester …"
+
+#~ msgid "Drive Settings…"
+#~ msgstr "Innstillinger for stasjon …"
+
+#~ msgid "Standby Now"
+#~ msgstr "Hvilemodus nå"
+
+#~ msgid "Wake-Up from Standby"
+#~ msgstr "Våkne fra hvilemodus"
+
+#~ msgid "Power Off…"
+#~ msgstr "Slå av …"
+
+#~ msgid "Format Partition…"
+#~ msgstr "Formater partisjon …"
+
+#~ msgid "Edit Partition…"
+#~ msgstr "Rediger partisjon …"
+
+#~ msgid "Edit Filesystem…"
+#~ msgstr "Rediger filsystem …"
+
+#~ msgid "Change Passphrase…"
+#~ msgstr "Bytt passordfrase …"
+
+#~ msgid "Edit Mount Options…"
+#~ msgstr "Rediger alternativer for montering …"
+
+#~ msgid "Edit Encryption Options…"
+#~ msgstr "Rediger alternativer for kryptering …"
+
+#~ msgid "Create Partition Image…"
+#~ msgstr "Lag partisjonsbilde …"
+
+#~ msgid "Restore Partition Image…"
+#~ msgstr "Gjenopprett partisjonsbilde …"
+
+#~ msgid "Benchmark Partition…"
+#~ msgstr "Kjør ytelsestest på partisjon …"
+
+#~ msgid "Encryption Options"
+#~ msgstr "Alternativer for kryptering"
+
+#~ msgid "_Automatic Encryption Options"
+#~ msgstr "_Automatiske krypteringsvalg"
+
+#~ msgid ""
+#~ "Switch off <i>Automatic Encryption Options</i> to manage encryption "
+#~ "options and passphrase for the device. The options correspond to an entry "
+#~ "in the <b>/etc/crypttab</b> file"
+#~ msgstr ""
+#~ "Slå av <i>Automatiske krypteringsvalg</i> for å håndtere krypteringsvalg "
+#~ "og passordfrase for enheten. Alternativene samsvarer med en oppføring i "
+#~ "filen <b>/etc/crypttab</b>"
+
+#~ msgid "Opt_ions"
+#~ msgstr "Alternat_iver"
+
+#~ msgid ""
+#~ "The name to use for the unlocked device - the device is set up as the "
+#~ "name prefixed with <b>/dev/mapper</b>/"
+#~ msgstr ""
+#~ "Navn som brukes for opplåst enhet - enheten settes opp som navnet "
+#~ "prefikset med <b>/dev/mapper</b>"
+
+#~ msgid "Options to use when unlocking the device"
+#~ msgstr "Alternativer som skal brukes ved opplåsing av enhet"
+
+#~ msgid "Passphrase File"
+#~ msgstr "Fil for passordfrase"
+
+#~ msgid "Sho_w passphrase"
+#~ msgstr "_Vis passordfrase"
+
+#~ msgid ""
+#~ "Passphrase of the device or empty to request from user when setting up "
+#~ "the device"
+#~ msgstr ""
+#~ "Passordfrase for enheten eller tom for å spørre bruker når enheten blir "
+#~ "satt opp"
+
+#~ msgid "_Passphrase"
+#~ msgstr "_Passordfrase"
+
+#~ msgid "_Unlock at startup"
+#~ msgstr "Lås _opp ved oppstart"
+
+#~ msgid "If checked, the device will be unlocked at startup [!noauto]"
+#~ msgstr "Kryss av her for at enheten skal være ulåst ved oppstart [!noauto]"
+
+#~ msgid "Require additional authori_zation to unlock"
+#~ msgstr "Krev ekstra autori_sering for å låse opp"
+
+#~ msgid ""
+#~ "If checked, additional authorization is required to unlock the device [x-"
+#~ "udisks-auth]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, må brukeren autentisere seg for å låse opp enheten "
+#~ "[x-udisks-auth]"
+
+#~ msgid "Edit Partition"
+#~ msgstr "Rediger partisjon"
+
+#~ msgid "_Type"
+#~ msgstr "_Type"
+
+#~ msgid "The partition type as a 8-bit unsigned integer"
+#~ msgstr "Partisjonstype som et 8-bit heltall uten fortegn"
+
+#~ msgid "_Bootable"
+#~ msgstr "O_ppstartbar"
+
+#~ msgid ""
+#~ "A flag used by the Platform bootloader to determine where the OS should "
+#~ "be loaded from. Sometimes the partition with this flag set is referred to "
+#~ "as the <i>active</i> partition"
+#~ msgstr ""
+#~ "Et flagg som brukes av oppstartslasteren Platform for å finne ut hvor "
+#~ "operativsystemet skal lastes inn fra. Partisjonen med dette flagget "
+#~ "regnes som den <i>aktive</i> partisjonen av enkelte systemer"
+
+#~ msgid "Change Filesystem Label"
+#~ msgstr "Rediger etikett for filsystem"
+
+#~ msgid "_Label"
+#~ msgstr "_Etikett"
+
+#~ msgid "Mount Options"
+#~ msgstr "Alternativer for montering"
+
+#~ msgid "_Automatic Mount Options"
+#~ msgstr "_Automatiske monteringsvalg"
+
+#~ msgid ""
+#~ "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+#~ "options for the device. The options correspond to an entry in the <b>/etc/"
+#~ "fstab</b> file"
+#~ msgstr ""
+#~ "Skru av <i>Automatiske monteringsvalg</i> for å håndtere "
+#~ "monteringspunkter og -valg for enheten. Valgene svarer til en oppføring i "
+#~ "fila <b>/etc/fstab</b>"
+
+#~ msgid "I_dentify As"
+#~ msgstr "I_dentifiser som"
+
+#~ msgid ""
+#~ "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
+#~ "hierarchy to control the scope of the entry"
+#~ msgstr ""
+#~ "<b>Spesiell enhetsfil</b>. Bruk symbolske lenker i </b>/dev/disk</b>-"
+#~ "mappehierarkiet for å styre omfang av oppføringer"
+
+#~ msgid ""
+#~ "The special device file - use symlinks in the /dev/disk hierarchy to "
+#~ "control the scope of the entry"
+#~ msgstr ""
+#~ "<b>Spesiell enhetsfil</b>. Bruk symbolske lenker i «/dev/disk»-"
+#~ "mappehierarkiet for å styre omfang av oppføringer"
+
+#~ msgid "Mount _Point"
+#~ msgstr "Monterings_punkt"
+
+#~ msgid "Filesystem _Type"
+#~ msgstr "_Type filsystem"
+
+#~ msgid "The directory to mount the device in"
+#~ msgstr "Hvilken mappe enheten skal monteres i"
+
+#~ msgid "The filesystem type to use"
+#~ msgstr "Type filsystem som skal brukes"
+
+#~ msgid "Display _Name"
+#~ msgstr "Visnings_navn"
+
+#~ msgid ""
+#~ "If set, the name to use for the device in the user interface [x-gvfs-"
+#~ "name=]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, angir det enhetsnavnet som skal brukes på enheten i "
+#~ "brukergrensesnittet [x-gvfs-name=]"
+
+#~ msgid "Icon Na_me"
+#~ msgstr "_Navn på ikon"
+
+#~ msgid ""
+#~ "If set, the name of the icon to use in the device in the user interface "
+#~ "[x-gvfs-icon=]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, angir det ikonnavnet som skal brukes på enheten i "
+#~ "brukergrensesnittet [x-gvfs-icon=]"
+
+#~ msgid "Sho_w in user interface"
+#~ msgstr "_Vis i brukergrensesnittet"
+
+#~ msgid ""
+#~ "If checked, the device is always shown in the user interface no matter "
+#~ "what its directory is [x-gvfs-show]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, vises enheten alltid i brukergrensesnittet uansett "
+#~ "hvor(-dan) den er montert [x-gvfs-show]"
+
+#~ msgid "Require additional authori_zation to mount"
+#~ msgstr "Krev ekstra autori_sasjon for å montere"
+
+#~ msgid ""
+#~ "If checked, additional authorization is required to mount the device [x-"
+#~ "udisks-auth]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, må brukeren autentisere seg for å montere enheten [x-"
+#~ "udisks-auth]"
+
+#~ msgid "Mount at _startup"
+#~ msgstr "Monter ved opp_start"
+
+#~ msgid "If checked, the device will be mounted at startup [!noauto]"
+#~ msgstr "Enheten vil bli montert ved oppstart hvis avkrysset [!noauto]"
+
+#~ msgid "S_ymbolic Icon Name"
+#~ msgstr "S_ymbolsk navn på ikon"
+
+#~ msgid ""
+#~ "If set, the name of the symbolic icon to use in the device in the user "
+#~ "interface [x-gvfs-symbolic-icon=]"
+#~ msgstr ""
+#~ "Hvis dette er valgt, bestemmes navnet på det symbolske ikonet for enheten "
+#~ "i brukergrensesnittet [x-gvfs-symbolic-icon=]"
+
+#~ msgid "Mount Opt_ions"
+#~ msgstr "Alternat_iver for montering"
+
+#~ msgid "The mount options stored in the <b>/etc/fstab</b> file"
+#~ msgstr "Monteringsoperasjon lagret i filen <b>/etc/fstab</b>"
+
+#~ msgid "The partition type represented as a 32-bit <i>GUID</i>"
+#~ msgstr "Partisjonstype representert som en 32-bit <i>GUID</i>"
+
+#~ msgid ""
+#~ "The partition name (up to 36 unicode characters). This is useful if you "
+#~ "want to refer to the device via a symlink in the <b>/dev/disk/by-"
+#~ "partlabel</b> directory"
+#~ msgstr ""
+#~ "Navnet på partisjonen (opp til 36 unicode-tegn). Dette er nyttig hvis du "
+#~ "ønsker å referere partisjonen via en symbolsk lenke i katalogen <b>/dev/"
+#~ "disk/by-partlabel</b>"
+
+#~ msgid "_System Partition"
+#~ msgstr "_Systempartisjon"
+
+#~ msgid ""
+#~ "Used to indicate that the partition and its contents are required for the "
+#~ "OS/Platform to function. Special care should be taken to not delete or "
+#~ "overwrite the contents"
+#~ msgstr ""
+#~ "Brukes for å vise at partisjonen og innholdet på den må være tilstede for "
+#~ "at operativsystemet skal fungere. Du bør passe spesielt godt på at "
+#~ "innholdet ikke slettes eller overskrives"
+
+#~ msgid "Legacy BIOS _Bootable"
+#~ msgstr "Gammel _BIOS-oppstartbar"
+
+#~ msgid ""
+#~ "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
+#~ "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
+#~ "systems"
+#~ msgstr ""
+#~ "Oppstartsdisk for gammel BIOS-type. Dette tilsvarer <i>bootable</i>-"
+#~ "statusflagg i en Master Boot Record, og brukes normalt bare på GPT-"
+#~ "partisjoner som kjører på MBR-baserte systemer"
+
+#~ msgid "Flags"
+#~ msgstr "Flagg"
+
+#~ msgid "Hide from _Firmware"
+#~ msgstr "Skjul fra _fastvare"
+
+#~ msgid "Erase Multiple Disks"
+#~ msgstr "Slett flere disker"
+
+#~ msgid "_Erase…"
+#~ msgstr "Sl_ett …"
+
+#~ msgid "Erase _Type"
+#~ msgstr "_Type sletting"
+
+#~ msgid "F_ilesystem"
+#~ msgstr "F_ilsystem"
+
+#~ msgid ""
+#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+#~ "<i>swap</i>"
+#~ msgstr ""
+#~ "Egendefinert type filsystem som skal lages. F.eks. <i>btrfs</i>, <i>xfs</"
+#~ "i> eller <i>swap</i>"
+
+#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+#~ msgstr ""
+#~ "Egendefinert type filsystem som skal lages. F.eks. btrfs, xfs eller swap"
+
+#~ msgid "Enter passphrase used to protect the data"
+#~ msgstr "Oppgi passordfrase som ble brukt for å beskytte data"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+#~ msgstr ""
+#~ "Selvvalgt navn på filsystemet. Dette er nyttig hvis du vil henvise til "
+#~ "enheten via en symbolsk lenke i mappa <b>/dev/disk/by-label</b>"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the /dev/disk/by-label directory"
+#~ msgstr ""
+#~ "Navn som skal brukes for filsystemet. Dette er nyttig hvis du vil "
+#~ "referere til enheten via en symbolsk lenke i katalogen /dev/disk/by-label"
+
+#~ msgid "For example, “My Files” or “Backup Data”"
+#~ msgstr "F.eks. «Mine filer» eller «Sikkerhetskopier»"
+
+#~ msgid "Format Disk"
+#~ msgstr "Formater disk"
+
+#~ msgid "_Format…"
+#~ msgstr "_Formater …"
+
+#~ msgid "_Partitioning"
+#~ msgstr "_Partisjonering"
+
+#~ msgid "Format Volume"
+#~ msgstr "Formater volum"
+
+#~ msgid "Restore Disk Image"
+#~ msgstr "Gjenopprett diskbilde"
+
+#~ msgid "_Image to Restore"
+#~ msgstr "B_ilde som skal gjenopprettes"
+
+#~ msgid "Select Disk Image to Restore"
+#~ msgstr "Velg diskbilde som skal gjenopprettes"
+
+#~ msgid "Destination"
+#~ msgstr "Mål"
+
+#~ msgid "_Destination"
+#~ msgstr "_Mål"
+
+#~ msgid "Image to Restore"
+#~ msgstr "Bilde som skal gjenopprettes"
+
+#~ msgid "Image Size"
+#~ msgstr "Størrelse på bilde"
+
+#~ msgid "_Start Restoring…"
+#~ msgstr "_Start gjenoppretting …"
+
+#~ msgid "SMART Data & Self-Tests"
+#~ msgstr "SMART-data og selvtester"
+
+#~ msgid "_Start Self-test"
+#~ msgstr "_Start selvtest"
+
+#~ msgid "Click to start a SMART self-test"
+#~ msgstr "Klikk for start av SMART-selvtest"
+
+#~ msgid "_Stop Self-test"
+#~ msgstr "Stopp selvtest"
+
+#~ msgid "Click to stop the SMART self-test currently in progress"
+#~ msgstr "Klikk for å stoppe SMART selvtest som pågår"
+
+#~ msgid "Click to force re-reading SMART data from the hard disk"
+#~ msgstr "Klikk for å tvinge ny lesing av SMART-data fra harddisken"
+
+#~ msgid "Powered On"
+#~ msgstr "Slått på"
+
+#~ msgid "Updated"
+#~ msgstr "Oppdatert"
+
+#~ msgid "Self-test Result"
+#~ msgstr "Resultat fra selvtest"
+
+#~ msgid "Self-assessment"
+#~ msgstr "Selvevaluering"
+
+#~ msgid "Overall Assessment"
+#~ msgstr "Helhetlig evaluering"
+
+#~ msgid "Click to toggle whether SMART is enabled for the hard disk"
+#~ msgstr "Klikk for å slå av/på hvorvidt SMART er aktiv for harddisken"
+
+#~ msgid "SMART _Attributes"
+#~ msgstr "SMART-_attributter"
+
+#~ msgid "Short"
+#~ msgstr "Kort"
+
+#~ msgid "Extended"
+#~ msgstr "Utvidet"
+
+#~ msgid "Conveyance"
+#~ msgstr "Overføring"
+
+#~ msgid "Enter passphrase to unlock"
+#~ msgstr "Oppgi passordfrase for å låse opp"
+
+#~ msgid "_Unlock"
+#~ msgstr "Lås _opp"
+
+#~ msgid "Disks Problem Monitor"
+#~ msgstr "Overvåking av diskproblemer"
+
+#~ msgid "Warns about problems with disks and storage devices"
+#~ msgstr "Advarer om problemer med disker og lagringsenheter"

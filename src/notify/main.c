@@ -43,7 +43,7 @@ main (int argc, char *argv[])
   guint name_owner_id = 0;
   GduSdMonitor *monitor = NULL;
 
-  notify_init ("test-gdusdplugin");
+  notify_init ("org.gnome.SettingsDaemon.DiskUtilityNotify");
 
   loop = g_main_loop_new (NULL, FALSE);
 

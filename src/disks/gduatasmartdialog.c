@@ -718,9 +718,9 @@ pretty_to_string (guint64 pretty,
       break;
 
     case 3: /* SK_SMART_ATTRIBUTE_UNIT_SECTORS */
-      /* Translators: Used in the treeview for the pretty/interpreted value of an attribute
-       * for a sector-based unit */
       ret = g_strdup_printf (dngettext (GETTEXT_PACKAGE,
+                                        /* Translators: Used in the treeview for the pretty/interpreted value of an attribute
+                                         * for a sector-based unit */
                                         "%d sector",
                                         "%d sectors",
                                         (gint) pretty),

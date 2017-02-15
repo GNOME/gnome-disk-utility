@@ -26,7 +26,6 @@ org.gnome.DiskUtility.service: Makefile
 # GSettings schemas
 gsettings_SCHEMAS = 						\
 	org.gnome.Disks.gschema.xml 				\
-	org.gnome.settings-daemon.plugins.gdu-sd.gschema.xml	\
 	$(NULL)
 
 @GSETTINGS_RULES@

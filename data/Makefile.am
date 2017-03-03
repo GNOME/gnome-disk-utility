@@ -11,7 +11,7 @@ desktop_in_files =				\
 
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
-$(desktop_DATA): $(desktop_in_files)
+%.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 dbusservicedir = $(datadir)/dbus-1/services

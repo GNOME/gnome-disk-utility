@@ -797,7 +797,7 @@ init_css (GduWindow *window)
   provider = gtk_css_provider_new ();
   file = g_file_new_for_uri ("resource:///org/gnome/Disks/ui/gdu.css");
   error = NULL;
-  if (!gtk_css_provider_load_from_file (provider, file, NULL))
+  if (!gtk_css_provider_load_from_file (provider, file, &error))
     {
       g_warning ("Can’t parse custom CSS: %s\n", error->message);
       g_error_free (error);

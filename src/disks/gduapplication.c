@@ -19,6 +19,7 @@
 #include "gduapplication.h"
 #include "gduformatvolumedialog.h"
 #include "gdurestorediskimagedialog.h"
+#include "gdunewdiskimagedialog.h"
 #include "gduwindow.h"
 #include "gdulocaljob.h"
 
@@ -267,6 +268,15 @@ gdu_application_activate (GApplication *_app)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+new_disk_image_activated (GSimpleAction *action,
+                          GVariant      *parameter,
+                          gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  gdu_new_disk_image_dialog_show (app->window);
+}
+
+static void
 attach_disk_image_activated (GSimpleAction *action,
                              GVariant      *parameter,
                              gpointer       user_data)
@@ -334,6 +344,7 @@ help_activated (GSimpleAction *action,
 
 static GActionEntry app_entries[] =
 {
+  { "new_disk_image", new_disk_image_activated, NULL, NULL, NULL },
   { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
   { "help", help_activated, NULL, NULL, NULL },

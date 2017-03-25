@@ -51,6 +51,10 @@ gboolean        gdu_window_ensure_unused_list_finish (GduWindow     *window,
                                                       GAsyncResult  *res,
                                                       GError       **error);
 
+gboolean        gdu_window_attach_disk_image_helper (GduWindow *window,
+                                                     gchar     *filename,
+                                                     gboolean   readonly);
+
 G_END_DECLS
 
 #endif /* __GDU_WINDOW_H__ */

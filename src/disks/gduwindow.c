@@ -710,15 +710,50 @@ loop_setup_cb (UDisksManager  *manager,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+gboolean
+gdu_window_attach_disk_image_helper (GduWindow *window, gchar *filename, gboolean readonly)
+{
+  gint fd = -1;
+  GUnixFDList *fd_list;
+  GVariantBuilder options_builder;
+  fd = open (filename, O_RDWR);
+  if (fd == -1)
+    fd = open (filename, O_RDONLY);
+  if (fd == -1)
+    {
+      GError *error;
+      error = g_error_new (G_IO_ERROR,
+                           g_io_error_from_errno (errno),
+                           "%s", strerror (errno));
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error attaching disk image"),
+                            error);
+      g_error_free (error);
+      return FALSE;
+    }
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (readonly)
+    g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
+  fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
+  udisks_manager_call_loop_setup (udisks_client_get_manager (window->client),
+                                  g_variant_new_handle (0),
+                                  g_variant_builder_end (&options_builder),
+                                  fd_list,
+                                  NULL,                       /* GCancellable */
+                                  (GAsyncReadyCallback) loop_setup_cb,
+                                  loop_setup_data_new (window, filename));
+  g_object_unref (fd_list);
+  return TRUE;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 void
 gdu_window_show_attach_disk_image (GduWindow *window)
 {
   GtkWidget *dialog;
   GFile *folder = NULL;
   gchar *filename = NULL;
-  gint fd = -1;
-  GUnixFDList *fd_list;
-  GVariantBuilder options_builder;
   GtkWidget *ro_checkbutton;
 
   dialog = gtk_file_chooser_dialog_new (_("Select Disk Image to Attach"),
@@ -744,38 +779,12 @@ gdu_window_show_attach_disk_image (GduWindow *window)
   filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   gtk_widget_hide (dialog);
 
-  fd = open (filename, O_RDWR);
-  if (fd == -1)
-    fd = open (filename, O_RDONLY);
-  if (fd == -1)
-    {
-      GError *error;
-      error = g_error_new (G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           "%s", strerror (errno));
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error attaching disk image"),
-                            error);
-      g_error_free (error);
-      goto out;
-    }
+  if (!gdu_window_attach_disk_image_helper (window, filename, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton))))
+    goto out;
 
   /* now that we know the user picked a folder, update file chooser settings */
   folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog));
   gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
-
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton)))
-    g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
-  fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
-  udisks_manager_call_loop_setup (udisks_client_get_manager (window->client),
-                                  g_variant_new_handle (0),
-                                  g_variant_builder_end (&options_builder),
-                                  fd_list,
-                                  NULL,                       /* GCancellable */
-                                  (GAsyncReadyCallback) loop_setup_cb,
-                                  loop_setup_data_new (window, filename));
-  g_object_unref (fd_list);
 
  out:
   gtk_widget_destroy (dialog);

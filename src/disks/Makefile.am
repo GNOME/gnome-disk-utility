@@ -52,6 +52,7 @@ gnome_disks_SOURCES = 							\
 	gducreatefilesystemwidget.h	gducreatefilesystemwidget.c	\
 	gduformatdiskdialog.h		gduformatdiskdialog.c		\
 	gducreatediskimagedialog.h	gducreatediskimagedialog.c	\
+	gdunewdiskimagedialog.h         gdunewdiskimagedialog.c         \
 	gdurestorediskimagedialog.h	gdurestorediskimagedialog.c	\
 	gdupasswordstrengthwidget.h	gdupasswordstrengthwidget.c	\
 	gduestimator.h			gduestimator.c			\

@@ -2563,6 +2563,16 @@ update_device_page_for_block (GduWindow          *window,
     }
 
   /* ------------------------------ */
+  /* 'UUID' field */
+
+  s = udisks_block_dup_id_uuid (block);
+  set_markup (window,
+              "devtab-uuid-label",
+              "devtab-uuid-value-label",
+              s, SET_MARKUP_FLAGS_NONE);
+  g_free (s);
+
+  /* ------------------------------ */
   /* 'Contents' field */
 
   usage = udisks_block_get_id_usage (block);

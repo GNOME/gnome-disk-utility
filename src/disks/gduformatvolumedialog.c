@@ -106,6 +106,7 @@ ensure_unused_cb (UDisksClient  *client,
   const gchar *fstype;
   const gchar *name;
   const gchar *passphrase;
+  gboolean encrypt;
 
   if (!gdu_utils_ensure_unused_finish (client, res, NULL))
     {
@@ -117,6 +118,7 @@ ensure_unused_cb (UDisksClient  *client,
   fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
   name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
   passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  encrypt = gdu_create_filesystem_widget_get_encrypt (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (name != NULL && strlen (name) > 0)
@@ -126,7 +128,7 @@ ensure_unused_cb (UDisksClient  *client,
       /* TODO: need a better way to determine if this should be TRUE */
       g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
     }
-  if (passphrase != NULL && strlen (passphrase) > 0)
+  if (encrypt && passphrase != NULL && strlen (passphrase) > 0)
     g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
 
   if (erase_type != NULL)

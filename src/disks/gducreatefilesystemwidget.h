@@ -27,6 +27,7 @@ const gchar *gdu_create_filesystem_widget_get_name       (GduCreateFilesystemWid
 const gchar *gdu_create_filesystem_widget_get_erase      (GduCreateFilesystemWidget *widget);
 const gchar *gdu_create_filesystem_widget_get_fstype     (GduCreateFilesystemWidget *widget);
 const gchar *gdu_create_filesystem_widget_get_passphrase (GduCreateFilesystemWidget *widget);
+gboolean     gdu_create_filesystem_widget_get_encrypt    (GduCreateFilesystemWidget *widget);
 gboolean     gdu_create_filesystem_widget_get_has_info   (GduCreateFilesystemWidget *widget);
 
 GtkWidget   *gdu_create_filesystem_widget_get_name_entry (GduCreateFilesystemWidget *widget);

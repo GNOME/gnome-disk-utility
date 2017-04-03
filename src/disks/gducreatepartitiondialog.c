@@ -355,6 +355,7 @@ create_partition_cb (GObject      *source_object,
   const gchar *fstype;
   const gchar *name;
   const gchar *passphrase;
+  gboolean encrypt;
 
   error = NULL;
   if (!udisks_partition_table_call_create_partition_finish (UDISKS_PARTITION_TABLE (source_object),
@@ -386,6 +387,7 @@ create_partition_cb (GObject      *source_object,
   fstype = gdu_create_filesystem_widget_get_fstype (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
   name = gdu_create_filesystem_widget_get_name (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
   passphrase = gdu_create_filesystem_widget_get_passphrase (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
+  encrypt = gdu_create_filesystem_widget_get_encrypt (GDU_CREATE_FILESYSTEM_WIDGET (data->create_filesystem_widget));
 
   /* Not meaningful to create a filesystem if requested to create an extended partition */
   if (g_strcmp0 (fstype, "dos_extended") == 0)
@@ -402,7 +404,7 @@ create_partition_cb (GObject      *source_object,
           /* TODO: need a better way to determine if this should be TRUE */
           g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
         }
-      if (passphrase != NULL && strlen (passphrase) > 0)
+      if (encrypt && passphrase != NULL && strlen (passphrase) > 0)
         g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase", g_variant_new_string (passphrase));
 
       if (erase != NULL)

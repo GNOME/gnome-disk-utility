@@ -49,6 +49,7 @@ struct _GduCreateFilesystemWidget
   gchar *fstype;
   gchar *name;
   gchar *passphrase;
+  gboolean encrypt;
   gboolean has_info;
 };
 
@@ -66,6 +67,7 @@ enum
   PROP_FSTYPE,
   PROP_NAME,
   PROP_PASSPHRASE,
+  PROP_ENCRYPT,
   PROP_HAS_INFO
 };
 
@@ -128,6 +130,10 @@ gdu_create_filesystem_widget_get_property (GObject    *object,
       g_value_set_string (value, widget->passphrase);
       break;
 
+    case PROP_ENCRYPT:
+      g_value_set_boolean (value, widget->encrypt);
+      break;
+
     case PROP_HAS_INFO:
       g_value_set_boolean (value, widget->has_info);
       break;
@@ -175,6 +181,7 @@ update (GduCreateFilesystemWidget *widget)
   gboolean show_filesystem_widgets = FALSE;
   gboolean show_passphrase_widgets = FALSE;
   gboolean has_info = FALSE;
+  gboolean encrypt = FALSE;
   const gchar *fstype = NULL;
   const gchar *name = NULL;
   const gchar *passphrase = NULL;
@@ -202,6 +209,7 @@ update (GduCreateFilesystemWidget *widget)
   else if (g_strcmp0 (id, "luks+ext4") == 0)
     {
       fstype = "ext4";
+      encrypt = TRUE;
       /* Encrypted, compatible with Linux (LUKS + ext4) */
       show_passphrase_widgets = TRUE;
       if (strlen (gtk_entry_get_text (GTK_ENTRY (widget->passphrase_entry))) > 0)
@@ -303,6 +311,11 @@ update (GduCreateFilesystemWidget *widget)
     {
       widget->has_info = has_info;
       g_object_notify (G_OBJECT (widget), "has-info");
+    }
+  if (widget->encrypt != encrypt)
+    {
+      widget->encrypt = encrypt;
+      g_object_notify (G_OBJECT (widget), "encrypt");
     }
   g_object_thaw_notify (G_OBJECT (widget));
 }
@@ -606,6 +619,12 @@ gdu_create_filesystem_widget_class_init (GduCreateFilesystemWidgetClass *klass)
                                                         G_PARAM_READABLE |
                                                         G_PARAM_STATIC_STRINGS));
 
+  g_object_class_install_property (gobject_class, PROP_ENCRYPT,
+                                   g_param_spec_boolean ("encrypt", NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE |
+                                                         G_PARAM_STATIC_STRINGS));
+
   g_object_class_install_property (gobject_class, PROP_HAS_INFO,
                                    g_param_spec_boolean ("has-info", NULL, NULL,
                                                          FALSE,
@@ -657,6 +676,13 @@ gdu_create_filesystem_widget_get_fstype (GduCreateFilesystemWidget *widget)
 {
   g_return_val_if_fail (GDU_IS_CREATE_FILESYSTEM_WIDGET (widget), NULL);
   return widget->fstype;
+}
+
+gboolean
+gdu_create_filesystem_widget_get_encrypt (GduCreateFilesystemWidget *widget)
+{
+  g_return_val_if_fail (GDU_IS_CREATE_FILESYSTEM_WIDGET (widget), FALSE);
+  return widget->encrypt;
 }
 
 const gchar *

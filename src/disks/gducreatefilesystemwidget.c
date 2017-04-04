@@ -556,7 +556,11 @@ gdu_create_filesystem_widget_constructed (GObject *object)
                       TRUE, TRUE, 0);
 
   /* reparent and nuke the dummy window */
-  gtk_widget_reparent (widget->grid, GTK_WIDGET (widget));
+  g_object_ref (widget->grid);
+  gtk_container_remove (GTK_CONTAINER (dummy_window), widget->grid);
+  gtk_container_add (GTK_CONTAINER (widget), widget->grid);
+  g_object_unref (widget->grid);
+
   gtk_widget_destroy (dummy_window);
 
   populate (widget);

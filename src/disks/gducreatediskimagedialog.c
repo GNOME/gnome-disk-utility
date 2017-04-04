@@ -466,7 +466,7 @@ on_success (gpointer user_data)
    */
   if (data->num_error_bytes > 0)
     {
-      GtkWidget *dialog, *button;
+      GtkWidget *dialog;
       GError *error = NULL;
       gchar *s = NULL;
       gint response;
@@ -475,7 +475,7 @@ on_success (gpointer user_data)
       dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->window),
                                                    GTK_DIALOG_MODAL,
                                                    GTK_MESSAGE_WARNING,
-                                                   GTK_BUTTONS_CLOSE,
+                                                   GTK_BUTTONS_NONE,
                                                    "<big><b>%s</b></big>",
                                                    /* Translators: Primary message in dialog shown if some data was unreadable while creating a disk image */
                                                    _("Unrecoverable read errors while creating disk image"));
@@ -491,12 +491,11 @@ on_success (gpointer user_data)
                                                   percentage,
                                                   s,
                                                   gtk_label_get_text (GTK_LABEL (data->source_label)));
-      button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                      /* Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image */
-                                      _("_Delete Disk Image File"),
-                                      GTK_RESPONSE_NO);
-      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (gtk_dialog_get_action_area (GTK_DIALOG (dialog))),
-                                          button, TRUE);
+      gtk_dialog_add_button (GTK_DIALOG (dialog),
+                             /* Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image */
+                             _("_Delete Disk Image File"),
+                             GTK_RESPONSE_NO);
+      gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Close"), GTK_RESPONSE_CLOSE);
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
       response = gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);

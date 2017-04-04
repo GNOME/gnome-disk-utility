@@ -266,12 +266,6 @@ typedef struct
   ShowFlagsVolumeMenu        volume_menu;
 } ShowFlags;
 
-static void generic_menu_position_func (GtkMenu       *menu,
-                                        gint          *x,
-                                        gint          *y,
-                                        gboolean      *push_in,
-                                        gpointer       user_data);
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void update_all (GduWindow *window);
@@ -1056,7 +1050,10 @@ gdu_window_constructed (GObject *object)
 
   gtk_widget_show_all (window->header);
 
-  gtk_widget_reparent (window->main_box, GTK_WIDGET (window));
+  g_object_ref (window->main_box);
+  gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (window->main_box)), window->main_box);
+  gtk_container_add (GTK_CONTAINER (window), window->main_box);
+  g_object_unref (window->main_box);
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
   gtk_window_set_default_size (GTK_WINDOW (window), 800, 700);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
@@ -3424,88 +3421,17 @@ on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-generic_menu_position_func (GtkMenu       *menu,
-                            gint          *x,
-                            gint          *y,
-                            gboolean      *push_in,
-                            gpointer       user_data)
-{
-  GtkWidget *align_widget = GTK_WIDGET (user_data);
-  GtkRequisition menu_req;
-  GtkTextDirection direction;
-  GdkRectangle monitor;
-  gint monitor_num;
-  GdkScreen *screen;
-  GdkWindow *gdk_window;
-  GtkAllocation allocation, arrow_allocation;
-  GtkAlign align;
-  GtkWidget *toplevel;
-
-  align = gtk_widget_get_halign (GTK_WIDGET (menu));
-  direction = gtk_widget_get_direction (align_widget);
-  gdk_window = gtk_widget_get_window (align_widget);
-
-  gtk_widget_get_preferred_size (GTK_WIDGET (menu),
-                                 &menu_req,
-                                 NULL);
-
-  toplevel = gtk_widget_get_toplevel (GTK_WIDGET (menu));
-  gtk_window_set_type_hint (GTK_WINDOW (toplevel), GDK_WINDOW_TYPE_HINT_DROPDOWN_MENU);
-
-  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
-  monitor_num = gdk_screen_get_monitor_at_window (screen, gdk_window);
-  if (monitor_num < 0)
-    monitor_num = 0;
-  gdk_screen_get_monitor_workarea (screen, monitor_num, &monitor);
-
-  gtk_widget_get_allocation (align_widget, &allocation);
-  gtk_widget_get_allocation (align_widget, &arrow_allocation);
-
-  gdk_window_get_origin (gdk_window, x, y);
-  *x += allocation.x;
-  *y += allocation.y;
-
-  /* treat the default align value like START */
-  if (align == GTK_ALIGN_FILL)
-    align = GTK_ALIGN_START;
-
-  if (align == GTK_ALIGN_CENTER)
-    *x -= (menu_req.width - allocation.width) / 2;
-  else if ((align == GTK_ALIGN_START && direction == GTK_TEXT_DIR_LTR) ||
-           (align == GTK_ALIGN_END && direction == GTK_TEXT_DIR_RTL))
-    *x += MAX (allocation.width - menu_req.width, 0);
-  else if (menu_req.width > allocation.width)
-    *x -= menu_req.width - allocation.width;
-
-  if ((*y + arrow_allocation.height + menu_req.height) <= monitor.y + monitor.height)
-    *y += arrow_allocation.height;
-  else if ((*y - menu_req.height) >= monitor.y)
-    *y -= menu_req.height;
-  else if (monitor.y + monitor.height - (*y + arrow_allocation.height) > *y)
-    *y += arrow_allocation.height;
-  else
-    *y -= menu_req.height;
-
-  *push_in = FALSE;
-}
-
-static void
 on_generic_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  GdkEventButton *event = NULL;
 
   update_all (window);
 
-  gtk_menu_popup_for_device (GTK_MENU (window->generic_menu),
-                             event != NULL ? event->device : NULL,
-                             NULL, /* parent_menu_shell */
-                             NULL, /* parent_menu_item */
-                             generic_menu_position_func,
-                             window->toolbutton_generic_menu,
-                             NULL, /* user_data GDestroyNotify */
-                             event != NULL ? event->button : 0,
-                             event != NULL ? event->time : gtk_get_current_event_time ());
+  gtk_menu_popup_at_widget (GTK_MENU (window->generic_menu),
+                            window->toolbutton_generic_menu,
+                            GDK_GRAVITY_SOUTH_WEST,
+                            GDK_GRAVITY_NORTH_WEST,
+                            NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

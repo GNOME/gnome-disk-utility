@@ -334,12 +334,11 @@ help_activated (GSimpleAction *action,
                 GVariant      *parameter,
                 gpointer       user_data)
 {
-  //GduApplication *app = GDU_APPLICATION (user_data);
-  //gtk_widget_destroy (GTK_WIDGET (app->window));
-  gtk_show_uri (NULL, /* GdkScreen */
-                "help:gnome-help/disk",
-                GDK_CURRENT_TIME,
-                NULL); /* GError */
+  GduApplication *app = GDU_APPLICATION (user_data);
+  gtk_show_uri_on_window (GTK_WINDOW (app->window),
+                          "help:gnome-help/disk",
+                          GDK_CURRENT_TIME,
+                          NULL); /* GError */
 }
 
 static GActionEntry app_entries[] =

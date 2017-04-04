@@ -432,7 +432,6 @@ gdu_volume_grid_realize (GtkWidget *widget)
   GdkWindowAttr attributes;
   gint attributes_mask;
   GtkAllocation allocation;
-  GtkStyleContext *context;
 
   gtk_widget_set_realized (widget, TRUE);
   gtk_widget_get_allocation (widget, &allocation);
@@ -464,9 +463,6 @@ gdu_volume_grid_realize (GtkWidget *widget)
                            attributes_mask);
   gtk_widget_set_window (widget, window);
   gdk_window_set_user_data (window, grid);
-
-  context = gtk_widget_get_style_context (widget);
-  gtk_style_context_set_background (context, window);
 }
 
 static guint

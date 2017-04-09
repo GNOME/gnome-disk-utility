@@ -187,6 +187,13 @@ update (GduCreateFilesystemWidget *widget)
   const gchar *passphrase = NULL;
   const gchar *id;
 
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget->confirm_passphrase_entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     NULL);
+  gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget->confirm_passphrase_entry),
+                                   GTK_ENTRY_ICON_SECONDARY,
+                                   NULL);
+
   name = gtk_entry_get_text (GTK_ENTRY (widget->name_entry));
   passphrase = gtk_entry_get_text (GTK_ENTRY (widget->passphrase_entry));
 
@@ -218,6 +225,15 @@ update (GduCreateFilesystemWidget *widget)
                          gtk_entry_get_text (GTK_ENTRY (widget->confirm_passphrase_entry))) == 0)
             {
               has_info = TRUE;
+            }
+          else if (strlen (gtk_entry_get_text (GTK_ENTRY (widget->confirm_passphrase_entry))) > 0)
+            {
+              gtk_entry_set_icon_from_icon_name (GTK_ENTRY (widget->confirm_passphrase_entry),
+                                                 GTK_ENTRY_ICON_SECONDARY,
+                                                 "dialog-warning-symbolic");
+              gtk_entry_set_icon_tooltip_text (GTK_ENTRY (widget->confirm_passphrase_entry),
+                                               GTK_ENTRY_ICON_SECONDARY,
+                                               _("The passphrases do not match"));
             }
         }
       gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (widget->passphrase_strengh_widget),

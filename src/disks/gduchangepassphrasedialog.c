@@ -94,8 +94,40 @@ update (ChangePassphraseData *data)
   passphrase = gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry));
   confirm_passphrase = gtk_entry_get_text (GTK_ENTRY (data->confirm_passphrase_entry));
 
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (data->confirm_passphrase_entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     NULL);
+  gtk_entry_set_icon_tooltip_text (GTK_ENTRY (data->confirm_passphrase_entry),
+                                   GTK_ENTRY_ICON_SECONDARY,
+                                   NULL);
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (data->passphrase_entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     NULL);
+  gtk_entry_set_icon_tooltip_text (GTK_ENTRY (data->passphrase_entry),
+                                   GTK_ENTRY_ICON_SECONDARY,
+                                   NULL);
+
   gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (data->passphrase_strengh_widget),
                                              passphrase);
+
+  if (strlen (passphrase) > 0 && strlen (confirm_passphrase) > 0 && g_strcmp0 (passphrase, confirm_passphrase) != 0)
+    {
+      gtk_entry_set_icon_from_icon_name (GTK_ENTRY (data->confirm_passphrase_entry),
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         "dialog-warning-symbolic");
+      gtk_entry_set_icon_tooltip_text (GTK_ENTRY (data->confirm_passphrase_entry),
+                                       GTK_ENTRY_ICON_SECONDARY,
+                                       _("The passphrases do not match"));
+    }
+  if (strlen (existing_passphrase) > 0 && strlen (passphrase) > 0 && g_strcmp0 (passphrase, existing_passphrase) == 0)
+    {
+      gtk_entry_set_icon_from_icon_name (GTK_ENTRY (data->passphrase_entry),
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         "dialog-warning-symbolic");
+      gtk_entry_set_icon_tooltip_text (GTK_ENTRY (data->passphrase_entry),
+                                       GTK_ENTRY_ICON_SECONDARY,
+                                       _("The passphrase matches the existing passphrase"));
+    }
 
   if (strlen (existing_passphrase) > 0 && strlen (passphrase) > 0 &&
       g_strcmp0 (passphrase, confirm_passphrase) == 0 &&

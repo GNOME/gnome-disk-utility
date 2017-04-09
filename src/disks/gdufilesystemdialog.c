@@ -34,6 +34,13 @@ on_change_filesystem_label_entry_changed (GtkEditable *editable,
   ChangeFilesystemLabelData *data = user_data;
   gboolean sensitive;
 
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (editable),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     NULL);
+  gtk_entry_set_icon_tooltip_text (GTK_ENTRY (editable),
+                                   GTK_ENTRY_ICON_SECONDARY,
+                                   NULL);
+
   _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (GTK_ENTRY (editable)),
                                     data->label_max_length);
 
@@ -41,6 +48,15 @@ on_change_filesystem_label_entry_changed (GtkEditable *editable,
   if (g_strcmp0 (gtk_entry_get_text (GTK_ENTRY (editable)), data->orig_label) != 0)
     {
       sensitive = TRUE;
+    }
+  else
+    {
+      gtk_entry_set_icon_from_icon_name (GTK_ENTRY (editable),
+                                         GTK_ENTRY_ICON_SECONDARY,
+                                         "dialog-warning-symbolic");
+      gtk_entry_set_icon_tooltip_text (GTK_ENTRY (editable),
+                                       GTK_ENTRY_ICON_SECONDARY,
+                                       _("The label matches the existing label"));
     }
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog),

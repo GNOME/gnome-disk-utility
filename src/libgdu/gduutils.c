@@ -780,6 +780,42 @@ gdu_utils_is_ntfs_available (void)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+guint
+gdu_utils_get_max_label_length (const gchar *fstype)
+{
+  guint max_length = G_MAXUINT;
+
+  if (g_strcmp0 (fstype, "exfat") == 0)
+    {
+      max_length = 15;
+    }
+  else if (g_strcmp0 (fstype, "vfat") == 0)
+    {
+      max_length = 11;
+    }
+
+  return max_length;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gboolean
+_gtk_entry_buffer_truncate_bytes (GtkEntryBuffer *gtk_entry_buffer,
+                                  guint           max_bytes)
+{
+  guint max_utf8_length = max_bytes;
+
+  while (gtk_entry_buffer_get_bytes (gtk_entry_buffer) > max_bytes)
+    {
+      gtk_entry_buffer_delete_text (gtk_entry_buffer, max_utf8_length, -1);
+      max_utf8_length--;
+    }
+
+  return max_utf8_length != max_bytes;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 #ifdef __GNUC_PREREQ
 # if __GNUC_PREREQ(4,6)
 #  pragma GCC diagnostic pop

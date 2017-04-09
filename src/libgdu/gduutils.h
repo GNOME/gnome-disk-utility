@@ -62,6 +62,11 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
 gboolean gdu_utils_is_ntfs_available (void);
 
+guint gdu_utils_get_max_label_length (const gchar *fstype);
+
+gboolean _gtk_entry_buffer_truncate_bytes (GtkEntryBuffer *gtk_entry_buffer,
+                                           guint           max_bytes);
+
 gboolean gdu_util_is_same_size (GList   *blocks,
                                 guint64 *out_min_size);
 

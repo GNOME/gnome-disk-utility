@@ -15,6 +15,7 @@
 #include <gdk/gdkx.h>
 #include <stdlib.h>
 
+#include "gduutils.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducreatefilesystemwidget.h"
@@ -194,7 +195,6 @@ update (GduCreateFilesystemWidget *widget)
                                    GTK_ENTRY_ICON_SECONDARY,
                                    NULL);
 
-  name = gtk_entry_get_text (GTK_ENTRY (widget->name_entry));
   passphrase = gtk_entry_get_text (GTK_ENTRY (widget->passphrase_entry));
 
   id = gtk_combo_box_get_active_id (GTK_COMBO_BOX (widget->type_combobox));
@@ -259,6 +259,10 @@ update (GduCreateFilesystemWidget *widget)
       fstype = id;
       has_info = TRUE;
     }
+
+  _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (GTK_ENTRY (widget->name_entry)),
+                                    gdu_utils_get_max_label_length (fstype));
+  name = gtk_entry_get_text (GTK_ENTRY (widget->name_entry));
 
   if (show_name_widgets)
     {

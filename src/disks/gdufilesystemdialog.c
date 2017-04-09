@@ -11,6 +11,7 @@
 
 #include <glib/gi18n.h>
 
+#include "gduutils.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdufilesystemdialog.h"
@@ -23,6 +24,7 @@ typedef struct
 {
   GtkWidget *dialog;
   gchar *orig_label;
+  guint label_max_length;
 } ChangeFilesystemLabelData;
 
 static void
@@ -31,6 +33,9 @@ on_change_filesystem_label_entry_changed (GtkEditable *editable,
 {
   ChangeFilesystemLabelData *data = user_data;
   gboolean sensitive;
+
+  _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (GTK_ENTRY (editable)),
+                                    data->label_max_length);
 
   sensitive = FALSE;
   if (g_strcmp0 (gtk_entry_get_text (GTK_ENTRY (editable)), data->orig_label) != 0)
@@ -77,6 +82,7 @@ gdu_filesystem_dialog_show (GduWindow    *window,
   const gchar *label;
   ChangeFilesystemLabelData data;
   const gchar *label_to_set;
+  gchar *fstype;
 
   block = udisks_object_peek_block (object);
   filesystem = udisks_object_peek_filesystem (object);
@@ -99,6 +105,9 @@ gdu_filesystem_dialog_show (GduWindow    *window,
   memset (&data, '\0', sizeof (ChangeFilesystemLabelData));
   data.dialog = dialog;
   data.orig_label = g_strdup (label);
+  fstype = udisks_block_dup_id_type (block);
+  data.label_max_length = gdu_utils_get_max_label_length (fstype);
+  g_free (fstype);
 
   gtk_entry_set_text (GTK_ENTRY (entry), label);
   gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);

@@ -980,6 +980,7 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
           if (g_strv_length ((gchar **) mount_points) > 0)
             {
               filesystem_to_unmount = g_object_ref (filesystem_for_object);
+              ret = TRUE;
               goto victim_found;
             }
         }
@@ -993,6 +994,7 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
             {
               g_object_unref (cleartext);
               encrypted_to_lock = g_object_ref (encrypted_for_object);
+              ret = TRUE;
               goto victim_found;
             }
         }
@@ -1004,13 +1006,11 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
     {
       *filesystem_to_unmount_out = (filesystem_to_unmount != NULL) ?
         g_object_ref (filesystem_to_unmount) : NULL;
-      ret = TRUE;
     }
-  else if (encrypted_to_lock_out != NULL)
+  if (encrypted_to_lock_out != NULL)
     {
       *encrypted_to_lock_out = (encrypted_to_lock != NULL) ?
         g_object_ref (encrypted_to_lock) : NULL;
-      ret = TRUE;
     }
 
   g_clear_object (&partition_table);

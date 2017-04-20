@@ -37,7 +37,6 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdudisksettingsdialog.h"
-#include "gduerasemultipledisksdialog.h"
 #include "gdulocaljob.h"
 
 struct _GduWindow

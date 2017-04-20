@@ -58,7 +58,6 @@ gnome_disks_SOURCES = 							\
 	gduestimator.h			gduestimator.c			\
 	gduchangepassphrasedialog.h	gduchangepassphrasedialog.c	\
 	gdudisksettingsdialog.h		gdudisksettingsdialog.c		\
-	gduerasemultipledisksdialog.h	gduerasemultipledisksdialog.c	\
 	gdudvdsupport.h			gdudvdsupport.c			\
 	gdulocaljob.h			gdulocaljob.c			\
 	gduxzdecompressor.h		gduxzdecompressor.c		\

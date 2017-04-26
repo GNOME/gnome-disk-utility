@@ -1589,7 +1589,8 @@ set_switch (GduWindow      *window,
             const gchar    *key_label_id,
             const gchar    *switch_box_id,
             const gchar    *switch_id,
-            gboolean        active)
+            gboolean        active,
+            gboolean        sensitive)
 {
   GtkWidget *key_label;
   GtkWidget *switch_box;
@@ -1600,6 +1601,7 @@ set_switch (GduWindow      *window,
   switch_ = GTK_WIDGET (gtk_builder_get_object (window->builder, switch_id));
 
   gtk_switch_set_active (GTK_SWITCH (switch_), active);
+  gtk_widget_set_sensitive (switch_, sensitive);
   gtk_widget_show (key_label);
   gtk_widget_show (switch_box);
   gtk_widget_show (switch_);
@@ -2327,7 +2329,8 @@ update_device_page_for_loop (GduWindow      *window,
                   "devtab-loop-autoclear-label",
                   "devtab-loop-autoclear-switch-box",
                   "devtab-loop-autoclear-switch",
-                  udisks_loop_get_autoclear (loop));
+                  udisks_loop_get_autoclear (loop),
+                  gdu_utils_is_in_use (window->client, object));
     }
 
   /* cleanup */
@@ -2769,7 +2772,8 @@ update_device_page_for_free_space (GduWindow          *window,
                   "devtab-loop-autoclear-label",
                   "devtab-loop-autoclear-switch-box",
                   "devtab-loop-autoclear-switch",
-                  udisks_loop_get_autoclear (loop));
+                  udisks_loop_get_autoclear (loop),
+                  gdu_utils_is_in_use (window->client, object));
     }
 
   set_size (window,

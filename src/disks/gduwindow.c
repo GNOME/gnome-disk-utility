@@ -3385,24 +3385,21 @@ on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-unmount_cb (UDisksFilesystem *filesystem,
+unmount_cb (GduWindow        *window,
             GAsyncResult     *res,
             gpointer          user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
+  GError *error = NULL;
 
-  error = NULL;
-  if (!udisks_filesystem_call_unmount_finish (filesystem,
-                                              res,
-                                              &error))
+  if (!gdu_window_ensure_unused_finish (window,
+                                        res,
+                                        &error))
     {
       gdu_utils_show_error (GTK_WINDOW (window),
                             _("Error unmounting filesystem"),
                             error);
       g_error_free (error);
     }
-  g_object_unref (window);
 }
 
 static void
@@ -3410,15 +3407,13 @@ on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
-  UDisksFilesystem *filesystem;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  filesystem = udisks_object_peek_filesystem (object);
-  udisks_filesystem_call_unmount (filesystem,
-                                  g_variant_new ("a{sv}", NULL), /* options */
-                                  NULL, /* cancellable */
-                                  (GAsyncReadyCallback) unmount_cb,
-                                  g_object_ref (window));
+  gdu_window_ensure_unused (window,
+                            object,
+                            (GAsyncReadyCallback) unmount_cb,
+                            NULL,
+                            NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3593,42 +3588,21 @@ on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-lock_cb (UDisksEncrypted *encrypted,
+lock_cb (GduWindow       *window,
          GAsyncResult    *res,
          gpointer         user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
-  GError *error;
+  GError *error = NULL;
 
-  error = NULL;
-  if (!udisks_encrypted_call_lock_finish (encrypted,
-                                          res,
-                                          &error))
+  if (!gdu_window_ensure_unused_finish (window,
+                                        res,
+                                        &error))
     {
       gdu_utils_show_error (GTK_WINDOW (window),
                             _("Error locking encrypted device"),
                             error);
       g_error_free (error);
     }
-  g_object_unref (window);
-}
-
-static void
-lock_ensure_unused_cb (GduWindow     *window,
-                       GAsyncResult  *res,
-                       gpointer       user_data)
-{
-  UDisksObject *object = UDISKS_OBJECT (user_data);
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
-    {
-      UDisksEncrypted *encrypted = udisks_object_peek_encrypted (object);
-      udisks_encrypted_call_lock (encrypted,
-                                  g_variant_new ("a{sv}", NULL), /* options */
-                                  NULL, /* cancellable */
-                                  (GAsyncReadyCallback) lock_cb,
-                                  g_object_ref (window));
-    }
-  g_object_unref (object);
 }
 
 static void
@@ -3636,22 +3610,13 @@ on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
-  UDisksBlock *block;
-  UDisksBlock *cleartext;
-  UDisksObject *cleartext_object;
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
-  block = udisks_object_peek_block (object);
-
-  /* ensure the cleartext object is unused (e.g. unmounted) before tearing down the encrypted device... */
-  cleartext = udisks_client_get_cleartext_block (window->client, block);
-  cleartext_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (cleartext));
   gdu_window_ensure_unused (window,
-                            cleartext_object,
-                            (GAsyncReadyCallback) lock_ensure_unused_cb,
+                            object,
+                            (GAsyncReadyCallback) lock_cb,
                             NULL, /* GCancellable */
-                            g_object_ref (object));
-  g_object_unref (cleartext);
+                            NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

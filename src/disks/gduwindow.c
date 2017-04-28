@@ -3237,7 +3237,7 @@ power_off_ensure_unused_cb (GduWindow     *window,
                             gpointer       user_data)
 {
   UDisksObject *object = UDISKS_OBJECT (user_data);
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
+  if (gdu_window_ensure_unused_list_finish (window, res, NULL))
     {
       UDisksDrive *drive = udisks_object_peek_drive (object);
       udisks_drive_call_power_off (drive,

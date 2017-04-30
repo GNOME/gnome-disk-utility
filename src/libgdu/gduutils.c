@@ -895,7 +895,8 @@ static gboolean
 gdu_utils_is_in_use_full (UDisksClient      *client,
                           UDisksObject      *object,
                           UDisksFilesystem **filesystem_to_unmount_out,
-                          UDisksEncrypted  **encrypted_to_lock_out)
+                          UDisksEncrypted  **encrypted_to_lock_out,
+                          gboolean          *last_out)
 {
   UDisksFilesystem *filesystem_to_unmount = NULL;
   UDisksEncrypted *encrypted_to_lock = NULL;
@@ -907,6 +908,7 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
   GList *l;
   GList *objects_to_check = NULL;
   gboolean ret = FALSE;
+  gboolean last = TRUE;
 
   drive = udisks_object_get_drive (object);
   if (drive != NULL)
@@ -979,9 +981,14 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
           const gchar *const *mount_points = udisks_filesystem_get_mount_points (filesystem_for_object);
           if (g_strv_length ((gchar **) mount_points) > 0)
             {
+              if (ret)
+                {
+                  last = FALSE;
+                  break;
+                }
+
               filesystem_to_unmount = g_object_ref (filesystem_for_object);
               ret = TRUE;
-              goto victim_found;
             }
         }
 
@@ -993,14 +1000,21 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
           if (cleartext != NULL)
             {
               g_object_unref (cleartext);
+
+              if (ret)
+                {
+                  last = FALSE;
+                  break;
+                }
+
               encrypted_to_lock = g_object_ref (encrypted_for_object);
               ret = TRUE;
-              goto victim_found;
             }
         }
-    }
 
- victim_found:
+      if (ret && last_out == NULL)
+        break;
+    }
 
   if (filesystem_to_unmount_out != NULL)
     {
@@ -1012,6 +1026,8 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
       *encrypted_to_lock_out = (encrypted_to_lock != NULL) ?
         g_object_ref (encrypted_to_lock) : NULL;
     }
+  if (last_out != NULL)
+    *last_out = last;
 
   g_clear_object (&partition_table);
   g_list_free_full (partitions, g_object_unref);
@@ -1029,7 +1045,7 @@ gboolean
 gdu_utils_is_in_use (UDisksClient *client,
                      UDisksObject *object)
 {
-  return gdu_utils_is_in_use_full (client, object, NULL, NULL);
+  return gdu_utils_is_in_use_full (client, object, NULL, NULL, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1115,15 +1131,71 @@ unuse_lock_cb (UDisksEncrypted  *encrypted,
 }
 
 static void
+unuse_set_autoclear_cb (UDisksLoop   *loop,
+                        GAsyncResult *res,
+                        gpointer      user_data)
+{
+  UnuseData *data = user_data;
+  GError *error = NULL;
+
+  if (!udisks_loop_call_set_autoclear_finish (loop,
+                                              res,
+                                              &error))
+    {
+      unuse_data_complete (data,
+                           _("Error disabling autoclear for loop device"),
+                           error);
+    }
+  else
+    {
+      unuse_data_iterate (data);
+    }
+}
+
+static void
 unuse_data_iterate (UnuseData *data)
 {
   UDisksObject *object;
   UDisksFilesystem *filesystem_to_unmount = NULL;
   UDisksEncrypted *encrypted_to_lock = NULL;
+  UDisksLoop *loop;
+  UDisksBlock *block;
+  gboolean last;
 
   object = UDISKS_OBJECT (data->object_iter->data);
   gdu_utils_is_in_use_full (data->client, object,
-                            &filesystem_to_unmount, &encrypted_to_lock);
+                            &filesystem_to_unmount, &encrypted_to_lock, NULL);
+  block = udisks_object_peek_block (object);
+
+  if (block != NULL && (filesystem_to_unmount != NULL || encrypted_to_lock != NULL))
+    {
+      loop = udisks_client_get_loop_for_block (data->client, block);
+
+      if (loop != NULL)
+        {
+          if (udisks_loop_get_autoclear (loop))
+            {
+              gdu_utils_is_in_use_full (data->client,
+                                        UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (loop))),
+                                        NULL, NULL, &last);
+              if (last)
+                {
+                  udisks_loop_call_set_autoclear (loop,
+                                                  FALSE,
+                                                  g_variant_new ("a{sv}", NULL),
+                                                  data->cancellable,
+                                                  (GAsyncReadyCallback) unuse_set_autoclear_cb,
+                                                  data);
+                  g_object_unref (loop);
+                  g_clear_object (&encrypted_to_lock);
+                  g_clear_object (&filesystem_to_unmount);
+                  return;
+                }
+            }
+
+          g_object_unref (loop);
+        }
+    }
 
   if (filesystem_to_unmount != NULL)
     {

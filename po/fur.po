@@ -1,23 +1,23 @@
 # Friulian translation for gnome-disk-utility.
 # Copyright (C) 2014 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Fabio Tomat <f.t.public@gmail.com>, 2014.
+# Fabio Tomat <f.t.public@gmail.com>, 2014, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-04-12 12:39+0000\n"
-"PO-Revision-Date: 2017-04-21 22:43+0200\n"
+"POT-Creation-Date: 2017-05-02 07:26+0000\n"
+"PO-Revision-Date: 2017-05-05 10:58+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
-"Language-Team: Friulian <fur@li.org>\n"
+"Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -89,7 +89,7 @@ msgstr "Un mût sempliç par gjestî i tiei discs"
 msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1057
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1056
 msgid "Disks"
 msgstr "Discs"
 
@@ -124,7 +124,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Selezione imagjins disc di montâ"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:756
+#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:755
 msgid "_Cancel"
 msgstr "_Anule"
 
@@ -480,8 +480,9 @@ msgid ""
 "reallocated sectors to a spare area"
 msgstr ""
 "Numars di operazions di colocaments tornâts a fâ. Il valôr grês di chest "
-"atribût al mostre il numar totâl (a bon fin o no) di tentatîfs di spostâ i "
-"dâts dai setôrs tornâts a colocâ a zonis di risierve (spare area)"
+"atribût al mostre il numar totâl (a bon fin o no) di tentatîfs tal spostâ i "
+"dâts dai setôrs che a son stâts tornâts a colocâ, a zonis di risierve (spare "
+"area)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -958,7 +959,7 @@ msgstr "AUTO-TEST FALÎT"
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
-msgstr[0] "Il disc al è a puest, un atribût al stâ par vuastâsi"
+msgstr[0] "Il disc al è a puest, un atribût al sta par vuastâsi"
 msgstr[1] "Il disc al è a puest, %d atribûts a stan par vuastâsi"
 
 #: src/disks/gduatasmartdialog.c:986
@@ -1425,25 +1426,21 @@ msgid "Enter filesystem type"
 msgstr "Inseris il tip di filesystem"
 
 #: src/disks/gducreatefilesystemwidget.c:522
-#: src/disks/gduerasemultipledisksdialog.c:131
 #: src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
-msgstr "No stâ sorescrivi i dâts presints"
+msgstr "No sta sorescrivi i dâts presints"
 
 #: src/disks/gducreatefilesystemwidget.c:523
-#: src/disks/gduerasemultipledisksdialog.c:132
 #: src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "veloç"
 
 #: src/disks/gducreatefilesystemwidget.c:530
-#: src/disks/gduerasemultipledisksdialog.c:142
 #: src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Sorescrîf i dâts presints cun zeros"
 
 #: src/disks/gducreatefilesystemwidget.c:531
-#: src/disks/gduerasemultipledisksdialog.c:143
 #: src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "planc"
@@ -1609,75 +1606,6 @@ msgstr "Cuiet (Planc)"
 msgid "Loud (Fast)"
 msgstr "Rumorôs (Veloç)"
 
-#: src/disks/gduerasemultipledisksdialog.c:154
-msgid "ATA Secure Erase / Enhanced Secure Erase"
-msgstr "ATA Secure Erase / Enhanced Secure Erase"
-
-#: src/disks/gduerasemultipledisksdialog.c:155
-msgid "If Available, Slow"
-msgstr "Se disponibil, lent"
-
-#: src/disks/gduerasemultipledisksdialog.c:186
-#, c-format
-msgid "Error erasing device %s"
-msgstr "Erôr tal scancelâ il dispositîf %s"
-
-#: src/disks/gduerasemultipledisksdialog.c:367
-msgid "Are you sure you want to erase the disks?"
-msgstr "Sigûrs di volê scancelâ il disc?"
-
-#. Translators: warning used for erasure of multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:371
-msgid ""
-"All data on the selected disks will be lost but may still be recoverable by "
-"data recovery services"
-msgstr ""
-"Ducj i dâts tal disc selezionât a laran pierdûts, ma si podaran recuperâ cun "
-"servizis di recupar dâts"
-
-#: src/disks/gduerasemultipledisksdialog.c:373
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
-"<b>Sugjeriment</b>: tal câs che tu proviodis di riciclâ, vendi o da vie di "
-"bant il tô computer o il disc, tu varessis di doprâ une maniere di "
-"scanceladure dâts plui rigorose, in mût tâl di vuardâsi che i propris dâts "
-"no vegnin recuperâts da malfidants."
-
-#. Translators: warning used when overwriting data on multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:378
-msgid ""
-"All data on the selected disks will be overwritten and will likely not be "
-"recoverable by data recovery services"
-msgstr ""
-"Ducj i dâts sul disc selezionât a vegnaran sorescrits e al è facil che no si "
-"podaran plui recuperâ cun servizis di recupar dâts"
-
-#: src/disks/gduerasemultipledisksdialog.c:384
-#: src/disks/gduformatdiskdialog.c:437
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can’t be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-"<b>Atenzion</b>: il comant «Secure Erase» al podarès meti une vore di timp "
-"par finî, nol pues jessi fermât e al podarès no funzionâ cun cualchi "
-"hardware. Tal piês dai câs la unitât no si podarà doprâ o il tô sisteme al "
-"larà in crash o si blocarà. Prime di procedi, par plasê lei la pagjine a "
-"rivuart <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
-"Secure Erase</a> e sigurâsi di vê capît i pericui."
-
-#: src/disks/gduerasemultipledisksdialog.c:396
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "_Scancele"
-
 #: src/disks/gdufilesystemdialog.c:59
 msgid "The label matches the existing label"
 msgstr "La etichete e corispuint ae etichete esistente"
@@ -1749,6 +1677,17 @@ msgstr ""
 "Ducj i dâts tal disc a laran pierdûts, ma si podaran recuperâ cun servizis "
 "di recupar dâts"
 
+#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>Sugjeriment</b>: tal câs che tu proviodis di riciclâ, vendi o da vie di "
+"bant il tô computer o il disc, tu varessis di doprâ une maniere di "
+"scanceladure dâts plui rigorose, in mût tâl di vuardâsi che i propris dâts "
+"no vegnin recuperâts da malfidants."
+
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:429
 msgid ""
@@ -1757,6 +1696,22 @@ msgid ""
 msgstr ""
 "Ducj i dâts tal disc a saran sorescrits e al è facil che no si podaran plui "
 "recuperâ cun servizis di recupar dâts"
+
+#: src/disks/gduformatdiskdialog.c:437
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can’t be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>Atenzion</b>: il comant «Secure Erase» al podarès meti une vore di timp "
+"par finî, nol pues jessi fermât e al podarès no funzionâ cun cualchi "
+"hardware. Tal piês dai câs la unitât no si podarà doprâ o il tô sisteme al "
+"larà in crash o si blocarà. Prime di procedi, par plasê lei la pagjine a "
+"rivuart <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
+"Secure Erase</a> e sigurâsi di vê capît i pericui."
 
 #: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
 msgid "_Format"
@@ -1958,7 +1913,7 @@ msgstr "La passphrase di cifradure e je stade recuperade dal puarteclâfs"
 msgid "Volumes Grid"
 msgstr "Gridele volums"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2048
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2049
 msgid "No Media"
 msgstr "Nissun supuart"
 
@@ -2000,30 +1955,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Spazi libar"
 
-#: src/disks/gduwindow.c:580
+#: src/disks/gduwindow.c:579
 msgid "Error deleting loop device"
 msgstr "Erôr tal eliminâ il dispositîf di loop"
 
-#: src/disks/gduwindow.c:680 src/disks/gduwindow.c:723
+#: src/disks/gduwindow.c:679 src/disks/gduwindow.c:722
 msgid "Error attaching disk image"
 msgstr "Erôr tal tacâ la imagjin disc"
 
-#: src/disks/gduwindow.c:753
+#: src/disks/gduwindow.c:752
 msgid "Select Disk Image to Attach"
 msgstr "Selezione la imagjin disc di tacâ"
 
-#: src/disks/gduwindow.c:757
+#: src/disks/gduwindow.c:756
 msgid "_Attach"
 msgstr "T_ache"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:764
+#: src/disks/gduwindow.c:763
 msgid "Set up _read-only loop device"
 msgstr "Impuestâ il dispositîf di loop in dome-leture"
 
-#: src/disks/gduwindow.c:765
+#: src/disks/gduwindow.c:764
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2031,20 +1986,20 @@ msgstr ""
 "Se selezionât, il dispositîf di loop al sarà in dome-leture. Al è util se no "
 "si vûl che il file disot al vegni midificât"
 
-#: src/disks/gduwindow.c:961
+#: src/disks/gduwindow.c:960
 msgid "Power off this disk"
 msgstr "Stude il disc"
 
-#: src/disks/gduwindow.c:967
+#: src/disks/gduwindow.c:966
 msgid "Eject this disk"
 msgstr "Pare fûr chest disc"
 
-#: src/disks/gduwindow.c:973
+#: src/disks/gduwindow.c:972
 msgid "Detach this loop device"
 msgstr "Stache chest dispositîf di loop"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1368
+#: src/disks/gduwindow.c:1367
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2053,7 +2008,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1376
+#: src/disks/gduwindow.c:1375
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2062,7 +2017,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1384
+#: src/disks/gduwindow.c:1383
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2071,12 +2026,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1392
+#: src/disks/gduwindow.c:1391
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1407
+#: src/disks/gduwindow.c:1406
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Maiusc>F10"
@@ -2085,13 +2040,13 @@ msgstr "<Maiusc>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1417
+#: src/disks/gduwindow.c:1416
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Maiusc><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1737
+#: src/disks/gduwindow.c:1738
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (dome-leture)"
@@ -2100,7 +2055,7 @@ msgstr "%s (dome-leture)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1775
+#: src/disks/gduwindow.c:1776
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2109,7 +2064,7 @@ msgstr "\"%s restants (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1783
+#: src/disks/gduwindow.c:1784
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2120,7 +2075,7 @@ msgstr "%s restants"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1798
+#: src/disks/gduwindow.c:1799
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s di %s — %s"
@@ -2129,17 +2084,17 @@ msgstr "%s di %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1885
+#: src/disks/gduwindow.c:1886
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1957 src/disks/gduwindow.c:2357
+#: src/disks/gduwindow.c:1958 src/disks/gduwindow.c:2359
 msgid "Block device is empty"
 msgstr "Il dispositîf a blocs al è vueit"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1980
+#: src/disks/gduwindow.c:1981
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2148,11 +2103,11 @@ msgstr "No cognossût (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2149
+#: src/disks/gduwindow.c:2150
 msgid "Connected to another seat"
 msgstr "Tacât a une altre postazion"
 
-#: src/disks/gduwindow.c:2295
+#: src/disks/gduwindow.c:2296
 msgid "Loop device is empty"
 msgstr "Il dispositîf di loop al è vueit"
 
@@ -2162,61 +2117,61 @@ msgstr "Il dispositîf di loop al è vueit"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2524
+#: src/disks/gduwindow.c:2526
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libars (%.1f%% doprât)"
 
-#: src/disks/gduwindow.c:2554
+#: src/disks/gduwindow.c:2556
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "No cognossût"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2592
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Filesystem root"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2600
+#: src/disks/gduwindow.c:2602
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montât su %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2606
+#: src/disks/gduwindow.c:2608
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "No montât"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2631
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Atîf"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2635
+#: src/disks/gduwindow.c:2637
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "No atîf"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2648
+#: src/disks/gduwindow.c:2650
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Sblocât"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2654
+#: src/disks/gduwindow.c:2656
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Blocât"
 
-#: src/disks/gduwindow.c:2664
+#: src/disks/gduwindow.c:2666
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partizion estese"
@@ -2225,39 +2180,39 @@ msgstr "Partizion estese"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2684
+#: src/disks/gduwindow.c:2686
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2784
+#: src/disks/gduwindow.c:2787
 msgid "Unallocated Space"
 msgstr "Spazi no assegnât"
 
-#: src/disks/gduwindow.c:3133
+#: src/disks/gduwindow.c:3136
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Al è vignût fûr un erôr intant che si cirive di meti il dispositîf in standby"
 
-#: src/disks/gduwindow.c:3179
+#: src/disks/gduwindow.c:3182
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Al è vignût fûr un erôr intant che si cirive di sveâ il dispositîf dal "
 "standby"
 
-#: src/disks/gduwindow.c:3224
+#: src/disks/gduwindow.c:3227
 msgid "Error powering off drive"
 msgstr "Erôr tal studâ il dispositîf"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3276
+#: src/disks/gduwindow.c:3279
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sigûrs di studâ il dispositîf?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3278
+#: src/disks/gduwindow.c:3281
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2265,55 +2220,55 @@ msgstr ""
 "Cheste operazion a prontarà il sisteme par che chescj dispositîfs a vegnin "
 "studâts e gjavâts."
 
-#: src/disks/gduwindow.c:3282
+#: src/disks/gduwindow.c:3285
 msgid "_Power Off"
 msgstr "_Stude"
 
-#: src/disks/gduwindow.c:3359
+#: src/disks/gduwindow.c:3362
 msgid "Error mounting filesystem"
 msgstr "Erôr tal montâ il filesystem"
 
-#: src/disks/gduwindow.c:3398 src/libgdu/gduutils.c:1089
+#: src/disks/gduwindow.c:3399 src/libgdu/gduutils.c:1105
 msgid "Error unmounting filesystem"
 msgstr "Erôr tal dismontâ il filesystem"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3467
 msgid "Error deleting partition"
 msgstr "Erôr tal eliminâ la partizion"
 
-#: src/disks/gduwindow.c:3506
+#: src/disks/gduwindow.c:3504
 msgid "Are you sure you want to delete the partition?"
 msgstr "Sigûrs di scancelâ la partizion?"
 
-#: src/disks/gduwindow.c:3507
+#: src/disks/gduwindow.c:3505
 msgid "All data on the partition will be lost"
 msgstr "Ducj i dâts te partizion a saran pierdûts"
 
-#: src/disks/gduwindow.c:3508
+#: src/disks/gduwindow.c:3506
 msgid "_Delete"
 msgstr "_Elimine"
 
-#: src/disks/gduwindow.c:3539
+#: src/disks/gduwindow.c:3537
 msgid "Error ejecting media"
 msgstr "Erôr tal parâ fûr il supuart"
 
-#: src/disks/gduwindow.c:3606
+#: src/disks/gduwindow.c:3602
 msgid "Error locking encrypted device"
 msgstr "Erôr tal blocâ il dispositîf cifrât"
 
-#: src/disks/gduwindow.c:3670
+#: src/disks/gduwindow.c:3638
 msgid "Error starting swap"
 msgstr "Erôr tal ativâ il spazi di swap"
 
-#: src/disks/gduwindow.c:3707
+#: src/disks/gduwindow.c:3675
 msgid "Error stopping swap"
 msgstr "Erôr tal disativâ il spazi di swap"
 
-#: src/disks/gduwindow.c:3749
+#: src/disks/gduwindow.c:3717
 msgid "Error setting autoclear flag"
 msgstr "Erôr tal impuestâ la etichete di pulizie automatiche"
 
-#: src/disks/gduwindow.c:3802 src/disks/gduwindow.c:3866
+#: src/disks/gduwindow.c:3770 src/disks/gduwindow.c:3834
 msgid "Error canceling job"
 msgstr "Erôr tal anulâ il lavôr"
 
@@ -2420,7 +2375,7 @@ msgid ""
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
 "La esecuzion di benchmark a consist tal misurâ il tas di trasferiment in "
-"variis bandis dal dispositîf, cussì come misurâ trop timp che al stâ a "
+"variis bandis dal dispositîf, cussì come misurâ trop timp che al sta a "
 "spostâ dâts di une bande a câs a che altre. Fâs un backup dai dâts "
 "impuartants prime di doprâ il benchmark di scriture."
 
@@ -2755,7 +2710,7 @@ msgstr "Abilite cache in scriture"
 
 #: src/disks/ui/disk-settings-dialog.ui:571
 msgid "Disable Write Cache"
-msgstr "No stâ abilitâ cache in scriture"
+msgstr "No sta abilitâ cache in scriture"
 
 #: src/disks/ui/disk-settings-dialog.ui:594
 msgid ""
@@ -3011,7 +2966,7 @@ msgstr "_Sbloche tal inviament"
 #: src/disks/ui/edit-crypttab-dialog.ui:310
 msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgstr ""
-"Se selezionât, il dispositîf al vegnarà sblocât cuant che si stâ inviant il "
+"Se selezionât, il dispositîf al vignarà sblocât cuant che si sta inviant il "
 "sisteme [!noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
@@ -3079,7 +3034,7 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"No stâ abilitâ <i>Opzions di montaç automatic</i> par ministrâ il pont di "
+"No sta abilitâ <i>Opzions di montaç automatic</i> par ministrâ il pont di "
 "montaç e lis opzions di montaç par il dispositîf. Lis opzions a corispuindin "
 "a une vôs tal file <b>/etc/fstab</b>"
 
@@ -3273,6 +3228,10 @@ msgstr "Il gjenar di file system di creâ, come btrfs, xfs o swap"
 #: src/disks/ui/filesystem-create.ui:137 src/disks/ui/filesystem-create.ui:138
 msgid "Enter passphrase used to protect the data"
 msgstr "Scrîf la passphrase par protezi i dâts"
+
+#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "_Scancele"
 
 #: src/disks/ui/filesystem-create.ui:267
 msgid ""
@@ -3551,9 +3510,14 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositîfs coinvolts"
 
-#: src/libgdu/gduutils.c:1109
+#: src/libgdu/gduutils.c:1125
 msgid "Error locking device"
 msgstr "Erôr tal blocâ il dispositîf"
+
+#: src/libgdu/gduutils.c:1146
+#| msgid "Error deleting loop device"
+msgid "Error disabling autoclear for loop device"
+msgstr "Erôr tal disabilitâ la netisie automatiche pal dispositîf di loop"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3572,6 +3536,32 @@ msgstr "Un disc fis si podarès rompi ca di pôc."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Esamine"
+
+#~ msgid "ATA Secure Erase / Enhanced Secure Erase"
+#~ msgstr "ATA Secure Erase / Enhanced Secure Erase"
+
+#~ msgid "If Available, Slow"
+#~ msgstr "Se disponibil, lent"
+
+#~ msgid "Error erasing device %s"
+#~ msgstr "Erôr tal scancelâ il dispositîf %s"
+
+#~ msgid "Are you sure you want to erase the disks?"
+#~ msgstr "Sigûrs di volê scancelâ il disc?"
+
+#~ msgid ""
+#~ "All data on the selected disks will be lost but may still be recoverable "
+#~ "by data recovery services"
+#~ msgstr ""
+#~ "Ducj i dâts tal disc selezionât a laran pierdûts, ma si podaran recuperâ "
+#~ "cun servizis di recupar dâts"
+
+#~ msgid ""
+#~ "All data on the selected disks will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "Ducj i dâts sul disc selezionât a vegnaran sorescrits e al è facil che no "
+#~ "si podaran plui recuperâ cun servizis di recupar dâts"
 
 #~ msgid "Activation of this plugin"
 #~ msgstr "Ativazion dal plugin"

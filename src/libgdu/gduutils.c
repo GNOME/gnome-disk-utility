@@ -85,7 +85,6 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
   g_object_set_data_full (G_OBJECT (file_chooser), "x-gdu-orig-folder", g_strdup (folder), g_free);
   gtk_file_chooser_set_current_folder_uri (file_chooser, folder);
 
-  /* TODO: define proper mime-types */
   if (set_file_types)
     {
       filter = gtk_file_filter_new ();
@@ -97,14 +96,12 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
         gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.img.xz, *.iso)"));
       else
         gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.iso)"));
-      gtk_file_filter_add_pattern (filter, "*.raw-disk-image");
-      gtk_file_filter_add_pattern (filter, "*.img");
+      gtk_file_filter_add_mime_type (filter, "application/x-raw-disk-image");
       if (allow_compressed)
         {
-          gtk_file_filter_add_pattern (filter, "*.raw-disk-image.xz");
-          gtk_file_filter_add_pattern (filter, "*.img.xz");
+          gtk_file_filter_add_mime_type (filter, "application/x-raw-disk-image-xz-compressed");
         }
-      gtk_file_filter_add_pattern (filter, "*.iso");
+      gtk_file_filter_add_mime_type (filter, "application/x-cd-image");
       gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
       gtk_file_chooser_set_filter (file_chooser, filter);
     }

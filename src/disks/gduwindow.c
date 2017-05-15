@@ -348,6 +348,15 @@ gdu_window_init (GduWindow *window)
 static void on_client_changed (UDisksClient  *client,
                                gpointer       user_data);
 
+static
+gboolean
+on_delete_event (GtkWidget *widget,
+                 GdkEvent  *event,
+                 gpointer user_data)
+{
+  return !gdu_application_should_exit (GDU_WINDOW (widget)->application);
+}
+
 static void
 gdu_window_finalize (GObject *object)
 {
@@ -1346,6 +1355,11 @@ gdu_window_constructed (GObject *object)
                     "activate-link",
                     G_CALLBACK (on_activate_link),
                     window);
+
+  g_signal_connect (window,
+                    "delete-event",
+                    G_CALLBACK (on_delete_event),
+                    NULL);
 
   ensure_something_selected (window);
   gtk_widget_grab_focus (window->device_tree_treeview);

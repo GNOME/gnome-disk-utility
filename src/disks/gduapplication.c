@@ -76,6 +76,35 @@ gdu_application_finalize (GObject *object)
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
 
+
+gboolean
+gdu_application_should_exit (GduApplication *app)
+{
+  GtkWidget *dialog;
+  gint response;
+
+  if (app->local_jobs != NULL && g_hash_table_size (app->local_jobs) != 0)
+    {
+      dialog = gtk_message_dialog_new (GTK_WINDOW (app->window),
+                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_WARNING,
+                                       GTK_BUTTONS_OK_CANCEL,
+                                       _("Stop running jobs?"));
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+                                                _("Closing now stops the running jobs and leads to a corrupt result."));
+
+      response = gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_destroy (dialog);
+
+      if (response != GTK_RESPONSE_OK)
+        return FALSE;
+
+    }
+
+  return TRUE;
+}
+
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -326,7 +355,9 @@ quit_activated (GSimpleAction *action,
                 gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_widget_destroy (GTK_WIDGET (app->window));
+
+  if (gdu_application_should_exit (app))
+    gtk_widget_destroy (GTK_WIDGET (app->window));
 }
 
 static void

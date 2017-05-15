@@ -27,6 +27,8 @@ GObject      *gdu_application_new_widget (GduApplication  *application,
                                           const gchar     *name,
                                           GtkBuilder     **out_builder);
 
+gboolean      gdu_application_should_exit       (GduApplication *application);
+
 GduLocalJob  *gdu_application_create_local_job  (GduApplication *application,
                                                  UDisksObject   *object);
 void          gdu_application_destroy_local_job (GduApplication *application,

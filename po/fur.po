@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-02 07:26+0000\n"
-"PO-Revision-Date: 2017-05-05 10:58+0200\n"
+"POT-Creation-Date: 2017-05-09 13:57+0000\n"
+"PO-Revision-Date: 2017-05-16 18:30+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -2907,19 +2907,19 @@ msgstr "Benchmark partizion…"
 msgid "Encryption Options"
 msgstr "Opzions di cifradure"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92
-msgid "_Automatic Encryption Options"
-msgstr "_Opzions di cifradure automatichis"
+#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+msgid "Us_er Session Defaults"
+msgstr "Predefinîts session ut_ent"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
 msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
+"Switch off <i>User Session Defaults</i> to manage encryption options and "
+"passphrase for the device. The options correspond to an entry in the <b>/etc/"
+"crypttab</b> file"
 msgstr ""
-"Gjave la abilitazion <i>Opzions di cifradure automatiche</i> par ministrâ "
-"lis opzions di cifradure e la passphrase par il dispositîf (lis opzions a "
-"corispuindin a une vôs tal file <b>/etc/crypttab</b>)"
+"Distede <i>Predefinîts session utent</i> par ministrâ lis opzions di "
+"cifradure e la passphrase pal dispositîf. Lis opzions a corispuindin a une "
+"vôs tal file <b>/etc/crypttab</b>"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
@@ -2960,14 +2960,14 @@ msgid "_Passphrase"
 msgstr "_Passphrase"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-msgid "_Unlock at startup"
-msgstr "_Sbloche tal inviament"
+msgid "_Unlock at system startup"
+msgstr "_Sbloche al inviament dal sisteme"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
-"Se selezionât, il dispositîf al vignarà sblocât cuant che si sta inviant il "
-"sisteme [!noauto]"
+"Se selezionât, il dispositîf al vignarà sblocât al inviament dal sisteme [!"
+"noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3024,19 +3024,15 @@ msgstr "_Etichete"
 msgid "Mount Options"
 msgstr "Opzions di montaç"
 
-#: src/disks/ui/edit-fstab-dialog.ui:46
-msgid "_Automatic Mount Options"
-msgstr "_Opzions di montaç automatic"
-
 #: src/disks/ui/edit-fstab-dialog.ui:64
 msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"No sta abilitâ <i>Opzions di montaç automatic</i> par ministrâ il pont di "
-"montaç e lis opzions di montaç par il dispositîf. Lis opzions a corispuindin "
-"a une vôs tal file <b>/etc/fstab</b>"
+"Distude <i>Predefinîts session utent</i> par ministrâ il pont di montaç e "
+"lis opzions di montaç pal dispositîf. Lis opzions a corispuindin a une vôs "
+"tal file <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
@@ -3122,12 +3118,14 @@ msgstr ""
 "dispositîf [x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-msgid "Mount at _startup"
-msgstr "Montâ tal _inviament"
+msgid "Mount at system _startup"
+msgstr "Montâ al _inviament dal sisteme"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Se selezionât, il dispositîf al vegnarà montât tal inviament [!noauto]"
+msgid "If checked, the device will be mounted at system startup [!noauto]"
+msgstr ""
+"Se selezionât, il dispositîf al vegnarà montât al inviament dal sisteme [!"
+"noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3515,7 +3513,6 @@ msgid "Error locking device"
 msgstr "Erôr tal blocâ il dispositîf"
 
 #: src/libgdu/gduutils.c:1146
-#| msgid "Error deleting loop device"
 msgid "Error disabling autoclear for loop device"
 msgstr "Erôr tal disabilitâ la netisie automatiche pal dispositîf di loop"
 
@@ -3536,6 +3533,12 @@ msgstr "Un disc fis si podarès rompi ca di pôc."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Esamine"
+
+#~ msgid "_Automatic Encryption Options"
+#~ msgstr "_Opzions di cifradure automatichis"
+
+#~ msgid "_Automatic Mount Options"
+#~ msgstr "_Opzions di montaç automatic"
 
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "ATA Secure Erase / Enhanced Secure Erase"

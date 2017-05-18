@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-02 07:26+0000\n"
-"PO-Revision-Date: 2017-05-02 14:36+0700\n"
+"POT-Creation-Date: 2017-05-09 13:57+0000\n"
+"PO-Revision-Date: 2017-05-15 12:05+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -2899,18 +2899,18 @@ msgstr "Uji Banding Partisi…"
 msgid "Encryption Options"
 msgstr "Opsi Enkripsi"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92
-msgid "_Automatic Encryption Options"
-msgstr "Opsi Enkripsi Otom_atis"
+#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+msgid "Us_er Session Defaults"
+msgstr "Sesi P_engguna Bawaan"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
 msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
+"Switch off <i>User Session Defaults</i> to manage encryption options and "
+"passphrase for the device. The options correspond to an entry in the <b>/etc/"
+"crypttab</b> file"
 msgstr ""
-"Matikan <i>Opsi Enkripsi Otomatis</i> untuk mengelola opsi enkripsi dan "
-"frasa sandi bagi perangkat. Opsi berkaitan dengan entri dalam berkas <b>/etc/"
+"Matikan <i>Sesi Pengguna Bawaan</i> untuk mengelola opsi enkripsi dan frasa "
+"sandi bagi perangkat. Opsi berkaitan dengan entri dalam berkas <b>/etc/"
 "crypttab</b>."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
@@ -2952,12 +2952,13 @@ msgid "_Passphrase"
 msgstr "_Frasa sandi"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-msgid "_Unlock at startup"
-msgstr "B_uka kunci saat awal mula"
+msgid "_Unlock at system startup"
+msgstr "B_uka kunci saat awal mula sistem"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr "Bila dicontreng, perangkat akan tak terkunci saat awal mula [!noauto]"
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
+msgstr ""
+"Bila dicontreng, perangkat akan tak terkunci saat awal mula sistem [!noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3014,17 +3015,13 @@ msgstr "_Label"
 msgid "Mount Options"
 msgstr "Opsi Pengaitan"
 
-#: src/disks/ui/edit-fstab-dialog.ui:46
-msgid "_Automatic Mount Options"
-msgstr "Opsi Pengaitan Otom_atis"
-
 #: src/disks/ui/edit-fstab-dialog.ui:64
 msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"Matikan <i>Opsi Kait Otomatis</i> untuk mengelola titik kait dan opsi kait "
+"Matikan <i>Sesi Pengguna Bawaan</i> untuk mengelola titik kait dan opsi kait "
 "bagi perangkat. Opsi berhubungan dengan entri dalam berkas <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
@@ -3111,12 +3108,13 @@ msgstr ""
 "udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-msgid "Mount at _startup"
-msgstr "Kaitkan saat memulai _sistem"
+msgid "Mount at system _startup"
+msgstr "Kaitkan saat awal mula _sistem"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Bila dicontreng, perangkat akan dikat saat awal mula [!noauto]"
+msgid "If checked, the device will be mounted at system startup [!noauto]"
+msgstr ""
+"Bila dicontreng, perangkat akan dikaitkan saat awal mula sistem [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3447,35 +3445,35 @@ msgstr[0] "%d milidetik"
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
-msgstr "%s, %s, dan %s"
+msgstr "%s, %s, %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
 #: src/libgdu/gduutils.c:541
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
-msgstr "%s dan %s"
+msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
 #: src/libgdu/gduutils.c:546
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
-msgstr "%s dan %s"
+msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
 #: src/libgdu/gduutils.c:551
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
-msgstr "%s dan %s"
+msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
 #: src/libgdu/gduutils.c:562
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
-msgstr "%s dan %s"
+msgstr "%s %s"
 
 #: src/libgdu/gduutils.c:571
 msgctxt "duration"
@@ -3527,6 +3525,12 @@ msgstr "Suatu hard disk mungkin segera gagal."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Periksa"
+
+#~ msgid "_Automatic Encryption Options"
+#~ msgstr "Opsi Enkripsi Otom_atis"
+
+#~ msgid "_Automatic Mount Options"
+#~ msgstr "Opsi Pengaitan Otom_atis"
 
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "Hapus Aman / Hapus Aman Ditingkatkan ATA"

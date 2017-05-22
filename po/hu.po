@@ -4,12 +4,13 @@
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2009, 2010, 2012, 2013, 2014, 2015.
 # Balázs Úr <urbalazs at gmail dot com>, 2015, 2016, 2017.
+# Balázs Meskó <meskobalazs at gmail dot com>, 2017.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-09 13:57+0000\n"
+"POT-Creation-Date: 2017-05-19 11:42+0000\n"
 "PO-Revision-Date: 2017-05-14 21:15+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
@@ -89,7 +90,7 @@ msgstr "Egyszerű módja a lemezek kezelésének"
 msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1056
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1065
 msgid "Disks"
 msgstr "Lemezek"
 
@@ -125,7 +126,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Válassza ki a csatolandó lemezképet"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:755
+#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:764
 msgid "_Cancel"
 msgstr "Mé_gse"
 
@@ -143,8 +144,8 @@ msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
 msgstr ""
-"Ha be van jelölve, akkor a csatolás csak olvasható lesz. Ez akkor hasznos, ha "
-"még véletlenül sem szeretné az alapul szolgáló lemezképet módosítani."
+"Ha be van jelölve, akkor a csatolás csak olvasható lesz. Ez akkor hasznos, "
+"ha még véletlenül sem szeretné az alapul szolgáló lemezképet módosítani."
 
 #: src/disk-image-mounter/main.c:136
 #, c-format
@@ -170,39 +171,48 @@ msgstr "Hiba „%s” megnyitásakor: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Hiba a lemezkép csatolásakor: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:115
+#: src/disks/gduapplication.c:92
+msgid "Stop running jobs?"
+msgstr "Leállítja a futó feladatokat?"
+
+#: src/disks/gduapplication.c:94
+msgid "Closing now stops the running jobs and leads to a corrupt result."
+msgstr "Az azonnali bezárás leállítja a futó feladatokat, és hibás "
+"eredményt okoz."
+
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Hiba %s megnyitásakor: %s"
 
-#: src/disks/gduapplication.c:122
+#: src/disks/gduapplication.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Hiba a blokkeszköz kikeresésekor ehhez: %s"
 
-#: src/disks/gduapplication.c:144
+#: src/disks/gduapplication.c:173
 msgid "Select device"
 msgstr "Válasszon egy eszközt"
 
-#: src/disks/gduapplication.c:145
+#: src/disks/gduapplication.c:174
 msgid "Format selected device"
 msgstr "A kijelölt eszköz formázása"
 
-#: src/disks/gduapplication.c:146
+#: src/disks/gduapplication.c:175
 msgid "Parent window XID for the format dialog"
 msgstr "A formázás ablak szülőablakának XID-ja"
 
-#: src/disks/gduapplication.c:147
+#: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Lemezkép helyreállítása"
 
-#: src/disks/gduapplication.c:181
+#: src/disks/gduapplication.c:210
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 "A --format-device kapcsolót a --block-device kapcsolóval együtt kell "
 "használni\n"
 
-#: src/disks/gduapplication.c:187
+#: src/disks/gduapplication.c:216
 msgid "--format-device must be specified when using --xid\n"
 msgstr "A --format-device kapcsolót is meg kell adni a --xid használatakor\n"
 
@@ -211,7 +221,7 @@ msgstr "A --format-device kapcsolót is meg kell adni a --xid használatakor\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:306
+#: src/disks/gduapplication.c:335
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1217,12 +1227,10 @@ msgstr "Hiba %lld bájt olvasásakor a következő eltolásból: %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
 #: src/disks/gducreatefilesystemwidget.c:236
-#| msgid "Enter passphrase to unlock"
 msgid "The passphrases do not match"
 msgstr "A jelmondatok nem egyeznek"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#| msgid "The strength of the passphrase"
 msgid "The passphrase matches the existing passphrase"
 msgstr "A jelmondat megegyezik a meglévő jelmondattal"
 
@@ -1804,7 +1812,6 @@ msgid "Unnamed (%s).img"
 msgstr "Névtelen (%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:283
-#| msgid "Error writing to image"
 msgid "Error writing file"
 msgstr "Hiba a fájl íráskor"
 
@@ -1913,7 +1920,7 @@ msgstr "A titkosítási jelmondat lekérve a kulcstartóról"
 msgid "Volumes Grid"
 msgstr "Kötetek rácsa"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2049
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2063
 msgid "No Media"
 msgstr "Nincs adathordozó"
 
@@ -1955,52 +1962,51 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Szabad hely"
 
-#: src/disks/gduwindow.c:579
+#: src/disks/gduwindow.c:588
 msgid "Error deleting loop device"
 msgstr "Hiba a hurokeszköz törlésekor"
 
-#: src/disks/gduwindow.c:679 src/disks/gduwindow.c:722
+#: src/disks/gduwindow.c:688 src/disks/gduwindow.c:731
 msgid "Error attaching disk image"
 msgstr "Hiba a lemezkép csatolásakor"
 
-#: src/disks/gduwindow.c:752
+#: src/disks/gduwindow.c:761
 msgid "Select Disk Image to Attach"
 msgstr "Válassza ki a csatolandó lemezképet"
 
-#: src/disks/gduwindow.c:756
+#: src/disks/gduwindow.c:765
 msgid "_Attach"
 msgstr "C_satolás"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:763
+#: src/disks/gduwindow.c:772
 msgid "Set up _read-only loop device"
 msgstr "Csak _olvasható hurokeszköz beállítása"
 
-#: src/disks/gduwindow.c:764
+#: src/disks/gduwindow.c:773
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr ""
-"Ha be van jelölve, akkor a hurokeszköz csak olvasható lesz. Ez akkor hasznos, "
-"ha még véletlenül sem "
-"szeretné az alapul szolgáló fájlt módosítani."
+"Ha be van jelölve, akkor a hurokeszköz csak olvasható lesz. Ez akkor "
+"hasznos, ha még véletlenül sem szeretné az alapul szolgáló fájlt módosítani."
 
-#: src/disks/gduwindow.c:960
+#: src/disks/gduwindow.c:969
 msgid "Power off this disk"
 msgstr "A lemez kikapcsolása"
 
-#: src/disks/gduwindow.c:966
+#: src/disks/gduwindow.c:975
 msgid "Eject this disk"
 msgstr "Lemez kiadása"
 
-#: src/disks/gduwindow.c:972
+#: src/disks/gduwindow.c:981
 msgid "Detach this loop device"
 msgstr "A hurokeszköz leválasztása"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1367
+#: src/disks/gduwindow.c:1381
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2009,7 +2015,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1375
+#: src/disks/gduwindow.c:1389
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2018,7 +2024,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1383
+#: src/disks/gduwindow.c:1397
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2027,12 +2033,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1391
+#: src/disks/gduwindow.c:1405
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1406
+#: src/disks/gduwindow.c:1420
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2041,13 +2047,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1416
+#: src/disks/gduwindow.c:1430
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1738
+#: src/disks/gduwindow.c:1752
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (csak olvasható)"
@@ -2056,7 +2062,7 @@ msgstr "%s (csak olvasható)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1776
+#: src/disks/gduwindow.c:1790
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2065,7 +2071,7 @@ msgstr "%s van hátra (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1784
+#: src/disks/gduwindow.c:1798
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2076,7 +2082,7 @@ msgstr "%s van hátra"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1799
+#: src/disks/gduwindow.c:1813
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s / %s – %s"
@@ -2085,17 +2091,17 @@ msgstr "%s / %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1886
+#: src/disks/gduwindow.c:1900
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1958 src/disks/gduwindow.c:2359
+#: src/disks/gduwindow.c:1972 src/disks/gduwindow.c:2373
 msgid "Block device is empty"
 msgstr "A blokkeszköz üres"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1981
+#: src/disks/gduwindow.c:1995
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2104,11 +2110,11 @@ msgstr "Ismeretlen (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2150
+#: src/disks/gduwindow.c:2164
 msgid "Connected to another seat"
 msgstr "Kapcsolódva másik helyhez"
 
-#: src/disks/gduwindow.c:2296
+#: src/disks/gduwindow.c:2310
 msgid "Loop device is empty"
 msgstr "A hurokeszköz üres"
 
@@ -2118,61 +2124,61 @@ msgstr "A hurokeszköz üres"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2526
+#: src/disks/gduwindow.c:2540
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s szabad (%.1f%% használt)"
 
-#: src/disks/gduwindow.c:2556
+#: src/disks/gduwindow.c:2570
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2594
+#: src/disks/gduwindow.c:2608
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Fájlrendszer gyökere"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2602
+#: src/disks/gduwindow.c:2616
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Csatolva ide: %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2622
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nincs csatolva"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2631
+#: src/disks/gduwindow.c:2645
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktív"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2637
+#: src/disks/gduwindow.c:2651
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Nem aktív"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2650
+#: src/disks/gduwindow.c:2664
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Feloldva"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2656
+#: src/disks/gduwindow.c:2670
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Zárolva"
 
-#: src/disks/gduwindow.c:2666
+#: src/disks/gduwindow.c:2680
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Kiterjesztett partíció"
@@ -2181,38 +2187,38 @@ msgstr "Kiterjesztett partíció"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2686
+#: src/disks/gduwindow.c:2700
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2787
+#: src/disks/gduwindow.c:2801
 msgid "Unallocated Space"
 msgstr "Lefoglalatlan terület"
 
-#: src/disks/gduwindow.c:3136
+#: src/disks/gduwindow.c:3150
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Hiba történt a meghajtó készenléti módba küldésére tett kísérlet során"
 
-#: src/disks/gduwindow.c:3182
+#: src/disks/gduwindow.c:3196
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Hiba történt a meghajtó készenléti állapotból való felébresztésére tett "
 "kísérlet során"
 
-#: src/disks/gduwindow.c:3227
+#: src/disks/gduwindow.c:3241
 msgid "Error powering off drive"
 msgstr "Hiba a meghajtó kikapcsolásakor"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3279
+#: src/disks/gduwindow.c:3293
 msgid "Are you sure you want to power off the drives?"
 msgstr "Biztosan ki szeretné kapcsolni a meghajtókat?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3281
+#: src/disks/gduwindow.c:3295
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2220,55 +2226,55 @@ msgstr ""
 "Ez a művelet előkészíti a rendszert a következő meghajtók kikapcsolására és "
 "eltávolítására."
 
-#: src/disks/gduwindow.c:3285
+#: src/disks/gduwindow.c:3299
 msgid "_Power Off"
 msgstr "_Kikapcsolás"
 
-#: src/disks/gduwindow.c:3362
+#: src/disks/gduwindow.c:3376
 msgid "Error mounting filesystem"
 msgstr "Hiba a fájlrendszer csatolásakor"
 
-#: src/disks/gduwindow.c:3399 src/libgdu/gduutils.c:1105
+#: src/disks/gduwindow.c:3413 src/libgdu/gduutils.c:1102
 msgid "Error unmounting filesystem"
 msgstr "Hiba a fájlrendszer leválasztásakor"
 
-#: src/disks/gduwindow.c:3467
+#: src/disks/gduwindow.c:3481
 msgid "Error deleting partition"
 msgstr "Hiba a partíció törlésekor"
 
-#: src/disks/gduwindow.c:3504
+#: src/disks/gduwindow.c:3518
 msgid "Are you sure you want to delete the partition?"
 msgstr "Biztosan törölni kívánja a partíciót?"
 
-#: src/disks/gduwindow.c:3505
+#: src/disks/gduwindow.c:3519
 msgid "All data on the partition will be lost"
 msgstr "A partíción lévő minden adat elvész"
 
-#: src/disks/gduwindow.c:3506
+#: src/disks/gduwindow.c:3520
 msgid "_Delete"
 msgstr "_Törlés"
 
-#: src/disks/gduwindow.c:3537
+#: src/disks/gduwindow.c:3551
 msgid "Error ejecting media"
 msgstr "Hiba az adathordozó kiadásakor"
 
-#: src/disks/gduwindow.c:3602
+#: src/disks/gduwindow.c:3616
 msgid "Error locking encrypted device"
 msgstr "Hiba a titkosított eszköz zárolásakor"
 
-#: src/disks/gduwindow.c:3638
+#: src/disks/gduwindow.c:3652
 msgid "Error starting swap"
 msgstr "Hiba a cserehely elindításakor"
 
-#: src/disks/gduwindow.c:3675
+#: src/disks/gduwindow.c:3689
 msgid "Error stopping swap"
 msgstr "Hiba a cserehely leállításakor"
 
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3731
 msgid "Error setting autoclear flag"
 msgstr "Hiba az automatikus törlés jelző beállításakor"
 
-#: src/disks/gduwindow.c:3770 src/disks/gduwindow.c:3834
+#: src/disks/gduwindow.c:3784 src/disks/gduwindow.c:3848
 msgid "Error canceling job"
 msgstr "Hiba a feladat megszakításakor"
 
@@ -2307,7 +2313,6 @@ msgstr ""
 "Meskó Balázs <meskobalazs at gmail dot com>"
 
 #: src/disks/ui/app-menu.ui:6
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
 msgstr "Ú_j lemezkép…"
 
@@ -2918,10 +2923,6 @@ msgid "Us_er Session Defaults"
 msgstr "Fel_használói munkamenet alapértékei"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -2970,16 +2971,14 @@ msgid "_Passphrase"
 msgstr "Jel_mondat"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
 msgstr "_Feloldás a rendszer indításakor"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
-"Ha be van jelölve, akkor az eszköz fel lesz oldva a rendszer indításakor "
-"[!noauto]"
+"Ha be van jelölve, akkor az eszköz fel lesz oldva a rendszer indításakor [!"
+"noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -2990,8 +2989,8 @@ msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
 msgstr ""
-"Ha be van jelölve, akkor további hitelesítés szükséges az eszköz feloldásához "
-"[x-udisks-auth]"
+"Ha be van jelölve, akkor további hitelesítés szükséges az eszköz "
+"feloldásához [x-udisks-auth]"
 
 #: src/disks/ui/edit-dos-partition-dialog.ui:7
 #: src/disks/ui/edit-gpt-partition-dialog.ui:8
@@ -3037,10 +3036,6 @@ msgid "Mount Options"
 msgstr "Csatolási beállítások"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3119,8 +3114,7 @@ msgid ""
 "its directory is [x-gvfs-show]"
 msgstr ""
 "Ha be van jelölve, akkor az eszköz mindig megjelenik a felületen, bármi is "
-"legyen a könyvtára [x-"
-"gvfs-show]"
+"legyen a könyvtára [x-gvfs-show]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Require additional authori_zation to mount"
@@ -3131,20 +3125,18 @@ msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
-"Ha be van jelölve, akkor további hitelesítés szükséges az eszköz csatolásához "
-"[x-udisks-auth]"
+"Ha be van jelölve, akkor további hitelesítés szükséges az eszköz "
+"csatolásához [x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
 msgstr "Csatolás a rendszer in_dításakor"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
-"Ha be van jelölve, akkor az eszköz csatolva lesz a rendszer indításakor "
-"[!noauto]"
+"Ha be van jelölve, akkor az eszköz csatolva lesz a rendszer indításakor [!"
+"noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3290,12 +3282,10 @@ msgid "Format Volume"
 msgstr "Kötet formázása"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
 msgstr "Új lemezkép"
 
 #: src/disks/ui/new-disk-image-dialog.ui:188
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
 msgstr "Új _lemezkép csatolása…"
 
@@ -3404,20 +3394,20 @@ msgstr "Adja meg a jelmondatot a feloldáshoz"
 msgid "_Unlock"
 msgstr "_Feloldás"
 
-#: src/libgdu/gduutils.c:92
+#: src/libgdu/gduutils.c:91
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: src/libgdu/gduutils.c:97
+#: src/libgdu/gduutils.c:96
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Lemezképek (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:99
+#: src/libgdu/gduutils.c:98
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Lemezképek (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:430
+#: src/libgdu/gduutils.c:427
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3425,7 +3415,7 @@ msgstr[0] "%d év"
 msgstr[1] "%d év"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:437
+#: src/libgdu/gduutils.c:434
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3433,7 +3423,7 @@ msgstr[0] "%d hónap"
 msgstr[1] "%d hónap"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:444
+#: src/libgdu/gduutils.c:441
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3441,7 +3431,7 @@ msgstr[0] "%d nap"
 msgstr[1] "%d nap"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:451
+#: src/libgdu/gduutils.c:448
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3449,7 +3439,7 @@ msgstr[0] "%d órája"
 msgstr[1] "%d órája"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:458
+#: src/libgdu/gduutils.c:455
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3457,7 +3447,7 @@ msgstr[0] "%d perce"
 msgstr[1] "%d perce"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:465
+#: src/libgdu/gduutils.c:462
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3465,7 +3455,7 @@ msgstr[0] "%d másodperc"
 msgstr[1] "%d másodperc"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:472
+#: src/libgdu/gduutils.c:469
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3473,71 +3463,70 @@ msgstr[0] "%d ezredmásodperc"
 msgstr[1] "%d ezredmásodperc"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:536
+#: src/libgdu/gduutils.c:533
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:541
+#: src/libgdu/gduutils.c:538
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:546
+#: src/libgdu/gduutils.c:543
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:551
+#: src/libgdu/gduutils.c:548
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:562
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s %s"
 
-#: src/libgdu/gduutils.c:571
+#: src/libgdu/gduutils.c:568
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Kevesebb, mint egy perc"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:576
+#: src/libgdu/gduutils.c:573
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:582
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:724
+#: src/libgdu/gduutils.c:721
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Érintett eszközök"
 
-#: src/libgdu/gduutils.c:1125
+#: src/libgdu/gduutils.c:1122
 msgid "Error locking device"
 msgstr "Hiba az eszköz zárolásakor"
 
-#: src/libgdu/gduutils.c:1146
-#| msgid "Error deleting loop device"
+#: src/libgdu/gduutils.c:1143
 msgid "Error disabling autoclear for loop device"
 msgstr "Hiba a hurokeszköz automatikus törlésének letiltásakor"
 
@@ -3558,4 +3547,3 @@ msgstr "Egy merevlemez valószínűleg hamarosan meghibásodik."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Vizsgálat"
-

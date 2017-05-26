@@ -42,6 +42,9 @@ AC_MSG_RESULT([yes])
 AC_DEFINE([HAVE_FALLOCATE],[1],[Have valid fallocate() function])],[
 AC_MSG_RESULT([no])])
 
+CFLAGS="${CFLAGS} `getconf LFS_CFLAGS`"
+LDFLAGS="${LDFLAGS} `getconf LFS_LIBS`"
+
 # ***************************
 # Check for required packages
 # ***************************

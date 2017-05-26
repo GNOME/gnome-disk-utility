@@ -9,7 +9,6 @@
 
 #include "config.h"
 
-#define _FILE_OFFSET_BITS 64
 #include <glib/gi18n.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>

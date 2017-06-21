@@ -935,6 +935,7 @@ power_state_cell_func (GtkTreeViewColumn *column,
 {
   gboolean visible = FALSE;
   GduPowerStateFlags flags;
+  GduWindow *window = GDU_WINDOW (user_data);
 
   gtk_tree_model_get (model,
                       iter,
@@ -945,6 +946,7 @@ power_state_cell_func (GtkTreeViewColumn *column,
     visible = TRUE;
 
   gtk_cell_renderer_set_visible (renderer, visible);
+  update_all (window);
 }
 
 /* TODO: load from .ui file */
@@ -1169,7 +1171,7 @@ gdu_window_constructed (GObject *object)
   gtk_tree_view_column_set_cell_data_func (column,
                                            renderer,
                                            power_state_cell_func,
-                                           NULL,  /* user_data */
+                                           window,
                                            NULL); /* user_data GDestroyNotify */
 
   /* -------------------- */

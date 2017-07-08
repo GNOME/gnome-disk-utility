@@ -66,67 +66,6 @@ create_partition_data_free (CreatePartitionData *data)
   g_free (data);
 }
 
-static guint
-count_primary_dos_partitions (CreatePartitionData *data)
-{
-  GList *partitions, *l;
-  guint ret = 0;
-  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
-  for (l = partitions; l != NULL; l = l->next)
-    {
-      UDisksPartition *partition = UDISKS_PARTITION (l->data);
-      if (!udisks_partition_get_is_contained (partition))
-        ret += 1;
-    }
-  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
-  g_list_free (partitions);
-  return ret;
-}
-
-static gboolean
-have_dos_extended (CreatePartitionData *data)
-{
-  GList *partitions, *l;
-  gboolean ret = FALSE;
-  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
-  for (l = partitions; l != NULL; l = l->next)
-    {
-      UDisksPartition *partition = UDISKS_PARTITION (l->data);
-      if (udisks_partition_get_is_container (partition))
-        {
-          ret = TRUE;
-          break;
-        }
-    }
-  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
-  g_list_free (partitions);
-  return ret;
-}
-
-static gboolean
-is_inside_dos_extended (CreatePartitionData *data, guint64 offset)
-{
-  GList *partitions, *l;
-  gboolean ret = FALSE;
-  partitions = udisks_client_get_partitions (gdu_window_get_client (data->window), data->table);
-  for (l = partitions; l != NULL; l = l->next)
-    {
-      UDisksPartition *partition = UDISKS_PARTITION (l->data);
-      if (udisks_partition_get_is_container (partition))
-        {
-          if (offset >= udisks_partition_get_offset (partition) &&
-              offset < udisks_partition_get_offset (partition) + udisks_partition_get_size (partition))
-            {
-              ret = TRUE;
-              break;
-            }
-        }
-    }
-  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
-  g_list_free (partitions);
-  return ret;
-}
-
 static void
 create_partition_update (CreatePartitionData *data)
 {
@@ -142,10 +81,10 @@ create_partition_update (CreatePartitionData *data)
    */
   if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
     {
-      if (!is_inside_dos_extended (data, data->offset))
+      if (!gdu_utils_is_inside_dos_extended (gdu_window_get_client (data->window), data->table, data->offset))
         {
           guint num_primary;
-          num_primary = count_primary_dos_partitions (data);
+          num_primary = gdu_utils_count_primary_dos_partitions (gdu_window_get_client (data->window), data->table);
           if (num_primary == 4)
             show_dos_error = TRUE;
           else if (num_primary == 3)
@@ -405,7 +344,7 @@ gdu_create_partition_dialog_show (GduWindow    *window,
 
   if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
     {
-      if (!have_dos_extended (data))
+      if (!gdu_utils_have_dos_extended (gdu_window_get_client (data->window), data->table))
         {
           snprintf (dos_extended_partition_name, sizeof dos_extended_partition_name,
                     "%s <span size=\"small\">(%s)</span>",

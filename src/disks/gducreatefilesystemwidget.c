@@ -349,28 +349,6 @@ on_property_changed (GObject     *object,
   update (widget);
 }
 
-
-static gboolean
-is_flash (UDisksDrive *drive)
-{
-  gboolean ret = FALSE;
-  guint n;
-  const gchar *const *media_compat;
-
-  media_compat = udisks_drive_get_media_compatibility (drive);
-  for (n = 0; media_compat != NULL && media_compat[n] != NULL; n++)
-    {
-      if (g_str_has_prefix (media_compat[n], "flash"))
-        {
-          ret = TRUE;
-          goto out;
-        }
-    }
-
- out:
-  return ret;
-}
-
 static gboolean
 separator_func (GtkTreeModel *model,
                 GtkTreeIter *iter,
@@ -465,7 +443,7 @@ populate (GduCreateFilesystemWidget *widget)
   if (widget->drive != NULL && udisks_drive_get_removable (widget->drive))
     {
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
-      if (is_flash (widget->drive) || udisks_drive_get_size (widget->drive) < (guint64)(20ULL * 1000ULL*1000ULL*1000ULL))
+      if (gdu_utils_is_flash (widget->drive) || udisks_drive_get_size (widget->drive) < (guint64)(20ULL * 1000ULL*1000ULL*1000ULL))
         {
           gtk_combo_box_set_active_id (GTK_COMBO_BOX (widget->type_combobox), "vfat");
         }

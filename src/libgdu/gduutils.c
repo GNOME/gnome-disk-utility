@@ -590,6 +590,100 @@ gdu_utils_format_duration_usec (guint64                usec,
   return ret;
 }
 
+gboolean
+gdu_utils_is_flash (UDisksDrive *drive)
+{
+  gboolean ret = FALSE;
+  guint n;
+  const gchar *const *media_compat;
+
+  media_compat = udisks_drive_get_media_compatibility (drive);
+  for (n = 0; media_compat != NULL && media_compat[n] != NULL; n++)
+    {
+      if (g_str_has_prefix (media_compat[n], "flash"))
+        {
+          ret = TRUE;
+          break;
+        }
+    }
+
+  return ret;
+}
+
+guint
+gdu_utils_count_primary_dos_partitions (UDisksClient         *client,
+                                        UDisksPartitionTable *table)
+{
+  GList *partitions, *l;
+  guint ret = 0;
+
+  partitions = udisks_client_get_partitions (client, table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (!udisks_partition_get_is_contained (partition))
+        ret += 1;
+    }
+
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+
+  return ret;
+}
+
+gboolean
+gdu_utils_have_dos_extended (UDisksClient         *client,
+                             UDisksPartitionTable *table)
+{
+  GList *partitions, *l;
+  gboolean ret = FALSE;
+
+  partitions = udisks_client_get_partitions (client, table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (udisks_partition_get_is_container (partition))
+        {
+          ret = TRUE;
+          break;
+        }
+    }
+
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+
+  return ret;
+}
+
+gboolean
+gdu_utils_is_inside_dos_extended (UDisksClient         *client,
+                                  UDisksPartitionTable *table,
+                                  guint64               offset)
+{
+  GList *partitions, *l;
+  gboolean ret = FALSE;
+
+  partitions = udisks_client_get_partitions (client, table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *partition = UDISKS_PARTITION (l->data);
+      if (udisks_partition_get_is_container (partition))
+        {
+          if (offset >= udisks_partition_get_offset (partition) &&
+              offset < udisks_partition_get_offset (partition) + udisks_partition_get_size (partition))
+            {
+              ret = TRUE;
+              break;
+            }
+        }
+    }
+
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+
+  return ret;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 void

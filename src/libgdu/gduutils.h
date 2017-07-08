@@ -47,6 +47,18 @@ const gchar *gdu_utils_get_seat (void);
 gchar *gdu_utils_format_duration_usec (guint64                usec,
                                        GduFormatDurationFlags flags);
 
+gboolean gdu_utils_is_flash                  (UDisksDrive *drive);
+
+guint gdu_utils_count_primary_dos_partitions (UDisksClient         *client,
+                                              UDisksPartitionTable *table);
+
+gboolean gdu_utils_have_dos_extended         (UDisksClient         *client,
+                                              UDisksPartitionTable *table);
+
+gboolean gdu_utils_is_inside_dos_extended    (UDisksClient         *client,
+                                              UDisksPartitionTable *table,
+                                              guint64               offset);
+
 void            gdu_utils_show_error      (GtkWindow      *parent_window,
                                            const gchar    *message,
                                            GError         *error);

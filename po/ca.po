@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-28 14:17+0000\n"
-"PO-Revision-Date: 2017-03-13 18:25+0100\n"
+"POT-Creation-Date: 2017-06-21 12:16+0000\n"
+"PO-Revision-Date: 2017-07-09 19:40+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 2.0.1\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -41,6 +41,19 @@ msgstr "Escriptor d'imatges de disc"
 #: data/gnome-disk-image-writer.desktop.in:4
 msgid "Write Disk Images to Devices"
 msgstr "Escriu imatges de disc a dispositius"
+
+#: data/org.gnome.Disks.gschema.xml:6
+msgid "Default location for the Create/Restore disk image dialogs"
+msgstr ""
+"Ubicació per defecte dels diàlegs de creació/restauració d'imatges de disc"
+
+#: data/org.gnome.Disks.gschema.xml:7
+msgid ""
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
+msgstr ""
+"La ubicació per defecte dels diàlegs de creació/restauració d'imatges de "
+"disc. Si no se n'especifica cap s'utilitza la carpeta ~/Documents."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -77,7 +90,7 @@ msgstr "Una manera fàcil de gestionar els discs"
 msgid "The GNOME Project"
 msgstr "El projecte GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1051
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1067
 msgid "Disks"
 msgstr "Discs"
 
@@ -100,19 +113,6 @@ msgstr ""
 msgid "gnome-disks"
 msgstr "gnome-disks"
 
-#: data/org.gnome.Disks.gschema.xml:6
-msgid "Default location for the Create/Restore disk image dialogs"
-msgstr ""
-"Ubicació per defecte dels diàlegs de creació/restauració d'imatges de disc"
-
-#: data/org.gnome.Disks.gschema.xml:7
-msgid ""
-"Default location for the Create/Restore disk image dialogs. If blank the ~/"
-"Documents folder is used."
-msgstr ""
-"La ubicació per defecte dels diàlegs de creació/restauració d'imatges de "
-"disc. Si no se n'especifica cap s'utilitza la carpeta ~/Documents."
-
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "S'ha produït un error"
@@ -125,8 +125,8 @@ msgstr "Permet escriure a la imatge"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccioneu les imatges de disc a muntar"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gduwindow.c:727
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:764
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
@@ -158,10 +158,12 @@ msgid "Attach and mount one or more disk image files."
 msgstr "Adjunteu i munteu un, o més, fitxers d'imatge de disc."
 
 #: src/disk-image-mounter/main.c:192
+#, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "S'ha produït un error en obrir «%s». Potser el volum no està muntat?"
 
 #: src/disk-image-mounter/main.c:199
+#, c-format
 msgid "Error opening “%s”: %m"
 msgstr "S'ha produït un error en obrir «%s»: %m"
 
@@ -170,37 +172,47 @@ msgstr "S'ha produït un error en obrir «%s»: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "S'ha produït un error en adjuntar la imatge de disc: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:114
+#: src/disks/gduapplication.c:92
+msgid "Stop running jobs?"
+msgstr "Voleu aturar les tasques actives?"
+
+#: src/disks/gduapplication.c:94
+msgid "Closing now stops the running jobs and leads to a corrupt result."
+msgstr ""
+"Si tanqueu ara, les tasques que s'estan duent a terme s'aturaran i això "
+"comportarà un resultat malmès."
+
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "S'ha produït un error en obrir %s: %s"
 
-#: src/disks/gduapplication.c:121
+#: src/disks/gduapplication.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "S'ha produït un error en consultar el dispositiu de bloc de %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:173
 msgid "Select device"
 msgstr "Seleccioneu el dispositiu"
 
-#: src/disks/gduapplication.c:144
+#: src/disks/gduapplication.c:174
 msgid "Format selected device"
 msgstr "Formata el dispositiu seleccionat"
 
-#: src/disks/gduapplication.c:145
+#: src/disks/gduapplication.c:175
 msgid "Parent window XID for the format dialog"
 msgstr "L'XID de la finestra pare del diàleg de formatació"
 
-#: src/disks/gduapplication.c:146
+#: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Restaura una imatge de disc"
 
-#: src/disks/gduapplication.c:180
+#: src/disks/gduapplication.c:210
 msgid "--format-device must be used together with --block-device\n"
 msgstr "«--format-device» s'ha d'utilitzar conjuntament amb «--block-device»\n"
 
-#: src/disks/gduapplication.c:186
+#: src/disks/gduapplication.c:216
 msgid "--format-device must be specified when using --xid\n"
 msgstr "«--format-device» s'ha d'especificar si s'utilitza «--xid»\n"
 
@@ -209,7 +221,7 @@ msgstr "«--format-device» s'ha d'especificar si s'utilitza «--xid»\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:296
+#: src/disks/gduapplication.c:335
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1079,27 +1091,27 @@ msgid "Assessment"
 msgstr "Avaluació"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:333
+#: src/disks/gdubenchmarkdialog.c:332
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:338
+#: src/disks/gdubenchmarkdialog.c:337
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:662
+#: src/disks/gdubenchmarkdialog.c:661
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: src/disks/gdubenchmarkdialog.c:677 src/disks/gdubenchmarkdialog.c:889
+#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1111,136 +1123,145 @@ msgstr[1] "%u mostres"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: src/disks/gdubenchmarkdialog.c:718
+#: src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (fa %s)"
 
-#: src/disks/gdubenchmarkdialog.c:730
+#: src/disks/gdubenchmarkdialog.c:729
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "No hi ha dades del test de referència disponibles"
 
-#: src/disks/gdubenchmarkdialog.c:735
+#: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "S'està obrint el dispositiu…"
 
-#: src/disks/gdubenchmarkdialog.c:739
+#: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "S'està mesurant la ràtio de transferència (s'ha completat un %2.1f%%)…"
 
-#: src/disks/gdubenchmarkdialog.c:746
+#: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "S'està mesurant el temps d'accés (s'ha completat un %2.1f%%)…"
 
-#: src/disks/gdubenchmarkdialog.c:812
+#: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:887
+#: src/disks/gdubenchmarkdialog.c:886
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f ms"
 
-#: src/disks/gdubenchmarkdialog.c:1199
+#: src/disks/gdubenchmarkdialog.c:1198
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "S'ha produït un error en obtenir la mida del dispositiu: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1209
+#: src/disks/gdubenchmarkdialog.c:1208
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "S'ha produït un error en obtenir la mida de la pàgina: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1243 src/disks/gdubenchmarkdialog.c:1306
-#: src/disks/gdubenchmarkdialog.c:1325
+#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
+#: src/disks/gdubenchmarkdialog.c:1324
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "S'ha produït un error en desplaçar-se un desplaçament %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1254
+#: src/disks/gdubenchmarkdialog.c:1253
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "S'ha produït un error en pre-llegir %s del desplaçament %s"
 
-#: src/disks/gdubenchmarkdialog.c:1266
+#: src/disks/gdubenchmarkdialog.c:1265
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "S'ha produït un error en desplaçar-se un desplaçament %s"
 
-#: src/disks/gdubenchmarkdialog.c:1280
+#: src/disks/gdubenchmarkdialog.c:1279
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "S'ha produït un error en llegir %s del desplaçament %s"
 
-#: src/disks/gdubenchmarkdialog.c:1315
+#: src/disks/gdubenchmarkdialog.c:1314
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "S'ha produït un error en pre-llegir %lld bytes del desplaçament %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1336
+#: src/disks/gdubenchmarkdialog.c:1335
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "S'ha produït un error en escriure %lld bytes al desplaçament %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1346
+#: src/disks/gdubenchmarkdialog.c:1345
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "S'esperava escriure %lld bytes, però només se n'han escrit %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1356
+#: src/disks/gdubenchmarkdialog.c:1355
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "S'ha produït un error en sincronitzar (al desplaçament %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1396
+#: src/disks/gdubenchmarkdialog.c:1395
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "S'ha produït un error en desplaçar-se al desplaçament %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1408
+#: src/disks/gdubenchmarkdialog.c:1407
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "S'ha produït un error en llegir %lld bytes del desplaçament %lld"
 
-#: src/disks/gduchangepassphrasedialog.c:157
+#: src/disks/gduchangepassphrasedialog.c:120
+#: src/disks/gducreatefilesystemwidget.c:236
+msgid "The passphrases do not match"
+msgstr "Les contrasenyes no coincideixen"
+
+#: src/disks/gduchangepassphrasedialog.c:129
+msgid "The passphrase matches the existing passphrase"
+msgstr "La contrasenya coincideix amb l'actual"
+
+#: src/disks/gduchangepassphrasedialog.c:189
 msgid "Error updating /etc/crypttab"
 msgstr "S'ha produït un error en actualitzar /etc/crypttab"
 
-#: src/disks/gduchangepassphrasedialog.c:176
+#: src/disks/gduchangepassphrasedialog.c:208
 msgid "Error changing passphrase"
 msgstr "S'ha produït un error en canviar la contrasenya"
 
-#: src/disks/gduchangepassphrasedialog.c:263 src/disks/gducrypttabdialog.c:408
+#: src/disks/gduchangepassphrasedialog.c:295 src/disks/gducrypttabdialog.c:408
 msgid "Error retrieving configuration data"
 msgstr "S'ha produït un error en recuperar les dades de configuració"
 
-#: src/disks/gduchangepassphrasedialog.c:289
+#: src/disks/gduchangepassphrasedialog.c:321
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "Les dades de configuració de /etc/crypttab no estan ben formatades"
 
-#: src/disks/gduchangepassphrasedialog.c:322
+#: src/disks/gduchangepassphrasedialog.c:354
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
@@ -1248,8 +1269,8 @@ msgstr ""
 "Si canvieu la contrasenya del dispositiu també s'actualitzarà la contrasenya "
 "referenciada en el fitxer <i>/etc/crypttab</i>"
 
-#: src/disks/gduchangepassphrasedialog.c:341
-#: src/disks/gducreatefilesystemwidget.c:541
+#: src/disks/gduchangepassphrasedialog.c:373
+#: src/disks/gducreatefilesystemwidget.c:574
 msgid "The strength of the passphrase"
 msgstr "La seguretat de la contrasenya"
 
@@ -1324,27 +1345,34 @@ msgstr ""
 msgid "_Delete Disk Image File"
 msgstr "_Suprimeix el fitxer d'imatge de disc"
 
-#: src/disks/gducreatediskimagedialog.c:724
+#: src/disks/gducreatediskimagedialog.c:498
+#, fuzzy
+msgid "_Close"
+msgstr "Tan_ca"
+
+#: src/disks/gducreatediskimagedialog.c:723
 #: src/disks/gdurestorediskimagedialog.c:747
 msgid "Error determining size of device: "
 msgstr "S'ha produït un error en determinar la mida del dispositiu: "
 
-#: src/disks/gducreatediskimagedialog.c:731
+#: src/disks/gducreatediskimagedialog.c:730
 #: src/disks/gdurestorediskimagedialog.c:754
 msgid "Device is size 0"
 msgstr "El dispositiu té una mida 0"
 
-#: src/disks/gducreatediskimagedialog.c:765
+#: src/disks/gducreatediskimagedialog.c:764
 msgid "Error allocating space for disk image file: "
 msgstr ""
 "S'ha produït un error en ubicar espai pel fitxer de la imatge de disc: "
 
-#: src/disks/gducreatediskimagedialog.c:926
+#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gdunewdiskimagedialog.c:340
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Ja existeix un fitxer amb el nom «%s». Voleu reemplaçar-lo?"
 
-#: src/disks/gducreatediskimagedialog.c:929
+#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gdunewdiskimagedialog.c:343
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1352,86 +1380,84 @@ msgstr ""
 "Ja existeix el fitxer a «%s». Si el reemplaceu en sobreescriureu el "
 "contingut."
 
-#: src/disks/gducreatediskimagedialog.c:932
+#: src/disks/gducreatediskimagedialog.c:931
+#: src/disks/gdunewdiskimagedialog.c:346
 msgid "_Replace"
 msgstr "_Reemplaça"
 
-#: src/disks/gducreatediskimagedialog.c:982
+#: src/disks/gducreatediskimagedialog.c:981
+#: src/disks/gdunewdiskimagedialog.c:263
 msgid "Error opening file for writing"
 msgstr "S'ha produït un error en obrir el fitxer per escriure-hi"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:998
+#: src/disks/gducreatediskimagedialog.c:997
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "S'està copiant el dispositiu a una imatge de disc"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1004
+#: src/disks/gducreatediskimagedialog.c:1003
 msgid "Creating Disk Image"
 msgstr "S'està creant una imatge de disc"
 
-#: src/disks/gducreatefilesystemwidget.c:382
+#: src/disks/gducreatefilesystemwidget.c:415
 #: src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "Compatible amb tots els sistemes i dispositius"
 
-#: src/disks/gducreatefilesystemwidget.c:383
+#: src/disks/gducreatefilesystemwidget.c:416
 msgid "FAT"
 msgstr "FAT"
 
-#: src/disks/gducreatefilesystemwidget.c:388
+#: src/disks/gducreatefilesystemwidget.c:421
 msgid "Compatible with most systems"
 msgstr "Compatible amb la majoria de sistemes"
 
-#: src/disks/gducreatefilesystemwidget.c:389
+#: src/disks/gducreatefilesystemwidget.c:422
 msgid "NTFS"
 msgstr "NTFS"
 
-#: src/disks/gducreatefilesystemwidget.c:394
+#: src/disks/gducreatefilesystemwidget.c:427
 msgid "Compatible with Linux systems"
 msgstr "Compatible amb sistemes Linux"
 
-#: src/disks/gducreatefilesystemwidget.c:395
+#: src/disks/gducreatefilesystemwidget.c:428
 msgid "Ext4"
 msgstr "Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:400
+#: src/disks/gducreatefilesystemwidget.c:433
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Encriptat, compatible amb sistemes Linux"
 
-#: src/disks/gducreatefilesystemwidget.c:401
+#: src/disks/gducreatefilesystemwidget.c:434
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:406
+#: src/disks/gducreatefilesystemwidget.c:439
 msgid "Custom"
 msgstr "Personalitzat"
 
-#: src/disks/gducreatefilesystemwidget.c:407
+#: src/disks/gducreatefilesystemwidget.c:440
 msgid "Enter filesystem type"
 msgstr "Introduïu el tipus de sistema de fitxers"
 
-#: src/disks/gducreatefilesystemwidget.c:489
-#: src/disks/gduerasemultipledisksdialog.c:131
+#: src/disks/gducreatefilesystemwidget.c:522
 #: src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
 msgstr "No sobreescriguis les dades existents"
 
-#: src/disks/gducreatefilesystemwidget.c:490
-#: src/disks/gduerasemultipledisksdialog.c:132
+#: src/disks/gducreatefilesystemwidget.c:523
 #: src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "Ràpid"
 
-#: src/disks/gducreatefilesystemwidget.c:497
-#: src/disks/gduerasemultipledisksdialog.c:142
+#: src/disks/gducreatefilesystemwidget.c:530
 #: src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Sobreescriu les dades existents amb zeros"
 
-#: src/disks/gducreatefilesystemwidget.c:498
-#: src/disks/gduerasemultipledisksdialog.c:143
+#: src/disks/gducreatefilesystemwidget.c:531
 #: src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "Lent"
@@ -1440,25 +1466,25 @@ msgstr "Lent"
 msgid "Error formatting partition"
 msgstr "S'ha produït un error en formatar la partició"
 
-#: src/disks/gducreatepartitiondialog.c:365
+#: src/disks/gducreatepartitiondialog.c:366
 msgid "Error creating partition"
 msgstr "S'ha produït un error en crear la partició"
 
-#: src/disks/gducreatepartitiondialog.c:455
+#: src/disks/gducreatepartitiondialog.c:457
 msgid "Extended partition"
 msgstr "Partició ampliada"
 
-#: src/disks/gducreatepartitiondialog.c:456
+#: src/disks/gducreatepartitiondialog.c:458
 msgid "For logical partitions"
 msgstr "Per a particions lògiques"
 
-#: src/disks/gducreatepartitiondialog.c:469
+#: src/disks/gducreatepartitiondialog.c:471
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 "No es pot crear una partició nova. Ja hi ha quatre particions primàries."
 
-#: src/disks/gducreatepartitiondialog.c:473
+#: src/disks/gducreatepartitiondialog.c:475
 msgid "This is the last primary partition that can be created."
 msgstr "Aquesta és l'última partició primària que es pot crear."
 
@@ -1598,76 +1624,11 @@ msgstr "Silenciós (lent)"
 msgid "Loud (Fast)"
 msgstr "Sorollós (ràpid)"
 
-#: src/disks/gduerasemultipledisksdialog.c:154
-msgid "ATA Secure Erase / Enhanced Secure Erase"
-msgstr "Esborrat segur d'ATA/esborrat segur millorat"
+#: src/disks/gdufilesystemdialog.c:59
+msgid "The label matches the existing label"
+msgstr "L'etiqueta coincideix amb l'actual"
 
-#: src/disks/gduerasemultipledisksdialog.c:155
-msgid "If Available, Slow"
-msgstr "Si és disponible, més lent"
-
-#: src/disks/gduerasemultipledisksdialog.c:186
-#, c-format
-msgid "Error erasing device %s"
-msgstr "S'ha produït un error en esborrar el dispositiu %s"
-
-#: src/disks/gduerasemultipledisksdialog.c:367
-msgid "Are you sure you want to erase the disks?"
-msgstr "Segur que voleu esborrar els discs?"
-
-#. Translators: warning used for erasure of multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:371
-msgid ""
-"All data on the selected disks will be lost but may still be recoverable by "
-"data recovery services"
-msgstr ""
-"Es perdran totes les dades dels discs seleccionats, però encara es podrien "
-"recuperar amb sistemes de recuperació de dades"
-
-#: src/disks/gduerasemultipledisksdialog.c:373
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:222
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
-"<b>Consell</b>: si teniu pensat reciclar, vendre o donar un ordinador vell o "
-"un disc, hauríeu d'utilitzar un mètode d'esborrat més exhaustiu per "
-"assegurar-vos que les vostres dades privades no acaben a les mans equivocades"
-
-#. Translators: warning used when overwriting data on multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:378
-msgid ""
-"All data on the selected disks will be overwritten and will likely not be "
-"recoverable by data recovery services"
-msgstr ""
-"Es sobreescriuran totes les dades dels discs i segurament no serà possible "
-"recuperar-la amb sistemes de recuperació de dades"
-
-#: src/disks/gduerasemultipledisksdialog.c:384
-#: src/disks/gduformatdiskdialog.c:437
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can’t be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-"<b>Avís</b>: l'ordre d'esborrat segur pot tardar molt de temps en completar-"
-"se, no es pot cancel·lar i pot ser que no funcioni correctament amb segons "
-"quin maquinari. En el pitjor dels casos pot fer que la unitat deixi de "
-"funcionar, s'espatlli el sistema o es bloquegi. Abans de continuar, llegiu "
-"l'article sobre l'<a href='https://ata.wiki.kernel.org/index.php/"
-"ATA_Secure_Erase'>esborrat segur d'ATA</a> i assegureu-vos que n'enteneu els "
-"riscs"
-
-#: src/disks/gduerasemultipledisksdialog.c:396
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "_Esborra"
-
-#: src/disks/gdufilesystemdialog.c:60
+#: src/disks/gdufilesystemdialog.c:81
 msgid "Error setting label"
 msgstr "S'ha produït un error en establir l'etiqueta"
 
@@ -1734,6 +1695,16 @@ msgstr ""
 "Es perdran totes les dades del disc, però encara es podrien recuperar amb "
 "sistemes de recuperació de dades"
 
+#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>Consell</b>: si teniu pensat reciclar, vendre o donar un ordinador vell o "
+"un disc, hauríeu d'utilitzar un mètode d'esborrat més exhaustiu per "
+"assegurar-vos que les vostres dades privades no acaben a les mans equivocades"
+
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:429
 msgid ""
@@ -1743,7 +1714,24 @@ msgstr ""
 "Es sobreescriuran totes les dades del disc i segurament no serà possible "
 "recuperar-la amb sistemes de recuperació de dades"
 
-#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:234
+#: src/disks/gduformatdiskdialog.c:437
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can’t be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>Avís</b>: l'ordre d'esborrat segur pot tardar molt de temps en completar-"
+"se, no es pot cancel·lar i pot ser que no funcioni correctament amb segons "
+"quin maquinari. En el pitjor dels casos pot fer que la unitat deixi de "
+"funcionar, s'espatlli el sistema o es bloquegi. Abans de continuar, llegiu "
+"l'article sobre l'<a href='https://ata.wiki.kernel.org/index.php/"
+"ATA_Secure_Erase'>esborrat segur d'ATA</a> i assegureu-vos que n'enteneu els "
+"riscs"
+
+#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
 msgid "_Format"
 msgstr "_Formata"
 
@@ -1751,12 +1739,12 @@ msgstr "_Formata"
 msgid "Error formatting volume"
 msgstr "S'ha produït un error en formatar el volum"
 
-#: src/disks/gduformatvolumedialog.c:216
+#: src/disks/gduformatvolumedialog.c:218
 msgid "Are you sure you want to format the volume?"
 msgstr "Segur que voleu formatar el volum?"
 
 #. Translators: warning used for quick format of the volume
-#: src/disks/gduformatvolumedialog.c:220
+#: src/disks/gduformatvolumedialog.c:222
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -1765,7 +1753,7 @@ msgstr ""
 "sistemes de recuperació de dades"
 
 #. Translators: warning used when overwriting data of the volume
-#: src/disks/gduformatvolumedialog.c:227
+#: src/disks/gduformatvolumedialog.c:229
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -1829,6 +1817,18 @@ msgstr "S'ha produït un error en afegir una entrada nova a /etc/fstab"
 #: src/disks/gdufstabdialog.c:603
 msgid "Error updating /etc/fstab entry"
 msgstr "S'ha produït un error en actualitzar una entrada a /etc/fstab"
+
+#. Translators: The suggested name for the disk image to create.
+#. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
+#.
+#: src/disks/gdunewdiskimagedialog.c:208
+#, c-format
+msgid "Unnamed (%s).img"
+msgstr "Sense nom (%s).img"
+
+#: src/disks/gdunewdiskimagedialog.c:283
+msgid "Error writing file"
+msgstr "S'ha produït un error en escriure el fitxer"
 
 #: src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
@@ -1935,16 +1935,16 @@ msgstr "S'ha recuperat la contrasenya d'encriptació de l'anell de claus"
 msgid "Volumes Grid"
 msgstr "Xarxa de volums"
 
-#: src/disks/gduvolumegrid.c:570 src/disks/gduwindow.c:2042
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2065
 msgid "No Media"
 msgstr "Cap suport"
 
-#: src/disks/gduvolumegrid.c:1670
+#: src/disks/gduvolumegrid.c:1666
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Sistema de fitxers"
 
-#: src/disks/gduvolumegrid.c:1680
+#: src/disks/gduvolumegrid.c:1676
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Memòria intermèdia"
@@ -1952,7 +1952,7 @@ msgstr "Memòria intermèdia"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: src/disks/gduvolumegrid.c:1703
+#: src/disks/gduvolumegrid.c:1699
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -1961,46 +1961,46 @@ msgstr "Partició %u: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: src/disks/gduvolumegrid.c:1710
+#: src/disks/gduvolumegrid.c:1706
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Partició %u"
 
-#: src/disks/gduvolumegrid.c:1767
+#: src/disks/gduvolumegrid.c:1763
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
 
-#: src/disks/gduvolumegrid.c:1842
+#: src/disks/gduvolumegrid.c:1838
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espai lliure"
 
-#: src/disks/gduwindow.c:586
+#: src/disks/gduwindow.c:588
 msgid "Error deleting loop device"
 msgstr "S'ha produït un error en suprimir el dispositiu de bucle"
 
-#: src/disks/gduwindow.c:686 src/disks/gduwindow.c:757
+#: src/disks/gduwindow.c:688 src/disks/gduwindow.c:731
 msgid "Error attaching disk image"
 msgstr "S'ha produït un error en adjuntar la imatge de disc"
 
-#: src/disks/gduwindow.c:724
+#: src/disks/gduwindow.c:761
 msgid "Select Disk Image to Attach"
 msgstr "Seleccioneu la imatge de disc a adjuntar"
 
-#: src/disks/gduwindow.c:728
+#: src/disks/gduwindow.c:765
 msgid "_Attach"
 msgstr "_Adjunta"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:735
+#: src/disks/gduwindow.c:772
 msgid "Set up _read-only loop device"
 msgstr "Configura el dispositiu de bucle en mode _només lectura"
 
-#: src/disks/gduwindow.c:736
+#: src/disks/gduwindow.c:773
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2008,20 +2008,20 @@ msgstr ""
 "Si se selecciona, el dispositiu de bucle s'utilitzarà només en mode lectura. "
 "És útil si no voleu que es modifiqui el fitxer que conté"
 
-#: src/disks/gduwindow.c:958
+#: src/disks/gduwindow.c:971
 msgid "Power off this disk"
 msgstr "Atura la unitat"
 
-#: src/disks/gduwindow.c:964
+#: src/disks/gduwindow.c:977
 msgid "Eject this disk"
 msgstr "Expulsa el suport"
 
-#: src/disks/gduwindow.c:970
+#: src/disks/gduwindow.c:983
 msgid "Detach this loop device"
 msgstr "Separa el dispositiu de bucle"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1362
+#: src/disks/gduwindow.c:1383
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2030,7 +2030,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1370
+#: src/disks/gduwindow.c:1391
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2039,7 +2039,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1378
+#: src/disks/gduwindow.c:1399
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2048,12 +2048,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1386
+#: src/disks/gduwindow.c:1407
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1401
+#: src/disks/gduwindow.c:1422
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Maj>F10"
@@ -2062,13 +2062,13 @@ msgstr "<Maj>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1411
+#: src/disks/gduwindow.c:1432
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Ctrl><Maj>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1731
+#: src/disks/gduwindow.c:1754
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Només lectura)"
@@ -2077,7 +2077,7 @@ msgstr "%s (Només lectura)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1769
+#: src/disks/gduwindow.c:1792
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2086,7 +2086,7 @@ msgstr "Manquen %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1777
+#: src/disks/gduwindow.c:1800
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2097,7 +2097,8 @@ msgstr "Manquen %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1792
+#: src/disks/gduwindow.c:1815
+#, c-format
 msgid "%s of %s — %s"
 msgstr "%s de %s – %s"
 
@@ -2105,17 +2106,17 @@ msgstr "%s de %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1879
+#: src/disks/gduwindow.c:1902
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1951 src/disks/gduwindow.c:2351
+#: src/disks/gduwindow.c:1974 src/disks/gduwindow.c:2375
 msgid "Block device is empty"
 msgstr "El dispositiu de bloc és buit"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1974
+#: src/disks/gduwindow.c:1997
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2124,11 +2125,11 @@ msgstr "Desconeguda (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2143
+#: src/disks/gduwindow.c:2166
 msgid "Connected to another seat"
 msgstr "Connectat a un altre terminal"
 
-#: src/disks/gduwindow.c:2289
+#: src/disks/gduwindow.c:2312
 msgid "Loop device is empty"
 msgstr "El dispositiu de bucle és buit"
 
@@ -2138,61 +2139,61 @@ msgstr "El dispositiu de bucle és buit"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2518
+#: src/disks/gduwindow.c:2542
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s lliure (%.1f%% en ús)"
 
-#: src/disks/gduwindow.c:2548
+#: src/disks/gduwindow.c:2572
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconeguda"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2576
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Sistema de fitxers arrel"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2618
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Muntat a %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2590
+#: src/disks/gduwindow.c:2624
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Sense muntar"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2613
+#: src/disks/gduwindow.c:2647
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2653
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "No actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2632
+#: src/disks/gduwindow.c:2666
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Desblocat"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2638
+#: src/disks/gduwindow.c:2672
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Blocat"
 
-#: src/disks/gduwindow.c:2648
+#: src/disks/gduwindow.c:2682
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
@@ -2201,38 +2202,38 @@ msgstr "Partició ampliada"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2668
+#: src/disks/gduwindow.c:2702
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2768
+#: src/disks/gduwindow.c:2803
 msgid "Unallocated Space"
 msgstr "Espai no ubicat"
 
-#: src/disks/gduwindow.c:3117
+#: src/disks/gduwindow.c:3152
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava posar la unitat en mode de repòs"
 
-#: src/disks/gduwindow.c:3163
+#: src/disks/gduwindow.c:3198
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava despertar la unitat del mode de repòs"
 
-#: src/disks/gduwindow.c:3208
+#: src/disks/gduwindow.c:3243
 msgid "Error powering off drive"
 msgstr "S'ha produït un error en apagar el dispositiu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3260
+#: src/disks/gduwindow.c:3295
 msgid "Are you sure you want to power off the drives?"
 msgstr "Segur que voleu apagar els dispositius?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3262
+#: src/disks/gduwindow.c:3297
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2240,55 +2241,55 @@ msgstr ""
 "Aquesta operació prepararà el sistema perquè es puguin apagar i treure els "
 "dispositius següents."
 
-#: src/disks/gduwindow.c:3266
+#: src/disks/gduwindow.c:3301
 msgid "_Power Off"
 msgstr "_Apaga"
 
-#: src/disks/gduwindow.c:3343
+#: src/disks/gduwindow.c:3378
 msgid "Error mounting filesystem"
 msgstr "S'ha produït un error en muntar el sistema de fitxers"
 
-#: src/disks/gduwindow.c:3382 src/libgdu/gduutils.c:1053
+#: src/disks/gduwindow.c:3415 src/libgdu/gduutils.c:1102
 msgid "Error unmounting filesystem"
 msgstr "S'ha produït un error en desmuntar el sistema de fitxers"
 
-#: src/disks/gduwindow.c:3524
+#: src/disks/gduwindow.c:3483
 msgid "Error deleting partition"
 msgstr "S'ha produït un error en suprimir particions"
 
-#: src/disks/gduwindow.c:3561
+#: src/disks/gduwindow.c:3520
 msgid "Are you sure you want to delete the partition?"
 msgstr "Segur que voleu suprimir la partició?"
 
-#: src/disks/gduwindow.c:3562
+#: src/disks/gduwindow.c:3521
 msgid "All data on the partition will be lost"
 msgstr "Es perdran totes les dades de la partició"
 
-#: src/disks/gduwindow.c:3563
+#: src/disks/gduwindow.c:3522
 msgid "_Delete"
 msgstr "_Suprimeix"
 
-#: src/disks/gduwindow.c:3594
+#: src/disks/gduwindow.c:3553
 msgid "Error ejecting media"
 msgstr "S'ha produït un error en expulsar el suport"
 
-#: src/disks/gduwindow.c:3661
+#: src/disks/gduwindow.c:3618
 msgid "Error locking encrypted device"
 msgstr "S'ha produït un error en bloquejar el dispositiu encriptat"
 
-#: src/disks/gduwindow.c:3725
+#: src/disks/gduwindow.c:3654
 msgid "Error starting swap"
 msgstr "S'ha produït un error en iniciar la memòria d'intercanvi"
 
-#: src/disks/gduwindow.c:3762
+#: src/disks/gduwindow.c:3691
 msgid "Error stopping swap"
 msgstr "S'ha produït un error en aturar la memòria d'intercanvi"
 
-#: src/disks/gduwindow.c:3804
+#: src/disks/gduwindow.c:3733
 msgid "Error setting autoclear flag"
 msgstr "S'ha produït un error en establir el senyalador d'autoneteja"
 
-#: src/disks/gduwindow.c:3857 src/disks/gduwindow.c:3921
+#: src/disks/gduwindow.c:3786 src/disks/gduwindow.c:3850
 msgid "Error canceling job"
 msgstr "S'ha produït un error en cancel·lar la tasca"
 
@@ -2325,18 +2326,22 @@ msgid "translator-credits"
 msgstr "Gil Forcada <gilforcada@guifi.net>"
 
 #: src/disks/ui/app-menu.ui:6
+msgid "_New Disk Image…"
+msgstr "_Crea una imatge de disc…"
+
+#: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
 msgstr "Adjunta una _imatge de disc…"
 
-#: src/disks/ui/app-menu.ui:13
+#: src/disks/ui/app-menu.ui:17
 msgid "_Help"
 msgstr "A_juda"
 
-#: src/disks/ui/app-menu.ui:17
+#: src/disks/ui/app-menu.ui:21
 msgid "_About"
 msgstr "_Quant a"
 
-#: src/disks/ui/app-menu.ui:21
+#: src/disks/ui/app-menu.ui:25
 msgid "_Quit"
 msgstr "_Surt"
 
@@ -2526,14 +2531,17 @@ msgstr "Crea una imatge de disc"
 #: src/disks/ui/edit-crypttab-dialog.ui:140
 #: src/disks/ui/edit-gpt-partition-dialog.ui:107
 #: src/disks/ui/filesystem-create.ui:37
+#: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Nom"
 
 #: src/disks/ui/create-disk-image-dialog.ui:48
+#: src/disks/ui/new-disk-image-dialog.ui:67
 msgid "Save in _Folder"
 msgstr "De_sa a la carpeta"
 
 #: src/disks/ui/create-disk-image-dialog.ui:85
+#: src/disks/ui/new-disk-image-dialog.ui:124
 msgid "Select a Folder"
 msgstr "Seleccioneu una carpeta"
 
@@ -2554,55 +2562,69 @@ msgid "C_reate"
 msgstr "C_rea"
 
 #: src/disks/ui/create-partition-dialog.ui:112
+#: src/disks/ui/new-disk-image-dialog.ui:29
 msgid "Partition _Size"
 msgstr "_Mida de la partició"
 
 #: src/disks/ui/create-partition-dialog.ui:130
 #: src/disks/ui/create-partition-dialog.ui:131
+#: src/disks/ui/new-disk-image-dialog.ui:86
+#: src/disks/ui/new-disk-image-dialog.ui:87
 msgid "The size of the partition to create, in megabytes"
 msgstr "La mida de la partició que es crearà, en megabytes"
 
 #: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/new-disk-image-dialog.ui:141
 msgid "bytes"
 msgstr "bytes"
 
 #: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/new-disk-image-dialog.ui:142
 msgid "kB"
 msgstr "kB"
 
 #: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/new-disk-image-dialog.ui:143
 msgid "MB"
 msgstr "MB"
 
 #: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/new-disk-image-dialog.ui:144
 msgid "GB"
 msgstr "GB"
 
 #: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/new-disk-image-dialog.ui:145
 msgid "TB"
 msgstr "TB"
 
 #: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/new-disk-image-dialog.ui:146
 msgid "PB"
 msgstr "PB"
 
 #: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/new-disk-image-dialog.ui:147
 msgid "KiB"
 msgstr "KiB"
 
 #: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/new-disk-image-dialog.ui:148
 msgid "MiB"
 msgstr "MiB"
 
 #: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/new-disk-image-dialog.ui:149
 msgid "GiB"
 msgstr "GiB"
 
 #: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/new-disk-image-dialog.ui:150
 msgid "TiB"
 msgstr "TiB"
 
 #: src/disks/ui/create-partition-dialog.ui:162
+#: src/disks/ui/new-disk-image-dialog.ui:151
 msgid "PiB"
 msgstr "PiB"
 
@@ -2616,7 +2638,7 @@ msgid "The free space following the partition, in megabytes"
 msgstr "L'espai lliure contigu a la partició, en megabytes"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:862
+#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:863
 msgid "Contents"
 msgstr "Contingut"
 
@@ -2752,7 +2774,7 @@ msgstr "Ubicació"
 msgid "Media"
 msgstr "Suport"
 
-#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:974
+#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:1012
 msgid "Job"
 msgstr "Tasca"
 
@@ -2760,7 +2782,7 @@ msgstr "Tasca"
 msgid "Name"
 msgstr "Nom"
 
-#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:829
+#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:830
 msgid "Size"
 msgstr "Mida"
 
@@ -2768,132 +2790,141 @@ msgstr "Mida"
 msgid "Auto-clear"
 msgstr "Neteja automàtica"
 
+#: src/disks/ui/disks.ui:533
+#, fuzzy
+msgid "Detach loop device after unmount action"
+msgstr "Desacobla el dispositiu de bucle després de desmuntar-lo."
+
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:555
+#: src/disks/ui/disks.ui:556
 msgid "Backing File"
 msgstr "S'està creant una còpia del fitxer"
 
-#: src/disks/ui/disks.ui:592
+#: src/disks/ui/disks.ui:593
 msgid "Partitioning"
 msgstr "Particionat"
 
-#: src/disks/ui/disks.ui:636
+#: src/disks/ui/disks.ui:637
 msgid "_Volumes"
 msgstr "_Volums"
 
-#: src/disks/ui/disks.ui:690
+#: src/disks/ui/disks.ui:691
 msgid "Mount selected partition"
 msgstr "Monta la partició seleccionada"
 
-#: src/disks/ui/disks.ui:703
+#: src/disks/ui/disks.ui:704
 msgid "Unmount selected partition"
 msgstr "Desmunta la partició seleccionada"
 
-#: src/disks/ui/disks.ui:716
+#: src/disks/ui/disks.ui:717
 msgid "Activate selected swap partition"
 msgstr "Activa la partició d'intercanvi seleccionada"
 
-#: src/disks/ui/disks.ui:729
+#: src/disks/ui/disks.ui:730
 msgid "Deactivate selected swap partition"
 msgstr "Desactiva la partició d'intercanvi seleccionada"
 
-#: src/disks/ui/disks.ui:743
+#: src/disks/ui/disks.ui:744
 msgid "Unlock selected encrypted partition"
 msgstr "Desbloca la partició encriptada seleccionada"
 
-#: src/disks/ui/disks.ui:756
+#: src/disks/ui/disks.ui:757
 msgid "Lock selected encrypted partition"
 msgstr "Bloca la partició encriptada seleccionada"
 
-#: src/disks/ui/disks.ui:768
+#: src/disks/ui/disks.ui:769
 msgid "Create partition in unallocated space"
 msgstr "Crea una partició en l'espai no assignat"
 
-#: src/disks/ui/disks.ui:781
+#: src/disks/ui/disks.ui:782
 msgid "Delete selected partition"
 msgstr "Suprimeix la partició seleccionada"
 
-#: src/disks/ui/disks.ui:794
+#: src/disks/ui/disks.ui:795
 msgid "Additional partition options"
 msgstr "Opcions de la partició addicionals"
 
-#: src/disks/ui/disks.ui:899
+#: src/disks/ui/disks.ui:900
 msgid "Device"
 msgstr "Dispositiu"
 
-#: src/disks/ui/disks.ui:936
+#: src/disks/ui/disks.ui:937
+msgid "UUID"
+msgstr "UUID"
+
+#: src/disks/ui/disks.ui:974
 msgid "Partition Type"
 msgstr "Tipus de partició"
 
-#: src/disks/ui/disks.ui:1134
+#: src/disks/ui/disks.ui:1172
 msgid "Format Disk…"
 msgstr "Formata el disc…"
 
-#: src/disks/ui/disks.ui:1147
+#: src/disks/ui/disks.ui:1185
 msgid "Create Disk Image…"
 msgstr "Crea una imatge de disc…"
 
-#: src/disks/ui/disks.ui:1154
+#: src/disks/ui/disks.ui:1192
 msgid "Restore Disk Image…"
 msgstr "Restaura una imatge de disc…"
 
-#: src/disks/ui/disks.ui:1161
+#: src/disks/ui/disks.ui:1199
 msgid "Benchmark Disk…"
 msgstr "Test de referència del disc…"
 
-#: src/disks/ui/disks.ui:1174
+#: src/disks/ui/disks.ui:1212
 msgid "SMART Data & Self-Tests…"
 msgstr "Tests i dades de l'SMART…"
 
-#: src/disks/ui/disks.ui:1181
+#: src/disks/ui/disks.ui:1219
 msgid "Drive Settings…"
 msgstr "Paràmetres de la unitat…"
 
-#: src/disks/ui/disks.ui:1194
+#: src/disks/ui/disks.ui:1232
 msgid "Standby Now"
 msgstr "Posa en repòs ara"
 
-#: src/disks/ui/disks.ui:1201
+#: src/disks/ui/disks.ui:1239
 msgid "Wake-Up from Standby"
 msgstr "Desperta del repòs"
 
-#: src/disks/ui/disks.ui:1208
+#: src/disks/ui/disks.ui:1246
 msgid "Power Off…"
 msgstr "Atura…"
 
-#: src/disks/ui/disks.ui:1221
+#: src/disks/ui/disks.ui:1259
 msgid "Format Partition…"
 msgstr "Formata la partició…"
 
-#: src/disks/ui/disks.ui:1235
+#: src/disks/ui/disks.ui:1273
 msgid "Edit Partition…"
 msgstr "Edita la partició…"
 
-#: src/disks/ui/disks.ui:1243
+#: src/disks/ui/disks.ui:1281
 msgid "Edit Filesystem…"
 msgstr "Edita el sistema de fitxers…"
 
-#: src/disks/ui/disks.ui:1251
+#: src/disks/ui/disks.ui:1289
 msgid "Change Passphrase…"
 msgstr "Canvia la contrasenya…"
 
-#: src/disks/ui/disks.ui:1265
+#: src/disks/ui/disks.ui:1303
 msgid "Edit Mount Options…"
 msgstr "Edita les opcions de muntatge…"
 
-#: src/disks/ui/disks.ui:1273
+#: src/disks/ui/disks.ui:1311
 msgid "Edit Encryption Options…"
 msgstr "Edita les opcions d'encriptació…"
 
-#: src/disks/ui/disks.ui:1287
+#: src/disks/ui/disks.ui:1325
 msgid "Create Partition Image…"
 msgstr "Crea una image de la partició…"
 
-#: src/disks/ui/disks.ui:1295
+#: src/disks/ui/disks.ui:1333
 msgid "Restore Partition Image…"
 msgstr "Restaura una imatge de la partició…"
 
-#: src/disks/ui/disks.ui:1303
+#: src/disks/ui/disks.ui:1341
 msgid "Benchmark Partition…"
 msgstr "Test de referència de la partició…"
 
@@ -2901,19 +2932,19 @@ msgstr "Test de referència de la partició…"
 msgid "Encryption Options"
 msgstr "Opcions d'encriptació"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92
-msgid "_Automatic Encryption Options"
-msgstr "Opcions d'encriptació _automàtica"
+#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+msgid "Us_er Session Defaults"
+msgstr "Opcions per d_efecte de la sessió d'usuari"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
 msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
+"Switch off <i>User Session Defaults</i> to manage encryption options and "
+"passphrase for the device. The options correspond to an entry in the <b>/etc/"
+"crypttab</b> file"
 msgstr ""
-"Desactiveu les <i>Opcions d'encriptació automàtica</i> per gestionar les "
-"opcions d'encriptació i de contrasenya del dispositiu. Les opcions "
-"corresponen a una entrada al fitxer <b>/etc/crypttab</b>"
+"Desactiveu les <i>opcions per defecte de la sessió d'usuari</i> per "
+"gestionar les opcions d'encriptació i de contrasenya del dispositiu. Les "
+"opcions corresponen a una entrada al fitxer <b>/etc/crypttab</b>"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
@@ -2954,13 +2985,14 @@ msgid "_Passphrase"
 msgstr "_Contrasenya"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-msgid "_Unlock at startup"
-msgstr "_Desbloqueja en iniciar"
+msgid "_Unlock at system startup"
+msgstr "_Desbloqueja a l'inici del sistema"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
-"Si se selecciona es desbloquejarà el dispositiu en iniciar-se [!noauto]"
+"Si se selecciona es desbloquejarà el dispositiu en iniciar el sistema [!"
+"noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3017,19 +3049,15 @@ msgstr "_Etiqueta"
 msgid "Mount Options"
 msgstr "Opcions de muntatge"
 
-#: src/disks/ui/edit-fstab-dialog.ui:46
-msgid "_Automatic Mount Options"
-msgstr "Opcions de muntatge _automàtic"
-
 #: src/disks/ui/edit-fstab-dialog.ui:64
 msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"Desactiveu les <i>Opcions de muntatge automàtic</i> per gestionar el punt de "
-"muntatge i les opcions de muntatge del dispositiu. Les opcions corresponen a "
-"una entrada al fitxer <b>/etc/fstab</b>"
+"Desactiveu les <i>Opcions per defecte de la sessió d'usuari</i> per "
+"gestionar el punt de muntatge i les opcions de muntatge del dispositiu. Les "
+"opcions corresponen a una entrada al fitxer <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
@@ -3115,12 +3143,13 @@ msgstr ""
 "dispositiu [x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-msgid "Mount at _startup"
-msgstr "_Munta'l en iniciar"
+msgid "Mount at system _startup"
+msgstr "_Munta'l a l'inici del sistema"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Si està seleccionat, es muntarà el dispositiu en iniciar [!noauto]"
+msgid "If checked, the device will be mounted at system startup [!noauto]"
+msgstr ""
+"Si està seleccionat, es muntarà el dispositiu en iniciar el sistema [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3226,6 +3255,10 @@ msgstr ""
 msgid "Enter passphrase used to protect the data"
 msgstr "Introduïu la contrasenya que es fa servir per protegir les dades"
 
+#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "_Esborra"
+
 #: src/disks/ui/filesystem-create.ui:267
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
@@ -3263,6 +3296,14 @@ msgstr "_Particionat"
 #: src/disks/ui/format-volume-dialog.ui:7
 msgid "Format Volume"
 msgstr "Formata el volum"
+
+#: src/disks/ui/new-disk-image-dialog.ui:8
+msgid "New Disk Image"
+msgstr "Crea una imatge de disc"
+
+#: src/disks/ui/new-disk-image-dialog.ui:188
+msgid "Attach new _Image…"
+msgstr "Adjunta una _imatge nova…"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3368,20 +3409,20 @@ msgstr "Introduïu la contrasenya per desbloquejar"
 msgid "_Unlock"
 msgstr "_Desbloca"
 
-#: src/libgdu/gduutils.c:92
+#: src/libgdu/gduutils.c:91
 msgid "All Files"
 msgstr "Tots els fitxers"
 
-#: src/libgdu/gduutils.c:97
+#: src/libgdu/gduutils.c:96
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Imatges de disc (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:99
+#: src/libgdu/gduutils.c:98
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imatges de disc (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:430
+#: src/libgdu/gduutils.c:427
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3389,7 +3430,7 @@ msgstr[0] "%d any"
 msgstr[1] "%d anys"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:437
+#: src/libgdu/gduutils.c:434
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3397,7 +3438,7 @@ msgstr[0] "%d mes"
 msgstr[1] "%d mesos"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:444
+#: src/libgdu/gduutils.c:441
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3405,7 +3446,7 @@ msgstr[0] "%d dia"
 msgstr[1] "%d dies"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:451
+#: src/libgdu/gduutils.c:448
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3413,7 +3454,7 @@ msgstr[0] "%d hora"
 msgstr[1] "%d hores"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:458
+#: src/libgdu/gduutils.c:455
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3421,7 +3462,7 @@ msgstr[0] "%d minut"
 msgstr[1] "%d minuts"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:465
+#: src/libgdu/gduutils.c:462
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3429,7 +3470,7 @@ msgstr[0] "%d segon"
 msgstr[1] "%d segons"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:472
+#: src/libgdu/gduutils.c:469
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3437,68 +3478,73 @@ msgstr[0] "%d mil·lisegon"
 msgstr[1] "%d mil·lisegons"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:536
+#: src/libgdu/gduutils.c:533
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s i %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:541
+#: src/libgdu/gduutils.c:538
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:546
+#: src/libgdu/gduutils.c:543
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:551
+#: src/libgdu/gduutils.c:548
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:562
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: src/libgdu/gduutils.c:571
+#: src/libgdu/gduutils.c:568
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Menys d'un minut"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:576
+#: src/libgdu/gduutils.c:573
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:582
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:724
+#: src/libgdu/gduutils.c:721
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositius afectats"
 
-#: src/libgdu/gduutils.c:1073
+#: src/libgdu/gduutils.c:1122
 msgid "Error locking device"
 msgstr "S'ha produït un error en blocar el dispositiu"
+
+#: src/libgdu/gduutils.c:1143
+msgid "Error disabling autoclear for loop device"
+msgstr ""
+"S'ha produït un error en desactivar l'autoneteja pel dispositiu de bucle"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3517,6 +3563,38 @@ msgstr "Segurament fallarà un disc dur aviat."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examina"
+
+#~ msgid "ATA Secure Erase / Enhanced Secure Erase"
+#~ msgstr "Esborrat segur d'ATA/esborrat segur millorat"
+
+#~ msgid "If Available, Slow"
+#~ msgstr "Si és disponible, més lent"
+
+#~ msgid "Error erasing device %s"
+#~ msgstr "S'ha produït un error en esborrar el dispositiu %s"
+
+#~ msgid "Are you sure you want to erase the disks?"
+#~ msgstr "Segur que voleu esborrar els discs?"
+
+#~ msgid ""
+#~ "All data on the selected disks will be lost but may still be recoverable "
+#~ "by data recovery services"
+#~ msgstr ""
+#~ "Es perdran totes les dades dels discs seleccionats, però encara es "
+#~ "podrien recuperar amb sistemes de recuperació de dades"
+
+#~ msgid ""
+#~ "All data on the selected disks will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "Es sobreescriuran totes les dades dels discs i segurament no serà "
+#~ "possible recuperar-la amb sistemes de recuperació de dades"
+
+#~ msgid "_Automatic Encryption Options"
+#~ msgstr "Opcions d'encriptació _automàtica"
+
+#~ msgid "_Automatic Mount Options"
+#~ msgstr "Opcions de muntatge _automàtic"
 
 #~ msgid "Activation of this plugin"
 #~ msgstr "Activació d'aquest connector"
@@ -3783,10 +3861,6 @@ msgstr "Examina"
 #~ msgctxt "md-raid-window"
 #~ msgid "RAID Array"
 #~ msgstr "Matriu RAID"
-
-#~ msgctxt "mdraid"
-#~ msgid "Not running"
-#~ msgstr "No està funcionant"
 
 #~ msgctxt "mdraid"
 #~ msgid "%s (local to %s)"

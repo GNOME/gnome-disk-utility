@@ -15,13 +15,11 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 dbusservicedir = $(datadir)/dbus-1/services
-dbusservice_DATA = org.gnome.DiskUtility.service
+dbusservice_in_files = org.gnome.DiskUtility.service.in
+dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 
-org.gnome.DiskUtility.service: Makefile
-	$(AM_V_GEN) (echo '[D-BUS Service]'; \
-		     echo 'Name=org.gnome.DiskUtility'; \
-		     echo 'Exec=${bindir}/gnome-disks --gapplication-service') > $@.tmp && \
-		     mv $@.tmp $@
+%.service: %.service.in
+	$(AM_V_GEN)$(SED) -e "s|[@]bindir[@]|$(bindir)|" $< > $@
 
 # GSettings schemas
 gsettings_SCHEMAS = 						\
@@ -44,6 +42,7 @@ DISTCHECK_CONFIGURE_FLAGS == --enable-appdata-check
 EXTRA_DIST = 			\
 	$(appstream_in_files)	\
 	$(desktop_in_files)	\
+	$(dbusservice_in_files) \
 	$(gsettings_SCHEMAS)	\
 	$(NULL)
 

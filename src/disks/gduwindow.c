@@ -37,6 +37,7 @@
 #include "gdurestorediskimagedialog.h"
 #include "gduchangepassphrasedialog.h"
 #include "gdudisksettingsdialog.h"
+#include "gduresizedialog.h"
 #include "gdulocaljob.h"
 
 struct _GduWindow
@@ -100,6 +101,10 @@ struct _GduWindow
   GtkWidget *generic_menu_item_configure_fstab;
   GtkWidget *generic_menu_item_configure_crypttab;
   GtkWidget *generic_menu_item_change_passphrase;
+  GtkWidget *generic_menu_item_resize;
+  GtkWidget *generic_menu_item_repair;
+  GtkWidget *generic_menu_item_check;
+  GtkWidget *generic_menu_item_separator;
   GtkWidget *generic_menu_item_edit_label;
   GtkWidget *generic_menu_item_edit_partition;
   GtkWidget *generic_menu_item_format_volume;
@@ -173,6 +178,10 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_change_passphrase), "generic-menu-item-change-passphrase"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_resize), "generic-menu-item-resize"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_check), "generic-menu-item-check"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_repair), "generic-menu-item-repair"},
+  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_separator), "generic-menu-item-separator"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
   {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
@@ -255,6 +264,9 @@ typedef enum
   SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE   = (1<<6),
   SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE  = (1<<7),
   SHOW_FLAGS_VOLUME_MENU_BENCHMARK             = (1<<8),
+  SHOW_FLAGS_VOLUME_MENU_RESIZE                = (1<<9),
+  SHOW_FLAGS_VOLUME_MENU_REPAIR                = (1<<10),
+  SHOW_FLAGS_VOLUME_MENU_CHECK                 = (1<<11),
 } ShowFlagsVolumeMenu;
 
 typedef struct
@@ -311,6 +323,16 @@ static void on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
                                                      gpointer   user_data);
 static void on_generic_menu_item_change_passphrase (GtkMenuItem *menu_item,
                                                     gpointer   user_data);
+
+#ifdef HAVE_UDISKS2_7_2
+static void on_generic_menu_item_resize (GtkMenuItem *menu_item,
+                                         gpointer     user_data);
+static void on_generic_menu_item_repair (GtkMenuItem *menu_item,
+                                         gpointer     user_data);
+static void on_generic_menu_item_check (GtkMenuItem *menu_item,
+                                        gpointer     user_data);
+#endif
+
 static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
                                              gpointer   user_data);
 static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
@@ -460,6 +482,12 @@ update_for_show_flags (GduWindow *window,
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_change_passphrase),
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_resize),
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESIZE);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_repair),
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_REPAIR);
+  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_check),
+                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHECK);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_label),
                             show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL);
   gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_partition),
@@ -1309,6 +1337,27 @@ gdu_window_constructed (GObject *object)
                     "activate",
                     G_CALLBACK (on_generic_menu_item_change_passphrase),
                     window);
+
+#ifdef HAVE_UDISKS2_7_2
+  g_signal_connect (window->generic_menu_item_resize,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_resize),
+                    window);
+  g_signal_connect (window->generic_menu_item_repair,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_repair),
+                    window);
+  g_signal_connect (window->generic_menu_item_check,
+                    "activate",
+                    G_CALLBACK (on_generic_menu_item_check),
+                    window);
+#else
+  gtk_widget_hide (window->generic_menu_item_resize);
+  gtk_widget_hide (window->generic_menu_item_repair);
+  gtk_widget_hide (window->generic_menu_item_check);
+  gtk_widget_hide (window->generic_menu_item_separator);
+#endif
+
   g_signal_connect (window->generic_menu_item_edit_label,
                     "activate",
                     G_CALLBACK (on_generic_menu_item_edit_label),
@@ -2724,6 +2773,29 @@ update_device_page_for_block (GduWindow          *window,
         show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
 
+#ifdef HAVE_UDISKS2_7_2
+
+  if (partition != NULL && g_strcmp0 (usage, "") == 0 && !read_only)
+    {
+
+      /* allow partition resize if no known structured data was found on the device */
+      show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_RESIZE;
+    }
+  else if (filesystem != NULL)
+    {
+      /* for now the filesystem resize on just any block device is not shown, see resize_dialog_show */
+      if (!read_only && partition != NULL && gdu_utils_can_resize (window->client, type, FALSE, NULL, NULL))
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_RESIZE;
+
+      if (!read_only && gdu_utils_can_repair (window->client, type, FALSE, NULL))
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_REPAIR;
+
+      if (gdu_utils_can_check (window->client, type, FALSE, NULL))
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHECK;
+    }
+
+#endif
+
   /* Only show jobs if the volume is a partition (if it's not, we're already showing
    * the jobs in the drive section)
    */
@@ -2962,6 +3034,277 @@ update_device_page (GduWindow      *window,
 
   g_clear_object (&loop);
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+#ifdef HAVE_UDISKS2_7_2
+
+static void
+on_generic_menu_item_resize (GtkMenuItem *menu_item,
+                             gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+  gdu_resize_dialog_show (window, object);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+fs_repair_cb (UDisksFilesystem *filesystem,
+              GAsyncResult     *res,
+              GduWindow        *window)
+{
+  gboolean success;
+  GError *error = NULL;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error while repairing filesystem"),
+                            error);
+      g_error_free (error);
+    }
+  else
+    {
+      GtkWidget *message_dialog;
+      UDisksObjectInfo *info;
+      UDisksBlock *block;
+      UDisksObject *object;
+      const gchar *name;
+      gchar *s;
+
+      object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
+      block = udisks_object_peek_block (object);
+      g_assert (block != NULL);
+      info = udisks_client_get_object_info (window->client, object);
+      name = udisks_block_get_id_label (block);
+
+      if (name == NULL || strlen (name) == 0)
+        name = udisks_block_get_id_type (block);
+
+      message_dialog = gtk_message_dialog_new_with_markup  (GTK_WINDOW (window),
+                                                            GTK_DIALOG_MODAL,
+                                                            GTK_MESSAGE_INFO,
+                                                            GTK_BUTTONS_CLOSE,
+                                                            "<big><b>%s</b></big>",
+                                                            success ? _("Repair successful") : _("Repair failed"));
+      if (success)
+        {
+          s = g_strdup_printf (_("Filesystem %s on %s has been repaired."),
+                               name, udisks_object_info_get_name (info));
+        }
+      else
+        {
+          /* show as result and not error message, because it's not a malfunction of GDU */
+          s = g_strdup_printf (_("Filesystem %s on %s could not be repaired."),
+                               name, udisks_object_info_get_name (info));
+        }
+
+      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
+      gtk_dialog_run (GTK_DIALOG (message_dialog));
+
+      gtk_widget_destroy (message_dialog);
+      g_free (s);
+    }
+
+}
+
+static void
+fs_repair_unmount_cb (GduWindow        *window,
+                      GAsyncResult     *res,
+                      gpointer          user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  GError *error = NULL;
+
+  if (!gdu_window_ensure_unused_finish (window,
+                                        res,
+                                        &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error unmounting filesystem"),
+                            error);
+      g_error_free (error);
+    }
+  else
+    {
+      UDisksFilesystem *filesystem;
+
+      filesystem = udisks_object_peek_filesystem (object);
+      g_assert (filesystem != NULL);
+      udisks_filesystem_call_repair (filesystem,
+                                     g_variant_new ("a{sv}", NULL),
+                                     NULL,
+                                     (GAsyncReadyCallback) fs_repair_cb,
+                                     window);
+    }
+
+  g_object_unref (object);
+}
+
+static void
+on_generic_menu_item_repair (GtkMenuItem *menu_item,
+                             gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  GtkWidget *message_dialog, *ok_button;
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+
+  message_dialog = gtk_message_dialog_new_with_markup  (GTK_WINDOW (window),
+                                                        GTK_DIALOG_MODAL,
+                                                        GTK_MESSAGE_WARNING,
+                                                        GTK_BUTTONS_OK_CANCEL,
+                                                        "<big><b>%s</b></big>",
+                                                        _("Confirm Repair"));
+
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s",
+                                              _("A filesystem repair is not always possible and can cause data loss. "
+                                                "Consider backing it up first in order to use forensic recovery tools "
+                                                "that retrieve lost files. "
+                                                "Depending on the amount of data this operation takes longer time."));
+
+  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
+  gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");
+
+  if (gtk_dialog_run (GTK_DIALOG (message_dialog)) == GTK_RESPONSE_OK)
+    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_repair_unmount_cb,
+                              NULL, g_object_ref (object));
+
+  gtk_widget_destroy (message_dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+fs_check_cb (UDisksFilesystem *filesystem,
+             GAsyncResult     *res,
+             GduWindow        *window)
+{
+  gboolean consistent;
+  GError *error = NULL;
+
+  if (!udisks_filesystem_call_check_finish (filesystem, &consistent, res, &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error while checking filesystem"),
+                            error);
+      g_error_free (error);
+    }
+  else
+    {
+      GtkWidget *message_dialog;
+      UDisksObjectInfo *info;
+      UDisksBlock *block;
+      UDisksObject *object;
+      const gchar *name;
+      gchar *s;
+
+      object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
+      block = udisks_object_peek_block (object);
+      g_assert (block != NULL);
+      info = udisks_client_get_object_info (window->client, object);
+      name = udisks_block_get_id_label (block);
+
+      if (name == NULL || strlen (name) == 0)
+        name = udisks_block_get_id_type (block);
+
+      message_dialog = gtk_message_dialog_new_with_markup  (GTK_WINDOW (window),
+                                                            GTK_DIALOG_MODAL,
+                                                            GTK_MESSAGE_INFO,
+                                                            GTK_BUTTONS_CLOSE,
+                                                            "<big><b>%s</b></big>",
+                                                            consistent ? _("Filesystem intact") : _("Filesystem damaged"));
+      if (consistent)
+        {
+          s = g_strdup_printf (_("Filesystem %s on %s is undamaged."),
+                               name, udisks_object_info_get_name (info));
+        }
+      else
+        {
+          /* show as result and not error message, because it's not a malfunction of GDU */
+          s = g_strdup_printf (_("Filesystem %s on %s needs repairing."),
+                               name, udisks_object_info_get_name (info));
+        }
+
+      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
+      gtk_dialog_run (GTK_DIALOG (message_dialog));
+
+      gtk_widget_destroy (message_dialog);
+      g_free (s);
+    }
+}
+
+static void
+fs_check_unmount_cb (GduWindow        *window,
+                     GAsyncResult     *res,
+                     gpointer          user_data)
+{
+  UDisksObject *object = UDISKS_OBJECT (user_data);
+  GError *error = NULL;
+
+  if (!gdu_window_ensure_unused_finish (window,
+                                        res,
+                                        &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error unmounting filesystem"),
+                            error);
+      g_error_free (error);
+    }
+  else
+    {
+      UDisksFilesystem *filesystem;
+
+      filesystem = udisks_object_peek_filesystem (object);
+      udisks_filesystem_call_check (filesystem,
+                                    g_variant_new ("a{sv}", NULL),
+                                    NULL,
+                                    (GAsyncReadyCallback) fs_check_cb,
+                                    window);
+    }
+
+  g_object_unref (object);
+}
+
+static void
+on_generic_menu_item_check (GtkMenuItem *menu_item,
+                            gpointer     user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+  GtkWidget *message_dialog, *ok_button;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+
+  message_dialog = gtk_message_dialog_new_with_markup  (GTK_WINDOW (window),
+                                                        GTK_DIALOG_MODAL,
+                                                        GTK_MESSAGE_WARNING,
+                                                        GTK_BUTTONS_OK_CANCEL,
+                                                        "<big><b>%s</b></big>",
+                                                        _("Confirm Check"));
+
+  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s",
+                                              _("Depending on the amount of data the filesystem check takes longer time."));
+
+  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
+  gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");
+
+  if (gtk_dialog_run (GTK_DIALOG (message_dialog)) == GTK_RESPONSE_OK)
+    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_check_unmount_cb,
+                              NULL, g_object_ref (object));
+
+  gtk_widget_destroy (message_dialog);
+}
+
+#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 

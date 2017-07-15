@@ -31,6 +31,10 @@ sources = files(
   'main.c'
 )
 
+if config_h.get('HAVE_UDISKS2_7_2')
+  sources += files('gduresizedialog.c')
+endif
+
 resource_data = files(
   'ui/about-dialog.ui',
   'ui/app-menu.ui',
@@ -52,6 +56,7 @@ resource_data = files(
   'ui/format-volume-dialog.ui',
   'ui/gdu.css',
   'ui/new-disk-image-dialog.ui',
+  'ui/resize-dialog.ui',
   'ui/restore-disk-image-dialog.ui',
   'ui/smart-dialog.ui',
   'ui/unlock-device-dialog.ui'

@@ -160,6 +160,11 @@ libnotify_dep = dependency('libnotify', version: '>= 0.7')
 liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
 m_dep = cc.find_library('m')
 
+# *** Check for recent UDisks ***
+udisks2_7_2_dep = dependency('udisks2', version: '>= 2.7.2', required: false)
+config_h.set('HAVE_UDISKS2_7_2', udisks2_7_2_dep.found(),
+             description: 'Define to 1 if UDisks version >= 2.7.2 for resize, repair, check')
+
 # *** Check for libsystemd ***
 enable_libsystemd = get_option('enable-libsystemd')
 if enable_libsystemd

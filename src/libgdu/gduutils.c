@@ -1146,15 +1146,10 @@ gdu_utils_get_pretty_uri (GFile *file)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
-gdu_utils_is_in_use_full (UDisksClient      *client,
-                          UDisksObject      *object,
-                          UDisksFilesystem **filesystem_to_unmount_out,
-                          UDisksEncrypted  **encrypted_to_lock_out,
-                          gboolean          *last_out)
+GList *
+gdu_utils_get_all_contained_objects (UDisksClient *client,
+                                     UDisksObject *object)
 {
-  UDisksFilesystem *filesystem_to_unmount = NULL;
-  UDisksEncrypted *encrypted_to_lock = NULL;
   UDisksBlock *block = NULL;
   UDisksDrive *drive = NULL;
   UDisksObject *block_object = NULL;
@@ -1162,8 +1157,6 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
   GList *partitions = NULL;
   GList *l;
   GList *objects_to_check = NULL;
-  gboolean ret = FALSE;
-  gboolean last = TRUE;
 
   drive = udisks_object_get_drive (object);
   if (drive != NULL)
@@ -1218,6 +1211,33 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
             }
         }
     }
+
+  g_clear_object (&partition_table);
+  g_list_free_full (partitions, g_object_unref);
+  g_clear_object (&block_object);
+  g_clear_object (&block);
+  g_clear_object (&drive);
+
+  return objects_to_check;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static gboolean
+gdu_utils_is_in_use_full (UDisksClient      *client,
+                          UDisksObject      *object,
+                          UDisksFilesystem **filesystem_to_unmount_out,
+                          UDisksEncrypted  **encrypted_to_lock_out,
+                          gboolean          *last_out)
+{
+  UDisksFilesystem *filesystem_to_unmount = NULL;
+  UDisksEncrypted *encrypted_to_lock = NULL;
+  GList *l;
+  GList *objects_to_check = NULL;
+  gboolean ret = FALSE;
+  gboolean last = TRUE;
+
+  objects_to_check = gdu_utils_get_all_contained_objects (client, object);
 
   /* Check in reverse order, e.g. cleartext before LUKS, partitions before the main block device */
   objects_to_check = g_list_reverse (objects_to_check);
@@ -1284,14 +1304,9 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
   if (last_out != NULL)
     *last_out = last;
 
-  g_clear_object (&partition_table);
-  g_list_free_full (partitions, g_object_unref);
   g_list_free_full (objects_to_check, g_object_unref);
   g_clear_object (&encrypted_to_lock);
   g_clear_object (&filesystem_to_unmount);
-  g_clear_object (&block_object);
-  g_clear_object (&block);
-  g_clear_object (&drive);
 
   return ret;
 }

@@ -36,6 +36,9 @@ void          gdu_application_destroy_local_job (GduApplication *application,
 GList        *gdu_application_get_local_jobs_for_object (GduApplication *application,
                                                          UDisksObject   *object);
 
+gboolean      gdu_application_has_running_job (GduApplication *application,
+                                               UDisksObject   *object);
+
 
 G_END_DECLS
 

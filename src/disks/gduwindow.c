@@ -52,6 +52,8 @@ struct _GduWindow
   GduDeviceTreeModel *model;
 
   UDisksObject *current_object;
+  gboolean has_drive_job;
+  gboolean has_volume_job;
 
   GtkWidget *volume_grid;
 
@@ -1070,6 +1072,9 @@ gdu_window_constructed (GObject *object)
       g_warn_if_fail (*p != NULL);
     }
 
+  window->has_drive_job = FALSE;
+  window->has_volume_job = FALSE;
+
   window->header = create_header (window);
   if (!in_desktop ("Unity"))
       gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
@@ -1909,6 +1914,8 @@ update_jobs (GduWindow *window,
   GtkWidget *remaining_label = window->devtab_drive_job_remaining_label;
   GtkWidget *no_progress_label = window->devtab_drive_job_no_progress_label;
   GtkWidget *cancel_button = window->devtab_drive_job_cancel_button;
+  gboolean drive_sensitivity;
+  gboolean selected_volume_sensitivity;
 
   if (is_volume)
     {
@@ -1919,6 +1926,15 @@ update_jobs (GduWindow *window,
       no_progress_label = window->devtab_job_no_progress_label;
       cancel_button = window->devtab_job_cancel_button;
     }
+
+  drive_sensitivity = !gdu_application_has_running_job (window->application, window->current_object);
+  gtk_widget_set_sensitive (window->devtab_drive_generic_button, drive_sensitivity);
+  gtk_widget_set_sensitive (window->devtab_drive_eject_button, drive_sensitivity);
+  gtk_widget_set_sensitive (window->devtab_drive_power_off_button, drive_sensitivity);
+  gtk_widget_set_sensitive (window->devtab_drive_loop_detach_button, drive_sensitivity);
+
+  selected_volume_sensitivity = (!window->has_volume_job && !window->has_drive_job);
+  gtk_widget_set_sensitive (window->devtab_grid_toolbar, selected_volume_sensitivity);
 
   if (jobs == NULL)
     {
@@ -1991,13 +2007,18 @@ static void
 update_drive_jobs (GduWindow *window,
                    GList     *jobs)
 {
+  window->has_volume_job = FALSE; /* comes before update_volume_jobs */
+  window->has_drive_job = (jobs != NULL);
   update_jobs (window, jobs, FALSE);
 }
 
 static void
-update_volume_jobs (GduWindow *window,
-                    GList     *jobs)
+update_volume_jobs (GduWindow    *window,
+                    GList        *jobs,
+                    UDisksObject *origin_object)
 {
+  /* in contrast to variable 'jobs' this call includes jobs on contained objects */
+  window->has_volume_job = gdu_application_has_running_job (window->application, origin_object);
   update_jobs (window, jobs, TRUE);
 }
 
@@ -2804,7 +2825,7 @@ update_device_page_for_block (GduWindow          *window,
       jobs = udisks_client_get_jobs_for_object (window->client, object);
       jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
     }
-  update_volume_jobs (window, jobs);
+  update_volume_jobs (window, jobs, object);
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
   g_clear_object (&partition_table);

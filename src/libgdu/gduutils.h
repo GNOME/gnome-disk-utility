@@ -112,6 +112,9 @@ gboolean gdu_util_is_same_size (GList   *blocks,
 
 gchar *gdu_utils_get_pretty_uri (GFile *file);
 
+GList *gdu_utils_get_all_contained_objects (UDisksClient *client,
+                                            UDisksObject *object);
+
 gboolean gdu_utils_is_in_use (UDisksClient *client,
                               UDisksObject *object);
 

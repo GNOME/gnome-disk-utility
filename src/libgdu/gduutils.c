@@ -1338,3 +1338,36 @@ gdu_utils_get_unused_for_block (UDisksClient *client,
  out:
   return ret;
 }
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gint
+gdu_utils_get_default_unit (guint64 size)
+{
+  if (size > unit_sizes[TByte] * 10)
+    {
+      /* size > 10TB -> TB */
+      return TByte;
+    }
+  else if (size > unit_sizes[GByte] * 10)
+    {
+      /* 10TB > size > 10GB -> GB */
+      return GByte;
+    }
+  else if (size > unit_sizes[MByte] * 10)
+    {
+      /* 10GB > size > 10MB -> MB */
+      return MByte;
+    }
+  else if (size > unit_sizes[KByte] * 10)
+    {
+      /* 10MB > size > 10KB -> KB */
+      return KByte;
+    }
+  else
+    {
+      /* 10kB > size > 0 -> bytes */
+      return Byte;
+    }
+}
+

@@ -16,25 +16,9 @@
 #include "gduwindow.h"
 #include "gducreatepartitiondialog.h"
 #include "gducreatefilesystemwidget.h"
+#include "gduutils.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
-
-#define NUM_UNITS 11
-
-/* Keep in sync with Glade file */
-static const guint64 unit_sizes[NUM_UNITS] = {
-  (1ULL),                /*  0: bytes */
-  (1000ULL),             /*  1: kB */
-  (1000000ULL),          /*  2: MB */
-  (1000000000ULL),       /*  3: GB */
-  (1000000000000ULL),    /*  4: TB */
-  (1000000000000000ULL), /*  5: PB */
-  ((1ULL)<<10),          /*  6: KiB */
-  ((1ULL)<<20),          /*  7: MiB */
-  ((1ULL)<<30),          /*  8: GiB */
-  ((1ULL)<<40),          /*  9: TiB */
-  ((1ULL)<<50),          /* 10: PiB */
-};
 
 typedef struct
 {
@@ -261,36 +245,7 @@ set_unit_num (CreatePartitionData *data,
 static void
 create_partition_populate (CreatePartitionData *data)
 {
-  gint unit_num;
-
-  /* figure out default unit */
-  if (data->max_size > unit_sizes[4] * 100ULL)
-    {
-      /*         size > 100TB -> TB */
-      unit_num = 4;
-    }
-  else if (data->max_size > unit_sizes[3] * 100ULL)
-    {
-      /* 100TB > size > 100GB -> GB */
-      unit_num = 3;
-    }
-  else if (data->max_size > unit_sizes[2] * 100ULL)
-    {
-      /* 100GB > size > 100MB -> MB */
-      unit_num = 2;
-    }
-  else if (data->max_size > unit_sizes[1] * 100ULL)
-    {
-      /* 100MB > size > 100kB -> kB */
-      unit_num = 1;
-    }
-  else
-    {
-      /* 100kB > size > 0 -> bytes */
-      unit_num = 0;
-    }
-
-  set_unit_num (data, unit_num);
+  set_unit_num (data, gdu_utils_get_default_unit (data->max_size));
 }
 
 static void

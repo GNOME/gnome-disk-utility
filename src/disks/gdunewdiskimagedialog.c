@@ -24,23 +24,7 @@
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdunewdiskimagedialog.h"
-
-#define NUM_UNITS 11
-
-/* Keep in sync with Glade file */
-static const guint64 unit_sizes[NUM_UNITS] = {
-  (1ULL),                /*  0: bytes */
-  (1000ULL),             /*  1: kB */
-  (1000000ULL),          /*  2: MB */
-  (1000000000ULL),       /*  3: GB */
-  (1000000000000ULL),    /*  4: TB */
-  (1000000000000000ULL), /*  5: PB */
-  ((1ULL)<<10),          /*  6: KiB */
-  ((1ULL)<<20),          /*  7: MiB */
-  ((1ULL)<<30),          /*  8: GiB */
-  ((1ULL)<<40),          /*  9: TiB */
-  ((1ULL)<<50),          /* 10: PiB */
-};
+#include "gduutils.h"
 
 /* TODOs / ideas for New Disk Image creation
  * include a radio toggle to create either

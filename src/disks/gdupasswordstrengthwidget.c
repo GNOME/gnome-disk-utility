@@ -195,6 +195,7 @@ gdu_password_strength_widget_constructed (GObject *object)
 
   widget->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (widget->notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (widget->notebook), FALSE);
   gtk_box_pack_start (GTK_BOX (widget), widget->notebook, FALSE, TRUE, 0);
 
   for (n = 0; n < G_N_ELEMENTS (hint_labels); n++)

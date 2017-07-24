@@ -27,7 +27,6 @@
 #include "gduwindow.h"
 #include "gducreatediskimagedialog.h"
 #include "gduvolumegrid.h"
-#include "gducreatefilesystemwidget.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 

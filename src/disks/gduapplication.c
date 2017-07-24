@@ -17,7 +17,7 @@
 #include <unistd.h>
 
 #include "gduapplication.h"
-#include "gduformatvolumedialog.h"
+#include "gducreateformatdialog.h"
 #include "gdurestorediskimagedialog.h"
 #include "gdunewdiskimagedialog.h"
 #include "gduwindow.h"
@@ -257,14 +257,15 @@ gdu_application_command_line (GApplication            *_app,
         {
           gdu_window_select_object (app->window, object_to_select);
           if (opt_format)
-            gdu_format_volume_dialog_show (app->window, object_to_select);
+            gdu_create_format_show (app->client, GTK_WINDOW (app->window), object_to_select,
+                                    FALSE, FALSE, 0, 0, NULL, NULL);
         }
     }
   else if (opt_format)
     {
       g_application_hold (_app);
-      gdu_format_volume_dialog_show_for_xid (app->client, opt_xid, object_to_select,
-                                             (GCallback)g_application_release, _app);
+      gdu_create_format_show (app->client, NULL, object_to_select,
+                              FALSE, FALSE, 0, 0, (GCallback) g_application_release, _app);
     }
 
   if (opt_restore_disk_image != NULL)

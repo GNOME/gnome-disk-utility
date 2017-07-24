@@ -15,7 +15,6 @@
 #include "gduwindow.h"
 #include "gduformatdiskdialog.h"
 #include "gduvolumegrid.h"
-#include "gducreatefilesystemwidget.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

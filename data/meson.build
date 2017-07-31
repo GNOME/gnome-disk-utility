@@ -36,7 +36,7 @@ install_data(
   install_dir: join_paths(gdu_datadir, 'glib-2.0', 'schemas')
 )
 
-info = 'org.gnome.DiskUtility.metainfo.xml'
+info = 'org.gnome.DiskUtility.appdata.xml'
 
 i18n.merge_file(
   info,

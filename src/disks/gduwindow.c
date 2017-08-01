@@ -2775,6 +2775,8 @@ update_device_page_for_block (GduWindow          *window,
               /* Translators: Shown as in-use part of 'Contents' if the swap device is not in use */
               in_use_markup = g_strdup (C_("volume-content-swap", "Not Active"));
             }
+
+          show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB;
         }
     }
   else if (g_strcmp0 (udisks_block_get_id_usage (block), "crypto") == 0)

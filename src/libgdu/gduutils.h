@@ -74,6 +74,34 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
 gboolean gdu_utils_is_ntfs_available (void);
 
+#ifdef HAVE_UDISKS2_7_2
+
+/* Defined by libblockdev/UDisks */
+typedef enum {
+  OFFLINE_SHRINK = 1 << 1,
+  OFFLINE_GROW = 1 << 2,
+  ONLINE_SHRINK = 1 << 3,
+  ONLINE_GROW = 1 << 4
+} ResizeFlags;
+
+gboolean gdu_utils_can_resize (UDisksClient *client,
+                               const gchar  *fstype,
+                               gboolean      flush,
+                               ResizeFlags  *mode_out,
+                               gchar       **missing_util_out);
+
+gboolean gdu_utils_can_repair (UDisksClient *client,
+                               const gchar  *fstype,
+                               gboolean      flush,
+                               gchar       **missing_util_out);
+
+gboolean gdu_utils_can_check  (UDisksClient *client,
+                               const gchar  *fstype,
+                               gboolean      flush,
+                               gchar       **missing_util_out);
+
+#endif
+
 guint gdu_utils_get_max_label_length (const gchar *fstype);
 
 gboolean _gtk_entry_buffer_truncate_bytes (GtkEntryBuffer *gtk_entry_buffer,
@@ -106,6 +134,14 @@ void gdu_utils_ensure_unused_list (UDisksClient         *client,
 gboolean gdu_utils_ensure_unused_list_finish (UDisksClient  *client,
                                               GAsyncResult  *res,
                                               GError       **error);
+
+guint64 gdu_utils_calc_space_to_grow (UDisksClient *client,
+                                      UDisksPartitionTable *table,
+                                      UDisksPartition *partition);
+
+guint64 gdu_utils_calc_space_to_shrink_extended (UDisksClient *client,
+                                                 UDisksPartitionTable *table,
+                                                 UDisksPartition *partition);
 
 gint64 gdu_utils_get_unused_for_block (UDisksClient *client,
                                        UDisksBlock  *block);

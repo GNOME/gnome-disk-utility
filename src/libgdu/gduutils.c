@@ -871,6 +871,170 @@ gdu_utils_is_ntfs_available (void)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+#ifdef HAVE_UDISKS2_7_2
+
+typedef struct
+{
+  gboolean available;
+  gchar *missing_util;
+  ResizeFlags mode;
+} UtilCacheEntry;
+
+static void
+util_cache_entry_free (UtilCacheEntry *data)
+{
+  g_free (data->missing_util);
+  g_free (data);
+}
+
+G_LOCK_DEFINE (can_resize_lock);
+
+/* Uses an internal cache, set flush to rebuild it first */
+gboolean
+gdu_utils_can_resize (UDisksClient *client,
+                      const gchar  *fstype,
+                      gboolean      flush,
+                      ResizeFlags  *mode_out,
+                      gchar       **missing_util_out)
+{
+  static GHashTable *cache = NULL;
+  const gchar *const *supported_fs;
+  UtilCacheEntry *result;
+
+  G_LOCK (can_resize_lock);
+  if (flush)
+    g_clear_pointer (&cache, g_hash_table_destroy);
+
+  if (cache == NULL)
+    {
+      cache = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) util_cache_entry_free);
+      supported_fs = udisks_manager_get_supported_filesystems (udisks_client_get_manager (client));
+      for (gsize i = 0; supported_fs[i] != NULL; i++)
+        {
+          GVariant *out_available;
+
+          if (udisks_manager_call_can_resize_sync (udisks_client_get_manager (client),
+                                                   supported_fs[i], &out_available, NULL, NULL))
+            {
+              UtilCacheEntry *entry;
+              guint64 m = 0;
+
+              entry = g_new0 (UtilCacheEntry, 1);
+              g_variant_get (out_available, "(bts)", &entry->available, &m, &entry->missing_util);
+              g_variant_unref (out_available);
+              entry->mode = (ResizeFlags) m;
+              g_hash_table_insert (cache, g_strdup (supported_fs[i]), entry);
+            }
+        }
+    }
+  G_UNLOCK (can_resize_lock);
+
+  result = g_hash_table_lookup (cache, fstype);
+  if (mode_out != NULL)
+    *mode_out = result ? result->mode : 0;
+
+  if (missing_util_out != NULL)
+    *missing_util_out = result ? g_strdup (result->missing_util) : NULL;
+
+  return result ? result->available : FALSE;
+}
+
+G_LOCK_DEFINE (can_repair_lock);
+
+gboolean
+gdu_utils_can_repair (UDisksClient *client,
+                      const gchar  *fstype,
+                      gboolean      flush,
+                      gchar       **missing_util_out)
+{
+  static GHashTable *cache = NULL;
+  const gchar *const *supported_fs;
+  UtilCacheEntry *result;
+
+  G_LOCK (can_repair_lock);
+  if (flush)
+    g_clear_pointer (&cache, g_hash_table_destroy);
+
+  if (cache == NULL)
+    {
+      cache = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) util_cache_entry_free);
+      supported_fs = udisks_manager_get_supported_filesystems (udisks_client_get_manager (client));
+      for (gsize i = 0; supported_fs[i] != NULL; i++)
+        {
+          GVariant *out_available;
+
+          if (udisks_manager_call_can_repair_sync (udisks_client_get_manager (client),
+                                                   supported_fs[i], &out_available, NULL, NULL))
+            {
+              UtilCacheEntry *entry;
+
+              entry = g_new0 (UtilCacheEntry, 1);
+              g_variant_get (out_available, "(bs)", &entry->available, &entry->missing_util);
+              g_variant_unref (out_available);
+              g_hash_table_insert (cache, g_strdup (supported_fs[i]), entry);
+            }
+        }
+    }
+  G_UNLOCK (can_repair_lock);
+
+  result = g_hash_table_lookup (cache, fstype);
+  if (missing_util_out != NULL)
+    *missing_util_out = result ? g_strdup (result->missing_util) : NULL;
+
+  return result ? result->available : FALSE;
+}
+
+G_LOCK_DEFINE (can_check_lock);
+
+gboolean
+gdu_utils_can_check (UDisksClient *client,
+                     const gchar  *fstype,
+                     gboolean      flush,
+                     gchar       **missing_util_out)
+{
+  static GHashTable *cache = NULL;
+  const gchar *const *supported_fs;
+  UtilCacheEntry *result;
+
+  G_LOCK (can_check_lock);
+  if (flush && cache != NULL)
+    g_clear_pointer (&cache, g_hash_table_destroy);
+
+  if (cache == NULL)
+    {
+      cache = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) util_cache_entry_free);
+      supported_fs = udisks_manager_get_supported_filesystems (udisks_client_get_manager (client));
+      for (gsize i = 0; supported_fs[i] != NULL; i++)
+        {
+          GVariant *out_available;
+
+          if (udisks_manager_call_can_check_sync (udisks_client_get_manager (client),
+                                                  supported_fs[i], &out_available, NULL, NULL))
+            {
+              UtilCacheEntry *entry;
+              guint64 m = 0;
+
+              entry = g_new0 (UtilCacheEntry, 1);
+              g_variant_get (out_available, "(bs)", &entry->available, &entry->missing_util);
+              g_variant_unref (out_available);
+              entry->mode = (ResizeFlags) m;
+              g_hash_table_insert (cache, g_strdup (supported_fs[i]), entry);
+            }
+        }
+    }
+  G_UNLOCK (can_check_lock);
+
+  result = g_hash_table_lookup (cache, fstype);
+  if (missing_util_out != NULL)
+    *missing_util_out = result ? g_strdup (result->missing_util) : NULL;
+
+  return result ? result->available : FALSE;
+}
+
+#endif
+
+/* ---------------------------------------------------------------------------------------------------- */
+
 guint
 gdu_utils_get_max_label_length (const gchar *fstype)
 {
@@ -1392,6 +1556,77 @@ gdu_utils_ensure_unused_finish (UDisksClient  *client,
                                 GError       **error)
 {
   return gdu_utils_ensure_unused_list_finish (client, res, error);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+guint64
+gdu_utils_calc_space_to_grow (UDisksClient *client,
+                              UDisksPartitionTable *table,
+                              UDisksPartition *partition)
+{
+  GList *partitions, *l;
+  guint64 next_pos, current_end;
+  UDisksObject *table_object;
+
+  table_object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (table)));
+  next_pos = udisks_block_get_size (udisks_object_peek_block (table_object));
+  current_end = udisks_partition_get_offset (partition) + udisks_partition_get_size (partition);
+  partitions = udisks_client_get_partitions (client, table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *tmp_partition = UDISKS_PARTITION (l->data);
+      guint64 start;
+      guint64 end;
+
+      if (udisks_partition_get_number (partition) == udisks_partition_get_number (tmp_partition))
+        continue;
+
+      start = udisks_partition_get_offset (tmp_partition);
+      end = start + udisks_partition_get_size (tmp_partition);
+      if (end > current_end && (end < next_pos))
+        next_pos = end;
+      if (start >= current_end && (start < next_pos))
+        next_pos = start;
+    }
+
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+
+  return next_pos - udisks_partition_get_offset (partition);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+guint64
+gdu_utils_calc_space_to_shrink_extended (UDisksClient *client,
+                                         UDisksPartitionTable *table,
+                                         UDisksPartition *partition)
+{
+  GList *partitions, *l;
+  guint64 minimum, maximum;
+
+  g_assert (udisks_partition_get_is_container (partition));
+  minimum = udisks_partition_get_offset (partition) + 1;
+  maximum = minimum + udisks_partition_get_size (partition);
+  partitions = udisks_client_get_partitions (client, table);
+  for (l = partitions; l != NULL; l = l->next)
+    {
+      UDisksPartition *tmp_partition = UDISKS_PARTITION (l->data);
+      guint64 end;
+
+      if (udisks_partition_get_number (partition) == udisks_partition_get_number (tmp_partition))
+        continue;
+
+      end = udisks_partition_get_offset (tmp_partition) + udisks_partition_get_size (tmp_partition);
+      if (end > minimum && end <= maximum)
+        minimum = end;
+    }
+
+  g_list_foreach (partitions, (GFunc) g_object_unref, NULL);
+  g_list_free (partitions);
+
+  return minimum - udisks_partition_get_offset (partition);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

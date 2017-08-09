@@ -28,6 +28,15 @@ typedef struct
 } ChangeFilesystemLabelData;
 
 static void
+change_filesystem_label_data_free (ChangeFilesystemLabelData *data)
+{
+  if (data->dialog != NULL)
+    g_object_unref (data->dialog);
+  g_free (data->orig_label);
+  g_free (data);
+}
+
+static void
 on_change_filesystem_label_entry_changed (GtkEditable *editable,
                                           gpointer     user_data)
 {
@@ -96,7 +105,7 @@ gdu_filesystem_dialog_show (GduWindow    *window,
   UDisksBlock *block;
   UDisksFilesystem *filesystem;
   const gchar *label;
-  ChangeFilesystemLabelData data;
+  ChangeFilesystemLabelData *label_data;
   const gchar *label_to_set;
   gchar *fstype;
 
@@ -114,16 +123,15 @@ gdu_filesystem_dialog_show (GduWindow    *window,
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   label = udisks_block_get_id_label (block);
+  label_data = g_new (ChangeFilesystemLabelData, 1);
+  label_data->dialog = g_object_ref (dialog);
+  label_data->orig_label = g_strdup (label);
+  fstype = udisks_block_dup_id_type (block);
+  label_data->label_max_length = gdu_utils_get_max_label_length (fstype);
   g_signal_connect (entry,
                     "changed",
                     G_CALLBACK (on_change_filesystem_label_entry_changed),
-                    &data);
-  memset (&data, '\0', sizeof (ChangeFilesystemLabelData));
-  data.dialog = dialog;
-  data.orig_label = g_strdup (label);
-  fstype = udisks_block_dup_id_type (block);
-  data.label_max_length = gdu_utils_get_max_label_length (fstype);
-  g_free (fstype);
+                    label_data);
 
   gtk_entry_set_text (GTK_ENTRY (entry), label);
   gtk_editable_select_region (GTK_EDITABLE (entry), 0, -1);
@@ -145,7 +153,8 @@ gdu_filesystem_dialog_show (GduWindow    *window,
                                     g_object_ref (window));
 
  out:
-  g_free (data.orig_label);
+  g_free (fstype);
+  change_filesystem_label_data_free (label_data);
   gtk_widget_hide (dialog);
   gtk_widget_destroy (dialog);
   g_object_unref (builder);

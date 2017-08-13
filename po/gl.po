@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-07 21:48+0000\n"
-"PO-Revision-Date: 2017-08-09 00:17+0200\n"
+"POT-Creation-Date: 2017-08-10 12:16+0000\n"
+"PO-Revision-Date: 2017-08-13 12:11+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -78,10 +78,6 @@ msgstr ""
 "configurar discos e dispositivos de bloque."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
-#| "physical disks, and image USB sticks. Tasks are executed in the "
-#| "background, even after the application has been closed by the user."
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -178,8 +174,6 @@ msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Produciuse un erro ao anexar a imaxe do disco: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:92
-#| msgctxt "mdraid"
-#| msgid "Not running"
 msgid "Stop running jobs?"
 msgstr "Deter as tarefas en execución?"
 
@@ -1241,12 +1235,10 @@ msgstr "Produciuse un erro ao ler %lld bytes desde o desprazamento %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
 #: src/disks/gducreatefilesystemwidget.c:236
-#| msgid "Passphrases do not match"
 msgid "The passphrases do not match"
 msgstr "As frases de paso non coinciden"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#| msgid "To change the passphrase, enter both the current and new passphrase"
 msgid "The passphrase matches the existing passphrase"
 msgstr "As frases de paso coinciden con unha frase de paso existente"
 
@@ -1623,13 +1615,19 @@ msgstr "Silencioso (Lento)"
 msgid "Loud (Fast)"
 msgstr "Ruidoso (Rápido)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
 msgstr "A etiqueta coincide con unha etiqueta existente"
 
-#: src/disks/gdufilesystemdialog.c:81
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Produciuse un erro ao definir a etiqueta"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1826,7 +1824,6 @@ msgid "Unnamed (%s).img"
 msgstr "(%s).img Sen nome"
 
 #: src/disks/gdunewdiskimagedialog.c:267
-#| msgid "Error writing to image"
 msgid "Error writing file"
 msgstr "Produciuse un erro ao escribir o ficheiro"
 
@@ -1863,34 +1860,28 @@ msgid "Strong"
 msgstr "Forte"
 
 #: src/disks/gduresizedialog.c:188
-#| msgid "Chunk _Size"
 msgid "Current Size"
 msgstr "Tamaño actual"
 
 #: src/disks/gduresizedialog.c:199
-#| msgid "Minimum Size"
 msgid "Minimal Size"
 msgstr "Tamaño mínimo"
 
 #: src/disks/gduresizedialog.c:249
-#| msgid "_Restore"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
 msgstr "Produciuse un erro ao redimensionar o sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:525
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
 msgstr "Produciuse un erro ao particionar"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#| msgid "Error checking filesystem on volume"
 msgid "Error repairing filesystem after resize"
 msgstr ""
 "Produciuse un erro ao reparar o sistema de ficheiros despois de redimensionar"
@@ -1900,17 +1891,14 @@ msgid "Resizing not ready"
 msgstr "Redimensionar non está dispoñíbel"
 
 #: src/disks/gduresizedialog.c:466
-#| msgid "Change the label of the filesystem"
 msgid "Waited too long for the filesystem"
 msgstr "Agardouse demasiado tempo polo sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:595
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
 msgstr "Produciuse un erro ao reparar o sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:661
-#| msgid "Error unmounting filesystem"
 msgid "Error unmounting filesystem for resizing"
 msgstr ""
 "Produciuse un erro ao desmontar o sistema de ficheiros para redimensionar"
@@ -1920,7 +1908,6 @@ msgid "Fit to size"
 msgstr "Axustar ao tamaño"
 
 #: src/disks/gduresizedialog.c:738
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Produciuse un erro ao montar o sistema de ficheiros para calcular o tamaño "
@@ -2278,7 +2265,6 @@ msgid "Unallocated Space"
 msgstr "Espazo sen asignar"
 
 #: src/disks/gduwindow.c:3067
-#| msgid "Error mounting filesystem"
 msgid "Error while repairing filesystem"
 msgstr "Produciuse un erro ao reparar o sistema de ficheiros"
 
@@ -2287,7 +2273,6 @@ msgid "Repair successful"
 msgstr "Reparación exitosa"
 
 #: src/disks/gduwindow.c:3094
-#| msgid "The operation failed"
 msgid "Repair failed"
 msgstr "Reparación fallida"
 
@@ -2299,17 +2284,10 @@ msgstr "O sistema de ficheiros %s en %s foi reparado."
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3103
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "O sistema de ficheiros %s en %s non puido ser reparado."
 
-#: src/disks/gduwindow.c:3129 src/disks/gduwindow.c:3257
-#: src/disks/gduwindow.c:3758 src/libgdu/gduutils.c:1360
-msgid "Error unmounting filesystem"
-msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
-
 #: src/disks/gduwindow.c:3165
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Repair"
 msgstr "Confirmar reparación"
 
@@ -2325,24 +2303,19 @@ msgstr ""
 "cantidade de datos esta operación pode levar bastante tempo."
 
 #: src/disks/gduwindow.c:3196
-#| msgid "Error checking filesystem on volume"
 msgid "Error while checking filesystem"
 msgstr "Produciuse un erro ao comprobar o sistema de ficheiros"
 
 #: src/disks/gduwindow.c:3223
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
 msgid "Filesystem intact"
 msgstr "Sistema de ficheiros intacto"
 
 #: src/disks/gduwindow.c:3223
-#| msgid "Filesystem label"
 msgid "Filesystem damaged"
 msgstr "Sistema de ficheiros danado"
 
 #: src/disks/gduwindow.c:3226
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s is undamaged."
 msgstr "O sistema de ficheiros %s en %s non está danado."
 
@@ -2353,7 +2326,6 @@ msgid "Filesystem %s on %s needs repairing."
 msgstr "O sistema de ficheiros %s en %s precisa reparación."
 
 #: src/disks/gduwindow.c:3292
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Check"
 msgstr "Confirmar comprobación"
 
@@ -2473,7 +2445,6 @@ msgstr ""
 "Antón Méixome <meixome@certima.net>, 2009, 2010"
 
 #: src/disks/ui/app-menu.ui:6
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
 msgstr "_Nova imaxe de disco…"
 
@@ -2715,7 +2686,7 @@ msgstr "_Tamaño da partición"
 #: src/disks/ui/create-partition-dialog.ui:130
 #: src/disks/ui/create-partition-dialog.ui:131
 #: src/disks/ui/new-disk-image-dialog.ui:86
-#: src/disks/ui/new-disk-image-dialog.ui:87 src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/new-disk-image-dialog.ui:87
 msgid "The size of the partition to create, in megabytes"
 msgstr "O tamaño da partición a crear, en megabites"
 
@@ -2781,7 +2752,6 @@ msgstr "Espazo libre a _continuación"
 
 #: src/disks/ui/create-partition-dialog.ui:195
 #: src/disks/ui/create-partition-dialog.ui:196
-#: src/disks/ui/resize-dialog.ui:167 src/disks/ui/resize-dialog.ui:212
 msgid "The free space following the partition, in megabytes"
 msgstr "O espazo libre a continuación da partición, en megabites"
 
@@ -2993,7 +2963,6 @@ msgid "Device"
 msgstr "Dispositivo"
 
 #: src/disks/ui/disks.ui:937
-#| msgid "UUID: %s"
 msgid "UUID"
 msgstr "UUID"
 
@@ -3058,12 +3027,10 @@ msgid "Resize…"
 msgstr "Redimensionar…"
 
 #: src/disks/ui/disks.ui:1311
-#| msgid "_Check Filesystem"
 msgid "Check Filesystem…"
 msgstr "Verificar o sistema de ficheiros…"
 
 #: src/disks/ui/disks.ui:1319
-#| msgid "Edit Filesystem…"
 msgid "Repair Filesystem…"
 msgstr "Reparar sistema de ficheiros…"
 
@@ -3096,10 +3063,6 @@ msgid "Us_er Session Defaults"
 msgstr "Predeterminados da sesión do _usuario"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3148,12 +3111,10 @@ msgid "_Passphrase"
 msgstr "_Frase de paso"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
 msgstr "_Desbloquear ao arrincar o sistema"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
 "Se está marcado, o dispositivo desbloquearase ao arrincar o sistema (!noauto)"
@@ -3205,7 +3166,13 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Cambiar a etiqueta do sistema de ficheiros"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+"Este sistema de ficheiros desmontarase automaticamente antes de aplicar "
+"calquera cambio."
+
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Etiqueta"
 
@@ -3214,10 +3181,6 @@ msgid "Mount Options"
 msgstr "Opcións de montaxe"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3311,12 +3274,10 @@ msgstr ""
 "dispositivo [x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
 msgstr "Montar ao _arrincar o sistema"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
 "Si está marcada, o dispositivo montarase ao arrincar o sistema [!noauto]"
@@ -3466,17 +3427,14 @@ msgid "Format Volume"
 msgstr "Formatar volume"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
 msgstr "Nova imaxe de disco"
 
 #: src/disks/ui/new-disk-image-dialog.ui:188
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
 msgstr "Acoplar nova _imaxe…"
 
 #: src/disks/ui/resize-dialog.ui:19
-#| msgid "New Volume"
 msgid "Resize Volume"
 msgstr "Redimensionar volume"
 
@@ -3494,9 +3452,24 @@ msgstr ""
 "para o sistema de ficheioros para que traballe máis rápido e de forma máis "
 "segura."
 
+#: src/disks/ui/resize-dialog.ui:109
+#| msgid "The size of the partition to create, in megabytes"
+msgid "The size of the partition to create"
+msgstr "O tamaño da partición a crear"
+
+#: src/disks/ui/resize-dialog.ui:167
+#| msgid "The free space following the partition, in megabytes"
+msgid "The free space following the partition"
+msgstr "O espazo libre a continuación da partición"
+
 #: src/disks/ui/resize-dialog.ui:196
 msgid "_Difference"
 msgstr "_Diferencia"
+
+#: src/disks/ui/resize-dialog.ui:212
+#| msgid "The requested partition size"
+msgid "The difference to the previous partition size"
+msgstr "A diferencia ao tamaño de partición anterior"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3735,7 +3708,6 @@ msgid "Error locking device"
 msgstr "Produciuse un erro ao bloquear o dispositivo"
 
 #: src/libgdu/gduutils.c:1401
-#| msgid "Error deleting loop device"
 msgid "Error disabling autoclear for loop device"
 msgstr "Produciuse un erro ao desactivar a autolimpeza do dispositivo de búcle"
 
@@ -5090,9 +5062,6 @@ msgstr "Examinar"
 
 #~ msgid "The maximum possible partition size"
 #~ msgstr "O tamaño máximo posíbel de partición"
-
-#~ msgid "The requested partition size"
-#~ msgstr "O tamaño solicitado da partición"
 
 #~ msgid "Flags for the widget"
 #~ msgstr "Bandeiras para o widget"

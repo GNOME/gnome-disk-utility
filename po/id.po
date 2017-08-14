@@ -11,16 +11,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-08 23:03+0000\n"
-"PO-Revision-Date: 2017-08-09 11:44+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"POT-Creation-Date: 2017-08-10 12:16+0000\n"
+"PO-Revision-Date: 2017-08-14 14:12+0700\n"
+"Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.0.3\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -1602,13 +1602,19 @@ msgstr "Hening (Lambat)"
 msgid "Loud (Fast)"
 msgstr "Berisik (Cepat)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
 msgstr "Label sesuai dengan label yang ada"
 
-#: src/disks/gdufilesystemdialog.c:81
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Galat ketika mengeset label"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Galat ketika melepas kaitan sistem berkas"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -2262,11 +2268,6 @@ msgstr "Sistem berkas %s pada %s telah sukses diperbaiki."
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Sistem berkas %s pada %s tidak dapat diperbaiki."
-
-#: src/disks/gduwindow.c:3129 src/disks/gduwindow.c:3257
-#: src/disks/gduwindow.c:3758 src/libgdu/gduutils.c:1360
-msgid "Error unmounting filesystem"
-msgstr "Galat ketika melepas kaitan sistem berkas"
 
 #: src/disks/gduwindow.c:3165
 msgid "Confirm Repair"
@@ -3151,7 +3152,12 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Ubah Label Sistem Berkas"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+"Sistem berkas ini akan secara otomatis dilepas sebelum perubahan apapun."
+
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Label"
 

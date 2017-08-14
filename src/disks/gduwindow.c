@@ -40,6 +40,8 @@
 #include "gduresizedialog.h"
 #include "gdulocaljob.h"
 
+#define JOB_SENSITIVITY_DELAY_MS 300
+
 struct _GduWindow
 {
   GtkApplicationWindow parent_instance;
@@ -54,6 +56,7 @@ struct _GduWindow
   UDisksObject *current_object;
   gboolean has_drive_job;
   gboolean has_volume_job;
+  guint delay_job_update_id;
 
   GtkWidget *volume_grid;
 
@@ -281,7 +284,7 @@ typedef struct
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void update_all (GduWindow *window);
+static void update_all (GduWindow *window, gboolean is_delayed_job_update);
 
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
@@ -509,6 +512,7 @@ static gboolean
 select_object (GduWindow    *window,
                UDisksObject *object)
 {
+  gboolean is_delayed_job_update = FALSE;
   gboolean ret = FALSE;
   GtkTreeIter iter;
 
@@ -538,9 +542,15 @@ select_object (GduWindow    *window,
       if (window->current_object != NULL)
         g_object_unref (window->current_object);
       window->current_object = object != NULL ? g_object_ref (object) : NULL;
+      if (window->delay_job_update_id != 0)
+        {
+          g_source_remove (window->delay_job_update_id);
+          window->delay_job_update_id = 0;
+          is_delayed_job_update = TRUE;
+        }
     }
 
-  update_all (window);
+  update_all (window, is_delayed_job_update);
 
  out:
   return ret;
@@ -976,7 +986,7 @@ power_state_cell_func (GtkTreeViewColumn *column,
     visible = TRUE;
 
   gtk_cell_renderer_set_visible (renderer, visible);
-  update_all (window);
+  update_all (window, FALSE);
 }
 
 /* TODO: load from .ui file */
@@ -1074,6 +1084,7 @@ gdu_window_constructed (GObject *object)
 
   window->has_drive_job = FALSE;
   window->has_volume_job = FALSE;
+  window->delay_job_update_id = 0;
 
   window->header = create_header (window);
   if (!in_desktop ("Unity"))
@@ -1419,7 +1430,7 @@ gdu_window_constructed (GObject *object)
 
   ensure_something_selected (window);
   gtk_widget_grab_focus (window->device_tree_treeview);
-  update_all (window);
+  update_all (window, FALSE);
 
   /* attach the generic menu to the toplevel window for correct placement */
   gtk_menu_attach_to_widget (GTK_MENU (window->generic_menu),
@@ -1722,7 +1733,7 @@ block_compare_on_preferred (UDisksObject *a,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void update_device_page (GduWindow *window, ShowFlags *show_flags);
+static void update_device_page (GduWindow *window, ShowFlags *show_flags, gboolean is_delayed_job_update);
 
 /* Keep in sync with tabs in disks.ui file */
 typedef enum
@@ -1733,7 +1744,7 @@ typedef enum
 } DetailsPage;
 
 static void
-update_all (GduWindow *window)
+update_all (GduWindow *window, gboolean is_delayed_job_update)
 {
   ShowFlags show_flags = {0};
   DetailsPage page = DETAILS_PAGE_NOT_IMPLEMENTED;
@@ -1769,7 +1780,7 @@ update_all (GduWindow *window)
       break;
 
     case DETAILS_PAGE_DEVICE:
-      update_device_page (window, &show_flags);
+      update_device_page (window, &show_flags, is_delayed_job_update);
       break;
 
     default:
@@ -1784,7 +1795,7 @@ on_client_changed (UDisksClient   *client,
 {
   GduWindow *window = GDU_WINDOW (user_data);
   //g_debug ("on_client_changed");
-  update_all (window);
+  update_all (window, FALSE);
 }
 
 static void
@@ -1792,8 +1803,16 @@ on_volume_grid_changed (GduVolumeGrid  *grid,
                         gpointer        user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
+  gboolean is_delayed_job_update = FALSE;
   //g_debug ("on_volume_grid_changed");
-  update_all (window);
+  if (window->delay_job_update_id != 0)
+    {
+      g_source_remove (window->delay_job_update_id);
+      window->delay_job_update_id = 0;
+      is_delayed_job_update = TRUE;
+    }
+
+  update_all (window, is_delayed_job_update);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -1903,10 +1922,22 @@ get_job_progress_text (GduWindow *window,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+delayed_job_update (gpointer user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+
+  window->delay_job_update_id = 0;
+  update_all (window, TRUE);
+
+  return G_SOURCE_REMOVE;
+}
+
 static void
 update_jobs (GduWindow *window,
              GList     *jobs,
-             gboolean   is_volume)
+             gboolean   is_volume,
+             gboolean   is_delayed_job_update)
 {
   GtkWidget *label = window->devtab_drive_job_label;
   GtkWidget *grid = window->devtab_drive_job_grid;
@@ -1916,6 +1947,7 @@ update_jobs (GduWindow *window,
   GtkWidget *cancel_button = window->devtab_drive_job_cancel_button;
   gboolean drive_sensitivity;
   gboolean selected_volume_sensitivity;
+  gboolean gets_sensitive;
 
   if (is_volume)
     {
@@ -1928,13 +1960,27 @@ update_jobs (GduWindow *window,
     }
 
   drive_sensitivity = !gdu_application_has_running_job (window->application, window->current_object);
-  gtk_widget_set_sensitive (window->devtab_drive_generic_button, drive_sensitivity);
-  gtk_widget_set_sensitive (window->devtab_drive_eject_button, drive_sensitivity);
-  gtk_widget_set_sensitive (window->devtab_drive_power_off_button, drive_sensitivity);
-  gtk_widget_set_sensitive (window->devtab_drive_loop_detach_button, drive_sensitivity);
-
   selected_volume_sensitivity = (!window->has_volume_job && !window->has_drive_job);
-  gtk_widget_set_sensitive (window->devtab_grid_toolbar, selected_volume_sensitivity);
+  gets_sensitive = (drive_sensitivity && !gtk_widget_get_sensitive (window->devtab_drive_generic_button))
+                   || (selected_volume_sensitivity && !gtk_widget_get_sensitive (window->devtab_grid_toolbar));
+
+  /* delay for some milliseconds if change to sensitive or while a delay is pending */
+  if (window->delay_job_update_id > 0 || (gets_sensitive && !is_delayed_job_update))
+    {
+      if (window->delay_job_update_id != 0)
+        g_source_remove (window->delay_job_update_id);
+
+      window->delay_job_update_id = g_timeout_add (JOB_SENSITIVITY_DELAY_MS, delayed_job_update, window);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (window->devtab_drive_generic_button, drive_sensitivity);
+      gtk_widget_set_sensitive (window->devtab_drive_eject_button, drive_sensitivity);
+      gtk_widget_set_sensitive (window->devtab_drive_power_off_button, drive_sensitivity);
+      gtk_widget_set_sensitive (window->devtab_drive_loop_detach_button, drive_sensitivity);
+
+      gtk_widget_set_sensitive (window->devtab_grid_toolbar, selected_volume_sensitivity);
+    }
 
   if (jobs == NULL)
     {
@@ -2005,21 +2051,23 @@ update_jobs (GduWindow *window,
 
 static void
 update_drive_jobs (GduWindow *window,
-                   GList     *jobs)
+                   GList     *jobs,
+                   gboolean   is_delayed_job_update)
 {
   window->has_volume_job = FALSE; /* comes before update_volume_jobs */
   window->has_drive_job = (jobs != NULL);
-  update_jobs (window, jobs, FALSE);
+  update_jobs (window, jobs, FALSE, is_delayed_job_update);
 }
 
 static void
 update_volume_jobs (GduWindow    *window,
                     GList        *jobs,
-                    UDisksObject *origin_object)
+                    UDisksObject *origin_object,
+                    gboolean      is_delayed_job_update)
 {
   /* in contrast to variable 'jobs' this call includes jobs on contained objects */
   window->has_volume_job = gdu_application_has_running_job (window->application, origin_object);
-  update_jobs (window, jobs, TRUE);
+  update_jobs (window, jobs, TRUE, is_delayed_job_update);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -2028,7 +2076,8 @@ static void
 update_generic_drive_bits (GduWindow      *window,
                            UDisksBlock    *block,          /* should be the whole disk */
                            GList          *jobs,           /* jobs not specific to @block */
-                           ShowFlags      *show_flags)
+                           ShowFlags      *show_flags,
+                           gboolean        is_delayed_job_update)
 {
   if (block != NULL)
     {
@@ -2085,12 +2134,12 @@ update_generic_drive_bits (GduWindow      *window,
       UDisksObject *block_object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
       jobs = udisks_client_get_jobs_for_object (window->client, block_object);
       jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, block_object));
-      update_drive_jobs (window, jobs);
+      update_drive_jobs (window, jobs, is_delayed_job_update);
       g_list_free_full (jobs, g_object_unref);
     }
   else
     {
-      update_drive_jobs (window, jobs);
+      update_drive_jobs (window, jobs, is_delayed_job_update);
     }
 }
 
@@ -2100,7 +2149,8 @@ static void
 update_device_page_for_drive (GduWindow      *window,
                               UDisksObject   *object,
                               UDisksDrive    *drive,
-                              ShowFlags      *show_flags)
+                              ShowFlags      *show_flags,
+                              gboolean        is_delayed_job_update)
 {
   gchar *s;
   GList *blocks;
@@ -2129,7 +2179,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   jobs = udisks_client_get_jobs_for_object (window->client, object);
   jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
-  update_generic_drive_bits (window, block, jobs, show_flags);
+  update_generic_drive_bits (window, block, jobs, show_flags, is_delayed_job_update);
 
   gdu_volume_grid_set_no_media_string (GDU_VOLUME_GRID (window->volume_grid),
                                        _("No Media"));
@@ -2371,7 +2421,8 @@ update_device_page_for_loop (GduWindow      *window,
                              UDisksObject   *object,
                              UDisksBlock    *block,
                              UDisksLoop     *loop,
-                             ShowFlags      *show_flags)
+                             ShowFlags      *show_flags,
+                             gboolean        is_delayed_job_update)
 {
   UDisksObjectInfo *info = NULL;
   gchar *s = NULL;
@@ -2397,7 +2448,7 @@ update_device_page_for_loop (GduWindow      *window,
 
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  update_generic_drive_bits (window, block, NULL, show_flags);
+  update_generic_drive_bits (window, block, NULL, show_flags, is_delayed_job_update);
 
   /* -------------------------------------------------- */
   /* 'Auto-clear' and 'Backing File' fields */
@@ -2435,7 +2486,8 @@ static void
 update_device_page_for_fake_block (GduWindow      *window,
                                    UDisksObject   *object,
                                    UDisksBlock    *block,
-                                   ShowFlags      *show_flags)
+                                   ShowFlags      *show_flags,
+                                   gboolean        is_delayed_job_update)
 {
   UDisksObjectInfo *info = NULL;
   gchar *device_desc = NULL;
@@ -2460,7 +2512,7 @@ update_device_page_for_fake_block (GduWindow      *window,
 
   gtk_widget_show (window->devtab_drive_generic_button);
 
-  update_generic_drive_bits (window, block, NULL, show_flags);
+  update_generic_drive_bits (window, block, NULL, show_flags, is_delayed_job_update);
 
   /* cleanup */
   g_clear_object (&info);
@@ -2511,7 +2563,8 @@ update_device_page_for_block (GduWindow          *window,
                               UDisksObject       *object,
                               UDisksBlock        *block,
                               guint64             size,
-                              ShowFlags          *show_flags)
+                              ShowFlags          *show_flags,
+                              gboolean            is_delayed_job_update)
 {
   const gchar *usage;
   const gchar *type;
@@ -2825,7 +2878,7 @@ update_device_page_for_block (GduWindow          *window,
       jobs = udisks_client_get_jobs_for_object (window->client, object);
       jobs = g_list_concat (jobs, gdu_application_get_local_jobs_for_object (window->application, object));
     }
-  update_volume_jobs (window, jobs, object);
+  update_volume_jobs (window, jobs, object, is_delayed_job_update);
   g_list_foreach (jobs, (GFunc) g_object_unref, NULL);
   g_list_free (jobs);
   g_clear_object (&partition_table);
@@ -2967,7 +3020,8 @@ maybe_hide (GtkWidget *widget,
 
 static void
 update_device_page (GduWindow      *window,
-                    ShowFlags      *show_flags)
+                    ShowFlags      *show_flags,
+                    gboolean        is_delayed_job_update)
 {
   UDisksObject *object;
   GduVolumeGridElementType type;
@@ -3006,11 +3060,11 @@ update_device_page (GduWindow      *window,
     show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH;
 
   if (drive != NULL)
-    update_device_page_for_drive (window, object, drive, show_flags);
+    update_device_page_for_drive (window, object, drive, show_flags, is_delayed_job_update);
   else if (loop != NULL)
-    update_device_page_for_loop (window, object, block, loop, show_flags);
+    update_device_page_for_loop (window, object, block, loop, show_flags, is_delayed_job_update);
   else
-    update_device_page_for_fake_block (window, object, block, show_flags);
+    update_device_page_for_fake_block (window, object, block, show_flags, is_delayed_job_update);
 
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));
   size = gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid));
@@ -3018,7 +3072,7 @@ update_device_page (GduWindow      *window,
   if (type == GDU_VOLUME_GRID_ELEMENT_TYPE_CONTAINER)
     {
       if (block != NULL)
-        update_device_page_for_block (window, object, block, size, show_flags);
+        update_device_page_for_block (window, object, block, size, show_flags, is_delayed_job_update);
     }
   else
     {
@@ -3035,11 +3089,11 @@ update_device_page (GduWindow      *window,
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_DEVICE:
-              update_device_page_for_block (window, object, block, size, show_flags);
+              update_device_page_for_block (window, object, block, size, show_flags, is_delayed_job_update);
               break;
 
             case GDU_VOLUME_GRID_ELEMENT_TYPE_NO_MEDIA:
-              update_device_page_for_block (window, object, block, size, show_flags);
+              update_device_page_for_block (window, object, block, size, show_flags, is_delayed_job_update);
               update_device_page_for_no_media (window, object, block, show_flags);
               break;
 
@@ -3803,7 +3857,7 @@ on_generic_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
 
-  update_all (window);
+  update_all (window, FALSE);
 
   gtk_menu_popup_at_widget (GTK_MENU (window->generic_menu),
                             window->toolbutton_generic_menu,
@@ -4086,7 +4140,7 @@ loop_set_autoclear_cb (UDisksLoop      *loop,
   GError *error;
 
   /* in case of error, make sure the GtkSwitch:active corresponds to UDisksLoop:autoclear */
-  update_all (window);
+  update_all (window, FALSE);
 
   error = NULL;
   if (!udisks_loop_call_set_autoclear_finish (loop,

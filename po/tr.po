@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-19 08:41+0000\n"
-"PO-Revision-Date: 2017-05-21 22:39+0300\n"
+"POT-Creation-Date: 2017-08-15 22:36+0000\n"
+"PO-Revision-Date: 2017-08-16 12:26+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
-"Language-Team: Türkçe <>\n"
+"Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -79,24 +79,21 @@ msgstr ""
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
 msgid ""
-"Using Disks, you can view SMART data, manage RAID devices, benchmark "
-"physical disks, and image USB sticks. Tasks are executed in the background, "
-"even after the application has been closed by the user."
+"Using Disks, you can view SMART data, manage devices, benchmark physical "
+"disks, and image USB sticks."
 msgstr ""
-"Diskleri kullanarak, SMART verisini görebilir, RAID aygıtları yönetebilir, "
-"fiziksel diskleri değerlendirebilir, USB bellekleri kopyalayabilirsiniz. "
-"Uygulama kullanıcı tarafından kapatıldıktan sonra bile görevler arka planda "
-"yerine getirilir."
+"Diskler’i kullanarak; SMART verisini görebilir, aygıtları yönetebilir, "
+"fiziksel diskleri değerlendirebilir, USB bellekleri kopyalayabilirsiniz."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:23
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
 msgstr "Disklerinizi yönetmenin kolay yolu"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:35
+#: data/org.gnome.DiskUtility.appdata.xml.in:34
 msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1065
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1095
 msgid "Disks"
 msgstr "Diskler"
 
@@ -132,7 +129,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Bağlamak için Disk Kalıp(ları) Seç"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:764
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:792
 msgid "_Cancel"
 msgstr "_Vazgeç"
 
@@ -146,9 +143,6 @@ msgid "Set up _read-only mount"
 msgstr "Salt okunu_r olarak bağla"
 
 #: src/disk-image-mounter/main.c:95
-#| msgid ""
-#| "If checked, the mount will be read-only. This is useful if you don't want "
-#| "the underlying disk image to be modified"
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -167,13 +161,11 @@ msgstr "Bir veya daha çok disk kalıbı ekle ve bağla."
 
 #: src/disk-image-mounter/main.c:192
 #, c-format
-#| msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "“%s” açılamıyor — bölüm bağlanmamış olabilir mi?"
 
 #: src/disk-image-mounter/main.c:199
 #, c-format
-#| msgid "Error opening `%s': %m"
 msgid "Error opening “%s”: %m"
 msgstr "“%s” açılırken hata: %m"
 
@@ -413,7 +405,7 @@ msgstr "Yüksek Uçuş Yazmaları"
 #: src/disks/gduatasmartdialog.c:269
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
-msgstr "Kayıt kafasının normal çalışma aralığı dışında uçma sayısı"
+msgstr "Kayıt kafasının olağan çalışma aralığı dışında uçma sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1085,27 +1077,27 @@ msgid "Assessment"
 msgstr "Değerlendirme"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:333
+#: src/disks/gdubenchmarkdialog.c:332
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:338
+#: src/disks/gdubenchmarkdialog.c:337
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:662
+#: src/disks/gdubenchmarkdialog.c:661
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: src/disks/gdubenchmarkdialog.c:677 src/disks/gdubenchmarkdialog.c:889
+#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1116,115 +1108,115 @@ msgstr[0] "%u örnek"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: src/disks/gdubenchmarkdialog.c:718
+#: src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (%s önce)"
 
-#: src/disks/gdubenchmarkdialog.c:730
+#: src/disks/gdubenchmarkdialog.c:729
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "Kıyaslama verisi yok"
 
-#: src/disks/gdubenchmarkdialog.c:735
+#: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "Aygıt Açılıyor…"
 
-#: src/disks/gdubenchmarkdialog.c:739
+#: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Aktarım hızı ölçümü (%%%2.1f tamamlandı)…"
 
-#: src/disks/gdubenchmarkdialog.c:746
+#: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "Erişim hızı ölçülüyor (%%%2.1f tamamlandı)…"
 
-#: src/disks/gdubenchmarkdialog.c:812
+#: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Bir hata oluştu"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:887
+#: src/disks/gdubenchmarkdialog.c:886
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f milisaniye"
 
-#: src/disks/gdubenchmarkdialog.c:1199
+#: src/disks/gdubenchmarkdialog.c:1198
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Aygıtın boyutunu saptamada hata: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1209
+#: src/disks/gdubenchmarkdialog.c:1208
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Sayfa boyutu alınırken hata oluştu: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1243 src/disks/gdubenchmarkdialog.c:1306
-#: src/disks/gdubenchmarkdialog.c:1325
+#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
+#: src/disks/gdubenchmarkdialog.c:1324
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "%lld bağıl konumu aranırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1254
+#: src/disks/gdubenchmarkdialog.c:1253
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "%s verisi %s bağıl konumundan ön okuma yapılırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1266
+#: src/disks/gdubenchmarkdialog.c:1265
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "%s bağıl konumu aranırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1280
+#: src/disks/gdubenchmarkdialog.c:1279
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "%s verisi %s bağıl konumundan okunurken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1315
+#: src/disks/gdubenchmarkdialog.c:1314
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr ""
 "%lld baytlık veri %lld bağıl konumundan ön okuma yapılırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1336
+#: src/disks/gdubenchmarkdialog.c:1335
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "%lld baytlık veri %lld bağıl adresine yazılırken hata oluştu: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1346
+#: src/disks/gdubenchmarkdialog.c:1345
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld byte veri yazılması beklenirken, yalnızca %lld bayt yazıldı: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1356
+#: src/disks/gdubenchmarkdialog.c:1355
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Eşitleme hatası (%lld bağıl konumunda): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1396
+#: src/disks/gdubenchmarkdialog.c:1395
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "%lld bağıl konumu aranırken hata oluştu: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1408
+#: src/disks/gdubenchmarkdialog.c:1407
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1232,12 +1224,10 @@ msgstr "%lld baytlık veri %lld bağıl konumundan okunurken hata oluştu"
 
 #: src/disks/gduchangepassphrasedialog.c:120
 #: src/disks/gducreatefilesystemwidget.c:236
-#| msgid "Enter passphrase to unlock"
 msgid "The passphrases do not match"
 msgstr "Parolalar eşleşmiyor"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#| msgid "The strength of the passphrase"
 msgid "The passphrase matches the existing passphrase"
 msgstr "Var olan parolayla eşleşen parola"
 
@@ -1266,7 +1256,7 @@ msgstr ""
 "parola başvurusunu da günceller"
 
 #: src/disks/gduchangepassphrasedialog.c:373
-#: src/disks/gducreatefilesystemwidget.c:574
+#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "Parola gücü"
 
@@ -1358,13 +1348,13 @@ msgid "Error allocating space for disk image file: "
 msgstr "Disk kalıbı dosyası için yer ayırmada hata: "
 
 #: src/disks/gducreatediskimagedialog.c:925
-#: src/disks/gdunewdiskimagedialog.c:340
+#: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "“%s” adında bir dosya zaten var. Yerine bunu koymak ister misin?"
 
 #: src/disks/gducreatediskimagedialog.c:928
-#: src/disks/gdunewdiskimagedialog.c:343
+#: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1373,12 +1363,12 @@ msgstr ""
 "yazacaktır."
 
 #: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:346
+#: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "Ye_r değiştir"
 
 #: src/disks/gducreatediskimagedialog.c:981
-#: src/disks/gdunewdiskimagedialog.c:263
+#: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Yazmak için dosya açmada hata"
 
@@ -1393,90 +1383,90 @@ msgstr "Aygıt disk kalıbına kopyalanıyor"
 msgid "Creating Disk Image"
 msgstr "Disk Kalıbı Oluşturma"
 
-#: src/disks/gducreatefilesystemwidget.c:415
+#: src/disks/gducreatefilesystemwidget.c:393
 #: src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "Tüm sistemler ve aygıtlarla uyumlu"
 
-#: src/disks/gducreatefilesystemwidget.c:416
+#: src/disks/gducreatefilesystemwidget.c:394
 msgid "FAT"
 msgstr "FAT"
 
-#: src/disks/gducreatefilesystemwidget.c:421
+#: src/disks/gducreatefilesystemwidget.c:399
 msgid "Compatible with most systems"
 msgstr "Çoğu sistemle uyumlu"
 
-#: src/disks/gducreatefilesystemwidget.c:422
+#: src/disks/gducreatefilesystemwidget.c:400
 msgid "NTFS"
 msgstr "NTFS"
 
-#: src/disks/gducreatefilesystemwidget.c:427
+#: src/disks/gducreatefilesystemwidget.c:405
 msgid "Compatible with Linux systems"
 msgstr "Linux sistemler ile uyumlu"
 
-#: src/disks/gducreatefilesystemwidget.c:428
+#: src/disks/gducreatefilesystemwidget.c:406
 msgid "Ext4"
 msgstr "Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:433
+#: src/disks/gducreatefilesystemwidget.c:411
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Şifreli, Linux sistemler ile uyumlu"
 
-#: src/disks/gducreatefilesystemwidget.c:434
+#: src/disks/gducreatefilesystemwidget.c:412
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:439
+#: src/disks/gducreatefilesystemwidget.c:417
 msgid "Custom"
 msgstr "Özel"
 
-#: src/disks/gducreatefilesystemwidget.c:440
+#: src/disks/gducreatefilesystemwidget.c:418
 msgid "Enter filesystem type"
 msgstr "Dosya sistemi türünü gir"
 
-#: src/disks/gducreatefilesystemwidget.c:522
+#: src/disks/gducreatefilesystemwidget.c:500
 #: src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
 msgstr "Var olan verinin üzerine yazma"
 
-#: src/disks/gducreatefilesystemwidget.c:523
+#: src/disks/gducreatefilesystemwidget.c:501
 #: src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "Hızlı"
 
-#: src/disks/gducreatefilesystemwidget.c:530
+#: src/disks/gducreatefilesystemwidget.c:508
 #: src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Var olan verileri sıfırlar ile değiştir"
 
-#: src/disks/gducreatefilesystemwidget.c:531
+#: src/disks/gducreatefilesystemwidget.c:509
 #: src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "Yavaş"
 
-#: src/disks/gducreatepartitiondialog.c:337
+#: src/disks/gducreatepartitiondialog.c:231
 msgid "Error formatting partition"
 msgstr "Bölüm biçimlendirmeda hata"
 
-#: src/disks/gducreatepartitiondialog.c:366
+#: src/disks/gducreatepartitiondialog.c:260
 msgid "Error creating partition"
 msgstr "Bölümleme oluşturulurken hata"
 
-#: src/disks/gducreatepartitiondialog.c:457
+#: src/disks/gducreatepartitiondialog.c:351
 msgid "Extended partition"
 msgstr "Genişletilmiş bölüm"
 
-#: src/disks/gducreatepartitiondialog.c:458
+#: src/disks/gducreatepartitiondialog.c:352
 msgid "For logical partitions"
 msgstr "Mantıksal bölümler için"
 
-#: src/disks/gducreatepartitiondialog.c:471
+#: src/disks/gducreatepartitiondialog.c:365
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 "Yeni bölüm oluşturulamıyor. En çok dört tane birincil bölüm oluşturulabilir."
 
-#: src/disks/gducreatepartitiondialog.c:475
+#: src/disks/gducreatepartitiondialog.c:369
 msgid "This is the last primary partition that can be created."
 msgstr "Bu oluşturabileceğiniz son birincil bölümdür."
 
@@ -1616,13 +1606,19 @@ msgstr "Sessiz (Yavaş)"
 msgid "Loud (Fast)"
 msgstr "Sesli (Hızlı)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
 msgstr "Var olan etiketle eşleşen etiket"
 
-#: src/disks/gdufilesystemdialog.c:81
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Etiket değiştirmede hata"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Dosya sistemi ayırmada hata"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1720,7 +1716,7 @@ msgstr ""
 "edilemeyebilir ve bazı donanımlarda düzgün çalışmayabilir. En kötü durumda "
 "sürücü kullanılmaz hale gelebilir veya sisteminiz çökebilir ya da "
 "kilitlenebilir. Devam etmeden önce lütfen <a href='https://ata.wiki.kernel."
-"org/index.php/ATA_Secure_Erase'>ATA Güvenli Silme(İngilizce)</a> ile ilgili "
+"org/index.php/ATA_Secure_Erase'>ATA Güvenli Silme (İngilizce)</a> ile ilgili "
 "yazıyı okuyup riskleri anladığınızdan emin olunuz."
 
 #: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
@@ -1808,13 +1804,12 @@ msgstr "/etc/fstab girdisini güncellemede hata"
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:208
+#: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "Adlandırılmamış (%s).img"
 
-#: src/disks/gdunewdiskimagedialog.c:283
-#| msgid "Error powering off drive"
+#: src/disks/gdunewdiskimagedialog.c:267
 msgid "Error writing file"
 msgstr "Dosya yazılırken hata"
 
@@ -1849,6 +1844,56 @@ msgstr "İyi"
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Güçlü"
+
+#: src/disks/gduresizedialog.c:188
+msgid "Current Size"
+msgstr "Şimdiki Boyut"
+
+#: src/disks/gduresizedialog.c:199
+msgid "Minimal Size"
+msgstr "Asgari Boyut"
+
+#: src/disks/gduresizedialog.c:249
+msgid "_Resize"
+msgstr "_Yeniden boyutlandır"
+
+#: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
+#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+msgid "Error resizing filesystem"
+msgstr "Dosya sistemi yeniden boyutlandırılırken hata"
+
+#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
+#: src/disks/gduresizedialog.c:525
+msgid "Error resizing partition"
+msgstr "Bölüm yeniden boyutlandırılırken hata"
+
+#: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
+msgid "Error repairing filesystem after resize"
+msgstr "Yeniden boyutlandırma sonrası dosya sistemi onarılırken hata"
+
+#: src/disks/gduresizedialog.c:464
+msgid "Resizing not ready"
+msgstr "Yeniden boyutlandırma hazır değil"
+
+#: src/disks/gduresizedialog.c:466
+msgid "Waited too long for the filesystem"
+msgstr "Dosya sistemi için uzun süre beklendi"
+
+#: src/disks/gduresizedialog.c:595
+msgid "Error repairing filesystem"
+msgstr "Dosya sistemi onarılırken hata"
+
+#: src/disks/gduresizedialog.c:661
+msgid "Error unmounting filesystem for resizing"
+msgstr "Yeniden boyutlandırma için dosya sistemi ayrılırken hata"
+
+#: src/disks/gduresizedialog.c:703
+msgid "Fit to size"
+msgstr "Boyuta sığdır"
+
+#: src/disks/gduresizedialog.c:738
+msgid "Error mounting filesystem to calculate minimum size"
+msgstr "Asgari boyut hesaplaması için dosya sistemi bağlanırken hata"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -1923,7 +1968,7 @@ msgstr "Şifreleme parolası anahtarlıktan alındı"
 msgid "Volumes Grid"
 msgstr "Birimler Tablosu"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2063
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2114
 msgid "No Media"
 msgstr "Ortam yok"
 
@@ -1965,30 +2010,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Boş Alan"
 
-#: src/disks/gduwindow.c:588
+#: src/disks/gduwindow.c:616
 msgid "Error deleting loop device"
 msgstr "Döngü aygıtı silinmede hata"
 
-#: src/disks/gduwindow.c:688 src/disks/gduwindow.c:731
+#: src/disks/gduwindow.c:716 src/disks/gduwindow.c:759
 msgid "Error attaching disk image"
 msgstr "Disk kalıbı eklemede hata"
 
-#: src/disks/gduwindow.c:761
+#: src/disks/gduwindow.c:789
 msgid "Select Disk Image to Attach"
 msgstr "Eklemek İçin Disk Kalıbı Seçin"
 
-#: src/disks/gduwindow.c:765
+#: src/disks/gduwindow.c:793
 msgid "_Attach"
 msgstr "_Ekle"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:772
+#: src/disks/gduwindow.c:800
 msgid "Set up _read-only loop device"
 msgstr "_Salt okunur döngü aygıtı olarak ayarla"
 
-#: src/disks/gduwindow.c:773
+#: src/disks/gduwindow.c:801
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -1996,20 +2041,20 @@ msgstr ""
 "Eğer işaretlenirse döngü aygıtı salt okunur olacak. Bu seçenek, asıl "
 "dosyanın değişmesini istemiyorsanız kullanışlıdır."
 
-#: src/disks/gduwindow.c:969
+#: src/disks/gduwindow.c:999
 msgid "Power off this disk"
 msgstr "Bu diski kapat"
 
-#: src/disks/gduwindow.c:975
+#: src/disks/gduwindow.c:1005
 msgid "Eject this disk"
 msgstr "Bu diski çıkart"
 
-#: src/disks/gduwindow.c:981
+#: src/disks/gduwindow.c:1011
 msgid "Detach this loop device"
 msgstr "Bu döngü aygıtını ayır"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1381
+#: src/disks/gduwindow.c:1432
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2018,7 +2063,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1389
+#: src/disks/gduwindow.c:1440
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2027,7 +2072,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1397
+#: src/disks/gduwindow.c:1448
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2036,12 +2081,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1405
+#: src/disks/gduwindow.c:1456
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1420
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2050,13 +2095,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1430
+#: src/disks/gduwindow.c:1481
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1752
+#: src/disks/gduwindow.c:1803
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Salt Okunur)"
@@ -2065,7 +2110,7 @@ msgstr "%s (Salt Okunur)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1790
+#: src/disks/gduwindow.c:1841
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2074,7 +2119,7 @@ msgstr "%s kaldı (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1798
+#: src/disks/gduwindow.c:1849
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2085,9 +2130,8 @@ msgstr "%s kaldı"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1813
+#: src/disks/gduwindow.c:1864
 #, c-format
-#| msgid "%s of %s – %s"
 msgid "%s of %s — %s"
 msgstr "%s/%s — %s"
 
@@ -2095,17 +2139,17 @@ msgstr "%s/%s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1900
+#: src/disks/gduwindow.c:1951
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %%%2.1f"
 
-#: src/disks/gduwindow.c:1972 src/disks/gduwindow.c:2373
+#: src/disks/gduwindow.c:2023 src/disks/gduwindow.c:2424
 msgid "Block device is empty"
 msgstr "Blok aygıtı boş"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1995
+#: src/disks/gduwindow.c:2046
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2114,11 +2158,11 @@ msgstr "Bilinmiyor (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2164
+#: src/disks/gduwindow.c:2215
 msgid "Connected to another seat"
 msgstr "Başka bir yuvaya bağlandı"
 
-#: src/disks/gduwindow.c:2310
+#: src/disks/gduwindow.c:2361
 msgid "Loop device is empty"
 msgstr "Döngü aygıtı boş"
 
@@ -2128,61 +2172,61 @@ msgstr "Döngü aygıtı boş"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2540
+#: src/disks/gduwindow.c:2591
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s boş (%%%.1f dolu)"
 
-#: src/disks/gduwindow.c:2570
+#: src/disks/gduwindow.c:2621
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2659
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Kök Dosya Sistemi"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2616
+#: src/disks/gduwindow.c:2667
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s noktasına bağlandı"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2622
+#: src/disks/gduwindow.c:2673
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Bağlı Değil"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2645
+#: src/disks/gduwindow.c:2696
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Etkin"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2651
+#: src/disks/gduwindow.c:2702
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Etkin Değil"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2664
+#: src/disks/gduwindow.c:2715
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Kilidi Açık"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2670
+#: src/disks/gduwindow.c:2721
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Kilitli"
 
-#: src/disks/gduwindow.c:2680
+#: src/disks/gduwindow.c:2731
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Uzatılmış Bölüm"
@@ -2191,36 +2235,105 @@ msgstr "Uzatılmış Bölüm"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2700
+#: src/disks/gduwindow.c:2751
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2801
+#: src/disks/gduwindow.c:2875
 msgid "Unallocated Space"
 msgstr "Ayrılmamış Alan"
 
-#: src/disks/gduwindow.c:3150
+#: src/disks/gduwindow.c:3067
+msgid "Error while repairing filesystem"
+msgstr "Dosya sistemi onarılırken hata"
+
+#: src/disks/gduwindow.c:3094
+msgid "Repair successful"
+msgstr "Onarım başarılı"
+
+#: src/disks/gduwindow.c:3094
+msgid "Repair failed"
+msgstr "Onarım başarısız"
+
+#: src/disks/gduwindow.c:3097
+#, c-format
+msgid "Filesystem %s on %s has been repaired."
+msgstr "%2$s üzerindeki %1$s dosya sistemi onarıldı."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3103
+#, c-format
+msgid "Filesystem %s on %s could not be repaired."
+msgstr "%2$s üzerindeki %1$s dosya sistemi onarılamadı."
+
+#: src/disks/gduwindow.c:3165
+msgid "Confirm Repair"
+msgstr "Onarımı Onayla"
+
+#: src/disks/gduwindow.c:3168
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider "
+"backing it up first in order to use forensic recovery tools that retrieve "
+"lost files. Depending on the amount of data this operation takes longer time."
+msgstr ""
+"Dosya sistemi onarımı her zaman olası değildir ve veri kaybına neden "
+"olabilir. Kayıp dosyaları adli kurtarma araçları kullanarak geri getirmemek "
+"için öncelikle verinizi yedeklemeyi düşünün. Bu işlem veri tutarına bağlı "
+"olarak uzun zaman alır."
+
+#: src/disks/gduwindow.c:3196
+msgid "Error while checking filesystem"
+msgstr "Dosya sistemi denetlenirken hata"
+
+#: src/disks/gduwindow.c:3223
+msgid "Filesystem intact"
+msgstr "Dosya sistemi sağlam"
+
+#: src/disks/gduwindow.c:3223
+msgid "Filesystem damaged"
+msgstr "Dosya sistemi hasarlı"
+
+#: src/disks/gduwindow.c:3226
+#, c-format
+msgid "Filesystem %s on %s is undamaged."
+msgstr "%2$s üzerindeki %1$s dosya sistemi sağlamdır."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3232
+#, c-format
+msgid "Filesystem %s on %s needs repairing."
+msgstr "%2$s üzerindeki %1$s dosya sistemi onarım gerektiriyor."
+
+#: src/disks/gduwindow.c:3292
+msgid "Confirm Check"
+msgstr "Denetimi Onayla"
+
+#: src/disks/gduwindow.c:3295
+msgid "Depending on the amount of data the filesystem check takes longer time."
+msgstr "Dosya sistemi denetimi veri tutarına bağlı olarak uzun zaman alır."
+
+#: src/disks/gduwindow.c:3495
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Sürücüyü bekleme kipine alırken bir hata oluştu"
 
-#: src/disks/gduwindow.c:3196
+#: src/disks/gduwindow.c:3541
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Sürücüyü bekleme kipinden uyandırırken bir hata oluştu"
 
-#: src/disks/gduwindow.c:3241
+#: src/disks/gduwindow.c:3586
 msgid "Error powering off drive"
 msgstr "Sürücü kapatılırken hata oluştu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3293
+#: src/disks/gduwindow.c:3638
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sürücülerin gücünü kapatmak istediğinizden emin misiniz?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3295
+#: src/disks/gduwindow.c:3640
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2228,55 +2341,51 @@ msgstr ""
 "Bu işlem aşağıdaki sürücülerin kapatılması ve kaldırılması için sistemi "
 "hazırlar"
 
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3644
 msgid "_Power Off"
 msgstr "G_ücü Kapat"
 
-#: src/disks/gduwindow.c:3376
+#: src/disks/gduwindow.c:3721
 msgid "Error mounting filesystem"
 msgstr "Dosya sistemi bağlamada hata"
 
-#: src/disks/gduwindow.c:3413 src/libgdu/gduutils.c:1102
-msgid "Error unmounting filesystem"
-msgstr "Dosya sistemi ayırmada hata"
-
-#: src/disks/gduwindow.c:3481
+#: src/disks/gduwindow.c:3826
 msgid "Error deleting partition"
 msgstr "Bölümleme silinirken hata"
 
-#: src/disks/gduwindow.c:3518
+#: src/disks/gduwindow.c:3863
 msgid "Are you sure you want to delete the partition?"
 msgstr "Bölümü silmek istediğinizden emin misiniz?"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3864
 msgid "All data on the partition will be lost"
 msgstr "Bölümdeki tüm veriler kaybedilecek"
 
-#: src/disks/gduwindow.c:3520
+#: src/disks/gduwindow.c:3865
 msgid "_Delete"
 msgstr "_Sil"
 
-#: src/disks/gduwindow.c:3551
+#: src/disks/gduwindow.c:3896
 msgid "Error ejecting media"
 msgstr "Ortam çıkarmada hata"
 
-#: src/disks/gduwindow.c:3616
+#: src/disks/gduwindow.c:3961
 msgid "Error locking encrypted device"
 msgstr "Şifrelenmiş aygıt kilitlenirken hata"
 
-#: src/disks/gduwindow.c:3652
+#: src/disks/gduwindow.c:3997
 msgid "Error starting swap"
 msgstr "Takas bölümü başlatmada hata"
 
-#: src/disks/gduwindow.c:3689
+#: src/disks/gduwindow.c:4034
 msgid "Error stopping swap"
 msgstr "Takas bölümü durdurmada hata"
 
-#: src/disks/gduwindow.c:3731
+#: src/disks/gduwindow.c:4076
 msgid "Error setting autoclear flag"
 msgstr "Otomatik temizle (autoclear) bayrağı ayarlanırken hata"
 
-#: src/disks/gduwindow.c:3784 src/disks/gduwindow.c:3848
+#: src/disks/gduwindow.c:4129 src/disks/gduwindow.c:4193
 msgid "Error canceling job"
 msgstr "İş iptal edilirken hata"
 
@@ -2316,7 +2425,6 @@ msgstr ""
 "Osman Karagöz <osmank3@gmail.com>"
 
 #: src/disks/ui/app-menu.ui:6
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
 msgstr "_Yeni Disk Kalıbı…"
 
@@ -2472,12 +2580,12 @@ msgstr "_Değiştir"
 
 #: src/disks/ui/change-passphrase-dialog.ui:86
 msgid "Curr_ent Passphrase"
-msgstr "_Mevcut Parola Metni"
+msgstr "_Geçerli Parola Metni"
 
 #: src/disks/ui/change-passphrase-dialog.ui:106
 #: src/disks/ui/change-passphrase-dialog.ui:107
 msgid "Enter current passphrase used to protect the data"
-msgstr "Veriyi korumak için kullanılan mevcut parolayı gir"
+msgstr "Veriyi korumak için kullanılan geçerli parolayı gir"
 
 #: src/disks/ui/change-passphrase-dialog.ui:123
 #: src/disks/ui/filesystem-create.ui:189
@@ -2528,7 +2636,7 @@ msgid "Save in _Folder"
 msgstr "_Dizine Kaydet"
 
 #: src/disks/ui/create-disk-image-dialog.ui:85
-#: src/disks/ui/new-disk-image-dialog.ui:124
+#: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Klasör Seç"
 
@@ -2549,83 +2657,82 @@ msgid "C_reate"
 msgstr "_Oluştur"
 
 #: src/disks/ui/create-partition-dialog.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:29
+#: src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "Bö_lüm Boyutu"
 
 #: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/create-partition-dialog.ui:131
-#: src/disks/ui/new-disk-image-dialog.ui:86
-#: src/disks/ui/new-disk-image-dialog.ui:87
-msgid "The size of the partition to create, in megabytes"
-msgstr "Oluşturulacak bölümün megabayt türünden boyutu"
+#: src/disks/ui/resize-dialog.ui:109
+msgid "The size of the partition to create"
+msgstr "Oluşturulacak bölümün boyutu"
 
-#: src/disks/ui/create-partition-dialog.ui:152
-#: src/disks/ui/new-disk-image-dialog.ui:141
+#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "bayt"
 
-#: src/disks/ui/create-partition-dialog.ui:153
-#: src/disks/ui/new-disk-image-dialog.ui:142
+#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-dialog.ui:154
-#: src/disks/ui/new-disk-image-dialog.ui:143
+#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-dialog.ui:155
-#: src/disks/ui/new-disk-image-dialog.ui:144
+#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-dialog.ui:156
-#: src/disks/ui/new-disk-image-dialog.ui:145
+#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-dialog.ui:157
-#: src/disks/ui/new-disk-image-dialog.ui:146
+#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
-#: src/disks/ui/new-disk-image-dialog.ui:147
+#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
-#: src/disks/ui/new-disk-image-dialog.ui:148
+#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
-#: src/disks/ui/new-disk-image-dialog.ui:149
+#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
-#: src/disks/ui/new-disk-image-dialog.ui:150
+#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:162
-#: src/disks/ui/new-disk-image-dialog.ui:151
+#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:177
+#: src/disks/ui/create-partition-dialog.ui:176
+#: src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "_Takip Eden Boş Alan"
 
-#: src/disks/ui/create-partition-dialog.ui:195
-#: src/disks/ui/create-partition-dialog.ui:196
-msgid "The free space following the partition, in megabytes"
-msgstr "Bölümü takip eden boş alan, megabayt olarak"
+#: src/disks/ui/create-partition-dialog.ui:194
+#: src/disks/ui/resize-dialog.ui:167
+msgid "The free space following the partition"
+msgstr "Bölümü takip eden boş alan"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
 msgid "Contents"
 msgstr "İçerik"
 
@@ -2891,22 +2998,34 @@ msgid "Change Passphrase…"
 msgstr "Parola Değiştir…"
 
 #: src/disks/ui/disks.ui:1303
+msgid "Resize…"
+msgstr "Yeniden boyutlandır…"
+
+#: src/disks/ui/disks.ui:1311
+msgid "Check Filesystem…"
+msgstr "Dosya Sistemini Denetle…"
+
+#: src/disks/ui/disks.ui:1319
+msgid "Repair Filesystem…"
+msgstr "Dosya Sistemini Onar…"
+
+#: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
 msgstr "Bağlama Seçeneklerini Düzenle…"
 
-#: src/disks/ui/disks.ui:1311
+#: src/disks/ui/disks.ui:1341
 msgid "Edit Encryption Options…"
 msgstr "Şifreleme Seçeneklerini Düzenle…"
 
-#: src/disks/ui/disks.ui:1325
+#: src/disks/ui/disks.ui:1355
 msgid "Create Partition Image…"
 msgstr "Bölüm Kalıbı Oluştur…"
 
-#: src/disks/ui/disks.ui:1333
+#: src/disks/ui/disks.ui:1363
 msgid "Restore Partition Image…"
 msgstr "Bölüm Kalıbını Geri Yükle…"
 
-#: src/disks/ui/disks.ui:1341
+#: src/disks/ui/disks.ui:1371
 msgid "Benchmark Partition…"
 msgstr "Bölümü Kıyasla…"
 
@@ -2914,15 +3033,12 @@ msgstr "Bölümü Kıyasla…"
 msgid "Encryption Options"
 msgstr "Şifreleme Seçenekleri"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+#: src/disks/ui/edit-crypttab-dialog.ui:92
+#: src/disks/ui/edit-fstab-dialog.ui:46
 msgid "Us_er Session Defaults"
 msgstr "Kullan_ıcı Oturum Öntanımlıları"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -2937,9 +3053,6 @@ msgid "Opt_ions"
 msgstr "_Seçenekler"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:179
-#| msgid ""
-#| "The name to use for the unlocked device - the device is set up as the "
-#| "name prefixed with <b>/dev/mapper</b>/"
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
@@ -2969,17 +3082,16 @@ msgstr ""
 "için boş bırakın"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/filesystem-create.ui:97 src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/filesystem-create.ui:97
+#: src/disks/ui/unlock-device-dialog.ui:43
 msgid "_Passphrase"
 msgstr "_Parola Metni"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
 msgstr "Başlangıçta kilidi _aç"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr "İşaretlenmişse başlangıçta aygıtın kilidi açılır [!noauto]"
 
@@ -3030,7 +3142,11 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Dosya Sistemi Etiketini Değiştir"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr "Dosya sistemi herhangi bir değişiklikten önce kendiliğinden ayrılacak."
+
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Etiket"
 
@@ -3039,10 +3155,6 @@ msgid "Mount Options"
 msgstr "Bağlama Seçenekleri"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3057,9 +3169,6 @@ msgid "I_dentify As"
 msgstr "_Farklı Tanımla"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
-#| msgid ""
-#| "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-#| "hierarchy to control the scope of the entry"
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
@@ -3068,9 +3177,6 @@ msgstr ""
 "b> hiyerarşisindeki sembolik bağlantıları kullan"
 
 #: src/disks/ui/edit-fstab-dialog.ui:111
-#| msgid ""
-#| "The special device file - use symlinks in the /dev/disk hierarchy to "
-#| "control the scope of the entry"
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
@@ -3139,12 +3245,10 @@ msgid ""
 msgstr "İşaretlenmişse aygıtı bağlamak için ek yetki ister [x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
 msgstr "_Başlangıçta bağla"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr "Eğer işaretlenmişse aygıt başlangıçta bağlanır [!noauto]"
 
@@ -3249,7 +3353,8 @@ msgstr "Oluşturulacak özel dosya sistemi türü. btrfs, xfs, swap, vb."
 msgid "Enter passphrase used to protect the data"
 msgstr "Veriyi korumak için kullanılan parolayı girin"
 
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
+#: src/disks/ui/filesystem-create.ui:229
+#: src/disks/ui/format-disk-dialog.ui:103
 msgid "_Erase"
 msgstr "_Sil"
 
@@ -3291,14 +3396,47 @@ msgid "Format Volume"
 msgstr "Birimi Biçimlendir"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
 msgstr "Yeni Disk Kalıbı"
 
-#: src/disks/ui/new-disk-image-dialog.ui:188
-#| msgid "Attach Disk _Image…"
+#: src/disks/ui/new-disk-image-dialog.ui:29
+#| msgid "Image Size"
+msgid "Image _Size"
+msgstr "Kalıp _Boyutu"
+
+#: src/disks/ui/new-disk-image-dialog.ui:86
+#| msgid "The size of the partition to create"
+msgid "The size of the image to create"
+msgstr "Oluşturulacak kalıbın boyutu"
+
+#: src/disks/ui/new-disk-image-dialog.ui:187
 msgid "Attach new _Image…"
 msgstr "Yeni Disk _Kalıbı Ekle…"
+
+#: src/disks/ui/resize-dialog.ui:19
+msgid "Resize Volume"
+msgstr "Bölümü Yeniden Boyutlandır"
+
+#: src/disks/ui/resize-dialog.ui:53
+msgid ""
+"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"data before. The resize operation will take longer if a lot of data has to "
+"be moved. The minimal size is calculated according to the current content. "
+"Keep additional free space for the filesystem to work fast and reliably."
+msgstr ""
+"Bir dosya sistemini yeniden boyutlandırmak veri kaybına neden olabilir. "
+"Öncesinde verinizi yedeklemeniz önerilir. Eğer birçok verinin taşınması "
+"gerekiyorsa yeniden boyutlandırma işlemi uzun sürecektir. Asgari boyut "
+"şimdiki içeriğe göre hesaplanmıştır. Dosya sisteminin hızlı ve eksiksiz "
+"biçimde çalışması için ek boş alan tutun."
+
+#: src/disks/ui/resize-dialog.ui:196
+msgid "_Difference"
+msgstr "_Fark"
+
+#: src/disks/ui/resize-dialog.ui:212
+msgid "The difference to the previous partition size"
+msgstr "Önceki bölüm boyutuyla olan fark"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3520,17 +3658,16 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:721
+#: src/libgdu/gduutils.c:815
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Etkilenen Aygıtlar"
 
-#: src/libgdu/gduutils.c:1122
+#: src/libgdu/gduutils.c:1380
 msgid "Error locking device"
 msgstr "Aygıt kilitlemede hata"
 
-#: src/libgdu/gduutils.c:1143
-#| msgid "Error deleting loop device"
+#: src/libgdu/gduutils.c:1401
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Döngü aygıtı için otomatik temizle (autoclear) devre dışı bırakılırken hata"
@@ -3552,6 +3689,12 @@ msgstr "Sabit disk yakında bozulabilir."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "İncele"
+
+#~ msgid "The size of the partition to create, in megabytes"
+#~ msgstr "Oluşturulacak bölümün megabayt türünden boyutu"
+
+#~ msgid "The free space following the partition, in megabytes"
+#~ msgstr "Bölümü takip eden boş alan, megabayt olarak"
 
 #~ msgid "Activation of this plugin"
 #~ msgstr "Bu eklentinin etkinleştirilmesi"

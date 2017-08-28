@@ -4,16 +4,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Jorge González <jorgegonz@svn.gnome.org>, 2009, 2010, 2011.
 # Nicolás Satragno <nsatragno@gnome.org>, 2012, 2013.
-# 
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012-2017.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2012-2017, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-07 21:48+0000\n"
-"PO-Revision-Date: 2017-08-08 12:07+0200\n"
+"POT-Creation-Date: 2017-08-15 20:10+0000\n"
+"PO-Revision-Date: 2017-08-28 09:33+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1615,13 +1614,19 @@ msgstr "Silencioso (Lento)"
 msgid "Loud (Fast)"
 msgstr "Ruidoso (Rápido)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
 msgstr "La etiqueta coincide con una etiqueta existente"
 
-#: src/disks/gdufilesystemdialog.c:81
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Error al establecer la etiqueta"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Error al desmontar el sistema de archivos"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1854,34 +1859,28 @@ msgid "Strong"
 msgstr "Fuerte"
 
 #: src/disks/gduresizedialog.c:188
-#| msgid "Chunk _Size"
 msgid "Current Size"
 msgstr "Tamaño actual"
 
 #: src/disks/gduresizedialog.c:199
-#| msgid "Minimum Size"
 msgid "Minimal Size"
 msgstr "Tamaño mínimo"
 
 #: src/disks/gduresizedialog.c:249
-#| msgid "_Restore"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
 msgstr "Error al redimensionar el sistema de archivos"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:525
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
 msgstr "Error al redimensionar la partición"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#| msgid "Error setting file system label"
 msgid "Error repairing filesystem after resize"
 msgstr ""
 "Error al reparar la etiqueta del sistema de archivos después de redimensionar"
@@ -1891,17 +1890,14 @@ msgid "Resizing not ready"
 msgstr "El cambio de tamaño no está preparado"
 
 #: src/disks/gduresizedialog.c:466
-#| msgid "Change the label of the filesystem"
 msgid "Waited too long for the filesystem"
 msgstr "Se ha esperado demasiado al sistema de archivos"
 
 #: src/disks/gduresizedialog.c:595
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
 msgstr "Error al reparar el sistema de archivos"
 
 #: src/disks/gduresizedialog.c:661
-#| msgid "Error unmounting filesystem"
 msgid "Error unmounting filesystem for resizing"
 msgstr "Error al desmontar el sistema de archivos para redimensionarlo"
 
@@ -1910,7 +1906,6 @@ msgid "Fit to size"
 msgstr "Ajustar al tamaño"
 
 #: src/disks/gduresizedialog.c:738
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Error al montar el sistema de archivos para calcular el tamaño mínimo"
 
@@ -2267,7 +2262,6 @@ msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
 #: src/disks/gduwindow.c:3067
-#| msgid "Error mounting filesystem"
 msgid "Error while repairing filesystem"
 msgstr "Error al reparar el sistema de archivos"
 
@@ -2276,7 +2270,6 @@ msgid "Repair successful"
 msgstr "Reparación correcta"
 
 #: src/disks/gduwindow.c:3094
-#| msgid "The operation failed"
 msgid "Repair failed"
 msgstr "Falló al reparar"
 
@@ -2288,17 +2281,10 @@ msgstr "Se ha reparado el sistema de archivos %s en %s."
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3103
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "No se pudo reparar el sistema de archivos %s en %s."
 
-#: src/disks/gduwindow.c:3129 src/disks/gduwindow.c:3257
-#: src/disks/gduwindow.c:3758 src/libgdu/gduutils.c:1360
-msgid "Error unmounting filesystem"
-msgstr "Error al desmontar el sistema de archivos"
-
 #: src/disks/gduwindow.c:3165
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Repair"
 msgstr "Confirmar reparación"
 
@@ -2314,24 +2300,19 @@ msgstr ""
 "tiempo que dure esta operación depende de la cantidad de datos."
 
 #: src/disks/gduwindow.c:3196
-#| msgid "Error checking filesystem on volume"
 msgid "Error while checking filesystem"
 msgstr "Error al comprobar el sistema de archivos"
 
 #: src/disks/gduwindow.c:3223
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
 msgid "Filesystem intact"
 msgstr "Sistema de archivos intacto"
 
 #: src/disks/gduwindow.c:3223
-#| msgid "Filesystem label"
 msgid "Filesystem damaged"
 msgstr "Sistema de archivos dañado"
 
 #: src/disks/gduwindow.c:3226
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s is undamaged."
 msgstr "El sistema de archivos %s en %s no está dañado."
 
@@ -2342,7 +2323,6 @@ msgid "Filesystem %s on %s needs repairing."
 msgstr "El sistema de archivos %s en %s necesita reparación."
 
 #: src/disks/gduwindow.c:3292
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Check"
 msgstr "Confirmar comprobación"
 
@@ -2676,7 +2656,7 @@ msgid "Save in _Folder"
 msgstr "Guardar en _carpeta"
 
 #: src/disks/ui/create-disk-image-dialog.ui:85
-#: src/disks/ui/new-disk-image-dialog.ui:124
+#: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Seleccionar una carpeta"
 
@@ -2697,85 +2677,84 @@ msgid "C_reate"
 msgstr "C_rear"
 
 #: src/disks/ui/create-partition-dialog.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:29 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "_Tamaño de la partición"
 
 #: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/create-partition-dialog.ui:131
-#: src/disks/ui/new-disk-image-dialog.ui:86
-#: src/disks/ui/new-disk-image-dialog.ui:87 src/disks/ui/resize-dialog.ui:109
-msgid "The size of the partition to create, in megabytes"
-msgstr "El tamaño de la partición que crear, en megabytes"
+#: src/disks/ui/resize-dialog.ui:109
+#| msgid "The size of the partition to create, in megabytes"
+msgid "The size of the partition to create"
+msgstr "El tamaño de la partición que crear"
 
-#: src/disks/ui/create-partition-dialog.ui:152
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "bytes"
 
-#: src/disks/ui/create-partition-dialog.ui:153
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-dialog.ui:154
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-dialog.ui:155
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:130
+#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-dialog.ui:156
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:131
+#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-dialog.ui:157
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:132
+#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:133
+#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:134
+#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:135
+#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:136
+#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:162
-#: src/disks/ui/new-disk-image-dialog.ui:151 src/disks/ui/resize-dialog.ui:137
+#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:177
+#: src/disks/ui/create-partition-dialog.ui:176
 #: src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "Espacio libre a _continuación"
 
-#: src/disks/ui/create-partition-dialog.ui:195
-#: src/disks/ui/create-partition-dialog.ui:196
-#: src/disks/ui/resize-dialog.ui:167 src/disks/ui/resize-dialog.ui:212
-msgid "The free space following the partition, in megabytes"
-msgstr "El espacio libre después de la partición, en megabytes"
+#: src/disks/ui/create-partition-dialog.ui:194
+#: src/disks/ui/resize-dialog.ui:167
+#| msgid "The free space following the partition, in megabytes"
+msgid "The free space following the partition"
+msgstr "El espacio libre después de la partición"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
 msgid "Contents"
 msgstr "Contenido"
 
@@ -3048,12 +3027,10 @@ msgid "Resize…"
 msgstr "Redimensionar…"
 
 #: src/disks/ui/disks.ui:1311
-#| msgid "_Check Filesystem"
 msgid "Check Filesystem…"
 msgstr "Comprobar sistema de archivos…"
 
 #: src/disks/ui/disks.ui:1319
-#| msgid "Edit Filesystem…"
 msgid "Repair Filesystem…"
 msgstr "Reparar sistema de archivos…"
 
@@ -3190,7 +3167,13 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Cambiar la etiqueta del sistema de archivos"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+"EL sistema de archivos se desmontará automáticamente antes de aplicar "
+"cualquier cambio."
+
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Etiqueta"
 
@@ -3450,12 +3433,21 @@ msgstr "Formatear volumen"
 msgid "New Disk Image"
 msgstr "Nueva imagen de disco"
 
-#: src/disks/ui/new-disk-image-dialog.ui:188
+#: src/disks/ui/new-disk-image-dialog.ui:29
+#| msgid "Image Size"
+msgid "Image _Size"
+msgstr "_Tamaño de la imagen"
+
+#: src/disks/ui/new-disk-image-dialog.ui:86
+#| msgid "The size of the partition to create, in megabytes"
+msgid "The size of the image to create"
+msgstr "El tamaño de la imagen que crear"
+
+#: src/disks/ui/new-disk-image-dialog.ui:187
 msgid "Attach new _Image…"
 msgstr "Acoplar nueva _imagen…"
 
 #: src/disks/ui/resize-dialog.ui:19
-#| msgid "New Volume"
 msgid "Resize Volume"
 msgstr "Redimensionar volumen"
 
@@ -3475,6 +3467,11 @@ msgstr ""
 #: src/disks/ui/resize-dialog.ui:196
 msgid "_Difference"
 msgstr "_Diferencia"
+
+#: src/disks/ui/resize-dialog.ui:212
+#| msgid "The requested partition size"
+msgid "The difference to the previous partition size"
+msgstr "La diferencia con el tamaño anterior de la partición"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -4999,9 +4996,6 @@ msgstr "Examinar"
 
 #~ msgid "The maximum possible partition size"
 #~ msgstr "El tamaño máximo de la partición"
-
-#~ msgid "The requested partition size"
-#~ msgstr "El tamaño solicitado de la partición"
 
 #~ msgid "Flags for the widget"
 #~ msgstr "Opciones para el «widget»"

@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-05-19 08:41+0000\n"
-"PO-Revision-Date: 2017-07-13 20:36+0200\n"
+"POT-Creation-Date: 2017-08-15 20:10+0000\n"
+"PO-Revision-Date: 2017-09-02 11:14+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.3\n"
 
 # window title, program name
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -81,24 +81,22 @@ msgstr ""
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
 msgid ""
-"Using Disks, you can view SMART data, manage RAID devices, benchmark "
-"physical disks, and image USB sticks. Tasks are executed in the background, "
-"even after the application has been closed by the user."
+"Using Disks, you can view SMART data, manage devices, benchmark physical "
+"disks, and image USB sticks."
 msgstr ""
-"Vďaka aplikácii Disky môžete prezerať údaje SMART, spravovať zariadenia "
-"RAID, odskúšať výkon fyzických diskov a vytvárať obrazy USB kľúčov. Úlohy sú "
-"spúšťané na pozadí, aj po zavretí aplikácie používateľom."
+"Vďaka aplikácii Disky môžete prezerať údaje SMART, spravovať zariadenia, "
+"odskúšať výkon fyzických diskov a vytvárať obrazy USB kľúčov."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:23
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
 msgstr "Jednoduchý spôsob správy vašich diskov"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:35
+#: data/org.gnome.DiskUtility.appdata.xml.in:34
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
 # dektop entry name
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1065
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1095
 msgid "Disks"
 msgstr "Disky"
 
@@ -136,7 +134,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Výber obrazu(ov) disku na pripojenie"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:345 src/disks/gduwindow.c:764
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:792
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
@@ -190,7 +188,7 @@ msgstr "Zastaviť spustené úlohy?"
 
 #: src/disks/gduapplication.c:94
 msgid "Closing now stops the running jobs and leads to a corrupt result."
-msgstr ""
+msgstr "Zatvorením sa zastavía"
 
 #: src/disks/gduapplication.c:144
 #, c-format
@@ -1110,27 +1108,27 @@ msgid "Assessment"
 msgstr "Zhodnotenie"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:333
+#: src/disks/gdubenchmarkdialog.c:332
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:338
+#: src/disks/gdubenchmarkdialog.c:337
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:662
+#: src/disks/gdubenchmarkdialog.c:661
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: src/disks/gdubenchmarkdialog.c:677 src/disks/gdubenchmarkdialog.c:889
+#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1144,118 +1142,118 @@ msgstr[2] "%u vzorky"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: src/disks/gdubenchmarkdialog.c:718
+#: src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (pred %s)"
 
-#: src/disks/gdubenchmarkdialog.c:730
+#: src/disks/gdubenchmarkdialog.c:729
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "Nie sú dostupné žiadne údaje skúšok výkonov"
 
-#: src/disks/gdubenchmarkdialog.c:735
+#: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "Otvára sa zariadenie…"
 
-#: src/disks/gdubenchmarkdialog.c:739
+#: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Meria sa prenosová rýchlosť (dokončené na %2.1f %%)…"
 
-#: src/disks/gdubenchmarkdialog.c:746
+#: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "Meria sa doba prístupu (dokončené na %2.1f %%)…"
 
-#: src/disks/gdubenchmarkdialog.c:812
+#: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Vyskytla sa chyba"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:887
+#: src/disks/gdubenchmarkdialog.c:886
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f milisekúnd"
 
-#: src/disks/gdubenchmarkdialog.c:1199
+#: src/disks/gdubenchmarkdialog.c:1198
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Chyba pri získavaní veľkosti zariadenia: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1209
+#: src/disks/gdubenchmarkdialog.c:1208
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Chyba pri získavaní veľkosti stránky: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1243 src/disks/gdubenchmarkdialog.c:1306
-#: src/disks/gdubenchmarkdialog.c:1325
+#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
+#: src/disks/gdubenchmarkdialog.c:1324
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Chyba pri presune na ofset %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1254
+#: src/disks/gdubenchmarkdialog.c:1253
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Chyba pri prednačítaní %s z ofsetu %s"
 
-#: src/disks/gdubenchmarkdialog.c:1266
+#: src/disks/gdubenchmarkdialog.c:1265
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Chyba pri presune na ofset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1280
+#: src/disks/gdubenchmarkdialog.c:1279
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Chyba pri čítaní %s z ofsetu %s"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1315
+#: src/disks/gdubenchmarkdialog.c:1314
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Chyba pri prednačítaní %lld bajtov z ofsetu %lld"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1336
+#: src/disks/gdubenchmarkdialog.c:1335
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Chyba pri zápise %lld bajtov na ofsete %lld: %m"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1346
+#: src/disks/gdubenchmarkdialog.c:1345
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Očakávalo sa zapísanie %lld bajtov, zapísalo sa ale iba %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1356
+#: src/disks/gdubenchmarkdialog.c:1355
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Chyba pri synchronizácii (na ofsete %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1396
+#: src/disks/gdubenchmarkdialog.c:1395
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Chyba pri presune na ofset %lld: %m"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1408
+#: src/disks/gdubenchmarkdialog.c:1407
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1296,7 +1294,7 @@ msgstr ""
 "súbor <i>/etc/crypttab</i>"
 
 #: src/disks/gduchangepassphrasedialog.c:373
-#: src/disks/gducreatefilesystemwidget.c:574
+#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "Sila hesla"
 
@@ -1389,13 +1387,13 @@ msgid "Error allocating space for disk image file: "
 msgstr "Chyba pri rezervovaní miesta pre súbor s obrazom disku: "
 
 #: src/disks/gducreatediskimagedialog.c:925
-#: src/disks/gdunewdiskimagedialog.c:340
+#: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Súbor s názvom „%s“ už existuje. Chcete ho nahradiť?"
 
 #: src/disks/gducreatediskimagedialog.c:928
-#: src/disks/gdunewdiskimagedialog.c:343
+#: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1403,12 +1401,12 @@ msgstr "Súbor už v „%s“ existuje. Nahradenie prepíše jeho obsah."
 
 # button
 #: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:346
+#: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Nahradiť"
 
 #: src/disks/gducreatediskimagedialog.c:981
-#: src/disks/gdunewdiskimagedialog.c:263
+#: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Chyba pri otváraní súboru na zápis"
 
@@ -1424,101 +1422,101 @@ msgid "Creating Disk Image"
 msgstr "Vytváranie obrazu disku"
 
 # list store item - combobox výber súborového systému
-#: src/disks/gducreatefilesystemwidget.c:415
+#: src/disks/gducreatefilesystemwidget.c:393
 #: src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "Kompatibilný so všetkými systémami a zariadeniami"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:416
+#: src/disks/gducreatefilesystemwidget.c:394
 msgid "FAT"
 msgstr "FAT"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:421
+#: src/disks/gducreatefilesystemwidget.c:399
 msgid "Compatible with most systems"
 msgstr "Kompatibilný s väčšinou systémov"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:422
+#: src/disks/gducreatefilesystemwidget.c:400
 msgid "NTFS"
 msgstr "NTFS"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:427
+#: src/disks/gducreatefilesystemwidget.c:405
 msgid "Compatible with Linux systems"
 msgstr "Kompatibilný so systémami Linux"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:428
+#: src/disks/gducreatefilesystemwidget.c:406
 msgid "Ext4"
 msgstr "Ext4"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:433
+#: src/disks/gducreatefilesystemwidget.c:411
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Šifrovaný, kompatibilný so systémami Linux"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:434
+#: src/disks/gducreatefilesystemwidget.c:412
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:439
+#: src/disks/gducreatefilesystemwidget.c:417
 msgid "Custom"
 msgstr "Vlastný"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:440
+#: src/disks/gducreatefilesystemwidget.c:418
 msgid "Enter filesystem type"
 msgstr "Zadajte typ súborového systému"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:522
+#: src/disks/gducreatefilesystemwidget.c:500
 #: src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
 msgstr "Neprepísať existujúce údaje"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:523
+#: src/disks/gducreatefilesystemwidget.c:501
 #: src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "Rýchle"
 
 # list store item
-#: src/disks/gducreatefilesystemwidget.c:530
+#: src/disks/gducreatefilesystemwidget.c:508
 #: src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Prepísať existujúce údaje nulami"
 
-#: src/disks/gducreatefilesystemwidget.c:531
+#: src/disks/gducreatefilesystemwidget.c:509
 #: src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "Pomalé"
 
-#: src/disks/gducreatepartitiondialog.c:337
+#: src/disks/gducreatepartitiondialog.c:231
 msgid "Error formatting partition"
 msgstr "Chyba pri formátovaní oddielu"
 
-#: src/disks/gducreatepartitiondialog.c:366
+#: src/disks/gducreatepartitiondialog.c:260
 msgid "Error creating partition"
 msgstr "Chyba pri vytváraní oddielu"
 
-#: src/disks/gducreatepartitiondialog.c:457
+#: src/disks/gducreatepartitiondialog.c:351
 msgid "Extended partition"
 msgstr "Rozšírený oddiel"
 
-#: src/disks/gducreatepartitiondialog.c:458
+#: src/disks/gducreatepartitiondialog.c:352
 msgid "For logical partitions"
 msgstr "Pre logické oddiely"
 
-#: src/disks/gducreatepartitiondialog.c:471
+#: src/disks/gducreatepartitiondialog.c:365
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr "Nedá sa vytvoriť nový oddiel. Už existujú štyri hlavné oddiely."
 
-#: src/disks/gducreatepartitiondialog.c:475
+#: src/disks/gducreatepartitiondialog.c:369
 msgid "This is the last primary partition that can be created."
 msgstr "Toto je posledný hlavný oddiel, ktorý môže byť vytvorený."
 
@@ -1662,13 +1660,19 @@ msgstr "Potichu (Pomalé)"
 msgid "Loud (Fast)"
 msgstr "Hlasno (Rýchle)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
 msgstr "Menovka sa zhoduje s exitujúcou menovkou"
 
-#: src/disks/gdufilesystemdialog.c:81
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Chyba pri nastavovaní menovky"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Chyba pri odpájaní súborového systému"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1871,12 +1875,12 @@ msgstr "Chyba pri aktualizovaní záznamu v /etc/fstab"
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:208
+#: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "Nepomenovaný (%s).img"
 
-#: src/disks/gdunewdiskimagedialog.c:283
+#: src/disks/gdunewdiskimagedialog.c:267
 msgid "Error writing file"
 msgstr "Chyba pri zapisovaní súboru"
 
@@ -1911,6 +1915,59 @@ msgstr "Dobrá"
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Silná"
+
+#: src/disks/gduresizedialog.c:188
+msgid "Current Size"
+msgstr "Aktuálna veľkosť"
+
+# GtkLabel label
+#: src/disks/gduresizedialog.c:199
+msgid "Minimal Size"
+msgstr "Minimálna veľkosť"
+
+# button
+#: src/disks/gduresizedialog.c:249
+msgid "_Resize"
+msgstr "_Zmeniť veľkosť"
+
+#: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
+#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+msgid "Error resizing filesystem"
+msgstr "Chyba pri zmene veľkosti súborového systému"
+
+#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
+#: src/disks/gduresizedialog.c:525
+msgid "Error resizing partition"
+msgstr "Chyba pri zmene veľkosti oddielu"
+
+#: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
+msgid "Error repairing filesystem after resize"
+msgstr "Chyba pri opravovaní súborového systému po zmene veľkosti"
+
+#: src/disks/gduresizedialog.c:464
+msgid "Resizing not ready"
+msgstr "Zmena veľkosti nie je pripravená"
+
+#: src/disks/gduresizedialog.c:466
+msgid "Waited too long for the filesystem"
+msgstr "Čakalo sa príliš dlho na súborový systém"
+
+#: src/disks/gduresizedialog.c:595
+msgid "Error repairing filesystem"
+msgstr "Chyba pri opravovaní súborového systému"
+
+#: src/disks/gduresizedialog.c:661
+msgid "Error unmounting filesystem for resizing"
+msgstr "Chyba pri odpájaní súborového systému kvôli zmene veľkosti"
+
+#: src/disks/gduresizedialog.c:703
+msgid "Fit to size"
+msgstr "Prispôsobiť veľkosti"
+
+#: src/disks/gduresizedialog.c:738
+msgid "Error mounting filesystem to calculate minimum size"
+msgstr ""
+"Chyba pri pripájaní súborového systému kvôli výpočtu minimálnej veľkosti"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -1987,7 +2044,7 @@ msgstr "Heslo pre šifrovanie bolo získané zo zväzku kľúčov"
 msgid "Volumes Grid"
 msgstr "Mriežka zväzkov"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2063
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2114
 msgid "No Media"
 msgstr "Bez nosiča"
 
@@ -2029,31 +2086,31 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Voľné miesto"
 
-#: src/disks/gduwindow.c:588
+#: src/disks/gduwindow.c:616
 msgid "Error deleting loop device"
 msgstr "Chyba pri odstraňovaní zariadenia slučky"
 
-#: src/disks/gduwindow.c:688 src/disks/gduwindow.c:731
+#: src/disks/gduwindow.c:716 src/disks/gduwindow.c:759
 msgid "Error attaching disk image"
 msgstr "Chyba pri pričleňovaní obrazu disku"
 
 # window title
-#: src/disks/gduwindow.c:761
+#: src/disks/gduwindow.c:789
 msgid "Select Disk Image to Attach"
 msgstr "Výber obrazu disku na pričlenenie"
 
-#: src/disks/gduwindow.c:765
+#: src/disks/gduwindow.c:793
 msgid "_Attach"
 msgstr "_Pričleniť"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:772
+#: src/disks/gduwindow.c:800
 msgid "Set up _read-only loop device"
 msgstr "Nastaviť zariadenie slučky _iba na čítanie"
 
-#: src/disks/gduwindow.c:773
+#: src/disks/gduwindow.c:801
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2062,22 +2119,22 @@ msgstr ""
 "ak nechceme aby sa zmenil podkladový súbor"
 
 # tooltip
-#: src/disks/gduwindow.c:969
+#: src/disks/gduwindow.c:999
 msgid "Power off this disk"
 msgstr "Vypne tento disk"
 
 # tooltip
-#: src/disks/gduwindow.c:975
+#: src/disks/gduwindow.c:1005
 msgid "Eject this disk"
 msgstr "Vysunie tento disk"
 
 # tooltip
-#: src/disks/gduwindow.c:981
+#: src/disks/gduwindow.c:1011
 msgid "Detach this loop device"
-msgstr "Odpojí toto zariadenie slučky"
+msgstr "Vykoná vyňatie tohto zariadenie slučky"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1381
+#: src/disks/gduwindow.c:1432
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2086,7 +2143,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1389
+#: src/disks/gduwindow.c:1440
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2095,7 +2152,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1397
+#: src/disks/gduwindow.c:1448
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2104,12 +2161,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1405
+#: src/disks/gduwindow.c:1456
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1420
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2118,14 +2175,14 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1430
+#: src/disks/gduwindow.c:1481
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 # GtkCheckButton label
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1752
+#: src/disks/gduwindow.c:1803
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Iba na čítanie)"
@@ -2135,7 +2192,7 @@ msgstr "%s (Iba na čítanie)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1790
+#: src/disks/gduwindow.c:1841
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2144,7 +2201,7 @@ msgstr "Zostáva %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1798
+#: src/disks/gduwindow.c:1849
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2155,7 +2212,7 @@ msgstr "Zostáva %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1813
+#: src/disks/gduwindow.c:1864
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s z %s — %s"
@@ -2164,17 +2221,17 @@ msgstr "%s z %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1900
+#: src/disks/gduwindow.c:1951
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f %%"
 
-#: src/disks/gduwindow.c:1972 src/disks/gduwindow.c:2373
+#: src/disks/gduwindow.c:2023 src/disks/gduwindow.c:2424
 msgid "Block device is empty"
 msgstr "Blokové zariadenie je prázdne"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1995
+#: src/disks/gduwindow.c:2046
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2185,11 +2242,11 @@ msgstr "Neznámy (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2164
+#: src/disks/gduwindow.c:2215
 msgid "Connected to another seat"
 msgstr "Pripojený k inému sedeniu"
 
-#: src/disks/gduwindow.c:2310
+#: src/disks/gduwindow.c:2361
 msgid "Loop device is empty"
 msgstr "Zariadenie slučky je prázdne"
 
@@ -2199,12 +2256,12 @@ msgstr "Zariadenie slučky je prázdne"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2540
+#: src/disks/gduwindow.c:2591
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s voľných (zaplnených %.1f %%)"
 
-#: src/disks/gduwindow.c:2570
+#: src/disks/gduwindow.c:2621
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Neznámy"
@@ -2212,49 +2269,49 @@ msgstr "Neznámy"
 # PK: suborovy system
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2659
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Koreňový súborový systém"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2616
+#: src/disks/gduwindow.c:2667
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Pripojený do %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2622
+#: src/disks/gduwindow.c:2673
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nepripojené"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2645
+#: src/disks/gduwindow.c:2696
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktívne"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2651
+#: src/disks/gduwindow.c:2702
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Neaktívne"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2664
+#: src/disks/gduwindow.c:2715
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Odomknuté"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2670
+#: src/disks/gduwindow.c:2721
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Uzamknuté"
 
-#: src/disks/gduwindow.c:2680
+#: src/disks/gduwindow.c:2731
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Rozšírený oddiel"
@@ -2263,38 +2320,110 @@ msgstr "Rozšírený oddiel"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2700
+#: src/disks/gduwindow.c:2751
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2801
+#: src/disks/gduwindow.c:2875
 msgid "Unallocated Space"
 msgstr "Nevyhradené miesto"
 
-#: src/disks/gduwindow.c:3150
+#: src/disks/gduwindow.c:3067
+msgid "Error while repairing filesystem"
+msgstr "Chyba počas opravovania súborového systému"
+
+#: src/disks/gduwindow.c:3094
+msgid "Repair successful"
+msgstr "Oprava prebehla úspešne"
+
+#: src/disks/gduwindow.c:3094
+msgid "Repair failed"
+msgstr "Oprave zlyhala"
+
+#: src/disks/gduwindow.c:3097
+#, c-format
+msgid "Filesystem %s on %s has been repaired."
+msgstr "Súborový systém %s na zväzku %s bol opravený."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3103
+#, c-format
+msgid "Filesystem %s on %s could not be repaired."
+msgstr "Súborový systém %s na zväzku %s nemohol byť opravený."
+
+#: src/disks/gduwindow.c:3165
+msgid "Confirm Repair"
+msgstr "Potvrdenie opravy"
+
+#: src/disks/gduwindow.c:3168
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider "
+"backing it up first in order to use forensic recovery tools that retrieve "
+"lost files. Depending on the amount of data this operation takes longer time."
+msgstr ""
+"Oprava súborového systému nie je vždy možná a môže viesť k strate údajov. "
+"Zvážte najskôr vykonanie zálohy, aby ste sa vyhli forenzným nástrojom na "
+"obnovu stratených súborov. V závislosti na množstve údajov môže táto "
+"operácia trvať dlhšiu dobu."
+
+#: src/disks/gduwindow.c:3196
+msgid "Error while checking filesystem"
+msgstr "Chyba počas kontroly súborového systému"
+
+# PK: suborovy system
+#: src/disks/gduwindow.c:3223
+msgid "Filesystem intact"
+msgstr "Súborový systém nie je poškodený"
+
+#: src/disks/gduwindow.c:3223
+msgid "Filesystem damaged"
+msgstr "Súborový systém je poškodený"
+
+#: src/disks/gduwindow.c:3226
+#, c-format
+msgid "Filesystem %s on %s is undamaged."
+msgstr "Súborový systém %s na zväzku %s nie je poškodený."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3232
+#, c-format
+msgid "Filesystem %s on %s needs repairing."
+msgstr "Súborový systém %s na zväzku %s vyžaduje opravu."
+
+#: src/disks/gduwindow.c:3292
+msgid "Confirm Check"
+msgstr "Potvrdenie kontroly"
+
+#: src/disks/gduwindow.c:3295
+msgid "Depending on the amount of data the filesystem check takes longer time."
+msgstr ""
+"V závislosti na množstve údajov môže kontrola súborového systému trvať "
+"dlhšiu dobu."
+
+#: src/disks/gduwindow.c:3495
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prepnutie jednotky do pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3196
+#: src/disks/gduwindow.c:3541
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prebudenie jednotky z pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3241
+#: src/disks/gduwindow.c:3586
 msgid "Error powering off drive"
 msgstr "Chyba pri vypínaní jednotky"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3293
+#: src/disks/gduwindow.c:3638
 msgid "Are you sure you want to power off the drives?"
 msgstr "Naozaj chcete vypnúť jednotky?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3295
+#: src/disks/gduwindow.c:3640
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2303,56 +2432,52 @@ msgstr ""
 "jednotiek."
 
 # GtkLabel label
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3644
 msgid "_Power Off"
 msgstr "_Vypnúť"
 
-#: src/disks/gduwindow.c:3376
+#: src/disks/gduwindow.c:3721
 msgid "Error mounting filesystem"
 msgstr "Chyba pri pripájaní súborového systému"
 
-#: src/disks/gduwindow.c:3413 src/libgdu/gduutils.c:1102
-msgid "Error unmounting filesystem"
-msgstr "Chyba pri odpájaní súborového systému"
-
-#: src/disks/gduwindow.c:3481
+#: src/disks/gduwindow.c:3826
 msgid "Error deleting partition"
 msgstr "Chyba pri odstraňovaní oddielu"
 
-#: src/disks/gduwindow.c:3518
+#: src/disks/gduwindow.c:3863
 msgid "Are you sure you want to delete the partition?"
 msgstr "Naozaj chcete odstrániť oddiel?"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3864
 msgid "All data on the partition will be lost"
 msgstr "Všetky údaje na oddieli budú stratené"
 
 # button
-#: src/disks/gduwindow.c:3520
+#: src/disks/gduwindow.c:3865
 msgid "_Delete"
 msgstr "O_dstrániť"
 
-#: src/disks/gduwindow.c:3551
+#: src/disks/gduwindow.c:3896
 msgid "Error ejecting media"
 msgstr "Chyba pri vysúvaní nosiča"
 
-#: src/disks/gduwindow.c:3616
+#: src/disks/gduwindow.c:3961
 msgid "Error locking encrypted device"
 msgstr "Chyba pri zamykaní šifrovaného zariadenia"
 
-#: src/disks/gduwindow.c:3652
+#: src/disks/gduwindow.c:3997
 msgid "Error starting swap"
 msgstr "Chyba pri spúšťaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:3689
+#: src/disks/gduwindow.c:4034
 msgid "Error stopping swap"
 msgstr "Chyba pri zastavovaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:3731
+#: src/disks/gduwindow.c:4076
 msgid "Error setting autoclear flag"
 msgstr "Chyba pri nastavovaní príznaku „autoclear“"
 
-#: src/disks/gduwindow.c:3784 src/disks/gduwindow.c:3848
+#: src/disks/gduwindow.c:4129 src/disks/gduwindow.c:4193
 msgid "Error canceling job"
 msgstr "Chyba pri rušení úlohy"
 
@@ -2641,7 +2766,7 @@ msgstr "Uložiť v _priečinku"
 
 # GtkFileChooserButton title
 #: src/disks/ui/create-disk-image-dialog.ui:85
-#: src/disks/ui/new-disk-image-dialog.ui:124
+#: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Výber priečinka"
 
@@ -2666,99 +2791,97 @@ msgid "C_reate"
 msgstr "Vy_tvoriť"
 
 # GtkLabel label
-#: src/disks/ui/create-partition-dialog.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:29
+#: src/disks/ui/create-partition-dialog.ui:112 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "_Veľkosť oddielu"
 
 # GtkSpinButton tooltip_text
 #: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/create-partition-dialog.ui:131
-#: src/disks/ui/new-disk-image-dialog.ui:86
-#: src/disks/ui/new-disk-image-dialog.ui:87
-msgid "The size of the partition to create, in megabytes"
-msgstr "Veľkosť oddielu, ktorý sa má vytvoriť, v megabajtoch"
+#: src/disks/ui/resize-dialog.ui:109
+msgid "The size of the partition to create"
+msgstr "Veľkosť oddielu, ktorý sa má vytvoriť"
 
 # size of partition, GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:152
-#: src/disks/ui/new-disk-image-dialog.ui:141
+#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "bajtov"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:153
-#: src/disks/ui/new-disk-image-dialog.ui:142
+#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:154
-#: src/disks/ui/new-disk-image-dialog.ui:143
+#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:155
-#: src/disks/ui/new-disk-image-dialog.ui:144
+#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:156
-#: src/disks/ui/new-disk-image-dialog.ui:145
+#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:157
-#: src/disks/ui/new-disk-image-dialog.ui:146
+#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:158
-#: src/disks/ui/new-disk-image-dialog.ui:147
+#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:159
-#: src/disks/ui/new-disk-image-dialog.ui:148
+#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:160
-#: src/disks/ui/new-disk-image-dialog.ui:149
+#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:161
-#: src/disks/ui/new-disk-image-dialog.ui:150
+#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
 # GtkComboBoxText item
-#: src/disks/ui/create-partition-dialog.ui:162
-#: src/disks/ui/new-disk-image-dialog.ui:151
+#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
 # GtkLabel label
-#: src/disks/ui/create-partition-dialog.ui:177
+#: src/disks/ui/create-partition-dialog.ui:176
+#: src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "_Nasledujúce voľné miesto"
 
 # GtkSpinButton tooltip_text
-#: src/disks/ui/create-partition-dialog.ui:195
-#: src/disks/ui/create-partition-dialog.ui:196
-msgid "The free space following the partition, in megabytes"
-msgstr "Voľné miesto nasledujúce za oddielom v megabajtoch"
+#: src/disks/ui/create-partition-dialog.ui:194
+#: src/disks/ui/resize-dialog.ui:167
+msgid "The free space following the partition"
+msgstr "Voľné miesto nasledujúce za oddielom"
 
 # GtkLabel label
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
 msgid "Contents"
 msgstr "Obsah"
 
@@ -2943,9 +3066,10 @@ msgstr "Veľkosť"
 msgid "Auto-clear"
 msgstr "Automatické vymazanie"
 
+# tooltip
 #: src/disks/ui/disks.ui:533
 msgid "Detach loop device after unmount action"
-msgstr ""
+msgstr "Vykoná vyňatie zariadenie slučky po odpojení"
 
 # GtkLabel label
 #. The filename or URI of the file that is used as backing store for the loop device.
@@ -3078,27 +3202,41 @@ msgstr "Upraviť súborový systém…"
 msgid "Change Passphrase…"
 msgstr "Zmeniť heslo…"
 
-# GtkMenuItem label
 #: src/disks/ui/disks.ui:1303
+msgid "Resize…"
+msgstr "Zmeniť veľkosť…"
+
+# GtkMenuItem label
+#: src/disks/ui/disks.ui:1311
+msgid "Check Filesystem…"
+msgstr "Skontrolovať súborový systém…"
+
+# GtkMenuItem label
+#: src/disks/ui/disks.ui:1319
+msgid "Repair Filesystem…"
+msgstr "Opraviť súborový systém…"
+
+# GtkMenuItem label
+#: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
 msgstr "Upraviť voľby pripojenia…"
 
 # GtkMenuItem label
-#: src/disks/ui/disks.ui:1311
+#: src/disks/ui/disks.ui:1341
 msgid "Edit Encryption Options…"
 msgstr "Upraviť voľby šifrovania…"
 
-#: src/disks/ui/disks.ui:1325
+#: src/disks/ui/disks.ui:1355
 msgid "Create Partition Image…"
 msgstr "Vytvoriť obraz oddielu…"
 
 # GtkMenuItem label
-#: src/disks/ui/disks.ui:1333
+#: src/disks/ui/disks.ui:1363
 msgid "Restore Partition Image…"
 msgstr "Obnoviť obraz oddielu…"
 
 # GtkMenuItem label
-#: src/disks/ui/disks.ui:1341
+#: src/disks/ui/disks.ui:1371
 msgid "Benchmark Partition…"
 msgstr "Vyskúšať výkon oddielu…"
 
@@ -3109,23 +3247,18 @@ msgstr "Voľby šifrovania"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
 msgid "Us_er Session Defaults"
-msgstr ""
+msgstr "Predvolené _reláciou používateľa"
 
 # GtkSwitch tooltip_markup
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr ""
-"<i>Automatické voľby šifrovania</i> vypnite, ak chcete nastaviť voľby "
-"šifrovania a heslo pre zariadenie. Voľby zodpovedajú záznamu v súbore <b>/"
-"etc/crypttab</b>"
+"Vypnite voľbu <i>Predvolené reláciou používateľa</i>, ak chcete nastaviť "
+"voľby šifrovania a heslo pre zariadenie. Voľby zodpovedajú záznamu v súbore "
+"<b>/etc/crypttab</b>"
 
 # GtkLabel label
 #: src/disks/ui/edit-crypttab-dialog.ui:160
@@ -3237,8 +3370,13 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Zmena menovky súborového systému"
 
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+"Súborový systém bude automaticky odpojený pred vykonaním akýchkoľvek zmien."
+
 # GtkLabel label
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Menovka"
 
@@ -3249,19 +3387,14 @@ msgstr "Voľby pripojenia"
 
 # GtkSwitch tooltip_markup
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"<i>Automatické voľby pripojenia</i> vypnite, ak chcete spravovať prípojný "
-"bod a voľby pripojenia ručne. Voľby zodpovedajú záznamu v súbore <b>/etc/"
-"fstab</b>"
+"Vypnite voľbu <i>Predvolené reláciou používateľa</i>, ak chcete spravovať "
+"prípojný bod a voľby pripojenia ručne. Voľby zodpovedajú záznamu v súbore "
+"<b>/etc/fstab</b>"
 
 # GtkLabel label
 #: src/disks/ui/edit-fstab-dialog.ui:91
@@ -3549,9 +3682,47 @@ msgstr "Formátovanie zväzku"
 msgid "New Disk Image"
 msgstr "Nový obraz disku"
 
-#: src/disks/ui/new-disk-image-dialog.ui:188
+# GtkLabel label
+#: src/disks/ui/new-disk-image-dialog.ui:29
+msgid "Image _Size"
+msgstr "Veľkosť o_brazu"
+
+# GtkSpinButton tooltip_text
+#: src/disks/ui/new-disk-image-dialog.ui:86
+msgid "The size of the image to create"
+msgstr "Veľkosť obrazu, ktorý sa má vytvoriť"
+
+#: src/disks/ui/new-disk-image-dialog.ui:187
 msgid "Attach new _Image…"
 msgstr "Pričleniť nový o_braz…"
+
+# dialog title
+#: src/disks/ui/resize-dialog.ui:19
+msgid "Resize Volume"
+msgstr "Zmena veľkosti zväzku"
+
+#: src/disks/ui/resize-dialog.ui:53
+msgid ""
+"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"data before. The resize operation will take longer if a lot of data has to "
+"be moved. The minimal size is calculated according to the current content. "
+"Keep additional free space for the filesystem to work fast and reliably."
+msgstr ""
+"Zmena veľkosti súborového systému môže viesť k strate údajov. Pred vykonaním "
+"tejto operácie vám radíme zálohovať si svoje údaje. Operácia zmeny veľkosti "
+"bude trvať dlhšie, ak má byť presunuté veľké množstvo údajov. Minimálna "
+"veľkosť je vypočítaná v závislosti na aktuálnom obsahu. Ponechajte "
+"súborovému systému dodatočné voľné miesto, aby bola operácia vykonaná rýchlo "
+"a spoľahlivo."
+
+#: src/disks/ui/resize-dialog.ui:196
+msgid "_Difference"
+msgstr "_Rozdiel"
+
+# tooltip
+#: src/disks/ui/resize-dialog.ui:212
+msgid "The difference to the previous partition size"
+msgstr "Rozdiel oproti predošlej veľkosti oddielu"
 
 # GtkDialog title
 #: src/disks/ui/restore-disk-image-dialog.ui:9
@@ -3812,20 +3983,18 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:721
+#: src/libgdu/gduutils.c:815
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovplyvnené zariadenia"
 
-#: src/libgdu/gduutils.c:1122
+#: src/libgdu/gduutils.c:1380
 msgid "Error locking device"
 msgstr "Chyba pri zamykaní zariadenia"
 
-#: src/libgdu/gduutils.c:1143
-#, fuzzy
-#| msgid "Error deleting loop device"
+#: src/libgdu/gduutils.c:1401
 msgid "Error disabling autoclear for loop device"
-msgstr "Chyba pri odstraňovaní zariadenia slučky"
+msgstr "Chyba pri zakázaní príznaku autoclear pre zariadenie slučky"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356

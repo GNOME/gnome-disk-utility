@@ -1173,21 +1173,24 @@ gdu_utils_get_all_contained_objects (UDisksClient *client,
   if (block != NULL)
     {
       block_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
-      objects_to_check = g_list_prepend (objects_to_check, g_object_ref (block_object));
-    }
-
-  /* if we're a partitioned block device, add all partitions */
-  partition_table = udisks_object_get_partition_table (block_object);
-  if (partition_table != NULL)
-    {
-      partitions = udisks_client_get_partitions (client, partition_table);
-      for (l = partitions; l != NULL; l = l->next)
+      if (block_object != NULL)
         {
-          UDisksPartition *partition = UDISKS_PARTITION (l->data);
-          UDisksObject *partition_object;
-          partition_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (partition));
-          if (partition_object != NULL)
-            objects_to_check = g_list_append (objects_to_check, partition_object);
+          objects_to_check = g_list_prepend (objects_to_check, g_object_ref (block_object));
+
+          /* if we're a partitioned block device, add all partitions */
+          partition_table = udisks_object_get_partition_table (block_object);
+          if (partition_table != NULL)
+            {
+              partitions = udisks_client_get_partitions (client, partition_table);
+              for (l = partitions; l != NULL; l = l->next)
+                {
+                  UDisksPartition *partition = UDISKS_PARTITION (l->data);
+                  UDisksObject *partition_object;
+                  partition_object = (UDisksObject *) g_dbus_interface_dup_object (G_DBUS_INTERFACE (partition));
+                  if (partition_object != NULL)
+                    objects_to_check = g_list_append (objects_to_check, partition_object);
+                }
+            }
         }
     }
 

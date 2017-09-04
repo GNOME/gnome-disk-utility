@@ -1,9 +1,9 @@
 # Danish translation of gnome-disk-utility.
-# Copyright (C) 2009, 2012-2016 gnome-disk-utility's COPYRIGHT HOLDER
+# Copyright (C) 2009, 2012-2017 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Mads Lundby <lundbymads@gmail.com>, 2009.
 # Kenneth Nielsen <k.nielsen81@gmail.com>, 2013.
-# Ask Hjorth Larsen <asklarsen@gmail.com>, 2009, 10, 12, 13, 14, 15, 16.
+# Ask Hjorth Larsen <asklarsen@gmail.com>, 2009, 10, 12, 13, 14, 15, 16, 17.
 # scootergrisen, 2015.
 # Joe Hansen <joedalton2@yahoo.dk>, 2017.
 #
@@ -18,10 +18,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: "
-"https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-15 20:10+0000\n"
-"PO-Revision-Date: 2017-03-25 17:22+0100\n"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"disk-utility&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2017-08-26 17:09+0000\n"
+"PO-Revision-Date: 2017-09-04 22:09+0200\n"
 "Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -60,8 +60,8 @@ msgstr "Standardplacering for dialogerne Opret/Gendan diskaftryk"
 
 #: data/org.gnome.Disks.gschema.xml:7
 msgid ""
-"Default location for the Create/Restore disk image dialogs. If blank the "
-"~/Documents folder is used."
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
 msgstr ""
 "Standardplacering for dialogerne Opret/Gendan diskaftryk. Hvis ikke givet, "
 "bruges mappen ~/Dokumenter."
@@ -83,18 +83,10 @@ msgstr ""
 "og blokenheder."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#, fuzzy
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
-#| "physical disks, and image USB sticks. Tasks are executed in the background, "
-#| "even after the application has been closed by the user."
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
-msgstr ""
-"Med Diske kan du se SMART-data, håndtere RAID-enheder, benchmarke fysiske "
-"diske og oprette aftryk på USB-stick. Opgaver udføres i baggrunden, selv "
-"efter brugeren har lukket programmet."
+msgstr "Med Diske kan du se SMART-data, håndtere enheder, samt benchmarke fysiske diske og aftryk på USB-nøgler."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
@@ -104,7 +96,7 @@ msgstr "En nem måde at håndtere dine diske"
 msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1095
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1111
 msgid "Disks"
 msgstr "Diske"
 
@@ -115,11 +107,12 @@ msgstr "Håndtering af drev og medier"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.DiskUtility.desktop.in:6
 msgid ""
-""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
+"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-""
-"disk;drev;diskenhed;volumen;harddisk;hdd;disk;cdrom;dvd;partition;iso;aftryk;sikkerhedskopi;gendan;gendannelse;ydelsestest;ydelsesprøve;benchmark;raid;luks;kryptering;S.M.A.R.T.;smart;"
+"disk;drev;diskenhed;volumen;harddisk;hdd;disk;cdrom;dvd;partition;iso;aftryk;"
+"sikkerhedskopi;gendan;gendannelse;ydelsestest;ydelsesprøve;benchmark;raid;"
+"luks;kryptering;S.M.A.R.T.;smart;"
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: data/org.gnome.DiskUtility.desktop.in:9
@@ -139,7 +132,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Vælg diskaftryk, der skal monteres"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:792
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:804
 msgid "_Cancel"
 msgstr "_Annullér"
 
@@ -185,15 +178,12 @@ msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Fejl ved tilkobling af diskaftryk: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:92
-#, fuzzy
-#| msgctxt "mdraid"
-#| msgid "Not running"
 msgid "Stop running jobs?"
-msgstr "Kører ikke"
+msgstr "Stop kørende job?"
 
 #: src/disks/gduapplication.c:94
 msgid "Closing now stops the running jobs and leads to a corrupt result."
-msgstr ""
+msgstr "Hvis der lukkes nu, så stoppes de kørende job, hvilket fører til ugyldige resultater."
 
 #: src/disks/gduapplication.c:144
 #, c-format
@@ -300,13 +290,13 @@ msgstr "Antal omallokerede sektorer"
 
 #: src/disks/gduatasmartdialog.c:186
 msgid ""
-"Count of remapped sectors. When the hard drive finds a "
-"read/write/verification error, it marks the sector as “reallocated” and "
-"transfers data to a special reserved area (spare area)"
+"Count of remapped sectors. When the hard drive finds a read/write/"
+"verification error, it marks the sector as “reallocated” and transfers data "
+"to a special reserved area (spare area)"
 msgstr ""
-"Antal genafbildede sektorer. Når harddisken finder en "
-"læse-/skrive-/verifikationsfejl, markerer den sektoren som “omallokeret” og "
-"flytter data til et særligt reserveret område (ekstraområde)"
+"Antal genafbildede sektorer. Når harddisken finder en læse-/skrive-/"
+"verifikationsfejl, markerer den sektoren som “omallokeret” og flytter data "
+"til et særligt reserveret område (ekstraområde)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1246,18 +1236,12 @@ msgstr "Fejl under læsning af %lld byte fra afsæt %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
 #: src/disks/gducreatefilesystemwidget.c:236
-#, fuzzy
-#| msgid "Passphrases do not match"
 msgid "The passphrases do not match"
-msgstr "Adgangsfraser stemmer ikke overens"
+msgstr "Adgangsfraserne er ikke ens"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#, fuzzy
-#| msgid "To change the passphrase, enter both the current and new passphrase"
 msgid "The passphrase matches the existing passphrase"
-msgstr ""
-"For at ændre adgangsfrasen skal du indtaste både den nuværende og den nye "
-"adgangsfrase"
+msgstr "Adgangsfrasen er den samme som den eksisterende"
 
 #: src/disks/gduchangepassphrasedialog.c:189
 msgid "Error updating /etc/crypttab"
@@ -1359,7 +1343,7 @@ msgstr "_Slet diskaftryksfil"
 
 #: src/disks/gducreatediskimagedialog.c:498
 msgid "_Close"
-msgstr ""
+msgstr "_Luk"
 
 #: src/disks/gducreatediskimagedialog.c:723
 #: src/disks/gdurestorediskimagedialog.c:747
@@ -1635,15 +1619,15 @@ msgstr "Støjende (hurtig)"
 
 #: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
-msgstr ""
+msgstr "Etiketten er den samme som en eksisterende etiket"
 
 #: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Fejl ved ændring af etiket"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
-#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
-#: src/libgdu/gduutils.c:1360
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3204
+#: src/disks/gduwindow.c:3332 src/disks/gduwindow.c:3833
+#: src/libgdu/gduutils.c:1375
 msgid "Error unmounting filesystem"
 msgstr "Fejl under afmontering af filsystem"
 
@@ -1813,8 +1797,7 @@ msgid "Matches the given device"
 msgstr "Matcher den givne enhed"
 
 #: src/disks/gdufstabdialog.c:462
-msgid ""
-"The system may not work correctly if this entry is modified or removed."
+msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
 "Systemet virker måske ikke korrekt, hvis denne indgang ændres eller fjernes."
 
@@ -1836,13 +1819,11 @@ msgstr "Fejl ved opdatering af indgang i /etc/fstab"
 #: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
-msgstr ""
+msgstr "Unavngivet (%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
-#, fuzzy
-#| msgid "Error writing to image"
 msgid "Error writing file"
-msgstr "Fejl ved skrivning til diskaftryk"
+msgstr "Fejl ved skrivning af fil"
 
 #: src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
@@ -1877,74 +1858,54 @@ msgid "Strong"
 msgstr "Stærk"
 
 #: src/disks/gduresizedialog.c:188
-#, fuzzy
-#| msgid "Chunk _Size"
 msgid "Current Size"
-msgstr "Klump_størrelse"
+msgstr "Nuværende størrelse"
 
 #: src/disks/gduresizedialog.c:199
-#, fuzzy
-#| msgid "Minimum Size"
 msgid "Minimal Size"
 msgstr "Minimal størrelse"
 
 #: src/disks/gduresizedialog.c:249
-#, fuzzy
-#| msgid "_Restore"
 msgid "_Resize"
-msgstr "_Gendan"
+msgstr "_Ændr størrelse"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
-msgstr "Fejl under montering af filsystem"
+msgstr "Fejl ved ændring af størrelse på filsystem"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:525
-#, fuzzy
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
-msgstr "Fejl under oprettelse af partition"
+msgstr "Fejl under ændring af størrelse af partition"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#, fuzzy
-#| msgid "Error checking filesystem on volume"
 msgid "Error repairing filesystem after resize"
-msgstr "Fejl under kontrol af filsystem på diskenhed"
+msgstr "Fejl under reparation af filsystem efter ændring af størrelse"
 
 #: src/disks/gduresizedialog.c:464
 msgid "Resizing not ready"
-msgstr ""
+msgstr "Ændring af størrelse ikke klar"
 
 #: src/disks/gduresizedialog.c:466
-#, fuzzy
-#| msgid "Change the label of the filesystem"
 msgid "Waited too long for the filesystem"
-msgstr "Ændr filsystemets etiket"
+msgstr "Ventede for længe på filsystemet"
 
 #: src/disks/gduresizedialog.c:595
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
-msgstr "Fejl under montering af filsystem"
+msgstr "Fejl ved reparation af filsystem"
 
 #: src/disks/gduresizedialog.c:661
-#, fuzzy
-#| msgid "Error unmounting filesystem"
 msgid "Error unmounting filesystem for resizing"
-msgstr "Fejl under afmontering af filsystem"
+msgstr "Fejl under afmontering af filsystem med henblik på størrelsesændring"
 
 #: src/disks/gduresizedialog.c:703
 msgid "Fit to size"
-msgstr ""
+msgstr "Tilpas størrelse"
 
 #: src/disks/gduresizedialog.c:738
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
-msgstr "Fejl under montering af filsystem"
+msgstr "Fejl under montering af filsystem til beregning af minimal størrelse"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -2019,7 +1980,7 @@ msgstr "Krypteringsadgangsfrasen blev hentet fra nøgleringen"
 msgid "Volumes Grid"
 msgstr "Gitter med diskenheder"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2114
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2185
 msgid "No Media"
 msgstr "Intet medie"
 
@@ -2061,30 +2022,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Fri plads"
 
-#: src/disks/gduwindow.c:616
+#: src/disks/gduwindow.c:628
 msgid "Error deleting loop device"
 msgstr "Fejl under sletning af løkkeenhed"
 
-#: src/disks/gduwindow.c:716 src/disks/gduwindow.c:759
+#: src/disks/gduwindow.c:728 src/disks/gduwindow.c:771
 msgid "Error attaching disk image"
 msgstr "Fejl ved tilkobling af diskaftryk"
 
-#: src/disks/gduwindow.c:789
+#: src/disks/gduwindow.c:801
 msgid "Select Disk Image to Attach"
 msgstr "Vælg diskaftryk der skal tilkobles"
 
-#: src/disks/gduwindow.c:793
+#: src/disks/gduwindow.c:805
 msgid "_Attach"
 msgstr "_Tilkobl"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:800
+#: src/disks/gduwindow.c:812
 msgid "Set up _read-only loop device"
 msgstr "Opsæt skrive_beskyttet løkkeenhed"
 
-#: src/disks/gduwindow.c:801
+#: src/disks/gduwindow.c:813
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2092,20 +2053,20 @@ msgstr ""
 "Hvis afkrydset, vil løkkeenheden være skrivebeskyttet. Dette er nyttigt, "
 "hvis du ikke vil have at den underliggende fil ændres"
 
-#: src/disks/gduwindow.c:999
+#: src/disks/gduwindow.c:1011
 msgid "Power off this disk"
 msgstr "Sluk drevet"
 
-#: src/disks/gduwindow.c:1005
+#: src/disks/gduwindow.c:1017
 msgid "Eject this disk"
 msgstr "Skub disken ud"
 
-#: src/disks/gduwindow.c:1011
+#: src/disks/gduwindow.c:1023
 msgid "Detach this loop device"
 msgstr "Frakobl løkkeenhed"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1432
+#: src/disks/gduwindow.c:1448
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2114,7 +2075,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1440
+#: src/disks/gduwindow.c:1456
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2123,7 +2084,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1448
+#: src/disks/gduwindow.c:1464
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2132,12 +2093,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1456
+#: src/disks/gduwindow.c:1472
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1471
+#: src/disks/gduwindow.c:1487
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2146,13 +2107,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1481
+#: src/disks/gduwindow.c:1497
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1803
+#: src/disks/gduwindow.c:1827
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (skrivebeskyttet)"
@@ -2161,7 +2122,7 @@ msgstr "%s (skrivebeskyttet)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1841
+#: src/disks/gduwindow.c:1865
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2170,7 +2131,7 @@ msgstr "%s tilbage (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1873
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2181,7 +2142,7 @@ msgstr "%s tilbage"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1864
+#: src/disks/gduwindow.c:1888
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s af %s — %s"
@@ -2190,17 +2151,17 @@ msgstr "%s af %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1951
+#: src/disks/gduwindow.c:2013
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f %%"
 
-#: src/disks/gduwindow.c:2023 src/disks/gduwindow.c:2424
+#: src/disks/gduwindow.c:2093 src/disks/gduwindow.c:2497
 msgid "Block device is empty"
 msgstr "Blokenheden er tom"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2046
+#: src/disks/gduwindow.c:2116
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2209,11 +2170,11 @@ msgstr "Ukendt (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2215
+#: src/disks/gduwindow.c:2286
 msgid "Connected to another seat"
 msgstr "Forbundet til at andet sæde"
 
-#: src/disks/gduwindow.c:2361
+#: src/disks/gduwindow.c:2433
 msgid "Loop device is empty"
 msgstr "Løkkeenheden er tom"
 
@@ -2223,62 +2184,62 @@ msgstr "Løkkeenheden er tom"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2591
+#: src/disks/gduwindow.c:2665
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s fri (%.1f %% fuld)"
 
-#: src/disks/gduwindow.c:2621
+#: src/disks/gduwindow.c:2695
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ukendt"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2659
+#: src/disks/gduwindow.c:2733
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Filsystemrod"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2667
+#: src/disks/gduwindow.c:2741
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Monteret på %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2673
+#: src/disks/gduwindow.c:2747
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ikke monteret"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2696
+#: src/disks/gduwindow.c:2770
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktiv"
 
 # Her mener jeg ikke, at vedlæg eller vedhæft kan bruges
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2702
+#: src/disks/gduwindow.c:2776
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ikke aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2715
+#: src/disks/gduwindow.c:2789
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Låst op"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2721
+#: src/disks/gduwindow.c:2795
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Låst"
 
-#: src/disks/gduwindow.c:2731
+#: src/disks/gduwindow.c:2805
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Udvidet partition"
@@ -2287,170 +2248,152 @@ msgstr "Udvidet partition"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2751
+#: src/disks/gduwindow.c:2825
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2875
+#: src/disks/gduwindow.c:2949
 msgid "Unallocated Space"
 msgstr "Uallokeret plads"
 
-#: src/disks/gduwindow.c:3067
-#, fuzzy
-#| msgid "Error mounting filesystem"
+#: src/disks/gduwindow.c:3142
 msgid "Error while repairing filesystem"
-msgstr "Fejl under montering af filsystem"
+msgstr "Fejl under reparation af filsystem"
 
-#: src/disks/gduwindow.c:3094
+#: src/disks/gduwindow.c:3169
 msgid "Repair successful"
-msgstr ""
+msgstr "Reparation fuldført"
 
-#: src/disks/gduwindow.c:3094
-#, fuzzy
-#| msgid "The operation failed"
+#: src/disks/gduwindow.c:3169
 msgid "Repair failed"
-msgstr "Fejl under operationen"
+msgstr "Reparation mislykkedes"
 
-#: src/disks/gduwindow.c:3097
+#: src/disks/gduwindow.c:3172
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
-msgstr ""
+msgstr "Filsystemet %s på %s er blevet repareret."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3103
-#, c-format, fuzzy
-#| msgid "Filesystem tools not installed"
+#: src/disks/gduwindow.c:3178
+#, c-format
 msgid "Filesystem %s on %s could not be repaired."
-msgstr "Filsystemværktøjer ikke installeret"
+msgstr "Filsystemet %s på %s kunne ikke repareres."
 
-#: src/disks/gduwindow.c:3165
-#, fuzzy
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3240
 msgid "Confirm Repair"
-msgstr "B_ekræft adgangsfrase"
+msgstr "Bekræft reparation"
 
-#: src/disks/gduwindow.c:3168
+#: src/disks/gduwindow.c:3243
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. Depending on the amount of data this operation takes longer time."
-msgstr ""
+msgstr "Det er ikke altid muligt at reparere et filsystem, og dette kan føre til tab af data. Overvej at tage en sikkerhedskopi først, og dernæst bruge genskabelsesværktøjer som genopretter tabte filer. Afhængigt af mængden af data, kan denne handling tage længere tid."
 
-#: src/disks/gduwindow.c:3196
-#, fuzzy
-#| msgid "Error checking filesystem on volume"
+#: src/disks/gduwindow.c:3271
 msgid "Error while checking filesystem"
-msgstr "Fejl under kontrol af filsystem på diskenhed"
+msgstr "Fejl under kontrol af filsystem"
 
-#: src/disks/gduwindow.c:3223
-#, fuzzy
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
+#: src/disks/gduwindow.c:3298
 msgid "Filesystem intact"
-msgstr "Filsystemrod"
+msgstr "Filsystem intakt"
 
-#: src/disks/gduwindow.c:3223
-#, fuzzy
-#| msgid "Filesystem label"
+#: src/disks/gduwindow.c:3298
 msgid "Filesystem damaged"
-msgstr "Filsystemetiket"
+msgstr "Filsystem beskadiget"
 
-#: src/disks/gduwindow.c:3226
-#, c-format, fuzzy
-#| msgid "Filesystem tools not installed"
+#: src/disks/gduwindow.c:3301
+#, c-format
 msgid "Filesystem %s on %s is undamaged."
-msgstr "Filsystemværktøjer ikke installeret"
+msgstr "Filsystemet %s på %s er ubeskadiget."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3232
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
-msgstr ""
+msgstr "Filsystemet %s på %s bør repareres."
 
-#: src/disks/gduwindow.c:3292
-#, fuzzy
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3367
 msgid "Confirm Check"
-msgstr "B_ekræft adgangsfrase"
+msgstr "Bekræft kontrol"
 
-#: src/disks/gduwindow.c:3295
-msgid ""
-"Depending on the amount of data the filesystem check takes longer time."
-msgstr ""
+#: src/disks/gduwindow.c:3370
+msgid "Depending on the amount of data the filesystem check takes longer time."
+msgstr "Afhængigt af mængden af data kan filsystemkontrollen tage længere tid."
 
-#: src/disks/gduwindow.c:3495
+#: src/disks/gduwindow.c:3570
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Der opstod en fejl ved forsøg på at sætte drevet i hviletilstand"
 
-#: src/disks/gduwindow.c:3541
+#: src/disks/gduwindow.c:3616
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Der opstod en fejl ved forsøg på at vække drevet fra hviletilstand"
 
-#: src/disks/gduwindow.c:3586
+#: src/disks/gduwindow.c:3661
 msgid "Error powering off drive"
 msgstr "Fejl under slukning af drev"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3638
+#: src/disks/gduwindow.c:3713
 msgid "Are you sure you want to power off the drives?"
 msgstr "Er du sikker på at du vil slukke drevene?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3640
+#: src/disks/gduwindow.c:3715
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Denne handling vil forberede systemet på at følgende drev slukkes og fjernes."
 
-#: src/disks/gduwindow.c:3644
+#: src/disks/gduwindow.c:3719
 msgid "_Power Off"
 msgstr "_Sluk"
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3796
 msgid "Error mounting filesystem"
 msgstr "Fejl under montering af filsystem"
 
-#: src/disks/gduwindow.c:3826
+#: src/disks/gduwindow.c:3901
 msgid "Error deleting partition"
 msgstr "Fejl under sletning af partition"
 
-#: src/disks/gduwindow.c:3863
+#: src/disks/gduwindow.c:3938
 msgid "Are you sure you want to delete the partition?"
 msgstr "Er du sikker på, at du vil slette partitionen?"
 
-#: src/disks/gduwindow.c:3864
+#: src/disks/gduwindow.c:3939
 msgid "All data on the partition will be lost"
 msgstr "Alle data på partitionen vil gå tabt"
 
-#: src/disks/gduwindow.c:3865
+#: src/disks/gduwindow.c:3940
 msgid "_Delete"
 msgstr "_Slet"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:3971
 msgid "Error ejecting media"
 msgstr "Fejl under forsøg på at skubbe medie ud"
 
-#: src/disks/gduwindow.c:3961
+#: src/disks/gduwindow.c:4036
 msgid "Error locking encrypted device"
 msgstr "Fejl under låsning af krypteret enhed"
 
-#: src/disks/gduwindow.c:3997
+#: src/disks/gduwindow.c:4072
 msgid "Error starting swap"
 msgstr "Fejl ved start af swap"
 
-#: src/disks/gduwindow.c:4034
+#: src/disks/gduwindow.c:4109
 msgid "Error stopping swap"
 msgstr "Fejl ved standsning af swap"
 
-#: src/disks/gduwindow.c:4076
+#: src/disks/gduwindow.c:4151
 msgid "Error setting autoclear flag"
 msgstr "Fejl ved ændring af autorydningsflag"
 
-#: src/disks/gduwindow.c:4129 src/disks/gduwindow.c:4193
+#: src/disks/gduwindow.c:4204 src/disks/gduwindow.c:4268
 msgid "Error canceling job"
 msgstr "Fejl ved annullering af job"
 
@@ -2492,10 +2435,8 @@ msgstr ""
 "Mere info: http://www.dansk-gruppen.dk"
 
 #: src/disks/ui/app-menu.ui:6
-#, fuzzy
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
-msgstr "Opret diskaftryk …"
+msgstr "_Nyt diskaftryk …"
 
 #: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
@@ -2519,7 +2460,7 @@ msgstr "Benchmark"
 
 #: src/disks/ui/benchmark-dialog.ui:23
 msgid "_Start Benchmark…"
-msgstr "_Sidste benchmark …"
+msgstr "_Start benchmark …"
 
 #: src/disks/ui/benchmark-dialog.ui:38
 msgid "_Abort Benchmark"
@@ -2551,11 +2492,11 @@ msgstr "Prøvestørrelse"
 
 #: src/disks/ui/benchmark-dialog.ui:319
 msgid "Benchmark Settings"
-msgstr "Indstillinger for ydelsesprøver"
+msgstr "Indstillinger for benchmark"
 
 #: src/disks/ui/benchmark-dialog.ui:349
 msgid "_Start Benchmarking…"
-msgstr "_Start ydelsesprøve …"
+msgstr "_Start benchmark …"
 
 #: src/disks/ui/benchmark-dialog.ui:381
 msgid ""
@@ -2734,10 +2675,8 @@ msgstr "Partitions_størrelse"
 
 #: src/disks/ui/create-partition-dialog.ui:130
 #: src/disks/ui/resize-dialog.ui:109
-#, fuzzy
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the partition to create"
-msgstr "Størrelsen af partitionen, der skal oprettes, i megabyte"
+msgstr "Størrelsen af partitionen der skal oprettes"
 
 #: src/disks/ui/create-partition-dialog.ui:151
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
@@ -2801,10 +2740,8 @@ msgstr "Efter_følgende fri plads"
 
 #: src/disks/ui/create-partition-dialog.ui:194
 #: src/disks/ui/resize-dialog.ui:167
-#, fuzzy
-#| msgid "The free space following the partition, in megabytes"
 msgid "The free space following the partition"
-msgstr "Den fri plads, der følger efter partitionen, i megabyte"
+msgstr "Den fri plads, der følger efter partitionen"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
 #: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
@@ -2958,7 +2895,7 @@ msgstr "Auto-ryd"
 
 #: src/disks/ui/disks.ui:533
 msgid "Detach loop device after unmount action"
-msgstr ""
+msgstr "Frakobl løkkeenhed efter afmonteringshandling"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: src/disks/ui/disks.ui:556
@@ -3014,10 +2951,8 @@ msgid "Device"
 msgstr "Enhed"
 
 #: src/disks/ui/disks.ui:937
-#, fuzzy
-#| msgid "UUID: %s"
 msgid "UUID"
-msgstr "UUID: %s"
+msgstr "UUID"
 
 #: src/disks/ui/disks.ui:974
 msgid "Partition Type"
@@ -3037,7 +2972,7 @@ msgstr "Gendan diskaftryk …"
 
 #: src/disks/ui/disks.ui:1199
 msgid "Benchmark Disk…"
-msgstr "Diskydelsesprøve …"
+msgstr "Diskbenchmark …"
 
 #: src/disks/ui/disks.ui:1212
 msgid "SMART Data & Self-Tests…"
@@ -3077,17 +3012,13 @@ msgstr "Ændr adgangsfrase …"
 
 #: src/disks/ui/disks.ui:1303
 msgid "Resize…"
-msgstr ""
+msgstr "Ændr størrelse …"
 
 #: src/disks/ui/disks.ui:1311
-#, fuzzy
-#| msgid "_Check Filesystem"
 msgid "Check Filesystem…"
-msgstr "_Kontrollér filsystemet"
+msgstr "Kontrollér filsystem …"
 
 #: src/disks/ui/disks.ui:1319
-#, fuzzy
-#| msgid "Edit Filesystem…"
 msgid "Repair Filesystem…"
 msgstr "Redigér filsystem …"
 
@@ -3109,7 +3040,7 @@ msgstr "Gendan partitionsaftryk …"
 
 #: src/disks/ui/disks.ui:1371
 msgid "Benchmark Partition…"
-msgstr "Partitionsydelsesprøve …"
+msgstr "Partitionsbenchmark …"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:11
 msgid "Encryption Options"
@@ -3117,22 +3048,14 @@ msgstr "Krypteringsindstillinger"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
 msgid "Us_er Session Defaults"
-msgstr ""
+msgstr "Standardindstillinger for br_ugersession"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-#| "and passphrase for the device. The options correspond to an entry in the "
-#| "<b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
-"passphrase for the device. The options correspond to an entry in the "
-"<b>/etc/crypttab</b> file"
-msgstr ""
-"Slå <i>Indstillinger for automatisk kryptering</i> fra for at håndtere "
-"krypteringsindstillinger og adgangsfrase for enheden. Indstillingerne svarer "
-"til en post i filen <b>/etc/crypttab</b>"
+"passphrase for the device. The options correspond to an entry in the <b>/etc/"
+"crypttab</b> file"
+msgstr "Slå <i>Standardindstillinger for brugersession</i> fra for at håndtere krypteringsindstillinger og adgangsfrase for enheden. Indstillingerne svarer til en post i filen <b>/etc/crypttab</b>"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
@@ -3173,16 +3096,12 @@ msgid "_Passphrase"
 msgstr "_Adgangsfrase"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#, fuzzy
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
-msgstr "_Lås op ved opstart"
+msgstr "_Lås op ved systemstart"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#, fuzzy
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr "Hvis afkrydset, vil enheden blive låst op ved opstart [!noauto]"
+msgstr "Hvis afkrydset, vil enheden blive låst op ved systemstart [!noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3190,8 +3109,8 @@ msgstr "Kræv yderligere _godkendelse for at låse op"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:331
 msgid ""
-"If checked, additional authorization is required to unlock the device "
-"[x-udisks-auth]"
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
 msgstr ""
 "Hvis afkrydset, vil der blive krævet yderligere godkendelse for at kunne "
 "låse ennheden op [x-udisks-auth]"
@@ -3233,7 +3152,7 @@ msgstr "Ændr filsystemetiket"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:72
 msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr ""
+msgstr "Dette filsystem vil automatisk blive afmonteret, før der udføres nogen ændringer."
 
 #: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
@@ -3244,19 +3163,11 @@ msgid "Mount Options"
 msgstr "Monteringsindstillinger"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the "
-#| "<b>/etc/fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the "
-"<b>/etc/fstab</b> file"
-msgstr ""
-"Slå <i>Indstillinger for automatisk montering</i> fra for at håndtere "
-"monteringspunkter og -indstillinger for enheden. Indstillingerne svarer til "
-"en post i filen <b>/etc/fstab</b>"
+"options for the device. The options correspond to an entry in the <b>/etc/"
+"fstab</b> file"
+msgstr "Slå <i>Standardindstillinger for brugersession</i> fra for at håndtere monteringspunkter og -indstillinger for enheden. Indstillingerne svarer til en post i filen <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
@@ -3311,8 +3222,8 @@ msgstr "Ikonna_vn"
 
 #: src/disks/ui/edit-fstab-dialog.ui:274
 msgid ""
-"If set, the name of the icon to use in the device in the user interface "
-"[x-gvfs-icon=]"
+"If set, the name of the icon to use in the device in the user interface [x-"
+"gvfs-icon=]"
 msgstr ""
 "Hvis givet, er dette navnet på ikonet, der skal bruges for enheden i "
 "brugergrænsefladen [x-gvfs-icon=]"
@@ -3335,23 +3246,19 @@ msgstr "Kræv yderligere _godkendelse ved montering"
 
 #: src/disks/ui/edit-fstab-dialog.ui:313 src/disks/ui/edit-fstab-dialog.ui:314
 msgid ""
-"If checked, additional authorization is required to mount the device "
-"[x-udisks-auth]"
+"If checked, additional authorization is required to mount the device [x-"
+"udisks-auth]"
 msgstr ""
 "Hvis afkrydset, vil der kræves yderligere godkendelse for at montere enheden "
 "[x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#, fuzzy
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
-msgstr "Montér ved _opstart"
+msgstr "Montér ved _systemstart"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#, fuzzy
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
-msgstr "Hvis afkrydset, vil enheden blive monteret ved opstart [!noauto]"
+msgstr "Hvis afkrydset, vil enheden blive monteret ved systemstart [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3384,8 +3291,8 @@ msgid ""
 "directory"
 msgstr ""
 "Partitionsnavnet (op til 36 unicode-tegn). Dette er nyttigt hvis du vil "
-"referere til enheden via en symlænke i kataloget "
-"<b>/dev/disk/by-partlabel</b>"
+"referere til enheden via en symlænke i kataloget <b>/dev/disk/by-partlabel</"
+"b>"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:138
 msgid "_System Partition"
@@ -3393,8 +3300,8 @@ msgstr "_Systempartition"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:143
 msgid ""
-"Used to indicate that the partition and its contents are required for the "
-"OS/Platform to function. Special care should be taken to not delete or "
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
 "Bruges til at angive, at partitionen og dens indhold kræves for at OS'et "
@@ -3409,9 +3316,8 @@ msgstr "Gammel BIOS, _bootbar"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
 #: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-"<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-"systems"
+"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
+"i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
 "Gammel BIOS, bootbar. Dette svarer til opstartsflaget <i>bootable</i> i "
 "Master Boot Record. Bruges typisk til GPT-partitioner på MBR-systemet"
@@ -3500,34 +3406,24 @@ msgid "Format Volume"
 msgstr "Formater diskenhed"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#, fuzzy
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
-msgstr "Opret diskaftryk"
+msgstr "Nyt diskaftryk"
 
 #: src/disks/ui/new-disk-image-dialog.ui:29
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image _Size"
-msgstr "Aftryksstørrelse"
+msgstr "Aftryks_størrelse"
 
 #: src/disks/ui/new-disk-image-dialog.ui:86
-#, fuzzy
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the image to create"
-msgstr "Størrelsen af partitionen, der skal oprettes, i megabyte"
+msgstr "Størrelsen af aftrykket der skal oprettes"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
-#, fuzzy
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
-msgstr "_Tilslut diskaftryk …"
+msgstr "Tilslut nyt _aftryk …"
 
 #: src/disks/ui/resize-dialog.ui:19
-#, fuzzy
-#| msgid "New Volume"
 msgid "Resize Volume"
-msgstr "Ny diskenhed"
+msgstr "Ændr størrelse på diskenhed"
 
 #: src/disks/ui/resize-dialog.ui:53
 msgid ""
@@ -3535,17 +3431,15 @@ msgid ""
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
-msgstr ""
+msgstr "Ændring af størrelse på et filsystem kan føre til tab af data. Du tilrådes at sikkerhedskopiere dine data først. Størrelsesændringshandlingen kan vare længere, hvis der skal flyttes mange data. Den minimale størrelse udregnes ud fra det nuværende indhold. Hold yderligere fri plads for at få filsystemet til at fungere hurtigt og pålideligt."
 
 #: src/disks/ui/resize-dialog.ui:196
 msgid "_Difference"
-msgstr ""
+msgstr "_Forskel"
 
 #: src/disks/ui/resize-dialog.ui:212
-#, fuzzy
-#| msgid "The requested partition size"
 msgid "The difference to the previous partition size"
-msgstr "Den forespurgte partitionsstørrelse"
+msgstr "Forskellen fra den forrige partitionsstørrelse"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3780,15 +3674,13 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Påvirkede enheder"
 
-#: src/libgdu/gduutils.c:1380
+#: src/libgdu/gduutils.c:1395
 msgid "Error locking device"
 msgstr "Fejl ved låsning af enhed"
 
-#: src/libgdu/gduutils.c:1401
-#, fuzzy
-#| msgid "Error deleting loop device"
+#: src/libgdu/gduutils.c:1416
 msgid "Error disabling autoclear for loop device"
-msgstr "Fejl under sletning af løkkeenhed"
+msgstr "Fejl under deaktivering af autoclear for løkkeenhed"
 
 # den korte form undgår problemer med ental/flertal
 #. Translators: This is used as the title of the SMART failure notification
@@ -3812,7 +3704,7 @@ msgstr "Undersøg"
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "ATA sikker sletning / udvidet sikker sletning"
 
-#~ # ???
+# ???
 #~ msgid "If Available, Slow"
 #~ msgstr "Hvis tilgængelig, langsom"
 
@@ -3823,8 +3715,8 @@ msgstr "Undersøg"
 #~ msgstr "Er du sikker på at du vil slette diskene?"
 
 #~ msgid ""
-#~ "All data on the selected disks will be lost but may still be recoverable by "
-#~ "data recovery services"
+#~ "All data on the selected disks will be lost but may still be recoverable "
+#~ "by data recovery services"
 #~ msgstr ""
 #~ "Alle data på de valgte diske vil gå tabt, men vil måske stadig kunne "
 #~ "gendannes af datagenskabelsestjenester"
@@ -3833,8 +3725,8 @@ msgstr "Undersøg"
 #~ "All data on the selected disks will be overwritten and will likely not be "
 #~ "recoverable by data recovery services"
 #~ msgstr ""
-#~ "Alle data på de valgte diske vil blive overskrevet og vil sandsynligvis ikke "
-#~ "kunne gendannes af datagenskabelsestjenester"
+#~ "Alle data på de valgte diske vil blive overskrevet og vil sandsynligvis "
+#~ "ikke kunne gendannes af datagenskabelsestjenester"
 
 #~ msgid "_Automatic Encryption Options"
 #~ msgstr "Indstillinger for _automatisk kryptering"
@@ -3845,7 +3737,8 @@ msgstr "Undersøg"
 #~ msgid "Activation of this plugin"
 #~ msgstr "Aktivering af dette udvidelsesmodul"
 
-#~ msgid "Whether this plugin would be activated by gnome-settings-daemon or not"
+#~ msgid ""
+#~ "Whether this plugin would be activated by gnome-settings-daemon or not"
 #~ msgstr ""
 #~ "Om dette udvidelsesmodul ville blive aktiveret af gnome-settings-daemon "
 #~ "eller ikke"
@@ -3853,7 +3746,8 @@ msgstr "Undersøg"
 #~ msgid "Priority to use for this plugin"
 #~ msgstr "Prioritet, som skal bruges for dette udvidelsesmodul"
 
-#~ msgid "Priority to use for this plugin in gnome-settings-daemon startup queue"
+#~ msgid ""
+#~ "Priority to use for this plugin in gnome-settings-daemon startup queue"
 #~ msgstr ""
 #~ "Prioritet, som skal bruges for dette udvidelsesmodul i opstartskøen for "
 #~ "gnome-settings-daemon"
@@ -3946,11 +3840,11 @@ msgstr "Undersøg"
 #~ msgstr "Opret RAID"
 
 #~ msgid ""
-#~ "If set, some OSes may mount or use the contents of the partition as "
-#~ "read-only instead of read-write"
+#~ "If set, some OSes may mount or use the contents of the partition as read-"
+#~ "only instead of read-write"
 #~ msgstr ""
-#~ "Hvis givet, vil visse OS'er montere eller bruge indholdet af partitionen som "
-#~ "skrivebeskyttet i stedet for læse/skrive"
+#~ "Hvis givet, vil visse OS'er montere eller bruge indholdet af partitionen "
+#~ "som skrivebeskyttet i stedet for læse/skrive"
 
 #~ msgid "H_idden"
 #~ msgstr "Sk_jult"
@@ -3966,7 +3860,8 @@ msgstr "Undersøg"
 #~ msgstr "_Automontér ikke"
 
 #~ msgid "If set, some OSes may not automount the contents of the partition"
-#~ msgstr "Hvis givet, vil visse OS'er ikke automontere indholdet af partitionen"
+#~ msgstr ""
+#~ "Hvis givet, vil visse OS'er ikke automontere indholdet af partitionen"
 
 #~ msgid "RAID Disks"
 #~ msgstr "RAID-diske"
@@ -4013,7 +3908,7 @@ msgstr "Undersøg"
 #~ msgid "Are you sure you want to remove the disk?"
 #~ msgstr "Er du sikker på at du vil fjerne disken?"
 
-#~ # det drejer sig nok om hastighed
+# det drejer sig nok om hastighed
 #~ msgctxt "mdraid-disks"
 #~ msgid "Removing a disk from a RAID array may degrade it"
 #~ msgstr "Fjernelse af en disk fra en RAID-række kan forringe den"
@@ -4146,7 +4041,7 @@ msgstr "Undersøg"
 #~ msgid "Not running"
 #~ msgstr "Kører ikke"
 
-#~ # http://en.wikipedia.org/wiki/Data_scrubbing
+# http://en.wikipedia.org/wiki/Data_scrubbing
 #~ msgctxt "mdraid-state"
 #~ msgid "Data Scrubbing"
 #~ msgstr "“Data scrubbing”-fejlrettelse"
@@ -4205,24 +4100,22 @@ msgstr "Undersøg"
 #~ msgctxt "mdraid-scrub-dialog"
 #~ msgid ""
 #~ "As storage devices can develop bad blocks at any time it is valuable to "
-#~ "regularly read all blocks on all disks in a RAID array so as to catch such "
-#~ "bad blocks early.\n"
+#~ "regularly read all blocks on all disks in a RAID array so as to catch "
+#~ "such bad blocks early.\n"
 #~ "\n"
-#~ "The RAID array will remain operational for the duration of the operation but "
-#~ "performance will be impacted. For more information about data scrubbing, see "
-#~ "the <a "
-#~ "href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
-#~ "Administration</a> article."
+#~ "The RAID array will remain operational for the duration of the operation "
+#~ "but performance will be impacted. For more information about data "
+#~ "scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> article."
 #~ msgstr ""
-#~ "Da lagerenheder kan få beskadigede blokke når som helst, er det en god idé "
-#~ "jævnligt at læse alle blokke på alle diske i en RAID-række, så beskadigede "
-#~ "blokke findes tidligt.\n"
+#~ "Da lagerenheder kan få beskadigede blokke når som helst, er det en god "
+#~ "idé jævnligt at læse alle blokke på alle diske i en RAID-række, så "
+#~ "beskadigede blokke findes tidligt.\n"
 #~ "\n"
-#~ "RAID-rækken vil fungere under operationen, men ydelsen vil blive påvirket. "
-#~ "Yderligere information om \"data scrubbing\"-fejlrettelse kan findes i "
-#~ "artiklen <a "
-#~ "href='https://raid.wiki.kernel.org/index.php/RAID_Administration'>RAID "
-#~ "Administration</a> (på engelsk)."
+#~ "RAID-rækken vil fungere under operationen, men ydelsen vil blive "
+#~ "påvirket. Yderligere information om \"data scrubbing\"-fejlrettelse kan "
+#~ "findes i artiklen <a href='https://raid.wiki.kernel.org/index.php/"
+#~ "RAID_Administration'>RAID Administration</a> (på engelsk)."
 
 #~ msgctxt "mdraid-scrub-dialog"
 #~ msgid "_Start"
@@ -4289,7 +4182,7 @@ msgstr "Undersøg"
 #~ msgid "RAID (%s)"
 #~ msgstr "RAID (%s)"
 
-#~ # den korte form undgår problemer med ental/flertal
+# den korte form undgår problemer med ental/flertal
 #~ msgctxt "notify-mdraid"
 #~ msgid "RAID Problems Detected"
 #~ msgstr "Der blev fundet RAID-problemer"
@@ -4329,23 +4222,24 @@ msgstr "Undersøg"
 #~ "%s <span size=\"small\">(Normeret: %d, tærskel: %d, værste: %d)</span>"
 
 #~ msgid ""
-#~ "Failure is a sign the disk will fail within 24 hours <span "
-#~ "size=\"small\">(Pre-Fail)</span>"
+#~ "Failure is a sign the disk will fail within 24 hours <span size=\"small"
+#~ "\">(Pre-Fail)</span>"
 #~ msgstr ""
-#~ "Fejl er et tegn på at disken vil svigte inden for 24 timer <span "
-#~ "size=\"small\">(Pre-Fail)</span>"
+#~ "Fejl er et tegn på at disken vil svigte inden for 24 timer <span size="
+#~ "\"small\">(Pre-Fail)</span>"
 
 #~ msgid ""
 #~ "Failure is a sign the disk exceeded its intended design life period <span "
 #~ "size=\"small\">(Old-Age)</span>"
 #~ msgstr ""
-#~ "Fejl er et tegn på at disken har overgået sin designlevetid <span "
-#~ "size=\"small\">(Old-Age)</span>"
+#~ "Fejl er et tegn på at disken har overgået sin designlevetid <span size="
+#~ "\"small\">(Old-Age)</span>"
 
 #~ msgid ""
 #~ "Updated every time data is collected <span size=\"small\">(Online)</span>"
 #~ msgstr ""
-#~ "Opdateres hver gang der indsamles data <span size=\"small\">(Online)</span>"
+#~ "Opdateres hver gang der indsamles data <span size=\"small\">(Online)</"
+#~ "span>"
 
 #~ msgid ""
 #~ "Updated only during off-line activities <span size=\"small\">(Not "
@@ -4373,7 +4267,7 @@ msgstr "Undersøg"
 #~ msgid "New RAID Array"
 #~ msgstr "Ny RAID-række"
 
-#~ # ?
+# ?
 #~ msgid "%s Loop Device"
 #~ msgstr "%s løkkeenhed"
 
@@ -4456,8 +4350,10 @@ msgstr "Undersøg"
 #~ msgstr "Fejl er et tegn på disksvigt inden for 24 timer (Pre-Fail)"
 
 #~ msgid ""
-#~ "Failure is a sign the disk exceeded its intended design life period (Old-Age)"
-#~ msgstr "Fejl er et tegn på at disken af overgået sin designlevetid (Old-Age)"
+#~ "Failure is a sign the disk exceeded its intended design life period (Old-"
+#~ "Age)"
+#~ msgstr ""
+#~ "Fejl er et tegn på at disken af overgået sin designlevetid (Old-Age)"
 
 #~ msgid "Every time data is collected (Online)"
 #~ msgstr "Hver gang data indsamles (Online)"
@@ -4489,8 +4385,8 @@ msgstr "Undersøg"
 #~ "Hvis afkrydset, vil systemet ikke vente på enheden ved opstart [nofail]"
 
 #~ msgid ""
-#~ "The name to use for the unlocked device - the device is set up as the name "
-#~ "prefixed with /dev/mapper/"
+#~ "The name to use for the unlocked device - the device is set up as the "
+#~ "name prefixed with /dev/mapper/"
 #~ msgstr ""
 #~ "Navnet, der bruges til den oplåste enhed - sættes op som navnet med "
 #~ "foranstillet/dev/mapper/"
@@ -4508,8 +4404,8 @@ msgstr "Undersøg"
 #~ msgstr "K_atalog"
 
 #~ msgid ""
-#~ "If checked, the device is never shown in the user interface no matter what "
-#~ "its directory is [x-gvfs-hide]"
+#~ "If checked, the device is never shown in the user interface no matter "
+#~ "what its directory is [x-gvfs-hide]"
 #~ msgstr ""
 #~ "Hvis afkrydset vil enheden aldrig blive vist i brugergrænsefladen, uanset "
 #~ "hvad kataloget er [x-gvfs-hide]"
@@ -4532,11 +4428,11 @@ msgstr "Undersøg"
 #~ msgid "new"
 #~ msgstr "ny"
 
-#~ # ?
+# ?
 #~ msgid "not_implemented"
 #~ msgstr "ikke_implementeret"
 
-#~ # ?
+# ?
 #~ msgid "nothing_selected"
 #~ msgstr "intet_valgt"
 
@@ -4559,8 +4455,8 @@ msgstr "Undersøg"
 #~ "To prevent data corruption, wait until this has finished before removing "
 #~ "media or disconnecting the device."
 #~ msgstr ""
-#~ "For at forhindre ødelæggelse af data, bør du vente med at fjerne medie eller "
-#~ "frakoble enhed, indtil dette er afsluttet."
+#~ "For at forhindre ødelæggelse af data, bør du vente med at fjerne medie "
+#~ "eller frakoble enhed, indtil dette er afsluttet."
 
 #~ msgid "The device to show the dialog for"
 #~ msgstr "Enheden som der skal vises et vindue for"
@@ -4583,7 +4479,7 @@ msgstr "Undersøg"
 #~ msgid "Operation was canceled"
 #~ msgstr "Operationen blev annulleret"
 
-#~ # Det er mit bedste bud. Noget man kan udtale uden at meningen går tabt.
+# Det er mit bedste bud. Noget man kan udtale uden at meningen går tabt.
 #~ msgid "Gnome Disk Utility formatting tool"
 #~ msgstr "Diskredskabs- og formateringsværktøj til Gnome"
 
@@ -4623,7 +4519,8 @@ msgstr "Undersøg"
 #~ msgid "Add spare to %s"
 #~ msgstr "Tilføj reserve til %s"
 
-#~ msgid "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
+#~ msgid ""
+#~ "Select a device to create a %s spare on for the RAID Array \"%s\" (%s)"
 #~ msgstr ""
 #~ "Vælg en disk, der skal oprettes en %s-reserve på, i RAID-rækken “%s” (%s)"
 
@@ -4631,11 +4528,11 @@ msgstr "Undersøg"
 #~ msgstr "Udvid %s"
 
 #~ msgid ""
-#~ "Select one or more devices to use %s on for expanding the RAID Array \"%s\" "
-#~ "(%s)"
+#~ "Select one or more devices to use %s on for expanding the RAID Array \"%s"
+#~ "\" (%s)"
 #~ msgstr ""
-#~ "Vælg en eller flere enheder, hvorpå %s skal bruges til at udvide RAID-rækken "
-#~ "“%s” (%s)"
+#~ "Vælg en eller flere enheder, hvorpå %s skal bruges til at udvide RAID-"
+#~ "rækken “%s” (%s)"
 
 #~ msgid "_Expand"
 #~ msgstr "_Udvid"
@@ -4662,12 +4559,12 @@ msgstr "Undersøg"
 #~ msgstr "Vælg SMART-selvtest"
 
 #~ msgid ""
-#~ "The tests may take a very long time to complete depending on the speed and "
-#~ "size of the disk. You can continue using your system while the test is "
-#~ "running."
+#~ "The tests may take a very long time to complete depending on the speed "
+#~ "and size of the disk. You can continue using your system while the test "
+#~ "is running."
 #~ msgstr ""
-#~ "Testene kan tage meget lang tid at fuldføre afhængig af diskens hastighed og "
-#~ "størrelse. Du kan fortsætte med at bruge dit system, mens testen kører."
+#~ "Testene kan tage meget lang tid at fuldføre afhængig af diskens hastighed "
+#~ "og størrelse. Du kan fortsætte med at bruge dit system, mens testen kører."
 
 #~ msgid "_Short (usually less than ten minutes)"
 #~ msgstr "_Kort (normalt mindre end 10 minutter)"
@@ -4675,7 +4572,7 @@ msgstr "Undersøg"
 #~ msgid "_Extended (usually tens of minutes)"
 #~ msgstr "_Udvidet (normalt mere end 10 minutter)"
 
-#~ # Det er navnet på en selvtest, der har til formål at finde skade forårsaget under transport (wikipedia)
+# Det er navnet på en selvtest, der har til formål at finde skade forårsaget under transport (wikipedia)
 #~ msgid "C_onveyance (usually less than ten minutes)"
 #~ msgstr "_Transport (normalt mindre end ti minutter)"
 
@@ -4686,11 +4583,11 @@ msgstr "Undersøg"
 #~ msgstr "%s (%s) – SMART-data"
 
 #~ msgid ""
-#~ "Time since SMART data was last read – SMART data is updated every 30 minutes "
-#~ "unless the disk is sleeping"
+#~ "Time since SMART data was last read – SMART data is updated every 30 "
+#~ "minutes unless the disk is sleeping"
 #~ msgstr ""
-#~ "Tid siden SMART-data sidst blev læst - SMART-data opdateres hvert 30. minut, "
-#~ "med mindre disken sover"
+#~ "Tid siden SMART-data sidst blev læst - SMART-data opdateres hvert 30. "
+#~ "minut, med mindre disken sover"
 
 #~ msgid "The result of the last self-test that ran on the disk"
 #~ msgstr "Resultatet af sidste selvtest, der blev kørt på disken"
@@ -4829,9 +4726,9 @@ msgstr "Undersøg"
 #~ "“Connect”. The connection will be made using the <i>Secure Shell</i> "
 #~ "protocol."
 #~ msgstr ""
-#~ "Indtast adressen og tryk på “Forbind” for at håndtere lagerenheder på andre "
-#~ "maskiner. Forbindelsen vil blive oprettet ved hjælp af protokollen <i>Secure "
-#~ "Shell</i>."
+#~ "Indtast adressen og tryk på “Forbind” for at håndtere lagerenheder på "
+#~ "andre maskiner. Forbindelsen vil blive oprettet ved hjælp af protokollen "
+#~ "<i>Secure Shell</i>."
 
 #~ msgid "The hostname or address to connect to"
 #~ msgstr "Værtsnavnet eller adressen, der skal forbindes til"
@@ -4887,7 +4784,7 @@ msgstr "Undersøg"
 #~ msgid "Drives"
 #~ msgstr "Drev"
 
-#~ # Grumble
+# Grumble
 #~ msgid "Array of drives to use for the array"
 #~ msgstr "Række af drev, der skal bruges"
 
@@ -4971,7 +4868,7 @@ msgstr "Undersøg"
 #~ msgid "The largest free segment for all the drives"
 #~ msgstr "Største frie segment blandt alle drev"
 
-#~ # ???
+# ???
 #~ msgid "The size to use in the details header"
 #~ msgstr "Størrelsen, der skal bruges i detalje-headeren"
 
@@ -4981,28 +4878,29 @@ msgstr "Undersøg"
 #~ msgid ""
 #~ "Insufficient space: %s is needed but largest contiguous free block is %s."
 #~ msgstr ""
-#~ "Utilstrækkelig plads: der kræves %s, men største sammenhængende frie blok er "
-#~ "%s."
+#~ "Utilstrækkelig plads: der kræves %s, men største sammenhængende frie blok "
+#~ "er %s."
 
 #~ msgid "The disk will be partitioned and a partition will be created"
 #~ msgstr ""
 #~ "Disken vil blive partitioneret, og der vil blive oprettet en partition"
 
 #~ msgid ""
-#~ "The disk will be partitioned and a %s partition will be created. Afterwards "
-#~ "no space will be available."
+#~ "The disk will be partitioned and a %s partition will be created. "
+#~ "Afterwards no space will be available."
 #~ msgstr ""
-#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-partition. "
-#~ "Derefter vil ingen yderligere plads være tilgængelig."
+#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-"
+#~ "partition. Derefter vil ingen yderligere plads være tilgængelig."
 
 #~ msgid ""
-#~ "The disk will be partitioned and a %s partition will be created. Afterwards "
-#~ "%s will be available."
+#~ "The disk will be partitioned and a %s partition will be created. "
+#~ "Afterwards %s will be available."
 #~ msgstr ""
-#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-partition. "
-#~ "Derefter vil %s være tilgængelig."
+#~ "Disken vil blive partitioneret, og der vil blive oprettet en %s-"
+#~ "partition. Derefter vil %s være tilgængelig."
 
-#~ msgid "A %s partition will be created. Afterwards no space will be available."
+#~ msgid ""
+#~ "A %s partition will be created. Afterwards no space will be available."
 #~ msgstr ""
 #~ "Der vil blive oprettet en %s-partition. Derefter vil ingen plads være "
 #~ "tilgængelig."
@@ -5236,13 +5134,14 @@ msgstr "Undersøg"
 #~ msgstr "Kr_yptér underliggende enhed"
 
 #~ msgid ""
-#~ "Encryption protects your data, requiring a passphrase to be entered before "
-#~ "the file system can be used. May decrease performance and may not be "
-#~ "compatible if you use the media on other operating systems."
+#~ "Encryption protects your data, requiring a passphrase to be entered "
+#~ "before the file system can be used. May decrease performance and may not "
+#~ "be compatible if you use the media on other operating systems."
 #~ msgstr ""
-#~ "Kryptering beskytter dine data ved at kræve indtastning af en adgangsfrase, "
-#~ "før filsystemet kan bruges. Kan formindske ydelsen og er måske ikke "
-#~ "kompatibelt, hvis du ønsker at bruge mediet på andre operativsystemer."
+#~ "Kryptering beskytter dine data ved at kræve indtastning af en "
+#~ "adgangsfrase, før filsystemet kan bruges. Kan formindske ydelsen og er "
+#~ "måske ikke kompatibelt, hvis du ønsker at bruge mediet på andre "
+#~ "operativsystemer."
 
 #~ msgctxt "application name"
 #~ msgid "Bourne Again Shell"
@@ -5317,9 +5216,11 @@ msgstr "Undersøg"
 #~ "beskytte den"
 
 #~ msgid ""
-#~ "Data on this device is stored in an encrypted form protected by a passphrase"
+#~ "Data on this device is stored in an encrypted form protected by a "
+#~ "passphrase"
 #~ msgstr ""
-#~ "Data på denne enhed opbevares i krypteret form beskyttet af en adgangsfrase"
+#~ "Data på denne enhed opbevares i krypteret form beskyttet af en "
+#~ "adgangsfrase"
 
 #~ msgid ""
 #~ "Data on this device will be stored in an encrypted form protected by a "
@@ -5329,9 +5230,11 @@ msgstr "Undersøg"
 #~ "adgangsfrase."
 
 #~ msgid ""
-#~ "Data on this device is stored in an encrypted form protected by a passphrase."
+#~ "Data on this device is stored in an encrypted form protected by a "
+#~ "passphrase."
 #~ msgstr ""
-#~ "Data på denne enhed opbevares i krypteret form beskyttet af en adgangsfrase."
+#~ "Data på denne enhed opbevares i krypteret form beskyttet af en "
+#~ "adgangsfrase."
 
 #~ msgid ""
 #~ "To make the data available for use, enter the passphrase for the device."
@@ -5590,8 +5493,8 @@ msgstr "Undersøg"
 #~ msgstr "Fejl ved logind"
 
 #~ msgid ""
-#~ "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for secret' "
-#~ "but got `%s'"
+#~ "Unexpected stderr output - expected `udisks-tcp-bridge: Waiting for "
+#~ "secret' but got `%s'"
 #~ msgstr ""
 #~ "Uventet udskrift fra stderr - forventede “udisks-tcp-bridge: Waiting for "
 #~ "secret”, men fandt “%s”"
@@ -5603,15 +5506,16 @@ msgstr "Undersøg"
 #~ "Unexpected stderr output - expected `udisks-tcp-bridge: Attempting to "
 #~ "connect to port %d' but got `%s'"
 #~ msgstr ""
-#~ "Uventet udskrift fra stderr - forventede \"udisks-tcp-bridge: Attempting to "
-#~ "connect to port %d' men fandt \"%s\""
+#~ "Uventet udskrift fra stderr - forventede \"udisks-tcp-bridge: Attempting "
+#~ "to connect to port %d' men fandt \"%s\""
 
 #~ msgid "The udisks-tcp-bridge program failed to prove it was authorized: %s"
 #~ msgstr ""
 #~ "Programmet udisks-tcp-bridge kunne ikke bevise, at det er autoriseret: %s"
 
 #~ msgid "The udisks-tcp-bridge program failed to prove it was authorized"
-#~ msgstr "Programmet udisks-tcp-bridge kunne ikke bevise, at det er autoriseret"
+#~ msgstr ""
+#~ "Programmet udisks-tcp-bridge kunne ikke bevise, at det er autoriseret"
 
 #~ msgid "%s (%s bytes)"
 #~ msgstr "%s (%s byte)"
@@ -5634,7 +5538,7 @@ msgstr "Undersøg"
 #~ msgid "HFS+"
 #~ msgstr "HFS+"
 
-#~ # Denne mener jeg ikke skal oversættes, da den forklarer forkortelsen
+# Denne mener jeg ikke skal oversættes, da den forklarer forkortelsen
 #~ msgid "Linux Unified Key Setup"
 #~ msgstr "Linux Unified Key Setup"
 
@@ -5779,7 +5683,7 @@ msgstr "Undersøg"
 #~ msgid "Running Extended SMART Self-Test"
 #~ msgstr "Kører udvidet SMART-selvtest"
 
-#~ # Conveyance-testen er noget med om enheden har taget skade under transport http://linux.die.net/man/8/smartctl
+# Conveyance-testen er noget med om enheden har taget skade under transport http://linux.die.net/man/8/smartctl
 #~ msgid "Running Conveyance SMART Self-Test"
 #~ msgstr "Kører transport-SMART-selvtest"
 
@@ -5825,7 +5729,7 @@ msgstr "Undersøg"
 #~ msgid "Microsoft Windows Recovery Environment"
 #~ msgstr "Microsoft Windows Recovery Environment"
 
-#~ # Jeg er i tvivl om denne her
+# Jeg er i tvivl om denne her
 #~ msgid "HP-UX Data Partition"
 #~ msgstr "HP-UX-datapartition"
 
@@ -5859,7 +5763,7 @@ msgstr "Undersøg"
 #~ msgid "Solaris Swap Partition"
 #~ msgstr "Solaris-swappartition"
 
-#~ # Jeg er i tvivl om denne her
+# Jeg er i tvivl om denne her
 #~ msgid "Solaris Backup Partition"
 #~ msgstr "Solaris-backuppartition"
 
@@ -6071,58 +5975,61 @@ msgstr "Undersøg"
 #~ msgstr "Linux RAID autogenkend (0xfd)"
 
 #~ msgid ""
-#~ "A popular format compatible with almost any device or system, typically used "
-#~ "for file exchange."
+#~ "A popular format compatible with almost any device or system, typically "
+#~ "used for file exchange."
 #~ msgstr ""
-#~ "Et populært format, der er kompatibelt med næsten alle enheder og systemer, "
-#~ "som bruges til filudveksling."
+#~ "Et populært format, der er kompatibelt med næsten alle enheder og "
+#~ "systemer, som bruges til filudveksling."
 
 #~ msgid ""
-#~ "This file system is compatible with Linux systems only and provides classic "
-#~ "UNIX file permissions support. This file system does not use a journal."
+#~ "This file system is compatible with Linux systems only and provides "
+#~ "classic UNIX file permissions support. This file system does not use a "
+#~ "journal."
 #~ msgstr ""
-#~ "Dette filsystem er kun kompatibelt med Linux-systemer, og det understøtter "
-#~ "klassiske UNIX-filrettigheder. Dette filsystem bruger ikke en journal."
+#~ "Dette filsystem er kun kompatibelt med Linux-systemer, og det "
+#~ "understøtter klassiske UNIX-filrettigheder. Dette filsystem bruger ikke "
+#~ "en journal."
 
 #~ msgid ""
-#~ "This file system is compatible with Linux systems only and provides classic "
-#~ "UNIX file permissions support."
+#~ "This file system is compatible with Linux systems only and provides "
+#~ "classic UNIX file permissions support."
 #~ msgstr ""
-#~ "Dette filsystem er kun kompatibelt med Linux-systemer, og det understøtter "
-#~ "klassiske UNIX-filrettigheder."
+#~ "Dette filsystem er kun kompatibelt med Linux-systemer, og det "
+#~ "understøtter klassiske UNIX-filrettigheder."
 
 #~ msgid "Swap area used by the operating system for virtual memory."
 #~ msgstr "Swap-område, der bruges af operativsystemet til virtuel hukommelse."
 
 #~ msgid ""
-#~ "The native Windows file system. Not widely compatible with other operating "
-#~ "systems than Windows."
+#~ "The native Windows file system. Not widely compatible with other "
+#~ "operating systems than Windows."
 #~ msgstr ""
 #~ "Det Windows-tilknyttede filsystem. Ikke bredt kompatibelt med andre "
 #~ "operativsystemer end Windows."
 
 #~ msgid ""
-#~ "Simple filesystem with low overhead and UNIX permissions support. Not widely "
-#~ "compatible with operating systems other than Linux and Minix."
+#~ "Simple filesystem with low overhead and UNIX permissions support. Not "
+#~ "widely compatible with operating systems other than Linux and Minix."
 #~ msgstr ""
-#~ "Simpelt filsystem med lav systembyrde og understøttelse af UNIX-rettigheder. "
-#~ "Er ikke bredt understøttet af andre operativsystemer end Linux og Minix."
+#~ "Simpelt filsystem med lav systembyrde og understøttelse af UNIX-"
+#~ "rettigheder. Er ikke bredt understøttet af andre operativsystemer end "
+#~ "Linux og Minix."
 
 #~ msgid "No file system will be created."
 #~ msgstr "Intet filsystem vil blive oprettet."
 
 #~ msgid ""
-#~ "The Master Boot Record scheme is compatible with almost any device or system "
-#~ "but has a number of limitations with respect to disk size and number of "
-#~ "partitions."
+#~ "The Master Boot Record scheme is compatible with almost any device or "
+#~ "system but has a number of limitations with respect to disk size and "
+#~ "number of partitions."
 #~ msgstr ""
 #~ "Master Boot Record-systemet er kompatibelt med næsten alle enheder eller "
 #~ "systemer, men det har nogle begrænsninger med hensyn til diskstørrelse og "
 #~ "antal partitioner."
 
 #~ msgid ""
-#~ "A legacy scheme that is incompatible with most systems except Apple systems "
-#~ "and most Linux systems. Not recommended for removable media."
+#~ "A legacy scheme that is incompatible with most systems except Apple "
+#~ "systems and most Linux systems. Not recommended for removable media."
 #~ msgstr ""
 #~ "Et ældre system, der er inkompatibelt med de fleste systemer, på nær "
 #~ "Apple-systemer og de fleste Linux-systemer. Anbefales ikke til flytbare "
@@ -6136,11 +6043,12 @@ msgstr "Undersøg"
 #~ "inkompatibelt med visse enheder og ældre systemer."
 
 #~ msgid ""
-#~ "Marks the entire disk as unused. Use this option only if you want to avoid "
-#~ "partitioning the disk for e.g. whole disk use or floppy / Zip disks."
+#~ "Marks the entire disk as unused. Use this option only if you want to "
+#~ "avoid partitioning the disk for e.g. whole disk use or floppy / Zip disks."
 #~ msgstr ""
 #~ "Markerer hele disken som ubrugt. Brug kun denne valgmulighed, hvis du vil "
-#~ "undgå at partitionere disken til f.eks. heldiskbrug eller diskette/zip-diske."
+#~ "undgå at partitionere disken til f.eks. heldiskbrug eller diskette/zip-"
+#~ "diske."
 
 #~ msgid "%.1f kB/s"
 #~ msgstr "%.1f kB/s"
@@ -6207,45 +6115,46 @@ msgstr "Undersøg"
 #~ "tolerance. If a single disk in the array fails, the entire RAID-0 array "
 #~ "fails."
 #~ msgstr ""
-#~ "Stribet uden paritet. Giver forbedret ydelse, men ingen fejltolerance. Hvis "
-#~ "en disk i rækken svigter, vil hele RAID-0-rækken svigte."
+#~ "Stribet uden paritet. Giver forbedret ydelse, men ingen fejltolerance. "
+#~ "Hvis en disk i rækken svigter, vil hele RAID-0-rækken svigte."
 
 #~ msgid ""
 #~ "Mirrored set without parity. Provides fault tolerance and improved "
-#~ "performance for reading. RAID-1 arrays can sustain all but one disk failing."
+#~ "performance for reading. RAID-1 arrays can sustain all but one disk "
+#~ "failing."
 #~ msgstr ""
 #~ "Spejlet uden paritet. Giver standardtolerance og forbedret ydelse ved "
 #~ "læsning. RAID-1-rækker kan tåle, at alle på nær én disk svigter."
 
 #~ msgid ""
-#~ "Striped set with parity on a single disk. Provides improved performance and "
-#~ "fault tolerance. RAID-4 arrays can sustain a single disk failure."
+#~ "Striped set with parity on a single disk. Provides improved performance "
+#~ "and fault tolerance. RAID-4 arrays can sustain a single disk failure."
 #~ msgstr ""
 #~ "Stribet med paritet på en enkelt disk. Giver forbedret ydelse og "
 #~ "fejltolerance. RAID-4-rækker kan tåle et enkelt disksvigt."
 
 #~ msgid ""
-#~ "Striped set with distributed parity. Provides improved performance and fault "
-#~ "tolerance. RAID-5 arrays can sustain a single disk failure."
+#~ "Striped set with distributed parity. Provides improved performance and "
+#~ "fault tolerance. RAID-5 arrays can sustain a single disk failure."
 #~ msgstr ""
-#~ "Stribet med distribueret paritet. Giver forbedret ydelse og fejltolerance. "
-#~ "RAID-5-rækker kan tåle et enkelt disksvigt."
+#~ "Stribet med distribueret paritet. Giver forbedret ydelse og "
+#~ "fejltolerance. RAID-5-rækker kan tåle et enkelt disksvigt."
 
 #~ msgid ""
-#~ "Striped set with dual distributed parity. Provides improved performance and "
-#~ "fault tolerance. RAID-6 arrays can sustain two disk failures."
+#~ "Striped set with dual distributed parity. Provides improved performance "
+#~ "and fault tolerance. RAID-6 arrays can sustain two disk failures."
 #~ msgstr ""
 #~ "Stribet med dobbelt distribueret paritet. Giver forbedret ydelse og "
 #~ "fejltolerance. RAID-6-rækker kan tåle to disksvigt."
 
 #~ msgid ""
-#~ "Striped set with distributed parity. Provides improved performance and fault "
-#~ "tolerance. RAID-10 arrays can sustain multiple drive losses so long as no "
-#~ "mirror loses all its drives."
+#~ "Striped set with distributed parity. Provides improved performance and "
+#~ "fault tolerance. RAID-10 arrays can sustain multiple drive losses so long "
+#~ "as no mirror loses all its drives."
 #~ msgstr ""
-#~ "Stribet med distribueret paritet. Giver forbedret ydelse og fejltolerance. "
-#~ "RAID-10-rækker kan tåle tab af flere drev, så længe intet spejl mister alle "
-#~ "dets drev."
+#~ "Stribet med distribueret paritet. Giver forbedret ydelse og "
+#~ "fejltolerance. RAID-10-rækker kan tåle tab af flere drev, så længe intet "
+#~ "spejl mister alle dets drev."
 
 #~ msgid "Unknown RAID level %s."
 #~ msgstr "Ukendt RAID-niveau %s."
@@ -6394,7 +6303,7 @@ msgstr "Undersøg"
 #~ msgid "Optical Disc"
 #~ msgstr "Optisk disk"
 
-#~ # %s er en drevstørrelse
+# %s er en drevstørrelse
 #~ msgid "%s Filesystem"
 #~ msgstr "%s filsystem"
 
@@ -6439,8 +6348,8 @@ msgstr "Undersøg"
 #~ msgstr "Det er nu sikkert at fjerne “%s”."
 
 #~ msgid ""
-#~ "To prevent data loss, wait until this has finished before removing media or "
-#~ "disconnecting the device."
+#~ "To prevent data loss, wait until this has finished before removing media "
+#~ "or disconnecting the device."
 #~ msgstr ""
 #~ "For at forhindre af datatab, bør du vente med at fjerne mediet eller "
 #~ "frakoble enheden, indtil dette er afsluttet."
@@ -6501,8 +6410,8 @@ msgstr "Undersøg"
 #~ "<b>NOTE:</b> This object represents one of several paths to the drive. To "
 #~ "perform operations on the drive, use the corresponding multipath object."
 #~ msgstr ""
-#~ "<b>BEMÆRK:</b> Dette objekt repræsenterer en af flere stier til drevet. Brug "
-#~ "det tilsvarende multipath-objekt for at udføre operationer på drevet."
+#~ "<b>BEMÆRK:</b> Dette objekt repræsenterer en af flere stier til drevet. "
+#~ "Brug det tilsvarende multipath-objekt for at udføre operationer på drevet."
 
 #~ msgid "Firmware Version:"
 #~ msgstr "Firmwareversion:"
@@ -6564,7 +6473,7 @@ msgstr "Undersøg"
 #~ msgid "Driver:"
 #~ msgstr "Driver:"
 
-#~ # Egentlig 'Stof', men det virker temmelig usandsynligt i denne sammenhæng
+# Egentlig 'Stof', men det virker temmelig usandsynligt i denne sammenhæng
 #~ msgid "Fabric:"
 #~ msgstr "Struktur:"
 
@@ -6661,7 +6570,7 @@ msgstr "Undersøg"
 #~ msgid "Checking"
 #~ msgstr "Kontrollerer"
 
-#~ # så det er en 'handling'?
+# så det er en 'handling'?
 #~ msgctxt "RAID action"
 #~ msgid "Idle"
 #~ msgstr "Gå i tomgang"
@@ -6744,7 +6653,7 @@ msgstr "Undersøg"
 #~ msgid "File system check on \"%s\" (%s) completed"
 #~ msgstr "Kontrol af filsystem på “%s” (%s) er fuldført"
 
-#~ # Jeg synes "i god stand" er mere beskrivende end "rent". Refererer til disktjek.
+# Jeg synes "i god stand" er mere beskrivende end "rent". Refererer til disktjek.
 #~ msgid "File system is clean."
 #~ msgstr "Filsystemet er i god stand."
 
@@ -6810,7 +6719,7 @@ msgstr "Undersøg"
 #~ msgid "Allow Write"
 #~ msgstr "Tillad skrivning"
 
-#~ # ???
+# ???
 #~ msgid "Boot Code PIC"
 #~ msgstr "Boot-kode PIC"
 
@@ -6971,8 +6880,8 @@ msgstr "Undersøg"
 #~ "One or more hard disks report health problems. Click the icon to get more "
 #~ "information."
 #~ msgstr ""
-#~ "En eller flere harddiske rapporter om helbredsproblemer. Klik på ikonet for "
-#~ "flere oplysninger."
+#~ "En eller flere harddiske rapporter om helbredsproblemer. Klik på ikonet "
+#~ "for flere oplysninger."
 
 #~ msgid "Ignored Drives"
 #~ msgstr "Ignorerede drev"
@@ -7072,19 +6981,19 @@ msgstr "Undersøg"
 
 #~ msgid "Are you sure you want to format the disk, deleting existing data ?"
 #~ msgstr ""
-#~ "Er du sikker på, at du vil formatere disken, hvilket vil slette eksisterende "
-#~ "data?"
+#~ "Er du sikker på, at du vil formatere disken, hvilket vil slette "
+#~ "eksisterende data?"
 
 #~ msgid ""
 #~ "All data on the media in \"%s\" will be irrecovably erased. Make sure "
 #~ "important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Alle data på mediet i “%s” vil blive slettet for evigt. Sørg for at vigtige "
-#~ "data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
+#~ "Alle data på mediet i “%s” vil blive slettet for evigt. Sørg for at "
+#~ "vigtige data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
 
 #~ msgid ""
-#~ "All data on the drive \"%s\" will be irrecovably erased. Make sure important "
-#~ "data is backed up. This action cannot be undone."
+#~ "All data on the drive \"%s\" will be irrecovably erased. Make sure "
+#~ "important data is backed up. This action cannot be undone."
 #~ msgstr ""
 #~ "Alle data på drevet “%s” vil blive slettet for evigt. Sørg for at vigtige "
 #~ "data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
@@ -7097,8 +7006,8 @@ msgstr "Undersøg"
 #~ "partitionstabel. Alle eksisterende data vil gå tabt."
 
 #~ msgid ""
-#~ "The volume contains encrypted data that can be unlocked with a passphrase. "
-#~ "The passphrase can optionally be stored in the keyring."
+#~ "The volume contains encrypted data that can be unlocked with a "
+#~ "passphrase. The passphrase can optionally be stored in the keyring."
 #~ msgstr ""
 #~ "Diskenheden indeholder krypterede data, som kan låses op med en "
 #~ "adgangsfrase. Adgangsfrasen kan valgfrit opbevares i nøgleringen."
@@ -7107,19 +7016,19 @@ msgstr "Undersøg"
 #~ msgstr "Diskenheden indeholder et montérbart filsystem."
 
 #~ msgid ""
-#~ "Only volumes of acceptable sizes can be selected. You may need to manually "
-#~ "create new volumes of acceptable sizes."
+#~ "Only volumes of acceptable sizes can be selected. You may need to "
+#~ "manually create new volumes of acceptable sizes."
 #~ msgstr ""
-#~ "Kun diskenheder af acceptable størrelser kan vælges. Det kan være nødvendigt "
-#~ "at oprette nye diskenheder af acceptable størrelser manuelt."
+#~ "Kun diskenheder af acceptable størrelser kan vælges. Det kan være "
+#~ "nødvendigt at oprette nye diskenheder af acceptable størrelser manuelt."
 
 #~ msgid ""
 #~ "The data on component \"%s\" of the RAID Array \"%s\" will be irrecovably "
 #~ "erased and the RAID Array might be degraded. Make sure important data is "
 #~ "backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Data på komponenten “%s” i RAID-rækken “%s” vil blive slettet for evigt, og "
-#~ "RAID-rækken kan blive degraderet. Sørg for at vigtige data er "
+#~ "Data på komponenten “%s” i RAID-rækken “%s” vil blive slettet for evigt, "
+#~ "og RAID-rækken kan blive degraderet. Sørg for at vigtige data er "
 #~ "sikkerhedskopieret. Denne handling kan ikke fortrydes."
 
 #~ msgctxt "RAID component type"
@@ -7162,13 +7071,13 @@ msgstr "Undersøg"
 #~ msgid "RAID Type:"
 #~ msgstr "RAID-type:"
 
-#~ # Jeg er i tvivl om stale -> inaktiv
+# Jeg er i tvivl om stale -> inaktiv
 #~ msgid ""
-#~ "Attaches the stale component to the RAID array. After attachment, data from "
-#~ "the array will be synchronized on the component."
+#~ "Attaches the stale component to the RAID array. After attachment, data "
+#~ "from the array will be synchronized on the component."
 #~ msgstr ""
-#~ "Tilkobler den inaktive komponent til RAID-rækken. Efter tilkobling vil data "
-#~ "fra rækken blive synkroniseret på komponenten."
+#~ "Tilkobler den inaktive komponent til RAID-rækken. Efter tilkobling vil "
+#~ "data fra rækken blive synkroniseret på komponenten."
 
 #~ msgid ""
 #~ "Detaches the running component from the RAID array. Data on the component "
@@ -7177,13 +7086,13 @@ msgstr "Undersøg"
 #~ "Frakobler den kørende komponent fra RAID-rækken. Data på komponenten vil "
 #~ "blive slettet, og komponenten vil derefter være klar til anden brug."
 
-#~ # hot spare???
+# hot spare???
 #~ msgid ""
 #~ "Adds a new component to the running RAID array. Use this when replacing a "
 #~ "failed component or adding a hot spare."
 #~ msgstr ""
-#~ "Tilføjer en ny komponent til den kørende RAID-række. Brug denne funktion når "
-#~ "du erstatter en beskadiget komponent eller tilføjer en “hot spare”."
+#~ "Tilføjer en ny komponent til den kørende RAID-række. Brug denne funktion "
+#~ "når du erstatter en beskadiget komponent eller tilføjer en “hot spare”."
 
 #~ msgid "Chec_k"
 #~ msgstr "_Kontrollér"
@@ -7194,8 +7103,8 @@ msgstr "Undersøg"
 #~ msgid ""
 #~ "To format or edit media, insert it into the drive and wait a few seconds."
 #~ msgstr ""
-#~ "For at formatere eller redigere et medie, indsæt det i drevet og vent et par "
-#~ "sekunder."
+#~ "For at formatere eller redigere et medie, indsæt det i drevet og vent et "
+#~ "par sekunder."
 
 #~ msgid ""
 #~ "Are you sure you want to remove the partition, deleting existing data ?"
@@ -7205,12 +7114,14 @@ msgstr "Undersøg"
 
 #~ msgid ""
 #~ "All data on partition %d with name \"%s\" on the media in \"%s\" and all "
-#~ "partitions contained in this extended partition will be irrecovably erased.\n"
+#~ "partitions contained in this extended partition will be irrecovably "
+#~ "erased.\n"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Alle data på partition %d med navnet “%s” på mediet “%s” og alle partitioner "
-#~ "indeholdt i denne udvidede partition vil blive slettet for evigt.\n"
+#~ "Alle data på partition %d med navnet “%s” på mediet “%s” og alle "
+#~ "partitioner indeholdt i denne udvidede partition vil blive slettet for "
+#~ "evigt.\n"
 #~ "\n"
 #~ "Sørg for at vigtige data er sikkerhedskopieret. Denne handling kan ikke "
 #~ "fortrydes."
@@ -7221,15 +7132,15 @@ msgstr "Undersøg"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Alle data på partition %d med navnet “%s” på mediet “%s” vil blive slettet "
-#~ "for evigt.\n"
+#~ "Alle data på partition %d med navnet “%s” på mediet “%s” vil blive "
+#~ "slettet for evigt.\n"
 #~ "\n"
 #~ "Sørg for at vigtige data er sikkerhedskopieret. Denne handling kan ikke "
 #~ "fortrydes."
 
 #~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" and all partitions contained "
-#~ "in this extended partition will be irrecovably erased.\n"
+#~ "All data on partition %d on the media in \"%s\" and all partitions "
+#~ "contained in this extended partition will be irrecovably erased.\n"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
@@ -7240,7 +7151,8 @@ msgstr "Undersøg"
 #~ "fortrydes."
 
 #~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrecovably erased.\n"
+#~ "All data on partition %d on the media in \"%s\" will be irrecovably "
+#~ "erased.\n"
 #~ "\n"
 #~ "Make sure important data is backed up. This action cannot be undone."
 #~ msgstr ""
@@ -7299,8 +7211,8 @@ msgstr "Undersøg"
 #~ "The attributes of the partition can be edited. The partition can also be "
 #~ "deleted to make room for other data."
 #~ msgstr ""
-#~ "Partitionens attributter kan redigeres. Partitionen kan også slettes for at "
-#~ "skabe plads til andre data."
+#~ "Partitionens attributter kan redigeres. Partitionen kan også slettes for "
+#~ "at skabe plads til andre data."
 
 #~ msgid "Apply the changes made"
 #~ msgstr "Anvend de ændringer, der er foretaget"
@@ -7319,29 +7231,32 @@ msgstr "Undersøg"
 #~ "To create a new partition, select the size and whether to create a file "
 #~ "system. The partition type, label and flags can be changed after creation."
 #~ msgstr ""
-#~ "For at oprette en ny partition, skal du vælge størrelsen og hvorvidt du vil "
-#~ "oprette et filsystem. Partitionstypen, mærke og flag kan ændres efter "
+#~ "For at oprette en ny partition, skal du vælge størrelsen og hvorvidt du "
+#~ "vil oprette et filsystem. Partitionstypen, mærke og flag kan ændres efter "
 #~ "oprettelsen."
 
 #~ msgid ""
-#~ "Are you sure you want to create a new file system, deleting existing data ?"
+#~ "Are you sure you want to create a new file system, deleting existing "
+#~ "data ?"
 #~ msgstr ""
 #~ "Er du sikker på, at du vil oprette et nyt filsystem, hvilket vil slette "
 #~ "eksisterende data?"
 
 #~ msgid ""
-#~ "All data on partition %d on the media in \"%s\" will be irrecovably erased. "
-#~ "Make sure important data is backed up. This action cannot be undone."
+#~ "All data on partition %d on the media in \"%s\" will be irrecovably "
+#~ "erased. Make sure important data is backed up. This action cannot be "
+#~ "undone."
 #~ msgstr ""
-#~ "Alle data på partition %d på mediet i “%s” vil blive slettet for evigt. Sørg "
-#~ "for at vigtige data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
+#~ "Alle data på partition %d på mediet i “%s” vil blive slettet for evigt. "
+#~ "Sørg for at vigtige data er sikkerhedskopieret. Denne handling kan ikke "
+#~ "fortrydes."
 
 #~ msgid ""
 #~ "All data on partition %d of \"%s\" will be irrecovably erased. Make sure "
 #~ "important data is backed up. This action cannot be undone."
 #~ msgstr ""
-#~ "Alle data på partition %d på “%s” vil blive slettet for evigt. Sørg for at "
-#~ "vigtige data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
+#~ "Alle data på partition %d på “%s” vil blive slettet for evigt. Sørg for "
+#~ "at vigtige data er sikkerhedskopieret. Denne handling kan ikke fortrydes."
 
 #~ msgid "Create File System"
 #~ msgstr "Opret filsystem"
@@ -7361,7 +7276,7 @@ msgstr "Undersøg"
 #~ msgid "View details about SMART for this disk"
 #~ msgstr "Vis detaljer om SMART for denne disk"
 
-#~ # %s er en filsystemtype
+# %s er en filsystemtype
 #~ msgid "%s File System"
 #~ msgstr "%s-filsystem"
 
@@ -7375,16 +7290,17 @@ msgstr "Undersøg"
 #~ msgstr "Klartekst-LUKS-enhed"
 
 #~ msgid "Are you sure you want to start the drive \"%s\" in degraded mode ?"
-#~ msgstr "Er du sikker på, at du vil starte drevet “%s” i degraderet tilstand?"
+#~ msgstr ""
+#~ "Er du sikker på, at du vil starte drevet “%s” i degraderet tilstand?"
 
 #~ msgid ""
 #~ "Starting a RAID array in degraded mode means that the RAID volume is no "
 #~ "longer tolerant to drive failures. Data on the volume may be irrevocably "
 #~ "lost if a drive fails."
 #~ msgstr ""
-#~ "At starte en RAID-række i degraderet tilstand betyder, at RAID-diskenheden "
-#~ "ikke længere er tolerant over for drevfejl. Data på diskenheden kan gå tabt "
-#~ "for evigt, hvis drevet svigter."
+#~ "At starte en RAID-række i degraderet tilstand betyder, at RAID-"
+#~ "diskenheden ikke længere er tolerant over for drevfejl. Data på "
+#~ "diskenheden kan gå tabt for evigt, hvis drevet svigter."
 
 #~ msgid "There was an error stopping the drive \"%s\"."
 #~ msgstr "Der opstod en fejl ved at standsning af drevet “%s”."
@@ -7430,7 +7346,8 @@ msgstr "Undersøg"
 #~ msgstr "Præsenterbart objekt"
 
 #~ msgid ""
-#~ "The presentable shown or NULL if this is a element representing lack of media"
+#~ "The presentable shown or NULL if this is a element representing lack of "
+#~ "media"
 #~ msgstr ""
 #~ "Det præsenterbare objekt, der vises, eller NULL hvis dette er et element, "
 #~ "der repræsenterer at der ikke er et medie til stede"
@@ -7439,8 +7356,8 @@ msgstr "Undersøg"
 #~ msgstr "Elementets minimale størrelse"
 
 #~ msgid ""
-#~ "The size in percent that this element should claim or 0 to always claim the "
-#~ "specified minimum size"
+#~ "The size in percent that this element should claim or 0 to always claim "
+#~ "the specified minimum size"
 #~ msgstr ""
 #~ "Størrelsen i procent, som dette element bør kræve, eller 0 for altid at "
 #~ "kræve den minimale størrelse"
@@ -7454,7 +7371,8 @@ msgstr "Undersøg"
 #~ msgid ""
 #~ "Drive failure expected in less than 24 hours. Save all data immediately."
 #~ msgstr ""
-#~ "Drevet forventes at svigte inden for 24 timer. Gem alle data øjeblikkeligt."
+#~ "Drevet forventes at svigte inden for 24 timer. Gem alle data "
+#~ "øjeblikkeligt."
 
 #~ msgctxt "ATA SMART status"
 #~ msgid "Unknown"
@@ -7529,8 +7447,8 @@ msgstr "Undersøg"
 #~ "report on various indicators of reliability, in the hope of anticipating "
 #~ "failures."
 #~ msgstr ""
-#~ "Visse diske understøtter ATA SMART, et målingssystem til at finde og melde "
-#~ "forskellige mål for pålidelighed i håb om at forudsige fejl."
+#~ "Visse diske understøtter ATA SMART, et målingssystem til at finde og "
+#~ "melde forskellige mål for pålidelighed i håb om at forudsige fejl."
 
 #~ msgid "Last Test:"
 #~ msgstr "Seneste test:"
@@ -7558,5 +7476,3 @@ msgstr "Undersøg"
 
 #~ msgid "%d Components (%s each)"
 #~ msgstr "%d komponenter (%s hver)"
-
-

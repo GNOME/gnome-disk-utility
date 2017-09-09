@@ -7,10 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
+"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-02-16 15:23+0000\n"
-"PO-Revision-Date: 2017-02-20 17:20+0100\n"
+"POT-Creation-Date: 2017-08-15 20:10+0000\n"
+"PO-Revision-Date: 2017-09-07 21:20+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -42,6 +42,20 @@ msgstr "Disko-irudien idazlea"
 msgid "Write Disk Images to Devices"
 msgstr "Idatzi disko-irudia gailuetan"
 
+#: data/org.gnome.Disks.gschema.xml:6
+msgid "Default location for the Create/Restore disk image dialogs"
+msgstr ""
+"Kokaleku lehenetsia disko-irudia sortzeko/leheneratzeko elkarrizketa-"
+"koadroentzako"
+
+#: data/org.gnome.Disks.gschema.xml:7
+msgid ""
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
+msgstr ""
+"Kokaleku lehenetsia disko-irudia sortzeko/leheneratzeko elkarrizketa-"
+"koadroentzako. Hutsik uzten bada, ~/Dokumentuak karpeta erabiliko da."
+
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
 msgstr "GNOMEren diskoak"
@@ -59,25 +73,26 @@ msgstr ""
 "partizioak egiteko eta konfiguratzeko modu erraza eskaintzen du."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
+#| msgid ""
+#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
+#| "physical disks, and image USB sticks. Tasks are executed in the "
+#| "background, even after the application has been closed by the user."
 msgid ""
-"Using Disks, you can view SMART data, manage RAID devices, benchmark "
-"physical disks, and image USB sticks. Tasks are executed in the background, "
-"even after the application has been closed by the user."
+"Using Disks, you can view SMART data, manage devices, benchmark physical "
+"disks, and image USB sticks."
 msgstr ""
-"'Diskoak' erabiliz SMART datuak ikus dezakezu, baita RAID gailuak kudeatu, "
-"disko fisikoen errendimendua aztertu edo eta USB gailuen irudiak sortzea. "
-"Atazak atzeko planoan exekutatzen dira, nahiz eta erabiltzaileak aplikazioa "
-"itxi."
+"'Diskoak' erabiliz SMART datuak ikus dezakezu, gailuak kudeatu, "
+"disko fisikoen errendimendua aztertu edo eta USB gailuen irudiak sortu."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:23
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
 msgstr "Diskoak kudeatzeko modu erraza"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:35
+#: data/org.gnome.DiskUtility.appdata.xml.in:34
 msgid "The GNOME Project"
 msgstr "GNOME proiektua"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1051
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1095
 msgid "Disks"
 msgstr "Diskoak"
 
@@ -100,20 +115,6 @@ msgstr ""
 msgid "gnome-disks"
 msgstr "gnome-disks"
 
-#: data/org.gnome.Disks.gschema.xml:6
-msgid "Default location for the Create/Restore disk image dialogs"
-msgstr ""
-"Kokaleku lehenetsia disko-irudia sortzeko/leheneratzeko elkarrizketa-"
-"koadroentzako"
-
-#: data/org.gnome.Disks.gschema.xml:7
-msgid ""
-"Default location for the Create/Restore disk image dialogs. If blank the ~/"
-"Documents folder is used."
-msgstr ""
-"Kokaleku lehenetsia disko-irudia sortzeko/leheneratzeko elkarrizketa-"
-"koadroentzako. Hutsik uzten bada, ~/Dokumentuak karpeta erabiliko da."
-
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "Errore bat gertatu da"
@@ -126,8 +127,8 @@ msgstr "Baimendu irudian idaztea"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Hautatu disko-irudiak muntatzeko"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gduwindow.c:727
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:792
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -141,9 +142,6 @@ msgid "Set up _read-only mount"
 msgstr "Konfiguratu irakurtzeko _soilik muntatzea"
 
 #: src/disk-image-mounter/main.c:95
-#| msgid ""
-#| "If checked, the mount will be read-only. This is useful if you don't want "
-#| "the underlying disk image to be modified"
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -162,13 +160,11 @@ msgstr "Erantsi eta muntatu disko-irudien fitxategi bat edo gehiago."
 
 #: src/disk-image-mounter/main.c:192
 #, c-format
-#| msgid "Cannot open `%s' - maybe the volume isn't mounted?"
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "Ezin da “%s“ ireki. Agian bolumena ez dago muntatuta?"
 
 #: src/disk-image-mounter/main.c:199
 #, c-format
-#| msgid "Error opening `%s': %m"
 msgid "Error opening “%s”: %m"
 msgstr "Errorea “%s“ irekitzean: %m"
 
@@ -177,38 +173,50 @@ msgstr "Errorea “%s“ irekitzean: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Errorea disko-irudia eranstean: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:114
+#: src/disks/gduapplication.c:92
+#| msgctxt "mdraid"
+#| msgid "Not running"
+msgid "Stop running jobs?"
+msgstr "Gelditu exekutatzen ari diren lanak?"
+
+#: src/disks/gduapplication.c:94
+msgid "Closing now stops the running jobs and leads to a corrupt result."
+msgstr ""
+"Orain ixteak exekutatzen ari diren lanak gelditu eta hondatutako emaitzetara "
+"eraman lezake."
+
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Errorea '%s' irekitzean: %s"
 
-#: src/disks/gduapplication.c:121
+#: src/disks/gduapplication.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Errorea bloke motako gailua bilatzean '%s'(r)entzako"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:173
 msgid "Select device"
 msgstr "Hautatu gailua"
 
-#: src/disks/gduapplication.c:144
+#: src/disks/gduapplication.c:174
 msgid "Format selected device"
 msgstr "Eman formatua hautatutako gailuari"
 
-#: src/disks/gduapplication.c:145
+#: src/disks/gduapplication.c:175
 msgid "Parent window XID for the format dialog"
 msgstr "Leiho gurasoaren XID formatuaren elkarrizketa-koadroarentzako"
 
-#: src/disks/gduapplication.c:146
+#: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Berreskuratu disko-irudia"
 
-#: src/disks/gduapplication.c:180
+#: src/disks/gduapplication.c:210
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 "'--format-device' erabili behar da '--block-device' aukerarekin batera\n"
 
-#: src/disks/gduapplication.c:186
+#: src/disks/gduapplication.c:216
 msgid "--format-device must be specified when using --xid\n"
 msgstr "'--format-device' zehaztu behar da '--xid' erabiltzean\n"
 
@@ -217,7 +225,7 @@ msgstr "'--format-device' zehaztu behar da '--xid' erabiltzean\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:296
+#: src/disks/gduapplication.c:335
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1078,27 +1086,27 @@ msgid "Assessment"
 msgstr "Estimazioa"
 
 #. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:333
+#: src/disks/gdubenchmarkdialog.c:332
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
 msgstr "%d MB/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:338
+#: src/disks/gdubenchmarkdialog.c:337
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
 msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:662
+#: src/disks/gdubenchmarkdialog.c:661
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
 msgstr "%s/s"
 
-#: src/disks/gdubenchmarkdialog.c:677 src/disks/gdubenchmarkdialog.c:889
+#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1110,136 +1118,147 @@ msgstr[1] "%u< lagin"
 #. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
 #. * now, for example "3 days" or "2 hours" or "12 minutes".
 #.
-#: src/disks/gdubenchmarkdialog.c:718
+#: src/disks/gdubenchmarkdialog.c:717
 #, c-format
 msgctxt "benchmark-updated"
 msgid "%s (%s ago)"
 msgstr "%s (duela %s)"
 
-#: src/disks/gdubenchmarkdialog.c:730
+#: src/disks/gdubenchmarkdialog.c:729
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
 msgstr "Ez dago errendimenduaren probaren daturik erabilgarri"
 
-#: src/disks/gdubenchmarkdialog.c:735
+#: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
 msgstr "Gailua irekitzen…"
 
-#: src/disks/gdubenchmarkdialog.c:739
+#: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
 msgstr "Transferentzi-emaria neurtzen (%%%2.1f osatuta)…"
 
-#: src/disks/gdubenchmarkdialog.c:746
+#: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
 msgstr "Atzipen-denbora neurtzen (%%%2.1f osatuta)…"
 
-#: src/disks/gdubenchmarkdialog.c:812
+#: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
 msgid "An error occurred"
 msgstr "Errore bat gertatu da"
 
 #. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:887
+#: src/disks/gdubenchmarkdialog.c:886
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f mseg."
 
-#: src/disks/gdubenchmarkdialog.c:1199
+#: src/disks/gdubenchmarkdialog.c:1198
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Errorea gailuaren tamaina lortzean: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1209
+#: src/disks/gdubenchmarkdialog.c:1208
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Errorea orrialde-tamaina lortzean: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1243 src/disks/gdubenchmarkdialog.c:1306
-#: src/disks/gdubenchmarkdialog.c:1325
+#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
+#: src/disks/gdubenchmarkdialog.c:1324
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Errorea %lld desplazamendua bilatzean"
 
-#: src/disks/gdubenchmarkdialog.c:1254
+#: src/disks/gdubenchmarkdialog.c:1253
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Errorea  '%2$s' desplazamenduaren %1$s aurre-irakurketa lantzean"
 
-#: src/disks/gdubenchmarkdialog.c:1266
+#: src/disks/gdubenchmarkdialog.c:1265
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Errorea '%s' desplazamendua bilatzean"
 
-#: src/disks/gdubenchmarkdialog.c:1280
+#: src/disks/gdubenchmarkdialog.c:1279
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Errorea  '%2$s' desplazamenduaren %1$s irakurtzean"
 
-#: src/disks/gdubenchmarkdialog.c:1315
+#: src/disks/gdubenchmarkdialog.c:1314
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Errorea '%2$lld' desplazamenduaren %1$lld byte aurre-irakurtzean"
 
-#: src/disks/gdubenchmarkdialog.c:1336
+#: src/disks/gdubenchmarkdialog.c:1335
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Errorea '%2$lld' desplazamenduaren %1$lld byte idaztean: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1346
+#: src/disks/gdubenchmarkdialog.c:1345
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld byte idaztea espero zen, %lld soilik idatzita: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1356
+#: src/disks/gdubenchmarkdialog.c:1355
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Errorea sinkronizatzean (%lld desplazamenduan): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1396
+#: src/disks/gdubenchmarkdialog.c:1395
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Errorea %lld desplazamendua bilatzean: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1408
+#: src/disks/gdubenchmarkdialog.c:1407
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Errorea '%2$lld' desplazamenduaren %1$lld byte irakurtzean"
 
-#: src/disks/gduchangepassphrasedialog.c:157
+#: src/disks/gduchangepassphrasedialog.c:120
+#: src/disks/gducreatefilesystemwidget.c:236
+#| msgid "Passphrases do not match"
+msgid "The passphrases do not match"
+msgstr "Pasaesaldiak ez datoz bat"
+
+#: src/disks/gduchangepassphrasedialog.c:129
+#| msgid "To change the passphrase, enter both the current and new passphrase"
+msgid "The passphrase matches the existing passphrase"
+msgstr "Pasaesaldia bat dator dagoen pasaesaldiarekin"
+
+#: src/disks/gduchangepassphrasedialog.c:189
 msgid "Error updating /etc/crypttab"
 msgstr "Errorea /etc/crypttab eguneratzean"
 
-#: src/disks/gduchangepassphrasedialog.c:176
+#: src/disks/gduchangepassphrasedialog.c:208
 msgid "Error changing passphrase"
 msgstr "Errorea pasaesaldia aldatzean"
 
-#: src/disks/gduchangepassphrasedialog.c:263 src/disks/gducrypttabdialog.c:408
+#: src/disks/gduchangepassphrasedialog.c:295 src/disks/gducrypttabdialog.c:408
 msgid "Error retrieving configuration data"
 msgstr "Errorea konfigurazioaren datuak eskuratzean"
 
-#: src/disks/gduchangepassphrasedialog.c:289
+#: src/disks/gduchangepassphrasedialog.c:321
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "/etc/crypttab konfigurazioko datuak gaizki osatuta"
 
-#: src/disks/gduchangepassphrasedialog.c:322
+#: src/disks/gduchangepassphrasedialog.c:354
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
@@ -1247,8 +1266,8 @@ msgstr ""
 "Gailu honen pasaesaldia aldatzean <i>/etc/crypttab</i> fitxategiak "
 "erreferentziatutako  pasaesaldia ere eguneratuko du"
 
-#: src/disks/gduchangepassphrasedialog.c:341
-#: src/disks/gducreatefilesystemwidget.c:541
+#: src/disks/gduchangepassphrasedialog.c:373
+#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "Pasaesaldiaren indarra"
 
@@ -1321,26 +1340,32 @@ msgstr ""
 msgid "_Delete Disk Image File"
 msgstr "_Ezabatu disko-irudiaren fitxategia"
 
-#: src/disks/gducreatediskimagedialog.c:724
+#: src/disks/gducreatediskimagedialog.c:498
+msgid "_Close"
+msgstr "It_xi"
+
+#: src/disks/gducreatediskimagedialog.c:723
 #: src/disks/gdurestorediskimagedialog.c:747
 msgid "Error determining size of device: "
 msgstr "Errorea gailuaren tamaina zehaztean: "
 
-#: src/disks/gducreatediskimagedialog.c:731
+#: src/disks/gducreatediskimagedialog.c:730
 #: src/disks/gdurestorediskimagedialog.c:754
 msgid "Device is size 0"
 msgstr "Gailuaren tamaina 0 da"
 
-#: src/disks/gducreatediskimagedialog.c:765
+#: src/disks/gducreatediskimagedialog.c:764
 msgid "Error allocating space for disk image file: "
 msgstr "Errorea disko-irudiaren fitxategiarentzako lekua esleitzean: "
 
-#: src/disks/gducreatediskimagedialog.c:926
+#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "'%s' izeneko fitxategia badago lehendik. Ordeztea nahi duzu?"
 
-#: src/disks/gducreatediskimagedialog.c:929
+#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1348,113 +1373,111 @@ msgstr ""
 "'%s'(e)n badago fitxategia lehendik. Hau ordeztean bere eduki guztia "
 "gainidatziko da."
 
-#: src/disks/gducreatediskimagedialog.c:932
+#: src/disks/gducreatediskimagedialog.c:931
+#: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Ordeztu"
 
-#: src/disks/gducreatediskimagedialog.c:982
+#: src/disks/gducreatediskimagedialog.c:981
+#: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Errorea fitxategia idazteko irekitzean"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:998
+#: src/disks/gducreatediskimagedialog.c:997
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Gailua disko-irudian kopiatzen"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1004
+#: src/disks/gducreatediskimagedialog.c:1003
 msgid "Creating Disk Image"
 msgstr "Disko-irudia sortzen"
 
-#: src/disks/gducreatefilesystemwidget.c:382
+#: src/disks/gducreatefilesystemwidget.c:393
 #: src/disks/gduformatdiskdialog.c:254
 msgid "Compatible with all systems and devices"
 msgstr "Sistema eta guztiekin bateragarria"
 
-#: src/disks/gducreatefilesystemwidget.c:383
+#: src/disks/gducreatefilesystemwidget.c:394
 msgid "FAT"
 msgstr "FAT"
 
-#: src/disks/gducreatefilesystemwidget.c:388
+#: src/disks/gducreatefilesystemwidget.c:399
 msgid "Compatible with most systems"
 msgstr "Sistema gehienekin bateragarria"
 
-#: src/disks/gducreatefilesystemwidget.c:389
+#: src/disks/gducreatefilesystemwidget.c:400
 msgid "NTFS"
 msgstr "NTFS"
 
-#: src/disks/gducreatefilesystemwidget.c:394
+#: src/disks/gducreatefilesystemwidget.c:405
 msgid "Compatible with Linux systems"
 msgstr "Linux sistemekin bateragarria"
 
-#: src/disks/gducreatefilesystemwidget.c:395
+#: src/disks/gducreatefilesystemwidget.c:406
 msgid "Ext4"
 msgstr "Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:400
+#: src/disks/gducreatefilesystemwidget.c:411
 msgid "Encrypted, compatible with Linux systems"
 msgstr "Enkriptatuta, Linux sistemekin bateragarria"
 
-#: src/disks/gducreatefilesystemwidget.c:401
+#: src/disks/gducreatefilesystemwidget.c:412
 msgid "LUKS + Ext4"
 msgstr "LUKS + Ext4"
 
-#: src/disks/gducreatefilesystemwidget.c:406
+#: src/disks/gducreatefilesystemwidget.c:417
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
-#: src/disks/gducreatefilesystemwidget.c:407
+#: src/disks/gducreatefilesystemwidget.c:418
 msgid "Enter filesystem type"
 msgstr "Sartu fitxategi-sistema mota"
 
-#: src/disks/gducreatefilesystemwidget.c:489
-#: src/disks/gduerasemultipledisksdialog.c:131
+#: src/disks/gducreatefilesystemwidget.c:500
 #: src/disks/gduformatdiskdialog.c:151
 msgid "Don’t overwrite existing data"
 msgstr "Ez gainidatzi existitzen diren datuak"
 
-#: src/disks/gducreatefilesystemwidget.c:490
-#: src/disks/gduerasemultipledisksdialog.c:132
+#: src/disks/gducreatefilesystemwidget.c:501
 #: src/disks/gduformatdiskdialog.c:152
 msgid "Quick"
 msgstr "Bizkorra"
 
-#: src/disks/gducreatefilesystemwidget.c:497
-#: src/disks/gduerasemultipledisksdialog.c:142
+#: src/disks/gducreatefilesystemwidget.c:508
 #: src/disks/gduformatdiskdialog.c:162
 msgid "Overwrite existing data with zeroes"
 msgstr "Gainidatzi existitzen diren datuak zerorekin"
 
-#: src/disks/gducreatefilesystemwidget.c:498
-#: src/disks/gduerasemultipledisksdialog.c:143
+#: src/disks/gducreatefilesystemwidget.c:509
 #: src/disks/gduformatdiskdialog.c:163
 msgid "Slow"
 msgstr "Motela"
 
-#: src/disks/gducreatepartitiondialog.c:337
+#: src/disks/gducreatepartitiondialog.c:231
 msgid "Error formatting partition"
 msgstr "Errorea partizioari formatua ematean"
 
-#: src/disks/gducreatepartitiondialog.c:365
+#: src/disks/gducreatepartitiondialog.c:260
 msgid "Error creating partition"
 msgstr "Errorea partizioa sortzean"
 
-#: src/disks/gducreatepartitiondialog.c:455
+#: src/disks/gducreatepartitiondialog.c:351
 msgid "Extended partition"
 msgstr "Hedatutako partizioa"
 
-#: src/disks/gducreatepartitiondialog.c:456
+#: src/disks/gducreatepartitiondialog.c:352
 msgid "For logical partitions"
 msgstr "Partizio logikoentzako"
 
-#: src/disks/gducreatepartitiondialog.c:469
+#: src/disks/gducreatepartitiondialog.c:365
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 "Ezin da partizio berria sortu. Jadanik lehen mailako lau partizio daude."
 
-#: src/disks/gducreatepartitiondialog.c:473
+#: src/disks/gducreatepartitiondialog.c:369
 msgid "This is the last primary partition that can be created."
 msgstr "Sor daitekeen lehen mailako azken partizio da hau."
 
@@ -1594,77 +1617,19 @@ msgstr "Isilik (motela)"
 msgid "Loud (Fast)"
 msgstr "Ozenki (azkarra)"
 
-#: src/disks/gduerasemultipledisksdialog.c:154
-msgid "ATA Secure Erase / Enhanced Secure Erase"
-msgstr "ATA Ezabatze segurua / Hobetutako ezabatze segurua"
+#: src/disks/gdufilesystemdialog.c:86
+msgid "The label matches the existing label"
+msgstr "Etiketa bat dator dagoen etiketarekin"
 
-#: src/disks/gduerasemultipledisksdialog.c:155
-msgid "If Available, Slow"
-msgstr "Erabilgarri badago, motela"
-
-#: src/disks/gduerasemultipledisksdialog.c:186
-#, c-format
-msgid "Error erasing device %s"
-msgstr "Errorea gailuak ezabatzean: %s"
-
-#: src/disks/gduerasemultipledisksdialog.c:367
-msgid "Are you sure you want to erase the disks?"
-msgstr "Ziur zaude diskoak ezabatzea nahi dituzula?"
-
-#. Translators: warning used for erasure of multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:371
-msgid ""
-"All data on the selected disks will be lost but may still be recoverable by "
-"data recovery services"
-msgstr ""
-"Hautatutako diskoetako datu guztiak galduko diren arren,  datuak "
-"berreskuratzeko zerbitzuen bidez berreskura daitezke oraindik"
-
-#: src/disks/gduerasemultipledisksdialog.c:373
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:222
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
-"<b>Aholkua</b>: zure ordenagailu edo disko zaharra birziklatzeko, saltzeko "
-"edo emateko asmoa baduzu, erabili erabat ezabatzen duen mota bat zure "
-"informazio pribatua esku txarretan eror ez dadin"
-
-#. Translators: warning used when overwriting data on multiple disks
-#: src/disks/gduerasemultipledisksdialog.c:378
-msgid ""
-"All data on the selected disks will be overwritten and will likely not be "
-"recoverable by data recovery services"
-msgstr ""
-"Hautatutako diskoetako datu guztiak gainidatzi egingo dira, eta datuak "
-"berreskuratzeko zerbitzuen bidez ezin izango dira berreskuratu"
-
-#: src/disks/gduerasemultipledisksdialog.c:384
-#: src/disks/gduformatdiskdialog.c:437
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can’t be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-"<b>Abisua</b>: Ezabatze seguruaren komandoak denbora beharko du osatzeko, "
-"ezin da bertan behera utzi eta hardware batzuekin ez da egoki ibiltzen. "
-"Kasurik txarrenean unitatea erabilkaitz bihur dezake, edo sistema kraskatu "
-"edo blokeatu. Aurrera jarraitu aurretik, irakurri  <a href='https://ata.wiki."
-"kernel.org/index.php/ATA_Secure_Erase'>ATA Ezabatze segurua</a> artikulua "
-"eta ziurtatu zaitez arriskuak ulertzen dituzula"
-
-#: src/disks/gduerasemultipledisksdialog.c:396
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "_Ezabatu"
-
-#: src/disks/gdufilesystemdialog.c:60
+#: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Errorea etiketa ezartzean"
+
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3257 src/disks/gduwindow.c:3758
+#: src/libgdu/gduutils.c:1360
+msgid "Error unmounting filesystem"
+msgstr "Errorea fitxategi-sistema desmuntatzean"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1729,6 +1694,16 @@ msgstr ""
 "Diskoko datu guztiak galduko diren arren, datuak berreskuratzeko zerbitzuen "
 "bidez berreskura daitezke oraindik"
 
+#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+"<b>Aholkua</b>: zure ordenagailu edo disko zaharra birziklatzeko, saltzeko "
+"edo emateko asmoa baduzu, erabili erabat ezabatzen duen mota bat zure "
+"informazio pribatua esku txarretan eror ez dadin"
+
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:429
 msgid ""
@@ -1738,7 +1713,23 @@ msgstr ""
 "Diskoko datu guztiak gainidatzi egingo dira, eta datuak berreskuratzeko "
 "zerbitzuen bidez ezin izango dira berreskuratu"
 
-#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:234
+#: src/disks/gduformatdiskdialog.c:437
+msgid ""
+"<b>WARNING</b>: The Secure Erase command may take a very long time to "
+"complete, can’t be canceled and may not work properly with some hardware. In "
+"the worst case, your drive may be rendered unusable or your system may crash "
+"or lock up. Before proceeding, please read the article about <a "
+"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
+"Erase</a> and make sure you understand the risks"
+msgstr ""
+"<b>Abisua</b>: Ezabatze seguruaren komandoak denbora beharko du osatzeko, "
+"ezin da bertan behera utzi eta hardware batzuekin ez da egoki ibiltzen. "
+"Kasurik txarrenean unitatea erabilkaitz bihur dezake, edo sistema kraskatu "
+"edo blokeatu. Aurrera jarraitu aurretik, irakurri  <a href='https://ata.wiki."
+"kernel.org/index.php/ATA_Secure_Erase'>ATA Ezabatze segurua</a> artikulua "
+"eta ziurtatu zaitez arriskuak ulertzen dituzula"
+
+#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
 msgid "_Format"
 msgstr "_Formateatu"
 
@@ -1746,12 +1737,12 @@ msgstr "_Formateatu"
 msgid "Error formatting volume"
 msgstr "Errorea bolumena formateatzean"
 
-#: src/disks/gduformatvolumedialog.c:216
+#: src/disks/gduformatvolumedialog.c:218
 msgid "Are you sure you want to format the volume?"
 msgstr "Ziur zaude bolumena formateatzea nahi duzula?"
 
 #. Translators: warning used for quick format of the volume
-#: src/disks/gduformatvolumedialog.c:220
+#: src/disks/gduformatvolumedialog.c:222
 msgid ""
 "All data on the volume will be lost but may still be recoverable by data "
 "recovery services"
@@ -1760,7 +1751,7 @@ msgstr ""
 "zerbitzuen bidez berreskura daitezke oraindik"
 
 #. Translators: warning used when overwriting data of the volume
-#: src/disks/gduformatvolumedialog.c:227
+#: src/disks/gduformatvolumedialog.c:229
 msgid ""
 "All data on the volume will be overwritten and will likely not be "
 "recoverable by data recovery services"
@@ -1824,6 +1815,19 @@ msgstr "Errorea /etc/fstab-i sarrera berria gehitzean"
 msgid "Error updating /etc/fstab entry"
 msgstr "Errorea /etc/fstab-en sarrera eguneratzean"
 
+#. Translators: The suggested name for the disk image to create.
+#. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
+#.
+#: src/disks/gdunewdiskimagedialog.c:192
+#, c-format
+msgid "Unnamed (%s).img"
+msgstr "Izengabea (%s).img"
+
+#: src/disks/gdunewdiskimagedialog.c:267
+#| msgid "Error powering off drive"
+msgid "Error writing file"
+msgstr "Errorea fitxategia idaztean"
+
 #: src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
 msgstr "Errorea partizioa mota ezartzean"
@@ -1855,6 +1859,66 @@ msgstr "Ona"
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Sendoa"
+
+#: src/disks/gduresizedialog.c:188
+#| msgid "Chunk _Size"
+msgid "Current Size"
+msgstr "Uneko tamaina"
+
+#: src/disks/gduresizedialog.c:199
+#| msgid "Minimum Size"
+msgid "Minimal Size"
+msgstr "Gutxieneko tamaina"
+
+#: src/disks/gduresizedialog.c:249
+#| msgid "_Restore"
+msgid "_Resize"
+msgstr "_Aldatu tamaina"
+
+#: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
+#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#| msgid "Error mounting filesystem"
+msgid "Error resizing filesystem"
+msgstr "Errorea fitxategi-sistema tamainaz aldatzean"
+
+#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
+#: src/disks/gduresizedialog.c:525
+#| msgid "Error creating partition"
+msgid "Error resizing partition"
+msgstr "Errorea partizioa tamainaz aldatzean"
+
+#: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
+#| msgid "Error checking filesystem on volume"
+msgid "Error repairing filesystem after resize"
+msgstr "Errorea fitxategi-sistema tamainaz aldatu ondoren konpontzean"
+
+#: src/disks/gduresizedialog.c:464
+msgid "Resizing not ready"
+msgstr "Tamaina aldatzea ez dago prest"
+
+#: src/disks/gduresizedialog.c:466
+#| msgid "Change the label of the filesystem"
+msgid "Waited too long for the filesystem"
+msgstr "Gehiegi itxoin dio fitxategi-sistemari"
+
+#: src/disks/gduresizedialog.c:595
+#| msgid "Error mounting filesystem"
+msgid "Error repairing filesystem"
+msgstr "Errorea fitxategi-sistema konpontzean"
+
+#: src/disks/gduresizedialog.c:661
+#| msgid "Error unmounting filesystem"
+msgid "Error unmounting filesystem for resizing"
+msgstr "Errorea fitxategi-sistema desmuntatzean tamainaz aldatzeko"
+
+#: src/disks/gduresizedialog.c:703
+msgid "Fit to size"
+msgstr "Doitu tamainara"
+
+#: src/disks/gduresizedialog.c:738
+#| msgid "Error mounting filesystem"
+msgid "Error mounting filesystem to calculate minimum size"
+msgstr "Errorea fitxategi-sistema muntatzean gutxieneko tamaina kalkulatzeko"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -1929,16 +1993,16 @@ msgstr "Enkriptazioaren pasaesaldia gako-sortatik lortu da"
 msgid "Volumes Grid"
 msgstr "Bolumenen sareta"
 
-#: src/disks/gduvolumegrid.c:570 src/disks/gduwindow.c:2042
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2114
 msgid "No Media"
 msgstr "Euskarririk ez"
 
-#: src/disks/gduvolumegrid.c:1670
+#: src/disks/gduvolumegrid.c:1666
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Fitxategi-sistema"
 
-#: src/disks/gduvolumegrid.c:1680
+#: src/disks/gduvolumegrid.c:1676
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Swap"
@@ -1946,7 +2010,7 @@ msgstr "Swap"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: src/disks/gduvolumegrid.c:1703
+#: src/disks/gduvolumegrid.c:1699
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -1955,46 +2019,46 @@ msgstr "%u. partizioa: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: src/disks/gduvolumegrid.c:1710
+#: src/disks/gduvolumegrid.c:1706
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "%u. partizioa"
 
-#: src/disks/gduvolumegrid.c:1767
+#: src/disks/gduvolumegrid.c:1763
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Hedatutako partizioa"
 
-#: src/disks/gduvolumegrid.c:1842
+#: src/disks/gduvolumegrid.c:1838
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Ez dago nahikoa leku librerik"
 
-#: src/disks/gduwindow.c:586
+#: src/disks/gduwindow.c:616
 msgid "Error deleting loop device"
 msgstr "Errorea gailuaren begizta ezabatzean"
 
-#: src/disks/gduwindow.c:686 src/disks/gduwindow.c:757
+#: src/disks/gduwindow.c:716 src/disks/gduwindow.c:759
 msgid "Error attaching disk image"
 msgstr "Errorea disko-irudia eranstean"
 
-#: src/disks/gduwindow.c:724
+#: src/disks/gduwindow.c:789
 msgid "Select Disk Image to Attach"
 msgstr "Hautatu disko-irudiak eransteko"
 
-#: src/disks/gduwindow.c:728
+#: src/disks/gduwindow.c:793
 msgid "_Attach"
 msgstr "_Erantsi"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:735
+#: src/disks/gduwindow.c:800
 msgid "Set up _read-only loop device"
 msgstr "Konfiguratu begizta ('loop') motako gailua irakurtzeko _soilik gisa"
 
-#: src/disks/gduwindow.c:736
+#: src/disks/gduwindow.c:801
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2002,20 +2066,20 @@ msgstr ""
 "Gaitzen bada, begiztaren gailua irakurtzeko soilik izango da. Erabilgarria "
 "da ez baduzu bere fitxategiak aldatzerik nahi"
 
-#: src/disks/gduwindow.c:958
+#: src/disks/gduwindow.c:999
 msgid "Power off this disk"
 msgstr "Itzali disko hau"
 
-#: src/disks/gduwindow.c:964
+#: src/disks/gduwindow.c:1005
 msgid "Eject this disk"
 msgstr "Egotzi disko hau"
 
-#: src/disks/gduwindow.c:970
+#: src/disks/gduwindow.c:1011
 msgid "Detach this loop device"
 msgstr "Askatu begizta gailu hau"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1362
+#: src/disks/gduwindow.c:1432
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2024,7 +2088,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1370
+#: src/disks/gduwindow.c:1440
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2033,7 +2097,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1378
+#: src/disks/gduwindow.c:1448
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2042,12 +2106,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1386
+#: src/disks/gduwindow.c:1456
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1401
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2056,13 +2120,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1411
+#: src/disks/gduwindow.c:1481
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1731
+#: src/disks/gduwindow.c:1803
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (irakurtzeko soilik)"
@@ -2071,7 +2135,7 @@ msgstr "%s (irakurtzeko soilik)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1769
+#: src/disks/gduwindow.c:1841
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2080,7 +2144,7 @@ msgstr "%s geratzen da (%s/seg)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1777
+#: src/disks/gduwindow.c:1849
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2091,9 +2155,8 @@ msgstr "%s geratzen da"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1792
+#: src/disks/gduwindow.c:1864
 #, c-format
-#| msgid "%s of %s – %s"
 msgid "%s of %s — %s"
 msgstr "%s / %s — %s"
 
@@ -2101,17 +2164,17 @@ msgstr "%s / %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1879
+#: src/disks/gduwindow.c:1951
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %%%2.1f"
 
-#: src/disks/gduwindow.c:1951 src/disks/gduwindow.c:2351
+#: src/disks/gduwindow.c:2023 src/disks/gduwindow.c:2424
 msgid "Block device is empty"
 msgstr "Blokeen gailua hutsik dago"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1974
+#: src/disks/gduwindow.c:2046
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2120,11 +2183,11 @@ msgstr "Ezezaguna (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2143
+#: src/disks/gduwindow.c:2215
 msgid "Connected to another seat"
 msgstr "Konektatu beste eserlekura"
 
-#: src/disks/gduwindow.c:2289
+#: src/disks/gduwindow.c:2361
 msgid "Loop device is empty"
 msgstr "Begiztaren gailua hutsik dago"
 
@@ -2134,61 +2197,61 @@ msgstr "Begiztaren gailua hutsik dago"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2518
+#: src/disks/gduwindow.c:2591
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libre (%%%.1f beteta)"
 
-#: src/disks/gduwindow.c:2548
+#: src/disks/gduwindow.c:2621
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2576
+#: src/disks/gduwindow.c:2659
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Fitxategi-sistemaren erroa"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2667
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s(e)n muntatuta"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2590
+#: src/disks/gduwindow.c:2673
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Muntatu gabe"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2613
+#: src/disks/gduwindow.c:2696
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2702
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ez aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2632
+#: src/disks/gduwindow.c:2715
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Desblokeatuta"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2638
+#: src/disks/gduwindow.c:2721
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Blokeatuta"
 
-#: src/disks/gduwindow.c:2648
+#: src/disks/gduwindow.c:2731
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Hedatutako partizioa"
@@ -2197,91 +2260,169 @@ msgstr "Hedatutako partizioa"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2668
+#: src/disks/gduwindow.c:2751
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2768
+#: src/disks/gduwindow.c:2875
 msgid "Unallocated Space"
 msgstr "Esleitu gabeko lekua"
 
-#: src/disks/gduwindow.c:3117
+#: src/disks/gduwindow.c:3067
+#| msgid "Error mounting filesystem"
+msgid "Error while repairing filesystem"
+msgstr "Errorea fitxategi-sistema konpontzean"
+
+#: src/disks/gduwindow.c:3094
+msgid "Repair successful"
+msgstr "Ongi konpondu da"
+
+#: src/disks/gduwindow.c:3094
+#| msgid "The operation failed"
+msgid "Repair failed"
+msgstr "Konponketak huts egin du"
+
+#: src/disks/gduwindow.c:3097
+#, c-format
+msgid "Filesystem %s on %s has been repaired."
+msgstr "%s fitxategi-sistema, %s(e)n, konpondu da."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3103
+#, c-format
+#| msgid "Filesystem tools not installed"
+msgid "Filesystem %s on %s could not be repaired."
+msgstr "%s fitxategi-sistema, %s(e)n, ezin izan da konpondu."
+
+#: src/disks/gduwindow.c:3165
+#| msgid "C_onfirm Passphrase"
+msgid "Confirm Repair"
+msgstr "Berretsi konpontzea"
+
+#: src/disks/gduwindow.c:3168
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider "
+"backing it up first in order to use forensic recovery tools that retrieve "
+"lost files. Depending on the amount of data this operation takes longer time."
+msgstr ""
+"Batzuetan ezin izaten da fitxategi-sistema bat konpondu, eta datuen galera "
+"gerta daiteke. "
+"Aurrenik babeskopia bat egitea komeni da berreskuratzeko forentse-tresnak "
+"erabil "
+"ahal izateko. Datuen kopuruaren arabera, eragiketa honek denbora luze bat "
+"behar lezake."
+
+#: src/disks/gduwindow.c:3196
+#| msgid "Error checking filesystem on volume"
+msgid "Error while checking filesystem"
+msgstr "Errorea fitxategi-sistema egiaztatzean"
+
+#: src/disks/gduwindow.c:3223
+#| msgctxt "volume-content-fs"
+#| msgid "Filesystem Root"
+msgid "Filesystem intact"
+msgstr "Fitxategi-sistema oso osorik"
+
+#: src/disks/gduwindow.c:3223
+#| msgctxt "volume-grid"
+#| msgid "Filesystem"
+msgid "Filesystem damaged"
+msgstr "Fitxategi-sistema hondatuta"
+
+#: src/disks/gduwindow.c:3226
+#, c-format
+#| msgid "Filesystem tools not installed"
+msgid "Filesystem %s on %s is undamaged."
+msgstr "%2$s(e)ko %1$s fitxategi-sistemak ez dauka kalterik."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gduwindow.c:3232
+#, c-format
+msgid "Filesystem %s on %s needs repairing."
+msgstr "%2$s(e)ko %1$s fitxategi-sistemak konpontzea behar ditu."
+
+#: src/disks/gduwindow.c:3292
+#| msgid "C_onfirm Passphrase"
+msgid "Confirm Check"
+msgstr "Berretsi egiaztaketa"
+
+#: src/disks/gduwindow.c:3295
+msgid "Depending on the amount of data the filesystem check takes longer time."
+msgstr "Fitxategi-sistemako datu kopuruaren arabera, honek luze jo lezake."
+
+#: src/disks/gduwindow.c:3495
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Errorea gertatu da unitatea egonean moduan jartzen saiatzean"
 
-#: src/disks/gduwindow.c:3163
+#: src/disks/gduwindow.c:3541
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Errorea gertatu da unitatea egonean modutik esnatzen saiatzean"
 
-#: src/disks/gduwindow.c:3208
+#: src/disks/gduwindow.c:3586
 msgid "Error powering off drive"
 msgstr "Errorea unitatea itzaltzean"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3260
+#: src/disks/gduwindow.c:3638
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ziur zaude unitateak itzaltzea nahi dituzula?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3262
+#: src/disks/gduwindow.c:3640
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Eragiketa honek sistema prestatuko du unitate hauek itzali eta kentzeko"
 
-#: src/disks/gduwindow.c:3266
+#: src/disks/gduwindow.c:3644
 msgid "_Power Off"
 msgstr "_Itzali"
 
-#: src/disks/gduwindow.c:3343
+#: src/disks/gduwindow.c:3721
 msgid "Error mounting filesystem"
 msgstr "Errorea fitxategi-sistema muntatzean"
 
-#: src/disks/gduwindow.c:3382 src/libgdu/gduutils.c:1053
-msgid "Error unmounting filesystem"
-msgstr "Errorea fitxategi-sistema desmuntatzean"
-
-#: src/disks/gduwindow.c:3524
+#: src/disks/gduwindow.c:3826
 msgid "Error deleting partition"
 msgstr "Errorea partizioa ezabatzean"
 
-#: src/disks/gduwindow.c:3561
+#: src/disks/gduwindow.c:3863
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ziur zaude partizioa ezabatzea nahi duzula?"
 
-#: src/disks/gduwindow.c:3562
+#: src/disks/gduwindow.c:3864
 msgid "All data on the partition will be lost"
 msgstr "Partizioan dauden datu guztiak galdu egingo dira"
 
-#: src/disks/gduwindow.c:3563
+#: src/disks/gduwindow.c:3865
 msgid "_Delete"
 msgstr "_Ezabatu"
 
-#: src/disks/gduwindow.c:3594
+#: src/disks/gduwindow.c:3896
 msgid "Error ejecting media"
 msgstr "Errorea euskarria egoztean"
 
-#: src/disks/gduwindow.c:3661
+#: src/disks/gduwindow.c:3961
 msgid "Error locking encrypted device"
 msgstr "Errorea enkriptatutako gailua blokeatzean"
 
-#: src/disks/gduwindow.c:3725
+#: src/disks/gduwindow.c:3997
 msgid "Error starting swap"
 msgstr "Errorea swap abiaraztean"
 
-#: src/disks/gduwindow.c:3762
+#: src/disks/gduwindow.c:4034
 msgid "Error stopping swap"
 msgstr "Errorea swap gelditzean"
 
-#: src/disks/gduwindow.c:3804
+#: src/disks/gduwindow.c:4076
 msgid "Error setting autoclear flag"
 msgstr "Errorea garbiketa automatikoaren bandera ezartzean"
 
-#: src/disks/gduwindow.c:3857 src/disks/gduwindow.c:3921
+#: src/disks/gduwindow.c:4129 src/disks/gduwindow.c:4193
 msgid "Error canceling job"
 msgstr "Errorea lana bertan behera uztean"
 
@@ -2318,18 +2459,23 @@ msgid "translator-credits"
 msgstr "Iñaki Larrañaga Murgoitio <dooteo@zundan.com>"
 
 #: src/disks/ui/app-menu.ui:6
+#| msgid "Create Disk Image…"
+msgid "_New Disk Image…"
+msgstr "Disko-irudi _berria…"
+
+#: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
 msgstr "Erantsi disko-_irudia..."
 
-#: src/disks/ui/app-menu.ui:13
+#: src/disks/ui/app-menu.ui:17
 msgid "_Help"
 msgstr "_Laguntza"
 
-#: src/disks/ui/app-menu.ui:17
+#: src/disks/ui/app-menu.ui:21
 msgid "_About"
 msgstr "Honi _buruz"
 
-#: src/disks/ui/app-menu.ui:21
+#: src/disks/ui/app-menu.ui:25
 msgid "_Quit"
 msgstr "Irte_n"
 
@@ -2518,14 +2664,17 @@ msgstr "Sortu disko-irudia"
 #: src/disks/ui/edit-crypttab-dialog.ui:140
 #: src/disks/ui/edit-gpt-partition-dialog.ui:107
 #: src/disks/ui/filesystem-create.ui:37
+#: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Izena"
 
 #: src/disks/ui/create-disk-image-dialog.ui:48
+#: src/disks/ui/new-disk-image-dialog.ui:67
 msgid "Save in _Folder"
 msgstr "Gorde _karpetan"
 
 #: src/disks/ui/create-disk-image-dialog.ui:85
+#: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Hautatu karpeta"
 
@@ -2545,70 +2694,84 @@ msgstr "Sortu partizioa"
 msgid "C_reate"
 msgstr "_Sortu"
 
-#: src/disks/ui/create-partition-dialog.ui:112
+#: src/disks/ui/create-partition-dialog.ui:112 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "Partizioaren _tamaina"
 
 #: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/create-partition-dialog.ui:131
-msgid "The size of the partition to create, in megabytes"
-msgstr "Partizioaren tamaina sortzeko (megabyte-tan)"
+#: src/disks/ui/resize-dialog.ui:109
+#| msgid "The size of the partition to create, in megabytes"
+msgid "The size of the partition to create"
+msgstr "Partizioaren tamaina sortzeko"
 
-#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "byte"
 
-#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:162
+#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:177
+#: src/disks/ui/create-partition-dialog.ui:176
+#: src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "Espazio libre _jarraia"
 
-#: src/disks/ui/create-partition-dialog.ui:195
-#: src/disks/ui/create-partition-dialog.ui:196
-msgid "The free space following the partition, in megabytes"
-msgstr "Partizioari jarraitzen dion espazio librea (megabyte-tan)"
+#: src/disks/ui/create-partition-dialog.ui:194
+#: src/disks/ui/resize-dialog.ui:167
+#| msgid "The free space following the partition, in megabytes"
+msgid "The free space following the partition"
+msgstr "Partizioari jarraitzen dion espazio librea"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:241 src/disks/ui/disks.ui:862
+#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
 msgid "Contents"
 msgstr "Osagaiak"
 
@@ -2741,7 +2904,7 @@ msgstr "Kokalekua"
 msgid "Media"
 msgstr "Euskarria"
 
-#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:974
+#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:1012
 msgid "Job"
 msgstr "Lana"
 
@@ -2749,7 +2912,7 @@ msgstr "Lana"
 msgid "Name"
 msgstr "Izena"
 
-#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:829
+#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:830
 msgid "Size"
 msgstr "Tamaina"
 
@@ -2757,132 +2920,155 @@ msgstr "Tamaina"
 msgid "Auto-clear"
 msgstr "Automatikoki garbitu"
 
+#: src/disks/ui/disks.ui:533
+msgid "Detach loop device after unmount action"
+msgstr "Askatu begizta gailua desmuntatze ekintzaren ondoren"
+
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:555
+#: src/disks/ui/disks.ui:556
 msgid "Backing File"
 msgstr "Fitxategiaren babeskopia egiten"
 
-#: src/disks/ui/disks.ui:592
+#: src/disks/ui/disks.ui:593
 msgid "Partitioning"
 msgstr "Partizioa egitea"
 
-#: src/disks/ui/disks.ui:636
+#: src/disks/ui/disks.ui:637
 msgid "_Volumes"
 msgstr "_Bolumenak"
 
-#: src/disks/ui/disks.ui:690
+#: src/disks/ui/disks.ui:691
 msgid "Mount selected partition"
 msgstr "Muntatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:703
+#: src/disks/ui/disks.ui:704
 msgid "Unmount selected partition"
 msgstr "Desmuntatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:716
+#: src/disks/ui/disks.ui:717
 msgid "Activate selected swap partition"
 msgstr "Aktibatu hautatutako trukatzeko partizioa"
 
-#: src/disks/ui/disks.ui:729
+#: src/disks/ui/disks.ui:730
 msgid "Deactivate selected swap partition"
 msgstr "Desaktibatu hautatutako trukatzeko partizioa"
 
-#: src/disks/ui/disks.ui:743
+#: src/disks/ui/disks.ui:744
 msgid "Unlock selected encrypted partition"
 msgstr "Desblokeatu hautatutako enkriptatutako partizioa"
 
-#: src/disks/ui/disks.ui:756
+#: src/disks/ui/disks.ui:757
 msgid "Lock selected encrypted partition"
 msgstr "Blokeatu hautatutako enkriptatutako partizioa"
 
-#: src/disks/ui/disks.ui:768
+#: src/disks/ui/disks.ui:769
 msgid "Create partition in unallocated space"
 msgstr "Sortu partizioa esleitu gabeko lekuan"
 
-#: src/disks/ui/disks.ui:781
+#: src/disks/ui/disks.ui:782
 msgid "Delete selected partition"
 msgstr "Ezabatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:794
+#: src/disks/ui/disks.ui:795
 msgid "Additional partition options"
 msgstr "Partizioaren aukera gehigarriak"
 
-#: src/disks/ui/disks.ui:899
+#: src/disks/ui/disks.ui:900
 msgid "Device"
 msgstr "Gailua"
 
-#: src/disks/ui/disks.ui:936
+#: src/disks/ui/disks.ui:937
+#| msgid "UUID: %s"
+msgid "UUID"
+msgstr "UUIDa"
+
+#: src/disks/ui/disks.ui:974
 msgid "Partition Type"
 msgstr "Partizio mota"
 
-#: src/disks/ui/disks.ui:1134
+#: src/disks/ui/disks.ui:1172
 msgid "Format Disk…"
 msgstr "Formateatu diskoa…"
 
-#: src/disks/ui/disks.ui:1147
+#: src/disks/ui/disks.ui:1185
 msgid "Create Disk Image…"
 msgstr "Sortu disko-irudia…"
 
-#: src/disks/ui/disks.ui:1154
+#: src/disks/ui/disks.ui:1192
 msgid "Restore Disk Image…"
 msgstr "Leheneratu disko-irudia…"
 
-#: src/disks/ui/disks.ui:1161
+#: src/disks/ui/disks.ui:1199
 msgid "Benchmark Disk…"
 msgstr "Probatu diskoaren errendimendua…"
 
-#: src/disks/ui/disks.ui:1174
+#: src/disks/ui/disks.ui:1212
 msgid "SMART Data & Self-Tests…"
 msgstr "SMART datuak eta auto-probak…"
 
-#: src/disks/ui/disks.ui:1181
+#: src/disks/ui/disks.ui:1219
 msgid "Drive Settings…"
 msgstr "Unitatearen ezarpenak…"
 
-#: src/disks/ui/disks.ui:1194
+#: src/disks/ui/disks.ui:1232
 msgid "Standby Now"
 msgstr "Egonean dago"
 
-#: src/disks/ui/disks.ui:1201
+#: src/disks/ui/disks.ui:1239
 msgid "Wake-Up from Standby"
 msgstr "Iratzarri 'egonetik'"
 
-#: src/disks/ui/disks.ui:1208
+#: src/disks/ui/disks.ui:1246
 msgid "Power Off…"
 msgstr "Itzali…"
 
-#: src/disks/ui/disks.ui:1221
+#: src/disks/ui/disks.ui:1259
 msgid "Format Partition…"
 msgstr "Formateatu partizioa…"
 
-#: src/disks/ui/disks.ui:1235
+#: src/disks/ui/disks.ui:1273
 msgid "Edit Partition…"
 msgstr "Editatu partizioa…"
 
-#: src/disks/ui/disks.ui:1243
+#: src/disks/ui/disks.ui:1281
 msgid "Edit Filesystem…"
 msgstr "Editatu fitxategi-sistema…"
 
-#: src/disks/ui/disks.ui:1251
+#: src/disks/ui/disks.ui:1289
 msgid "Change Passphrase…"
 msgstr "Aldatu pasaesaldia…"
 
-#: src/disks/ui/disks.ui:1265
+#: src/disks/ui/disks.ui:1303
+msgid "Resize…"
+msgstr "Aldatu tamaina…"
+
+#: src/disks/ui/disks.ui:1311
+#| msgid "_Check Filesystem"
+msgid "Check Filesystem…"
+msgstr "Egiaztatu fitxategi-sistema…"
+
+#: src/disks/ui/disks.ui:1319
+#| msgid "Edit Filesystem…"
+msgid "Repair Filesystem…"
+msgstr "Konpondu fitxategi-sistema…"
+
+#: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
 msgstr "Editatu muntatze-aukerak…"
 
-#: src/disks/ui/disks.ui:1273
+#: src/disks/ui/disks.ui:1341
 msgid "Edit Encryption Options…"
 msgstr "Editatu enkriptatzeko aukerak…"
 
-#: src/disks/ui/disks.ui:1287
+#: src/disks/ui/disks.ui:1355
 msgid "Create Partition Image…"
 msgstr "Sortu partizio-irudia…"
 
-#: src/disks/ui/disks.ui:1295
+#: src/disks/ui/disks.ui:1363
 msgid "Restore Partition Image…"
 msgstr "Leheneratu partizio-irudia…"
 
-#: src/disks/ui/disks.ui:1303
+#: src/disks/ui/disks.ui:1371
 msgid "Benchmark Partition…"
 msgstr "Probatu partizioaren errendimendua…"
 
@@ -2890,34 +3076,36 @@ msgstr "Probatu partizioaren errendimendua…"
 msgid "Encryption Options"
 msgstr "Enkriptatzeko aukerak"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92
-msgid "_Automatic Encryption Options"
-msgstr "_Automatikoki enkriptatzeko aukerak"
+#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+msgid "Us_er Session Defaults"
+msgstr "_Erabiltzailearen saioaren lehenespenak"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
+#| msgid ""
+#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
+#| "options and passphrase for the device. The options correspond to an entry "
+#| "in the <b>/etc/crypttab</b> file"
 msgid ""
-"Switch off <i>Automatic Encryption Options</i> to manage encryption options "
-"and passphrase for the device. The options correspond to an entry in the <b>/"
-"etc/crypttab</b> file"
+"Switch off <i>User Session Defaults</i> to manage encryption options and "
+"passphrase for the device. The options correspond to an entry in the <b>/etc/"
+"crypttab</b> file"
 msgstr ""
-"Desaktibatu <i>Automatikoki enkriptatzeko aukerak</i> gailuaren "
-"enkriptatzeko aukerak eta pasaesaldia kudeatzeko. Aukerak <b>/etc/crypttab</"
-"b> fitxategiko sarrera bati dagokie."
+"Desaktibatu <i>Erabiltzailearen saioaren lehenespenak</i> gailuaren "
+"enkriptatzeko aukerak eta pasaesaldia kudeatzeko. Aukerak <b>/etc/crypttab</b>"
+" "
+"fitxategiko sarrera bati dagokie."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
 msgstr "A_ukerak"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:179
-#| msgid ""
-#| "The name to use for the unlocked device - the device is set up as the "
-#| "name prefixed with <b>/dev/mapper</b>/"
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
-"Gailua desblokeatzeko erabiliko den izena. Gailuaren izena "
-"<b>/dev/mapper</b>/ aurrizkiarekin konfiguratzen da."
+"Gailua desblokeatzeko erabiliko den izena. Gailuaren izena <b>/dev/mapper</"
+"b>/ aurrizkiarekin konfiguratzen da."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:196
 msgid "Options to use when unlocking the device"
@@ -2946,12 +3134,15 @@ msgid "_Passphrase"
 msgstr "_Pasaesaldia"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-msgid "_Unlock at startup"
-msgstr "_Desblokeatu abioan"
+#| msgid "_Unlock at startup"
+msgid "_Unlock at system startup"
+msgstr "_Desblokeatu sistemaren abioan"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-msgid "If checked, the device will be unlocked at startup [!noauto]"
-msgstr "Aktibatzen bada, gailua abioan desblokeatuko da [!ez-automatikoa]"
+#| msgid "If checked, the device will be unlocked at startup [!noauto]"
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
+msgstr ""
+"Aktibatzen bada, gailua sistemaren abioan desblokeatuko da [!ez-automatikoa]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3000,7 +3191,12 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Aldatu fitxategi-sistemaren etiketa"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:75
+#: src/disks/ui/edit-filesystem-dialog.ui:72
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+"Fitxategi-sistema hau edozer aldaketen aurretik automatikoki desmuntatuko da."
+
+#: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
 msgstr "_Etiketa"
 
@@ -3008,28 +3204,25 @@ msgstr "_Etiketa"
 msgid "Mount Options"
 msgstr "Muntatze-aukerak"
 
-#: src/disks/ui/edit-fstab-dialog.ui:46
-msgid "_Automatic Mount Options"
-msgstr "_Automatikoki muntatzeko aukerak"
-
 #: src/disks/ui/edit-fstab-dialog.ui:64
+#| msgid ""
+#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+#| "options for the device. The options correspond to an entry in the <b>/etc/"
+#| "fstab</b> file"
 msgid ""
-"Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
+"Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"Desaktibatu <i>Automatikoki muntatzeko aukerak</i> gailuaren enkriptatzeko "
-"aukerak eta muntatze-puntua eta muntatze-aukerak kudeatzeko. Aukerak <b>/etc/"
-"fstab</b> fitxategiko sarrera bati dagokie."
+"Desaktibatu <i>Erabiltzailearen saioaren lehenespenak</i> gailuaren "
+"muntatzeko lekua eta aukerak kudeatzeko. Aukerak <b>/etc/fstab</b> "
+"fitxategiko sarrera bati dagokie."
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
 msgstr "_Identifikatu honela"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
-#| msgid ""
-#| "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-#| "hierarchy to control the scope of the entry"
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
@@ -3038,9 +3231,6 @@ msgstr ""
 "hierarkian sarreraren esparrua kontrolatzeko"
 
 #: src/disks/ui/edit-fstab-dialog.ui:111
-#| msgid ""
-#| "The special device file - use symlinks in the /dev/disk hierarchy to "
-#| "control the scope of the entry"
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
@@ -3112,12 +3302,15 @@ msgstr ""
 "udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-msgid "Mount at _startup"
-msgstr "Muntatu _abioan"
+#| msgid "Mount at _startup"
+msgid "Mount at system _startup"
+msgstr "Muntatu sistemaren _abioan"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-msgid "If checked, the device will be mounted at startup [!noauto]"
-msgstr "Aktibatzen bada, gailua abioan muntatuko da [!ez-automatikoa]"
+#| msgid "If checked, the device will be mounted at startup [!noauto]"
+msgid "If checked, the device will be mounted at system startup [!noauto]"
+msgstr ""
+"Aktibatzen bada, gailua sistemaren abioan muntatuko da [!ez-automatikoa]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3222,6 +3415,10 @@ msgstr ""
 msgid "Enter passphrase used to protect the data"
 msgstr "Sartu pasaesaldia (datuak babesteko erabilitakoa)"
 
+#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "_Ezabatu"
+
 #: src/disks/ui/filesystem-create.ui:267
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
@@ -3260,6 +3457,54 @@ msgstr "_Partizioa egitea"
 #: src/disks/ui/format-volume-dialog.ui:7
 msgid "Format Volume"
 msgstr "Formateatu bolumena"
+
+#: src/disks/ui/new-disk-image-dialog.ui:8
+#| msgid "Create Disk Image"
+msgid "New Disk Image"
+msgstr "Disko-irudi berria"
+
+#: src/disks/ui/new-disk-image-dialog.ui:29
+#| msgid "Image Size"
+msgid "Image _Size"
+msgstr "Irudi-_tamaina"
+
+#: src/disks/ui/new-disk-image-dialog.ui:86
+#| msgid "The size of the partition to create, in megabytes"
+msgid "The size of the image to create"
+msgstr "Irudiaren tamaina sortzeko"
+
+#: src/disks/ui/new-disk-image-dialog.ui:187
+#| msgid "Attach Disk _Image…"
+msgid "Attach new _Image…"
+msgstr "Erantsi _irudia berria…"
+
+#: src/disks/ui/resize-dialog.ui:19
+#| msgid "New Volume"
+msgid "Resize Volume"
+msgstr "Aldatu bolumena tamainaz"
+
+#: src/disks/ui/resize-dialog.ui:53
+msgid ""
+"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"data before. The resize operation will take longer if a lot of data has to "
+"be moved. The minimal size is calculated according to the current content. "
+"Keep additional free space for the filesystem to work fast and reliably."
+msgstr ""
+"Fitxategi-sistema bat tamainaz aldatzeak datuak galtzea eragin dezake. "
+"Zure datuen babeskopia egin beharko zenuke aurrenik. Lekuz aldatu beharreko "
+"datuen kopuruaren arabera, tamaina aldatzeko eragiketak luze jo dezake. "
+"Gutxieneko tamaina kalkulatu da uneko edukian oinarrituz. Mantendu "
+"fitxategi-sistemaren leku libre gehigarria azkar eta fidagarritasunez lan "
+"egiteko."
+
+#: src/disks/ui/resize-dialog.ui:196
+msgid "_Difference"
+msgstr "_Diferentzia"
+
+#: src/disks/ui/resize-dialog.ui:212
+#| msgid "The requested partition size"
+msgid "The difference to the previous partition size"
+msgstr "Partizioaren aurreko tamainarekiko diferentzia"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3366,20 +3611,20 @@ msgstr "Sartu pasaesaldia desblokeatzeko"
 msgid "_Unlock"
 msgstr "_Desblokeatu"
 
-#: src/libgdu/gduutils.c:92
+#: src/libgdu/gduutils.c:91
 msgid "All Files"
 msgstr "Fitxategi guztiak"
 
-#: src/libgdu/gduutils.c:97
+#: src/libgdu/gduutils.c:96
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Disko-irudiak (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:99
+#: src/libgdu/gduutils.c:98
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Disko-irudiak (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:430
+#: src/libgdu/gduutils.c:427
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3387,7 +3632,7 @@ msgstr[0] "urte %d"
 msgstr[1] "%d urte"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:437
+#: src/libgdu/gduutils.c:434
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3395,7 +3640,7 @@ msgstr[0] "hilabete %d"
 msgstr[1] "%d hilabete"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:444
+#: src/libgdu/gduutils.c:441
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3403,7 +3648,7 @@ msgstr[0] "egun %d"
 msgstr[1] "%d egun"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:451
+#: src/libgdu/gduutils.c:448
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3411,7 +3656,7 @@ msgstr[0] "ordu %d"
 msgstr[1] "%d ordu"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:458
+#: src/libgdu/gduutils.c:455
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3419,7 +3664,7 @@ msgstr[0] "minutu %d"
 msgstr[1] "%d minutu"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:465
+#: src/libgdu/gduutils.c:462
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3427,7 +3672,7 @@ msgstr[0] "segundo %d"
 msgstr[1] "%d segundo"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:472
+#: src/libgdu/gduutils.c:469
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3435,68 +3680,73 @@ msgstr[0] "milisegundo %d"
 msgstr[1] "%d milisegundo"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:536
+#: src/libgdu/gduutils.c:533
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s eta %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:541
+#: src/libgdu/gduutils.c:538
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s eta %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:546
+#: src/libgdu/gduutils.c:543
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s eta %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:551
+#: src/libgdu/gduutils.c:548
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s eta %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:562
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s eta %s"
 
-#: src/libgdu/gduutils.c:571
+#: src/libgdu/gduutils.c:568
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "minutu bat baino gutxiago"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:576
+#: src/libgdu/gduutils.c:573
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:582
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:724
+#: src/libgdu/gduutils.c:815
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Eragindako gailuak"
 
-#: src/libgdu/gduutils.c:1073
+#: src/libgdu/gduutils.c:1380
 msgid "Error locking device"
 msgstr "Errorea gailua blokeatzean"
+
+#: src/libgdu/gduutils.c:1401
+#| msgid "Error deleting loop device"
+msgid "Error disabling autoclear for loop device"
+msgstr "Errorea begizta gailuaren garbiketa automatikoa desgaitzean"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3515,6 +3765,38 @@ msgstr "Disko gogorra agian hutsegin egingo du"
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Aztertu"
+
+#~ msgid "ATA Secure Erase / Enhanced Secure Erase"
+#~ msgstr "ATA Ezabatze segurua / Hobetutako ezabatze segurua"
+
+#~ msgid "If Available, Slow"
+#~ msgstr "Erabilgarri badago, motela"
+
+#~ msgid "Error erasing device %s"
+#~ msgstr "Errorea gailuak ezabatzean: %s"
+
+#~ msgid "Are you sure you want to erase the disks?"
+#~ msgstr "Ziur zaude diskoak ezabatzea nahi dituzula?"
+
+#~ msgid ""
+#~ "All data on the selected disks will be lost but may still be recoverable "
+#~ "by data recovery services"
+#~ msgstr ""
+#~ "Hautatutako diskoetako datu guztiak galduko diren arren,  datuak "
+#~ "berreskuratzeko zerbitzuen bidez berreskura daitezke oraindik"
+
+#~ msgid ""
+#~ "All data on the selected disks will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "Hautatutako diskoetako datu guztiak gainidatzi egingo dira, eta datuak "
+#~ "berreskuratzeko zerbitzuen bidez ezin izango dira berreskuratu"
+
+#~ msgid "_Automatic Encryption Options"
+#~ msgstr "_Automatikoki enkriptatzeko aukerak"
+
+#~ msgid "_Automatic Mount Options"
+#~ msgstr "_Automatikoki muntatzeko aukerak"
 
 #~ msgid "Activation of this plugin"
 #~ msgstr "Plugin honen aktibazioa"
@@ -3552,9 +3834,6 @@ msgstr "Aztertu"
 
 #~ msgid "RAID _Level"
 #~ msgstr "RAID _maila"
-
-#~ msgid "Chunk _Size"
-#~ msgstr "Zatiaren _tamaina"
 
 #~ msgid "Usable Size"
 #~ msgstr "Tamaina erabilgarria"
@@ -3783,10 +4062,6 @@ msgstr "Aztertu"
 #~ msgctxt "md-raid-window"
 #~ msgid "RAID Array"
 #~ msgstr "RAID matrizea"
-
-#~ msgctxt "mdraid"
-#~ msgid "Not running"
-#~ msgstr "Ez da exekutatzen ari"
 
 #~ msgctxt "mdraid"
 #~ msgid "%s (local to %s)"
@@ -4408,9 +4683,6 @@ msgstr "Aztertu"
 #~ msgid "The maximum possible partition size"
 #~ msgstr "Partizioak eduki dezakeen gehienezko tamaina"
 
-#~ msgid "The requested partition size"
-#~ msgstr "Eskatutako partizioaren tamaina"
-
 #~ msgid "Flags for the widget"
 #~ msgstr "Trepetaren banderak"
 
@@ -4531,9 +4803,6 @@ msgstr "Aztertu"
 #~ msgid "Missing Physical Volume"
 #~ msgstr "Bolumen fisikoa falta da"
 
-#~ msgid "UUID: %s"
-#~ msgstr "UUIDa: %s"
-
 #~ msgid "Edit PVs on %s (%s)"
 #~ msgstr "Editatu bol. fisikoa %s(e)n (%s)"
 
@@ -4612,9 +4881,6 @@ msgstr "Aztertu"
 #~ msgid "Ty_pe:"
 #~ msgstr "_Mota:"
 
-#~ msgid "The operation failed"
-#~ msgstr "Eragiketak huts egin du"
-
 #~ msgid "The operation was canceled"
 #~ msgstr "Eragiketa bertan behera utzi da"
 
@@ -4635,9 +4901,6 @@ msgstr "Aztertu"
 
 #~ msgid "Filesystem driver not installed"
 #~ msgstr "Fitxategi-sistemaren kontrolatzailea ez dago instalatuta"
-
-#~ msgid "Filesystem tools not installed"
-#~ msgstr "Fitxategi-sistemaren tresnak ez daude instalatuta"
 
 #~ msgid "Unknown error"
 #~ msgstr "Errore ezezaguna"
@@ -4684,9 +4947,6 @@ msgstr "Aztertu"
 #~ msgid "Compatible with Linux (ext4)"
 #~ msgstr "Linux-ekin bateragarria (ext4)"
 
-#~ msgid "New Volume"
-#~ msgstr "Bolumen berria"
-
 #~ msgid "T_ake ownership of filesystem"
 #~ msgstr "_Hartu fitxategi-sistemaren jabetza"
 
@@ -4732,9 +4992,6 @@ msgstr "Aztertu"
 #~ "Aplikazio bat, edo gehiago, bolumena erabiltzen ari da. Irten "
 #~ "aplikaziotik eta saiatu berriro desmuntatzen."
 
-#~ msgid "Passphrases do not match"
-#~ msgstr "Pasaesaldiak ez datoz bat"
-
 #~ msgid "Passphrases do not differ"
 #~ msgstr "Pasaesaldiak ez dira desberdinak"
 
@@ -4747,9 +5004,6 @@ msgstr "Aztertu"
 #~ msgid "To create an encrypted device, choose a passphrase to protect it"
 #~ msgstr ""
 #~ "Enkriptatutako gailua sortzeko, aukeratu pasaesaldi bat hura babesteko"
-
-#~ msgid "To change the passphrase, enter both the current and new passphrase"
-#~ msgstr "Pasaesaldia aldatzeko, sartu uneko pasaesaldia eta baita berria ere"
 
 #~ msgid ""
 #~ "Data on this device is stored in an encrypted form protected by a "
@@ -4817,9 +5071,6 @@ msgstr "Aztertu"
 
 #~ msgid "The currently selected size"
 #~ msgstr "Unean hautatutako tamaina"
-
-#~ msgid "Minimum Size"
-#~ msgstr "Gutxieneko tamaina"
 
 #~ msgid "The minimum size that can be selected"
 #~ msgstr "Hauta daitekeen gutxieneko tamaina"
@@ -6121,9 +6372,6 @@ msgstr "Aztertu"
 #~ msgid "Choose a new filesystem label."
 #~ msgstr "Aukeratu fitxategi-sistemaren etiketa berria."
 
-#~ msgid "Error checking filesystem on volume"
-#~ msgstr "Errorea bolumeneko fitxategi-sistema egiaztatzean"
-
 #~ msgid "File system check on \"%s\" (%s) completed"
 #~ msgstr "\"%s\"(r)en (%s) fitxategi-sistemaren egiaztaketa burutu da."
 
@@ -6217,14 +6465,8 @@ msgstr "Aztertu"
 #~ msgid "Erase or format the volume"
 #~ msgstr "Ezabatu edo formatua eman bolumenari"
 
-#~ msgid "_Check Filesystem"
-#~ msgstr "_Egiaztatu fitxategi-sistema"
-
 #~ msgid "Check and repair the filesystem"
 #~ msgstr "Egiaztatu eta konpondu fitxategi-sistema"
-
-#~ msgid "Change the label of the filesystem"
-#~ msgstr "Aldatu fitxategi-sistemaren etiketa"
 
 #~ msgid "Change partition type, label and flags"
 #~ msgstr "Aldatu partizio mota, etiketa eta banderak"

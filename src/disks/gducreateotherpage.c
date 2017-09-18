@@ -112,17 +112,17 @@ static const gchar *
 get_fs_description (const gchar *fs_type)
 {
   if (g_strcmp0 (fs_type, "xfs") == 0)
-    return _("XFS – Linux Filesystem");
+    return _("XFS — Linux Filesystem");
   else if (g_strcmp0 (fs_type, "swap") == 0)
     return _("Linux Swap Partition");
   else if (g_strcmp0 (fs_type, "btrfs") == 0)
-    return _("Btrfs – Copy-on-write Linux Filesystem, for snapshots");
+    return _("Btrfs — Copy-on-write Linux Filesystem, for snapshots");
   else if (g_strcmp0 (fs_type, "f2fs") == 0)
-    return _("F2FS – Flash Storage Linux Filesystem");
+    return _("F2FS — Flash Storage Linux Filesystem");
   else if (g_strcmp0 (fs_type, "exfat") == 0)
-    return _("exFAT – Flash Storage Windows Filesystem, used on SDXC cards");
+    return _("exFAT — Flash Storage Windows Filesystem, used on SDXC cards");
   else if (g_strcmp0 (fs_type, "udf") == 0)
-    return _("UDF – Universal Disk Format, for removable devices on many systems");
+    return _("UDF — Universal Disk Format, for removable devices on many systems");
   else if (g_strcmp0 (fs_type, "empty") == 0)
     return _("No Filesystem");
   else

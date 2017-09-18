@@ -105,7 +105,7 @@ gdu_create_confirm_page_fill_confirmation (GduCreateConfirmPage *page)
   /* Translators: In most cases this should not need translation unless the
    *              separation character '—' is not appropriate. The strings come
    *              from UDisks, first is description, second the name:
-   *              "Partition 1 of 32 GB Flash Disk – /dev/sdb1".
+   *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
    */
   s1 = g_strdup_printf (_("%s — %s"), udisks_object_info_get_description (info),
                                       udisks_object_info_get_name (info));

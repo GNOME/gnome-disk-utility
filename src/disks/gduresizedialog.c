@@ -513,9 +513,59 @@ part_resize_cb_online_next_fs_resize (UDisksPartition  *partition,
 }
 
 static void
-part_resize_cb_offline_next_fs_resize (UDisksPartition  *partition,
-                                       GAsyncResult     *res,
-                                       ResizeDialogData *data)
+fs_repair_cb_offline_next_grow (UDisksFilesystem *filesystem,
+                                GAsyncResult     *res,
+                                ResizeDialogData *data)
+{
+  GError *error = NULL;
+  gboolean success = FALSE;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error repairing filesystem"),
+                            error);
+      g_error_free (error);
+      resize_dialog_data_unref (data);
+    }
+  else
+    {
+      /* growing: next is to resize filesystem, then run repair again */
+      udisks_filesystem_call_resize (data->filesystem, get_size (data),
+                                     g_variant_new ("a{sv}", NULL), NULL,
+                                     (GAsyncReadyCallback) fs_resize_cb_offline_next_repair, data);
+    }
+}
+
+static void
+ensure_unused_cb_offline_next_repair (GObject      *source_object,
+                                      GAsyncResult *res,
+                                      gpointer      user_data)
+{
+  ResizeDialogData *data = user_data;
+  GError *error = NULL;
+
+  if (!gdu_utils_ensure_unused_finish (data->client, res, &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error unmounting filesystem"),
+                            error);
+
+      g_error_free (error);
+      resize_dialog_data_unref (data);
+    }
+  else
+    {
+      udisks_filesystem_call_repair (data->filesystem,
+                                     g_variant_new ("a{sv}", NULL), NULL,
+                                     (GAsyncReadyCallback) fs_repair_cb_offline_next_grow, data);
+    }
+}
+
+static void
+part_resize_cb_offline_next_fs_unmount (UDisksPartition  *partition,
+                                        GAsyncResult     *res,
+                                        ResizeDialogData *data)
 {
   GError *error = NULL;
 
@@ -529,9 +579,12 @@ part_resize_cb_offline_next_fs_resize (UDisksPartition  *partition,
     }
   else
     {
-      udisks_filesystem_call_resize (data->filesystem, get_size (data),
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_resize_cb_offline_next_repair, data);
+      gdu_utils_ensure_unused (data->client,
+                               GTK_WINDOW (data->window),
+                               data->object,
+                               ensure_unused_cb_offline_next_repair,
+                               NULL,
+                               data);
     }
 }
 
@@ -582,7 +635,7 @@ fs_resize_cb_offline_next_fs_repair (UDisksFilesystem *filesystem,
 }
 
 static void
-fs_repair_cb_offline_next_resize (UDisksFilesystem *filesystem,
+fs_repair_cb_offline_next_shrink (UDisksFilesystem *filesystem,
                                   GAsyncResult     *res,
                                   ResizeDialogData *data)
 {
@@ -599,20 +652,10 @@ fs_repair_cb_offline_next_resize (UDisksFilesystem *filesystem,
     }
   else
     {
-      if (is_shrinking (data))
-        {
-          /* shrinking: next is to resize filesystem, run repair, then resize partition */
-          udisks_filesystem_call_resize (data->filesystem, get_size (data),
-                                         g_variant_new ("a{sv}", NULL), NULL,
-                                         (GAsyncReadyCallback) fs_resize_cb_offline_next_fs_repair, data);
-        }
-      else
-        {
-          /* growing: next is to resize partition, then resize filesystem, run repair */
-          udisks_partition_call_resize (data->partition, get_size (data),
-                                        g_variant_new ("a{sv}", NULL), NULL,
-                                        (GAsyncReadyCallback) part_resize_cb_offline_next_fs_resize, data);
-        }
+      /* shrinking: next is to resize filesystem, run repair again, then resize partition */
+      udisks_filesystem_call_resize (data->filesystem, get_size (data),
+                                     g_variant_new ("a{sv}", NULL), NULL,
+                                     (GAsyncReadyCallback) fs_resize_cb_offline_next_fs_repair, data);
     }
 }
 
@@ -636,18 +679,6 @@ online_resize_no_repair (ResizeDialogData *data)
 }
 
 static void
-offline_resize_with_repair (ResizeDialogData *data)
-{
-  /* partition and filesystem resize:
-   * if growing fs-repair, part-resize, fs-resize, fs-repair
-   * if shrinking fs-repair, fs-resize, fs-repair, part-resize
-   */
-  udisks_filesystem_call_repair (data->filesystem,
-                                 g_variant_new ("a{sv}", NULL), NULL,
-                                 (GAsyncReadyCallback) fs_repair_cb_offline_next_resize, data);
-}
-
-static void
 unmount_cb (GObject      *source_object,
             GAsyncResult *res,
             gpointer      user_data)
@@ -666,7 +697,75 @@ unmount_cb (GObject      *source_object,
     }
   else
     {
-      offline_resize_with_repair (data);
+      /* shrinking partition and filesystem:
+       * fs-repair, fs-resize, fs-repair, part-resize
+       */
+      udisks_filesystem_call_repair (data->filesystem,
+                                     g_variant_new ("a{sv}", NULL), NULL,
+                                     (GAsyncReadyCallback) fs_repair_cb_offline_next_shrink, data);
+    }
+}
+
+static void
+resize (ResizeDialogData *data)
+{
+  gboolean shrinking;
+
+  shrinking = is_shrinking (data);
+
+  if ((!(data->support & ONLINE_SHRINK) && shrinking) ||
+      (!(data->support & ONLINE_GROW) && !shrinking))
+    {
+      if (shrinking)
+        {
+          gdu_utils_ensure_unused (data->client,
+                                   GTK_WINDOW (data->window),
+                                   data->object,
+                                   unmount_cb,
+                                   NULL,
+                                   data);
+        }
+      else
+        {
+          /* The offline grow case still needs the FS to be mounted during
+           * the partition resize to prevent any race conditions with GVFs
+           * automount but will unmount as soon as FS repair and resize take place:
+           * part-resize, fs-repair, fs-resize, fs-repair
+           */
+          udisks_partition_call_resize (data->partition, get_size (data),
+                                        g_variant_new ("a{sv}", NULL), NULL,
+                                        (GAsyncReadyCallback) part_resize_cb_offline_next_fs_unmount, data);
+        }
+    }
+  else
+    {
+      online_resize_no_repair (data);
+    }
+}
+
+static void
+mount_cb (UDisksFilesystem *filesystem,
+          GAsyncResult     *res,
+          gpointer          user_data)
+{
+  ResizeDialogData *data = (ResizeDialogData *) user_data;
+  GError *error = NULL;
+
+  if (!udisks_filesystem_call_mount_finish (filesystem,
+                                            NULL, /* out_mount_path */
+                                            res,
+                                            &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (data->window),
+                            _("Error mounting filesystem"),
+                            error);
+
+      g_error_free (error);
+      resize_dialog_data_unref (data);
+    }
+  else
+    {
+      resize (data);
     }
 }
 
@@ -861,34 +960,27 @@ gdu_resize_dialog_show (GduWindow    *window,
 
   if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
     {
-      gboolean shrinking;
-
-      shrinking = is_shrinking (data);
-
       gtk_widget_hide (data->dialog);
       g_clear_pointer (&data->dialog, gtk_widget_destroy);
 
       if (data->filesystem != NULL)
         {
-          mount_points = udisks_filesystem_get_mount_points (data->filesystem);
+          gboolean offline_shrink;
 
-          if (g_strv_length ((gchar **) mount_points) == 0)
+          mount_points = udisks_filesystem_get_mount_points (data->filesystem);
+          /* prevent the case of mounting when directly unmount would follow */
+          offline_shrink = !(data->support & ONLINE_SHRINK) && is_shrinking (data);
+
+          if (g_strv_length ((gchar **) mount_points) == 0 && !offline_shrink)
             {
-              offline_resize_with_repair (data);
-            }
-          else if ((!(data->support & ONLINE_SHRINK) && shrinking) ||
-                   (!(data->support & ONLINE_GROW) && !shrinking))
-            {
-              gdu_utils_ensure_unused (data->client,
-                                       GTK_WINDOW (window),
-                                       object,
-                                       unmount_cb,
-                                       NULL,
-                                       data);
+              /* FS was unmounted by the user while the dialog stayed open */
+              udisks_filesystem_call_mount (data->filesystem,
+                                            g_variant_new ("a{sv}", NULL), NULL,
+                                            (GAsyncReadyCallback) mount_cb, data);
             }
           else
             {
-              online_resize_no_repair (data);
+              resize (data);
             }
         }
       else

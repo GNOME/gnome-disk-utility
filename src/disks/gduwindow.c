@@ -2788,14 +2788,18 @@ update_device_page_for_block (GduWindow          *window,
         {
           show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK;
           /* Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked */
-          in_use_markup = g_strdup (C_("volume-content-luks", "Unlocked"));
+          in_use_markup = g_strdup (C_("volume-content-crypto", "Unlocked"));
         }
       else
         {
           show_flags->volume_buttons |= SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_UNLOCK;
           /* Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked */
-          in_use_markup = g_strdup (C_("volume-content-luks", "Locked"));
+          in_use_markup = g_strdup (C_("volume-content-crypto", "Locked"));
         }
+    }
+
+  if (g_strcmp0 (udisks_block_get_id_type (block), "crypto_LUKS") == 0)
+    {
       show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB;
       show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE;
     }

@@ -2610,7 +2610,8 @@ update_device_page_for_block (GduWindow          *window,
           show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE;
           if (udisks_block_get_hint_partitionable (block))
             show_flags->drive_menu |= SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK;
-          show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME;
+          if (partition == NULL || !udisks_partition_get_is_container (partition))
+            show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME;
         }
     }
 

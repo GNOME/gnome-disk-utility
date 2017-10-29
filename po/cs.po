@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-18 12:27+0000\n"
-"PO-Revision-Date: 2017-09-18 15:49+0200\n"
+"POT-Creation-Date: 2017-10-16 13:00+0000\n"
+"PO-Revision-Date: 2017-10-29 15:35+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -1715,29 +1715,29 @@ msgid "This is the last primary partition that can be created."
 msgstr "Jde o poslední primární oddíl, který může být vytvořen."
 
 #: src/disks/gducreateotherpage.c:115
-msgid "XFS – Linux Filesystem"
-msgstr "XFS – Linuxový souborový systém"
+msgid "XFS — Linux Filesystem"
+msgstr "XFS — Linuxový souborový systém"
 
 #: src/disks/gducreateotherpage.c:117
 msgid "Linux Swap Partition"
 msgstr "Linuxový odkládací oddíl"
 
 #: src/disks/gducreateotherpage.c:119
-msgid "Btrfs – Copy-on-write Linux Filesystem, for snapshots"
-msgstr "Btrfs – Linuxový souborový systém s Copy-on-write a snímky"
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+msgstr "Btrfs — Linuxový souborový systém s Copy-on-write a snímky"
 
 #: src/disks/gducreateotherpage.c:121
-msgid "F2FS – Flash Storage Linux Filesystem"
-msgstr "F2FS – Linuxový souborový systém pro úložiště flash"
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr "F2FS — Linuxový souborový systém pro úložiště flash"
 
 #: src/disks/gducreateotherpage.c:123
-msgid "exFAT – Flash Storage Windows Filesystem, used on SDXC cards"
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
-"exFAT – Souborový systém Windows pro úložiště flash, především karty SDXC"
+"exFAT — Souborový systém Windows pro úložiště flash, především karty SDXC"
 
 #: src/disks/gducreateotherpage.c:125
-msgid "UDF – Universal Disk Format, for removable devices on many systems"
-msgstr "UDF – Univerzální diskový formíát pro výměnná zařízení v řadě systémů"
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr "UDF — Univerzální diskový formát pro výměnná zařízení v řadě systémů"
 
 #: src/disks/gducreateotherpage.c:127
 msgid "No Filesystem"
@@ -1755,7 +1755,7 @@ msgstr "Hesla se liší"
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
 #. *              from UDisks, first is description, second the name:
-#. *              "Partition 1 of 32 GB Flash Disk – /dev/sdb1".
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
@@ -1883,12 +1883,12 @@ msgid "_Resize"
 msgstr "Z_měnit velikost"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
 msgid "Error resizing filesystem"
 msgstr "Chyba při změně velikosti souborového systému"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:525
+#: src/disks/gduresizedialog.c:575
 msgid "Error resizing partition"
 msgstr "Chyba při změně velikosti oddílu"
 
@@ -1904,19 +1904,27 @@ msgstr "Změna velikosti není připravená"
 msgid "Waited too long for the filesystem"
 msgstr "Příliš dlouho se čekalo na souborový systém"
 
-#: src/disks/gduresizedialog.c:595
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
 msgid "Error repairing filesystem"
 msgstr "Chyba při opravě souborového systému"
 
-#: src/disks/gduresizedialog.c:661
-msgid "Error unmounting filesystem for resizing"
-msgstr "Chyba při odpojování souborového kvůli změně velikosti"
+#: src/disks/gduresizedialog.c:551
+msgid "Error unmounting filesystem for repairing"
+msgstr "Chyba při odpojování souborového systému kvůli opravě"
 
-#: src/disks/gduresizedialog.c:703
+#: src/disks/gduresizedialog.c:692
+msgid "Error unmounting filesystem for resizing"
+msgstr "Chyba při odpojování souborového systému kvůli změně velikosti"
+
+#: src/disks/gduresizedialog.c:760
+msgid "Error mounting the filesystem"
+msgstr "Chyba při připojování souborového systému"
+
+#: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
 msgstr "Přizpůsobit velikost"
 
-#: src/disks/gduresizedialog.c:738
+#: src/disks/gduresizedialog.c:837
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Chyba při připojování souborového systému kvůli výpočtu minimální velikosti"
@@ -2710,7 +2718,7 @@ msgstr ""
 "odkazovat pomocí symbolického odkazu ve složce /dev/disk/by-label."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-msgid "For example: \"Angela's Files\" or \"Backup\"."
+msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Například „Adélčiny soubory“ nebo „Záloha“."
 
 #: src/disks/ui/create-filesystem-page.ui:74
@@ -2760,11 +2768,6 @@ msgstr "Veliko_st oddílu"
 #: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
 msgid "The size of the partition to create"
 msgstr "Velikost oddílu, který se má vytvořit"
-
-#: src/disks/ui/create-partition-page.ui:95
-#: src/disks/ui/create-partition-page.ui:150
-msgid "0"
-msgstr "0"
 
 #: src/disks/ui/create-partition-page.ui:111
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
@@ -3780,77 +3783,3 @@ msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Přezkoumat"
 
-#~ msgid "FAT"
-#~ msgstr "FAT"
-
-#~ msgid "Compatible with most systems"
-#~ msgstr "Kompatibilní s většinou systémů"
-
-#~ msgid "NTFS"
-#~ msgstr "NTFS"
-
-#~ msgid "Compatible with Linux systems"
-#~ msgstr "Kompatibilní se systémy Linux"
-
-#~ msgid "Ext4"
-#~ msgstr "Ext4"
-
-#~ msgid "Encrypted, compatible with Linux systems"
-#~ msgstr "Šifrovaný, kompatibilní se systémy Linux"
-
-#~ msgid "LUKS + Ext4"
-#~ msgstr "LUKS + Ext4"
-
-#~ msgid "Enter filesystem type"
-#~ msgstr "Zadejte typ souborového systému"
-
-#~ msgid "Error formatting partition"
-#~ msgstr "Chyba při formátování oddílu"
-
-#~ msgid "Extended partition"
-#~ msgstr "Rozšířený oddíl"
-
-#~ msgid "For logical partitions"
-#~ msgstr "Pro logické oddíly"
-
-#~ msgid "Are you sure you want to format the volume?"
-#~ msgstr "Opravdu chcete svazek naformátovat?"
-
-#~ msgid ""
-#~ "All data on the volume will be lost but may still be recoverable by data "
-#~ "recovery services"
-#~ msgstr ""
-#~ "Všechna data na svazku budou ztracena, ale bude ještě možné je obnovit "
-#~ "některou ze služeb pro záchranu dat"
-
-#~ msgid ""
-#~ "All data on the volume will be overwritten and will likely not be "
-#~ "recoverable by data recovery services"
-#~ msgstr ""
-#~ "Všechna data na svazku budou přepsána a nebude je možné obnovit žádnou "
-#~ "službou pro záchranu dat"
-
-#~ msgid "C_reate"
-#~ msgstr "Vy_tvořit"
-
-#~ msgid "F_ilesystem"
-#~ msgstr "So_uborový systém"
-
-#~ msgid ""
-#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-#~ "<i>swap</i>"
-#~ msgstr ""
-#~ "Vlastní typ souborového systému, který se má vytvořit, např. <i>btrfs</"
-#~ "i>, <i>xfs</i> nebo <i>swap</i>"
-
-#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-#~ msgstr ""
-#~ "Vlastní typ souborového systému, který se má vytvořit, např. btrfs, xfs "
-#~ "nebo swap"
-
-#~ msgid ""
-#~ "The name to use for the filesystem. This is useful if you want to refer "
-#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-#~ msgstr ""
-#~ "Název souborového systému. To je užitečné, když se chcete na zařízení "
-#~ "odkazovat pomocí symbolického odkazu ve složce <b>/dev/disk/by-label</b>"

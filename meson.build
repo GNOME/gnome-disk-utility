@@ -1,6 +1,6 @@
 project(
   'gnome-disk-utility', 'c',
-  version: '3.26.1',
+  version: '3.26.2',
   license: 'GPL2.0',
   default_options: [
     'buildtype=debugoptimized',

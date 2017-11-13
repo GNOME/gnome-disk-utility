@@ -2,10 +2,7 @@ project(
   'gnome-disk-utility', 'c',
   version: '3.27.2',
   license: 'GPL2.0',
-  default_options: [
-    'buildtype=debugoptimized',
-    'warning_level=1'
-  ],
+  default_options: 'buildtype=debugoptimized',
   meson_version: '>= 0.41.0'
 )
 

@@ -3,7 +3,7 @@ project(
   version: '3.27.2',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.41.0'
+  meson_version: '>= 0.43.0'
 )
 
 gdu_name = 'gnome-disk-utility'
@@ -42,10 +42,9 @@ fallocate_src = '''
 config_h.set('HAVE_FALLOCATE', cc.run(fallocate_src).returncode())
 
 # compiler flags
-gdu_cflags = []
+compiler_flags = []
 
-buildtype = get_option('buildtype')
-if buildtype == 'debug' or buildtype == 'debugoptimized'
+if get_option('buildtype').contains('debug')
   test_cflags = [
     '-fno-strict-aliasing',
     '-Wcast-align',
@@ -77,14 +76,10 @@ if buildtype == 'debug' or buildtype == 'debugoptimized'
     '-Wwrite-strings'
   ]
 
-  foreach cflag: test_cflags
-    if cc.has_argument(cflag)
-      gdu_cflags += [cflag]
-    endif
-  endforeach
+  compiler_flags += cc.get_supported_arguments(test_cflags)
 endif
 
-add_project_arguments(gdu_cflags, language: 'c')
+add_project_arguments(compiler_flags, language: 'c')
 
 gmodule_dep = dependency('gmodule-2.0')
 gio_unix_dep = dependency('gio-unix-2.0', version: '>= 2.31.0')
@@ -151,5 +146,5 @@ output += '        sysconfdir:                 ' + gdu_sysconfdir + '\n\n'
 output += '        Use libsystemd:             ' + enable_libsystemd.to_string() + '\n'
 output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
 output += '        compiler:                   ' + cc.get_id() + '\n'
-output += '        cflags:                     ' + ' '.join(gdu_cflags) + '\n'
+output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n'
 message(output)

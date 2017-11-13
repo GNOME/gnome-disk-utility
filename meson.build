@@ -42,7 +42,6 @@ fallocate_src = '''
 config_h.set('HAVE_FALLOCATE', cc.run(fallocate_src).returncode())
 
 # compiler flags
-common_flags = ['-DHAVE_CONFIG_H']
 gdu_cflags = []
 
 buildtype = get_option('buildtype')
@@ -85,7 +84,7 @@ if buildtype == 'debug' or buildtype == 'debugoptimized'
   endforeach
 endif
 
-add_project_arguments(common_flags + gdu_cflags, language: 'c')
+add_project_arguments(gdu_cflags, language: 'c')
 
 gmodule_dep = dependency('gmodule-2.0')
 gio_unix_dep = dependency('gio-unix-2.0', version: '>= 2.31.0')

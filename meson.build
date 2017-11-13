@@ -166,7 +166,7 @@ config_h.set('HAVE_UDISKS2_7_2', udisks2_7_2_dep.found(),
              description: 'Define to 1 if UDisks version >= 2.7.2 for resize, repair, check')
 
 # *** Check for libsystemd ***
-enable_libsystemd = get_option('enable-libsystemd')
+enable_libsystemd = get_option('libsystemd')
 if enable_libsystemd
   libsystemd_dep = dependency('libsystemd', version: '>= 209', required: false)
   config_h.set('HAVE_LIBSYSTEMD', libsystemd_dep.found(),
@@ -190,7 +190,7 @@ subdir('src/disks')
 subdir('src/disk-image-mounter')
 
 # *** gnome-settings-daemon plug-in ***
-enable_gsd_plugin = get_option('enable-gsd-plugin')
+enable_gsd_plugin = get_option('gsd_plugin')
 if enable_gsd_plugin
   subdir('src/notify')
 endif

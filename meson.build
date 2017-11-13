@@ -20,66 +20,8 @@ gdu_sysconfdir = join_paths(gdu_prefix, get_option('sysconfdir'))
 cc = meson.get_compiler('c')
 
 config_h = configuration_data()
-
-# package
-set_defines = [
-  ['PACKAGE', gdu_name],
-  ['PACKAGE_BUGREPORT', 'http://bugzilla.gnome.org/enter_bug.cgi?product=' + gdu_name],
-  ['PACKAGE_NAME', meson.project_name()],
-  ['PACKAGE_STRING', '@0@ @1@'.format(meson.project_name(), gdu_version)],
-  ['PACKAGE_TARNAME', gdu_name],
-  ['PACKAGE_URL', ''],
-  ['PACKAGE_VERSION', gdu_version],
-  ['VERSION', gdu_version],
-  ['GETTEXT_PACKAGE', gdu_name]
-]
-
-foreach define: set_defines
-  config_h.set_quoted(define[0], define[1])
-endforeach
-
-# headers
-check_headers = [
-  ['HAVE_DLFCN_H', 'dlfcn.h'],
-  ['HAVE_INTTYPES_H', 'inttypes.h'],
-  ['HAVE_MEMORY_H', 'memory.h'],
-  ['HAVE_STDINT_H', 'stdint.h'],
-  ['HAVE_STDLIB_H', 'stdlib.h'],
-  ['HAVE_STRINGS_H', 'strings.h'],
-  ['HAVE_STRING_H', 'string.h'],
-  ['HAVE_SYS_STAT_H', 'sys/stat.h'],
-  ['HAVE_SYS_TYPES_H', 'sys/types.h'],
-  ['HAVE_UNISTD_H', 'unistd.h']
-]
-
-foreach header: check_headers
-  if cc.has_header(header[1])
-    config_h.set(header[0], true)
-  endif
-endforeach
-
-# functions
-check_functions = [
-  ['HAVE_DCGETTEXT', 'dcgettext'],
-  ['HAVE_GETTEXT', 'gettext'],
-  ['HAVE_ICONV', 'iconv'],
-  ['HAVE_MEMSET', 'memset'],
-  ['HAVE_SETLOCALE', 'setlocale'],
-  ['HAVE_STRSTR', 'strstr']
-]
-
-if host_machine.system().contains('darwin')
-  check_functions += [
-    ['HAVE_CFLOCALECOPYCURRENT', 'CFLocaleCopyCurrent'],
-    ['HAVE_CFPREFERENCESCOPYAPPVALUE', 'CFPreferencesCopyAppValue']
-  ]
-endif
-
-foreach func: check_functions
-  if cc.has_function(func[1])
-    config_h.set(func[0], true)
-  endif
-endforeach
+config_h.set_quoted('PACKAGE_VERSION', gdu_version)
+config_h.set_quoted('GETTEXT_PACKAGE', gdu_name)
 
 message('Checking for valid fallocate() function')
 
@@ -170,11 +112,6 @@ if enable_libsystemd
                description: 'Define to 1 if libsystemd is available')
 endif
 
-configure_file(
-  output: 'config.h',
-  configuration: config_h
-)
-
 gnome = import('gnome')
 i18n = import('i18n')
 
@@ -195,6 +132,11 @@ endif
 subdir('data')
 subdir('po')
 subdir('doc/man')
+
+configure_file(
+  output: 'config.h',
+  configuration: config_h
+)
 
 meson.add_install_script('meson_post_install.py')
 

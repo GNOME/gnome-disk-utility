@@ -132,7 +132,10 @@ configure_file(
   configuration: config_h
 )
 
-meson.add_install_script('meson_post_install.py')
+meson.add_install_script(
+  'meson_post_install.py',
+  gdu_datadir
+)
 
 output = '\n        gnome-disk-utility ' + gdu_version + '\n'
 output += '        =========================\n\n'

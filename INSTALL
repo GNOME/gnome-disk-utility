@@ -5,6 +5,17 @@ http://mesonbuild.com/Quick-guide.html
 configure the build directory:
   meson builddir
 
+(skip if not needed:
+configure the build directory with options:
+  meson -D libsystemd=true|false -D gsd_plugin=true|false builddir
+
+list the available options and their current values:
+  meson configure builddir
+
+reconfigure a value:
+  meson configure builddir -D libsystemd=true|false -D gsd_plugin=true|false
+)
+
 compile:
   cd builddir
   ninja
@@ -13,6 +24,7 @@ run GNOME Disks:
   builddir/src/disks/gnome-disks
 
 produce a release tarball:
+  cd builddir
   ninja dist
 
 This will build against the system libraries.

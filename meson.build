@@ -149,5 +149,6 @@ output += '        sysconfdir:                 ' + gdu_sysconfdir + '\n\n'
 output += '        Use libsystemd:             ' + enable_libsystemd.to_string() + '\n'
 output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
 output += '        compiler:                   ' + cc.get_id() + '\n'
-output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n'
+output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n\n'
+output += '        (Change with: meson configure BUILDDIR -D libsystemd=true|false -D gsd_plugin=true|false)\n\n'
 message(output)

@@ -323,6 +323,7 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
 {
   guint64 size;
   const gchar *partition_type = "";
+  GVariantBuilder options_builder;
 
   if (response_id != GTK_RESPONSE_APPLY)
     {
@@ -345,9 +346,23 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
       return;
     }
 
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+
   if (g_strcmp0 (get_filesystem (data), "dos_extended") == 0)
     {
       partition_type = "0x05";
+      g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("extended"));
+    }
+  else if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
+    {
+      if (gdu_utils_is_inside_dos_extended (data->client, data->table, data->add_partition_offset))
+        {
+          g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("logical"));
+        }
+      else
+        {
+          g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("primary"));
+        }
     }
 
   if (data->add_partition)
@@ -358,7 +373,7 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
                                                     size,
                                                     partition_type, /* use default type */
                                                     "", /* use blank partition name */
-                                                    g_variant_new ("a{sv}", NULL), /* options */
+                                                    g_variant_builder_end (&options_builder),
                                                     NULL, /* GCancellable */
                                                     create_partition_cb,
                                                     data);

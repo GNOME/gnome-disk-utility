@@ -28,22 +28,23 @@
 # Jonatan Zeidler <jonatan_zeidler@hotmail.de>, 2013.
 # Benjamin Steinwender <b@stbe.at>, 2013.
 # Bernd Homuth <dev@hmt.im>, 2015.
+# Tim Sabsch <tim@sabsch.com>, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-29 15:49+0000\n"
-"PO-Revision-Date: 2017-10-27 12:25+0200\n"
-"Last-Translator: Mario Blättermann <mario.blaettermann@gmail.com>\n"
+"POT-Creation-Date: 2017-11-13 14:59+0000\n"
+"PO-Revision-Date: 2017-11-14 15:00+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -1571,8 +1572,8 @@ msgstr "Die Bezeichnung entspricht der existierenden Bezeichnung"
 msgid "Error setting label"
 msgstr "Fehler beim Festlegen der Bezeichnung"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3205
-#: src/disks/gduwindow.c:3333 src/disks/gduwindow.c:3834
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
+#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
 #: src/libgdu/gduutils.c:1378
 msgid "Error unmounting filesystem"
 msgstr "Fehler beim Aushängen des Dateisystems"
@@ -1801,8 +1802,6 @@ msgstr "Die Passwörter stimmen nicht überein"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s — %s"
 
@@ -1810,7 +1809,6 @@ msgstr "%s — %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -2254,61 +2252,61 @@ msgstr "Loop-Gerät ist leer"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2664
+#: src/disks/gduwindow.c:2665
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s frei (%.1f%% belegt)"
 
-#: src/disks/gduwindow.c:2694
+#: src/disks/gduwindow.c:2695
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Unbekannt"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2732
+#: src/disks/gduwindow.c:2733
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Dateisystemwurzel"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2740
+#: src/disks/gduwindow.c:2741
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Eingehängt in %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2746
+#: src/disks/gduwindow.c:2747
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nicht eingehängt"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2769
+#: src/disks/gduwindow.c:2770
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2775
+#: src/disks/gduwindow.c:2776
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Nicht aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2790
+#: src/disks/gduwindow.c:2791
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Entsperrt"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2796
+#: src/disks/gduwindow.c:2797
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Gesperrt"
 
-#: src/disks/gduwindow.c:2806
+#: src/disks/gduwindow.c:2807
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Erweiterte Partition"
@@ -2317,47 +2315,47 @@ msgstr "Erweiterte Partition"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2826
+#: src/disks/gduwindow.c:2827
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s – %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2950
+#: src/disks/gduwindow.c:2951
 msgid "Unallocated Space"
 msgstr "Nicht zugewiesener Platz"
 
-#: src/disks/gduwindow.c:3143
+#: src/disks/gduwindow.c:3144
 msgid "Error while repairing filesystem"
 msgstr "Fehler beim Reparieren des Dateisystems"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3171
 msgid "Repair successful"
 msgstr "Reparatur erfolgreich"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3171
 msgid "Repair failed"
 msgstr "Reparieren fehlgeschlagen"
 
-#: src/disks/gduwindow.c:3173
+#: src/disks/gduwindow.c:3174
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Dateisystem %s auf %s wurde repariert."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3179
+#: src/disks/gduwindow.c:3180
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Dateisystem %s auf %s konnte nicht repariert werden."
 
-#: src/disks/gduwindow.c:3241
+#: src/disks/gduwindow.c:3242
 msgid "Confirm Repair"
 msgstr "Reparieren bestätigen"
 
 # Consider backing it up:
 # "it" bezieht sich auf das Dateisystem
-#: src/disks/gduwindow.c:3244
+#: src/disks/gduwindow.c:3245
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2369,62 +2367,62 @@ msgstr ""
 "Dateien wiederfinden. Abhängig von der Datenmenge kann dieser Vorgang "
 "längere Zeit in Anspruch nehmen."
 
-#: src/disks/gduwindow.c:3272
+#: src/disks/gduwindow.c:3273
 msgid "Error while checking filesystem"
 msgstr "Fehler beim Überprüfen des Dateisystems"
 
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem intact"
 msgstr "Dateisystem ist intakt"
 
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem damaged"
 msgstr "Dateisystem ist beschädigt"
 
-#: src/disks/gduwindow.c:3302
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Dateisystem %s auf %s ist nicht beschädigt."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3308
+#: src/disks/gduwindow.c:3309
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Dateisystem %s auf %s muss repariert werden."
 
-#: src/disks/gduwindow.c:3368
+#: src/disks/gduwindow.c:3369
 msgid "Confirm Check"
 msgstr "Überprüfung bestätigen"
 
-#: src/disks/gduwindow.c:3371
+#: src/disks/gduwindow.c:3372
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Abhängig von der Datenmenge kann die Dateisystemüberprüfung längere Zeit in "
 "Anspruch nehmen."
 
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3572
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Ein Fehler ist bei dem Versuch aufgetreten, das Laufwerk in den "
 "Bereitschaftsmodus zu versetzen"
 
-#: src/disks/gduwindow.c:3617
+#: src/disks/gduwindow.c:3618
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Ein Fehler ist bei dem Versuch aufgetreten, das Laufwerk aus dem "
 "Bereitschaftsmodus aufwachen zu lassen"
 
-#: src/disks/gduwindow.c:3662
+#: src/disks/gduwindow.c:3663
 msgid "Error powering off drive"
 msgstr "Fehler beim Ausschalten des Laufwerks"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3714
+#: src/disks/gduwindow.c:3715
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sind Sie sicher, dass die Laufwerke ausgeschaltet werden soll?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3716
+#: src/disks/gduwindow.c:3717
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2432,51 +2430,51 @@ msgstr ""
 "Diese Operation wird das System darauf vorbereiten, dass die folgenden "
 "Laufwerke entfernt und ausgeschaltet werden."
 
-#: src/disks/gduwindow.c:3720
+#: src/disks/gduwindow.c:3721
 msgid "_Power Off"
 msgstr "_Ausschalten"
 
-#: src/disks/gduwindow.c:3797
+#: src/disks/gduwindow.c:3798
 msgid "Error mounting filesystem"
 msgstr "Fehler beim Einhängen des Dateisystems"
 
-#: src/disks/gduwindow.c:3906
+#: src/disks/gduwindow.c:3907
 msgid "Error deleting partition"
 msgstr "Fehler beim Löschen der Partition"
 
-#: src/disks/gduwindow.c:3943
+#: src/disks/gduwindow.c:3944
 msgid "Are you sure you want to delete the partition?"
 msgstr "Sind Sie sicher, dass die Partition gelöscht werden soll?"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3945
 msgid "All data on the partition will be lost"
 msgstr "Alle Daten auf dieser Partition werden verloren gehen"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3946
 msgid "_Delete"
 msgstr "_Löschen"
 
-#: src/disks/gduwindow.c:3976
+#: src/disks/gduwindow.c:3977
 msgid "Error ejecting media"
 msgstr "Fehler beim Auswerfen des Mediums"
 
-#: src/disks/gduwindow.c:4041
+#: src/disks/gduwindow.c:4042
 msgid "Error locking encrypted device"
 msgstr "Fehler beim Sperren des verschlüsselten Gerätes"
 
-#: src/disks/gduwindow.c:4077
+#: src/disks/gduwindow.c:4078
 msgid "Error starting swap"
 msgstr "Fehler beim Starten des Auslagerungsspeichers"
 
-#: src/disks/gduwindow.c:4114
+#: src/disks/gduwindow.c:4115
 msgid "Error stopping swap"
 msgstr "Fehler beim Anhalten des Auslagerungsspeichers"
 
-#: src/disks/gduwindow.c:4156
+#: src/disks/gduwindow.c:4157
 msgid "Error setting autoclear flag"
 msgstr "Fehler beim Festlegen des autoclear-Flags"
 
-#: src/disks/gduwindow.c:4209 src/disks/gduwindow.c:4273
+#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
 msgid "Error canceling job"
 msgstr "Fehler beim Abbruch des Vorgangs"
 
@@ -2499,16 +2497,18 @@ msgstr "Mehr Eingabedaten werden benötigt"
 #: src/disks/ui/about-dialog.ui:12
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 Das GNOME-Projekt\n"
 
-#: src/disks/ui/about-dialog.ui:14
+#: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
 msgstr "Betrachten, Anpassen und Einrichten von Laufwerken und Medien"
 
-#: src/disks/ui/about-dialog.ui:17
+#: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mario.blaettermann@gmail.com>\n"
@@ -2899,7 +2899,7 @@ msgstr "PiB"
 msgid "Free Space _Following"
 msgstr "Anschließender _freier Speicherplatz"
 
-#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:167
+#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
 msgid "The free space following the partition"
 msgstr "Der der Partition nachfolgende freie Platz"
 
@@ -3592,11 +3592,11 @@ msgstr ""
 "zusätzlichen freien Platz zur minimalen Größe hinzu, damit das Dateisystem "
 "schnell und zuverlässig arbeiten kann."
 
-#: src/disks/ui/resize-dialog.ui:196
+#: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "Unterschie_d"
 
-#: src/disks/ui/resize-dialog.ui:212
+#: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
 msgstr "Der Unterschied zur vorherigen Partitionsgröße"
 

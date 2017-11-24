@@ -1196,6 +1196,9 @@ should_include_block (UDisksObject *object)
   partition = udisks_object_peek_partition (object);
   loop = udisks_object_peek_loop (object);
 
+  if (gdu_utils_has_userspace_mount_option (block, "x-gdu.hide"))
+    goto out;
+
   /* RAM devices are useless */
   device = udisks_block_get_device (block);
   if (g_str_has_prefix (device, "/dev/ram"))

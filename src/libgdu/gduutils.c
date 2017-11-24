@@ -63,6 +63,26 @@ gdu_utils_has_configuration (UDisksBlock  *block,
   return ret;
 }
 
+gboolean
+gdu_utils_has_userspace_mount_option (UDisksBlock *block,
+                                      const gchar *option)
+{
+#ifdef HAVE_UDISKS2_7_6
+  const gchar *const *options;
+  gboolean ret;
+
+  ret = FALSE;
+
+  options = udisks_block_get_userspace_mount_options (block);
+  if (options != NULL)
+    ret = g_strv_contains (options, option);
+
+  return ret;
+#else
+  return FALSE;
+#endif
+}
+
 void
 gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
                                                   gboolean        set_file_types,

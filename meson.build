@@ -98,6 +98,10 @@ udisks2_7_2_dep = dependency('udisks2', version: '>= 2.7.2', required: false)
 config_h.set('HAVE_UDISKS2_7_2', udisks2_7_2_dep.found(),
              description: 'Define to 1 if UDisks version >= 2.7.2 for resize, repair, check')
 
+udisks2_7_6_dep = dependency('udisks2', version: '>= 2.7.6', required: false)
+config_h.set('HAVE_UDISKS2_7_6', udisks2_7_6_dep.found(),
+             description: 'Define to 1 if UDisks version >= 2.7.6 for userspace mount options')
+
 # *** Check for libsystemd ***
 enable_libsystemd = get_option('libsystemd')
 if enable_libsystemd

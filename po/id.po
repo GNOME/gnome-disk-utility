@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-18 15:58+0000\n"
-"PO-Revision-Date: 2017-09-19 14:38+0700\n"
+"POT-Creation-Date: 2017-11-15 11:30+0000\n"
+"PO-Revision-Date: 2017-11-16 11:46+0700\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.4\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -123,7 +123,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Pilih Image Diska untuk Dikaitkan"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Batal"
@@ -1524,8 +1524,8 @@ msgstr "Label sesuai dengan label yang ada"
 msgid "Error setting label"
 msgstr "Galat ketika mengeset label"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3205
-#: src/disks/gduwindow.c:3333 src/disks/gduwindow.c:3834
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
+#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
 #: src/libgdu/gduutils.c:1378
 msgid "Error unmounting filesystem"
 msgstr "Galat ketika melepas kaitan sistem berkas"
@@ -1650,7 +1650,7 @@ msgstr ""
 "ATA_Secure_Erase'>Hapus Aman ATA</a> dan pastikan bahwa Anda memahami "
 "risikonya"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Format"
 
@@ -1678,23 +1678,23 @@ msgstr "Galat ketika memformat volume"
 msgid "Error creating partition"
 msgstr "Galat ketika membuat partisi"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Buat Partisi"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Format Volume"
 
-#: src/disks/gducreateformatdialog.c:432
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Format Ubahan"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Atur Kata Sandi"
 
-#: src/disks/gducreateformatdialog.c:438
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Konfirmasi Detail"
 
@@ -1875,12 +1875,12 @@ msgid "_Resize"
 msgstr "Ubah Uku_ran"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
 msgid "Error resizing filesystem"
 msgstr "Galat ketika mengubah ukuran sistem berkas"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:525
+#: src/disks/gduresizedialog.c:575
 msgid "Error resizing partition"
 msgstr "Galat ketika mengubah ukuran partisi"
 
@@ -1896,19 +1896,27 @@ msgstr "Pengubahan ukuran belum siap"
 msgid "Waited too long for the filesystem"
 msgstr "Menunggu terlalu lama untuk sistem berkas"
 
-#: src/disks/gduresizedialog.c:595
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
 msgid "Error repairing filesystem"
 msgstr "Galat ketika memperbaiki sistem berkas"
 
-#: src/disks/gduresizedialog.c:661
+#: src/disks/gduresizedialog.c:551
+msgid "Error unmounting filesystem for repairing"
+msgstr "Galat ketika melepas kaitan sistem berkas untuk perbaikan"
+
+#: src/disks/gduresizedialog.c:692
 msgid "Error unmounting filesystem for resizing"
 msgstr "Galat ketika melepas kaitan sistem berkas untuk pengubahan ukuran"
 
-#: src/disks/gduresizedialog.c:703
+#: src/disks/gduresizedialog.c:760
+msgid "Error mounting the filesystem"
+msgstr "Galat ketika mengaitkan sistem berkas"
+
+#: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
 msgstr "Paskan ukuran"
 
-#: src/disks/gduresizedialog.c:738
+#: src/disks/gduresizedialog.c:837
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Galat ketika mengaitkan sistem berkas untuk menghitung ukuran minimum"
 
@@ -2189,61 +2197,61 @@ msgstr "Perangkat loop kosong"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2664
+#: src/disks/gduwindow.c:2665
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s bebas (%.1f%% penuh)"
 
-#: src/disks/gduwindow.c:2694
+#: src/disks/gduwindow.c:2695
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Tak Dikenal"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2732
+#: src/disks/gduwindow.c:2733
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Root Sistem Berkas"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2740
+#: src/disks/gduwindow.c:2741
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Dikaitkan pada %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2746
+#: src/disks/gduwindow.c:2747
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Tak Dikait"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2769
+#: src/disks/gduwindow.c:2770
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktif"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2775
+#: src/disks/gduwindow.c:2776
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Tak Aktif"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2790
+#: src/disks/gduwindow.c:2791
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Tak terkunci"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2796
+#: src/disks/gduwindow.c:2797
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Terkunci"
 
-#: src/disks/gduwindow.c:2806
+#: src/disks/gduwindow.c:2807
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partisi Diekstensi"
@@ -2252,45 +2260,45 @@ msgstr "Partisi Diekstensi"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2826
+#: src/disks/gduwindow.c:2827
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2950
+#: src/disks/gduwindow.c:2951
 msgid "Unallocated Space"
 msgstr "Ruang yang Belum Dialokasikan"
 
-#: src/disks/gduwindow.c:3143
+#: src/disks/gduwindow.c:3144
 msgid "Error while repairing filesystem"
 msgstr "Galat ketika memperbaiki sistem berkas"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3171
 msgid "Repair successful"
 msgstr "Perbaikan sukses"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3171
 msgid "Repair failed"
 msgstr "Perbaikan gagal"
 
-#: src/disks/gduwindow.c:3173
+#: src/disks/gduwindow.c:3174
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Sistem berkas %s pada %s telah sukses diperbaiki."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3179
+#: src/disks/gduwindow.c:3180
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Sistem berkas %s pada %s tidak dapat diperbaiki."
 
-#: src/disks/gduwindow.c:3241
+#: src/disks/gduwindow.c:3242
 msgid "Confirm Repair"
 msgstr "Konfirmasi Perbaikan"
 
-#: src/disks/gduwindow.c:3244
+#: src/disks/gduwindow.c:3245
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2302,58 +2310,58 @@ msgstr ""
 "berkas yang hilang. Bergantung kepada banyaknya data, operasi ini makan "
 "waktu lebih lama."
 
-#: src/disks/gduwindow.c:3272
+#: src/disks/gduwindow.c:3273
 msgid "Error while checking filesystem"
 msgstr "Galat ketika memeriksa sistem berkas"
 
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem intact"
 msgstr "Sistem berkas utuh"
 
-#: src/disks/gduwindow.c:3299
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem damaged"
 msgstr "Sistem berkas rusak"
 
-#: src/disks/gduwindow.c:3302
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Sistem berkas %s pada %s tidak rusak."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3308
+#: src/disks/gduwindow.c:3309
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Sistem berkas %s pada %s perlu perbaikan."
 
-#: src/disks/gduwindow.c:3368
+#: src/disks/gduwindow.c:3369
 msgid "Confirm Check"
 msgstr "Konfirmasi Periksa"
 
-#: src/disks/gduwindow.c:3371
+#: src/disks/gduwindow.c:3372
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Bergantung kepada banyaknya data, pemeriksaan sistem berkas makan waktu "
 "lebih lama."
 
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3572
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Terjadi galat ketika mencoba menata drive ke mode siaga"
 
-#: src/disks/gduwindow.c:3617
+#: src/disks/gduwindow.c:3618
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Terjadi galat ketika mencoba membangunkan drive dari mode siaga"
 
-#: src/disks/gduwindow.c:3662
+#: src/disks/gduwindow.c:3663
 msgid "Error powering off drive"
 msgstr "Galat ketika mematikan daya perangkat"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3714
+#: src/disks/gduwindow.c:3715
 msgid "Are you sure you want to power off the drives?"
 msgstr "Apakah Anda yakin ingin mematikan daya kandar?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3716
+#: src/disks/gduwindow.c:3717
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2361,51 +2369,51 @@ msgstr ""
 "Operasi ini akan menyiapkan sistem bagi kandar-kandar berikut untuk "
 "dimatikan dayanya dan dicabut."
 
-#: src/disks/gduwindow.c:3720
+#: src/disks/gduwindow.c:3721
 msgid "_Power Off"
 msgstr "_Matikan"
 
-#: src/disks/gduwindow.c:3797
+#: src/disks/gduwindow.c:3798
 msgid "Error mounting filesystem"
 msgstr "Galat ketika mengaitkan sistem berkas"
 
-#: src/disks/gduwindow.c:3906
+#: src/disks/gduwindow.c:3907
 msgid "Error deleting partition"
 msgstr "Galat ketika menghapus partisi"
 
-#: src/disks/gduwindow.c:3943
+#: src/disks/gduwindow.c:3944
 msgid "Are you sure you want to delete the partition?"
 msgstr "Hapus partisi?"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3945
 msgid "All data on the partition will be lost"
 msgstr "Semua data pada partisi akan hilang"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3946
 msgid "_Delete"
 msgstr "_Hapus"
 
-#: src/disks/gduwindow.c:3976
+#: src/disks/gduwindow.c:3977
 msgid "Error ejecting media"
 msgstr "Galat ketika mengeluarkan media"
 
-#: src/disks/gduwindow.c:4041
+#: src/disks/gduwindow.c:4042
 msgid "Error locking encrypted device"
 msgstr "Galat ketika mengunci perangkat yang dienkripsi"
 
-#: src/disks/gduwindow.c:4077
+#: src/disks/gduwindow.c:4078
 msgid "Error starting swap"
 msgstr "Galat ketika menjalankan swap"
 
-#: src/disks/gduwindow.c:4114
+#: src/disks/gduwindow.c:4115
 msgid "Error stopping swap"
 msgstr "Galat ketika menghentikan swap"
 
-#: src/disks/gduwindow.c:4156
+#: src/disks/gduwindow.c:4157
 msgid "Error setting autoclear flag"
 msgstr "Galat saat menata flag otobersih"
 
-#: src/disks/gduwindow.c:4209 src/disks/gduwindow.c:4273
+#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
 msgid "Error canceling job"
 msgstr "Galat ketika membatalkan tugas"
 
@@ -2428,16 +2436,18 @@ msgstr "Perlu lebih banyak masukan"
 #: src/disks/ui/about-dialog.ui:12
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
 "Hak Cipta © 2008-2013 Red Hat, Inc.\n"
-"Hak Cipta © 2008-2013 David Zeuthen"
+"Hak Cipta © 2008-2013 David Zeuthen\n"
+"Hak Cipta © 2009-2017 Proyek GNOME\n"
 
-#: src/disks/ui/about-dialog.ui:14
+#: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
 msgstr "Melihat, mengubah, serta menyetel diska dan media"
 
-#: src/disks/ui/about-dialog.ui:17
+#: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2010, 2012.\n"
@@ -2817,7 +2827,7 @@ msgstr "PiB"
 msgid "Free Space _Following"
 msgstr "Ruang Kosong _Mengikuti"
 
-#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:167
+#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
 msgid "The free space following the partition"
 msgstr "Ruang kosong setelah partisi"
 
@@ -3500,11 +3510,11 @@ msgstr ""
 "dipindah. Ukuran minimal dihitung menurut isi saat ini. Jaga ruang bebas "
 "tambahan agar sistem berkas bekerja cepat dan reliabel."
 
-#: src/disks/ui/resize-dialog.ui:196
+#: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "_Perbedaan"
 
-#: src/disks/ui/resize-dialog.ui:212
+#: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
 msgstr "Perbedaan ke ukuran partisi sebelumnya"
 

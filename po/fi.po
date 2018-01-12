@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-10-02 13:32+0000\n"
-"PO-Revision-Date: 2018-01-06 17:56+0200\n"
+"POT-Creation-Date: 2018-01-06 15:58+0000\n"
+"PO-Revision-Date: 2018-01-12 11:14+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.0.3\n"
 "X-POT-Import-Date: 2012-03-05 14:48:13+0000\n"
 "X-Project-Style: gnome\n"
 
@@ -95,7 +95,7 @@ msgstr "Vaivaton tapa hallita levyjä"
 msgid "The GNOME Project"
 msgstr "Gnome-projekti"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1111
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
 msgid "Disks"
 msgstr "Levyt"
 
@@ -130,8 +130,9 @@ msgstr "Salli levykuvalle kirjoitus"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Valitse liitettävä levykuva"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:804
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Peru"
 
@@ -227,7 +228,7 @@ msgstr "--format-device on annettava käytettäessä valitsinta --xid\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:335
+#: src/disks/gduapplication.c:336
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1078,6 +1079,7 @@ msgstr "Huonoin"
 
 #. Translators: This string is used as the column title in the treeview for the type
 #: src/disks/gduatasmartdialog.c:1588
+#: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Tyyppi"
 
@@ -1238,7 +1240,6 @@ msgid "Error reading %lld bytes from offset %lld"
 msgstr "Virhe luettaessa %lld tavua kohdasta %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#: src/disks/gducreatefilesystemwidget.c:236
 msgid "The passphrases do not match"
 msgstr "Tunnuslauseet eivät täsmää"
 
@@ -1271,7 +1272,6 @@ msgstr ""
 "etc/crypttab</i> -tiedostoon"
 
 #: src/disks/gduchangepassphrasedialog.c:373
-#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "Tunnuslauseen vahvuus"
 
@@ -1279,7 +1279,7 @@ msgstr "Tunnuslauseen vahvuus"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gducreatediskimagedialog.c:275
+#: src/disks/gducreatediskimagedialog.c:274
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "%s - levykuva (ajankohta %s).img"
@@ -1288,38 +1288,38 @@ msgstr "%s - levykuva (ajankohta %s).img"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:308
+#: src/disks/gducreatediskimagedialog.c:307
 msgid "Disk image read error"
 msgstr "Levykuvan lukuvirhe"
 
-#: src/disks/gducreatediskimagedialog.c:344
+#: src/disks/gducreatediskimagedialog.c:343
 msgid "Allocating Disk Image"
 msgstr "Varataan levykuvaa"
 
-#: src/disks/gducreatediskimagedialog.c:348
+#: src/disks/gducreatediskimagedialog.c:347
 msgid "Retrieving DVD keys"
 msgstr "Noudetaan DVD-avaimia"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:357
+#: src/disks/gducreatediskimagedialog.c:356
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s ei voitu lukea (korvattu nollilla)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:411
+#: src/disks/gducreatediskimagedialog.c:410
 #: src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "Levykuvan kopiointi on valmis"
 
-#: src/disks/gducreatediskimagedialog.c:440
+#: src/disks/gducreatediskimagedialog.c:439
 msgid "Error creating disk image"
 msgstr "Virhe luotaessa levykuvaa"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:481
+#: src/disks/gducreatediskimagedialog.c:480
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Levykuvaa luotaessa tapahtui lukuvirheitä, joista ei voitu toipua"
 
@@ -1328,7 +1328,7 @@ msgstr "Levykuvaa luotaessa tapahtui lukuvirheitä, joista ei voitu toipua"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:490
+#: src/disks/gducreatediskimagedialog.c:489
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1340,35 +1340,35 @@ msgstr ""
 "naarmuuntunut tai laite on vaurioitunut."
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:496
+#: src/disks/gducreatediskimagedialog.c:495
 msgid "_Delete Disk Image File"
 msgstr "_Poista levykuvatiedosto"
 
-#: src/disks/gducreatediskimagedialog.c:498
+#: src/disks/gducreatediskimagedialog.c:497
 msgid "_Close"
 msgstr "_Sulje"
 
-#: src/disks/gducreatediskimagedialog.c:723
+#: src/disks/gducreatediskimagedialog.c:722
 #: src/disks/gdurestorediskimagedialog.c:747
 msgid "Error determining size of device: "
 msgstr "Virhe laitteen kokoa määriteltäessä: "
 
-#: src/disks/gducreatediskimagedialog.c:730
+#: src/disks/gducreatediskimagedialog.c:729
 #: src/disks/gdurestorediskimagedialog.c:754
 msgid "Device is size 0"
 msgstr "Laitteen koko on 0"
 
-#: src/disks/gducreatediskimagedialog.c:764
+#: src/disks/gducreatediskimagedialog.c:763
 msgid "Error allocating space for disk image file: "
 msgstr "Virhe varattaessa tilaa levykuvatiedostolle: "
 
-#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gducreatediskimagedialog.c:924
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Tiedosto ”%s” on jo olemassa. Haluatko korvata sen?"
 
-#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
@@ -1377,113 +1377,26 @@ msgstr ""
 "Tiedosto on jo olemassa sijainnissa ”%s”. Tiedoston korvaaminen korvaa "
 "nykyisen tiedoston sisällön."
 
-#: src/disks/gducreatediskimagedialog.c:931
+#: src/disks/gducreatediskimagedialog.c:930
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "Ko_rvaa"
 
-#: src/disks/gducreatediskimagedialog.c:981
+#: src/disks/gducreatediskimagedialog.c:980
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Virhe avattaessa tiedostoa kirjoittamista varten"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:997
+#: src/disks/gducreatediskimagedialog.c:996
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Kopioidaan laitetta levykuvaksi"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1003
+#: src/disks/gducreatediskimagedialog.c:1002
 msgid "Creating Disk Image"
 msgstr "Luodaan levykuvaa"
-
-#: src/disks/gducreatefilesystemwidget.c:393
-#: src/disks/gduformatdiskdialog.c:254
-msgid "Compatible with all systems and devices"
-msgstr "Yhteensopiva kaikkien järjestelmien ja laitteiden kanssa"
-
-#: src/disks/gducreatefilesystemwidget.c:394
-msgid "FAT"
-msgstr "FAT"
-
-#: src/disks/gducreatefilesystemwidget.c:399
-msgid "Compatible with most systems"
-msgstr "Yhteensopiva useimpien järjestelmien kanssa"
-
-#: src/disks/gducreatefilesystemwidget.c:400
-msgid "NTFS"
-msgstr "NTFS"
-
-#: src/disks/gducreatefilesystemwidget.c:405
-msgid "Compatible with Linux systems"
-msgstr "Yhteensopiva Linux-järjestelmien kanssa"
-
-#: src/disks/gducreatefilesystemwidget.c:406
-msgid "Ext4"
-msgstr "Ext4"
-
-#: src/disks/gducreatefilesystemwidget.c:411
-msgid "Encrypted, compatible with Linux systems"
-msgstr "Salattu, yhteensopiva Linux-järjestelmien kanssa"
-
-#: src/disks/gducreatefilesystemwidget.c:412
-msgid "LUKS + Ext4"
-msgstr "LUKS + Ext4"
-
-#: src/disks/gducreatefilesystemwidget.c:417
-msgid "Custom"
-msgstr "Muu"
-
-#: src/disks/gducreatefilesystemwidget.c:418
-msgid "Enter filesystem type"
-msgstr "Anna tiedostojärjestelmän tyyppi"
-
-#: src/disks/gducreatefilesystemwidget.c:500
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Don’t overwrite existing data"
-msgstr "Älä kirjoita nykyisten tietojen yli"
-
-#: src/disks/gducreatefilesystemwidget.c:501
-#: src/disks/gduformatdiskdialog.c:152
-msgid "Quick"
-msgstr "Nopea"
-
-#: src/disks/gducreatefilesystemwidget.c:508
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Overwrite existing data with zeroes"
-msgstr "Kirjoita nykyisten tietojen yli nollia käyttäen"
-
-#: src/disks/gducreatefilesystemwidget.c:509
-#: src/disks/gduformatdiskdialog.c:163
-msgid "Slow"
-msgstr "Hidas"
-
-#: src/disks/gducreatepartitiondialog.c:231
-msgid "Error formatting partition"
-msgstr "Virhe osiota alustaessa"
-
-#: src/disks/gducreatepartitiondialog.c:260
-msgid "Error creating partition"
-msgstr "Virhe luotaessa osiota"
-
-#: src/disks/gducreatepartitiondialog.c:351
-msgid "Extended partition"
-msgstr "Laajennettu osio"
-
-#: src/disks/gducreatepartitiondialog.c:352
-msgid "For logical partitions"
-msgstr "Loogisille osioille"
-
-#: src/disks/gducreatepartitiondialog.c:365
-msgid ""
-"Cannot create a new partition. There are already four primary partitions."
-msgstr ""
-"Uuden osion luonti epäonnistui. Levyllä on jo neljä ensisijaista osiota."
-
-#: src/disks/gducreatepartitiondialog.c:369
-msgid "This is the last primary partition that can be created."
-msgstr "Tämä on viimeinen ensisijainen osio, joka voidaan luoda."
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1638,7 +1551,7 @@ msgstr "Virhe irrotettaessa tiedostojärjestelmää"
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:105
+#: src/disks/gduformatdiskdialog.c:104
 #, c-format
 msgid "At least %s"
 msgstr "Vähintään %s"
@@ -1647,51 +1560,71 @@ msgstr "Vähintään %s"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:116
+#: src/disks/gduformatdiskdialog.c:115
 #, c-format
 msgid "Approximately %s"
 msgstr "Noin %s"
 
-#: src/disks/gduformatdiskdialog.c:195
+#: src/disks/gduformatdiskdialog.c:150
+msgid "Don’t overwrite existing data"
+msgstr "Älä kirjoita nykyisten tietojen yli"
+
+#: src/disks/gduformatdiskdialog.c:151
+msgid "Quick"
+msgstr "Nopea"
+
+#: src/disks/gduformatdiskdialog.c:161
+msgid "Overwrite existing data with zeroes"
+msgstr "Kirjoita nykyisten tietojen yli nollia käyttäen"
+
+#: src/disks/gduformatdiskdialog.c:162
+msgid "Slow"
+msgstr "Hidas"
+
+#: src/disks/gduformatdiskdialog.c:194
 msgid "ATA Secure Erase"
 msgstr "ATA Secure Erase"
 
-#: src/disks/gduformatdiskdialog.c:210
+#: src/disks/gduformatdiskdialog.c:209
 msgid "ATA Enhanced Secure Erase"
 msgstr "ATA Enhanced Secure Erase"
 
-#: src/disks/gduformatdiskdialog.c:255
+#: src/disks/gduformatdiskdialog.c:253
+msgid "Compatible with all systems and devices"
+msgstr "Yhteensopiva kaikkien järjestelmien ja laitteiden kanssa"
+
+#: src/disks/gduformatdiskdialog.c:254
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: src/disks/gduformatdiskdialog.c:265
+#: src/disks/gduformatdiskdialog.c:264
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr ""
 "Yhteensopiva nykyaikaisten järjestelmien ja suurikokoisten kiintolevyjen (>2 "
 "Tt) kanssa"
 
-#: src/disks/gduformatdiskdialog.c:266
+#: src/disks/gduformatdiskdialog.c:265
 msgid "GPT"
 msgstr "GPT"
 
-#: src/disks/gduformatdiskdialog.c:283
+#: src/disks/gduformatdiskdialog.c:282
 msgid "No partitioning"
 msgstr "Ei osiointia"
 
-#: src/disks/gduformatdiskdialog.c:284
+#: src/disks/gduformatdiskdialog.c:283
 msgid "Empty"
 msgstr "Tyhjä"
 
-#: src/disks/gduformatdiskdialog.c:328
+#: src/disks/gduformatdiskdialog.c:327
 msgid "Error formatting disk"
 msgstr "Virhe levyä alustaessa"
 
-#: src/disks/gduformatdiskdialog.c:418
+#: src/disks/gduformatdiskdialog.c:417
 msgid "Are you sure you want to format the disk?"
 msgstr "Haluatko varmasti alustaa levyn?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:422
+#: src/disks/gduformatdiskdialog.c:421
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1699,7 +1632,7 @@ msgstr ""
 "Kaikki tieto levyltä menetetään, mutta tiedonpalautuspalvelut saattavat "
 "pystyä palauttamaan poistetut tiedot"
 
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+#: src/disks/gduformatdiskdialog.c:423
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1710,7 +1643,7 @@ msgstr ""
 "yksityiset tietosi päädy vääriin käsiin"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:429
+#: src/disks/gduformatdiskdialog.c:428
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1718,7 +1651,7 @@ msgstr ""
 "Kaikki tieto levyllä ylikirjoitetaan eikä sen palautus onnistu luultavasti "
 "edes tietojenpalautuspalveluiden avulla"
 
-#: src/disks/gduformatdiskdialog.c:437
+#: src/disks/gduformatdiskdialog.c:436
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1734,35 +1667,124 @@ msgstr ""
 "artikkeli <a href='https://ata.wiki.kernel.org/index.php/"
 "ATA_Secure_Erase'>ATA Secure Erase</a> ja varmista, että ymmärrät riskit"
 
-#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Alusta"
 
-#: src/disks/gduformatvolumedialog.c:92
+#: src/disks/gducreateformatdialog.c:175
+msgid "_Previous"
+msgstr "_Edellinen"
+
+#: src/disks/gducreateformatdialog.c:181
+msgid "Cre_ate"
+msgstr "_Luo"
+
+#: src/disks/gducreateformatdialog.c:187
+msgid "Form_at"
+msgstr "_Alusta"
+
+#: src/disks/gducreateformatdialog.c:194
+msgid "N_ext"
+msgstr "_Seuraava"
+
+#: src/disks/gducreateformatdialog.c:221
 msgid "Error formatting volume"
 msgstr "Virhe alustettaessa taltiota"
 
-#: src/disks/gduformatvolumedialog.c:218
-msgid "Are you sure you want to format the volume?"
-msgstr "Haluatko varmasti alustaa taltion?"
+#: src/disks/gducreateformatdialog.c:288
+msgid "Error creating partition"
+msgstr "Virhe luotaessa osiota"
 
-#. Translators: warning used for quick format of the volume
-#: src/disks/gduformatvolumedialog.c:222
-msgid ""
-"All data on the volume will be lost but may still be recoverable by data "
-"recovery services"
-msgstr ""
-"Kaikki tieto taltiolta menetetään, mutta tiedonpalautuspalvelut saattavat "
-"silti pystyä palauttamaan poistetut tiedot"
+#: src/disks/gducreateformatdialog.c:435
+msgid "Create Partition"
+msgstr "Luo osio"
 
-#. Translators: warning used when overwriting data of the volume
-#: src/disks/gduformatvolumedialog.c:229
+#: src/disks/gducreateformatdialog.c:444
+msgid "Format Volume"
+msgstr "Alusta taltio"
+
+#: src/disks/gducreateformatdialog.c:447
+msgid "Custom Format"
+msgstr "Mukautettu alustus"
+
+#: src/disks/gducreateformatdialog.c:450
+msgid "Set Password"
+msgstr "Aseta salasana"
+
+#: src/disks/gducreateformatdialog.c:453
+msgid "Confirm Details"
+msgstr "Vahvista tiedot"
+
+#: src/disks/gducreatepartitionpage.c:320
 msgid ""
-"All data on the volume will be overwritten and will likely not be "
-"recoverable by data recovery services"
+"Cannot create a new partition. There are already four primary partitions."
 msgstr ""
-"Kaikki tieto taltiolla ylikirjoitetaan eikä sen palautus onnistu luultavasti "
-"edes tietojenpalautuspalveluiden avulla"
+"Uuden osion luonti epäonnistui. Levyllä on jo neljä ensisijaista osiota."
+
+#: src/disks/gducreatepartitionpage.c:324
+msgid "This is the last primary partition that can be created."
+msgstr "Tämä on viimeinen ensisijainen osio, joka voidaan luoda."
+
+#: src/disks/gducreateotherpage.c:115
+msgid "XFS — Linux Filesystem"
+msgstr "XFS — Linux-tiedostojärjestelmä"
+
+#: src/disks/gducreateotherpage.c:117
+msgid "Linux Swap Partition"
+msgstr "Linuxin swap-osio"
+
+#: src/disks/gducreateotherpage.c:119
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+msgstr ""
+"Btrfs — Copy-on-write-pohjainen Linux-tiedostojärjestelmä, tilannevedoksille"
+
+#: src/disks/gducreateotherpage.c:121
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr "F2FS — Flash-tallennustilan Linux-tiedostojärjestelmä"
+
+#: src/disks/gducreateotherpage.c:123
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr ""
+"exFAT — Flash-tallennustilan Windows-tiedostojärjestelmä, käytetään SDXC-"
+"korteille"
+
+#: src/disks/gducreateotherpage.c:125
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr ""
+"UDF — Universaali levymuoto, irrotettaville laitteille moniin järjestelmiin"
+
+#: src/disks/gducreateotherpage.c:127
+msgid "No Filesystem"
+msgstr "Ei tiedostojärjestelmää"
+
+#: src/disks/gducreateotherpage.c:207
+#, c-format
+msgid "The utility %s is missing."
+msgstr "%s puuttuu."
+
+#: src/disks/gducreatepasswordpage.c:124
+msgid "The passwords do not match"
+msgstr "Salasanat eivät täsmää"
+
+#. Translators: In most cases this should not need translation unless the
+#. *              separation character '—' is not appropriate. The strings come
+#. *              from UDisks, first is description, second the name:
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+#.
+#: src/disks/gducreateconfirmpage.c:110
+#, c-format
+#| msgctxt "volume-contents-combiner"
+#| msgid "%s — %s"
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
+#: src/disks/gducreateconfirmpage.c:128
+#, c-format
+#| msgid "%s: %2.1f%%"
+msgid "%s (%.1f%%)"
+msgstr "%s (%.1f%%)"
 
 #: src/disks/gdufstabdialog.c:155
 #, fuzzy, c-format
@@ -1877,12 +1899,12 @@ msgid "_Resize"
 msgstr "_Muuta kokoa"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
 msgid "Error resizing filesystem"
 msgstr "Virhe tiedostojärjestelmän kokoa muuttaessa"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:525
+#: src/disks/gduresizedialog.c:575
 msgid "Error resizing partition"
 msgstr "Virhe osion kokoa muuttaessa"
 
@@ -1898,19 +1920,27 @@ msgstr "Koon muuttaminen ei ole valmis"
 msgid "Waited too long for the filesystem"
 msgstr "Odotettiin liian kauan tiedostojärjestelmää"
 
-#: src/disks/gduresizedialog.c:595
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
 msgid "Error repairing filesystem"
 msgstr "Virhe tiedostojärjestelmää korjatessa"
 
-#: src/disks/gduresizedialog.c:661
+#: src/disks/gduresizedialog.c:551
+msgid "Error unmounting filesystem for repairing"
+msgstr "Virhe irrotettaessa tiedostojärjestelmää korjausta varten"
+
+#: src/disks/gduresizedialog.c:692
 msgid "Error unmounting filesystem for resizing"
 msgstr "Virhe irrotettaessa tiedostojärjestelmää koon muuttamista varten"
 
-#: src/disks/gduresizedialog.c:703
+#: src/disks/gduresizedialog.c:760
+msgid "Error mounting the filesystem"
+msgstr "Virhe tiedostojärjestelmää liittäessä"
+
+#: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
 msgstr "Sovita kokoon"
 
-#: src/disks/gduresizedialog.c:738
+#: src/disks/gduresizedialog.c:837
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Virhe tiedostojärjestelmää liittäessä vähimmäiskoon laskemista varten"
 
@@ -1989,7 +2019,7 @@ msgstr "Salausavain haettiin avainrenkaasta"
 msgid "Volumes Grid"
 msgstr "_Taltiot"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2185
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2184
 msgid "No Media"
 msgstr "Ei mediaa"
 
@@ -2031,59 +2061,53 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Vapaa tila"
 
-#: src/disks/gduwindow.c:628
+#: src/disks/gduwindow.c:627
 msgid "Error deleting loop device"
 msgstr "Virhe havaittaessa takaisinkytkentälaitetta"
 
-#: src/disks/gduwindow.c:728 src/disks/gduwindow.c:771
+#: src/disks/gduwindow.c:727 src/disks/gduwindow.c:770
 msgid "Error attaching disk image"
 msgstr "Virhe liitettäessä levykuvaa"
 
-#: src/disks/gduwindow.c:801
+#: src/disks/gduwindow.c:800
 msgid "Select Disk Image to Attach"
 msgstr "Valitse liitettävä levykuva"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:804
 msgid "_Attach"
 msgstr "Liit_ä"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:812
+#: src/disks/gduwindow.c:811
 msgid "Set up _read-only loop device"
 msgstr "Liitä takaisinkytkentälaite _kirjoitussuojattuna"
 
-#: src/disks/gduwindow.c:813
-#, fuzzy
-#| msgid ""
-#| "If checked, the loop device will be read-only. This is useful if you "
-#| "don't want the underlying file to be modified"
+#: src/disks/gduwindow.c:812
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr ""
-"Jos valittu, levykuva liitetään kirjoitussuojattuna. Tämä on järkevää, jos "
-"et halua muokata liitettävää levykuvaa"
+"Jos valittu, takaisinkytkentälaite on kirjoitussuojattu. Tämä on järkevää, "
+"jos et halua perustana olevaa tiedostoa muokattavan"
 
-#: src/disks/gduwindow.c:1011
+#: src/disks/gduwindow.c:1010
 msgid "Power off this disk"
 msgstr "Sammuta virta tästä asemasta"
 
-#: src/disks/gduwindow.c:1017
+#: src/disks/gduwindow.c:1016
 #, fuzzy
 #| msgid "Eject the media"
 msgid "Eject this disk"
 msgstr "Poista media asemasta"
 
-#: src/disks/gduwindow.c:1023
-#, fuzzy
-#| msgid "Detach Loop Device"
+#: src/disks/gduwindow.c:1022
 msgid "Detach this loop device"
-msgstr "Irrota takaisinkytkentälaite"
+msgstr "Irrota tämä takaisinkytkentälaite"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1448
+#: src/disks/gduwindow.c:1447
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2092,7 +2116,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1456
+#: src/disks/gduwindow.c:1455
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2101,7 +2125,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1464
+#: src/disks/gduwindow.c:1463
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2110,12 +2134,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1472
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1487
+#: src/disks/gduwindow.c:1486
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2124,13 +2148,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1497
+#: src/disks/gduwindow.c:1496
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1827
+#: src/disks/gduwindow.c:1826
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (vain luku)"
@@ -2139,7 +2163,7 @@ msgstr "%s (vain luku)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1865
+#: src/disks/gduwindow.c:1864
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2148,7 +2172,7 @@ msgstr "%s jäljellä (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1873
+#: src/disks/gduwindow.c:1872
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2159,7 +2183,7 @@ msgstr "%s jäljellä"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1888
+#: src/disks/gduwindow.c:1887
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s/%s — %s"
@@ -2168,17 +2192,17 @@ msgstr "%s/%s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:2013
+#: src/disks/gduwindow.c:2012
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:2093 src/disks/gduwindow.c:2497
+#: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
 msgid "Block device is empty"
 msgstr "Lohkolaite on tyhjä"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2116
+#: src/disks/gduwindow.c:2115
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2187,13 +2211,13 @@ msgstr "Tuntematon (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2285
 msgid "Connected to another seat"
 msgstr "Yhdistetty toiseen käyttöpaikkaan"
 
-#: src/disks/gduwindow.c:2433
+#: src/disks/gduwindow.c:2432
 msgid "Loop device is empty"
-msgstr ""
+msgstr "Takaisinkytkentälaite on tyhjä"
 
 #. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
 #. *              space.
@@ -2381,43 +2405,43 @@ msgstr "_Sammuta"
 msgid "Error mounting filesystem"
 msgstr "Virhe tiedostojärjestelmää liittäessä"
 
-#: src/disks/gduwindow.c:3903
+#: src/disks/gduwindow.c:3907
 msgid "Error deleting partition"
 msgstr "Virhe poistettaessa osiota"
 
-#: src/disks/gduwindow.c:3940
+#: src/disks/gduwindow.c:3944
 msgid "Are you sure you want to delete the partition?"
 msgstr "Haluatko varmasti poistaa osion?"
 
-#: src/disks/gduwindow.c:3941
+#: src/disks/gduwindow.c:3945
 msgid "All data on the partition will be lost"
 msgstr "Kaikki osion tiedot menetetään"
 
-#: src/disks/gduwindow.c:3942
+#: src/disks/gduwindow.c:3946
 msgid "_Delete"
 msgstr "_Poista"
 
-#: src/disks/gduwindow.c:3973
+#: src/disks/gduwindow.c:3977
 msgid "Error ejecting media"
 msgstr "Virhe irrottaessa mediaa"
 
-#: src/disks/gduwindow.c:4038
+#: src/disks/gduwindow.c:4042
 msgid "Error locking encrypted device"
 msgstr "Virhe lukittaessa salattua laitetta"
 
-#: src/disks/gduwindow.c:4074
+#: src/disks/gduwindow.c:4078
 msgid "Error starting swap"
 msgstr "Virhe käynnistettäessä näennäismuistia"
 
-#: src/disks/gduwindow.c:4111
+#: src/disks/gduwindow.c:4115
 msgid "Error stopping swap"
 msgstr "Virhe pysäytettäessä näennäismuistia"
 
-#: src/disks/gduwindow.c:4153
+#: src/disks/gduwindow.c:4157
 msgid "Error setting autoclear flag"
 msgstr "Virhe asettaessa autoclear-lippua"
 
-#: src/disks/gduwindow.c:4206 src/disks/gduwindow.c:4270
+#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
 msgid "Error canceling job"
 msgstr "Virhe työtä peruessa"
 
@@ -2438,21 +2462,26 @@ msgid "Need more input"
 msgstr "Tarvitsee lisää syötettä"
 
 #: src/disks/ui/about-dialog.ui:12
+#| msgid ""
+#| "Copyright © 2008-2013 Red Hat, Inc.\n"
+#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
-"Tekijänoikeus © 2008–2013 Red Hat, Inc.\n"
-"Tekijänoikeus © 2008–2013 David Zeuthen"
+"Copyright © 2008-2013 Red Hat, Inc.\n"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 GNOME-projekti\n"
 
-#: src/disks/ui/about-dialog.ui:14
+#: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
 msgstr "Tarkastele, muokkaa ja hallitse levyjä sekä medioita"
 
-#: src/disks/ui/about-dialog.ui:17
+#: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
-"Jiri Grönroos, 2010-2017\n"
+"Jiri Grönroos, 2010-2018\n"
 "Ilkka Tuohela, 2009\n"
 "\n"
 "https://l10n.gnome.org/teams/fi/\n"
@@ -2628,19 +2657,18 @@ msgid "Enter current passphrase used to protect the data"
 msgstr "Anna tietojen salaamiseen käytettävä tunnuslause"
 
 #: src/disks/ui/change-passphrase-dialog.ui:123
-#: src/disks/ui/filesystem-create.ui:189
 msgid "Sho_w Passphrases"
 msgstr "Nä_ytä tunnuslauseet"
 
 #: src/disks/ui/change-passphrase-dialog.ui:129
 #: src/disks/ui/change-passphrase-dialog.ui:130
-#: src/disks/ui/filesystem-create.ui:195 src/disks/ui/filesystem-create.ui:196
+#: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "Valitse tämä, jos haluat nähdä yllä olevat tunnuslauseet"
 
 #: src/disks/ui/change-passphrase-dialog.ui:164
 #: src/disks/ui/change-passphrase-dialog.ui:165
-#: src/disks/ui/filesystem-create.ui:158 src/disks/ui/filesystem-create.ui:159
+#: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Vahvista annettu tunnuslause"
 
@@ -2650,13 +2678,37 @@ msgid "Enter new passphrase used to protect the data"
 msgstr "Anna uusi tietojen suojaamiseen käytettävä tunnuslause"
 
 #: src/disks/ui/change-passphrase-dialog.ui:206
-#: src/disks/ui/filesystem-create.ui:117
 msgid "C_onfirm Passphrase"
 msgstr "Va_hvista tunnuslause"
 
 #: src/disks/ui/change-passphrase-dialog.ui:226
 msgid "New _Passphrase"
 msgstr "Uusi _tunnuslause"
+
+#: src/disks/ui/create-confirm-page.ui:17
+msgid "Warning: all data on the volume will be lost"
+msgstr "Varoitus: kaikki taltion sisältämät tiedot hukataan pysyvästi"
+
+#: src/disks/ui/create-confirm-page.ui:33
+msgid "Confirm the details of the current volume before proceeding."
+msgstr "Vahvista nykyisen taltion tiedot ennen jatkamista."
+
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
+msgid "Device"
+msgstr "Laite"
+
+#: src/disks/ui/create-confirm-page.ui:72
+msgid "Volume"
+msgstr "Taltio"
+
+#: src/disks/ui/create-confirm-page.ui:98
+msgid "Used"
+msgstr "Käytetty"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
+msgid "Location"
+msgstr "Sijainti"
 
 #: src/disks/ui/create-disk-image-dialog.ui:8
 msgid "Create Disk Image"
@@ -2665,7 +2717,6 @@ msgstr "Luo levykuva"
 #: src/disks/ui/create-disk-image-dialog.ui:29
 #: src/disks/ui/edit-crypttab-dialog.ui:140
 #: src/disks/ui/edit-gpt-partition-dialog.ui:107
-#: src/disks/ui/filesystem-create.ui:37
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Nimi"
@@ -2688,92 +2739,168 @@ msgstr "Lähde"
 msgid "_Start Creating…"
 msgstr "_Aloita luonti…"
 
-#: src/disks/ui/create-partition-dialog.ui:12
-msgid "Create Partition"
-msgstr "Luo osio"
+#: src/disks/ui/create-filesystem-page.ui:19
+msgid "Volume _Name"
+msgstr "_Taltion nimi"
 
-#: src/disks/ui/create-partition-dialog.ui:42
-msgid "C_reate"
-msgstr "_Luo"
+#: src/disks/ui/create-filesystem-page.ui:33
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the /dev/disk/by-label directory."
+msgstr ""
+"Tiedostojärjestelmälle annettava nimi. Tämä on hyödyllistä, jos haluat "
+"viitata laitteeseen symbolisella linkillä /dev/disk/by-label -hakemistossa."
 
-#: src/disks/ui/create-partition-dialog.ui:112 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/create-filesystem-page.ui:47
+msgid "For example: “Angela’s Files” or “Backup”."
+msgstr "Esimerkiksi \"Omat tiedostot\" tai \"Varmuuskopion data\"."
+
+#: src/disks/ui/create-filesystem-page.ui:74
+#: src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "_Tyhjennä"
+
+#: src/disks/ui/create-filesystem-page.ui:89
+msgid "Overwrites existing data, but takes longer."
+msgstr "Kirjoita nykyisten tietojen yli, mutta kestää kauemmin."
+
+#: src/disks/ui/create-filesystem-page.ui:115
+msgid "_Internal disk for use with Linux systems only (Ext4)"
+msgstr "_Sisäinen levy vain Linux-järjestelmien käytettäväksi (Ext4)"
+
+#: src/disks/ui/create-filesystem-page.ui:131
+#: src/disks/ui/create-other-page.ui:46
+msgid "_Password protect volume (LUKS)"
+msgstr "_Salasanasuojattu taltio (LUKS)"
+
+#: src/disks/ui/create-filesystem-page.ui:147
+msgid "For use with _Windows (NTFS)"
+msgstr "Käytettäväksi _Windowsin kanssa (NTFS)"
+
+#: src/disks/ui/create-filesystem-page.ui:163
+msgid "For use with all _systems and devices (FAT)"
+msgstr "Käytettäväksi kaikkien jä_rjestelmien ja laitteiden kanssa (FAT)"
+
+#: src/disks/ui/create-filesystem-page.ui:179
+msgid "_Other"
+msgstr "_Muu"
+
+#: src/disks/ui/create-other-page.ui:17
+msgid ""
+"In case that the default options do not fit your needs select one of the "
+"following filesystems. Be aware of the technical differences and do research "
+"about your use case."
+msgstr ""
+"Jos oletusasetukset eivät sovi tarpeisiisi, valitse jokin seuraavista "
+"tiedostojärjestelmistä. Ota huomioon tekniset eroavaisuudet ja tutki mikä "
+"sopii parhaiten käyttötarkoituksiisi."
+
+#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "Osion _koko"
 
-#: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
 msgid "The size of the partition to create"
 msgstr "Luotavan osion koko"
 
-#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:111
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "tavua"
 
-#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/create-partition-page.ui:112
 #: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kt"
 
-#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/create-partition-page.ui:113
 #: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "Mt"
 
-#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/create-partition-page.ui:114
 #: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "Gt"
 
-#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/create-partition-page.ui:115
 #: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "Tt"
 
-#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/create-partition-page.ui:116
 #: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "Pt"
 
-#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/create-partition-page.ui:117
 #: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/create-partition-page.ui:118
 #: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/create-partition-page.ui:119
 #: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/create-partition-page.ui:120
 #: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/create-partition-page.ui:121
 #: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:176
-#: src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "Vapaata tilaa _jälkeen"
 
-#: src/disks/ui/create-partition-dialog.ui:194
-#: src/disks/ui/resize-dialog.ui:167
+#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
 msgid "The free space following the partition"
 msgstr "Osion jälkeen tuleva tyhjä tila"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
-msgid "Contents"
-msgstr "Sisältö"
+#: src/disks/ui/create-partition-page.ui:173
+msgid "Extended Partition"
+msgstr "Laajennettu osio"
+
+#: src/disks/ui/create-partition-page.ui:177
+msgid "Extended Partitions can contain Logical Partitions"
+msgstr "Laajennetut osiot voivat sisältää loogisia osioita"
+
+#: src/disks/ui/create-password-page.ui:18
+msgid ""
+"Data stored in the volume will only be accessible with the correct password. "
+"Be careful not to forget it."
+msgstr ""
+"Taltiolle tallennetut tiedot ovat käytettävissä vain oikealla salasanalla. "
+"Älä unohda salasanaasi."
+
+#: src/disks/ui/create-password-page.ui:34
+msgid "_Password"
+msgstr "_Salasana"
+
+#: src/disks/ui/create-password-page.ui:48
+msgid "_Confirm"
+msgstr "_Vahvista"
+
+#: src/disks/ui/create-password-page.ui:63
+msgid "Enter passphrase used to protect the data"
+msgstr "Anna tietojen suojaamiseen käytettävä tunnuslause"
+
+#: src/disks/ui/create-password-page.ui:95
+msgid "Sh_ow Password"
+msgstr "Nä_ytä salasana"
+
+#: src/disks/ui/create-password-page.ui:134
+msgid "Mix uppercase and lowercase and try to use a number or two."
+msgstr "Käytä pieniä ja isoja kirjaimia sekä numeroita."
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -2899,11 +3026,6 @@ msgstr "Sarjanumero"
 msgid "World Wide Name"
 msgstr "Maailmanlaajuinen nimi (WWN)"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/disks.ui:228
-msgid "Location"
-msgstr "Sijainti"
-
 #: src/disks/ui/disks.ui:265
 msgid "Media"
 msgstr "Media"
@@ -2977,9 +3099,10 @@ msgstr "Poista valittu osio"
 msgid "Additional partition options"
 msgstr "Osion lisävalinnat"
 
-#: src/disks/ui/disks.ui:900
-msgid "Device"
-msgstr "Laite"
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: src/disks/ui/disks.ui:863
+msgid "Contents"
+msgstr "Sisältö"
 
 #: src/disks/ui/disks.ui:937
 msgid "UUID"
@@ -3121,10 +3244,10 @@ msgid ""
 "device"
 msgstr ""
 "Laitteen tunnuslause. Jos tyhjä, tunnulausetta kysytään laitteen liittämisen "
-"yhteydessä."
+"yhteydessä"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/filesystem-create.ui:97 src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:43
 msgid "_Passphrase"
 msgstr "_Tunnuslause"
 
@@ -3158,7 +3281,6 @@ msgstr "Muokkaa osiota"
 #: src/disks/ui/edit-dos-partition-dialog.ui:76
 #: src/disks/ui/edit-gpt-partition-dialog.ui:75
 #: src/disks/ui/edit-partition-dialog.ui:75
-#: src/disks/ui/filesystem-create.ui:17
 msgid "_Type"
 msgstr "_Tyyppi"
 
@@ -3178,7 +3300,7 @@ msgid ""
 msgstr ""
 "Laitteen käynnistyslataimen käyttämä lippu jolla määritetään, mistä "
 "käyttöjärjestelmä tulisi ladata. Joskus osiota, jolla on tämä lippu, "
-"viitataan <i>aktiiviseksi</i> osioksi."
+"viitataan <i>aktiiviseksi</i> osioksi"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:7
 msgid "Change Filesystem Label"
@@ -3340,7 +3462,7 @@ msgid ""
 "overwrite the contents"
 msgstr ""
 "Ilmoittaa, että osio ja sen sisältö vaaditaan käyttöjärjestelmän tai "
-"laitteen toimintaan ja että osion sisältöä ei tule poistaa tai ylikirjoittaa."
+"laitteen toimintaan ja että osion sisältöä ei tule poistaa tai ylikirjoittaa"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:157
 msgid "Legacy BIOS _Bootable"
@@ -3376,67 +3498,17 @@ msgstr "Tyhjennä…"
 msgid "Erase _Type"
 msgstr "Tyhjennyksen _tyyppi"
 
-#: src/disks/ui/filesystem-create.ui:57
-msgid "F_ilesystem"
-msgstr "Tie_dostojärjestelmä"
-
-#: src/disks/ui/filesystem-create.ui:77
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"Luotavan tiedostojärjestelmän tyyppi, esim. <i>btrfs</i>, <i>xfs</i> tai "
-"<i>swap</i>"
-
-#: src/disks/ui/filesystem-create.ui:78
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr "Luotavan tiedostojärjestelmän tyyppi, esim. btrfs, xfs tai swap"
-
-#: src/disks/ui/filesystem-create.ui:137 src/disks/ui/filesystem-create.ui:138
-msgid "Enter passphrase used to protect the data"
-msgstr "Anna tietojen suojaamiseen käytettävä tunnuslause"
-
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "_Tyhjennä"
-
-#: src/disks/ui/filesystem-create.ui:267
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"Tiedostojärjestelmälle annettava nimi. Tämä on hyödyllistä, jos haluat "
-"viitata laitteeseen symbolisella linkillä <b>/dev/disk/by-label</b> -"
-"hakemistossa"
-
-#: src/disks/ui/filesystem-create.ui:268
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"Tiedostojärjestelmälle annettava nimi. Tämä on hyödyllistä, jos haluat "
-"viitata laitteeseen symbolisella linkillä /dev/disk/by-label -hakemistossa"
-
-#: src/disks/ui/filesystem-create.ui:285
-msgid "For example, “My Files” or “Backup Data”"
-msgstr "Esimerkiksi \"Omat tiedostot\" tai \"Varmuuskopion data\""
-
 #: src/disks/ui/format-disk-dialog.ui:7
 msgid "Format Disk"
 msgstr "Alusta levy"
 
 #: src/disks/ui/format-disk-dialog.ui:39
-#: src/disks/ui/format-volume-dialog.ui:39
 msgid "_Format…"
 msgstr "_Alusta…"
 
 #: src/disks/ui/format-disk-dialog.ui:86
 msgid "_Partitioning"
 msgstr "_Osiointi"
-
-#: src/disks/ui/format-volume-dialog.ui:7
-msgid "Format Volume"
-msgstr "Alusta taltio"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
@@ -3460,22 +3532,22 @@ msgstr "Muuta taltion kokoa"
 
 #: src/disks/ui/resize-dialog.ui:53
 msgid ""
-"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr ""
 "Tiedostojärjestelmän koon muuttaminen voi johtaa tietojen katoamiseen. Ota "
 "varmuuskopiot tiedoistasi, ennen kuin jatkat. Koon muuttamisessa saattaa "
-"kestää kauan, jos  siirrettävää tietoa on paljon. Vähimmäistila lasketaan "
+"kestää kauan, jos siirrettävää tietoa on paljon. Vähimmäistila lasketaan "
 "nykyisen sisällön mukaisesti. Pidä vapaata tilaa tiedostojärjestelmässä, "
 "jotta se toimii nopeasti ja luotettavasti."
 
-#: src/disks/ui/resize-dialog.ui:196
+#: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "_Erotus"
 
-#: src/disks/ui/resize-dialog.ui:212
+#: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
 msgstr "Erotus aiempaan osion kokoon"
 
@@ -3738,6 +3810,80 @@ msgstr "Kiintolevy hajonnee pian."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Tutki"
+
+#~ msgid "FAT"
+#~ msgstr "FAT"
+
+#~ msgid "Compatible with most systems"
+#~ msgstr "Yhteensopiva useimpien järjestelmien kanssa"
+
+#~ msgid "NTFS"
+#~ msgstr "NTFS"
+
+#~ msgid "Compatible with Linux systems"
+#~ msgstr "Yhteensopiva Linux-järjestelmien kanssa"
+
+#~ msgid "Ext4"
+#~ msgstr "Ext4"
+
+#~ msgid "Encrypted, compatible with Linux systems"
+#~ msgstr "Salattu, yhteensopiva Linux-järjestelmien kanssa"
+
+#~ msgid "LUKS + Ext4"
+#~ msgstr "LUKS + Ext4"
+
+#~ msgid "Enter filesystem type"
+#~ msgstr "Anna tiedostojärjestelmän tyyppi"
+
+#~ msgid "Error formatting partition"
+#~ msgstr "Virhe osiota alustaessa"
+
+#~ msgid "Extended partition"
+#~ msgstr "Laajennettu osio"
+
+#~ msgid "For logical partitions"
+#~ msgstr "Loogisille osioille"
+
+#~ msgid "Are you sure you want to format the volume?"
+#~ msgstr "Haluatko varmasti alustaa taltion?"
+
+#~ msgid ""
+#~ "All data on the volume will be lost but may still be recoverable by data "
+#~ "recovery services"
+#~ msgstr ""
+#~ "Kaikki tieto taltiolta menetetään, mutta tiedonpalautuspalvelut saattavat "
+#~ "silti pystyä palauttamaan poistetut tiedot"
+
+#~ msgid ""
+#~ "All data on the volume will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "Kaikki tieto taltiolla ylikirjoitetaan eikä sen palautus onnistu "
+#~ "luultavasti edes tietojenpalautuspalveluiden avulla"
+
+#~ msgid "C_reate"
+#~ msgstr "_Luo"
+
+#~ msgid "F_ilesystem"
+#~ msgstr "Tie_dostojärjestelmä"
+
+#~ msgid ""
+#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+#~ "<i>swap</i>"
+#~ msgstr ""
+#~ "Luotavan tiedostojärjestelmän tyyppi, esim. <i>btrfs</i>, <i>xfs</i> tai "
+#~ "<i>swap</i>"
+
+#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+#~ msgstr "Luotavan tiedostojärjestelmän tyyppi, esim. btrfs, xfs tai swap"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+#~ msgstr ""
+#~ "Tiedostojärjestelmälle annettava nimi. Tämä on hyödyllistä, jos haluat "
+#~ "viitata laitteeseen symbolisella linkillä <b>/dev/disk/by-label</b> -"
+#~ "hakemistossa"
 
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "ATA Secure Erase / Enhanced Secure Erase"
@@ -4033,11 +4179,6 @@ msgstr "Tutki"
 #~ msgid "%s, %s"
 #~ msgstr "%s, %s"
 
-#~ msgid "%d disk is missing"
-#~ msgid_plural "%d disks are missing"
-#~ msgstr[0] "%d levy puuttuu"
-#~ msgstr[1] "%d levyä puuttuu"
-
 #~ msgctxt "mdraid"
 #~ msgid "ARRAY IS DEGRADED"
 #~ msgstr "PAKKA ON TAANTUNUT"
@@ -4312,10 +4453,6 @@ msgstr "Tutki"
 
 #~ msgid "Copying data from device <i>%s</i>..."
 #~ msgstr "Kopioidaan tietoja laitteelta <i>%s</i>..."
-
-#, fuzzy
-#~ msgid "All data on the volume will be lost"
-#~ msgstr "Varoitus: kaikki taltion sisältämät tiedot hukataan pysyvästi."
 
 #~ msgid "Copying data to device <i>%s</i>..."
 #~ msgstr "Kopioidaan tietoja laitteelle <i>%s</i>..."

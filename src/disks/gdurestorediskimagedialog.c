@@ -690,49 +690,33 @@ copy_thread_func (gpointer user_data)
   gint fd = -1;
   gint buffer_size;
   guint64 num_bytes_completed = 0;
+  GUnixFDList *fd_list = NULL;
+  GVariant *fd_index = NULL;
 
   /* default to 1 MiB blocks */
   buffer_size = (1 * 1024 * 1024);
 
-  /* Most OSes put ACLs for logged-in users on /dev/sr* nodes (this is
-   * so CD burning tools etc. work) so see if we can open the device
-   * file ourselves. If so, great, since this avoids a polkit dialog.
-   *
-   * As opposed to udisks' OpenForBackup() we also avoid O_EXCL since
-   * the disc is read-only by its very nature. As a side-effect this
-   * allows creating a disk image of a mounted disc.
-   */
-  if (g_str_has_prefix (udisks_block_get_device (data->block), "/dev/sr"))
-    {
-      fd = open (udisks_block_get_device (data->block), O_RDONLY);
-    }
+  /* request the fd from udisks */
+  if (!udisks_block_call_open_for_restore_sync (data->block,
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* fd_list */
+                                                &fd_index,
+                                                &fd_list,
+                                                NULL, /* cancellable */
+                                                &error))
+    goto out;
 
-  /* Otherwise, request the fd from udisks */
-  if (fd == -1)
+  fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), &error);
+  if (error != NULL)
     {
-      GUnixFDList *fd_list = NULL;
-      GVariant *fd_index = NULL;
-      if (!udisks_block_call_open_for_restore_sync (data->block,
-                                                    g_variant_new ("a{sv}", NULL), /* options */
-                                                    NULL, /* fd_list */
-                                                    &fd_index,
-                                                    &fd_list,
-                                                    NULL, /* cancellable */
-                                                    &error))
-        goto out;
-
-      fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), &error);
-      if (error != NULL)
-        {
-          g_prefix_error (&error,
-                          "Error extracing fd with handle %d from D-Bus message: ",
-                          g_variant_get_handle (fd_index));
-          goto out;
-        }
-      if (fd_index != NULL)
-        g_variant_unref (fd_index);
-      g_clear_object (&fd_list);
+      g_prefix_error (&error,
+                      "Error extracing fd with handle %d from D-Bus message: ",
+                      g_variant_get_handle (fd_index));
+      goto out;
     }
+  if (fd_index != NULL)
+    g_variant_unref (fd_index);
+  g_clear_object (&fd_list);
 
   g_assert (fd != -1);
 

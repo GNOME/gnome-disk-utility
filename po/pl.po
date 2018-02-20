@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-13 14:59+0000\n"
-"PO-Revision-Date: 2018-02-08 05:33+0100\n"
+"POT-Creation-Date: 2018-02-20 13:12+0000\n"
+"PO-Revision-Date: 2018-02-20 21:44+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -125,7 +125,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Wybór obrazów dysków do zamontowania"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -1345,12 +1345,12 @@ msgid "_Close"
 msgstr "Za_mknij"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Błąd podczas ustalania rozmiaru urządzenia: "
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
 msgid "Device is size 0"
 msgstr "Urządzenie ma zerowy rozmiar"
 
@@ -1537,7 +1537,7 @@ msgstr "Błąd podczas ustawiania etykiety"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Błąd podczas odmontowywania systemu plików"
 
@@ -1660,7 +1660,7 @@ msgstr ""
 "ATA_Secure_Erase'>Bezpiecznym usuwaniu zawartości ATA</a> (dostępny w języku "
 "angielskim), aby zrozumieć związane z tym ryzyko"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Sformatuj"
 
@@ -1688,23 +1688,23 @@ msgstr "Błąd podczas formatowania woluminu"
 msgid "Error creating partition"
 msgstr "Błąd podczas tworzenia partycji"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Utworzenie partycji"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Formatowanie woluminu"
 
-#: src/disks/gducreateformatdialog.c:432
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Inny format"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Ustawienie hasła"
 
-#: src/disks/gducreateformatdialog.c:438
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Potwierdzenie informacji"
 
@@ -1813,8 +1813,8 @@ msgstr "Dopasowuje podane urządzenie"
 #: src/disks/gdufstabdialog.c:481
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
-"System może nie działać poprawnie, jeśli ten wpis zostanie zmodyfikowany lub "
-"usunięty."
+"Komputer może nie działać poprawnie, jeśli ten wpis zostanie zmodyfikowany "
+"lub usunięty."
 
 #: src/disks/gdufstabdialog.c:542
 msgid "Error removing old /etc/fstab entry"
@@ -1961,34 +1961,34 @@ msgstr "Obraz dysku jest o %s większy niż urządzenie docelowe"
 msgid "Error restoring disk image"
 msgstr "Błąd podczas przywracania obrazu dysku"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Błąd podczas otwierania pliku do odczytania"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Błąd podczas ustalania rozmiaru pliku"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopiowanie obrazu dysku do urządzenia"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Przywracanie obrazu dysku"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Na pewno zapisać obraz dysku na urządzeniu?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Wszystkie istniejące dane zostaną utracone"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Przywróć"
 
@@ -2374,7 +2374,7 @@ msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
-"To działanie przygotuje system na wyłączenie i usunięcie następujących "
+"To działanie przygotuje komputer na wyłączenie i usunięcie następujących "
 "dysków."
 
 #: src/disks/gduwindow.c:3721
@@ -2980,7 +2980,7 @@ msgid ""
 "susceptible to data loss in the event of a power failure"
 msgstr ""
 "Wydajność jest zwiększana przez włączenie pamięci podręcznej zapisu, ale "
-"system staje się wrażliwy na utratę danych podczas braku zasilania"
+"komputer staje się wrażliwy na utratę danych podczas braku zasilania"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
@@ -3453,14 +3453,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Przestarzała partycja _startowa BIOS"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Przestarzała partycja startowa BIOS. Jest to odpowiednik flagi <i>startowa</"
-"i> głównego sektora startowego. Jest zwykle używane tylko dla partycji GPT "
-"w systemach używających MBR"
+"Jest to odpowiednik flagi <i>startowa</i> głównego sektora startowego. Jest "
+"zwykle używane tylko dla partycji GPT w komputerach używających MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3468,7 +3466,15 @@ msgstr "Flagi"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
-msgstr "Ukrycie z _oprogramowania sprzętowego"
+msgstr "Ukrycie przed _oprogramowaniem sprzętowym"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Wskazuje, że oprogramowanie sprzętowe EFI ma ignorować zawartość partycji "
+"i nie odczytywać z niej"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3639,20 +3645,20 @@ msgstr "Proszę wprowadzić hasło, aby odblokować"
 msgid "_Unlock"
 msgstr "O_dblokuj"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Wszystkie pliki"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Obrazy dysków (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Obrazy dysków (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3661,7 +3667,7 @@ msgstr[1] "%d lata"
 msgstr[2] "%d lat"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3670,7 +3676,7 @@ msgstr[1] "%d miesiące"
 msgstr[2] "%d miesięcy"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3679,7 +3685,7 @@ msgstr[1] "%d dni"
 msgstr[2] "%d dni"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3688,7 +3694,7 @@ msgstr[1] "%d godziny"
 msgstr[2] "%d godzin"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3697,7 +3703,7 @@ msgstr[1] "%d minuty"
 msgstr[2] "%d minut"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3706,7 +3712,7 @@ msgstr[1] "%d sekundy"
 msgstr[2] "%d sekund"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3715,70 +3721,70 @@ msgstr[1] "%d milisekundy"
 msgstr[2] "%d milisekund"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s i %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mniej niż minuta"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dotyczy urządzeń"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Błąd podczas blokowania urządzenia"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Błąd podczas wyłączania automatycznego czyszczenia urządzenia zwrotnego"

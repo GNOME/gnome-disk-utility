@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-01-08 08:51+0000\n"
-"PO-Revision-Date: 2018-01-10 13:33+0100\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-02-21 05:53+0100\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -1340,12 +1340,13 @@ msgid "_Close"
 msgstr "_Siere"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Erôr tal determinâ la dimension dal dispositîf: "
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "La dimension dal dispositîf e je 0"
 
@@ -1535,7 +1536,7 @@ msgstr "Erôr tal impuestâ la etichete"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Erôr tal dismontâ il filesystem"
 
@@ -1956,34 +1957,34 @@ msgstr "La imagjin disc e je %s plui grande dal dispositîf"
 msgid "Error restoring disk image"
 msgstr "Erôr tal ripristinâ la imagjin disc"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Erôr tal vierzi il file in leture"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Erôr tal determinâ la dimension dal file"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Copie de imagjin disc tal dispositîf"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Daûr a tornâ a meti la imagjin disc"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Scrivi par dabon la imagjin disc tal dispositîf?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Ducj i dâts presints a saran pierdûts"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Ripristinâ"
 
@@ -2434,6 +2435,7 @@ msgid "Not enough memory"
 msgstr "No vonde memorie"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Erôr interni"
 
@@ -2442,9 +2444,6 @@ msgid "Need more input"
 msgstr "A coventin plui dâts in ingrès"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -3446,13 +3445,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Invia_bil cun BIOS datâts"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Inviabil cun BIOS datâts. Al è come la etichete <i>inviabil</i> dal Master "
-"Boot Record. Di solit doprât nome par partizions GPT su sistemis MBR"
+"Chest al è ecuivalent ae etichete <i>inviabil</i> dal Master Boot Record. Di "
+"solit al ven doprât nome pes partizions GPT su sistemis MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3461,6 +3459,14 @@ msgstr "Etichetis"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Plate dal _Firmware"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Al indiche che il firmware EFI al à di ignorâ il contignût de partizion e no "
+"cirî di leilu"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3631,20 +3637,20 @@ msgstr "Scrîf passphrase par sblocâ"
 msgid "_Unlock"
 msgstr "_Sbloche"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Ducj i file"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Imagjins disc (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imagjins disc (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3652,7 +3658,7 @@ msgstr[0] "%d an"
 msgstr[1] "%d agns"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3660,7 +3666,7 @@ msgstr[0] "%d mês"
 msgstr[1] "%d mês"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3668,7 +3674,7 @@ msgstr[0] "%d zornade"
 msgstr[1] "%d diis"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3676,7 +3682,7 @@ msgstr[0] "%d ore"
 msgstr[1] "%d oris"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3684,7 +3690,7 @@ msgstr[0] "%d minût"
 msgstr[1] "%d minûts"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3692,7 +3698,7 @@ msgstr[0] "%d secont"
 msgstr[1] "%d seconts"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3700,70 +3706,70 @@ msgstr[0] "%d milisecont"
 msgstr[1] "%d miliseconts"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s e %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s e %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mancul di un minût"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositîfs coinvolts"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Erôr tal blocâ il dispositîf"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Erôr tal disabilitâ la netisie automatiche pal dispositîf di loop"
 

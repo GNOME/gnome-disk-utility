@@ -6,15 +6,15 @@
 # Petr Kovar <pknbe@volny.cz>, 2009, 2012.
 # Tomas Bzatek <tbzatek@redhat.com>, 2009.
 # Lucas Lommer <llommer@svn.gnome.org>, 2009. (just few fixes)
-# Marek Černocký <marek@manet.cz>, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017.
+# Marek Černocký <marek@manet.cz>, 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-13 14:59+0000\n"
-"PO-Revision-Date: 2017-11-15 13:42+0100\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-02-22 10:27+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -127,7 +127,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Výběr obrazu(ů) disku pro připojení"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Zrušit"
@@ -1342,12 +1342,13 @@ msgid "_Close"
 msgstr "_Zavřít"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Chyba při určování velikosti zařízení: "
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "Zařízení má velikost 0"
 
@@ -1534,7 +1535,7 @@ msgstr "Chyba při nastavování návěští"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Chyba při odpojování souborového systému"
 
@@ -1657,7 +1658,7 @@ msgstr ""
 "php/ATA_Secure_Erase'>Bezpečném mazání disku s ATA</a> (odkazovaný článek je "
 "v angličtině) a ujistěte se, že chápete potenciální rizika"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Formátovat"
 
@@ -1685,23 +1686,23 @@ msgstr "Chyba při formátování svazku"
 msgid "Error creating partition"
 msgstr "Chyba při vytváření oddílu"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Vytvoření oddílu"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Formátování svazku"
 
-#: src/disks/gducreateformatdialog.c:432
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Vlastní formát"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Nastavit heslo"
 
-#: src/disks/gducreateformatdialog.c:438
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Potvrdit údaje"
 
@@ -1959,34 +1960,34 @@ msgstr "Vybraný obraz disku je o %s větší než cílové zařízení"
 msgid "Error restoring disk image"
 msgstr "Chyba při obnově z obrazu disku"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Chyba při otevírání souboru pro čtení"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Chyba při určování velikosti souboru"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopíruje se obraz disku do zařízení"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Obnovuje se z obrazu disku"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Opravdu chcete obraz disku zapsat na zařízení?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Všechna stávající data budou ztracena"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "O_bnovit"
 
@@ -2432,6 +2433,7 @@ msgid "Not enough memory"
 msgstr "Nedostatek paměti"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Interní chyba"
 
@@ -3438,13 +3440,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "_Zaveditelný se zastaralým BIOS"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"_Zaveditelný se zastaralým BIOS. Odpovídá to příznaku <i>zaveditelný</i> pro "
-"Master Boot Record. Normálně se používá pouze pro oddíly GTP na systémech MBR"
+"Odpovídá to příznaku <i>zaveditelný</i> v hlavním zaváděcím záznamu. Normálně "
+"se používá pouze pro oddíly GTP na systémech MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3453,6 +3454,13 @@ msgstr "Příznaky"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Skrýt před _firmwarem"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Říká, že firmware EFI by měl obsah oddílu ignorovat a nezkoušet z něj číst"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3624,20 +3632,20 @@ msgstr "Zadání hesla k odemknutí"
 msgid "_Unlock"
 msgstr "_Odemknout"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Všechny soubory"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Obrazy disku (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Obrazy disku (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3646,7 +3654,7 @@ msgstr[1] "%d roky"
 msgstr[2] "%d let"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3655,7 +3663,7 @@ msgstr[1] "%d měsíce"
 msgstr[2] "%d měsíců"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3664,7 +3672,7 @@ msgstr[1] "%d dny"
 msgstr[2] "%d dní"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3673,7 +3681,7 @@ msgstr[1] "%d hodiny"
 msgstr[2] "%d hodin"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3682,7 +3690,7 @@ msgstr[1] "%d minuty"
 msgstr[2] "%d minut"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3691,7 +3699,7 @@ msgstr[1] "%d sekundy"
 msgstr[2] "%d sekund"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3700,70 +3708,70 @@ msgstr[1] "%d milisekundy"
 msgstr[2] "%d milisekund"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s a %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s a %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s a %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Méně než minuta."
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovlivněná zařízení"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Chyba při zamykání zařízení"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Chyba při vypínání automatického mazání pro zařízení místní smyčky"
 

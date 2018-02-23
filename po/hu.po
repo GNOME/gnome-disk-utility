@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-13 14:59+0000\n"
-"PO-Revision-Date: 2018-01-26 21:37+0100\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-02-24 00:25+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
@@ -124,7 +124,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Válassza ki a csatolandó lemezképet"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "Mé_gse"
@@ -1335,12 +1335,13 @@ msgid "_Close"
 msgstr "_Bezárás"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Hiba az eszköz méretének meghatározásakor: "
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "Az eszköz mérete 0"
 
@@ -1530,7 +1531,7 @@ msgstr "Hiba a címke beállításakor"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Hiba a fájlrendszer leválasztásakor"
 
@@ -1653,7 +1654,7 @@ msgstr ""
 "el az <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
 "Secure Erase</a> cikket, hogy megismerje a kockázatokat."
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Formázás"
 
@@ -1666,7 +1667,6 @@ msgid "Cre_ate"
 msgstr "_Létrehozás"
 
 #: src/disks/gducreateformatdialog.c:187
-#| msgid "_Format"
 msgid "Form_at"
 msgstr "_Formázás"
 
@@ -1682,25 +1682,23 @@ msgstr "Hiba a kötet formázásakor"
 msgid "Error creating partition"
 msgstr "Hiba a partíció létrehozásakor"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Partíció létrehozása"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Kötet formázása"
 
-#: src/disks/gducreateformatdialog.c:432
-#| msgid "Custom"
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Egyéni formátum"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Jelszó beállítása"
 
-#: src/disks/gducreateformatdialog.c:438
-#| msgid "Confirm Repair"
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Részletek megerősítése"
 
@@ -1718,7 +1716,6 @@ msgid "XFS — Linux Filesystem"
 msgstr "XFS – linuxos fájlrendszer"
 
 #: src/disks/gducreateotherpage.c:117
-#| msgid "Edit Partition"
 msgid "Linux Swap Partition"
 msgstr "Linux cserehely partíció"
 
@@ -1742,8 +1739,6 @@ msgstr ""
 "UDF – univerzális lemezformátum, cserélhető eszközökhöz számos rendszeren"
 
 #: src/disks/gducreateotherpage.c:127
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
 msgstr "Nincs fájlrendszer"
 
@@ -1753,7 +1748,6 @@ msgid "The utility %s is missing."
 msgstr "A(z) %s segédprogram hiányzik."
 
 #: src/disks/gducreatepasswordpage.c:124
-#| msgid "The passphrases do not match"
 msgid "The passwords do not match"
 msgstr "A jelszavak nem egyeznek"
 
@@ -1764,8 +1758,6 @@ msgstr "A jelszavak nem egyeznek"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s – %s"
 
@@ -1773,7 +1765,6 @@ msgstr "%s – %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1918,7 +1909,6 @@ msgid "Error repairing filesystem"
 msgstr "Hiba a fájlrendszer javításakor"
 
 #: src/disks/gduresizedialog.c:551
-#| msgid "Error unmounting filesystem for resizing"
 msgid "Error unmounting filesystem for repairing"
 msgstr "Hiba a fájlrendszer javításhoz történő leválasztásakor"
 
@@ -1927,7 +1917,6 @@ msgid "Error unmounting filesystem for resizing"
 msgstr "Hiba a fájlrendszer átméretezéshez történő leválasztásakor"
 
 #: src/disks/gduresizedialog.c:760
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "Hiba a fájlrendszer csatolásakor"
 
@@ -1970,34 +1959,34 @@ msgstr "A lemezkép ennyivel nagyobb a céleszköznél: %s"
 msgid "Error restoring disk image"
 msgstr "Hiba a lemezkép helyreállításakor"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Hiba a fájl megnyitásakor olvasásra"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Hiba a fájl méretének meghatározásakor"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Lemezkép másolása az eszközre"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Lemezkép helyreállítása"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Biztosan az eszközre kívánja írni a lemezképet?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Minden meglévő adat elvész"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Visszaállítás"
 
@@ -2446,6 +2435,7 @@ msgid "Not enough memory"
 msgstr "Nincs elég memória"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Belső hiba"
 
@@ -2454,9 +2444,6 @@ msgid "Need more input"
 msgstr "További bemenet szükséges"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2672,7 +2659,6 @@ msgid "New _Passphrase"
 msgstr "Új jelm_ondat"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#| msgid "All data on the partition will be lost"
 msgid "Warning: all data on the volume will be lost"
 msgstr "Figyelmeztetés: a köteten lévő minden adat elvész"
 
@@ -2685,7 +2671,6 @@ msgid "Device"
 msgstr "Eszköz"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#| msgid "_Volumes"
 msgid "Volume"
 msgstr "Kötet"
 
@@ -2728,14 +2713,10 @@ msgid "_Start Creating…"
 msgstr "_Létrehozás megkezdése…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#| msgid "_Volumes"
 msgid "Volume _Name"
 msgstr "Kötet_név"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
@@ -2744,7 +2725,6 @@ msgstr ""
 "szeretne hivatkozni a /dev/disk/by-label könyvtárban."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Például „Fájlok” vagy „Biztonsági mentés”."
 
@@ -2754,7 +2734,6 @@ msgid "_Erase"
 msgstr "_Törlés"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
 msgstr "Felülírja a meglévő adatokat, de tovább tart."
 
@@ -2772,7 +2751,6 @@ msgid "For use with _Windows (NTFS)"
 msgstr "_Windowszal történő használathoz (NTFS)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
 msgstr "Tetszőleges _rendszerrel és eszközzel való használathoz (FAT)"
 
@@ -2862,8 +2840,6 @@ msgid "The free space following the partition"
 msgstr "A partíciót követő szabad hely"
 
 #: src/disks/ui/create-partition-page.ui:173
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "Kiterjesztett partíció"
 
@@ -2880,12 +2856,10 @@ msgstr ""
 "Semmiképp se felejtse el."
 
 #: src/disks/ui/create-password-page.ui:34
-#| msgid "_Passphrase"
 msgid "_Password"
 msgstr "_Jelszó"
 
 #: src/disks/ui/create-password-page.ui:48
-#| msgid "Confirm Check"
 msgid "_Confirm"
 msgstr "_Megerősítés"
 
@@ -2894,7 +2868,6 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Adja meg az adatok védelmére használandó jelszót"
 
 #: src/disks/ui/create-password-page.ui:95
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
 msgstr "Jelszó _megjelenítése"
 
@@ -3478,13 +3451,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Örökölt B_IOS indítható"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Az örökölt BIOS indítható. Ez megegyezik az MBR <i>indítható</i> jelzőjével. "
-"Általában csak MBR rendszerek GPT partícióin használatos."
+"Ez megegyezik az MBR <i>indítható</i> jelzőjével. Általában csak MBR "
+"rendszerek GPT partícióin használatos."
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3493,6 +3465,14 @@ msgstr "Jelzők"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Elrejtés a _firmware elől"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Azt jelzi, hogy az EFI firmware hagyja figyelmen kívül a partíció tartalmát, "
+"és ne próbáljon olvasni róla"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3539,12 +3519,6 @@ msgid "Resize Volume"
 msgstr "Kötet átméretezése"
 
 #: src/disks/ui/resize-dialog.ui:53
-#| msgid ""
-#| "Resizing a filesystem can lead to data loss. You are adviced to backup "
-#| "your data before. The resize operation will take longer if a lot of data "
-#| "has to be moved. The minimal size is calculated according to the current "
-#| "content. Keep additional free space for the filesystem to work fast and "
-#| "reliably."
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3670,20 +3644,20 @@ msgstr "Adja meg a jelmondatot a feloldáshoz"
 msgid "_Unlock"
 msgstr "_Feloldás"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Lemezképek (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Lemezképek (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3691,7 +3665,7 @@ msgstr[0] "%d év"
 msgstr[1] "%d év"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3699,7 +3673,7 @@ msgstr[0] "%d hónap"
 msgstr[1] "%d hónap"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3707,7 +3681,7 @@ msgstr[0] "%d nap"
 msgstr[1] "%d nap"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3715,7 +3689,7 @@ msgstr[0] "%d órája"
 msgstr[1] "%d órája"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3723,7 +3697,7 @@ msgstr[0] "%d perce"
 msgstr[1] "%d perce"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3731,7 +3705,7 @@ msgstr[0] "%d másodperc"
 msgstr[1] "%d másodperc"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3739,70 +3713,70 @@ msgstr[0] "%d ezredmásodperc"
 msgstr[1] "%d ezredmásodperc"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Kevesebb, mint egy perc"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Érintett eszközök"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Hiba az eszköz zárolásakor"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Hiba a hurokeszköz automatikus törlésének letiltásakor"
 

@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-13 14:59+0000\n"
-"PO-Revision-Date: 2018-01-12 00:46+0200\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-02-23 01:05+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
@@ -128,7 +128,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccione a(s) imaxe(s) de disco a montar"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -1345,12 +1345,13 @@ msgid "_Close"
 msgstr "_Pechar"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Produciuse un erro ao determinar o tamaño do dispositivo:"
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "Dispositivo con tamaño 0"
 
@@ -1538,7 +1539,7 @@ msgstr "Produciuse un erro ao definir a etiqueta"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros"
 
@@ -1660,7 +1661,7 @@ msgstr ""
 "ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>borrado ATA seguro</a> e "
 "asegúrese de que entende os riscos"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Formatar"
 
@@ -1673,7 +1674,6 @@ msgid "Cre_ate"
 msgstr "Cre_ar"
 
 #: src/disks/gducreateformatdialog.c:187
-#| msgid "_Format"
 msgid "Form_at"
 msgstr "_Formatar"
 
@@ -1689,25 +1689,23 @@ msgstr "Produciuse un erro ao formatar o volume"
 msgid "Error creating partition"
 msgstr "Produciuse un erro ao crear a partición"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Crear partición"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Formatar volume"
 
-#: src/disks/gducreateformatdialog.c:432
-#| msgid "Custom"
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Formato personalizado"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Establecer contrasinal"
 
-#: src/disks/gducreateformatdialog.c:438
-#| msgid "Confirm Repair"
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Confirmar detalles"
 
@@ -1751,20 +1749,15 @@ msgstr ""
 "sistemas"
 
 #: src/disks/gducreateotherpage.c:127
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
 msgstr "Sen sistema de ficheiros"
 
 #: src/disks/gducreateotherpage.c:207
 #, c-format
-#| msgid "%d disk is missing"
-#| msgid_plural "%d disks are missing"
 msgid "The utility %s is missing."
 msgstr "Falta a utilidade %s."
 
 #: src/disks/gducreatepasswordpage.c:124
-#| msgid "The passphrases do not match"
 msgid "The passwords do not match"
 msgstr "Os contrasinais non coinciden"
 
@@ -1775,8 +1768,6 @@ msgstr "Os contrasinais non coinciden"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s — %s"
 
@@ -1784,7 +1775,6 @@ msgstr "%s — %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1930,7 +1920,6 @@ msgid "Error repairing filesystem"
 msgstr "Produciuse un erro ao reparar o sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:551
-#| msgid "Error unmounting filesystem for resizing"
 msgid "Error unmounting filesystem for repairing"
 msgstr "Produciuse un erro ao desmontar o sistema de ficheiros para reparar"
 
@@ -1940,7 +1929,6 @@ msgstr ""
 "Produciuse un erro ao desmontar o sistema de ficheiros para redimensionar"
 
 #: src/disks/gduresizedialog.c:760
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "Produciuse un erro ao montar o sistema de ficheiros"
 
@@ -1984,34 +1972,34 @@ msgstr "A imaxe seleccionada é %s máis grande que o dispositivo obxectivo"
 msgid "Error restoring disk image"
 msgstr "Produciuse un erro ao restaurar a imaxe de disco"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Produciuse un erro ao abrir o ficheiro para lectura"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Produciuse un erro ao determinar o tamaño do ficheiro"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Copiando imaxe de disco ao dispositivo"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Restaurando imaxe de disco"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Está seguro de que quere escribir a imaxe de disco ao dispositivo?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Perderanse todos os datos existentes"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Restaurar"
 
@@ -2459,6 +2447,7 @@ msgid "Not enough memory"
 msgstr "Non hai memoria dabonda"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Erro interno"
 
@@ -2467,9 +2456,6 @@ msgid "Need more input"
 msgstr "Necesítase máis entrada"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2685,7 +2671,6 @@ msgid "New _Passphrase"
 msgstr "Novo _frase de paso"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#| msgid "All data on the volume will be lost"
 msgid "Warning: all data on the volume will be lost"
 msgstr "Aviso: todos os datos do volume perderanse irrevogabelmente"
 
@@ -2698,7 +2683,6 @@ msgid "Device"
 msgstr "Dispositivo"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#| msgid "_Volumes"
 msgid "Volume"
 msgstr "Volume"
 
@@ -2741,14 +2725,10 @@ msgid "_Start Creating…"
 msgstr "_Iniciar creación…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#| msgid "Volume Name:"
 msgid "Volume _Name"
 msgstr "_Nome do volume"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
@@ -2757,7 +2737,6 @@ msgstr ""
 "dispositivo mediante unha ligazón simbólica no cartafol /dev/disk/by-label."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Por exemplo: \"Os ficheiros de Ánxela\" ou \"Datos de respaldo\""
 
@@ -2767,7 +2746,6 @@ msgid "_Erase"
 msgstr "_Borrar"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
 msgstr "Sobrescribir os datos existentes, pero leva máis tempo."
 
@@ -2785,7 +2763,6 @@ msgid "For use with _Windows (NTFS)"
 msgstr "Para usar con _Windows (NTFS)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
 msgstr "Compatíbel con todos os _sistemas e dispositivos (FAT)"
 
@@ -2875,13 +2852,10 @@ msgid "The free space following the partition"
 msgstr "O espazo libre a continuación da partición"
 
 #: src/disks/ui/create-partition-page.ui:173
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "Partición estendida"
 
 #: src/disks/ui/create-partition-page.ui:177
-#| msgid "Container for Logical Partitions"
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr "As particións estendidas poden conter particións lóxicas"
 
@@ -2894,12 +2868,10 @@ msgstr ""
 "Preste atención para non olvidalo."
 
 #: src/disks/ui/create-password-page.ui:34
-#| msgid "Passed"
 msgid "_Password"
 msgstr "_Contrasinal"
 
 #: src/disks/ui/create-password-page.ui:48
-#| msgid "Confirm Check"
 msgid "_Confirm"
 msgstr "_Confirmar"
 
@@ -2908,7 +2880,6 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Escriba a frase de paso a usar para protexer os datos"
 
 #: src/disks/ui/create-password-page.ui:95
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
 msgstr "Mos_trar contrasinal"
 
@@ -3487,14 +3458,16 @@ msgid "Legacy BIOS _Bootable"
 msgstr "_Iniciábel por BIOS legacy"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+#| msgid ""
+#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
+#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
+#| "systems"
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Iniciábel por BIOS legacy. É o equivalente ao parámetro <i>bootable</i> de "
-"Master Boot Record. Normalmente só se usa para as particións GPT en sistemas "
-"MBR"
+"É o equivalente ao parámetro <i>arincábel</i> de Master Boot Record. "
+"Normalmente só se usa para as particións GPT en sistemas MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3503,6 +3476,14 @@ msgstr "Bandeiras"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Ocultar desde o _Firmware"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Indica que o firware EFI debería ignorar o contido da partición e non tentar "
+"lela."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3549,12 +3530,6 @@ msgid "Resize Volume"
 msgstr "Redimensionar volume"
 
 #: src/disks/ui/resize-dialog.ui:53
-#| msgid ""
-#| "Resizing a filesystem can lead to data loss. You are adviced to backup "
-#| "your data before. The resize operation will take longer if a lot of data "
-#| "has to be moved. The minimal size is calculated according to the current "
-#| "content. Keep additional free space for the filesystem to work fast and "
-#| "reliably."
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3680,20 +3655,20 @@ msgstr "Escriba a frase de paso para desbloquear"
 msgid "_Unlock"
 msgstr "_Desbloquear"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Todos os ficheiros"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Imaxes de disco (*.img, *.img.xz *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imaxes de disco (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3701,7 +3676,7 @@ msgstr[0] "%d ano"
 msgstr[1] "%d anos"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3709,7 +3684,7 @@ msgstr[0] "%d mes"
 msgstr[1] "%d meses"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3717,7 +3692,7 @@ msgstr[0] "%d día"
 msgstr[1] "%d días"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3725,7 +3700,7 @@ msgstr[0] "%d hora"
 msgstr[1] "%d horas"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3733,7 +3708,7 @@ msgstr[0] "%d minuto"
 msgstr[1] "%d minutos"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3741,7 +3716,7 @@ msgstr[0] "%d segundo"
 msgstr[1] "%d segundos"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3749,70 +3724,70 @@ msgstr[0] "%d milisegundo"
 msgstr[1] "%d milisegundos"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s e %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s e %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Menos dun minuto"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositivos afectados"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Produciuse un erro ao bloquear o dispositivo"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Produciuse un erro ao desactivar a autolimpeza do dispositivo de búcle"
 

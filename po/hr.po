@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-11-13 14:59+0000\n"
-"PO-Revision-Date: 2017-11-19 23:29+0100\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-02-25 22:11+0100\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2016-09-22 19:56+0000\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -122,7 +122,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Odaberi sliku(e) za montiranje"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:440
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Odustani"
@@ -865,7 +865,7 @@ msgstr "%.0f° C / %.0f° F"
 #.
 #: src/disks/gduatasmartdialog.c:747 src/disks/gduatasmartdialog.c:1117
 msgid "N/A"
-msgstr "nedostupno"
+msgstr "N/D"
 
 #: src/disks/gduatasmartdialog.c:767
 msgctxt "smart-self-test-result"
@@ -1338,12 +1338,13 @@ msgid "_Close"
 msgstr "_Zatvori"
 
 #: src/disks/gducreatediskimagedialog.c:722
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Greška u određivanju veličine uređaja: "
 
 #: src/disks/gducreatediskimagedialog.c:729
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "Veličina uređaja je 0"
 
@@ -1530,7 +1531,7 @@ msgstr "Greška postavljanja naziva"
 
 #: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
 #: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1378
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Greška odmontiranja datotečnog sustava"
 
@@ -1652,7 +1653,7 @@ msgstr ""
 "ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA sigurnosnom brisanju</a> "
 "i budite sigurni da razumijete rizik"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:441
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Formatiraj"
 
@@ -1680,23 +1681,23 @@ msgstr "Greška formatiranja uređaja"
 msgid "Error creating partition"
 msgstr "Greška stvaranja particije"
 
-#: src/disks/gducreateformatdialog.c:420
+#: src/disks/gducreateformatdialog.c:435
 msgid "Create Partition"
 msgstr "Stvori particiju"
 
-#: src/disks/gducreateformatdialog.c:429
+#: src/disks/gducreateformatdialog.c:444
 msgid "Format Volume"
 msgstr "Formatiraj uređaj"
 
-#: src/disks/gducreateformatdialog.c:432
+#: src/disks/gducreateformatdialog.c:447
 msgid "Custom Format"
 msgstr "Prilagođeno formatiranje"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
 msgstr "Postavi lozinku"
 
-#: src/disks/gducreateformatdialog.c:438
+#: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
 msgstr "Potvrdi pojedinosti"
 
@@ -1953,34 +1954,34 @@ msgstr "Slika diska je %s veća od uređaja odredišta"
 msgid "Error restoring disk image"
 msgstr "Greška vraćanja slike diska"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Greška otvaranja datoteke čitanja"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Greška određivanja veličine datoteke"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopiranje slike diska na uređaj"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Vraćanje slike diska"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Sigurno želite zapisati sliku diska na uređaj?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "Svi postojeći podaci će biti izgubljeni"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Vrati"
 
@@ -2427,6 +2428,7 @@ msgid "Not enough memory"
 msgstr "Nema dovoljno memorije"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Unutarnja greška"
 
@@ -3433,14 +3435,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Zastarjeli BIOS _Bootabilno"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Zastarjeli BIOS Bootabilan. To je ekvivalent Master Boot Record <i>bootable</"
-"i> oznaci. Uobičajeno bi se trebalo samo koristiti za GPT particije na MBR "
-"sustavima"
+"To je ekvivalent Master Boot Record <i>bootable</i> oznaci. Uobičajeno bi se "
+"trebalo samo koristiti za GPT particije na MBR sustavima"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3449,6 +3449,14 @@ msgstr "Oznake"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Sakrij od _frimvera"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Ukazuje da bi EFI frimver trebao zanemariti sadržaj particije i ne bi trebao "
+"pokušati čitati iz nje"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3620,20 +3628,20 @@ msgstr "Upišite lozinku za otključavanje"
 msgid "_Unlock"
 msgstr "_Otključaj"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Sve datoteke"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Slike diska (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Slike diska (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3642,7 +3650,7 @@ msgstr[1] "%d godine"
 msgstr[2] "%d godina"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3651,7 +3659,7 @@ msgstr[1] "%d mjeseca"
 msgstr[2] "%d mjeseca"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3660,7 +3668,7 @@ msgstr[1] "%d dana"
 msgstr[2] "%d dana"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3669,7 +3677,7 @@ msgstr[1] "%d sata"
 msgstr[2] "%d sata"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3678,7 +3686,7 @@ msgstr[1] "%d minute"
 msgstr[2] "%d minuta"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3687,7 +3695,7 @@ msgstr[1] "%d sekunde"
 msgstr[2] "%d sekundi"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3696,70 +3704,70 @@ msgstr[1] "%d millisekunde"
 msgstr[2] "%d millisekundi"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s i %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Manje od minute"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Zahvaćeni uređaji"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Greška zaključavanja uređaja"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Greška onemogućavanja virtualnog uređaja"
 

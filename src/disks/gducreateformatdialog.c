@@ -346,27 +346,27 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
       return;
     }
 
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-
-  if (g_strcmp0 (get_filesystem (data), "dos_extended") == 0)
-    {
-      partition_type = "0x05";
-      g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("extended"));
-    }
-  else if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
-    {
-      if (gdu_utils_is_inside_dos_extended (data->client, data->table, data->add_partition_offset))
-        {
-          g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("logical"));
-        }
-      else
-        {
-          g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("primary"));
-        }
-    }
-
   if (data->add_partition)
     {
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+
+      if (g_strcmp0 (get_filesystem (data), "dos_extended") == 0)
+        {
+          partition_type = "0x05";
+          g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("extended"));
+        }
+      else if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
+        {
+          if (gdu_utils_is_inside_dos_extended (data->client, data->table, data->add_partition_offset))
+            {
+              g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("logical"));
+            }
+          else
+            {
+              g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("primary"));
+            }
+        }
+
       size = gdu_create_partition_page_get_size (data->partition_page);
       udisks_partition_table_call_create_partition (data->table,
                                                     data->add_partition_offset,

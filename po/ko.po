@@ -4,8 +4,8 @@
 #
 # Namhyung Kim <namhyung@gmail.com>, 2009, 2010
 # Seong-ho Cho <shcho@gnome.org>, 2012, 2016-2017.
-# Changwoo Ryu <cwryu@debian.org>, 2011-2015.
 # SeongMan Jang <brian.jang11@gmail.com>, 2017.
+# Changwoo Ryu <cwryu@debian.org>, 2011-2015, 2018.
 #
 # 새로 번역하시는 분은 아래 translator-credits에 추가하세요.
 #
@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-09-02 09:15+0000\n"
-"PO-Revision-Date: 2017-09-03 20:16+0900\n"
-"Last-Translator: SeongMan Jang <brian.jang11@gmail.com>\n"
+"POT-Creation-Date: 2018-02-20 22:43+0000\n"
+"PO-Revision-Date: 2018-03-10 15:55+0900\n"
+"Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr "디스크를 관리할 쉬운 수단"
 msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1111
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
 msgid "Disks"
 msgstr "디스크"
 
@@ -139,8 +139,9 @@ msgstr "이미지에 기록 허용"
 msgid "Select Disk Image(s) to Mount"
 msgstr "마운트할 디스크 이미지를 선택하십시오"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:804
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -235,7 +236,7 @@ msgstr "--format-device 옵션은 --xid 옵션으로 지정해야 합니다\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:335
+#: src/disks/gduapplication.c:336
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1066,6 +1067,7 @@ msgstr "최악값"
 
 #. Translators: This string is used as the column title in the treeview for the type
 #: src/disks/gduatasmartdialog.c:1588
+#: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "형식"
 
@@ -1225,7 +1227,6 @@ msgid "Error reading %lld bytes from offset %lld"
 msgstr "%2$lld 오프셋으로부터 %1$lld 바이트를 읽는 중 오류"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#: src/disks/gducreatefilesystemwidget.c:236
 msgid "The passphrases do not match"
 msgstr "암호가 일치하지 않습니다."
 
@@ -1258,7 +1259,6 @@ msgstr ""
 "데이트합니다"
 
 #: src/disks/gduchangepassphrasedialog.c:373
-#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "암호의 강도"
 
@@ -1266,7 +1266,7 @@ msgstr "암호의 강도"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gducreatediskimagedialog.c:275
+#: src/disks/gducreatediskimagedialog.c:274
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "%s (%s).img의 디스크 이미지"
@@ -1275,38 +1275,38 @@ msgstr "%s (%s).img의 디스크 이미지"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:308
+#: src/disks/gducreatediskimagedialog.c:307
 msgid "Disk image read error"
 msgstr "디스크 이미지 읽기 오류"
 
-#: src/disks/gducreatediskimagedialog.c:344
+#: src/disks/gducreatediskimagedialog.c:343
 msgid "Allocating Disk Image"
 msgstr "디스크 이미지 할당"
 
-#: src/disks/gducreatediskimagedialog.c:348
+#: src/disks/gducreatediskimagedialog.c:347
 msgid "Retrieving DVD keys"
 msgstr "DVD 키 가져오기"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:357
+#: src/disks/gducreatediskimagedialog.c:356
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s 읽을 수 없음(0으로 대신)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:411
+#: src/disks/gducreatediskimagedialog.c:410
 #: src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "디스크 이미지 복사 완료"
 
-#: src/disks/gducreatediskimagedialog.c:440
+#: src/disks/gducreatediskimagedialog.c:439
 msgid "Error creating disk image"
 msgstr "디스크 이미지를 만드는 중 오류"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:481
+#: src/disks/gducreatediskimagedialog.c:480
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "디스크 이미지를 만드는 중 복구 불가능한 읽기 오류"
 
@@ -1315,7 +1315,7 @@ msgstr "디스크 이미지를 만드는 중 복구 불가능한 읽기 오류"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:490
+#: src/disks/gducreatediskimagedialog.c:489
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1327,35 +1327,36 @@ msgstr ""
 "된 경우입니다."
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:496
+#: src/disks/gducreatediskimagedialog.c:495
 msgid "_Delete Disk Image File"
 msgstr "디스크 이미지 파일 삭제(_D)"
 
-#: src/disks/gducreatediskimagedialog.c:498
+#: src/disks/gducreatediskimagedialog.c:497
 msgid "_Close"
 msgstr "닫기(_C)"
 
-#: src/disks/gducreatediskimagedialog.c:723
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gducreatediskimagedialog.c:722
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "장치의 크기를 결정하는 중 오류:"
 
-#: src/disks/gducreatediskimagedialog.c:730
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gducreatediskimagedialog.c:729
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "장치 크기가 0입니다"
 
-#: src/disks/gducreatediskimagedialog.c:764
+#: src/disks/gducreatediskimagedialog.c:763
 msgid "Error allocating space for disk image file: "
 msgstr "디스크 이미지 파일에 필요한 공간을 할당하는 중 오류: "
 
-#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gducreatediskimagedialog.c:924
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "이름이 “%s”인 파일이 이미 있습니다. 바꾸시겠습니까?"
 
-#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
@@ -1363,112 +1364,26 @@ msgid ""
 msgstr ""
 "“%s”에 파일이 이미 있습니다. 이 파일을 덮어 쓰면 파일 내용을 잃어버립니다."
 
-#: src/disks/gducreatediskimagedialog.c:931
+#: src/disks/gducreatediskimagedialog.c:930
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "바꾸기(_R)"
 
-#: src/disks/gducreatediskimagedialog.c:981
+#: src/disks/gducreatediskimagedialog.c:980
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "기록할 파일을 여는 중 오류"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:997
+#: src/disks/gducreatediskimagedialog.c:996
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "장치를 디스크 이미지에 복사"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1003
+#: src/disks/gducreatediskimagedialog.c:1002
 msgid "Creating Disk Image"
 msgstr "디스크 이미지 만들기"
-
-#: src/disks/gducreatefilesystemwidget.c:393
-#: src/disks/gduformatdiskdialog.c:254
-msgid "Compatible with all systems and devices"
-msgstr "모든 시스템과 장치에 호환"
-
-#: src/disks/gducreatefilesystemwidget.c:394
-msgid "FAT"
-msgstr "FAT"
-
-#: src/disks/gducreatefilesystemwidget.c:399
-msgid "Compatible with most systems"
-msgstr "대부분의 시스템과 호환"
-
-#: src/disks/gducreatefilesystemwidget.c:400
-msgid "NTFS"
-msgstr "NTFS"
-
-#: src/disks/gducreatefilesystemwidget.c:405
-msgid "Compatible with Linux systems"
-msgstr "리눅스 시스템과 호환"
-
-#: src/disks/gducreatefilesystemwidget.c:406
-msgid "Ext4"
-msgstr "EXT4"
-
-#: src/disks/gducreatefilesystemwidget.c:411
-msgid "Encrypted, compatible with Linux systems"
-msgstr "암호화, 리눅스 시스템과 호환"
-
-#: src/disks/gducreatefilesystemwidget.c:412
-msgid "LUKS + Ext4"
-msgstr "LUKS + EXT4"
-
-#: src/disks/gducreatefilesystemwidget.c:417
-msgid "Custom"
-msgstr "사용자 정의"
-
-#: src/disks/gducreatefilesystemwidget.c:418
-msgid "Enter filesystem type"
-msgstr "파일 시스템 종류를 입력하십시오"
-
-#: src/disks/gducreatefilesystemwidget.c:500
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Don’t overwrite existing data"
-msgstr "기존 데이터를 덮어쓰지 않기"
-
-#: src/disks/gducreatefilesystemwidget.c:501
-#: src/disks/gduformatdiskdialog.c:152
-msgid "Quick"
-msgstr "빠름"
-
-#: src/disks/gducreatefilesystemwidget.c:508
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Overwrite existing data with zeroes"
-msgstr "기존의 데이터를 0 값으로 덮어쓰기"
-
-#: src/disks/gducreatefilesystemwidget.c:509
-#: src/disks/gduformatdiskdialog.c:163
-msgid "Slow"
-msgstr "느림"
-
-#: src/disks/gducreatepartitiondialog.c:231
-msgid "Error formatting partition"
-msgstr "파티션을 포맷하는 중 오류"
-
-#: src/disks/gducreatepartitiondialog.c:260
-msgid "Error creating partition"
-msgstr "파티션을 만드는 중 오류"
-
-#: src/disks/gducreatepartitiondialog.c:351
-msgid "Extended partition"
-msgstr "확장 파티션"
-
-#: src/disks/gducreatepartitiondialog.c:352
-msgid "For logical partitions"
-msgstr "논리 파티션을 위함"
-
-#: src/disks/gducreatepartitiondialog.c:365
-msgid ""
-"Cannot create a new partition. There are already four primary partitions."
-msgstr "새 파티션을 만들 수 없습니다. 이미 네 개의 주 파티션이 있습니다."
-
-#: src/disks/gducreatepartitiondialog.c:369
-msgid "This is the last primary partition that can be created."
-msgstr "만들 수 있는 마지막 주 파티션입니다."
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1613,9 +1528,9 @@ msgstr "라벨이 이미 존재합니다"
 msgid "Error setting label"
 msgstr "레이블을 설정하는 중 오류"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3204
-#: src/disks/gduwindow.c:3332 src/disks/gduwindow.c:3833
-#: src/libgdu/gduutils.c:1375
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
+#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "파일 시스템을 마운트 해제하는 중 오류"
 
@@ -1623,7 +1538,7 @@ msgstr "파일 시스템을 마운트 해제하는 중 오류"
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:105
+#: src/disks/gduformatdiskdialog.c:104
 #, c-format
 msgid "At least %s"
 msgstr "최소 %s"
@@ -1632,49 +1547,69 @@ msgstr "최소 %s"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:116
+#: src/disks/gduformatdiskdialog.c:115
 #, c-format
 msgid "Approximately %s"
 msgstr "대략 %s"
 
-#: src/disks/gduformatdiskdialog.c:195
+#: src/disks/gduformatdiskdialog.c:150
+msgid "Don’t overwrite existing data"
+msgstr "기존 데이터를 덮어쓰지 않기"
+
+#: src/disks/gduformatdiskdialog.c:151
+msgid "Quick"
+msgstr "빠름"
+
+#: src/disks/gduformatdiskdialog.c:161
+msgid "Overwrite existing data with zeroes"
+msgstr "기존의 데이터를 0 값으로 덮어쓰기"
+
+#: src/disks/gduformatdiskdialog.c:162
+msgid "Slow"
+msgstr "느림"
+
+#: src/disks/gduformatdiskdialog.c:194
 msgid "ATA Secure Erase"
 msgstr "ATA 보안 소거"
 
-#: src/disks/gduformatdiskdialog.c:210
+#: src/disks/gduformatdiskdialog.c:209
 msgid "ATA Enhanced Secure Erase"
 msgstr "ATA 강화된 보안 소거"
 
-#: src/disks/gduformatdiskdialog.c:255
+#: src/disks/gduformatdiskdialog.c:253
+msgid "Compatible with all systems and devices"
+msgstr "모든 시스템과 장치에 호환"
+
+#: src/disks/gduformatdiskdialog.c:254
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: src/disks/gduformatdiskdialog.c:265
+#: src/disks/gduformatdiskdialog.c:264
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr "최근 시스템과 2TB를 초과한 하드 디스크와 호환"
 
-#: src/disks/gduformatdiskdialog.c:266
+#: src/disks/gduformatdiskdialog.c:265
 msgid "GPT"
 msgstr "GPT"
 
-#: src/disks/gduformatdiskdialog.c:283
+#: src/disks/gduformatdiskdialog.c:282
 msgid "No partitioning"
 msgstr "파티션 안 함"
 
-#: src/disks/gduformatdiskdialog.c:284
+#: src/disks/gduformatdiskdialog.c:283
 msgid "Empty"
 msgstr "비어 있음"
 
-#: src/disks/gduformatdiskdialog.c:328
+#: src/disks/gduformatdiskdialog.c:327
 msgid "Error formatting disk"
 msgstr "디스크 포맷 중 오류"
 
-#: src/disks/gduformatdiskdialog.c:418
+#: src/disks/gduformatdiskdialog.c:417
 msgid "Are you sure you want to format the disk?"
 msgstr "정말로 이 디스크를 포맷하시겠습니까?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:422
+#: src/disks/gduformatdiskdialog.c:421
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1682,7 +1617,7 @@ msgstr ""
 "디스크의 모든 데이터를 잃게 되지만, 그래도 데이터 복구 서비스에서 복구할 수 "
 "있습니다"
 
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+#: src/disks/gduformatdiskdialog.c:423
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1692,7 +1627,7 @@ msgstr ""
 "면, 좀 더 철저한 소거 방식을 사용해 개인 정보가 흘러가는 것을 막으십시오."
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:429
+#: src/disks/gduformatdiskdialog.c:428
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1700,7 +1635,7 @@ msgstr ""
 "데스크의 모든 데이터를 덮어 쓰므로, 데이터 복구 서비스에서 복구할 수 없습니"
 "다."
 
-#: src/disks/gduformatdiskdialog.c:437
+#: src/disks/gduformatdiskdialog.c:436
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1715,80 +1650,163 @@ msgstr ""
 "기 전에 <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
 "보안 소거</a>에 대한 내용을 읽어주시고, 위험성에 대해 충분히 이해하십시오."
 
-#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "포맷(_F)"
 
-#: src/disks/gduformatvolumedialog.c:92
+#: src/disks/gducreateformatdialog.c:175
+msgid "_Previous"
+msgstr "이전(_P)"
+
+#: src/disks/gducreateformatdialog.c:181
+msgid "Cre_ate"
+msgstr "만들기(_A)"
+
+#: src/disks/gducreateformatdialog.c:187
+msgid "Form_at"
+msgstr "포맷(_A)"
+
+#: src/disks/gducreateformatdialog.c:194
+msgid "N_ext"
+msgstr "다음(_E)"
+
+#: src/disks/gducreateformatdialog.c:221
 msgid "Error formatting volume"
 msgstr "볼륨을 포맷하는 중 오류"
 
-#: src/disks/gduformatvolumedialog.c:218
-msgid "Are you sure you want to format the volume?"
-msgstr "이 볼륨을 포맷하시겠습니까?"
+#: src/disks/gducreateformatdialog.c:288
+msgid "Error creating partition"
+msgstr "파티션을 만드는 중 오류"
 
-#. Translators: warning used for quick format of the volume
-#: src/disks/gduformatvolumedialog.c:222
+#: src/disks/gducreateformatdialog.c:435
+msgid "Create Partition"
+msgstr "파티션 만들기"
+
+#: src/disks/gducreateformatdialog.c:444
+msgid "Format Volume"
+msgstr "볼륨 포맷"
+
+#: src/disks/gducreateformatdialog.c:447
+msgid "Custom Format"
+msgstr "사용자 정의 형식"
+
+#: src/disks/gducreateformatdialog.c:450
+msgid "Set Password"
+msgstr "암호 설정"
+
+#: src/disks/gducreateformatdialog.c:453
+msgid "Confirm Details"
+msgstr "자세한 정보 확인"
+
+#: src/disks/gducreatepartitionpage.c:320
 msgid ""
-"All data on the volume will be lost but may still be recoverable by data "
-"recovery services"
-msgstr ""
-"볼륨의 모든 데이터를 잃지만, 그래도 데이터 복구 서비스에서 복구할 수 있습니다"
+"Cannot create a new partition. There are already four primary partitions."
+msgstr "새 파티션을 만들 수 없습니다. 이미 네 개의 주 파티션이 있습니다."
 
-#. Translators: warning used when overwriting data of the volume
-#: src/disks/gduformatvolumedialog.c:229
-msgid ""
-"All data on the volume will be overwritten and will likely not be "
-"recoverable by data recovery services"
-msgstr ""
-"볼륨의 모든 데이터를 덮어 쓰므로, 데이터 복구 서비스에서 복구할 수 없습니다."
+#: src/disks/gducreatepartitionpage.c:324
+msgid "This is the last primary partition that can be created."
+msgstr "만들 수 있는 마지막 주 파티션입니다."
 
-#: src/disks/gdufstabdialog.c:154
+#: src/disks/gducreateotherpage.c:115
+msgid "XFS — Linux Filesystem"
+msgstr "XFS — 리눅스 파일 시스템"
+
+#: src/disks/gducreateotherpage.c:117
+msgid "Linux Swap Partition"
+msgstr "리눅스 스왑 파티션"
+
+#: src/disks/gducreateotherpage.c:119
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+msgstr "Btrfs — 카피온라이트(copy-on-write) 리눅스 파일 시스템, 스냅샷 기능"
+
+#: src/disks/gducreateotherpage.c:121
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr "F2FS — 플래시 저장 장치 리눅스 파일 시스템"
+
+#: src/disks/gducreateotherpage.c:123
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr "exFAT — 플래시 저장 장치 윈도우 파일 시스템, SDXC 카드에 사용"
+
+#: src/disks/gducreateotherpage.c:125
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr "UDF — 유니버설 디스크 포맷(Universal Disk Format), 여러 시스템의 이동식 장치에 사용"
+
+#: src/disks/gducreateotherpage.c:127
+msgid "No Filesystem"
+msgstr "파일 시스템 없음"
+
+#: src/disks/gducreateotherpage.c:207
+#, c-format
+msgid "The utility %s is missing."
+msgstr "%s 유틸리티가 없습니다."
+
+#: src/disks/gducreatepasswordpage.c:124
+msgid "The passwords do not match"
+msgstr "암호가 일치하지 않습니다."
+
+#. Translators: In most cases this should not need translation unless the
+#. *              separation character '—' is not appropriate. The strings come
+#. *              from UDisks, first is description, second the name:
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+#.
+#: src/disks/gducreateconfirmpage.c:110
+#, c-format
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
+#: src/disks/gducreateconfirmpage.c:128
+#, c-format
+msgid "%s (%.1f%%)"
+msgstr "%s (%.1f%%)"
+
+#: src/disks/gdufstabdialog.c:155
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr "주어진 필수 제품 데이터에 장치의 파티션 %u번이 일치합니다"
 
-#: src/disks/gdufstabdialog.c:157
+#: src/disks/gdufstabdialog.c:158
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "주어진 필수 제품 데이터에 장치의 전체 디스크가 일치합니다"
 
-#: src/disks/gdufstabdialog.c:162
+#: src/disks/gdufstabdialog.c:163
 #, c-format
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr "주어진 포트나 주소에 연결한 어떤 장치에 대해 파티션 %u번이 일치합니다"
 
-#: src/disks/gdufstabdialog.c:165
+#: src/disks/gdufstabdialog.c:166
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr "주어진 포트나 주소에 연결한 어떤 장치에 대해 전체 디스크가 일치합니다"
 
-#: src/disks/gdufstabdialog.c:169
+#: src/disks/gdufstabdialog.c:170
 msgid "Matches any device with the given label"
 msgstr "주어진 레이블에 대해 임의의 장치가 일치합니다"
 
-#: src/disks/gdufstabdialog.c:173
+#: src/disks/gdufstabdialog.c:174
 msgid "Matches the device with the given UUID"
 msgstr "주어진 UUID에 대해 장치가 일치합니다"
 
-#: src/disks/gdufstabdialog.c:177
+#: src/disks/gdufstabdialog.c:178
 msgid "Matches the given device"
 msgstr "주어진 장치에 일치"
 
-#: src/disks/gdufstabdialog.c:462
+#: src/disks/gdufstabdialog.c:481
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
 "이 항목을 수정하거나 제거하면 시스템이 제대로 동작하지 않을지도 모릅니다."
 
-#: src/disks/gdufstabdialog.c:523
+#: src/disks/gdufstabdialog.c:542
 msgid "Error removing old /etc/fstab entry"
 msgstr "오래된 /etc/fstab 요소를 제거하는 중 오류"
 
-#: src/disks/gdufstabdialog.c:579
+#: src/disks/gdufstabdialog.c:598
 msgid "Error adding new /etc/fstab entry"
 msgstr "새로운 /etc/fstab 요소를 추가하는 중 오류"
 
-#: src/disks/gdufstabdialog.c:603
+#: src/disks/gdufstabdialog.c:622
 msgid "Error updating /etc/fstab entry"
 msgstr "/etc/fstab 요소를 업데이트 하는 중 오류"
 
@@ -1802,7 +1820,7 @@ msgstr "이름없는 (%s).img 디스크 이미지"
 
 #: src/disks/gdunewdiskimagedialog.c:267
 msgid "Error writing file"
-msgstr "파일 쓰기 중 에러"
+msgstr "파일 쓰기 중 오류"
 
 #: src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
@@ -1849,18 +1867,18 @@ msgid "_Resize"
 msgstr "(_R)"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
 msgid "Error resizing filesystem"
 msgstr "파일 시스템 크기조정 오류"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:525
+#: src/disks/gduresizedialog.c:575
 msgid "Error resizing partition"
 msgstr "파티션 크기조정 오류"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
 msgid "Error repairing filesystem after resize"
-msgstr "파일시스템 크기조정 후 복구 중 에러"
+msgstr "파일 시스템 크기조정 후 복구 중 오류"
 
 #: src/disks/gduresizedialog.c:464
 msgid "Resizing not ready"
@@ -1870,19 +1888,27 @@ msgstr "크기 조정이 준비되지 않음"
 msgid "Waited too long for the filesystem"
 msgstr "파일 시스템 응답 지연"
 
-#: src/disks/gduresizedialog.c:595
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
 msgid "Error repairing filesystem"
-msgstr "파일시스템을 복구 중 오류"
+msgstr "파일 시스템 복구 중 오류"
 
-#: src/disks/gduresizedialog.c:661
+#: src/disks/gduresizedialog.c:551
+msgid "Error unmounting filesystem for repairing"
+msgstr "복구를 위해 파일 시스템을 마운트 해제하는 중 오류"
+
+#: src/disks/gduresizedialog.c:692
 msgid "Error unmounting filesystem for resizing"
 msgstr "크기조정을 위해 파일 시스템을 마운트 해제하는 중 오류"
 
-#: src/disks/gduresizedialog.c:703
+#: src/disks/gduresizedialog.c:760
+msgid "Error mounting the filesystem"
+msgstr "파일 시스템을 마운트하는 중 오류"
+
+#: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
 msgstr "크기 자동 맞춤"
 
-#: src/disks/gduresizedialog.c:738
+#: src/disks/gduresizedialog.c:837
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "최소 크기 계산을 위해 파일 시스템을 마운트하는 중 오류"
 
@@ -1917,34 +1943,34 @@ msgstr "디스크 이미지가 대상 장치보다 %s 큽니다"
 msgid "Error restoring disk image"
 msgstr "디스크 이미지를 복구하는 중 오류"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "읽을 파일을 여는 중 오류"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "파일 크기를 결정하는 중 오류"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "디스크 이미지를 장치에 복사"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "디스크 이미지를 복구"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "정말로 이 장치에 디스크 이미지를 기록하시겠습니까?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "기존의 데이터가 모두 지워집니다"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "복구(_R)"
 
@@ -1960,7 +1986,7 @@ msgstr "암호화 암호를 모음에서 가져왔습니다"
 msgid "Volumes Grid"
 msgstr "볼륨 그리드"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2185
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2184
 msgid "No Media"
 msgstr "미디어 없음"
 
@@ -2002,30 +2028,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "여유 공간"
 
-#: src/disks/gduwindow.c:628
+#: src/disks/gduwindow.c:627
 msgid "Error deleting loop device"
 msgstr "루프 장치를 삭제하는 중 오류"
 
-#: src/disks/gduwindow.c:728 src/disks/gduwindow.c:771
+#: src/disks/gduwindow.c:727 src/disks/gduwindow.c:770
 msgid "Error attaching disk image"
 msgstr "디스크 이미지를 첨부하는 중 오류"
 
-#: src/disks/gduwindow.c:801
+#: src/disks/gduwindow.c:800
 msgid "Select Disk Image to Attach"
 msgstr "첨부할 디스크 이미지를 선택하십시오"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:804
 msgid "_Attach"
 msgstr "첨부(_A)"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:812
+#: src/disks/gduwindow.c:811
 msgid "Set up _read-only loop device"
 msgstr "읽기 전용 루프 장치 설정(_R)"
 
-#: src/disks/gduwindow.c:813
+#: src/disks/gduwindow.c:812
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2033,20 +2059,20 @@ msgstr ""
 "표시하면, 루프 장치를 읽기 전용으로 설정합니다. 파일을 수정하지 못하게 할 때 "
 "사용합니다"
 
-#: src/disks/gduwindow.c:1011
+#: src/disks/gduwindow.c:1010
 msgid "Power off this disk"
 msgstr "이 디스크 전원 끄기"
 
-#: src/disks/gduwindow.c:1017
+#: src/disks/gduwindow.c:1016
 msgid "Eject this disk"
 msgstr "이 디스크 빼기"
 
-#: src/disks/gduwindow.c:1023
+#: src/disks/gduwindow.c:1022
 msgid "Detach this loop device"
 msgstr "루프 장치를 연결 끊기"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1448
+#: src/disks/gduwindow.c:1447
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2055,7 +2081,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1456
+#: src/disks/gduwindow.c:1455
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2064,7 +2090,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1464
+#: src/disks/gduwindow.c:1463
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2073,12 +2099,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1472
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1487
+#: src/disks/gduwindow.c:1486
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2087,13 +2113,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1497
+#: src/disks/gduwindow.c:1496
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1827
+#: src/disks/gduwindow.c:1826
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s(읽기 전용)"
@@ -2102,7 +2128,7 @@ msgstr "%s(읽기 전용)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1865
+#: src/disks/gduwindow.c:1864
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2111,7 +2137,7 @@ msgstr "%s 남음(%s/초)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1873
+#: src/disks/gduwindow.c:1872
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2122,7 +2148,7 @@ msgstr "%s 남음"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1888
+#: src/disks/gduwindow.c:1887
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%2$s 중 %1$s – %3$s"
@@ -2131,17 +2157,17 @@ msgstr "%2$s 중 %1$s – %3$s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:2013
+#: src/disks/gduwindow.c:2012
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:2093 src/disks/gduwindow.c:2497
+#: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
 msgid "Block device is empty"
 msgstr "블록 장치가 비었습니다"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2116
+#: src/disks/gduwindow.c:2115
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2150,11 +2176,11 @@ msgstr "알 수 없음(%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2285
 msgid "Connected to another seat"
 msgstr "다른 위치에 연결했습니다"
 
-#: src/disks/gduwindow.c:2433
+#: src/disks/gduwindow.c:2432
 msgid "Loop device is empty"
 msgstr "루프 장치가 비어 있습니다"
 
@@ -2207,18 +2233,18 @@ msgid "Not Active"
 msgstr "활성화되지 않음"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2791
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "잠금 풀림"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2795
+#: src/disks/gduwindow.c:2797
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "잠금"
 
-#: src/disks/gduwindow.c:2805
+#: src/disks/gduwindow.c:2807
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "확장 파티션"
@@ -2227,155 +2253,152 @@ msgstr "확장 파티션"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2825
+#: src/disks/gduwindow.c:2827
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2949
+#: src/disks/gduwindow.c:2951
 msgid "Unallocated Space"
 msgstr "할당되지 않은 공간"
 
-#: src/disks/gduwindow.c:3142
+#: src/disks/gduwindow.c:3144
 msgid "Error while repairing filesystem"
 msgstr "파일 시스템을 복구 중 오류"
 
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3171
 msgid "Repair successful"
 msgstr "복구 성공"
 
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3171
 msgid "Repair failed"
 msgstr "복구 실패"
 
-#: src/disks/gduwindow.c:3172
+#: src/disks/gduwindow.c:3174
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s 상의 파일 시스템  %1$s 복구되었습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3178
+#: src/disks/gduwindow.c:3180
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
-msgstr "%2$s상의 파일시스템 %1$s 복구할 수 없습니다."
+msgstr "%2$s의 %1$s 파일 시스템을 복구할 수 없습니다."
 
-#: src/disks/gduwindow.c:3240
+#: src/disks/gduwindow.c:3242
 msgid "Confirm Repair"
 msgstr "복구 확인"
 
-#: src/disks/gduwindow.c:3243
+#: src/disks/gduwindow.c:3245
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. Depending on the amount of data this operation takes longer time."
-msgstr ""
-"파일시스템 복구는 항상 가능하지 않으며, 데이터 손실을 일으킬 수 있습니다. 손"
-"실된 데이터를 복구하기 위해 포렌식 도구를 사용하려면 먼저 백업을 고려하십시"
-"오. 데이터 양에 따라 이 작업은 오래 걸릴 수 있습니다."
+msgstr "파일 시스템 복구는 항상 가능하지 않으며, 데이터 손실을 일으킬 수 있습니다. 손실된 데이터 복구 용도로 포렌식 도구를 사용하려면 먼저 백업을 고려하십시오. 데이터 양에 따라 이 작업은 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3271
+#: src/disks/gduwindow.c:3273
 msgid "Error while checking filesystem"
-msgstr "파일시스템 검사 중 오류"
+msgstr "파일 시스템 검사 중 오류"
 
-#: src/disks/gduwindow.c:3298
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem intact"
-msgstr "정상적인 파일시스템 "
+msgstr "파일 시스템 정상"
 
-#: src/disks/gduwindow.c:3298
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem damaged"
-msgstr "파일시스템 손상됨"
+msgstr "파일 시스템 손상"
 
-#: src/disks/gduwindow.c:3301
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
-msgstr "%2$s상의 파일시스템 %1$s은 손상되지 않았습니다."
+msgstr "%2$s의 %1$s 파일 시스템은 손상되지 않았습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3307
+#: src/disks/gduwindow.c:3309
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
-msgstr "%2$s상의 파일시스템 %1$s은 복구가 필요합니다."
+msgstr "%2$s의 %1$s 파일 시스템은 복구가 필요합니다."
 
-#: src/disks/gduwindow.c:3367
+#: src/disks/gduwindow.c:3369
 msgid "Confirm Check"
 msgstr "검사 확인"
 
-#: src/disks/gduwindow.c:3370
+#: src/disks/gduwindow.c:3372
 msgid "Depending on the amount of data the filesystem check takes longer time."
-msgstr "데이터 양에 따라 파일시스템 검사에 시간이 오래 걸릴 수 있습니다."
+msgstr "데이터 양에 따라 파일 시스템 검사에 시간이 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3570
+#: src/disks/gduwindow.c:3572
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "드라이브를 대기 모드로 놓으려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3616
+#: src/disks/gduwindow.c:3618
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "드라이브를 대기 모드에서 복귀하려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3661
+#: src/disks/gduwindow.c:3663
 msgid "Error powering off drive"
 msgstr "장치의 전원을 끄는 중 오류"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3713
+#: src/disks/gduwindow.c:3715
 msgid "Are you sure you want to power off the drives?"
 msgstr "정말로 드라이브의 전원을 끄시겠습니까?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3717
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "이 동작은 다음 드라이브의 전원을 끄고 제거할 수 있도록 시스템을 준비합니다."
 
-#: src/disks/gduwindow.c:3719
+#: src/disks/gduwindow.c:3721
 msgid "_Power Off"
 msgstr "전원 끄기(_P)"
 
-#: src/disks/gduwindow.c:3796
+#: src/disks/gduwindow.c:3798
 msgid "Error mounting filesystem"
 msgstr "파일 시스템을 마운트하는 중 오류"
 
-#: src/disks/gduwindow.c:3901
+#: src/disks/gduwindow.c:3907
 msgid "Error deleting partition"
 msgstr "파티션을 지우는 중 오류"
 
-#: src/disks/gduwindow.c:3938
+#: src/disks/gduwindow.c:3944
 msgid "Are you sure you want to delete the partition?"
 msgstr "이 파티션을 지우시겠습니까?"
 
-#: src/disks/gduwindow.c:3939
+#: src/disks/gduwindow.c:3945
 msgid "All data on the partition will be lost"
 msgstr "파티선의 모든 데이터를 잃습니다"
 
-#: src/disks/gduwindow.c:3940
+#: src/disks/gduwindow.c:3946
 msgid "_Delete"
 msgstr "삭제(_D)"
 
-#: src/disks/gduwindow.c:3971
+#: src/disks/gduwindow.c:3977
 msgid "Error ejecting media"
 msgstr "미디어를 꺼내는 중 오류"
 
-#: src/disks/gduwindow.c:4036
+#: src/disks/gduwindow.c:4042
 msgid "Error locking encrypted device"
 msgstr "암호화된 장치를 잠그는 중 오류"
 
-#: src/disks/gduwindow.c:4072
+#: src/disks/gduwindow.c:4078
 msgid "Error starting swap"
 msgstr "스왑을 시작하는 중 오류"
 
-#: src/disks/gduwindow.c:4109
+#: src/disks/gduwindow.c:4115
 msgid "Error stopping swap"
 msgstr "스왑을 중지하는 중 오류"
 
-#: src/disks/gduwindow.c:4151
+#: src/disks/gduwindow.c:4157
 msgid "Error setting autoclear flag"
 msgstr "자동 소거 플래그를 설정하는 중 오류"
 
-#: src/disks/gduwindow.c:4204 src/disks/gduwindow.c:4268
+#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
 msgid "Error canceling job"
 msgstr "작업을 취소하는 중 오류"
 
@@ -2388,6 +2411,7 @@ msgid "Not enough memory"
 msgstr "메모리가 부족합니다"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "내부 오류"
 
@@ -2398,16 +2422,18 @@ msgstr "입력이 더 필요합니다"
 #: src/disks/ui/about-dialog.ui:12
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 
-#: src/disks/ui/about-dialog.ui:14
+#: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
 msgstr "디스크와 미디어를 보고, 수정하고, 설정합니다"
 
-#: src/disks/ui/about-dialog.ui:17
+#: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
 "김남형 <namhyung@gmail.com>\n"
@@ -2417,7 +2443,7 @@ msgstr ""
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
-msgstr "새 디스크 이미지…(_N)"
+msgstr "새 디스크 이미지(_N)…"
 
 #: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
@@ -2578,19 +2604,18 @@ msgid "Enter current passphrase used to protect the data"
 msgstr "데이터를 보호할 때 사용한 현재 암호를 입력하십시오"
 
 #: src/disks/ui/change-passphrase-dialog.ui:123
-#: src/disks/ui/filesystem-create.ui:189
 msgid "Sho_w Passphrases"
 msgstr "암호 보이기(_W)"
 
 #: src/disks/ui/change-passphrase-dialog.ui:129
 #: src/disks/ui/change-passphrase-dialog.ui:130
-#: src/disks/ui/filesystem-create.ui:195 src/disks/ui/filesystem-create.ui:196
+#: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "위에 입력한 암호를 보려면 이 확인란을 누르십시오"
 
 #: src/disks/ui/change-passphrase-dialog.ui:164
 #: src/disks/ui/change-passphrase-dialog.ui:165
-#: src/disks/ui/filesystem-create.ui:158 src/disks/ui/filesystem-create.ui:159
+#: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "위에 입력한 암호를 다시 입력하십시오"
 
@@ -2600,13 +2625,37 @@ msgid "Enter new passphrase used to protect the data"
 msgstr "데이터를 보호할 때 사용할 새 암호를 입력하십시오"
 
 #: src/disks/ui/change-passphrase-dialog.ui:206
-#: src/disks/ui/filesystem-create.ui:117
 msgid "C_onfirm Passphrase"
 msgstr "암호 확인(_O)"
 
 #: src/disks/ui/change-passphrase-dialog.ui:226
 msgid "New _Passphrase"
 msgstr "새 암호(_P)"
+
+#: src/disks/ui/create-confirm-page.ui:17
+msgid "Warning: all data on the volume will be lost"
+msgstr "경고: 볼륨의 모든 데이터를 잃습니다"
+
+#: src/disks/ui/create-confirm-page.ui:33
+msgid "Confirm the details of the current volume before proceeding."
+msgstr "계속 하기 전에 현재 볼륨의 상세 정보가 맞는지 확인하십시오."
+
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
+msgid "Device"
+msgstr "장치"
+
+#: src/disks/ui/create-confirm-page.ui:72
+msgid "Volume"
+msgstr "볼륨"
+
+#: src/disks/ui/create-confirm-page.ui:98
+msgid "Used"
+msgstr "사용됨"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
+msgid "Location"
+msgstr "위치"
 
 #: src/disks/ui/create-disk-image-dialog.ui:8
 msgid "Create Disk Image"
@@ -2615,7 +2664,6 @@ msgstr "디스크 이미지 만들기"
 #: src/disks/ui/create-disk-image-dialog.ui:29
 #: src/disks/ui/edit-crypttab-dialog.ui:140
 #: src/disks/ui/edit-gpt-partition-dialog.ui:107
-#: src/disks/ui/filesystem-create.ui:37
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "이름(_N)"
@@ -2638,92 +2686,163 @@ msgstr "원본"
 msgid "_Start Creating…"
 msgstr "만들기 시작(_S)…"
 
-#: src/disks/ui/create-partition-dialog.ui:12
-msgid "Create Partition"
-msgstr "파티션 만들기"
+#: src/disks/ui/create-filesystem-page.ui:19
+msgid "Volume _Name"
+msgstr "볼륨 이름(_N)"
 
-#: src/disks/ui/create-partition-dialog.ui:42
-msgid "C_reate"
-msgstr "만들기(_R)"
+#: src/disks/ui/create-filesystem-page.ui:33
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the /dev/disk/by-label directory."
+msgstr "파일 시스템에서 사용할 이름입니다. /dev/disk/by-label 디렉터리의 심볼릭 링크를 통해 디바이스를 참조하려 할 때 유용합니다."
 
-#: src/disks/ui/create-partition-dialog.ui:112 src/disks/ui/resize-dialog.ui:95
+# 디스크 볼륨에서 한글 사용 가능이 어려울 수 있으니 영어로
+# - 많이 쓰이는 한국 여성 이름을 하나 골라서 사용함.
+#: src/disks/ui/create-filesystem-page.ui:47
+msgid "For example: “Angela’s Files” or “Backup”."
+msgstr "예를 들어: “Younghee's Files” 또는 “Backup”."
+
+#: src/disks/ui/create-filesystem-page.ui:74
+#: src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "지우기(_E)"
+
+#: src/disks/ui/create-filesystem-page.ui:89
+msgid "Overwrites existing data, but takes longer."
+msgstr "기존의 데이터 덮어쓰기, 오래 걸립니다."
+
+#: src/disks/ui/create-filesystem-page.ui:115
+msgid "_Internal disk for use with Linux systems only (Ext4)"
+msgstr "리눅스 시스템에서만 사용하는 내부 디스크 (Ext4)(_I)"
+
+#: src/disks/ui/create-filesystem-page.ui:131
+#: src/disks/ui/create-other-page.ui:46
+msgid "_Password protect volume (LUKS)"
+msgstr "암호로 보호된 볼륨 (LUKS)(_P)"
+
+#: src/disks/ui/create-filesystem-page.ui:147
+msgid "For use with _Windows (NTFS)"
+msgstr "윈도우에서 사용 (NTFS)(_W)"
+
+#: src/disks/ui/create-filesystem-page.ui:163
+msgid "For use with all _systems and devices (FAT)"
+msgstr "모든 시스템과 장치에 호환 (FAT)(_S)"
+
+#: src/disks/ui/create-filesystem-page.ui:179
+msgid "_Other"
+msgstr "기타(_O)"
+
+#: src/disks/ui/create-other-page.ui:17
+msgid ""
+"In case that the default options do not fit your needs select one of the "
+"following filesystems. Be aware of the technical differences and do research "
+"about your use case."
+msgstr "기본 옵션이 필요에 안 맞을 경우 다음 파일 시스템 중 하나를 고르십시오. 기술적인 차이점을 감안하시고 내 상황에 맞는지 알아 보십시오."
+
+#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "파티션 크기(_S)"
 
-#: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
 msgid "The size of the partition to create"
-msgstr "생성할 파티션 "
+msgstr "만들 파티션의 크기"
 
-#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:111
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "바이트"
 
-#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/create-partition-page.ui:112
 #: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/create-partition-page.ui:113
 #: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/create-partition-page.ui:114
 #: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/create-partition-page.ui:115
 #: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/create-partition-page.ui:116
 #: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/create-partition-page.ui:117
 #: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/create-partition-page.ui:118
 #: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/create-partition-page.ui:119
 #: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/create-partition-page.ui:120
 #: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/create-partition-page.ui:121
 #: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:176
-#: src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "뒤 남은 공간(_F)"
 
-#: src/disks/ui/create-partition-dialog.ui:194
-#: src/disks/ui/resize-dialog.ui:167
+#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
 msgid "The free space following the partition"
 msgstr "다음 파티션의 여유 공간"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
-msgid "Contents"
-msgstr "내용"
+#: src/disks/ui/create-partition-page.ui:173
+msgid "Extended Partition"
+msgstr "확장 파티션"
+
+#: src/disks/ui/create-partition-page.ui:177
+msgid "Extended Partitions can contain Logical Partitions"
+msgstr "확장 파티션 안에 논리 파티션이 들어갈 수 있습니다"
+
+#: src/disks/ui/create-password-page.ui:18
+msgid ""
+"Data stored in the volume will only be accessible with the correct password. "
+"Be careful not to forget it."
+msgstr "암호가 있어야 이 볼륨에 저장된 데이터에 접근할 수 있습니다. 암호를 잊어버리지 않도록 하십시오."
+
+#: src/disks/ui/create-password-page.ui:34
+msgid "_Password"
+msgstr "암호(_P)"
+
+#: src/disks/ui/create-password-page.ui:48
+msgid "_Confirm"
+msgstr "확인(_C)"
+
+#: src/disks/ui/create-password-page.ui:63
+msgid "Enter passphrase used to protect the data"
+msgstr "데이터를 보호하려고 사용한 암호를 입력하십시오"
+
+#: src/disks/ui/create-password-page.ui:95
+msgid "Sh_ow Password"
+msgstr "암호 보이기(_O)"
+
+#: src/disks/ui/create-password-page.ui:134
+msgid "Mix uppercase and lowercase and try to use a number or two."
+msgstr "대소문자를 섞어 쓰고 숫자를 한두개 사용해 보십시오."
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -2843,11 +2962,6 @@ msgstr "시리얼 번호"
 msgid "World Wide Name"
 msgstr "월드 와이드 이름"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/disks.ui:228
-msgid "Location"
-msgstr "위치"
-
 #: src/disks/ui/disks.ui:265
 msgid "Media"
 msgstr "미디어"
@@ -2870,7 +2984,7 @@ msgstr "자동 지우기"
 
 #: src/disks/ui/disks.ui:533
 msgid "Detach loop device after unmount action"
-msgstr "언마운트 수행 후에 루프 디바이스 연결 끊기"
+msgstr "마운트 해제 수행 후에 루프 디바이스 연결 끊기"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: src/disks/ui/disks.ui:556
@@ -2921,9 +3035,10 @@ msgstr "선택한 파티션 삭제"
 msgid "Additional partition options"
 msgstr "추가 파티션 옵션"
 
-#: src/disks/ui/disks.ui:900
-msgid "Device"
-msgstr "장치"
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: src/disks/ui/disks.ui:863
+msgid "Contents"
+msgstr "내용"
 
 #: src/disks/ui/disks.ui:937
 msgid "UUID"
@@ -2991,11 +3106,11 @@ msgstr "크기조정…"
 
 #: src/disks/ui/disks.ui:1311
 msgid "Check Filesystem…"
-msgstr "파일시스템 검사…"
+msgstr "파일 시스템 검사…"
 
 #: src/disks/ui/disks.ui:1319
 msgid "Repair Filesystem…"
-msgstr "파일시스템 복구…"
+msgstr "파일 시스템 복구…"
 
 #: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
@@ -3066,7 +3181,7 @@ msgid ""
 msgstr "이 장치를 설정할 때 사용자에 요구할 암호글, 또는 빈 값"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/filesystem-create.ui:97 src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:43
 msgid "_Passphrase"
 msgstr "암호글(_P)"
 
@@ -3097,7 +3212,6 @@ msgstr "파티션 편집"
 #: src/disks/ui/edit-dos-partition-dialog.ui:76
 #: src/disks/ui/edit-gpt-partition-dialog.ui:75
 #: src/disks/ui/edit-partition-dialog.ui:75
-#: src/disks/ui/filesystem-create.ui:17
 msgid "_Type"
 msgstr "종류(_T)"
 
@@ -3124,7 +3238,7 @@ msgstr "파일 시스템 레이블"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:72
 msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr "모든 변경전에 파일시스템은 자동으로 언마운트 될 것입니다."
+msgstr "모든 변경 전에 파일 시스템은 자동으로 마운트 해제 될 것입니다."
 
 #: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
@@ -3282,13 +3396,10 @@ msgid "Legacy BIOS _Bootable"
 msgstr "레거시 BIOS 부팅 가능(_B)"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
-msgstr ""
-"레거시 BIOS 부팅 가능 플래그. 마스터 부트 레코드의 <i>bootable</i> 플래그와 "
-"동일합니다. 보통 MBR 시스템의 GPT 파티션을 위해서만 사용합니다"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
+msgstr "마스터 부트 레코드의 <i>bootable</i> 플래그와 동일합니다. 보통 MBR 시스템의 GPT 파티션을 위해서만 사용합니다"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3297,6 +3408,12 @@ msgstr "플래그"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "펌웨어에서 숨기기(_F)"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr "EFI 펌웨어에서 이 파티션의 내용을 무시하고 내용을 읽지 않도록 표시합니다."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3310,57 +3427,11 @@ msgstr "지우기(_E)…"
 msgid "Erase _Type"
 msgstr "지우기 방식(_T)"
 
-#: src/disks/ui/filesystem-create.ui:57
-msgid "F_ilesystem"
-msgstr "파일 시스템(_I)"
-
-#: src/disks/ui/filesystem-create.ui:77
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"새로 만들 사용자 정의 파일 시스템 종류(예: <i>btrfs</i>, <i>xfs</i>, "
-"<i>swap</i>)"
-
-#: src/disks/ui/filesystem-create.ui:78
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr "새로 만들 사용자 정의 파일 시스템 종류(예: btrfs, xfs, swap)"
-
-#: src/disks/ui/filesystem-create.ui:137 src/disks/ui/filesystem-create.ui:138
-msgid "Enter passphrase used to protect the data"
-msgstr "데이터를 보호하려고 사용한 암호를 입력하십시오"
-
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "지우기(_E)"
-
-#: src/disks/ui/filesystem-create.ui:267
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"파일 시스템에서 사용할 이름입니다. <b>/dev/disk/by-label</b> 디렉터리의 심볼"
-"릭 링크를 통해 디바이스를 참조하려 할 때 유용합니다"
-
-#: src/disks/ui/filesystem-create.ui:268
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"파일 시스템에서 사용할 이름입니다. /dev/disk/by-label 디렉터리의 심볼릭 링크"
-"를 통해 디바이스를 참조하려 할 때 유용합니다"
-
-# TODO: 디스크 볼륨에서 한글 사용 가능?
-#: src/disks/ui/filesystem-create.ui:285
-msgid "For example, “My Files” or “Backup Data”"
-msgstr "예를 들어, “My Files” 또는 “Backup Data”"
-
 #: src/disks/ui/format-disk-dialog.ui:7
 msgid "Format Disk"
 msgstr "디스크 포맷"
 
 #: src/disks/ui/format-disk-dialog.ui:39
-#: src/disks/ui/format-volume-dialog.ui:39
 msgid "_Format…"
 msgstr "포맷(_F)…"
 
@@ -3368,13 +3439,9 @@ msgstr "포맷(_F)…"
 msgid "_Partitioning"
 msgstr "파티션 하기(_P)"
 
-#: src/disks/ui/format-volume-dialog.ui:7
-msgid "Format Volume"
-msgstr "볼륨 포맷"
-
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
-msgstr "새 디스크 "
+msgstr "새 디스크 이미지"
 
 #: src/disks/ui/new-disk-image-dialog.ui:29
 msgid "Image _Size"
@@ -3382,7 +3449,7 @@ msgstr "이미지 크기(_S)"
 
 #: src/disks/ui/new-disk-image-dialog.ui:86
 msgid "The size of the image to create"
-msgstr "생성할 이미지 크기 "
+msgstr "만들 이미지 크기"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
 msgid "Attach new _Image…"
@@ -3394,21 +3461,17 @@ msgstr "볼륨 크기조정"
 
 #: src/disks/ui/resize-dialog.ui:53
 msgid ""
-"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
-msgstr ""
-"파일시스템 크기조정은 데이터 손실을 야기할 수 있습니다. 그 전에 데이터를 백업"
-"할 것을 추천드립니다. 많은 데이터 이동이 있을 경우 크기조정 작업은 시간이 걸"
-"릴 수 있습니다. 최소한의 크기는 현재 컨텐트에 따라 계산됩니다. 빠르고 안정적"
-"인 작업을 위해 파일시스템에 대한 추가적인 여유 공간을 유지하십시오."
+msgstr "파일 시스템 크기조정은 데이터 손실을 야기할 수 있습니다. 그 전에 데이터를 백업할 것을 추천드립니다. 많은 데이터 이동이 있을 경우 크기조정 작업은 시간이 걸릴 수 있습니다. 최소한의 크기는 현재 컨텐트에 따라 계산됩니다. 빠르고 안정적인 작업을 위해 파일시스템에 대한 추가적인 여유 공간을 유지하십시오."
 
-#: src/disks/ui/resize-dialog.ui:196
+#: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "차이(_D)"
 
-#: src/disks/ui/resize-dialog.ui:212
+#: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
 msgstr "이전 파티션 크기 대비 차이"
 
@@ -3516,132 +3579,132 @@ msgstr "잠금 해제할 암호를 입력하십시오"
 msgid "_Unlock"
 msgstr "풀기(_U)"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "모든 파일"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "디스크 이미지(*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "디스크 이미지(*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d년"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d달"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d일"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d시간"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d분"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d초"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d밀리초"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "1분 미만"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "관련 장치"
 
-#: src/libgdu/gduutils.c:1395
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "장치를 잠그는 중 오류"
 
-#: src/libgdu/gduutils.c:1416
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "루프 장치 자동소거 비활성화 중 오류"
 
@@ -3662,6 +3725,79 @@ msgstr "하드 디스크가 곧 실패할 것 같습니다."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "검사"
+
+#~ msgid "FAT"
+#~ msgstr "FAT"
+
+#~ msgid "Compatible with most systems"
+#~ msgstr "대부분의 시스템과 호환"
+
+#~ msgid "NTFS"
+#~ msgstr "NTFS"
+
+#~ msgid "Compatible with Linux systems"
+#~ msgstr "리눅스 시스템과 호환"
+
+#~ msgid "Ext4"
+#~ msgstr "EXT4"
+
+#~ msgid "Encrypted, compatible with Linux systems"
+#~ msgstr "암호화, 리눅스 시스템과 호환"
+
+#~ msgid "LUKS + Ext4"
+#~ msgstr "LUKS + EXT4"
+
+#~ msgid "Enter filesystem type"
+#~ msgstr "파일 시스템 종류를 입력하십시오"
+
+#~ msgid "Error formatting partition"
+#~ msgstr "파티션을 포맷하는 중 오류"
+
+#~ msgid "Extended partition"
+#~ msgstr "확장 파티션"
+
+#~ msgid "For logical partitions"
+#~ msgstr "논리 파티션을 위함"
+
+#~ msgid "Are you sure you want to format the volume?"
+#~ msgstr "이 볼륨을 포맷하시겠습니까?"
+
+#~ msgid ""
+#~ "All data on the volume will be lost but may still be recoverable by data "
+#~ "recovery services"
+#~ msgstr ""
+#~ "볼륨의 모든 데이터를 잃지만, 그래도 데이터 복구 서비스에서 복구할 수 있습"
+#~ "니다"
+
+#~ msgid ""
+#~ "All data on the volume will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "볼륨의 모든 데이터를 덮어 쓰므로, 데이터 복구 서비스에서 복구할 수 없습니"
+#~ "다."
+
+#~ msgid "C_reate"
+#~ msgstr "만들기(_R)"
+
+#~ msgid "F_ilesystem"
+#~ msgstr "파일 시스템(_I)"
+
+#~ msgid ""
+#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+#~ "<i>swap</i>"
+#~ msgstr ""
+#~ "새로 만들 사용자 정의 파일 시스템 종류(예: <i>btrfs</i>, <i>xfs</i>, "
+#~ "<i>swap</i>)"
+
+#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+#~ msgstr "새로 만들 사용자 정의 파일 시스템 종류(예: btrfs, xfs, swap)"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+#~ msgstr ""
+#~ "파일 시스템에서 사용할 이름입니다. <b>/dev/disk/by-label</b> 디렉터리의 심"
+#~ "볼릭 링크를 통해 디바이스를 참조하려 할 때 유용합니다"
 
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "ATA 보안 소거 / 강화된 보안 소거"

@@ -1,17 +1,17 @@
 # Swedish translation for gnome-disk-utility.
-# Copyright © 2009-2017 Free Software Foundation, Inc.
+# Copyright © 2009-2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Daniel Nylander <po@danielnylander.se>, 2009, 2010, 2011, 2012.
 # Mattias Eriksson <snaggen@gmail.com>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2017-08-28 10:56+0000\n"
-"PO-Revision-Date: 2017-08-30 19:38+0200\n"
+"POT-Creation-Date: 2018-02-20 22:42+0000\n"
+"PO-Revision-Date: 2018-02-22 13:40+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -87,7 +87,7 @@ msgstr "Ett enkelt sätt att hantera dina diskar"
 msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1111
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
 msgid "Disks"
 msgstr "Diskar"
 
@@ -121,8 +121,9 @@ msgstr "Tillåt skrivning till avbilden"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Välj diskavbild(er) att montera"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:930
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:804
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
 msgid "_Cancel"
 msgstr "_Avbryt"
 
@@ -215,7 +216,7 @@ msgstr "--format-device måste vara angivet vid användning av --xid\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:335
+#: src/disks/gduapplication.c:336
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1064,6 +1065,7 @@ msgstr "Sämsta"
 
 #. Translators: This string is used as the column title in the treeview for the type
 #: src/disks/gduatasmartdialog.c:1588
+#: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Typ"
 
@@ -1119,7 +1121,7 @@ msgstr "%s (%s sedan)"
 #: src/disks/gdubenchmarkdialog.c:729
 msgctxt "benchmark-updated"
 msgid "No benchmark data available"
-msgstr "Inget data för prestandatest tillgängligt"
+msgstr "Ingen data för prestandatest tillgängligt"
 
 #: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
@@ -1224,7 +1226,6 @@ msgid "Error reading %lld bytes from offset %lld"
 msgstr "Fel vid läsning av %lld byte från position %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#: src/disks/gducreatefilesystemwidget.c:236
 msgid "The passphrases do not match"
 msgstr "Lösenfraserna stämmer inte överens"
 
@@ -1257,7 +1258,6 @@ msgstr ""
 "som refereras av filen <i>/etc/crypttab</i>"
 
 #: src/disks/gduchangepassphrasedialog.c:373
-#: src/disks/gducreatefilesystemwidget.c:552
 msgid "The strength of the passphrase"
 msgstr "Styrkan för lösenfrasen"
 
@@ -1265,7 +1265,7 @@ msgstr "Styrkan för lösenfrasen"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gducreatediskimagedialog.c:275
+#: src/disks/gducreatediskimagedialog.c:274
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Diskavbild av %s (%s).img"
@@ -1274,38 +1274,38 @@ msgstr "Diskavbild av %s (%s).img"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:308
+#: src/disks/gducreatediskimagedialog.c:307
 msgid "Disk image read error"
 msgstr "Läsfel för diskavbild"
 
-#: src/disks/gducreatediskimagedialog.c:344
+#: src/disks/gducreatediskimagedialog.c:343
 msgid "Allocating Disk Image"
 msgstr "Allokerar diskavbild"
 
-#: src/disks/gducreatediskimagedialog.c:348
+#: src/disks/gducreatediskimagedialog.c:347
 msgid "Retrieving DVD keys"
 msgstr "Hämtar DVD-nycklar"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:357
+#: src/disks/gducreatediskimagedialog.c:356
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s oläsbar (ersatt med nollor)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:411
+#: src/disks/gducreatediskimagedialog.c:410
 #: src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "Kopiering av diskavbild slutförd"
 
-#: src/disks/gducreatediskimagedialog.c:440
+#: src/disks/gducreatediskimagedialog.c:439
 msgid "Error creating disk image"
 msgstr "Fel vid skapande av diskavbild"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:481
+#: src/disks/gducreatediskimagedialog.c:480
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Icke hanterbara läsfel vid skapande av diskavbild"
 
@@ -1314,7 +1314,7 @@ msgstr "Icke hanterbara läsfel vid skapande av diskavbild"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:490
+#: src/disks/gducreatediskimagedialog.c:489
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1326,35 +1326,36 @@ msgstr ""
 "repigt eller om det finns en fysisk skada på enheten"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:496
+#: src/disks/gducreatediskimagedialog.c:495
 msgid "_Delete Disk Image File"
 msgstr "Ta bort _diskavbildsfil"
 
-#: src/disks/gducreatediskimagedialog.c:498
+#: src/disks/gducreatediskimagedialog.c:497
 msgid "_Close"
 msgstr "S_täng"
 
-#: src/disks/gducreatediskimagedialog.c:723
-#: src/disks/gdurestorediskimagedialog.c:747
+#: src/disks/gducreatediskimagedialog.c:722
+#: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Fel vid fastställande av storlek för enhet: "
 
-#: src/disks/gducreatediskimagedialog.c:730
-#: src/disks/gdurestorediskimagedialog.c:754
+#: src/disks/gducreatediskimagedialog.c:729
+#: src/disks/gdurestorediskimagedialog.c:738
+#, c-format
 msgid "Device is size 0"
 msgstr "Enheten är storlek 0"
 
-#: src/disks/gducreatediskimagedialog.c:764
+#: src/disks/gducreatediskimagedialog.c:763
 msgid "Error allocating space for disk image file: "
 msgstr "Fel vid allokering av utrymme för diskavbildsfil: "
 
-#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gducreatediskimagedialog.c:924
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "En fil med namnet ”%s” finns redan.  Vill du ersätta den?"
 
-#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
@@ -1363,113 +1364,26 @@ msgstr ""
 "Filen finns redan i ”%s”.  Ersätter du den kommer du att skriva över dess "
 "innehåll."
 
-#: src/disks/gducreatediskimagedialog.c:931
+#: src/disks/gducreatediskimagedialog.c:930
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Ersätt"
 
-#: src/disks/gducreatediskimagedialog.c:981
+#: src/disks/gducreatediskimagedialog.c:980
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Fel vid öppning av fil för skrivning"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:997
+#: src/disks/gducreatediskimagedialog.c:996
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
-msgstr "Kopierar data till diskavbild"
+msgstr "Kopierar enhet till diskavbild"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1003
+#: src/disks/gducreatediskimagedialog.c:1002
 msgid "Creating Disk Image"
 msgstr "Skapar diskavbild"
-
-#: src/disks/gducreatefilesystemwidget.c:393
-#: src/disks/gduformatdiskdialog.c:254
-msgid "Compatible with all systems and devices"
-msgstr "Kompatibel med alla system och enheter"
-
-#: src/disks/gducreatefilesystemwidget.c:394
-msgid "FAT"
-msgstr "FAT"
-
-#: src/disks/gducreatefilesystemwidget.c:399
-msgid "Compatible with most systems"
-msgstr "Kompatibel med de flesta system"
-
-#: src/disks/gducreatefilesystemwidget.c:400
-msgid "NTFS"
-msgstr "NTFS"
-
-#: src/disks/gducreatefilesystemwidget.c:405
-msgid "Compatible with Linux systems"
-msgstr "Kompatibel med Linux-system"
-
-#: src/disks/gducreatefilesystemwidget.c:406
-msgid "Ext4"
-msgstr "Ext4"
-
-#: src/disks/gducreatefilesystemwidget.c:411
-msgid "Encrypted, compatible with Linux systems"
-msgstr "Krypterad, kompatibel med Linux-system"
-
-#: src/disks/gducreatefilesystemwidget.c:412
-msgid "LUKS + Ext4"
-msgstr "LUKS + Ext4"
-
-#: src/disks/gducreatefilesystemwidget.c:417
-msgid "Custom"
-msgstr "Anpassad"
-
-#: src/disks/gducreatefilesystemwidget.c:418
-msgid "Enter filesystem type"
-msgstr "Ange filsystemstyp"
-
-#: src/disks/gducreatefilesystemwidget.c:500
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Don’t overwrite existing data"
-msgstr "Skriv inte över existerande data"
-
-#: src/disks/gducreatefilesystemwidget.c:501
-#: src/disks/gduformatdiskdialog.c:152
-msgid "Quick"
-msgstr "Snabb"
-
-#: src/disks/gducreatefilesystemwidget.c:508
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Overwrite existing data with zeroes"
-msgstr "Skriv över befintlig data med nollor"
-
-#: src/disks/gducreatefilesystemwidget.c:509
-#: src/disks/gduformatdiskdialog.c:163
-msgid "Slow"
-msgstr "Långsam"
-
-#: src/disks/gducreatepartitiondialog.c:231
-msgid "Error formatting partition"
-msgstr "Fel vid formatering av partitionen"
-
-#: src/disks/gducreatepartitiondialog.c:260
-msgid "Error creating partition"
-msgstr "Fel vid skapande av partition"
-
-#: src/disks/gducreatepartitiondialog.c:351
-msgid "Extended partition"
-msgstr "Utökad partition"
-
-#: src/disks/gducreatepartitiondialog.c:352
-msgid "For logical partitions"
-msgstr "För logiska partitioner"
-
-#: src/disks/gducreatepartitiondialog.c:365
-msgid ""
-"Cannot create a new partition. There are already four primary partitions."
-msgstr ""
-"Kan inte skapa en ny partition. Det finns redan fyra primära partitioner."
-
-#: src/disks/gducreatepartitiondialog.c:369
-msgid "This is the last primary partition that can be created."
-msgstr "Detta är den sista primära partitionen som kan skapas."
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1614,9 +1528,9 @@ msgstr "Etiketten är densamma som befintlig etikett"
 msgid "Error setting label"
 msgstr "Fel vid inställning av etiketten"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3204
-#: src/disks/gduwindow.c:3332 src/disks/gduwindow.c:3833
-#: src/libgdu/gduutils.c:1375
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
+#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Fel vid avmontering av filsystemet"
 
@@ -1624,7 +1538,7 @@ msgstr "Fel vid avmontering av filsystemet"
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:105
+#: src/disks/gduformatdiskdialog.c:104
 #, c-format
 msgid "At least %s"
 msgstr "Åtminstone %s"
@@ -1633,49 +1547,69 @@ msgstr "Åtminstone %s"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:116
+#: src/disks/gduformatdiskdialog.c:115
 #, c-format
 msgid "Approximately %s"
 msgstr "Ungefär %s"
 
-#: src/disks/gduformatdiskdialog.c:195
+#: src/disks/gduformatdiskdialog.c:150
+msgid "Don’t overwrite existing data"
+msgstr "Skriv inte över existerande data"
+
+#: src/disks/gduformatdiskdialog.c:151
+msgid "Quick"
+msgstr "Snabb"
+
+#: src/disks/gduformatdiskdialog.c:161
+msgid "Overwrite existing data with zeroes"
+msgstr "Skriv över befintlig data med nollor"
+
+#: src/disks/gduformatdiskdialog.c:162
+msgid "Slow"
+msgstr "Långsam"
+
+#: src/disks/gduformatdiskdialog.c:194
 msgid "ATA Secure Erase"
 msgstr "ATA säker radering"
 
-#: src/disks/gduformatdiskdialog.c:210
+#: src/disks/gduformatdiskdialog.c:209
 msgid "ATA Enhanced Secure Erase"
 msgstr "ATA förbättrad säker radering"
 
-#: src/disks/gduformatdiskdialog.c:255
+#: src/disks/gduformatdiskdialog.c:253
+msgid "Compatible with all systems and devices"
+msgstr "Kompatibel med alla system och enheter"
+
+#: src/disks/gduformatdiskdialog.c:254
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: src/disks/gduformatdiskdialog.c:265
+#: src/disks/gduformatdiskdialog.c:264
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr "Kompatibel med moderna system och hårddiskar > 2 TB"
 
-#: src/disks/gduformatdiskdialog.c:266
+#: src/disks/gduformatdiskdialog.c:265
 msgid "GPT"
 msgstr "GPT"
 
-#: src/disks/gduformatdiskdialog.c:283
+#: src/disks/gduformatdiskdialog.c:282
 msgid "No partitioning"
 msgstr "Ingen partitionering"
 
-#: src/disks/gduformatdiskdialog.c:284
+#: src/disks/gduformatdiskdialog.c:283
 msgid "Empty"
 msgstr "Tom"
 
-#: src/disks/gduformatdiskdialog.c:328
+#: src/disks/gduformatdiskdialog.c:327
 msgid "Error formatting disk"
 msgstr "Fel vid formatering av disken"
 
-#: src/disks/gduformatdiskdialog.c:418
+#: src/disks/gduformatdiskdialog.c:417
 msgid "Are you sure you want to format the disk?"
 msgstr "Är du säker på att du vill formatera disken?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:422
+#: src/disks/gduformatdiskdialog.c:421
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1683,7 +1617,7 @@ msgstr ""
 "All data på disken kommer att förloras men kan fortfarande vara "
 "återskapningsbar av tjänster för att återskapa data"
 
-#: src/disks/gduformatdiskdialog.c:424 src/disks/gduformatvolumedialog.c:224
+#: src/disks/gduformatdiskdialog.c:423
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1694,7 +1628,7 @@ msgstr ""
 "förhindra att din privata information hamnar i fel händer"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:429
+#: src/disks/gduformatdiskdialog.c:428
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1702,7 +1636,7 @@ msgstr ""
 "All data på disken kommer att skrivas över och kommer troligen inte att vara "
 "återskapningsbar av tjänster för att återskapa data"
 
-#: src/disks/gduformatdiskdialog.c:437
+#: src/disks/gduformatdiskdialog.c:436
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1718,84 +1652,167 @@ msgstr ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA säker "
 "radering</a> och säkerställ att du förstår riskerna"
 
-#: src/disks/gduformatdiskdialog.c:445 src/disks/gduformatvolumedialog.c:236
+#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
 msgstr "_Formatera"
 
-#: src/disks/gduformatvolumedialog.c:92
+#: src/disks/gducreateformatdialog.c:175
+msgid "_Previous"
+msgstr "_Föregående"
+
+#: src/disks/gducreateformatdialog.c:181
+msgid "Cre_ate"
+msgstr "Sk_apa"
+
+#: src/disks/gducreateformatdialog.c:187
+msgid "Form_at"
+msgstr "Form_atera"
+
+#: src/disks/gducreateformatdialog.c:194
+msgid "N_ext"
+msgstr "Näs_ta"
+
+#: src/disks/gducreateformatdialog.c:221
 msgid "Error formatting volume"
 msgstr "Fel vid formatering av volymen"
 
-#: src/disks/gduformatvolumedialog.c:218
-msgid "Are you sure you want to format the volume?"
-msgstr "Är du säker på att du vill formatera volymen?"
+#: src/disks/gducreateformatdialog.c:288
+msgid "Error creating partition"
+msgstr "Fel vid skapande av partition"
 
-#. Translators: warning used for quick format of the volume
-#: src/disks/gduformatvolumedialog.c:222
+#: src/disks/gducreateformatdialog.c:435
+msgid "Create Partition"
+msgstr "Skapar partition"
+
+#: src/disks/gducreateformatdialog.c:444
+msgid "Format Volume"
+msgstr "Formatera volym"
+
+#: src/disks/gducreateformatdialog.c:447
+msgid "Custom Format"
+msgstr "Anpassat format"
+
+#: src/disks/gducreateformatdialog.c:450
+msgid "Set Password"
+msgstr "Ställ in lösenord"
+
+#: src/disks/gducreateformatdialog.c:453
+msgid "Confirm Details"
+msgstr "Bekräfta detaljer"
+
+#: src/disks/gducreatepartitionpage.c:320
 msgid ""
-"All data on the volume will be lost but may still be recoverable by data "
-"recovery services"
+"Cannot create a new partition. There are already four primary partitions."
 msgstr ""
-"All data på volymen kommer att förloras men kan fortfarande vara "
-"återskapningsbar av tjänster för att återskapa data"
+"Kan inte skapa en ny partition. Det finns redan fyra primära partitioner."
 
-#. Translators: warning used when overwriting data of the volume
-#: src/disks/gduformatvolumedialog.c:229
-msgid ""
-"All data on the volume will be overwritten and will likely not be "
-"recoverable by data recovery services"
+#: src/disks/gducreatepartitionpage.c:324
+msgid "This is the last primary partition that can be created."
+msgstr "Detta är den sista primära partitionen som kan skapas."
+
+#: src/disks/gducreateotherpage.c:115
+msgid "XFS — Linux Filesystem"
+msgstr "XFS — Linux-filsystem"
+
+#: src/disks/gducreateotherpage.c:117
+msgid "Linux Swap Partition"
+msgstr "Linux-växlingspartition"
+
+#: src/disks/gducreateotherpage.c:119
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
-"All data på volymen kommer att skrivas över och kommer troligen inte att "
-"vara återskapningsbar av tjänster för att återskapa data"
+"Btrfs — Linux-filsystem som kopierar vid skrivning, för ögonblicksavbilder"
 
-#: src/disks/gdufstabdialog.c:154
+#: src/disks/gducreateotherpage.c:121
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr "F2FS — Linux-filsystem för flash-lagring"
+
+#: src/disks/gducreateotherpage.c:123
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr "exFAT — Windows-filsystem för flash-lagring, används på SDXC-kort"
+
+#: src/disks/gducreateotherpage.c:125
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr "UDF — Universal Disk Format, för flyttbara enheter på många system"
+
+#: src/disks/gducreateotherpage.c:127
+msgid "No Filesystem"
+msgstr "Inget filsystem"
+
+#: src/disks/gducreateotherpage.c:207
+#, c-format
+msgid "The utility %s is missing."
+msgstr "Verktyget %s saknas."
+
+#: src/disks/gducreatepasswordpage.c:124
+msgid "The passwords do not match"
+msgstr "Lösenorden stämmer inte överens"
+
+#. Translators: In most cases this should not need translation unless the
+#. *              separation character '—' is not appropriate. The strings come
+#. *              from UDisks, first is description, second the name:
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+#.
+#: src/disks/gducreateconfirmpage.c:110
+#, c-format
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
+#: src/disks/gducreateconfirmpage.c:128
+#, c-format
+msgid "%s (%.1f%%)"
+msgstr "%s (%.1f%%)"
+
+#: src/disks/gdufstabdialog.c:155
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr "Matchar partition %u på enheten med angivet produktdata"
 
-#: src/disks/gdufstabdialog.c:157
+#: src/disks/gdufstabdialog.c:158
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "Matchar hela disken på enheten med angivet produktdata"
 
-#: src/disks/gdufstabdialog.c:162
+#: src/disks/gdufstabdialog.c:163
 #, c-format
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
 "Matchar partition %u på någon enhet ansluten på angiven port eller adress"
 
-#: src/disks/gdufstabdialog.c:165
+#: src/disks/gdufstabdialog.c:166
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
 "Matchar hela disken på någon enhet ansluten på angiven port eller adress"
 
-#: src/disks/gdufstabdialog.c:169
+#: src/disks/gdufstabdialog.c:170
 msgid "Matches any device with the given label"
 msgstr "Matchar någon enhet med angiven etikett"
 
-#: src/disks/gdufstabdialog.c:173
+#: src/disks/gdufstabdialog.c:174
 msgid "Matches the device with the given UUID"
 msgstr "Matchar enheten med angiven UUID"
 
-#: src/disks/gdufstabdialog.c:177
+#: src/disks/gdufstabdialog.c:178
 msgid "Matches the given device"
 msgstr "Matchar angiven enhet"
 
-#: src/disks/gdufstabdialog.c:462
+#: src/disks/gdufstabdialog.c:481
 msgid "The system may not work correctly if this entry is modified or removed."
 msgstr ""
 "Systemet kanske inte fungerar korrekt om denna post ändras eller tas bort."
 
-#: src/disks/gdufstabdialog.c:523
+#: src/disks/gdufstabdialog.c:542
 msgid "Error removing old /etc/fstab entry"
 msgstr "Fel vid borttagning av gammal post i /etc/fstab"
 
-#: src/disks/gdufstabdialog.c:579
+#: src/disks/gdufstabdialog.c:598
 msgid "Error adding new /etc/fstab entry"
 msgstr "Fel vid tillägg av ny post i /etc/fstab"
 
-#: src/disks/gdufstabdialog.c:603
+#: src/disks/gdufstabdialog.c:622
 msgid "Error updating /etc/fstab entry"
 msgstr "Fel vid uppdatering av post i /etc/fstab"
 
@@ -1856,12 +1873,12 @@ msgid "_Resize"
 msgstr "Änd_ra storlek"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:548 src/disks/gduresizedialog.c:571
+#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
 msgid "Error resizing filesystem"
 msgstr "Fel vid storleksändring av filsystemet"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:525
+#: src/disks/gduresizedialog.c:575
 msgid "Error resizing partition"
 msgstr "Fel vid storleksändring av partition"
 
@@ -1877,19 +1894,27 @@ msgstr "Storleksändring är inte redo"
 msgid "Waited too long for the filesystem"
 msgstr "Väntade för länge på filsystemet"
 
-#: src/disks/gduresizedialog.c:595
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
 msgid "Error repairing filesystem"
 msgstr "Fel vid reparation av filsystemet"
 
-#: src/disks/gduresizedialog.c:661
+#: src/disks/gduresizedialog.c:551
+msgid "Error unmounting filesystem for repairing"
+msgstr "Fel vid avmontering av filsystemet för reparation"
+
+#: src/disks/gduresizedialog.c:692
 msgid "Error unmounting filesystem for resizing"
 msgstr "Fel vid avmontering av filsystemet för storleksändring"
 
-#: src/disks/gduresizedialog.c:703
+#: src/disks/gduresizedialog.c:760
+msgid "Error mounting the filesystem"
+msgstr "Fel vid montering av filsystemet"
+
+#: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
 msgstr "Anpassa till storlek"
 
-#: src/disks/gduresizedialog.c:738
+#: src/disks/gduresizedialog.c:837
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Fel vid montering av filsystem för att beräkna minimal storlek"
 
@@ -1923,34 +1948,34 @@ msgstr "Diskavbilden är %s större än målenheten"
 msgid "Error restoring disk image"
 msgstr "Fel vid återskapning av diskavbild"
 
-#: src/disks/gdurestorediskimagedialog.c:939
+#: src/disks/gdurestorediskimagedialog.c:923
 msgid "Error opening file for reading"
 msgstr "Fel vid öppning av fil för läsning"
 
-#: src/disks/gdurestorediskimagedialog.c:954
+#: src/disks/gdurestorediskimagedialog.c:938
 msgid "Error determining size of file"
 msgstr "Fel vid fastställande av storlek på filen"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:982
+#: src/disks/gdurestorediskimagedialog.c:966
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopierar diskavbild till enhet"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:988
+#: src/disks/gdurestorediskimagedialog.c:972
 msgid "Restoring Disk Image"
 msgstr "Återställer diskavbild"
 
-#: src/disks/gdurestorediskimagedialog.c:1044
+#: src/disks/gdurestorediskimagedialog.c:1028
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Är du säker på att du vill skriva diskavbilden till enheten?"
 
-#: src/disks/gdurestorediskimagedialog.c:1045
+#: src/disks/gdurestorediskimagedialog.c:1029
 msgid "All existing data will be lost"
 msgstr "All befintlig data kommer att gå förlorad"
 
-#: src/disks/gdurestorediskimagedialog.c:1046
+#: src/disks/gdurestorediskimagedialog.c:1030
 msgid "_Restore"
 msgstr "_Återställ"
 
@@ -1966,7 +1991,7 @@ msgstr "Lösenfras för krypteringen hämtades från nyckelringen"
 msgid "Volumes Grid"
 msgstr "Volymnät"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2185
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2184
 msgid "No Media"
 msgstr "Inget media"
 
@@ -2008,30 +2033,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Ledigt utrymme"
 
-#: src/disks/gduwindow.c:628
+#: src/disks/gduwindow.c:627
 msgid "Error deleting loop device"
 msgstr "Fel vid borttagning av loop-enheten"
 
-#: src/disks/gduwindow.c:728 src/disks/gduwindow.c:771
+#: src/disks/gduwindow.c:727 src/disks/gduwindow.c:770
 msgid "Error attaching disk image"
 msgstr "Fel vid anslutning av diskavbilden"
 
-#: src/disks/gduwindow.c:801
+#: src/disks/gduwindow.c:800
 msgid "Select Disk Image to Attach"
 msgstr "Välj diskavbild att ansluta"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:804
 msgid "_Attach"
 msgstr "_Anslut"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:812
+#: src/disks/gduwindow.c:811
 msgid "Set up _read-only loop device"
 msgstr "Ställ in sk_rivskyddad loop-enhet"
 
-#: src/disks/gduwindow.c:813
+#: src/disks/gduwindow.c:812
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2039,20 +2064,20 @@ msgstr ""
 "Om kryssad kommer loop-enheten att vara skrivskyddad. Detta är användbart om "
 "du inte vill att den underliggande filen ska ändras"
 
-#: src/disks/gduwindow.c:1011
+#: src/disks/gduwindow.c:1010
 msgid "Power off this disk"
 msgstr "Stäng av denna disk"
 
-#: src/disks/gduwindow.c:1017
+#: src/disks/gduwindow.c:1016
 msgid "Eject this disk"
 msgstr "Mata ut denna disk"
 
-#: src/disks/gduwindow.c:1023
+#: src/disks/gduwindow.c:1022
 msgid "Detach this loop device"
 msgstr "Koppla loss denna loop-enhet"
 
 #. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1448
+#: src/disks/gduwindow.c:1447
 msgctxt "accelerator"
 msgid "F10"
 msgstr "F10"
@@ -2061,7 +2086,7 @@ msgstr "F10"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1456
+#: src/disks/gduwindow.c:1455
 msgctxt "accelerator"
 msgid "<Ctrl>F"
 msgstr "<Ctrl>F"
@@ -2070,7 +2095,7 @@ msgstr "<Ctrl>F"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1464
+#: src/disks/gduwindow.c:1463
 msgctxt "accelerator"
 msgid "<Ctrl>S"
 msgstr "<Ctrl>S"
@@ -2079,12 +2104,12 @@ msgstr "<Ctrl>S"
 #. *              The Ctrl modifier must not be translated or parsing will fail.
 #. *              You can however change to another English modifier (e.g. <Shift>).
 #.
-#: src/disks/gduwindow.c:1472
+#: src/disks/gduwindow.c:1471
 msgctxt "accelerator"
 msgid "<Ctrl>E"
 msgstr "<Ctrl>E"
 
-#: src/disks/gduwindow.c:1487
+#: src/disks/gduwindow.c:1486
 msgctxt "accelerator"
 msgid "<Shift>F10"
 msgstr "<Shift>F10"
@@ -2093,13 +2118,13 @@ msgstr "<Shift>F10"
 #. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
 #. *              You can however change to other English modifiers.
 #.
-#: src/disks/gduwindow.c:1497
+#: src/disks/gduwindow.c:1496
 msgctxt "accelerator"
 msgid "<Shift><Ctrl>F"
 msgstr "<Shift><Ctrl>F"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1827
+#: src/disks/gduwindow.c:1826
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Skrivskyddad)"
@@ -2108,7 +2133,7 @@ msgstr "%s (Skrivskyddad)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1865
+#: src/disks/gduwindow.c:1864
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2117,7 +2142,7 @@ msgstr "%s återstår (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1873
+#: src/disks/gduwindow.c:1872
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2128,7 +2153,7 @@ msgstr "%s återstår"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1888
+#: src/disks/gduwindow.c:1887
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s av %s — %s"
@@ -2137,17 +2162,17 @@ msgstr "%s av %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:2013
+#: src/disks/gduwindow.c:2012
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:2093 src/disks/gduwindow.c:2497
+#: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
 msgid "Block device is empty"
 msgstr "Blockenheten är tom"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2116
+#: src/disks/gduwindow.c:2115
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2156,11 +2181,11 @@ msgstr "Okänd (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2285
 msgid "Connected to another seat"
 msgstr "Ansluten till ett annat säte"
 
-#: src/disks/gduwindow.c:2433
+#: src/disks/gduwindow.c:2432
 msgid "Loop device is empty"
 msgstr "Loop-enheten är tom"
 
@@ -2213,18 +2238,18 @@ msgid "Not Active"
 msgstr "Inte aktiv"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2791
 msgctxt "volume-content-luks"
 msgid "Unlocked"
 msgstr "Upplåst"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2795
+#: src/disks/gduwindow.c:2797
 msgctxt "volume-content-luks"
 msgid "Locked"
 msgstr "Låst"
 
-#: src/disks/gduwindow.c:2805
+#: src/disks/gduwindow.c:2807
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Utökad partition"
@@ -2233,45 +2258,45 @@ msgstr "Utökad partition"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2825
+#: src/disks/gduwindow.c:2827
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2949
+#: src/disks/gduwindow.c:2951
 msgid "Unallocated Space"
 msgstr "Oallokerat utrymme"
 
-#: src/disks/gduwindow.c:3142
+#: src/disks/gduwindow.c:3144
 msgid "Error while repairing filesystem"
 msgstr "Fel under reparation av filsystemet"
 
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3171
 msgid "Repair successful"
 msgstr "Reparation lyckades"
 
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3171
 msgid "Repair failed"
 msgstr "Reparation misslyckades"
 
-#: src/disks/gduwindow.c:3172
+#: src/disks/gduwindow.c:3174
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Filsystemet %s på %s har reparerats."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3178
+#: src/disks/gduwindow.c:3180
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Filsystemet %s på %s kunde inte repareras."
 
-#: src/disks/gduwindow.c:3240
+#: src/disks/gduwindow.c:3242
 msgid "Confirm Repair"
 msgstr "Bekräfta reparation"
 
-#: src/disks/gduwindow.c:3243
+#: src/disks/gduwindow.c:3245
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2282,56 +2307,56 @@ msgstr ""
 "återställer förlorade filer. Denna operation tar längre tid beroende på "
 "mängden data."
 
-#: src/disks/gduwindow.c:3271
+#: src/disks/gduwindow.c:3273
 msgid "Error while checking filesystem"
 msgstr "Fel vid kontroll av filsystemet"
 
-#: src/disks/gduwindow.c:3298
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem intact"
 msgstr "Filsystemet är intakt"
 
-#: src/disks/gduwindow.c:3298
+#: src/disks/gduwindow.c:3300
 msgid "Filesystem damaged"
 msgstr "Filsystemet är skadat"
 
-#: src/disks/gduwindow.c:3301
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Filsystemet %s på %s är oskadat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3307
+#: src/disks/gduwindow.c:3309
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Filsystemet %s på %s behöver repareras."
 
-#: src/disks/gduwindow.c:3367
+#: src/disks/gduwindow.c:3369
 msgid "Confirm Check"
 msgstr "Bekräfta kontroll"
 
-#: src/disks/gduwindow.c:3370
+#: src/disks/gduwindow.c:3372
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "Beroende på mängden data tar filsystemskontrollen mer tid."
 
-#: src/disks/gduwindow.c:3570
+#: src/disks/gduwindow.c:3572
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ett fel uppstod vid försök att försätta disken i standby-läge"
 
-#: src/disks/gduwindow.c:3616
+#: src/disks/gduwindow.c:3618
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ett fel uppstod vid försök att väcka upp disken från standby-läge"
 
-#: src/disks/gduwindow.c:3661
+#: src/disks/gduwindow.c:3663
 msgid "Error powering off drive"
 msgstr "Fel vid avstängning av disk"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3713
+#: src/disks/gduwindow.c:3715
 msgid "Are you sure you want to power off the drives?"
 msgstr "Är du säker på att du vill stänga av diskarna?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3717
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2339,51 +2364,51 @@ msgstr ""
 "Denna operation förbereder systemet för att följande diskar stängs ner och "
 "tas bort."
 
-#: src/disks/gduwindow.c:3719
+#: src/disks/gduwindow.c:3721
 msgid "_Power Off"
 msgstr "_Stäng av"
 
-#: src/disks/gduwindow.c:3796
+#: src/disks/gduwindow.c:3798
 msgid "Error mounting filesystem"
 msgstr "Fel vid montering av filsystemet"
 
-#: src/disks/gduwindow.c:3901
+#: src/disks/gduwindow.c:3907
 msgid "Error deleting partition"
 msgstr "Fel vid borttagning av partition"
 
-#: src/disks/gduwindow.c:3938
+#: src/disks/gduwindow.c:3944
 msgid "Are you sure you want to delete the partition?"
 msgstr "Är du säker på att du vill ta bort partitionen?"
 
-#: src/disks/gduwindow.c:3939
+#: src/disks/gduwindow.c:3945
 msgid "All data on the partition will be lost"
 msgstr "All data på partitionen kommer att gå förlorad"
 
-#: src/disks/gduwindow.c:3940
+#: src/disks/gduwindow.c:3946
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: src/disks/gduwindow.c:3971
+#: src/disks/gduwindow.c:3977
 msgid "Error ejecting media"
 msgstr "Fel vid utmatning av media"
 
-#: src/disks/gduwindow.c:4036
+#: src/disks/gduwindow.c:4042
 msgid "Error locking encrypted device"
 msgstr "Fel vid låsning av krypterad enhet"
 
-#: src/disks/gduwindow.c:4072
+#: src/disks/gduwindow.c:4078
 msgid "Error starting swap"
 msgstr "Fel vid startandet av växlingsutrymmet"
 
-#: src/disks/gduwindow.c:4109
+#: src/disks/gduwindow.c:4115
 msgid "Error stopping swap"
 msgstr "Fel vid stoppandet av växlingsutrymmet"
 
-#: src/disks/gduwindow.c:4151
+#: src/disks/gduwindow.c:4157
 msgid "Error setting autoclear flag"
 msgstr "Fel vid inställning av flaggan ”autoclear”"
 
-#: src/disks/gduwindow.c:4204 src/disks/gduwindow.c:4268
+#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
 msgid "Error canceling job"
 msgstr "Fel när jobb avbröts"
 
@@ -2396,6 +2421,7 @@ msgid "Not enough memory"
 msgstr "Inte tillräckligt med minne"
 
 #: src/disks/gduxzdecompressor.c:136
+#, c-format
 msgid "Internal error"
 msgstr "Internt fel"
 
@@ -2406,16 +2432,18 @@ msgstr "Behöver mer indata"
 #: src/disks/ui/about-dialog.ui:12
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 GNOME-projektet\n"
 
-#: src/disks/ui/about-dialog.ui:14
+#: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
 msgstr "Visa, ändra och konfigurera diskar och media"
 
-#: src/disks/ui/about-dialog.ui:17
+#: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
 "Daniel Nylander <po@danielnylander.se>\n"
@@ -2588,38 +2616,61 @@ msgstr "A_ktuell lösenfras"
 #: src/disks/ui/change-passphrase-dialog.ui:106
 #: src/disks/ui/change-passphrase-dialog.ui:107
 msgid "Enter current passphrase used to protect the data"
-msgstr "Ange aktuell lösenfras som används för att skydda datat"
+msgstr "Ange aktuell lösenfras som används för att skydda data"
 
 #: src/disks/ui/change-passphrase-dialog.ui:123
-#: src/disks/ui/filesystem-create.ui:189
 msgid "Sho_w Passphrases"
 msgstr "V_isa lösenfraser"
 
 #: src/disks/ui/change-passphrase-dialog.ui:129
 #: src/disks/ui/change-passphrase-dialog.ui:130
-#: src/disks/ui/filesystem-create.ui:195 src/disks/ui/filesystem-create.ui:196
+#: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "Kryssa i denna ruta för att se lösenfraserna som anges ovan"
 
 #: src/disks/ui/change-passphrase-dialog.ui:164
 #: src/disks/ui/change-passphrase-dialog.ui:165
-#: src/disks/ui/filesystem-create.ui:158 src/disks/ui/filesystem-create.ui:159
+#: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Bekräfta lösenfrasen ovan"
 
 #: src/disks/ui/change-passphrase-dialog.ui:185
 #: src/disks/ui/change-passphrase-dialog.ui:186
 msgid "Enter new passphrase used to protect the data"
-msgstr "Ange ny lösenfras som används för att skydda datat"
+msgstr "Ange ny lösenfras som används för att skydda data"
 
 #: src/disks/ui/change-passphrase-dialog.ui:206
-#: src/disks/ui/filesystem-create.ui:117
 msgid "C_onfirm Passphrase"
 msgstr "B_ekräfta lösenfras"
 
 #: src/disks/ui/change-passphrase-dialog.ui:226
 msgid "New _Passphrase"
 msgstr "_Ny lösenfras"
+
+#: src/disks/ui/create-confirm-page.ui:17
+msgid "Warning: all data on the volume will be lost"
+msgstr "Varning: all data på volymen kommer att gå förlorad"
+
+#: src/disks/ui/create-confirm-page.ui:33
+msgid "Confirm the details of the current volume before proceeding."
+msgstr "Bekräfta detaljerna för aktuell volym innan du fortsätter."
+
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
+msgid "Device"
+msgstr "Enhet"
+
+#: src/disks/ui/create-confirm-page.ui:72
+msgid "Volume"
+msgstr "Volym"
+
+#: src/disks/ui/create-confirm-page.ui:98
+msgid "Used"
+msgstr "Använt"
+
+#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
+msgid "Location"
+msgstr "Plats"
 
 #: src/disks/ui/create-disk-image-dialog.ui:8
 msgid "Create Disk Image"
@@ -2628,7 +2679,6 @@ msgstr "Skapa diskavbild"
 #: src/disks/ui/create-disk-image-dialog.ui:29
 #: src/disks/ui/edit-crypttab-dialog.ui:140
 #: src/disks/ui/edit-gpt-partition-dialog.ui:107
-#: src/disks/ui/filesystem-create.ui:37
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Namn"
@@ -2651,92 +2701,169 @@ msgstr "Källa"
 msgid "_Start Creating…"
 msgstr "_Börja skapa…"
 
-#: src/disks/ui/create-partition-dialog.ui:12
-msgid "Create Partition"
-msgstr "Skapar partition"
+#: src/disks/ui/create-filesystem-page.ui:19
+msgid "Volume _Name"
+msgstr "Volym_namn"
 
-#: src/disks/ui/create-partition-dialog.ui:42
-msgid "C_reate"
-msgstr "S_kapa"
+#: src/disks/ui/create-filesystem-page.ui:33
+msgid ""
+"The name to use for the filesystem. This is useful if you want to refer to "
+"the device via a symlink in the /dev/disk/by-label directory."
+msgstr ""
+"Namnet att använda för filsystemet. Detta är användbart om du vill referera "
+"till enheten via en symbolisk länk i katalogen /dev/disk/by-label."
 
-#: src/disks/ui/create-partition-dialog.ui:112 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/create-filesystem-page.ui:47
+msgid "For example: “Angela’s Files” or “Backup”."
+msgstr "Till exempel: ”Angelikas filer” eller ”Säkerhetskopia”."
+
+#: src/disks/ui/create-filesystem-page.ui:74
+#: src/disks/ui/format-disk-dialog.ui:103
+msgid "_Erase"
+msgstr "_Radera"
+
+#: src/disks/ui/create-filesystem-page.ui:89
+msgid "Overwrites existing data, but takes longer."
+msgstr "Skriver över befintlig data, men tar längre tid."
+
+#: src/disks/ui/create-filesystem-page.ui:115
+msgid "_Internal disk for use with Linux systems only (Ext4)"
+msgstr "_Intern disk endast för användning med Linux-system (Ext4)"
+
+#: src/disks/ui/create-filesystem-page.ui:131
+#: src/disks/ui/create-other-page.ui:46
+msgid "_Password protect volume (LUKS)"
+msgstr "_Lösenordsskydda volym (LUKS)"
+
+#: src/disks/ui/create-filesystem-page.ui:147
+msgid "For use with _Windows (NTFS)"
+msgstr "För användning med _Windows (NTFS)"
+
+#: src/disks/ui/create-filesystem-page.ui:163
+msgid "For use with all _systems and devices (FAT)"
+msgstr "För användning med alla _system och enheter (FAT)"
+
+#: src/disks/ui/create-filesystem-page.ui:179
+msgid "_Other"
+msgstr "_Annat"
+
+#: src/disks/ui/create-other-page.ui:17
+msgid ""
+"In case that the default options do not fit your needs select one of the "
+"following filesystems. Be aware of the technical differences and do research "
+"about your use case."
+msgstr ""
+"Ifall standardalternativen inte passar dina behov, välj ett av följande "
+"filsystem. Var uppmärksam på de tekniska skillnaderna och undersök ditt "
+"användningsfall."
+
+#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "Partitions_storlek"
 
-#: src/disks/ui/create-partition-dialog.ui:130
-#: src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
 msgid "The size of the partition to create"
 msgstr "Storleken för partitionen att skapa"
 
-#: src/disks/ui/create-partition-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:111
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
 msgid "bytes"
 msgstr "byte"
 
-#: src/disks/ui/create-partition-dialog.ui:152
+#: src/disks/ui/create-partition-page.ui:112
 #: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-dialog.ui:153
+#: src/disks/ui/create-partition-page.ui:113
 #: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-dialog.ui:154
+#: src/disks/ui/create-partition-page.ui:114
 #: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-dialog.ui:155
+#: src/disks/ui/create-partition-page.ui:115
 #: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-dialog.ui:156
+#: src/disks/ui/create-partition-page.ui:116
 #: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-dialog.ui:157
+#: src/disks/ui/create-partition-page.ui:117
 #: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-dialog.ui:158
+#: src/disks/ui/create-partition-page.ui:118
 #: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-dialog.ui:159
+#: src/disks/ui/create-partition-page.ui:119
 #: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-dialog.ui:160
+#: src/disks/ui/create-partition-page.ui:120
 #: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-dialog.ui:161
+#: src/disks/ui/create-partition-page.ui:121
 #: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-dialog.ui:176
-#: src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
 msgid "Free Space _Following"
 msgstr "Ledigt utrymme _efter"
 
-#: src/disks/ui/create-partition-dialog.ui:194
-#: src/disks/ui/resize-dialog.ui:167
+#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
 msgid "The free space following the partition"
 msgstr "Ledigt utrymme som kommer efter partitionen"
 
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/create-partition-dialog.ui:239 src/disks/ui/disks.ui:863
-msgid "Contents"
-msgstr "Innehåll"
+#: src/disks/ui/create-partition-page.ui:173
+msgid "Extended Partition"
+msgstr "Utökad partition"
+
+#: src/disks/ui/create-partition-page.ui:177
+msgid "Extended Partitions can contain Logical Partitions"
+msgstr "Utökade partitioner kan innehålla logiska partitioner"
+
+#: src/disks/ui/create-password-page.ui:18
+msgid ""
+"Data stored in the volume will only be accessible with the correct password. "
+"Be careful not to forget it."
+msgstr ""
+"Data som lagrats i volymen kommer endast vara åtkomlig med det korrekta "
+"lösenordet. Var försiktig så att du inte glömmer det."
+
+#: src/disks/ui/create-password-page.ui:34
+msgid "_Password"
+msgstr "_Lösenord"
+
+#: src/disks/ui/create-password-page.ui:48
+msgid "_Confirm"
+msgstr "_Bekräfta"
+
+#: src/disks/ui/create-password-page.ui:63
+msgid "Enter passphrase used to protect the data"
+msgstr "Ange lösenfrasen som används för att skydda data"
+
+#: src/disks/ui/create-password-page.ui:95
+msgid "Sh_ow Password"
+msgstr "V_isa lösenord"
+
+#: src/disks/ui/create-password-page.ui:134
+msgid "Mix uppercase and lowercase and try to use a number or two."
+msgstr ""
+"Blanda stora och små bokstäver samt försök använda en siffra eller två."
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -2858,11 +2985,6 @@ msgstr "Serienummer"
 msgid "World Wide Name"
 msgstr "World Wide Name"
 
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/disks.ui:228
-msgid "Location"
-msgstr "Plats"
-
 #: src/disks/ui/disks.ui:265
 msgid "Media"
 msgstr "Media"
@@ -2936,9 +3058,10 @@ msgstr "Ta bort vald partition"
 msgid "Additional partition options"
 msgstr "Ytterligare partitionsalternativ"
 
-#: src/disks/ui/disks.ui:900
-msgid "Device"
-msgstr "Enhet"
+#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
+#: src/disks/ui/disks.ui:863
+msgid "Contents"
+msgstr "Innehåll"
 
 #: src/disks/ui/disks.ui:937
 msgid "UUID"
@@ -3084,7 +3207,7 @@ msgstr ""
 "konfiguration av enheten"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/filesystem-create.ui:97 src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:43
 msgid "_Passphrase"
 msgstr "_Lösenfras"
 
@@ -3118,7 +3241,6 @@ msgstr "Redigera partition"
 #: src/disks/ui/edit-dos-partition-dialog.ui:76
 #: src/disks/ui/edit-gpt-partition-dialog.ui:75
 #: src/disks/ui/edit-partition-dialog.ui:75
-#: src/disks/ui/filesystem-create.ui:17
 msgid "_Type"
 msgstr "_Typ"
 
@@ -3312,13 +3434,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Legacy BIOS _Bootable"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
 msgid ""
-"Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</"
-"i> flag. It is normally only used for GPT partitions on MBR systems"
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Legacy BIOS Bootable. Detta motsvarar flaggan <i>startbar</i> i Master Boot "
-"Record. Dett används oftast endast för GPT-partitioner på MBR-system"
+"Detta motsvarar flaggan <i>startbar</i> i Master Boot Record. Detta används "
+"oftast endast för GPT-partitioner på MBR-system"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3327,6 +3448,14 @@ msgstr "Flaggor"
 #: src/disks/ui/edit-gpt-partition-dialog.ui:195
 msgid "Hide from _Firmware"
 msgstr "Dölj för _fast programvara"
+
+#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"Indikerar att den fasta EFI-programvaran ska ignorera partitionens innehåll "
+"och inte försöka läsa det"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3340,68 +3469,17 @@ msgstr "_Radera…"
 msgid "Erase _Type"
 msgstr "Raderings_typ"
 
-#: src/disks/ui/filesystem-create.ui:57
-msgid "F_ilesystem"
-msgstr "F_ilsystem"
-
-#: src/disks/ui/filesystem-create.ui:77
-msgid ""
-"The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-"<i>swap</i>"
-msgstr ""
-"Den anpassade filsystemstypen att skapa t.ex. <i>btrfs</i>, <i>xfs</i> eller "
-"<i>växlingsutrymme</i>"
-
-#: src/disks/ui/filesystem-create.ui:78
-msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-msgstr ""
-"Den anpassade filsystemstypen att skapa t.ex. btrfs, xfs eller "
-"växlingsutrymme"
-
-#: src/disks/ui/filesystem-create.ui:137 src/disks/ui/filesystem-create.ui:138
-msgid "Enter passphrase used to protect the data"
-msgstr "Ange lösenfrasen som används för att skydda datat"
-
-#: src/disks/ui/filesystem-create.ui:229 src/disks/ui/format-disk-dialog.ui:103
-msgid "_Erase"
-msgstr "_Radera"
-
-#: src/disks/ui/filesystem-create.ui:267
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-msgstr ""
-"Namnet att använda för filsystemet. Detta är användbart om du vill referera "
-"till enheten via en symbolisk länk i katalogen <b>/dev/disk/by-label</b>"
-
-#: src/disks/ui/filesystem-create.ui:268
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory"
-msgstr ""
-"Namnet att använda för filsystemet. Detta är användbart om du vill referera "
-"till enheten via en symbolisk länk i katalogen /dev/disk/by-label"
-
-#: src/disks/ui/filesystem-create.ui:285
-msgid "For example, “My Files” or “Backup Data”"
-msgstr "Till exempel, ”Mina Filer” eller ”Säkerhetskopierad data”"
-
 #: src/disks/ui/format-disk-dialog.ui:7
 msgid "Format Disk"
 msgstr "Formatera disk"
 
 #: src/disks/ui/format-disk-dialog.ui:39
-#: src/disks/ui/format-volume-dialog.ui:39
 msgid "_Format…"
 msgstr "_Formatera…"
 
 #: src/disks/ui/format-disk-dialog.ui:86
 msgid "_Partitioning"
 msgstr "_Partitionering"
-
-#: src/disks/ui/format-volume-dialog.ui:7
-msgid "Format Volume"
-msgstr "Formatera volym"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
@@ -3425,7 +3503,7 @@ msgstr "Ändra storlek på volym"
 
 #: src/disks/ui/resize-dialog.ui:53
 msgid ""
-"Resizing a filesystem can lead to data loss. You are adviced to backup your "
+"Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
@@ -3437,11 +3515,11 @@ msgstr ""
 "att det finns extra ledigt utrymme för att filsystemet ska kunna arbeta "
 "snabbt och pålitligt."
 
-#: src/disks/ui/resize-dialog.ui:196
+#: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "S_killnad"
 
-#: src/disks/ui/resize-dialog.ui:212
+#: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
 msgstr "Skillnaden mot föregående partitionsstorlek"
 
@@ -3549,20 +3627,20 @@ msgstr "Ange lösenfras för att låsa upp"
 msgid "_Unlock"
 msgstr "L_ås upp"
 
-#: src/libgdu/gduutils.c:91
+#: src/libgdu/gduutils.c:111
 msgid "All Files"
 msgstr "Alla filer"
 
-#: src/libgdu/gduutils.c:96
+#: src/libgdu/gduutils.c:116
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Diskavbilder (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:118
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Diskavbilder (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:427
+#: src/libgdu/gduutils.c:447
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3570,7 +3648,7 @@ msgstr[0] "%d år"
 msgstr[1] "%d år"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:434
+#: src/libgdu/gduutils.c:454
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3578,7 +3656,7 @@ msgstr[0] "%d månad"
 msgstr[1] "%d månader"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:441
+#: src/libgdu/gduutils.c:461
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3586,7 +3664,7 @@ msgstr[0] "%d dag"
 msgstr[1] "%d dagar"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:448
+#: src/libgdu/gduutils.c:468
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3594,7 +3672,7 @@ msgstr[0] "%d timme"
 msgstr[1] "%d timmar"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:455
+#: src/libgdu/gduutils.c:475
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3602,7 +3680,7 @@ msgstr[0] "%d minut"
 msgstr[1] "%d minuter"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:462
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3610,7 +3688,7 @@ msgstr[0] "%d sekund"
 msgstr[1] "%d sekunder"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:469
+#: src/libgdu/gduutils.c:489
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3618,70 +3696,70 @@ msgstr[0] "%d millisekund"
 msgstr[1] "%d millisekunder"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:533
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s och %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:538
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s och %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:543
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s och %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:568
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s och %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:579
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s och %s"
 
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:588
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mindre än en minut"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:573
+#: src/libgdu/gduutils.c:593
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:599
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:815
+#: src/libgdu/gduutils.c:835
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Berörda enheter"
 
-#: src/libgdu/gduutils.c:1395
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Fel vid låsning av enheten"
 
-#: src/libgdu/gduutils.c:1416
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Fel vid inaktivering av autoclear för loop-enheten"
 
@@ -3702,6 +3780,82 @@ msgstr "En hårddisk är troligen på väg att gå sönder snart."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Undersök"
+
+#~ msgid "FAT"
+#~ msgstr "FAT"
+
+#~ msgid "Compatible with most systems"
+#~ msgstr "Kompatibel med de flesta system"
+
+#~ msgid "NTFS"
+#~ msgstr "NTFS"
+
+#~ msgid "Compatible with Linux systems"
+#~ msgstr "Kompatibel med Linux-system"
+
+#~ msgid "Ext4"
+#~ msgstr "Ext4"
+
+#~ msgid "Encrypted, compatible with Linux systems"
+#~ msgstr "Krypterad, kompatibel med Linux-system"
+
+#~ msgid "LUKS + Ext4"
+#~ msgstr "LUKS + Ext4"
+
+#~ msgid "Enter filesystem type"
+#~ msgstr "Ange filsystemstyp"
+
+#~ msgid "Error formatting partition"
+#~ msgstr "Fel vid formatering av partitionen"
+
+#~ msgid "Extended partition"
+#~ msgstr "Utökad partition"
+
+#~ msgid "For logical partitions"
+#~ msgstr "För logiska partitioner"
+
+#~ msgid "Are you sure you want to format the volume?"
+#~ msgstr "Är du säker på att du vill formatera volymen?"
+
+#~ msgid ""
+#~ "All data on the volume will be lost but may still be recoverable by data "
+#~ "recovery services"
+#~ msgstr ""
+#~ "All data på volymen kommer att förloras men kan fortfarande vara "
+#~ "återskapningsbar av tjänster för att återskapa data"
+
+#~ msgid ""
+#~ "All data on the volume will be overwritten and will likely not be "
+#~ "recoverable by data recovery services"
+#~ msgstr ""
+#~ "All data på volymen kommer att skrivas över och kommer troligen inte att "
+#~ "vara återskapningsbar av tjänster för att återskapa data"
+
+#~ msgid "C_reate"
+#~ msgstr "S_kapa"
+
+#~ msgid "F_ilesystem"
+#~ msgstr "F_ilsystem"
+
+#~ msgid ""
+#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
+#~ "<i>swap</i>"
+#~ msgstr ""
+#~ "Den anpassade filsystemstypen att skapa t.ex. <i>btrfs</i>, <i>xfs</i> "
+#~ "eller <i>växlingsutrymme</i>"
+
+#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
+#~ msgstr ""
+#~ "Den anpassade filsystemstypen att skapa t.ex. btrfs, xfs eller "
+#~ "växlingsutrymme"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
+#~ msgstr ""
+#~ "Namnet att använda för filsystemet. Detta är användbart om du vill "
+#~ "referera till enheten via en symbolisk länk i katalogen <b>/dev/disk/by-"
+#~ "label</b>"
 
 #~ msgid "ATA Secure Erase / Enhanced Secure Erase"
 #~ msgstr "ATA säker radering / Förbättrad säker radering"

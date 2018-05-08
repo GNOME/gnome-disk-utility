@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 22:43+0000\n"
-"PO-Revision-Date: 2018-02-22 12:33+0100\n"
+"POT-Creation-Date: 2018-05-08 06:38+0000\n"
+"PO-Revision-Date: 2018-05-08 13:18+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1161,74 +1161,81 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f mseg"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+#| msgid "Error benchmarking drive"
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Pruebas de rendimiento del dispositivo"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Error al obtener el tamaño del dispositivo: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Error al obtener el tamaño de página: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Error al buscar hasta el desplazamiento %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Error al preleer %s desde el desplazamiento %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Error al buscar hasta el desplazamiento %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Error al leer %s desde el desplazamiento %s"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Error en la pre-lectura de %lld bytes desde el desplazamiento %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Error al escribir %lld bytes en el desplazamiento %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Se esperaba escribir %lld bytes, sólo se escribieron %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Error al sincronizar (en el desplazamiento %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Error al buscar hasta el desplazamiento %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -3456,10 +3463,6 @@ msgid "Legacy BIOS _Bootable"
 msgstr "_BIOS heredada arrancable"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
@@ -5213,9 +5216,6 @@ msgstr "Examinar"
 
 #~ msgid "%s. Largest contiguous free block is %s"
 #~ msgstr "%s. El bloque libre contiguo más grande es %s"
-
-#~ msgid "Error benchmarking drive"
-#~ msgstr "Error al hacer la prueba de rendimiento del dispositivo"
 
 #~ msgid "Are you sure you want to start a read/write benchmark?"
 #~ msgstr ""

@@ -13,16 +13,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility-master-po-gl-208165.merged\n"
 "Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
 "disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-04-03 20:56+0000\n"
-"PO-Revision-Date: 2018-02-23 01:05+0200\n"
-"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"POT-Creation-Date: 2018-05-08 20:32+0000\n"
+"PO-Revision-Date: 2018-05-09 12:33+0200\n"
+"Last-Translator: marcos <marcoslansgarza@gmail.com>\n"
 "Language-Team: Galician\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Project-Style: gnome\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -1162,74 +1162,80 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f msec"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Proba de rendemento da unidade"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Produciuse un erro ao obter o tamaño do dispositivo: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Produciuse un erro ao obter o tamaño da páxina: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Produciuse un erro ao buscar o desprazamento %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Produciuse un erro ao precargar %s desde o desprazamento %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Produciuse un erro ao buscar o desprazamento %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Produciuse un erro ao ler %s desde o offset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Produciuse un erro ao ler de %lld bytes desde o desprazamento %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Produciuse un erro ao escribir %lld bytes no desprazamento %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Agardábase escribir %lld bytes, só se escribiron %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Produciuse un erro ao sincronizar (no desprazamento %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Produciuse un erro ao buscar até o desprazamento %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1531,7 +1537,7 @@ msgstr "Ruidoso (Rápido)"
 
 #: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
-msgstr "A etiqueta coincide cunha etiqueta existente"
+msgstr "A etiqueta coincide coa etiqueta existente"
 
 #: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
@@ -1782,13 +1788,12 @@ msgstr "%s (%.1f%%)"
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr ""
-"Fai corresponder a partición %u do dispositivo cos datos vitais do produto "
-"fornecidos"
+"A partición %u do dispositivo coincide cos datos vitais do produto fornecidos"
 
 #: src/disks/gdufstabdialog.c:158
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr ""
-"Fai corresponder o disco completo do dispositivo cos datos vitais do produto "
+"O disco completo do dispositivo coincide cos datos vitais do produto "
 "fornecidos"
 
 #: src/disks/gdufstabdialog.c:163
@@ -1796,27 +1801,27 @@ msgstr ""
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
-"Fai corresponder a partición %u de calquera dispositivo conectado no porto ou "
-"enderezo fornecido"
+"A partición %u de calquera dispositivo conectado no porto ou enderezo "
+"fornecido coincide"
 
 #: src/disks/gdufstabdialog.c:166
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
-"Fai corresponder o disco completo de calquera dispositivo conectado no porto ou "
-"enderezo fornecido"
+"O disco completo de calquera dispositivo conectado no porto ou enderezo "
+"fornecido coincide"
 
 #: src/disks/gdufstabdialog.c:170
 msgid "Matches any device with the given label"
-msgstr "Fai corresponder calquera dispositivo coa etiqueta fornecida"
+msgstr "Calquera dispositivo coincide coa etiqueta fornecida"
 
 #: src/disks/gdufstabdialog.c:174
 msgid "Matches the device with the given UUID"
-msgstr "Fai corresponder o dispositivo co UUID fornecido"
+msgstr "O dispositivo coincide co UUID fornecido"
 
 #: src/disks/gdufstabdialog.c:178
 msgid "Matches the given device"
-msgstr "Fai corresponder o dispositivo fornecido"
+msgstr "Coincide co dispositivo fornecido"
 
 #: src/disks/gdufstabdialog.c:481
 msgid "The system may not work correctly if this entry is modified or removed."
@@ -5282,9 +5287,6 @@ msgstr "Examinar"
 
 #~ msgid "Details"
 #~ msgstr "Detalles"
-
-#~ msgid "Error benchmarking drive"
-#~ msgstr "Produciuse un erro ao obter un medición do rendemento da unidade"
 
 #~ msgid "Are you sure you want to start a read/write benchmark?"
 #~ msgstr ""

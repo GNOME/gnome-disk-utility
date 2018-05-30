@@ -440,7 +440,7 @@ gdu_create_format_show (UDisksClient *client,
       data->partition_page = NULL;
     }
 
-  data->filesystem_page = gdu_create_filesystem_page_new (show_custom, data->drive);
+  data->filesystem_page = gdu_create_filesystem_page_new (data->client, show_custom, data->drive);
   gtk_stack_add_titled (data->stack, GTK_WIDGET (data->filesystem_page), FORMAT_PAGE, _("Format Volume"));
   g_signal_connect (data->filesystem_page, "notify::complete", G_CALLBACK (update_dialog), data);
   data->other_page = gdu_create_other_page_new (data->client);

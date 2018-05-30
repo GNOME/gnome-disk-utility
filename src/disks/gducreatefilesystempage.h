@@ -17,7 +17,8 @@ G_BEGIN_DECLS
 #define GDU_TYPE_CREATE_FILESYSTEM_PAGE gdu_create_filesystem_page_get_type ()
 G_DECLARE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, GDU, CREATE_FILESYSTEM_PAGE, GtkGrid)
 
-GduCreateFilesystemPage *gdu_create_filesystem_page_new          (gboolean      show_custom,
+GduCreateFilesystemPage *gdu_create_filesystem_page_new          (UDisksClient *client,
+                                                                  gboolean      show_custom,
                                                                   UDisksDrive  *drive);
 
 const gchar *            gdu_create_filesystem_page_get_name     (GduCreateFilesystemPage *page);

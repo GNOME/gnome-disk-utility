@@ -75,7 +75,7 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
                                              UDisksClient *client,
                                              GList        *objects);
 
-gboolean gdu_utils_is_ntfs_available (void);
+gboolean gdu_utils_is_ntfs_available (UDisksClient *client);
 
 #ifdef HAVE_UDISKS2_7_2
 

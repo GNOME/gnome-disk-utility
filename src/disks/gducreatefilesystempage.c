@@ -183,7 +183,7 @@ on_fs_type_changed (GtkToggleButton *object, gpointer user_data)
 }
 
 GduCreateFilesystemPage *
-gdu_create_filesystem_page_new (gboolean show_custom, UDisksDrive *drive)
+gdu_create_filesystem_page_new (UDisksClient *client, gboolean show_custom, UDisksDrive *drive)
 {
   GduCreateFilesystemPage *page;
   GduCreateFilesystemPagePrivate *priv;
@@ -208,7 +208,7 @@ gdu_create_filesystem_page_new (gboolean show_custom, UDisksDrive *drive)
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
       if (gdu_utils_is_flash (drive) ||
           udisks_drive_get_size (drive) < 20UL * 1000UL*1000UL*1000UL ||
-          !gdu_utils_is_ntfs_available ()
+          !gdu_utils_is_ntfs_available (client)
           )
         {
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton), TRUE);
@@ -219,7 +219,7 @@ gdu_create_filesystem_page_new (gboolean show_custom, UDisksDrive *drive)
         }
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_is_ntfs_available ());
+  gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_is_ntfs_available (client));
 
   return page;
 }

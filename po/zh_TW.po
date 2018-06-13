@@ -7,18 +7,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.3.93\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-27 16:57+0000\n"
-"PO-Revision-Date: 2018-02-28 23:45+0800\n"
-"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-06-06 07:59+0000\n"
+"PO-Revision-Date: 2018-06-13 22:28+0800\n"
+"Last-Translator: pan93412 <pan93412@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 2.0.8\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -234,7 +234,7 @@ msgid ""
 "indicates a problem with either the disk surface or read/write heads"
 msgstr ""
 "從磁碟讀取原始資料時發生錯誤的頻率。非零的數值代表可能是磁盤表面或是讀取/寫入"
-"磁頭的問題。"
+"磁頭的問題"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1122,74 +1122,80 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f 毫秒"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "評測裝置"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "取得裝置大小時發生錯誤：%m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "取得分頁大小時發生錯誤：%m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "搜尋偏移量 %lld 時發生錯誤"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "從偏移量 %2$s 預讀 %1$s 時發生錯誤"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "搜尋偏移量 %s 時發生錯誤"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "從偏移量 %s 讀取 %s 時發生錯誤"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "從偏移量 %2$lld 預讀 %1$lld 位元組時發生錯誤"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "寫入 %lld 位元組於補償 %lld 時發生錯誤：%m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "預期寫入 %lld 位元組，只寫入 %lld：%m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "同步 (於偏移量 %lld) 時發生錯誤：%m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "搜尋偏移量 %lld 時發生錯誤：%m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1493,9 +1499,9 @@ msgstr "標籤符合既有標籤"
 msgid "Error setting label"
 msgstr "設定標籤時發生錯誤"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "卸載檔案系統時發生錯誤"
 
@@ -1932,13 +1938,26 @@ msgstr "所有既存的資料都會消失"
 msgid "_Restore"
 msgstr "還原(_R)"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "解鎖已加密裝置時發生錯誤"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "選擇金鑰檔案"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "解鎖裝置時發生錯誤"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "無效的 PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "加密密語已從鑰匙圈取回"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "設定選項以解鎖"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2192,17 +2211,17 @@ msgstr "未使用"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "已解鎖"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "已鎖定"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "延伸分割區"
@@ -2211,45 +2230,45 @@ msgstr "延伸分割區"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "未配置的空間"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "修復檔案系統時發生錯誤"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "修復成功"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "修復失敗"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s 上的 %1$s 檔案系統已經修復。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%2$s 上的 %1$s 檔案系統無法修復。"
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "確認修復"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2258,106 +2277,106 @@ msgstr ""
 "檔案系統修復不是永遠可行，而且可能導致資料丟失。請在使用可擷取遺失檔案的偵察"
 "復原工具之前，先考慮資料備份。取決於資料量的多寡，此操作可能會花上較長時間。"
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "檢查檔案系統時發生錯誤"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "檔案系統完整"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "檔案系統損毀"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s 上的 %1$s 檔案系統未有損壞。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s 上的 %1$s 檔案系統需要修復。"
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "確認檢查"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "取決於檔案系統的資料量多寡，檢查過程可能花上較長的時間。"
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "當嘗試讓磁碟機進入待命模式時發生錯誤"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "當嘗試讓磁碟機從待命模式喚醒時發生錯誤"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "關閉磁碟電源時發生錯誤"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "確定要關閉磁碟機的電源？"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "這個操作會讓系統準備使下列磁碟機關閉電源與移除。"
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "關閉電源(_P)"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "掛載檔案系統時發生錯誤"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "刪除分割區時發生錯誤"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "確定要刪除此分割區？"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "分割區上的所有資料將會消失"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "刪除(_D)"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "退出媒體時發生錯誤"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "鎖定加密的裝置時發生錯誤"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "啟動置換區時發生錯誤"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "停止置換區時發生錯誤"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "設定 autoclear 旗標時發生錯誤"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "取消工作時發生錯誤"
 
@@ -3122,7 +3141,7 @@ msgid "Passphrase File"
 msgstr "密語檔案"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "顯示密語(_W)"
 
@@ -3133,7 +3152,7 @@ msgid ""
 msgstr "裝置的密語，或保持空白以在設定裝置時要求使用者"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "密語(_P)"
 
@@ -3521,11 +3540,58 @@ msgstr "延伸的"
 msgid "Conveyance"
 msgstr "輸運"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "輸入解除鎖定的密語"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "這個磁碟區可能是 VeraCrypt 儲存區，因為該儲存區包含隨機資料。"
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "如果指定"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "儲存區類型"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "隱藏(_H)"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr "不解鎖這個儲存區，而改去嘗試去解鎖之中的次要儲存區。"
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Windows 系統(_S)"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "解除鎖定選取的加密 Windows 分割區或磁碟。"
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"如果設定，VeraCrypt PIM (Personal Iterations Multiplier) 數值將會用於此儲存"
+"區。"
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "金鑰檔案"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "解鎖(_U)"
 
@@ -3650,11 +3716,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "受影響的裝置"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "鎖定裝置時發生錯誤"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "為迴圈裝置停用自動清除時發生錯誤"
 
@@ -3675,6 +3741,9 @@ msgstr "有硬碟即將毀壞。"
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "檢驗"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "解鎖已加密裝置時發生錯誤"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"
@@ -3893,9 +3962,6 @@ msgstr "檢驗"
 #~ "If set, some OSes may mount or use the contents of the partition as read-"
 #~ "only instead of read-write"
 #~ msgstr "如果設定，某些 OS 會以唯讀而非可讀寫的方式掛載或使用分割區的內容"
-
-#~ msgid "H_idden"
-#~ msgstr "隱藏(_I)"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "

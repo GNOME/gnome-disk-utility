@@ -12,10 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 22:43+0000\n"
-"PO-Revision-Date: 2018-02-22 22:25+0300\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-05-31 09:18+0000\n"
+"PO-Revision-Date: 2018-06-22 19:44+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -75,7 +75,7 @@ msgid ""
 "disks and block devices."
 msgstr ""
 "Diskler; diskleri ve blok aygıtları denetlemek, biçimlendirmek, "
-"bölümlendirmek ve yapılandırmak için kolay bir yol sağlar"
+"bölümlendirmek ve yapılandırmak için kolay bir yol sağlar."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
 msgid ""
@@ -149,7 +149,7 @@ msgid ""
 "the underlying disk image to be modified"
 msgstr ""
 "Eğer işaretlenirse salt okunur bağlanacak. Temel dosyanın değişmemesi için "
-"kullanışlıdır."
+"kullanışlıdır"
 
 #: src/disk-image-mounter/main.c:136
 #, c-format
@@ -245,7 +245,7 @@ msgid ""
 msgstr ""
 "Diskten ham veri okuma sırasındaki hata sıklığı. Sıfır olmayan bir değer "
 "disk yüzeyinde veya okuma/yazma kafaları ile ilgili bir sorun olduğunu "
-"gösterir."
+"gösterir"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -295,7 +295,7 @@ msgid ""
 msgstr ""
 "Yeniden haritalanan kesim sayısı. Sabit sürücü bir okuma/yazma/doğrulama "
 "hatası bulduğu zaman, bu kesimi “yeniden ayrıldı” olarak işaretler ve veriyi "
-"ayrılmış özel bir alana (yedek alan) aktarır "
+"ayrılmış özel bir alana (yedek alan) aktarır"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1150,75 +1150,82 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f milisaniye"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+#| msgid "Benchmark Settings"
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Aygıt kıyaslanıyor"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Aygıtın boyutunu saptamada hata: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Sayfa boyutu alınırken hata oluştu: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "%lld bağıl konumu aranırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "%s verisi %s bağıl konumundan ön okuma yapılırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "%s bağıl konumu aranırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "%s verisi %s bağıl konumundan okunurken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr ""
 "%lld baytlık veri %lld bağıl konumundan ön okuma yapılırken hata oluştu"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "%lld baytlık veri %lld bağıl adresine yazılırken hata oluştu: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld byte veri yazılması beklenirken, yalnızca %lld bayt yazıldı: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Eşitleme hatası (%lld bağıl konumunda): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "%lld bağıl konumu aranırken hata oluştu: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1528,9 +1535,9 @@ msgstr "Var olan etiketle eşleşen etiket"
 msgid "Error setting label"
 msgstr "Etiket değiştirmede hata"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Dosya sistemi ayırmada hata"
 
@@ -1651,7 +1658,7 @@ msgstr ""
 "sürücü kullanılmaz hale gelebilir veya sisteminiz çökebilir ya da "
 "kilitlenebilir. Devam etmeden önce lütfen <a href='https://ata.wiki.kernel."
 "org/index.php/ATA_Secure_Erase'>ATA Güvenli Silme (İngilizce)</a> ile ilgili "
-"yazıyı okuyup riskleri anladığınızdan emin olunuz."
+"yazıyı okuyup riskleri anladığınızdan emin olunuz"
 
 #: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
@@ -1981,13 +1988,28 @@ msgstr "Tüm veriler kaybedilecek"
 msgid "_Restore"
 msgstr "_Geri Yükle"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Şifrelenmiş aygıt açmada hata"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#| msgid "Select a device"
+msgid "Select a Keyfile"
+msgstr "Anahtar Dosyası Seç"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+#| msgid "Error locking device"
+msgid "Error unlocking device"
+msgstr "Aygıt kilidi açılırken hata"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "Geçersiz PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Şifreleme parolası anahtarlıktan alındı"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Kilidi açmak için seçenekleri belirle"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2064,7 +2086,7 @@ msgid ""
 "want the underlying file to be modified"
 msgstr ""
 "Eğer işaretlenirse döngü aygıtı salt okunur olacak. Bu seçenek, asıl "
-"dosyanın değişmesini istemiyorsanız kullanışlıdır."
+"dosyanın değişmesini istemiyorsanız kullanışlıdır"
 
 #: src/disks/gduwindow.c:1010
 msgid "Power off this disk"
@@ -2241,17 +2263,21 @@ msgstr "Etkin Değil"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Unlocked"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
-msgstr "Kilidi Açık"
+msgstr "Kilidi açık"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Locked"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Kilitli"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Uzatılmış Bölüm"
@@ -2260,45 +2286,45 @@ msgstr "Uzatılmış Bölüm"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Ayrılmamış Alan"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Dosya sistemi onarılırken hata"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Onarım başarılı"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Onarım başarısız"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarıldı."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarılamadı."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Onarımı Onayla"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2309,108 +2335,108 @@ msgstr ""
 "için öncelikle verinizi yedeklemeyi düşünün. Bu işlem veri tutarına bağlı "
 "olarak uzun zaman alır."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Dosya sistemi denetlenirken hata"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Dosya sistemi sağlam"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Dosya sistemi hasarlı"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s üzerindeki %1$s dosya sistemi sağlamdır."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarım gerektiriyor."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Denetimi Onayla"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "Dosya sistemi denetimi veri tutarına bağlı olarak uzun zaman alır."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Sürücüyü bekleme kipine alırken bir hata oluştu"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Sürücüyü bekleme kipinden uyandırırken bir hata oluştu"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Sürücü kapatılırken hata oluştu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sürücülerin gücünü kapatmak istediğinizden emin misiniz?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Bu işlem aşağıdaki sürücülerin kapatılması ve kaldırılması için sistemi "
-"hazırlar"
+"hazırlar."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "G_ücü Kapat"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Dosya sistemi bağlanırken hata"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Bölüm silinirken hata"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "Bölümü silmek istediğinizden emin misiniz?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Bölümdeki tüm veri kaybedilecek"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "_Sil"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Ortam çıkarmada hata"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Şifrelenmiş aygıt kilitlenirken hata"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Takas bölümü başlatmada hata"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Takas bölümü durdurmada hata"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Otomatik temizle (autoclear) bayrağı ayarlanırken hata"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "İş iptal edilirken hata"
 
@@ -2577,7 +2603,7 @@ msgid ""
 "taking more time."
 msgstr ""
 "Her örnekteki okuma/yazma için kullanılan MiB (1048576 bayt) boyutu. Büyük "
-"örnek boyutları daha doğru sonuçlar üretsede kıyaslama daha çok zaman alır"
+"örnek boyutları daha doğru sonuçlar üretsede kıyaslama daha çok zaman alır."
 
 #: src/disks/ui/benchmark-dialog.ui:533
 msgid "Access Time"
@@ -3191,7 +3217,7 @@ msgid "Passphrase File"
 msgstr "Parola Dosyası"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "Parola metnini _göster"
 
@@ -3204,7 +3230,7 @@ msgstr ""
 "için boş bırakın"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Parola Metni"
 
@@ -3425,10 +3451,6 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Eski BIOS’la _Önyüklenebilir"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
@@ -3613,11 +3635,62 @@ msgstr "Genişletilmiş"
 msgid "Conveyance"
 msgstr "Nakil"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Kilit açmak için parola gir"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "Bu birim rastgele veri içerdiğinden bir VeraCrypt birimi olabilir."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Eğer belirtildiyse"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+#| msgid "Volume"
+msgid "Volume type"
+msgstr "Birim türü"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "_Gizli"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Bu birimin kilidini açmak yerine içindeki gizli ikincil birimin kilidini "
+"açmaya çalış."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Windows _sistemi"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+#| msgid "Unlock selected encrypted partition"
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Şifreli Windows sistem bölümünün veya sürücüsünün kilidini aç."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Eğer belirtildiyse, birim için bu VeraCrypt PIM (Personal Iterations "
+"Multiplier) sayısal değeri kullanılacak."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Anahtar dosyaları"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Kilidi Aç"
 
@@ -3742,11 +3815,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Etkilenen Aygıtlar"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Aygıt kilitlemede hata"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Döngü aygıtı için otomatik temizle (autoclear) devre dışı bırakılırken hata"
@@ -3768,6 +3841,9 @@ msgstr "Sabit disk yakında bozulabilir."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "İncele"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Şifrelenmiş aygıt açmada hata"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"

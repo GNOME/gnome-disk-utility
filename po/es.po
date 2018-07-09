@@ -9,10 +9,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-05-08 06:38+0000\n"
-"PO-Revision-Date: 2018-05-08 13:18+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-07-01 22:37+0000\n"
+"PO-Revision-Date: 2018-07-09 08:46+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1163,7 +1163,6 @@ msgstr "%.2f mseg"
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdubenchmarkdialog.c:1180
-#| msgid "Error benchmarking drive"
 msgctxt "create-inhibit-message"
 msgid "Benchmarking device"
 msgstr "Pruebas de rendimiento del dispositivo"
@@ -1543,9 +1542,9 @@ msgstr "La etiqueta coincide con una etiqueta existente"
 msgid "Error setting label"
 msgstr "Error al establecer la etiqueta"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Error al desmontar el sistema de archivos"
 
@@ -2006,13 +2005,28 @@ msgstr "Se perderán todos los datos existentes"
 msgid "_Restore"
 msgstr "_Restaurar"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Error al desbloquear el dispositivo cifrado"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#| msgid "Select a device"
+msgid "Select a Keyfile"
+msgstr "Seleccionar un archivo de claves"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+#| msgid "Error locking device"
+msgid "Error unlocking device"
+msgstr "Error al bloquear el dispositivo"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "PIM no válido"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Se obtuvo la contraseña de cifrado del depósito de claves"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Establecer opciones para desbloquear"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2266,17 +2280,21 @@ msgstr "Inactivo"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Unlocked"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Desbloqueado"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Locked"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Bloqueado"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partición extendida"
@@ -2285,45 +2303,45 @@ msgstr "Partición extendida"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Espacio sin usar"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Error al reparar el sistema de archivos"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Reparación correcta"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Falló al reparar"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Se ha reparado el sistema de archivos %s en %s."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "No se pudo reparar el sistema de archivos %s en %s."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Confirmar reparación"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2334,58 +2352,58 @@ msgstr ""
 "usar herramientas de análisis forense que recuperen los datos perdidos. El "
 "tiempo que dure esta operación depende de la cantidad de datos."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Error al comprobar el sistema de archivos"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Sistema de archivos intacto"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Sistema de archivos dañado"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "El sistema de archivos %s en %s no está dañado."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "El sistema de archivos %s en %s necesita reparación."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Confirmar comprobación"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "La duración de la comprobación del sistema de archivos depende de la "
 "cantidad de datos."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ocurrió un error al intentar poner la unidad en reposo"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ocurrió un error al intentar que la unidad saliera del reposo"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Error al apagar el dispositivo"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "¿Está seguro de que quiere apagar las unidades?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2393,51 +2411,51 @@ msgstr ""
 "Esta operación preparará el sistema para extraer y apagar las siguientes "
 "unidades."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "_Apagar"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Error al eliminar la partición"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "¿Está seguro de que quiere eliminar la partición?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Se perderán todos los datos de la partición"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Error al bloquear el dispositivo cifrado"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Error al iniciar el intercambio"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Error al detener el intercambio"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Error al establecer la opción de limpieza automática"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "Error al cancelar el trabajo"
 
@@ -3224,7 +3242,7 @@ msgid "Passphrase File"
 msgstr "Archivo de contraseña"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "Mos_trar contraseña"
 
@@ -3237,7 +3255,7 @@ msgstr ""
 "configurar el dispositivo"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Contraseña"
 
@@ -3647,11 +3665,64 @@ msgstr "Extendido"
 msgid "Conveyance"
 msgstr "Transferencia"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Introduzca la frase de paso para desbloquear"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr ""
+"Este volumen puede ser de tipo VeraCrypt ya que contiene datos aleatorios."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Si se especifica"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+#| msgid "Volume"
+msgid "Volume type"
+msgstr "Tipo de volumen"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+#| msgid "H_idden"
+msgid "_Hidden"
+msgstr "O_culto"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"El lugar de desbloquear este volumen intentar desbloquear un volumen "
+"secundario oculto dentro."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "_Sistema Windows"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+#| msgid "Unlock selected encrypted partition"
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Desbloquear una unidad o una partición Windows del sistema cifrada."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Si está configurado este será el valor numérico del PIM VeraCrypt "
+"(multiplicado de iteraciones personales) usado para este volumen."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Archivos de claves"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Desbloquear"
 
@@ -3783,11 +3854,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositivos afectados"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Error al bloquear el dispositivo"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Error al desactivar la limpieza automática para el dispositivo «loop»"
 
@@ -3808,6 +3879,9 @@ msgstr "Un disco duro podría fallar pronto."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examinar"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Error al desbloquear el dispositivo cifrado"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"
@@ -3954,9 +4028,6 @@ msgstr "Examinar"
 #~ msgstr ""
 #~ "Si está establecida, algunos sistemas operativos pueden montar o usar el "
 #~ "contenido de la partición como solo lectura en lugar de lectura/escritura"
-
-#~ msgid "H_idden"
-#~ msgstr "O_culto"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "

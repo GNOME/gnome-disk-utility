@@ -59,7 +59,7 @@ struct _GduWindow
 
   GtkWidget *volume_grid;
 
-  GtkWidget *toolbutton_generic_menu;
+  GtkWidget *toolbutton_volume_menu;
   GtkWidget *toolbutton_partition_create;
   GtkWidget *toolbutton_partition_delete;
   GtkWidget *toolbutton_mount;
@@ -80,41 +80,17 @@ struct _GduWindow
   GtkWidget *devtab_drive_loop_detach_button;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_power_off_button;
-  GtkWidget *devtab_drive_generic_button;
+  GtkWidget *devtab_drive_menu_button;
+  GtkWidget *devtab_appmenu_button;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
   GtkWidget *devtab_grid_hbox;
   GtkWidget *devtab_volumes_label;
   GtkWidget *devtab_grid_toolbar;
 
-  GtkWidget *generic_drive_menu;
-  GtkWidget *generic_drive_menu_item_format_disk;
-  GtkWidget *generic_drive_menu_item_create_disk_image;
-  GtkWidget *generic_drive_menu_item_restore_disk_image;
-  GtkWidget *generic_drive_menu_item_benchmark;
-  /* Drive-specific items */
-  GtkWidget *generic_drive_menu_item_drive_sep_1;
-  GtkWidget *generic_drive_menu_item_view_smart;
-  GtkWidget *generic_drive_menu_item_disk_settings;
-  GtkWidget *generic_drive_menu_item_drive_sep_2;
-  GtkWidget *generic_drive_menu_item_standby_now;
-  GtkWidget *generic_drive_menu_item_resume_now;
-  GtkWidget *generic_drive_menu_item_power_off;
-
-  GtkWidget *generic_menu;
-  GtkWidget *generic_menu_item_configure_fstab;
-  GtkWidget *generic_menu_item_configure_crypttab;
-  GtkWidget *generic_menu_item_change_passphrase;
-  GtkWidget *generic_menu_item_resize;
-  GtkWidget *generic_menu_item_repair;
-  GtkWidget *generic_menu_item_check;
-  GtkWidget *generic_menu_item_separator;
-  GtkWidget *generic_menu_item_edit_label;
-  GtkWidget *generic_menu_item_edit_partition;
-  GtkWidget *generic_menu_item_format_volume;
-  GtkWidget *generic_menu_item_create_volume_image;
-  GtkWidget *generic_menu_item_restore_volume_image;
-  GtkWidget *generic_menu_item_benchmark;
+  GtkWidget *hamburger_menu;
+  GtkWidget *drive_menu;
+  GtkWidget *volume_menu;
 
   GtkWidget *devtab_loop_autoclear_switch;
 
@@ -140,7 +116,7 @@ static const struct {
   goffset offset;
   const gchar *name;
 } widget_mapping[] = {
-  {G_STRUCT_OFFSET (GduWindow, toolbutton_generic_menu), "toolbutton-generic-menu"},
+  {G_STRUCT_OFFSET (GduWindow, toolbutton_volume_menu), "toolbutton-volume-menu"},
   {G_STRUCT_OFFSET (GduWindow, toolbutton_partition_create), "toolbutton-partition-create"},
   {G_STRUCT_OFFSET (GduWindow, toolbutton_partition_delete), "toolbutton-partition-delete"},
   {G_STRUCT_OFFSET (GduWindow, toolbutton_mount), "toolbutton-mount"},
@@ -163,35 +139,6 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_toolbar), "devtab-grid-toolbar"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_loop_autoclear_switch), "devtab-loop-autoclear-switch"},
-
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu), "generic-drive-menu"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_format_disk), "generic-drive-menu-item-format-disk"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_create_disk_image), "generic-drive-menu-item-create-disk-image"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_restore_disk_image), "generic-drive-menu-item-restore-disk-image"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_benchmark), "generic-drive-menu-item-benchmark"},
-  /* Drive-specific items */
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_1), "generic-drive-menu-item-drive-sep-1"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_view_smart), "generic-drive-menu-item-view-smart"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_disk_settings), "generic-drive-menu-item-disk-settings"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_drive_sep_2), "generic-drive-menu-item-drive-sep-2"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_standby_now), "generic-drive-menu-item-standby-now"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_resume_now), "generic-drive-menu-item-resume-now"},
-  {G_STRUCT_OFFSET (GduWindow, generic_drive_menu_item_power_off), "generic-drive-menu-item-power-off"},
-
-  {G_STRUCT_OFFSET (GduWindow, generic_menu), "generic-menu"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_fstab), "generic-menu-item-configure-fstab"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_configure_crypttab), "generic-menu-item-configure-crypttab"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_change_passphrase), "generic-menu-item-change-passphrase"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_resize), "generic-menu-item-resize"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_check), "generic-menu-item-check"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_repair), "generic-menu-item-repair"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_separator), "generic-menu-item-separator"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_label), "generic-menu-item-edit-label"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_edit_partition), "generic-menu-item-edit-partition"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_format_volume), "generic-menu-item-format-volume"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_create_volume_image), "generic-menu-item-create-volume-image"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_restore_volume_image), "generic-menu-item-restore-volume-image"},
-  {G_STRUCT_OFFSET (GduWindow, generic_menu_item_benchmark), "generic-menu-item-benchmark"},
 
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_label), "devtab-drive-job-label"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_job_grid), "devtab-drive-job-grid"},
@@ -288,7 +235,7 @@ static void update_all (GduWindow *window, gboolean is_delayed_job_update);
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
 
-static void on_generic_tool_button_clicked (GtkToolButton *button, gpointer user_data);
+static void on_volume_menu_tool_button_clicked (GtkToolButton *button, gpointer user_data);
 static void on_partition_create_tool_button_clicked (GtkToolButton *button, gpointer user_data);
 static void on_partition_delete_tool_button_clicked (GtkToolButton *button, gpointer user_data);
 static void on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data);
@@ -302,53 +249,77 @@ static void on_devtab_drive_loop_detach_button_clicked (GtkButton *button, gpoin
 static void on_devtab_drive_eject_button_clicked (GtkButton *button, gpointer user_data);
 static void on_devtab_drive_power_off_button_clicked (GtkButton *button, gpointer user_data);
 
-static void on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
-                                             gpointer   user_data);
-static void on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
-                                                      gpointer   user_data);
-static void on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
-                                                    gpointer   user_data);
-static void on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
-                                                   gpointer   user_data);
-static void on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
-                                                  gpointer   user_data);
-static void on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
-                                              gpointer   user_data);
-static void on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
-                                                          gpointer   user_data);
-static void on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
-                                                           gpointer   user_data);
-static void on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
-                                                  gpointer   user_data);
+static void on_drive_menu_open (GSimpleAction *action, GVariant *parameter, gpointer user_data);
+static void on_volume_menu_open (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 
-static void on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
-                                                  gpointer   user_data);
-static void on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
-                                                     gpointer   user_data);
-static void on_generic_menu_item_change_passphrase (GtkMenuItem *menu_item,
-                                                    gpointer   user_data);
+static void on_drive_menu_item_view_smart (GSimpleAction *action,
+                                           GVariant      *parameter,
+                                           gpointer      user_data);
+static void on_drive_menu_item_disk_settings (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer      user_data);
+static void on_drive_menu_item_standby_now (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer      user_data);
+static void on_drive_menu_item_resume_now (GSimpleAction *action,
+                                           GVariant      *parameter,
+                                           gpointer      user_data);
+static void on_drive_menu_item_power_off (GSimpleAction *action,
+                                          GVariant      *parameter,
+                                          gpointer      user_data);
+static void on_drive_menu_item_format_disk (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer      user_data);
+static void on_drive_menu_item_create_disk_image (GSimpleAction *action,
+                                                  GVariant      *parameter,
+                                                  gpointer      user_data);
+static void on_drive_menu_item_restore_disk_image (GSimpleAction *action,
+                                                   GVariant      *parameter,
+                                                   gpointer      user_data);
+static void on_drive_menu_item_benchmark (GSimpleAction *action,
+                                          GVariant      *parameter,
+                                          gpointer      user_data);
+
+static void on_volume_menu_item_configure_fstab (GSimpleAction *action,
+                                                 GVariant      *parameter,
+                                                 gpointer      user_data);
+static void on_volume_menu_item_configure_crypttab (GSimpleAction *action,
+                                                    GVariant      *parameter,
+                                                    gpointer      user_data);
+static void on_volume_menu_item_change_passphrase (GSimpleAction *action,
+                                                   GVariant      *parameter,
+                                                   gpointer      user_data);
 
 #ifdef HAVE_UDISKS2_7_2
-static void on_generic_menu_item_resize (GtkMenuItem *menu_item,
-                                         gpointer     user_data);
-static void on_generic_menu_item_repair (GtkMenuItem *menu_item,
-                                         gpointer     user_data);
-static void on_generic_menu_item_check (GtkMenuItem *menu_item,
-                                        gpointer     user_data);
+static void on_volume_menu_item_resize (GSimpleAction *action,
+                                        GVariant      *parameter,
+                                        gpointer      user_data);
+static void on_volume_menu_item_repair (GSimpleAction *action,
+                                        GVariant      *parameter,
+                                        gpointer      user_data);
+static void on_volume_menu_item_check (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer      user_data);
 #endif
 
-static void on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
-                                             gpointer   user_data);
-static void on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
-                                                 gpointer   user_data);
-static void on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
-                                                gpointer   user_data);
-static void on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
-                                                      gpointer   user_data);
-static void on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
-                                                       gpointer   user_data);
-static void on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
-                                            gpointer   user_data);
+static void on_volume_menu_item_edit_label (GSimpleAction *action,
+                                            GVariant      *parameter,
+                                            gpointer      user_data);
+static void on_volume_menu_item_edit_partition (GSimpleAction *action,
+                                                GVariant      *parameter,
+                                                gpointer      user_data);
+static void on_volume_menu_item_format_volume (GSimpleAction *action,
+                                               GVariant      *parameter,
+                                               gpointer      user_data);
+static void on_volume_menu_item_create_volume_image (GSimpleAction *action,
+                                                     GVariant      *parameter,
+                                                     gpointer      user_data);
+static void on_volume_menu_item_restore_volume_image (GSimpleAction *action,
+                                                      GVariant      *parameter,
+                                                      gpointer      user_data);
+static void on_volume_menu_item_benchmark (GSimpleAction *action,
+                                           GVariant      *parameter,
+                                           gpointer      user_data);
 
 static void on_devtab_loop_autoclear_switch_notify_active (GObject    *object,
                                                            GParamSpec *pspec,
@@ -365,6 +336,36 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   gpointer     user_data);
 
 G_DEFINE_TYPE (GduWindow, gdu_window, GTK_TYPE_APPLICATION_WINDOW);
+
+static const GActionEntry actions[] = {
+	{ "open-drive-menu", on_drive_menu_open },
+	{ "open-volume-menu", on_volume_menu_open },
+
+	{ "format-disk", on_drive_menu_item_format_disk },
+	{ "create-disk-image", on_drive_menu_item_create_disk_image },
+	{ "restore-disk-image", on_drive_menu_item_restore_disk_image },
+	{ "benchmark-disk", on_drive_menu_item_benchmark },
+	{ "view-smart", on_drive_menu_item_view_smart },
+	{ "disk-settings", on_drive_menu_item_disk_settings },
+	{ "standby-now", on_drive_menu_item_standby_now },
+	{ "resume-now", on_drive_menu_item_resume_now },
+	{ "power-off", on_drive_menu_item_power_off },
+
+	{ "format-partition", on_volume_menu_item_format_volume },
+	{ "edit-partition", on_volume_menu_item_edit_partition },
+	{ "edit-label", on_volume_menu_item_edit_label },
+	{ "change-passphrase", on_volume_menu_item_change_passphrase },
+#ifdef HAVE_UDISKS2_7_2
+	{ "resize", on_volume_menu_item_resize },
+	{ "check-fs", on_volume_menu_item_check },
+	{ "repair-fs", on_volume_menu_item_repair },
+#endif
+	{ "configure-fstab", on_volume_menu_item_configure_fstab },
+	{ "configure-crypttab", on_volume_menu_item_configure_crypttab },
+	{ "create-partition-image", on_volume_menu_item_create_volume_image },
+	{ "restore-partition-image", on_volume_menu_item_restore_volume_image },
+	{ "benchmark-partition", on_volume_menu_item_benchmark }
+};
 
 static void
 gdu_window_init (GduWindow *window)
@@ -467,43 +468,63 @@ update_for_show_flags (GduWindow *window,
   gtk_widget_set_visible (window->toolbutton_lock,
                           show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_format_disk),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_view_smart),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_VIEW_SMART);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_disk_settings),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_create_disk_image),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_restore_disk_image),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_benchmark),
-                            show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "format-disk")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "view-smart")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_VIEW_SMART);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "disk-settings")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "create-disk-image")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "restore-disk-image")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "benchmark-disk")),
+                              show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_fstab),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_configure_crypttab),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_change_passphrase),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_resize),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESIZE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_repair),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_REPAIR);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_check),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHECK);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_label),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_edit_partition),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_format_volume),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_create_volume_image),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_restore_volume_image),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE);
-  gtk_widget_set_sensitive (GTK_WIDGET (window->generic_menu_item_benchmark),
-                            show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_BENCHMARK);
+
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "configure-fstab")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "configure-crypttab")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "change-passphrase")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "resize")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_RESIZE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "repair-fs")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_REPAIR);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "check-fs")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_CHECK);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "edit-label")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "edit-partition")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "format-partition")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "create-partition-image")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "restore-partition-image")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+                                                                          "benchmark-partition")),
+                              show_flags->drive_menu & SHOW_FLAGS_VOLUME_MENU_BENCHMARK);
+
   /* TODO: don't show the button bringing up the popup menu if it has no items */
 }
 
@@ -993,14 +1014,29 @@ static GtkWidget *
 create_header (GduWindow *window)
 {
   GtkWidget *header;
+  GtkBuilder *builder;
+  GMenuModel *model;
   GtkWidget *button;
   GtkWidget *image;
 
   header = gtk_header_bar_new ();
   gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (header), TRUE);
 
-  button = window->devtab_drive_generic_button = gtk_menu_button_new ();
-  gtk_menu_button_set_popup (GTK_MENU_BUTTON (button), window->generic_drive_menu);
+  button = window->devtab_appmenu_button = gtk_menu_button_new ();
+  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/app-menu.ui");
+  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "app-menu") );
+  window->hamburger_menu = gtk_popover_new_from_model (button, model);
+  gtk_menu_button_set_popover (GTK_MENU_BUTTON (button), window->hamburger_menu);
+  gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
+  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
+
+  button = window->devtab_drive_menu_button = gtk_menu_button_new ();
+  image = gtk_image_new_from_icon_name ("drive-harddisk-symbolic", GTK_ICON_SIZE_MENU);
+  gtk_button_set_image (GTK_BUTTON (button), image);
+  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/drive-menu.ui");
+  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "drive-menu") );
+  window->drive_menu = gtk_popover_new_from_model (button, model);
+  gtk_menu_button_set_popover (GTK_MENU_BUTTON (button), window->drive_menu);
   gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
   gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
 
@@ -1052,15 +1088,14 @@ static void
 gdu_window_constructed (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
-  guint key;
-  GdkModifierType mod;
-  GtkAccelGroup *accelgroup;
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
   GtkTreeSelection *selection;
   GtkStyleContext *context;
   GList *children, *l;
   guint n;
+  GtkBuilder *builder;
+  GMenuModel *model;
 
   init_css (window);
 
@@ -1108,7 +1143,7 @@ gdu_window_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (window), window->main_box);
   g_object_unref (window->main_box);
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
-  gtk_window_set_default_size (GTK_WINDOW (window), 800, 700);
+  gtk_window_set_default_size (GTK_WINDOW (window), 900, 600);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
 
   /* set up mnemonic */
@@ -1249,10 +1284,16 @@ gdu_window_constructed (GObject *object)
   gtk_widget_set_name (window->devtab_grid_toolbar, "devtab-grid-toolbar");
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
+  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/volume-menu.ui");
+  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "volume-menu") );
+  window->volume_menu = gtk_popover_new_from_model (window->toolbutton_volume_menu, model);
+  gtk_popover_set_position (GTK_POPOVER (window->volume_menu), GTK_POS_BOTTOM);
+  g_object_unref (builder);
+
   /* toolbar buttons */
-  g_signal_connect (window->toolbutton_generic_menu,
+  g_signal_connect (window->toolbutton_volume_menu,
                     "clicked",
-                    G_CALLBACK (on_generic_tool_button_clicked),
+                    G_CALLBACK (on_volume_menu_tool_button_clicked),
                     window);
   g_signal_connect (window->toolbutton_partition_create,
                     "clicked",
@@ -1301,101 +1342,9 @@ gdu_window_constructed (GObject *object)
                     G_CALLBACK (on_devtab_drive_power_off_button_clicked),
                     window);
 
-  /* drive menu */
-  g_signal_connect (window->generic_drive_menu_item_view_smart,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_view_smart),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_disk_settings,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_disk_settings),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_standby_now,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_standby_now),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_resume_now,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_resume_now),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_power_off,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_power_off),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_format_disk,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_format_disk),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_create_disk_image,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_create_disk_image),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_restore_disk_image,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_restore_disk_image),
-                    window);
-  g_signal_connect (window->generic_drive_menu_item_benchmark,
-                    "activate",
-                    G_CALLBACK (on_generic_drive_menu_item_benchmark),
-                    window);
-
-  /* volume menu */
-  g_signal_connect (window->generic_menu_item_configure_fstab,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_configure_fstab),
-                    window);
-  g_signal_connect (window->generic_menu_item_configure_crypttab,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_configure_crypttab),
-                    window);
-  g_signal_connect (window->generic_menu_item_change_passphrase,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_change_passphrase),
-                    window);
-
-#ifdef HAVE_UDISKS2_7_2
-  g_signal_connect (window->generic_menu_item_resize,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_resize),
-                    window);
-  g_signal_connect (window->generic_menu_item_repair,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_repair),
-                    window);
-  g_signal_connect (window->generic_menu_item_check,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_check),
-                    window);
-#else
-  gtk_widget_hide (window->generic_menu_item_resize);
-  gtk_widget_hide (window->generic_menu_item_repair);
-  gtk_widget_hide (window->generic_menu_item_check);
-  gtk_widget_hide (window->generic_menu_item_separator);
-#endif
-
-  g_signal_connect (window->generic_menu_item_edit_label,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_edit_label),
-                    window);
-  g_signal_connect (window->generic_menu_item_edit_partition,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_edit_partition),
-                    window);
-  g_signal_connect (window->generic_menu_item_format_volume,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_format_volume),
-                    window);
-  g_signal_connect (window->generic_menu_item_create_volume_image,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_create_volume_image),
-                    window);
-  g_signal_connect (window->generic_menu_item_restore_volume_image,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_restore_volume_image),
-                    window);
-  g_signal_connect (window->generic_menu_item_benchmark,
-                    "activate",
-                    G_CALLBACK (on_generic_menu_item_benchmark),
+  /* actions from both menus are connected here ; in a perfect world, buttons should to */
+  g_action_map_add_action_entries (G_ACTION_MAP (window),
+                    actions, G_N_ELEMENTS (actions),
                     window);
 
   /* loop's auto-clear switch */
@@ -1430,72 +1379,6 @@ gdu_window_constructed (GObject *object)
   ensure_something_selected (window);
   gtk_widget_grab_focus (window->device_tree_treeview);
   update_all (window, FALSE);
-
-  /* attach the generic menu to the toplevel window for correct placement */
-  gtk_menu_attach_to_widget (GTK_MENU (window->generic_menu),
-                             GTK_WIDGET (window),
-                             NULL);
-
-  /* TODO: would be better to have all this in the .ui file - no idea
-   * why it doesn't work - accelerator support in GTK+ seems extremely
-   * confusing and flaky :-(
-   */
-  accelgroup = gtk_accel_group_new ();
-  gtk_window_add_accel_group (GTK_WINDOW (window), accelgroup);
-
-  /* Translators: This is the short-cut to open the disks/drive gear menu */
-  gtk_accelerator_parse (C_("accelerator", "F10"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/DriveMenu", key, mod);
-  gtk_widget_set_accel_path (window->devtab_drive_generic_button, "<Disks>/DriveMenu", accelgroup);
-
-  /* Translators: This is the short-cut to format a disk.
-   *              The Ctrl modifier must not be translated or parsing will fail.
-   *              You can however change to another English modifier (e.g. <Shift>).
-   */
-  gtk_accelerator_parse (C_("accelerator", "<Ctrl>F"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/DriveMenu/Format", key, mod);
-  gtk_widget_set_accel_path (window->generic_drive_menu_item_format_disk, "<Disks>/DriveMenu/Format", accelgroup);
-
-  /* Translators: This is the short-cut to view SMART data for a disk.
-   *              The Ctrl modifier must not be translated or parsing will fail.
-   *              You can however change to another English modifier (e.g. <Shift>).
-   */
-  gtk_accelerator_parse (C_("accelerator", "<Ctrl>S"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/DriveMenu/ViewSmart", key, mod);
-  gtk_widget_set_accel_path (window->generic_drive_menu_item_view_smart, "<Disks>/DriveMenu/ViewSmart", accelgroup);
-
-  /* Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
-   *              The Ctrl modifier must not be translated or parsing will fail.
-   *              You can however change to another English modifier (e.g. <Shift>).
-   */
-  gtk_accelerator_parse (C_("accelerator", "<Ctrl>E"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/DriveMenu/Settings", key, mod);
-  gtk_widget_set_accel_path (window->generic_drive_menu_item_disk_settings, "<Disks>/DriveMenu/Settings", accelgroup);
-
-  /* Translators: This is the short-cut to open the volume gear menu.
-   *              The Shift modifier must not be translated or parsing will fail.
-   *              You can however change to another English modifier (e.g. <Ctrl>).
-   */
-  /* TODO: This results in
-   *
-   * Gtk-CRITICAL **: gtk_widget_set_accel_path: assertion 'GTK_WIDGET_GET_CLASS (widget)->activate_signal != 0' failed
-   *
-   * so comment it out for now.
-   */
-#if 0
-  gtk_accelerator_parse (C_("accelerator", "<Shift>F10"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/VolumeMenu", key, mod);
-  gtk_widget_set_accel_path (window->toolbutton_generic_menu, "<Disks>/VolumeMenu", accelgroup);
-#endif
-
-
-  /* Translators: This is the short-cut to format a volume.
-   *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
-   *              You can however change to other English modifiers.
-   */
-  gtk_accelerator_parse (C_("accelerator", "<Shift><Ctrl>F"), &key, &mod);
-  gtk_accel_map_add_entry ("<Disks>/VolumeMenu/Format", key, mod);
-  gtk_widget_set_accel_path (window->generic_menu_item_format_volume, "<Disks>/VolumeMenu/Format", accelgroup);
 }
 
 static void
@@ -1960,7 +1843,7 @@ update_jobs (GduWindow *window,
 
   drive_sensitivity = !gdu_application_has_running_job (window->application, window->current_object);
   selected_volume_sensitivity = (!window->has_volume_job && !window->has_drive_job);
-  gets_sensitive = (drive_sensitivity && !gtk_widget_get_sensitive (window->devtab_drive_generic_button))
+  gets_sensitive = (drive_sensitivity && !gtk_widget_get_sensitive (window->devtab_drive_menu_button))
                    || (selected_volume_sensitivity && !gtk_widget_get_sensitive (window->devtab_grid_toolbar));
 
   /* delay for some milliseconds if change to sensitive or while a delay is pending */
@@ -1973,7 +1856,7 @@ update_jobs (GduWindow *window,
     }
   else
     {
-      gtk_widget_set_sensitive (window->devtab_drive_generic_button, drive_sensitivity);
+      gtk_widget_set_sensitive (window->devtab_drive_menu_button, drive_sensitivity);
       gtk_widget_set_sensitive (window->devtab_drive_eject_button, drive_sensitivity);
       gtk_widget_set_sensitive (window->devtab_drive_power_off_button, drive_sensitivity);
       gtk_widget_set_sensitive (window->devtab_drive_loop_detach_button, drive_sensitivity);
@@ -2217,7 +2100,7 @@ update_device_page_for_drive (GduWindow      *window,
 
   g_string_free (str, TRUE);
 
-  gtk_widget_show (window->devtab_drive_generic_button);
+  gtk_widget_show (window->devtab_drive_menu_button);
 
   str = g_string_new (NULL);
   if (strlen (drive_vendor) == 0)
@@ -2381,29 +2264,26 @@ update_device_page_for_drive (GduWindow      *window,
       show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_EJECT;
     }
 
-  /* Show Drive-specific items */
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_1));
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_view_smart));
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_disk_settings));
-  gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
+  /* Enable Drive-specific items */
+  g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "view-smart")), TRUE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "disk-settings")), TRUE);
+
   if (!(show_flags->drive_menu & (SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW|SHOW_FLAGS_DRIVE_MENU_RESUME_NOW)))
     {
       /* no PM / safely-remove capabilities... only show "standby" greyed out */
-      gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), FALSE);
+        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), FALSE);
+        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), FALSE);
     }
   else
     {
       /* Only show one of Standby and Resume (they are mutually exclusive) */
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_standby_now), TRUE);
-      gtk_widget_set_sensitive (GTK_WIDGET (window->generic_drive_menu_item_resume_now), TRUE);
       if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW)
-        gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
+        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), TRUE);
       else
-        gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
+        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), TRUE);
     }
   if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_POWER_OFF)
-    gtk_widget_show (GTK_WIDGET (window->generic_drive_menu_item_power_off));
+    g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "power-off")), TRUE);
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
@@ -2445,7 +2325,7 @@ update_device_page_for_loop (GduWindow      *window,
       gtk_window_set_title (GTK_WINDOW (window), title);
     }
 
-  gtk_widget_show (window->devtab_drive_generic_button);
+  gtk_widget_show (window->devtab_drive_menu_button);
 
   update_generic_drive_bits (window, block, NULL, show_flags, is_delayed_job_update);
 
@@ -2509,7 +2389,7 @@ update_device_page_for_fake_block (GduWindow      *window,
       gtk_window_set_title (GTK_WINDOW (window), title);
     }
 
-  gtk_widget_show (window->devtab_drive_generic_button);
+  gtk_widget_show (window->devtab_drive_menu_button);
 
   update_generic_drive_bits (window, block, NULL, show_flags, is_delayed_job_update);
 
@@ -3044,14 +2924,12 @@ update_device_page (GduWindow      *window,
   gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), maybe_hide, window);
   gtk_container_foreach (GTK_CONTAINER (window->devtab_table), maybe_hide, window);
 
-  /* Hide all Drive-specific menu items - will be turned on again in update_device_page_for_drive() */
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_1));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_view_smart));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_disk_settings));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_drive_sep_2));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_standby_now));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_resume_now));
-  gtk_widget_hide (GTK_WIDGET (window->generic_drive_menu_item_power_off));
+  /* Disable all Drive-specific menu items - will be turned on again in update_device_page_for_drive() */
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "view-smart")), FALSE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "disk-settings")), FALSE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), FALSE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), FALSE);
+  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "power-off")), FALSE);
 
   /* ensure grid is set to the right volumes */
   device_page_ensure_grid (window);
@@ -3121,8 +2999,9 @@ update_device_page (GduWindow      *window,
 #ifdef HAVE_UDISKS2_7_2
 
 static void
-on_generic_menu_item_resize (GtkMenuItem *menu_item,
-                             gpointer     user_data)
+on_volume_menu_item_resize (GSimpleAction *action,
+                             GVariant      *parameter,
+                             gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3228,8 +3107,9 @@ fs_repair_unmount_cb (GduWindow        *window,
 }
 
 static void
-on_generic_menu_item_repair (GtkMenuItem *menu_item,
-                             gpointer     user_data)
+on_volume_menu_item_repair (GSimpleAction *action,
+                             GVariant      *parameter,
+                             gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   GtkWidget *message_dialog, *ok_button;
@@ -3355,8 +3235,9 @@ fs_check_unmount_cb (GduWindow        *window,
 }
 
 static void
-on_generic_menu_item_check (GtkMenuItem *menu_item,
-                            gpointer     user_data)
+on_volume_menu_item_check (GSimpleAction *action,
+                            GVariant      *parameter,
+                            gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3390,8 +3271,35 @@ on_generic_menu_item_check (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
-                                 gpointer   user_data)
+on_volume_menu_open (GSimpleAction *action,
+                     GVariant      *parameter,
+                     gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+
+  update_all (window, FALSE);
+  gtk_popover_popup (GTK_POPOVER (window->volume_menu));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_drive_menu_open (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer      user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+
+  update_all (window, FALSE);
+  gtk_popover_popup (GTK_POPOVER (window->drive_menu));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_volume_menu_item_edit_label (GSimpleAction *action,
+                                 GVariant      *parameter,
+                                 gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3404,8 +3312,9 @@ on_generic_menu_item_edit_label (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
-                                     gpointer   user_data)
+on_volume_menu_item_edit_partition (GSimpleAction *action,
+                                     GVariant      *parameter,
+                                     gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3418,8 +3327,9 @@ on_generic_menu_item_edit_partition (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
-                                    gpointer   user_data)
+on_volume_menu_item_format_volume (GSimpleAction *action,
+                                    GVariant      *parameter,
+                                    gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3432,8 +3342,9 @@ on_generic_menu_item_format_volume (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
-                                              gpointer   user_data)
+on_drive_menu_item_create_disk_image (GSimpleAction *action,
+                                              GVariant      *parameter,
+                                              gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3446,8 +3357,9 @@ on_generic_drive_menu_item_create_disk_image (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
-                                               gpointer   user_data)
+on_drive_menu_item_restore_disk_image (GSimpleAction *action,
+                                               GVariant      *parameter,
+                                               gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3460,8 +3372,9 @@ on_generic_drive_menu_item_restore_disk_image (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
-                                      gpointer   user_data)
+on_drive_menu_item_benchmark (GSimpleAction *action,
+                                      GVariant      *parameter,
+                                      gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3474,8 +3387,9 @@ on_generic_drive_menu_item_benchmark (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
-                                          gpointer   user_data)
+on_volume_menu_item_create_volume_image (GSimpleAction *action,
+                                          GVariant      *parameter,
+                                          gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3488,8 +3402,9 @@ on_generic_menu_item_create_volume_image (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
-                                           gpointer   user_data)
+on_volume_menu_item_restore_volume_image (GSimpleAction *action,
+                                           GVariant      *parameter,
+                                           gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3502,8 +3417,9 @@ on_generic_menu_item_restore_volume_image (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
-                                gpointer   user_data)
+on_volume_menu_item_benchmark (GSimpleAction *action,
+                                GVariant      *parameter,
+                                gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3516,8 +3432,9 @@ on_generic_menu_item_benchmark (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
-                                        gpointer   user_data)
+on_drive_menu_item_format_disk (GSimpleAction *action,
+                                        GVariant      *parameter,
+                                        gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3530,8 +3447,9 @@ on_generic_drive_menu_item_format_disk (GtkMenuItem *menu_item,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
-                                      gpointer   user_data)
+on_volume_menu_item_configure_fstab (GSimpleAction *action,
+                                      GVariant      *parameter,
+                                      gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3542,16 +3460,18 @@ on_generic_menu_item_configure_fstab (GtkMenuItem *menu_item,
 }
 
 static void
-on_generic_drive_menu_item_view_smart (GtkMenuItem *menu_item,
-                                       gpointer     user_data)
+on_drive_menu_item_view_smart (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_ata_smart_dialog_show (window, window->current_object);
 }
 
 static void
-on_generic_drive_menu_item_disk_settings (GtkMenuItem *menu_item,
-                                          gpointer     user_data)
+on_drive_menu_item_disk_settings (GSimpleAction *action,
+                                          GVariant      *parameter,
+                                          gpointer   user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   gdu_disk_settings_dialog_show (window, window->current_object);
@@ -3582,8 +3502,9 @@ ata_pm_standby_cb (GObject      *source_object,
 }
 
 static void
-on_generic_drive_menu_item_standby_now (GtkMenuItem *menu_item,
-                                        gpointer     user_data)
+on_drive_menu_item_standby_now (GSimpleAction *action,
+                                        GVariant      *parameter,
+                                        gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksDriveAta *ata;
@@ -3628,8 +3549,9 @@ ata_pm_wakeup_cb (GObject      *source_object,
 }
 
 static void
-on_generic_drive_menu_item_resume_now (GtkMenuItem *menu_item,
-                                       gpointer     user_data)
+on_drive_menu_item_resume_now (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksDriveAta *ata;
@@ -3739,8 +3661,9 @@ do_power_off (GduWindow *window)
 }
 
 static void
-on_generic_drive_menu_item_power_off (GtkMenuItem *menu_item,
-                                      gpointer     user_data)
+on_drive_menu_item_power_off (GSimpleAction *action,
+                                      GVariant      *parameter,
+                                      gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   do_power_off (window);
@@ -3757,8 +3680,9 @@ on_devtab_drive_power_off_button_clicked (GtkButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
-                                         gpointer   user_data)
+on_volume_menu_item_configure_crypttab (GSimpleAction *action,
+                                         GVariant      *parameter,
+                                         gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3770,8 +3694,9 @@ on_generic_menu_item_configure_crypttab (GtkMenuItem *menu_item,
 }
 
 static void
-on_generic_menu_item_change_passphrase (GtkMenuItem *menu_item,
-                                        gpointer   user_data)
+on_volume_menu_item_change_passphrase (GSimpleAction *action,
+                                        GVariant      *parameter,
+                                        gpointer      user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3859,17 +3784,12 @@ on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_generic_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_volume_menu_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
 
   update_all (window, FALSE);
-
-  gtk_menu_popup_at_widget (GTK_MENU (window->generic_menu),
-                            window->toolbutton_generic_menu,
-                            GDK_GRAVITY_SOUTH_WEST,
-                            GDK_GRAVITY_NORTH_WEST,
-                            NULL);
+  gtk_popover_popup (GTK_POPOVER (window->volume_menu));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

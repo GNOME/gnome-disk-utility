@@ -388,19 +388,40 @@ gdu_application_startup (GApplication *_app)
   GduApplication *app = GDU_APPLICATION (_app);
   GMenuModel *app_menu;
   GtkBuilder *builder;
+  const gchar **it;
+  const gchar *action_accels[] = {
+    "win.open-drive-menu",       "F10", NULL,
+    "win.open-volume-menu",      "<Shift>F10", NULL,
+
+    "win.format-disk",           "<Primary>F", NULL,
+    "win.view-smart",            "<Primary>S", NULL,
+    "win.disk-settings",         "<Primary>E", NULL,
+
+    "win.format-partition",      "<Shift><Primary>F", NULL,
+
+    "app.help",                  "F1", NULL,
+    "app.quit",                  "<Primary>Q", NULL,
+    NULL
+  };
 
   if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 
-  app_menu = G_MENU_MODEL (gdu_application_new_widget (app,
-                                                       "app-menu.ui",
-                                                       "app-menu",
-                                                       &builder));
-  gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
-  g_object_unref (app_menu);
-  g_clear_object (&builder);
+  if (gtk_application_prefers_app_menu(GTK_APPLICATION (_app)))
+    {
+      app_menu = G_MENU_MODEL (gdu_application_new_widget (app,
+                                                           "app-menu.ui",
+                                                           "app-menu",
+                                                           &builder));
+      gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
+      g_object_unref (app_menu);
+      g_clear_object (&builder);
+    }
+
+  for (it = action_accels; it[0]; it += g_strv_length ((gchar **)it) + 1)
+    gtk_application_set_accels_for_action (GTK_APPLICATION (app), it[0], &it[1]);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -624,4 +645,3 @@ gdu_application_has_running_job (GduApplication *application,
 
   return ret;
 }
-

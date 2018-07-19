@@ -316,6 +316,23 @@ attach_disk_image_activated (GSimpleAction *action,
 }
 
 static void
+shortcuts_activated (GSimpleAction *action,
+                     GVariant      *parameter,
+                     gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  GtkWidget *dialog;
+
+  dialog = GTK_WIDGET (gdu_application_new_widget (app,
+                                                   "shortcuts.ui",
+                                                   "shortcuts",
+                                                   NULL));
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
+  gtk_widget_show_all (dialog);
+}
+
+static void
 about_activated (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
@@ -377,6 +394,7 @@ static GActionEntry app_entries[] =
 {
   { "new_disk_image", new_disk_image_activated, NULL, NULL, NULL },
   { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
+  { "shortcuts", shortcuts_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
   { "help", help_activated, NULL, NULL, NULL },
   { "quit", quit_activated, NULL, NULL, NULL }
@@ -394,10 +412,14 @@ gdu_application_startup (GApplication *_app)
     "win.open-volume-menu",      "<Shift>F10", NULL,
 
     "win.format-disk",           "<Primary>F", NULL,
+    "win.restore-disk-image",    "<Primary>I", NULL,
     "win.view-smart",            "<Primary>S", NULL,
     "win.disk-settings",         "<Primary>E", NULL,
 
     "win.format-partition",      "<Shift><Primary>F", NULL,
+
+    "app.new_disk_image",        "<Primary>N", NULL,
+    "app.attach_disk_image",     "<Primary>O", NULL,
 
     "app.help",                  "F1", NULL,
     "app.quit",                  "<Primary>Q", NULL,

@@ -77,18 +77,18 @@ struct _GduWindow
   GtkWidget *device_tree_scrolledwindow;
   GtkWidget *device_tree_treeview;
 
+  GtkWidget *attach_image_button;
   GtkWidget *devtab_drive_loop_detach_button;
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_power_off_button;
   GtkWidget *devtab_drive_menu_button;
-  GtkWidget *devtab_appmenu_button;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
   GtkWidget *devtab_grid_hbox;
   GtkWidget *devtab_volumes_label;
   GtkWidget *devtab_grid_toolbar;
 
-  GtkWidget *hamburger_menu;
+  GtkWidget *attach_menu;
   GtkWidget *drive_menu;
   GtkWidget *volume_menu;
 
@@ -1009,55 +1009,33 @@ power_state_cell_func (GtkTreeViewColumn *column,
   update_all (window, FALSE);
 }
 
-/* TODO: load from .ui file */
 static GtkWidget *
 create_header (GduWindow *window)
 {
   GtkWidget *header;
   GtkBuilder *builder;
   GMenuModel *model;
-  GtkWidget *button;
-  GtkWidget *image;
 
-  header = gtk_header_bar_new ();
-  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (header), TRUE);
+  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/headerbar.ui");
+  header = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "disks-headerbar"));
 
-  button = window->devtab_appmenu_button = gtk_menu_button_new ();
-  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/app-menu.ui");
-  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "app-menu") );
-  window->hamburger_menu = gtk_popover_new_from_model (button, model);
-  gtk_menu_button_set_popover (GTK_MENU_BUTTON (button), window->hamburger_menu);
-  gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
+  window->attach_image_button = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "attach-image-button"));
+  window->devtab_drive_menu_button = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "drive-menu-button"));
+  window->devtab_drive_power_off_button = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "power-off-disk-button"));
+  window->devtab_drive_eject_button = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "eject-disk-button"));
+  window->devtab_drive_loop_detach_button = GTK_WIDGET (gtk_builder_get_object(GTK_BUILDER(builder), "detach-loop-device-button"));
 
-  button = window->devtab_drive_menu_button = gtk_menu_button_new ();
-  image = gtk_image_new_from_icon_name ("drive-harddisk-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_button_set_image (GTK_BUTTON (button), image);
+  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/attach-menu.ui");
+  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "attach-menu") );
+  window->attach_menu = gtk_popover_new_from_model (window->attach_image_button, model);
+  gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->attach_image_button), window->attach_menu);
+
   builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/drive-menu.ui");
   model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "drive-menu") );
-  window->drive_menu = gtk_popover_new_from_model (button, model);
-  gtk_menu_button_set_popover (GTK_MENU_BUTTON (button), window->drive_menu);
-  gtk_menu_button_set_direction (GTK_MENU_BUTTON (button), GTK_ARROW_NONE);
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
+  window->drive_menu = gtk_popover_new_from_model (window->devtab_drive_menu_button, model);
+  gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_drive_menu_button), window->drive_menu);
 
-  button = window->devtab_drive_power_off_button = gtk_button_new ();
-  image = gtk_image_new_from_icon_name ("system-shutdown-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_widget_set_tooltip_text (button, _("Power off this disk"));
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-
-  button = window->devtab_drive_eject_button = gtk_button_new ();
-  image = gtk_image_new_from_icon_name ("media-eject-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_widget_set_tooltip_text (button, _("Eject this disk"));
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-
-  button = window->devtab_drive_loop_detach_button = gtk_button_new ();
-  image = gtk_image_new_from_icon_name ("list-remove-symbolic", GTK_ICON_SIZE_MENU);
-  gtk_button_set_image (GTK_BUTTON (button), image);
-  gtk_widget_set_tooltip_text (button, _("Detach this loop device"));
-  gtk_header_bar_pack_end (GTK_HEADER_BAR (header), button);
-
+  g_object_unref (builder);
   return header;
 }
 
@@ -1121,7 +1099,7 @@ gdu_window_constructed (GObject *object)
   window->delay_job_update_id = 0;
 
   window->header = create_header (window);
-  if (!in_desktop ("Unity"))
+  if (!in_desktop ("Unity") && !in_desktop ("KDE"))
       gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
   else
     {
@@ -2085,7 +2063,7 @@ update_device_page_for_drive (GduWindow      *window,
       g_free (s);
     }
 
-  if (!in_desktop ("Unity"))
+  if (!in_desktop ("Unity") && !in_desktop ("KDE"))
     {
       gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
       gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), str->str);

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <object class="GtkHeaderBar" id="disks-headerbar">
+    <property name="can_focus">False</property>
+    <property name="show-close-button">True</property>
+    <child>
+      <object class="GtkMenuButton" id="attach-image-button">
+        <property name="visible">True</property>
+        <property name="tooltip_text" translatable="yes">Attach A Disk Image</property>
+        <property name="direction">down</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon_name">list-add-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_START</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkMenuButton" id="drive-menu-button">
+        <property name="visible">True</property>
+        <property name="tooltip_text" translatable="yes">Drive options</property>
+        <property name="direction">none</property>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_END</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="power-off-disk-button">
+        <property name="visible">True</property>
+        <property name="tooltip_text" translatable="yes">Power off this disk</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon_name">system-shutdown-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_END</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="eject-disk-button">
+        <property name="visible">True</property>
+        <property name="tooltip_text" translatable="yes">Eject this disk</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon_name">media-eject-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_END</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="detach-loop-device-button">
+        <property name="visible">True</property>
+        <property name="tooltip_text" translatable="yes">Detach this loop device</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="icon_name">list-remove-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_END</property>
+      </packing>
+    </child>
+  </object>
+</interface>

@@ -1099,7 +1099,7 @@ gdu_window_constructed (GObject *object)
   window->delay_job_update_id = 0;
 
   window->header = create_header (window);
-  if (!in_desktop ("Unity") && !in_desktop ("KDE"))
+  if (!in_desktop ("Unity"))
       gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
   else
     {
@@ -2063,7 +2063,7 @@ update_device_page_for_drive (GduWindow      *window,
       g_free (s);
     }
 
-  if (!in_desktop ("Unity") && !in_desktop ("KDE"))
+  if (!in_desktop ("Unity"))
     {
       gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
       gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), str->str);

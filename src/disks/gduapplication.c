@@ -431,17 +431,6 @@ gdu_application_startup (GApplication *_app)
 
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 
-  if (gtk_application_prefers_app_menu(GTK_APPLICATION (_app)))
-    {
-      app_menu = G_MENU_MODEL (gdu_application_new_widget (app,
-                                                           "app-menu.ui",
-                                                           "app-menu",
-                                                           &builder));
-      gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
-      g_object_unref (app_menu);
-      g_clear_object (&builder);
-    }
-
   for (it = action_accels; it[0]; it += g_strv_length ((gchar **)it) + 1)
     gtk_application_set_accels_for_action (GTK_APPLICATION (app), it[0], &it[1]);
 }

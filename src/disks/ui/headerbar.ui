@@ -7,7 +7,7 @@
     <child>
       <object class="GtkMenuButton" id="attach-image-button">
         <property name="visible">True</property>
-        <property name="tooltip_text" translatable="yes">Attach A Disk Image</property>
+        <property name="tooltip_text" translatable="yes">Attach a Disk Image</property>
         <property name="direction">down</property>
         <child>
           <object class="GtkImage">
@@ -21,10 +21,18 @@
       </packing>
     </child>
     <child>
+      <object class="GtkMenuButton" id="app-menu-button">
+        <property name="visible">True</property>
+        <property name="direction">none</property>
+      </object>
+      <packing>
+        <property name="pack-type">GTK_PACK_END</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkMenuButton" id="drive-menu-button">
         <property name="visible">True</property>
-        <property name="tooltip_text" translatable="yes">Drive options</property>
-        <property name="direction">none</property>
+        <property name="tooltip_text" translatable="yes">Drive Options</property>
       </object>
       <packing>
         <property name="pack-type">GTK_PACK_END</property>

@@ -1,5 +1,5 @@
 # French translation of gnome-disk-utility.
-# Copyright (C) 2009-2017 Free Software Foundation, Inc.
+# Copyright (C) 2009-2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
 # Pablo Martin-Gomez <pablo.martin-gomez@laposte.net>, 2009.
@@ -17,18 +17,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 22:42+0000\n"
-"PO-Revision-Date: 2018-03-11 14:30+0100\n"
-"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
-"Language-Team: français <GNOME French Team <gnomefr@traduc.org>>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-05-31 09:18+0000\n"
+"PO-Revision-Date: 2018-08-10 10:36+0200\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 2.91.7\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -78,8 +77,8 @@ msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
 msgstr ""
-"Disques propose une façon simple d’inspecter, de formater, partitionner "
-"et configurer les disques et périphériques en mode bloc."
+"Disques propose une façon simple d’inspecter, de formater, partitionner et "
+"configurer les disques et périphériques en mode bloc."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
 msgid ""
@@ -1181,74 +1180,80 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f ms"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Test de performance de périphérique en cours"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Erreur d’obtention de la taille du périphérique : %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Erreur d’obtention de la taille de la page : %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Erreur pendant la recherche depuis %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Erreur pendant la pré-lecture de %s depuis %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Erreur pendant la recherche depuis %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Erreur pendant la lecture de %s depuis %s"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Erreur pendant la pré-lecture de %lld octets depuis %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Erreur pendant l’écriture de %lld octets jusqu’à %lld : %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld octets devaient être écrits, mais seulement %lld le sont : %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Erreur pendant la synchronisation (depuis %lld) : %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Erreur pendant la recherche depuis %lld : %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1557,9 +1562,9 @@ msgstr "L’étiquette correspond à l’actuelle"
 msgid "Error setting label"
 msgstr "Erreur lors de la définition de l’étiquette"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Erreur lors du démontage du système de fichiers"
 
@@ -1752,7 +1757,8 @@ msgstr "Modifier la partition d’échange (swap) de linux"
 
 #: src/disks/gducreateotherpage.c:119
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
-msgstr "Btrfs — Système de fichiers Linux avec copie à l’écriture, pour instantanés"
+msgstr ""
+"Btrfs — Système de fichiers Linux avec copie à l’écriture, pour instantanés"
 
 #: src/disks/gducreateotherpage.c:121
 msgid "F2FS — Flash Storage Linux Filesystem"
@@ -2021,15 +2027,28 @@ msgstr "Toutes les données existantes seront perdues"
 msgid "_Restore"
 msgstr "_Restaurer"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Erreur lors du déverrouillage du périphérique chiffré"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "Sélectionner un fichier de clé"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "Erreur pendant le déverrouillage du périphérique"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "PIM non valide"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr ""
 "La phrase de passe de chiffrement a été récupérée à partir du trousseau de "
 "clés"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Définir les options de déverrouillage"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2283,17 +2302,17 @@ msgstr "Inactif"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Déverrouillé"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Verrouillé"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partition étendue"
@@ -2302,45 +2321,45 @@ msgstr "Partition étendue"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Espace non alloué"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Erreur lors de la réparation du système de fichiers"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Réparation réussie"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Échec de la réparation"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Le système de fichiers %s sur %s a été réparé."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Le système de fichiers %s sur %s n’a pas pu être réparé."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Confirmer la réparation"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2351,60 +2370,60 @@ msgstr ""
 "utiliser des outils de récupération de données. Selon la quantité de "
 "données, cette opération peut prendre du temps."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Erreur lors de la vérification du système de fichiers"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Système de fichiers intact"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Système de fichiers endommagé"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Le système de fichiers %s sur %s est sain."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Le système de fichiers %s sur %s nécessite une réparation."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Confirmer la vérification"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Selon la quantité de données, la vérification du système de fichiers peut "
 "prendre du temps."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Une erreur est survenue lors de la tentative de mise en veille du disque"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Une erreur est survenue lors de la tentative de sortie de veille du disque"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Erreur lors de l’extinction du lecteur"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "Voulez-vous vraiment éteindre les lecteurs ?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2412,51 +2431,51 @@ msgstr ""
 "Cette action va préparer le système à éteindre les lecteurs suivants et les "
 "retirer."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "É_teindre"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Erreur lors du montage du système de fichiers"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Erreur lors de la suppression de la partition"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "Voulez-vous vraiment supprimer la partition ?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Toutes les données de la partition seront perdues"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "_Supprimer"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Erreur lors de l’éjection du média"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Erreur lors du verrouillage du périphérique chiffré"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Erreur lors du démarrage de l’espace d’échange"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Erreur lors de l’arrêt de l’espace d’échange"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Erreur lors de la définition du drapeau autoclear"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "Erreur lors de l’annulation de la tâche"
 
@@ -3243,7 +3262,7 @@ msgid "Passphrase File"
 msgstr "Fichier de phrase de passe"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "_Afficher la phrase de passe"
 
@@ -3256,7 +3275,7 @@ msgstr ""
 "périphérique"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Phrase de passe"
 
@@ -3491,9 +3510,8 @@ msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Ceci est équivalent au drapeau <i>amorçable</i> du "
-"Master Boot Record. Il n’est normalement utilisé que pour les partitions GPT "
-"des systèmes avec MBR"
+"Ceci est équivalent au drapeau <i>amorçable</i> du Master Boot Record. Il "
+"n’est normalement utilisé que pour les partitions GPT des systèmes avec MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3673,11 +3691,62 @@ msgstr "Étendue"
 msgid "Conveyance"
 msgstr "Transmission"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Saisir la phrase de passe pour déverrouiller"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr ""
+"Ce volume pourrait être de type VeraCrypt car il contient des données "
+"aléatoires."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Si défini"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "Type de volume"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "_Masqué"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Au lieu de déverrouiller ce volume, tente de déverrouiller un volume "
+"secondaire caché à l’intérieur."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "_Système Windows"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Déverrouille une partition ou un lecteur Windows système chiffré."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Le cas échéant, la valeur numérique de PIM (Personal Iterations Multiplier) "
+"VeraCrypt à utiliser pour ce volume."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Fichiers de clés"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "Déverro_uiller"
 
@@ -3809,11 +3878,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Périphériques concernés"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Erreur pendant le verrouillage du périphérique"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Erreur lors de la désactivation du retrait automatique du périphérique boucle"
@@ -3835,79 +3904,3 @@ msgstr "Un disque dur va probablement bientôt tomber en panne."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examen"
-
-#~ msgid "FAT"
-#~ msgstr "FAT"
-
-#~ msgid "Compatible with most systems"
-#~ msgstr "Compatible avec la plupart des systèmes"
-
-#~ msgid "NTFS"
-#~ msgstr "NTFS"
-
-#~ msgid "Compatible with Linux systems"
-#~ msgstr "Compatible avec les systèmes Linux"
-
-#~ msgid "Ext4"
-#~ msgstr "Ext4"
-
-#~ msgid "Encrypted, compatible with Linux systems"
-#~ msgstr "Chiffré, compatible avec les systèmes Linux"
-
-#~ msgid "LUKS + Ext4"
-#~ msgstr "LUKS + Ext4"
-
-#~ msgid "Enter filesystem type"
-#~ msgstr "Saisir le type de système de fichiers"
-
-#~ msgid "Error formatting partition"
-#~ msgstr "Erreur lors du formatage de la partition"
-
-#~ msgid "Extended partition"
-#~ msgstr "Partition étendue"
-
-#~ msgid "For logical partitions"
-#~ msgstr "Pour les partitions logiques"
-
-#~ msgid "Are you sure you want to format the volume?"
-#~ msgstr "Voulez-vous vraiment formater le volume ?"
-
-#~ msgid ""
-#~ "All data on the volume will be lost but may still be recoverable by data "
-#~ "recovery services"
-#~ msgstr ""
-#~ "Toutes les données contenues sur le disque seront perdues mais pourraient "
-#~ "encore être retrouvées par une entreprise de récupération de données"
-
-#~ msgid ""
-#~ "All data on the volume will be overwritten and will likely not be "
-#~ "recoverable by data recovery services"
-#~ msgstr ""
-#~ "Toutes les données du disque seront écrasées et sans doute impossible à "
-#~ "récupérer par une entreprise spécialisée"
-
-#~ msgid "C_reate"
-#~ msgstr "C_réer"
-
-#~ msgid "F_ilesystem"
-#~ msgstr "Système de f_ichiers"
-
-#~ msgid ""
-#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-#~ "<i>swap</i>"
-#~ msgstr ""
-#~ "Le type de système de fichiers personnalisé à créer, par ex. <i>btrfs</"
-#~ "i>, <i>xfs</i> ou <i>swap</i>"
-
-#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-#~ msgstr ""
-#~ "Le type de système de fichiers personnalisé à créer, par ex. btrfs, xfs "
-#~ "ou swap"
-
-#~ msgid ""
-#~ "The name to use for the filesystem. This is useful if you want to refer "
-#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-#~ msgstr ""
-#~ "Le nom d’usage du système de fichiers. Il permet de vous référer au "
-#~ "périphérique par un lien symbolique dans le répertoire <b>/dev/disk/by-"
-#~ "label</b>"

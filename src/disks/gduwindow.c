@@ -70,6 +70,8 @@ struct _GduWindow
   GtkWidget *toolbutton_deactivate_swap;
 
   GtkWidget *header;
+  GtkWidget *right_header;
+  GtkWidget *left_header;
 
   GtkWidget *main_box;
   GtkWidget *main_hpane;
@@ -1019,8 +1021,10 @@ create_header (GduWindow *window)
   GtkBuilder *builder;
   GMenuModel *model;
 
-  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/headerbar.ui");
-  header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "disks-headerbar"));
+  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/headerbar.ui");
+  header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "headerbar-paned"));
+  window->right_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "disks-main-headerbar"));
+  window->left_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "disks-side-headerbar"));
 
   window->attach_image_button = GTK_WIDGET (gtk_builder_get_object (builder, "attach-image-button"));
   window->devtab_drive_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "drive-menu-button"));
@@ -1029,23 +1033,51 @@ create_header (GduWindow *window)
   window->devtab_drive_eject_button = GTK_WIDGET (gtk_builder_get_object (builder, "eject-disk-button"));
   window->devtab_drive_loop_detach_button = GTK_WIDGET (gtk_builder_get_object (builder, "detach-loop-device-button"));
 
-  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/attach-menu.ui");
+  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/attach-menu.ui");
   model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "attach-menu") );
   window->attach_menu = gtk_popover_new_from_model (window->attach_image_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->attach_image_button), window->attach_menu);
 
-  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/drive-menu.ui");
+  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/drive-menu.ui");
   model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "drive-menu") );
   window->drive_menu = gtk_popover_new_from_model (window->devtab_drive_menu_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_drive_menu_button), window->drive_menu);
 
-  builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/app-menu.ui");
+  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/app-menu.ui");
   model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "app-menu") );
   window->app_menu = gtk_popover_new_from_model (window->devtab_app_menu_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_app_menu_button), window->app_menu);
 
   g_object_unref (builder);
   return header;
+}
+
+static void
+gdu_window_update_decoration_layout (GObject     *object,
+                                     GParamSpec  *pspec,
+                                     GduWindow   *window)
+{
+  gchar *layout_desc;
+  gchar **tokens;
+
+  g_object_get (gtk_settings_get_default (),
+                "gtk-decoration-layout", &layout_desc,
+                NULL);
+
+  tokens = g_strsplit (layout_desc, ":", 2);
+  if (tokens)
+    {
+      gchar *layout_headerbar;
+
+      layout_headerbar = g_strdup_printf ("%c%s", ':', tokens[1]);
+      gtk_header_bar_set_decoration_layout (GTK_HEADER_BAR (window->right_header), layout_headerbar);
+      gtk_header_bar_set_decoration_layout (GTK_HEADER_BAR (window->left_header), tokens[0]);
+
+      g_free (layout_headerbar);
+      g_strfreev (tokens);
+    }
+
+  g_free (layout_desc);
 }
 
 static void
@@ -1084,18 +1116,32 @@ gdu_window_constructed (GObject *object)
   window->has_volume_job = FALSE;
   window->delay_job_update_id = 0;
 
+  g_object_ref (window->main_box);
+  gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (window->main_box)), window->main_box);
+  gtk_container_add (GTK_CONTAINER (window), window->main_box);
+  g_object_unref (window->main_box);
+
+  /* build the headerbar */
   window->header = create_header (window);
   gtk_window_set_titlebar (GTK_WINDOW (window), window->header);
 
   gtk_widget_show_all (window->header);
 
-  g_object_ref (window->main_box);
-  gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (window->main_box)), window->main_box);
-  gtk_container_add (GTK_CONTAINER (window), window->main_box);
-  g_object_unref (window->main_box);
+  g_object_bind_property (window->header,     "position",
+                          window->main_hpane, "position",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
   gtk_window_set_default_size (GTK_WINDOW (window), 900, 600);
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+
+  /* build the decorations */
+  gdu_window_update_decoration_layout(NULL, NULL, window);
+
+  g_signal_connect (gtk_settings_get_default (),
+                    "notify::gtk-decoration-layout",
+                    G_CALLBACK (gdu_window_update_decoration_layout),
+                    window);
 
   /* set up mnemonic */
   gtk_window_add_mnemonic (GTK_WINDOW (window),
@@ -2035,8 +2081,8 @@ update_device_page_for_drive (GduWindow      *window,
       g_free (s);
     }
 
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), str->str);
+  gtk_header_bar_set_title (GTK_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->right_header), str->str);
 
   g_string_free (str, TRUE);
 
@@ -2253,8 +2299,8 @@ update_device_page_for_loop (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+  gtk_header_bar_set_title (GTK_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->right_header), device_desc);
 
   gtk_widget_show (window->devtab_drive_menu_button);
 
@@ -2309,8 +2355,8 @@ update_device_page_for_fake_block (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  gtk_header_bar_set_title (GTK_HEADER_BAR (window->header), udisks_object_info_get_description (info));
-  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->header), device_desc);
+  gtk_header_bar_set_title (GTK_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
+  gtk_header_bar_set_subtitle (GTK_HEADER_BAR (window->right_header), device_desc);
 
   gtk_widget_show (window->devtab_drive_menu_button);
 

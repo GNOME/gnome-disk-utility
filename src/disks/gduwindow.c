@@ -85,6 +85,7 @@ struct _GduWindow
   GtkWidget *devtab_drive_eject_button;
   GtkWidget *devtab_drive_power_off_button;
   const gchar *icon_name;
+  GtkWidget *devtab_drive_menu_icon;
   GtkWidget *devtab_drive_menu_button;
   GtkWidget *devtab_table;
   GtkWidget *devtab_drive_table;
@@ -473,60 +474,60 @@ update_for_show_flags (GduWindow *window,
   gtk_widget_set_visible (window->toolbutton_lock,
                           show_flags->volume_buttons & SHOW_FLAGS_VOLUME_BUTTONS_ENCRYPTED_LOCK);
 
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "format-disk")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_FORMAT_DISK);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "view-smart")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_VIEW_SMART);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "disk-settings")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_DISK_SETTINGS);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "create-disk-image")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_CREATE_DISK_IMAGE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "restore-disk-image")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_RESTORE_DISK_IMAGE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "benchmark-disk")),
                               show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_BENCHMARK);
 
 
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "configure-fstab")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_FSTAB);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "configure-crypttab")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CONFIGURE_CRYPTTAB);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "change-passphrase")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHANGE_PASSPHRASE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "resize")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESIZE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "repair-fs")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_REPAIR);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "check-fs")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHECK);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "edit-label")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_LABEL);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "edit-partition")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_EDIT_PARTITION);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "format-partition")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_FORMAT_VOLUME);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "create-partition-image")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CREATE_VOLUME_IMAGE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "restore-partition-image")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_RESTORE_VOLUME_IMAGE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window),
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "benchmark-partition")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_BENCHMARK);
 
@@ -1022,29 +1023,30 @@ create_header (GduWindow *window)
   GMenuModel *model;
 
   builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/headerbar.ui");
-  header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "headerbar-paned"));
-  window->right_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "disks-main-headerbar"));
-  window->left_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER(builder), "disks-side-headerbar"));
+  header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "headerbar-paned"));
+  window->right_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "disks-main-headerbar"));
+  window->left_header = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "disks-side-headerbar"));
 
   window->attach_image_button = GTK_WIDGET (gtk_builder_get_object (builder, "attach-image-button"));
   window->devtab_drive_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "drive-menu-button"));
+  window->devtab_drive_menu_icon = GTK_WIDGET (gtk_builder_get_object (builder, "drive-menu-icon"));
   window->devtab_app_menu_button = GTK_WIDGET (gtk_builder_get_object (builder, "app-menu-button"));
   window->devtab_drive_power_off_button = GTK_WIDGET (gtk_builder_get_object (builder, "power-off-disk-button"));
   window->devtab_drive_eject_button = GTK_WIDGET (gtk_builder_get_object (builder, "eject-disk-button"));
   window->devtab_drive_loop_detach_button = GTK_WIDGET (gtk_builder_get_object (builder, "detach-loop-device-button"));
 
   builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/attach-menu.ui");
-  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "attach-menu") );
+  model = G_MENU_MODEL ( gtk_builder_get_object (GTK_BUILDER (builder), "attach-menu") );
   window->attach_menu = gtk_popover_new_from_model (window->attach_image_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->attach_image_button), window->attach_menu);
 
   builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/drive-menu.ui");
-  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "drive-menu") );
+  model = G_MENU_MODEL ( gtk_builder_get_object (GTK_BUILDER (builder), "drive-menu") );
   window->drive_menu = gtk_popover_new_from_model (window->devtab_drive_menu_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_drive_menu_button), window->drive_menu);
 
   builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/app-menu.ui");
-  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "app-menu") );
+  model = G_MENU_MODEL ( gtk_builder_get_object (GTK_BUILDER (builder), "app-menu") );
   window->app_menu = gtk_popover_new_from_model (window->devtab_app_menu_button, model);
   gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_app_menu_button), window->app_menu);
 
@@ -1282,7 +1284,7 @@ gdu_window_constructed (GObject *object)
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
   builder = gtk_builder_new_from_resource("/org/gnome/Disks/ui/volume-menu.ui");
-  model = G_MENU_MODEL ( gtk_builder_get_object(GTK_BUILDER(builder), "volume-menu") );
+  model = G_MENU_MODEL (gtk_builder_get_object (GTK_BUILDER (builder), "volume-menu"));
   window->volume_menu = gtk_popover_new_from_model (window->toolbutton_volume_menu, model);
   gtk_popover_set_position (GTK_POPOVER (window->volume_menu), GTK_POS_BOTTOM);
   g_object_unref (builder);
@@ -2250,25 +2252,25 @@ update_device_page_for_drive (GduWindow      *window,
     }
 
   /* Enable Drive-specific items */
-  g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "view-smart")), TRUE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "disk-settings")), TRUE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "view-smart")), TRUE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "disk-settings")), TRUE);
 
   if (!(show_flags->drive_menu & (SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW|SHOW_FLAGS_DRIVE_MENU_RESUME_NOW)))
     {
       /* no PM / safely-remove capabilities... only show "standby" greyed out */
-        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), FALSE);
-        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), FALSE);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "standby-now")), FALSE);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "resume-now")), FALSE);
     }
   else
     {
       /* Only show one of Standby and Resume (they are mutually exclusive) */
       if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_STANDBY_NOW)
-        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), TRUE);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "standby-now")), TRUE);
       else
-        g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), TRUE);
+        g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "resume-now")), TRUE);
     }
   if (show_flags->drive_menu & SHOW_FLAGS_DRIVE_MENU_POWER_OFF)
-    g_simple_action_set_enabled(G_SIMPLE_ACTION(g_action_map_lookup_action(G_ACTION_MAP (window), "power-off")), TRUE);
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "power-off")), TRUE);
 
   g_list_foreach (blocks, (GFunc) g_object_unref, NULL);
   g_list_free (blocks);
@@ -2911,8 +2913,7 @@ update_device_page (GduWindow      *window,
   UDisksDrive *drive;
   UDisksLoop *loop = NULL;
   guint64 size;
-  const gchar *icon;
-  GtkWidget *image;
+  const gchar *icon_name;
 
   /* First hide everything
    *
@@ -2923,11 +2924,11 @@ update_device_page (GduWindow      *window,
   gtk_container_foreach (GTK_CONTAINER (window->devtab_table), maybe_hide, window);
 
   /* Disable all Drive-specific menu items - will be turned on again in update_device_page_for_drive() */
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "view-smart")), FALSE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "disk-settings")), FALSE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "standby-now")), FALSE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "resume-now")), FALSE);
-  g_simple_action_set_enabled(G_SIMPLE_ACTION (g_action_map_lookup_action(G_ACTION_MAP (window), "power-off")), FALSE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "view-smart")), FALSE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "disk-settings")), FALSE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "standby-now")), FALSE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "resume-now")), FALSE);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "power-off")), FALSE);
 
   /* ensure grid is set to the right volumes */
   device_page_ensure_grid (window);
@@ -2941,17 +2942,17 @@ update_device_page (GduWindow      *window,
   if (udisks_object_peek_loop (object) != NULL)
     show_flags->drive_buttons |= SHOW_FLAGS_DRIVE_BUTTONS_LOOP_DETACH;
 
-  icon = "view-more-symbolic";
+  icon_name = "view-more-symbolic";
   if (drive != NULL)
     {
       update_device_page_for_drive (window, object, drive, show_flags, is_delayed_job_update);
-      icon = get_menu_icon_for_drive (window, object, drive);
+      icon_name = get_menu_icon_for_drive (window, object, drive);
     }
   else if (loop != NULL)
     {
       update_device_page_for_loop (window, object, block, loop, show_flags, is_delayed_job_update);
-      icon = "media-zip-symbolic";
-      /* icon = "drive-harddisk-usb-symbolic"; */
+      icon_name = "media-zip-symbolic";
+      /* icon_name = "drive-harddisk-usb-symbolic"; */
     }
   else
     {
@@ -2959,11 +2960,10 @@ update_device_page (GduWindow      *window,
     }
 
   /* Update the drive menu icon */
-  if (icon != window->icon_name)
+  if (icon_name != window->icon_name)
     {
-      image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
-      gtk_button_set_image (GTK_BUTTON(window->devtab_drive_menu_button), image);
-      window->icon_name = icon;
+      gtk_image_set_from_icon_name (GTK_IMAGE (window->devtab_drive_menu_icon), icon_name, GTK_ICON_SIZE_BUTTON);
+      window->icon_name = icon_name;
     }
 
   type = gdu_volume_grid_get_selected_type (GDU_VOLUME_GRID (window->volume_grid));

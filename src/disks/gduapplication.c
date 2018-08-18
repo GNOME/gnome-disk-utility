@@ -404,19 +404,17 @@ static void
 gdu_application_startup (GApplication *_app)
 {
   GduApplication *app = GDU_APPLICATION (_app);
-  GMenuModel *app_menu;
-  GtkBuilder *builder;
   const gchar **it;
   const gchar *action_accels[] = {
     "win.open-drive-menu",       "F10", NULL,
     "win.open-volume-menu",      "<Shift>F10", NULL,
 
-    "win.format-disk",           "<Primary>F", NULL,
-    "win.restore-disk-image",    "<Primary>I", NULL,
+    "win.format-disk",           "<Primary>D", NULL,
+    "win.restore-disk-image",    "<Primary>R", NULL,
     "win.view-smart",            "<Primary>S", NULL,
     "win.disk-settings",         "<Primary>E", NULL,
 
-    "win.format-partition",      "<Shift><Primary>F", NULL,
+    "win.format-partition",      "<Primary>P", NULL,
 
     "app.new_disk_image",        "<Primary>N", NULL,
     "app.attach_disk_image",     "<Primary>O", NULL,

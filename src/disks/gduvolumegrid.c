@@ -863,7 +863,7 @@ render_element (GduVolumeGrid *grid,
   if (element->show_mounted)
     g_ptr_array_add (icons_to_render, (gpointer) "media-playback-start-symbolic");
   if (element->show_configured)
-    g_ptr_array_add (icons_to_render, (gpointer) "user-bookmarks-symbolic");
+    g_ptr_array_add (icons_to_render, (gpointer) "starred-symbolic");
   if (icons_to_render->len > 0)
     {
       guint icon_offset = 0;

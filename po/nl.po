@@ -19,7 +19,7 @@
 #
 #
 # Sander Pientka <cumulus0007@gmail.com>, 2010.
-# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011, 2012, 2015, 2017.
+# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011, 2012, 2015, 2017, 2018.
 # Wouter Bolsterlee <wbolster@gnome.org>, 2011, 2012.
 # Erwin Poeze <donnut@outlook.com>, 2013, 2014.
 # Nathan Follens <nthn@unseen.is>, 2015-2018.
@@ -27,18 +27,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-22 11:37+0000\n"
-"PO-Revision-Date: 2018-02-22 19:26+0100\n"
-"Last-Translator: Justin van Steijn <jvs@fsfe.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
+"\n"
+"POT-Creation-Date: 2018-05-31 09:18+0000\n"
+"PO-Revision-Date: 2018-08-31 12:46+0100\n"
+"Last-Translator: Hannie Dumoleyn <hannie@ubuntu-nl.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Lokalize 2.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -1174,74 +1174,81 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f ms"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+#| msgid "Error benchmarking drive"
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Benchmarken van apparaat"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Fout bij het ophalen van de grootte van het apparaat: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Fout bij het ophalen van de paginagrootte: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Fout bij positioneren van offset %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Fout bij het vooraf lezen van %s van offset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Fout bij positioneren van offset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Fout bij het lezen van %s van offset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Fout bij het vooraf lezen van %lld bytes van offset %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Fout bij het schrijven van %lld bytes bij offset %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Verwachtte %lld bytes te schrijven, slechts %lld geschreven: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Fout bij het synchroniseren (bij offset %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Fout bij positioneren van offset %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1551,9 +1558,9 @@ msgstr "Het label komt overeen met het bestaande label"
 msgid "Error setting label"
 msgstr "Instellen van label is mislukt"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Afkoppelen bestandssysteem is mislukt"
 
@@ -2009,13 +2016,28 @@ msgstr "Alle bestaande gegevens zullen verloren gaan"
 msgid "_Restore"
 msgstr "_Terugzetten"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Fout bij ontgrendelen van versleuteld apparaat"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#| msgid "Select a device"
+msgid "Select a Keyfile"
+msgstr "Een sleutelbestand selecteren"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+#| msgid "Error locking device"
+msgid "Error unlocking device"
+msgstr "Fout bij ontgrendelen van apparaat"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "Ongeldige PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Het versleutelingswachtwoord werd uit de sleutelbos opgehaald"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Opties voor ontgrendeling instellen"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2269,17 +2291,21 @@ msgstr "Inactief"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Unlocked"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Ontgrendeld"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Locked"
+msgctxt "volume-content-crypto"
 msgid "Locked"
-msgstr "Geblokkeerd"
+msgstr "Vergrendeld"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Uitgebreide partitie"
@@ -2288,45 +2314,45 @@ msgstr "Uitgebreide partitie"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Niet-toegewezen ruimte"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Herstellen bestandssysteem is mislukt"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Herstellen gelukt"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Herstellen mislukt"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Bestandssysteem %s op %s is hersteld."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Bestandssysteem %s op %s kon niet hersteld worden."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Herstellen bevestigen"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2338,58 +2364,58 @@ msgstr ""
 "terughalen. Afhankelijk van de hoeveelheid gegevens kan deze bewerking een "
 "lange tijd duren."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Fout bij controleren bestandssysteem"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Bestandssysteem intact"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Bestandssysteem beschadigd"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Bestandssysteem %s op %s is onbeschadigd."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Bestandssysteem %s op %s moet hersteld worden."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Controleren bevestigen"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Afhankelijk van de hoeveelheid gegevens kan het controleren van het "
 "bestandssysteem lang duren."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "De poging de schijf in de standby-modus te zetten is mislukt"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "De poging de schijf vanuit de standby-modus te activeren is mislukt"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Uitschakelen station is mislukt"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "Weet u zeker dat u de schijven wilt uitschakelen?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2397,51 +2423,51 @@ msgstr ""
 "Met deze bewerking wordt het systeem voorbereid om de volgende schijven uit "
 "te schakelen en te verwijderen."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "_Uitgeschakelen"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Aankoppelen bestandssysteem is mislukt"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Verwijderen van partitie is mislukt"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "Weet u zeker dat u de partitie wilt verwijderen?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Alle gegevens op de partitie zullen verloren gaan"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "Verwij_deren"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Uitwerpen medium is mislukt"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Fout bij vergrendelen van versleuteld apparaat"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Fout bij starten wisselgeheugen"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Fout bij stoppen wisselgeheugen"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Fout bij instellen autoclear-vlag"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "Fout bij het annuleren van de taak"
 
@@ -3238,7 +3264,7 @@ msgid "Passphrase File"
 msgstr "Wachtwoordbestand"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "Wachtwoord _tonen"
 
@@ -3251,7 +3277,7 @@ msgstr ""
 "instellen van het apparaat"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Wachtwoord"
 
@@ -3666,11 +3692,65 @@ msgstr "Uitgebreid"
 msgid "Conveyance"
 msgstr "Overdracht"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Wachtwoord invoeren om te ontgrendelen"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr ""
+"Dit volume kan een VeraCrypt-volume zijn omdat het willekeurige gegevens"
+" bevat."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Indien opgegeven"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+#| msgid "Volume"
+msgid "Volume type"
+msgstr "Volumetype"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+#| msgid "H_idden"
+msgid "_Hidden"
+msgstr "_Verborgen"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Poging om in plaats van dit volume te ontgrendelen, een secundair, erbinnen"
+" verborgen, volume te ontgrendelen."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Windows-_systeem"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+#| msgid "Unlock selected encrypted partition"
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Een versleutelde Windows-systeempartitie of -schijf ontgrendelen."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Indien ingesteld, de numerieke waarde van VeraCrypt PIM (Personal Iterations"
+" Multiplier) gebruiken voor dit volume."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Sleutelbestanden"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Ontgrendelen"
 
@@ -3802,11 +3882,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Betrokken apparaten"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Vergrendelen apparaat is mislukt"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Fout bij uitschakelen autoclear voor loop-apparaat"
 
@@ -3827,6 +3907,9 @@ msgstr "Een harde schijf zal op korte termijn waarschijnlijk bezwijken."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Onderzoeken"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Fout bij ontgrendelen van versleuteld apparaat"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"
@@ -4044,9 +4127,6 @@ msgstr "Onderzoeken"
 #~ msgstr ""
 #~ "Indien ingesteld, kunnen OS-en de partitie aankoppelen of de inhoud ervan "
 #~ "gebruiken als alleen-lezen in plaats van lezen-schrijven"
-
-#~ msgid "H_idden"
-#~ msgstr "_Verborgen"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "
@@ -5042,9 +5122,6 @@ msgstr "Onderzoeken"
 
 #~ msgid "Details"
 #~ msgstr "Details"
-
-#~ msgid "Error benchmarking drive"
-#~ msgstr "Fout bij het uitvoeren benchmark"
 
 #~ msgid "Are you sure you want to start a read/write benchmark?"
 #~ msgstr "Weet u zeker dat u een lees/schrijf-benchmark wilt uitvoeren?"

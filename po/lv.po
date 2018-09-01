@@ -10,10 +10,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-d"
-"isk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 22:43+0000\n"
-"PO-Revision-Date: 2018-03-06 20:22+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
+"\n"
+"POT-Creation-Date: 2018-05-31 09:18+0000\n"
+"PO-Revision-Date: 2018-09-01 10:07+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -1157,74 +1157,81 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f milisekunde"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+#| msgid "Benchmark Settings"
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Veiktspējas ierīce"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Kļūda, nosakot ierīces izmēru: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Kļūda, nosakot lapas izmēru: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Kļūda, pozicionējoties uz nobīdi %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Kļūda, priekšlasot %s no nobīdes %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Kļūda, pozicionējoties uz nobīdi %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Kļūda, lasot %s no nobīdes %s"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Kļūda, priekšlasot %lld baitus no nobīdes %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Kļūda, rakstot %lld baitus no nobīdes %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Domāts ierakstīt %lld baiti, bet ierakstīja tikai %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Kļūda, sinhronizējot (pie nobīdes %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Kļūda, pozicionējoties uz nobīdi %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1531,9 +1538,9 @@ msgstr "Etiķete sakrīt ar esošo etiķeti"
 msgid "Error setting label"
 msgstr "Kļūda, iestatot etiķeti"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Kļūda, atmontējot datņu sistēmu"
 
@@ -1671,7 +1678,6 @@ msgid "Cre_ate"
 msgstr "Iz_veidot"
 
 #: src/disks/gducreateformatdialog.c:187
-#| msgid "_Format"
 msgid "Form_at"
 msgstr "Form_atēt"
 
@@ -1696,7 +1702,6 @@ msgid "Format Volume"
 msgstr "Formatēt sējumu"
 
 #: src/disks/gducreateformatdialog.c:447
-#| msgid "Custom"
 msgid "Custom Format"
 msgstr "Pielāgota formatēšana"
 
@@ -1705,7 +1710,6 @@ msgid "Set Password"
 msgstr "Iestatīt paroli"
 
 #: src/disks/gducreateformatdialog.c:453
-#| msgid "Confirm Repair"
 msgid "Confirm Details"
 msgstr "Apstiprināt informāciju"
 
@@ -1723,7 +1727,6 @@ msgid "XFS — Linux Filesystem"
 msgstr "XFS — Linux datņu sistēma"
 
 #: src/disks/gducreateotherpage.c:117
-#| msgid "Edit Partition"
 msgid "Linux Swap Partition"
 msgstr "Linux maiņvietas nodalījums"
 
@@ -1744,8 +1747,6 @@ msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgstr "UDF — universāls diska formāts, noņemamām ierīcēm uz daudzām sistēmām"
 
 #: src/disks/gducreateotherpage.c:127
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
 msgstr "Bez datņu sistēmas"
 
@@ -1755,7 +1756,6 @@ msgid "The utility %s is missing."
 msgstr "Nav utilītprogrammas %s."
 
 #: src/disks/gducreatepasswordpage.c:124
-#| msgid "The passphrases do not match"
 msgid "The passwords do not match"
 msgstr "Paroles nesakrīt"
 
@@ -1766,8 +1766,6 @@ msgstr "Paroles nesakrīt"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s — %s"
 
@@ -1775,7 +1773,6 @@ msgstr "%s — %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1914,7 +1911,6 @@ msgid "Error repairing filesystem"
 msgstr "Kļūda, labojot datņu sistēmu"
 
 #: src/disks/gduresizedialog.c:551
-#| msgid "Error unmounting filesystem for resizing"
 msgid "Error unmounting filesystem for repairing"
 msgstr "Kļūda, atmontējot datņu sistēmas labošanai"
 
@@ -1923,7 +1919,6 @@ msgid "Error unmounting filesystem for resizing"
 msgstr "Kļūda, atmontējot datņu sistēmu izmēra mainīšanai"
 
 #: src/disks/gduresizedialog.c:760
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "Kļūda, montējot datņu sistēmu"
 
@@ -1996,13 +1991,28 @@ msgstr "Visi esošie dati tiks zaudēti"
 msgid "_Restore"
 msgstr "_Atjaunot"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Kļūda, atslēdzot šifrētu ierīči"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#| msgid "Select a device"
+msgid "Select a Keyfile"
+msgstr "Izvēlieties atslēgdatni"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+#| msgid "Error locking device"
+msgid "Error unlocking device"
+msgstr "Kļūda, atbloķējot ierīci"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "Nederīgs PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrēšanas parole tika iegūta no saišķa"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Iestatīt opcijas, lai atbloķētu"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2256,17 +2266,21 @@ msgstr "Nav aktīvs"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Unlocked"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Atbloķēts"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+#| msgctxt "volume-content-luks"
+#| msgid "Locked"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Bloķēts"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Paplašinātais nodalījums"
@@ -2275,45 +2289,45 @@ msgstr "Paplašinātais nodalījums"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Neiedalītā vieta"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Kļūda, labojot datņu sistēmu"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Labošana bija veiksmīga"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Neizdevās salabot"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datņu sistēma %s uz %s ir salabota."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datņu sistēmu %s uz %s nevarēja salabot."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Apstiprināt labošanu"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2324,109 +2338,109 @@ msgstr ""
 "izmantot izmeklēšanas rīkus pazudušo datņu atrašanai. Darbība var aizņemt "
 "ilgāku laiku, atkarībā no datu apjoma."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Kļūda, pārbaudot datņu sistēmu"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Datņu sistēmas ir neskarta"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Datņu sistēma ir bojāta"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datņu sistēma %s uz %s nav bojāta."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datņu sistēmu %s uz %s vajag salabot."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Apstiprināt pārbaudi"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Datņu sistēmas pārbaude var aizņemt daudz laika, kas ir atkarīgs no datu "
 "apjoma."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Notika kļūda, mēģinot iestatīt dzini gaidstāves režīmā"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Notika kļūda, mēģinot pamodināt dzini no gaidstāves režīma"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Kļūda, izslēdzot ierīci"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "Vai tiešām vēlaties izslēgt diskus?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Šī darbība sagatavos sistēmu, lai varētu izslēgt un izņemt sekojošas ierīces."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "_Izslēgt"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Kļūda, montējot datņu sistēmu"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Kļūda, dzēšot nodalījumu"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "Vai tiešām vēlaties dzēst nodalījumu?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Visi dati šajā nodalījumā tiks zaudēti"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "_Dzēst"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Kļūda, izgrūžot datu nesēju"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Kļūda, slēdzot šifrētu ierīci"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Kļūda, palaižot maiņvietu"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Kļūda, apturot maiņvietu"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Kļūda, iestatot automātiskās attīrīšanas karogu"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "Kļūda, atceļot darbu"
 
@@ -2448,9 +2462,6 @@ msgid "Need more input"
 msgstr "Vajag vairāk ievades"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2666,7 +2677,6 @@ msgid "New _Passphrase"
 msgstr "Jau_nā parole"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#| msgid "All data on the partition will be lost"
 msgid "Warning: all data on the volume will be lost"
 msgstr "Brīdinājums: visi dati šajā sējumā tiks zaudēti"
 
@@ -2679,7 +2689,6 @@ msgid "Device"
 msgstr "Ierīce"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#| msgid "_Volumes"
 msgid "Volume"
 msgstr "Sējums"
 
@@ -2722,14 +2731,10 @@ msgid "_Start Creating…"
 msgstr "_Sākt veidot…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#| msgid "_Volumes"
 msgid "Volume _Name"
 msgstr "Sējuma _nosaukums"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
@@ -2738,7 +2743,6 @@ msgstr ""
 "piekļūt ierīcei caur simbolisko saiti /dev/disk/by-label direktorijā."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Piemēram — “Mani dati” vai “Dublējumi”."
 
@@ -2748,7 +2752,6 @@ msgid "_Erase"
 msgstr "_Dzēst"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
 msgstr "Pārraksta esošos datus, bet tas aizņem vairāk laika."
 
@@ -2766,7 +2769,6 @@ msgid "For use with _Windows (NTFS)"
 msgstr "Izmantošanai ar _Windows (NTFS)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
 msgstr "Izmantošanai ar visām _sistēmām un ierīcēm (FAT)"
 
@@ -2780,9 +2782,9 @@ msgid ""
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
 msgstr ""
-"Ja noklusējuma opcijas neatbilst jūsu vajadzībām, izvēlieties kādu no"
-" sekojošajām datņu sistēmām. Ņemiet vērā tehniskās atšķirības un izpētiet,"
-" kādos apstākļos jūs to izmantosiet."
+"Ja noklusējuma opcijas neatbilst jūsu vajadzībām, izvēlieties kādu no "
+"sekojošajām datņu sistēmām. Ņemiet vērā tehniskās atšķirības un izpētiet, "
+"kādos apstākļos jūs to izmantosiet."
 
 #: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
@@ -2856,8 +2858,6 @@ msgid "The free space following the partition"
 msgstr "Brīvā diska vieta pēc nodalījuma"
 
 #: src/disks/ui/create-partition-page.ui:173
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "Paplašinātais nodalījums"
 
@@ -2870,16 +2870,14 @@ msgid ""
 "Data stored in the volume will only be accessible with the correct password. "
 "Be careful not to forget it."
 msgstr ""
-"Sējumā saglabātie dati būs pieejami tikai ar pareizu paroli. Mēģiniet to"
-" neaizmirst."
+"Sējumā saglabātie dati būs pieejami tikai ar pareizu paroli. Mēģiniet to "
+"neaizmirst."
 
 #: src/disks/ui/create-password-page.ui:34
-#| msgid "_Passphrase"
 msgid "_Password"
 msgstr "_Parole"
 
 #: src/disks/ui/create-password-page.ui:48
-#| msgid "Confirm Check"
 msgid "_Confirm"
 msgstr "_Apstiprināt"
 
@@ -2888,7 +2886,6 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Ievadiet paroli, ar kuru aizsargāt datus"
 
 #: src/disks/ui/create-password-page.ui:95
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
 msgstr "Rādīt par_oli"
 
@@ -3226,7 +3223,7 @@ msgid "Passphrase File"
 msgstr "Paroles datne"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "Rādīt _paroli"
 
@@ -3239,7 +3236,7 @@ msgstr ""
 "ierīci."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Parole"
 
@@ -3462,17 +3459,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "_Palaižams ar mantoto BIOS"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Tas ir līdzvērtīgs pamatpalaišanas ieraksta (MBR) "
-"<i>bootable (palaižams)</i> karogam. Šis tiek parasti izmantots tikai GPT "
-"nodalījumiem MBR sistēmās."
+"Tas ir līdzvērtīgs pamatpalaišanas ieraksta (MBR) <i>bootable (palaižams)</"
+"i> karogam. Šis tiek parasti izmantots tikai GPT nodalījumiem MBR sistēmās."
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3487,8 +3479,8 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
-"Norāda, ka EFI aparātprogrammatūrai vajadzētu ignorēt nodalījumu saturu un"
-" nevajadzētu mēģināt no tā lasīt"
+"Norāda, ka EFI aparātprogrammatūrai vajadzētu ignorēt nodalījumu saturu un "
+"nevajadzētu mēģināt no tā lasīt"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3535,12 +3527,6 @@ msgid "Resize Volume"
 msgstr "Mainīt sējuma izmēru"
 
 #: src/disks/ui/resize-dialog.ui:53
-#| msgid ""
-#| "Resizing a filesystem can lead to data loss. You are adviced to backup "
-#| "your data before. The resize operation will take longer if a lot of data "
-#| "has to be moved. The minimal size is calculated according to the current "
-#| "content. Keep additional free space for the filesystem to work fast and "
-#| "reliably."
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3658,11 +3644,63 @@ msgstr "Paplašināts"
 msgid "Conveyance"
 msgstr "Transports"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Ievadiet paroli, lai atslēgtu"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr ""
+"Šis sējums varētu būt šifrēts VeraCrypt sējums, jo tas satur nejaušus datus."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Ja ir norādīts"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+#| msgid "Volume"
+msgid "Volume type"
+msgstr "Sējuma tips"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "_Slēpts"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Tā vietā, lai atslēgtu šo sējumu, mēģināt atslēgt iekšā paslēptu sekundāro"
+" sējumu."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Windows _sistēma"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+#| msgid "Unlock selected encrypted partition"
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Atbloķēt šifrētu Windows sistēmas nodalījumu vai dzini."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Ja iestatīts, VeraCrypt PIM (personīgo iterāciju multiplikators) skaitliskā"
+" vērtība, ko izmantot šim sējumam."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Atslēgdatnes"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Atbloķēt"
 
@@ -3801,11 +3839,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ietekmētās ierīces"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Kļūda, bloķējot ierīci"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Kļūda, izslēdzot automātisko attīrīšanu cikla ierīcei"
 
@@ -3826,6 +3864,9 @@ msgstr "Iespējams, ka cietais disks drīz avarēs."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Izpētīt"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Kļūda, atslēdzot šifrētu ierīči"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"

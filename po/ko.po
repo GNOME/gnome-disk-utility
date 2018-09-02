@@ -22,9 +22,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-02-20 22:43+0000\n"
-"PO-Revision-Date: 2018-03-10 15:55+0900\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-05-31 09:18+0000\n"
+"PO-Revision-Date: 2018-09-02 18:08+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -307,8 +308,8 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "다시 매핑된 섹터의 수. 하드 드라이브가 읽기/쓰기/확인 오류를 감지하면, 해당 "
-"섹터를 \"재할당\"되었다고 표시하고 데이터를 특별히 예약된 영역(예비 영역)으"
-"로 이동합니다."
+"섹터를 “재할당”되었다고 표시하고 데이터를 특별히 예약된 영역(예비 영역)으로 "
+"이동합니다."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1153,74 +1154,80 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f밀리초"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "장치 벤치마크 중"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "장치의 용량을 가져오는 중 오류1"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "페이지 용량을 가져오는 중 오류: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "오프셋 %lld 위치로 탐색하는데 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "오프셋 %2$s 위치에서 %1$s을(를) 미리 읽는 중 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "오프셋 %s 위치로 탐색 중 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "오프셋 %2$s 위치에서 %1$s을(를) 읽는 중 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "%2$lld 오프셋에서 %1$lld 바이트를 미리 읽는 중 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "%2$lld 오프셋의 %1$lld 바이트를 기록하는데 오류가 발생했습니다: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "%lld 바이트 기록을 예상했지만, %lld만 기록했습니다: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "(오프셋 %lld에서) 동기화 도중 오류: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "%lld 오프셋을 읽는 중 오류"
 
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1528,9 +1535,9 @@ msgstr "라벨이 이미 존재합니다"
 msgid "Error setting label"
 msgstr "레이블을 설정하는 중 오류"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "파일 시스템을 마운트 해제하는 중 오류"
 
@@ -1729,7 +1736,9 @@ msgstr "exFAT — 플래시 저장 장치 윈도우 파일 시스템, SDXC 카�
 
 #: src/disks/gducreateotherpage.c:125
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr "UDF — 유니버설 디스크 포맷(Universal Disk Format), 여러 시스템의 이동식 장치에 사용"
+msgstr ""
+"UDF — 유니버설 디스크 포맷(Universal Disk Format), 여러 시스템의 이동식 장치"
+"에 사용"
 
 #: src/disks/gducreateotherpage.c:127
 msgid "No Filesystem"
@@ -1974,13 +1983,26 @@ msgstr "기존의 데이터가 모두 지워집니다"
 msgid "_Restore"
 msgstr "복구(_R)"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "암호화된 장치 잠금 해제 중 오류"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "키 파일을 선택하십시오"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "장치 잠금을 해제하는 중 오류"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "잘못된 PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "암호화 암호를 모음에서 가져왔습니다"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "잠금 해제 옵션 선택"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2234,17 +2256,17 @@ msgstr "활성화되지 않음"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "잠금 풀림"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "잠금"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "확장 파티션"
@@ -2253,152 +2275,155 @@ msgstr "확장 파티션"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "할당되지 않은 공간"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "파일 시스템을 복구 중 오류"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "복구 성공"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "복구 실패"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s 상의 파일 시스템  %1$s 복구되었습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%2$s의 %1$s 파일 시스템을 복구할 수 없습니다."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "복구 확인"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. Depending on the amount of data this operation takes longer time."
-msgstr "파일 시스템 복구는 항상 가능하지 않으며, 데이터 손실을 일으킬 수 있습니다. 손실된 데이터 복구 용도로 포렌식 도구를 사용하려면 먼저 백업을 고려하십시오. 데이터 양에 따라 이 작업은 오래 걸릴 수 있습니다."
+msgstr ""
+"파일 시스템 복구는 항상 가능하지 않으며, 데이터 손실을 일으킬 수 있습니다. 손"
+"실된 데이터 복구 용도로 포렌식 도구를 사용하려면 먼저 백업을 고려하십시오. 데"
+"이터 양에 따라 이 작업은 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "파일 시스템 검사 중 오류"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "파일 시스템 정상"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "파일 시스템 손상"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s의 %1$s 파일 시스템은 손상되지 않았습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s의 %1$s 파일 시스템은 복구가 필요합니다."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "검사 확인"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "데이터 양에 따라 파일 시스템 검사에 시간이 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "드라이브를 대기 모드로 놓으려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "드라이브를 대기 모드에서 복귀하려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "장치의 전원을 끄는 중 오류"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "정말로 드라이브의 전원을 끄시겠습니까?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "이 동작은 다음 드라이브의 전원을 끄고 제거할 수 있도록 시스템을 준비합니다."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "전원 끄기(_P)"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "파일 시스템을 마운트하는 중 오류"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "파티션을 지우는 중 오류"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "이 파티션을 지우시겠습니까?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "파티선의 모든 데이터를 잃습니다"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "삭제(_D)"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "미디어를 꺼내는 중 오류"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "암호화된 장치를 잠그는 중 오류"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "스왑을 시작하는 중 오류"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "스왑을 중지하는 중 오류"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "자동 소거 플래그를 설정하는 중 오류"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "작업을 취소하는 중 오류"
 
@@ -2694,7 +2719,9 @@ msgstr "볼륨 이름(_N)"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
-msgstr "파일 시스템에서 사용할 이름입니다. /dev/disk/by-label 디렉터리의 심볼릭 링크를 통해 디바이스를 참조하려 할 때 유용합니다."
+msgstr ""
+"파일 시스템에서 사용할 이름입니다. /dev/disk/by-label 디렉터리의 심볼릭 링크"
+"를 통해 디바이스를 참조하려 할 때 유용합니다."
 
 # 디스크 볼륨에서 한글 사용 가능이 어려울 수 있으니 영어로
 # - 많이 쓰이는 한국 여성 이름을 하나 골라서 사용함.
@@ -2737,7 +2764,9 @@ msgid ""
 "In case that the default options do not fit your needs select one of the "
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
-msgstr "기본 옵션이 필요에 안 맞을 경우 다음 파일 시스템 중 하나를 고르십시오. 기술적인 차이점을 감안하시고 내 상황에 맞는지 알아 보십시오."
+msgstr ""
+"기본 옵션이 필요에 안 맞을 경우 다음 파일 시스템 중 하나를 고르십시오. 기술적"
+"인 차이점을 감안하시고 내 상황에 맞는지 알아 보십시오."
 
 #: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
@@ -2822,7 +2851,9 @@ msgstr "확장 파티션 안에 논리 파티션이 들어갈 수 있습니다"
 msgid ""
 "Data stored in the volume will only be accessible with the correct password. "
 "Be careful not to forget it."
-msgstr "암호가 있어야 이 볼륨에 저장된 데이터에 접근할 수 있습니다. 암호를 잊어버리지 않도록 하십시오."
+msgstr ""
+"암호가 있어야 이 볼륨에 저장된 데이터에 접근할 수 있습니다. 암호를 잊어버리"
+"지 않도록 하십시오."
 
 #: src/disks/ui/create-password-page.ui:34
 msgid "_Password"
@@ -2883,8 +2914,8 @@ msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
-"갑작스런 회전수 감소는 예상보다 빨리 드라이브를 망가지게 할 수 있습니다. \"시"
-"작/정지 카운트\" SMART 속성을 종종 확인해 보십시오."
+"갑작스런 회전수 감소는 예상보다 빨리 드라이브를 망가지게 할 수 있습니다. “시"
+"작/정지 카운트” SMART 속성을 종종 확인해 보십시오."
 
 #: src/disks/ui/disk-settings-dialog.ui:308
 msgid "A_PM"
@@ -3170,7 +3201,7 @@ msgid "Passphrase File"
 msgstr "암호글 파일"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "암호글 표시(_W)"
 
@@ -3181,7 +3212,7 @@ msgid ""
 msgstr "이 장치를 설정할 때 사용자에 요구할 암호글, 또는 빈 값"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "암호글(_P)"
 
@@ -3399,7 +3430,9 @@ msgstr "레거시 BIOS 부팅 가능(_B)"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
-msgstr "마스터 부트 레코드의 <i>bootable</i> 플래그와 동일합니다. 보통 MBR 시스템의 GPT 파티션을 위해서만 사용합니다"
+msgstr ""
+"마스터 부트 레코드의 <i>bootable</i> 플래그와 동일합니다. 보통 MBR 시스템의 "
+"GPT 파티션을 위해서만 사용합니다"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3413,7 +3446,8 @@ msgstr "펌웨어에서 숨기기(_F)"
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
-msgstr "EFI 펌웨어에서 이 파티션의 내용을 무시하고 내용을 읽지 않도록 표시합니다."
+msgstr ""
+"EFI 펌웨어에서 이 파티션의 내용을 무시하고 내용을 읽지 않도록 표시합니다."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3465,7 +3499,11 @@ msgid ""
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
-msgstr "파일 시스템 크기조정은 데이터 손실을 야기할 수 있습니다. 그 전에 데이터를 백업할 것을 추천드립니다. 많은 데이터 이동이 있을 경우 크기조정 작업은 시간이 걸릴 수 있습니다. 최소한의 크기는 현재 컨텐트에 따라 계산됩니다. 빠르고 안정적인 작업을 위해 파일시스템에 대한 추가적인 여유 공간을 유지하십시오."
+msgstr ""
+"파일 시스템 크기조정은 데이터 손실을 야기할 수 있습니다. 그 전에 데이터를 백"
+"업할 것을 추천드립니다. 많은 데이터 이동이 있을 경우 크기조정 작업은 시간이 "
+"걸릴 수 있습니다. 최소한의 크기는 현재 컨텐트에 따라 계산됩니다. 빠르고 안정"
+"적인 작업을 위해 파일시스템에 대한 추가적인 여유 공간을 유지하십시오."
 
 #: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
@@ -3571,11 +3609,60 @@ msgstr "확장"
 msgid "Conveyance"
 msgstr "이송"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "잠금 해제할 암호를 입력하십시오"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "이 볼륨은 임의의 데이터가 들어 있으므로 VeraCrypt 볼륨일 수 있습니다."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "지정한 경우"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "볼륨 종류"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "숨김(_H)"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"이 볼륨의 잠금을 해제하는 대신, 그 안에 숨겨진 다음 볼륨 잠금 해제를 시도합니"
+"다."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "윈도우 시스템(_S)"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "암호화한 윈도우 시스템 파티션 또는 드라이브의 잠금을 풉니다."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"설정하는 경우, 이 볼륨에 사용할 VeraCrypt PIM (Personal Interactions "
+"Multiplier) 숫자 값."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "키 파일"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "풀기(_U)"
 
@@ -3700,11 +3787,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "관련 장치"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "장치를 잠그는 중 오류"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "루프 장치 자동소거 비활성화 중 오류"
 
@@ -3725,6 +3812,9 @@ msgstr "하드 디스크가 곧 실패할 것 같습니다."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "검사"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "암호화된 장치 잠금 해제 중 오류"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"

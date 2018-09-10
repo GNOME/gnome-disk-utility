@@ -1364,6 +1364,7 @@ typedef struct
   GList *object_iter;
   GTask *task;
   GCancellable *cancellable; /* borrowed ref */
+  gboolean unmounted;
 } UnuseData;
 
 static void
@@ -1412,6 +1413,7 @@ unuse_unmount_cb (UDisksFilesystem *filesystem,
     }
   else
     {
+      data->unmounted = TRUE;
       unuse_data_iterate (data);
     }
 }
@@ -1469,8 +1471,9 @@ unuse_data_iterate (UnuseData *data)
   gboolean last;
 
   object = UDISKS_OBJECT (data->object_iter->data);
-  gdu_utils_is_in_use_full (data->client, object,
-                            &filesystem_to_unmount, &encrypted_to_lock, NULL);
+  if( data->unmounted == FALSE )
+    gdu_utils_is_in_use_full (data->client, object,
+                              &filesystem_to_unmount, &encrypted_to_lock, NULL);
   block = udisks_object_peek_block (object);
 
   if (block != NULL && (filesystem_to_unmount != NULL || encrypted_to_lock != NULL))

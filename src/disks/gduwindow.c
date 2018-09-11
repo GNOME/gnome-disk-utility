@@ -1068,7 +1068,7 @@ gdu_window_constructed (GObject *object)
   if (G_OBJECT_CLASS (gdu_window_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_window_parent_class)->constructed (object);
 
-  gtk_window_set_icon_name (GTK_WINDOW (window), "gnome-disks");
+  gtk_window_set_icon_name (GTK_WINDOW (window), "org.gnome.DiskUtility");
 
   /* load UI file */
   gdu_application_new_widget (window->application, "disks.ui", NULL, &window->builder);

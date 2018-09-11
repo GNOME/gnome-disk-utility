@@ -3200,18 +3200,8 @@ fs_repair_unmount_cb (GduWindow        *window,
                       gpointer          user_data)
 {
   UDisksObject *object = UDISKS_OBJECT (user_data);
-  GError *error = NULL;
 
-  if (!gdu_window_ensure_unused_finish (window,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error unmounting filesystem"),
-                            error);
-      g_error_free (error);
-    }
-  else
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
     {
       UDisksFilesystem *filesystem;
 
@@ -3328,18 +3318,8 @@ fs_check_unmount_cb (GduWindow        *window,
                      gpointer          user_data)
 {
   UDisksObject *object = UDISKS_OBJECT (user_data);
-  GError *error = NULL;
 
-  if (!gdu_window_ensure_unused_finish (window,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error unmounting filesystem"),
-                            error);
-      g_error_free (error);
-    }
-  else
+  if (gdu_window_ensure_unused_finish (window, res, NULL))
     {
       UDisksFilesystem *filesystem;
 
@@ -3825,24 +3805,6 @@ on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-unmount_cb (GduWindow        *window,
-            GAsyncResult     *res,
-            gpointer          user_data)
-{
-  GError *error = NULL;
-
-  if (!gdu_window_ensure_unused_finish (window,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error unmounting filesystem"),
-                            error);
-      g_error_free (error);
-    }
-}
-
-static void
 on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
@@ -3851,7 +3813,7 @@ on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   gdu_window_ensure_unused (window,
                             object,
-                            (GAsyncReadyCallback) unmount_cb,
+                            NULL,
                             NULL,
                             NULL);
 }
@@ -4032,24 +3994,6 @@ on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-lock_cb (GduWindow       *window,
-         GAsyncResult    *res,
-         gpointer         user_data)
-{
-  GError *error = NULL;
-
-  if (!gdu_window_ensure_unused_finish (window,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (window),
-                            _("Error locking encrypted device"),
-                            error);
-      g_error_free (error);
-    }
-}
-
-static void
 on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
@@ -4058,7 +4002,7 @@ on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   gdu_window_ensure_unused (window,
                             object,
-                            (GAsyncReadyCallback) lock_cb,
+                            NULL,
                             NULL, /* GCancellable */
                             NULL);
 }

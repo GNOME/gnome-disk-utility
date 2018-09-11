@@ -1364,6 +1364,8 @@ typedef struct
   GList *object_iter;
   GTask *task;
   GCancellable *cancellable; /* borrowed ref */
+  gboolean Unmounted;
+  gulong Handler;
 } UnuseData;
 
 static void
@@ -1412,7 +1414,10 @@ unuse_unmount_cb (UDisksFilesystem *filesystem,
     }
   else
     {
-      unuse_data_iterate (data);
+      /* move to next iteration if property is already updated, otherwise wait */
+      if( data->Unmounted )
+        unuse_data_iterate (data);
+      else data->Unmounted = TRUE;
     }
 }
 
@@ -1456,6 +1461,21 @@ unuse_set_autoclear_cb (UDisksLoop   *loop,
     {
       unuse_data_iterate (data);
     }
+}
+
+static void
+mounts_changed (GObject *obj,
+                GParamSpec *property,
+                gpointer datap)
+{
+  UnuseData *data = datap;
+
+  g_signal_handler_disconnect (obj, data->Handler);
+  /* already finished unmount, now that the property has updated,
+     move to the next iteration */
+  if( data->Unmounted )
+    unuse_data_iterate (data);
+  else data->Unmounted = TRUE;
 }
 
 static void
@@ -1505,11 +1525,21 @@ unuse_data_iterate (UnuseData *data)
 
   if (filesystem_to_unmount != NULL)
     {
-      udisks_filesystem_call_unmount (filesystem_to_unmount,
-                                      g_variant_new ("a{sv}", NULL), /* options */
-                                      data->cancellable, /* cancellable */
-                                      (GAsyncReadyCallback) unuse_unmount_cb,
-                                      data);
+      data->Unmounted = FALSE;
+      data->Handler = g_signal_connect (G_OBJECT (filesystem_to_unmount),
+                                        "notify::MountPoints",
+                                        G_CALLBACK (mounts_changed),
+                                        data);
+      if( data->Handler == 0 )
+        {
+          GError *error = NULL;
+          unuse_data_complete (data, _("Error unmounting filesystem"), error);
+        }
+      else udisks_filesystem_call_unmount (filesystem_to_unmount,
+                                           g_variant_new ("a{sv}", NULL), /* options */
+                                           data->cancellable, /* cancellable */
+                                           (GAsyncReadyCallback) unuse_unmount_cb,
+                                           data);
     }
   else if (encrypted_to_lock != NULL)
     {

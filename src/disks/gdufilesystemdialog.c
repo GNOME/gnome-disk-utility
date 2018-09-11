@@ -118,18 +118,8 @@ ensure_unused_cb (UDisksObject *object,
                   gpointer      user_data)
 {
   EditFilesystemData *data = user_data;
-  GError *error = NULL;
 
-  if (!gdu_window_ensure_unused_finish (data->window,
-                                        res,
-                                        &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("Error unmounting filesystem"),
-                            error);
-      g_error_free (error);
-    }
-  else
+  if (gdu_window_ensure_unused_finish (data->window, res, NULL))
     {
       udisks_filesystem_call_set_label (data->filesystem,
                                         data->new_label,

@@ -543,15 +543,9 @@ ensure_unused_cb_offline_next_repair (GObject      *source_object,
                                       gpointer      user_data)
 {
   ResizeDialogData *data = user_data;
-  GError *error = NULL;
 
-  if (!gdu_utils_ensure_unused_finish (data->client, res, &error))
+  if (!gdu_utils_ensure_unused_finish (data->client, res, NULL))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("Error unmounting filesystem for repairing"),
-                            error);
-
-      g_error_free (error);
       resize_dialog_data_unref (data);
     }
   else
@@ -684,15 +678,9 @@ unmount_cb (GObject      *source_object,
             gpointer      user_data)
 {
   ResizeDialogData *data = user_data;
-  GError *error = NULL;
 
-  if (!gdu_utils_ensure_unused_finish (data->client, res, &error))
+  if (!gdu_utils_ensure_unused_finish (data->client, res, NULL))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("Error unmounting filesystem for resizing"),
-                            error);
-
-      g_error_free (error);
       resize_dialog_data_unref (data);
     }
   else

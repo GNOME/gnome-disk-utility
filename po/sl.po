@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-05-08 12:55+0000\n"
-"PO-Revision-Date: 2018-05-08 22:30+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-09-02 18:06+0000\n"
+"PO-Revision-Date: 2018-09-02 20:30+0200\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -91,6 +91,7 @@ msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Diski"
 
@@ -1541,9 +1542,9 @@ msgstr "Oznaka je enaka obstoječi."
 msgid "Error setting label"
 msgstr "Napaka nastavljanja oznake"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
+#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
+#: src/libgdu/gduutils.c:1411
 msgid "Error unmounting filesystem"
 msgstr "Napaka odklapljanja datotečnega sistema"
 
@@ -1999,13 +2000,26 @@ msgstr "Vsi obstoječi podatki bodo nepovratno izgubljeni."
 msgid "_Restore"
 msgstr "_Obnovi"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Napaka odklepanja šifrirane naprave"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "Izbor datoteke ključa"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "Napaka odklepanja naprave"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "Neveljavna koda PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrirna fraza je prebrana iz zbirke ključev"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Nastavitev možnosti za odklepanje"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2259,17 +2273,17 @@ msgstr "Ni dejavno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Odklenjeno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Zaklenjeno"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Razširjeni razdelek"
@@ -2278,45 +2292,45 @@ msgstr "Razširjeni razdelek"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s – %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Nerazvrščeni prostor"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Prišlo je do napake med popravljanjem datotečnega sistema"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Popravilo je uspešno zaključeno!"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Popravilo je spodletelo!"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečnega sistema %s na %s je popravljen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečnega sistema %s na %s ni mogoče popraviti."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3246
 msgid "Confirm Repair"
 msgstr "Potrdi popravilo"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3249
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2326,109 +2340,109 @@ msgstr ""
 "podatkov. Najprej je priporočljivo narediti varnostno kopijo. Opravilo bo "
 "dolgotrajno, če je treba premakniti veliko količino podatkov."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3277
 msgid "Error while checking filesystem"
 msgstr "Prišlo je do napake med preverjanjem datotečnega sistema ..."
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem intact"
 msgstr "Datotečni sistem ni poškodovan."
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3304
 msgid "Filesystem damaged"
 msgstr "Datotečni sistem je poškodovan."
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3307
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sistem %s na %s je nepoškodovan."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3313
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sistem %s na %s zahteva popravilo."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3373
 msgid "Confirm Check"
 msgstr "Potrdi preverjanje"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3376
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Glede na količino podatkov na datotečnem sistemu je lahko opravilo "
 "dolgotrajno."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3576
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Med poskusom pošiljanja v stanje pripravljenosti je prišlo do napake."
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3622
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Med poskusom povrnitve in stanja pripravljenosti je prišlo do napake."
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3667
 msgid "Error powering off drive"
 msgstr "Napaka izklapljanja pogona"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3719
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ali ste prepričani, da želite izklopiti pogone?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3721
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "To opravilo bo pripravilo sistem za izklop in odstranitev naslednjih pogonov."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3725
 msgid "_Power Off"
 msgstr "Izklopljeno"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3802
 msgid "Error mounting filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3911
 msgid "Error deleting partition"
 msgstr "Napaka brisanja razdelka"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3948
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ali ste prepričani, da želite izbrisati razdelek?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3949
 msgid "All data on the partition will be lost"
 msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni."
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3950
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3981
 msgid "Error ejecting media"
 msgstr "Napaka izmetavanja nosilca"
 
-#: src/disks/gduwindow.c:4042
+#: src/disks/gduwindow.c:4046
 msgid "Error locking encrypted device"
 msgstr "Napaka zaklepanja šifrirane naprave"
 
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4082
 msgid "Error starting swap"
 msgstr "Napaka začenjanja izmenjevalnega razdelka"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4119
 msgid "Error stopping swap"
 msgstr "Napaka zaustavljanja izmenjevalnega razdelka"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4161
 msgid "Error setting autoclear flag"
 msgstr "Napaka med nastavljanjem zastavice samodejnega počiščenja"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
 msgid "Error canceling job"
 msgstr "Napaka preklica posla"
 
@@ -2587,11 +2601,11 @@ msgstr ""
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
 msgstr ""
-"Število vzorcev. Večja številka poveča natančnost slike vzorcev časa "
-"dostopa, vendar je tudi opravilo časovno bolj zahtevno."
+"Število vzorcev. Pri večjem številu je diagram bolj natančen, primerjalni "
+"preizkus pa je na račun tega počasnejši."
 
 #: src/disks/ui/benchmark-dialog.ui:495
 msgid ""
@@ -2611,13 +2625,13 @@ msgstr "Čas zadnjega dostopa"
 msgid "Number of Sampl_es"
 msgstr "Število v_zorcev"
 
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
 msgstr ""
-"Število vzorcev. Pri večjem številu je diagram bolj natančen, primerjalni "
-"preizkus pa je na račun tega počasnejši."
+"Število vzorcev. Večja številka poveča natančnost slike vzorcev časa "
+"dostopa, vendar je tudi opravilo časovno bolj zahtevno."
 
 #: src/disks/ui/change-passphrase-dialog.ui:7
 msgid "Change Passphrase"
@@ -3216,7 +3230,7 @@ msgid "Passphrase File"
 msgstr "Datoteko šifrirnega gesla"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "_Pokaži šifrirno geslo"
 
@@ -3229,7 +3243,7 @@ msgstr ""
 "naprave med nastavljanjem."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Šifrirno geslo"
 
@@ -3641,11 +3655,60 @@ msgstr "Razširjeno"
 msgid "Conveyance"
 msgstr "Prenos"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Vnos šifrirnega gesla za odklepanje"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "Nosilec je morda šifriran s VeraCrypt, saj vsebuje naključne podatke."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Če je določeno"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "Vrsta nosilca"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "_Skrito"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Namesto odklepanja nosilca, poskusi odkleniti drugotni razdelek, skrit na "
+"njem."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Sistem _Windows"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Odkleni šifriran pogon ali sistemski razdelek Windows."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Izbrana nastavitev določa številčno vrednost kode VeraCrypt PIM (Personal "
+"Iterations Multiplier) za uporabo z nosilcem."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Datoteke ključev"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Odkleni"
 
@@ -3791,11 +3854,11 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Prizadete naprave"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Napaka zaklepanja naprave"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Napaka onemogočanja izvajanja ukaza autoclear zančne naprave"
 
@@ -3816,6 +3879,9 @@ msgstr "Trdi disk bo verjetno kmalu odpovedal."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Preuči"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Napaka odklepanja šifrirane naprave"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"
@@ -4081,9 +4147,6 @@ msgstr "Preuči"
 #~ msgstr ""
 #~ "Nastavljena možnost lahko povzroči priklapljanje vsebine razdelkov le za "
 #~ "branje namesto branje in pisanje"
-
-#~ msgid "H_idden"
-#~ msgstr "_Skrito"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "

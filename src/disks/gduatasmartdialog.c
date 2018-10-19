@@ -578,6 +578,22 @@ static const SmartDetails smart_details[] = {
   N_("Number of errors while reading from a disk")
 },
 {
+  "total-lbas-written",
+  /* Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+   * or the next string for a longer explanation.
+   */
+  N_("Total LBAs Written"),
+  N_("The number of 16-bit blocks of data written during the lifetime of the disk")
+},
+{
+  "total-lbas-read",
+  /* Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+   * or the next string for a longer explanation.
+   */
+  N_("Total LBAs Read"),
+  N_("The number of 16-bit blocks of data read during the lifetime of the disk")
+},
+{
   NULL,
   NULL,
   NULL

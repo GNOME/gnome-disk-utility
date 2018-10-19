@@ -578,6 +578,22 @@ static const SmartDetails smart_details[] = {
   N_("Number of errors while reading from a disk")
 },
 {
+  "total-lbas-written",
+  /* Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+   * or the next string for a longer explanation.
+   */
+  N_("Total LBAs Written"),
+  N_("The amount of data written during the lifetime of the disk")
+},
+{
+  "total-lbas-read",
+  /* Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+   * or the next string for a longer explanation.
+   */
+  N_("Total LBAs Read"),
+  N_("The amount of data read during the lifetime of the disk")
+},
+{
   NULL,
   NULL,
   NULL

@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-03-13 14:22+0000\n"
-"PO-Revision-Date: 2018-03-17 21:45+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-09-19 21:39+0000\n"
+"PO-Revision-Date: 2018-10-25 17:34+0200\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2\n"
 
 # window title, program name
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -97,6 +97,7 @@ msgstr "Projekt GNOME"
 
 # dektop entry name
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Disky"
 
@@ -1184,78 +1185,85 @@ msgctxt "benchmark-access-time"
 msgid "%.2f msec"
 msgstr "%.2f milisekúnd"
 
-#: src/disks/gdubenchmarkdialog.c:1198
+# GtkDialog title
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdubenchmarkdialog.c:1180
+msgctxt "create-inhibit-message"
+msgid "Benchmarking device"
+msgstr "Skúša sa výkon zariadenia"
+
+#: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting size of device: %m"
 msgstr "Chyba pri získavaní veľkosti zariadenia: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1208
+#: src/disks/gdubenchmarkdialog.c:1216
 #, c-format
 msgctxt "benchmarking"
 msgid "Error getting page size: %m\n"
 msgstr "Chyba pri získavaní veľkosti stránky: %m\n"
 
-#: src/disks/gdubenchmarkdialog.c:1242 src/disks/gdubenchmarkdialog.c:1305
-#: src/disks/gdubenchmarkdialog.c:1324
+#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
+#: src/disks/gdubenchmarkdialog.c:1332
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
 msgstr "Chyba pri presune na ofset %lld"
 
-#: src/disks/gdubenchmarkdialog.c:1253
+#: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
 msgstr "Chyba pri prednačítaní %s z ofsetu %s"
 
-#: src/disks/gdubenchmarkdialog.c:1265
+#: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %s"
 msgstr "Chyba pri presune na ofset %s"
 
-#: src/disks/gdubenchmarkdialog.c:1279
+#: src/disks/gdubenchmarkdialog.c:1287
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
 msgstr "Chyba pri čítaní %s z ofsetu %s"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1314
+#: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
 msgstr "Chyba pri prednačítaní %lld bajtov z ofsetu %lld"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1335
+#: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
 msgstr "Chyba pri zápise %lld bajtov na ofsete %lld: %m"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1345
+#: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
 msgstr "Očakávalo sa zapísanie %lld bajtov, zapísalo sa ale iba %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1355
+#: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
 msgctxt "benchmarking"
 msgid "Error syncing (at offset %lld): %m"
 msgstr "Chyba pri synchronizácii (na ofsete %lld): %m"
 
-#: src/disks/gdubenchmarkdialog.c:1395
+#: src/disks/gdubenchmarkdialog.c:1403
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Chyba pri presune na ofset %lld: %m"
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=685031
-#: src/disks/gdubenchmarkdialog.c:1407
+#: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1569,12 +1577,6 @@ msgstr "Menovka sa zhoduje s exitujúcou menovkou"
 #: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Chyba pri nastavovaní menovky"
-
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
-msgid "Error unmounting filesystem"
-msgstr "Chyba pri odpájaní súborového systému"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1947,12 +1949,12 @@ msgid "_Resize"
 msgstr "_Zmeniť veľkosť"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "Chyba pri zmene veľkosti súborového systému"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "Chyba pri zmene veľkosti oddielu"
 
@@ -1968,27 +1970,19 @@ msgstr "Zmena veľkosti nie je pripravená"
 msgid "Waited too long for the filesystem"
 msgstr "Čakalo sa príliš dlho na súborový systém"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "Chyba pri opravovaní súborového systému"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "Chyba pri odpájaní súborového systému kvôli oprave"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "Chyba pri odpájaní súborového systému kvôli zmene veľkosti"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "Chyba pri pripájaní súborového systému"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "Prispôsobiť veľkosti"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Chyba pri pripájaní súborového systému kvôli výpočtu minimálnej veľkosti"
@@ -2055,13 +2049,28 @@ msgstr "Všetky existujúce údaje budú stratené"
 msgid "_Restore"
 msgstr "_Obnoviť"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Chyba pri odomykaní šifrovaného zariadenia"
+# GtkLabel label
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "Vybrať kľúčový súbor"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "Chyba pri odomykaní zariadenia"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr ""
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Heslo pre šifrovanie bolo získané zo zväzku kľúčov"
+
+# window title
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Nastavenie volieb na odomknutie"
 
 # GtkLabel label
 #: src/disks/gduvolumegrid.c:262
@@ -2325,17 +2334,17 @@ msgstr "Neaktívne"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Odomknuté"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Uzamknuté"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Rozšírený oddiel"
@@ -2344,45 +2353,45 @@ msgstr "Rozšírený oddiel"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Nevyhradené miesto"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Chyba počas opravovania súborového systému"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Oprava prebehla úspešne"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Oprave zlyhala"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Súborový systém %s na zväzku %s bol opravený."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Súborový systém %s na zväzku %s nemohol byť opravený."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3236
 msgid "Confirm Repair"
 msgstr "Potvrdenie opravy"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3239
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2393,61 +2402,61 @@ msgstr ""
 "obnovu stratených súborov. V závislosti na množstve údajov môže táto "
 "operácia trvať dlhšiu dobu."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3267
 msgid "Error while checking filesystem"
 msgstr "Chyba počas kontroly súborového systému"
 
 # PK: suborovy system
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem intact"
 msgstr "Súborový systém nie je poškodený"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem damaged"
 msgstr "Súborový systém je poškodený"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3297
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Súborový systém %s na zväzku %s nie je poškodený."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Súborový systém %s na zväzku %s vyžaduje opravu."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3353
 msgid "Confirm Check"
 msgstr "Potvrdenie kontroly"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3356
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "V závislosti na množstve údajov môže kontrola súborového systému trvať "
 "dlhšiu dobu."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3556
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prepnutie jednotky do pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3602
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prebudenie jednotky z pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3647
 msgid "Error powering off drive"
 msgstr "Chyba pri vypínaní jednotky"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3699
 msgid "Are you sure you want to power off the drives?"
 msgstr "Naozaj chcete vypnúť jednotky?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3701
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2456,52 +2465,48 @@ msgstr ""
 "jednotiek."
 
 # GtkLabel label
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3705
 msgid "_Power Off"
 msgstr "_Vypnúť"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3782
 msgid "Error mounting filesystem"
 msgstr "Chyba pri pripájaní súborového systému"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3873
 msgid "Error deleting partition"
 msgstr "Chyba pri odstraňovaní oddielu"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3910
 msgid "Are you sure you want to delete the partition?"
 msgstr "Naozaj chcete odstrániť oddiel?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3911
 msgid "All data on the partition will be lost"
 msgstr "Všetky údaje na oddieli budú stratené"
 
 # button
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3912
 msgid "_Delete"
 msgstr "O_dstrániť"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3943
 msgid "Error ejecting media"
 msgstr "Chyba pri vysúvaní nosiča"
 
-#: src/disks/gduwindow.c:4042
-msgid "Error locking encrypted device"
-msgstr "Chyba pri zamykaní šifrovaného zariadenia"
-
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4026
 msgid "Error starting swap"
 msgstr "Chyba pri spúšťaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4063
 msgid "Error stopping swap"
 msgstr "Chyba pri zastavovaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4105
 msgid "Error setting autoclear flag"
 msgstr "Chyba pri nastavovaní príznaku „autoclear“"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4158 src/disks/gduwindow.c:4222
 msgid "Error canceling job"
 msgstr "Chyba pri rušení úlohy"
 
@@ -2674,11 +2679,11 @@ msgstr ""
 # GtkSpinButton tooltip_text
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
 msgstr ""
-"Počet vzoriek. Väčšie číslo preukáže presnejší obraz o charakteristike doby "
-"prístupu, ale zaberie viac času."
+"Počet vzoriek. Väčšie číslo vytvorí hladšie grafy, ale skúška výkonu zaberie "
+"viac času."
 
 # GtkSpinButton tooltip_text
 #: src/disks/ui/benchmark-dialog.ui:495
@@ -2701,13 +2706,13 @@ msgid "Number of Sampl_es"
 msgstr "Počet vzori_ek"
 
 # GtkSpinButton tooltip_text
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
 msgstr ""
-"Počet vzoriek. Väčšie číslo vytvorí hladšie grafy, ale skúška výkonu zaberie "
-"viac času."
+"Počet vzoriek. Väčšie číslo preukáže presnejší obraz o charakteristike doby "
+"prístupu, ale zaberie viac času."
 
 # GtkDialog title
 #: src/disks/ui/change-passphrase-dialog.ui:7
@@ -3417,7 +3422,7 @@ msgstr "Súbor hesla"
 
 # GtkCheckButton label
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "Z_obraziť heslo"
 
@@ -3432,7 +3437,7 @@ msgstr ""
 
 # GtkLabel label
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Heslo"
 
@@ -3918,12 +3923,60 @@ msgid "Conveyance"
 msgstr "Po preprave"
 
 # GtkDialog title
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Zadanie hesla na odomknutie"
 
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr ""
+"Tento zväzok môže byť zväzkom VeraCrypt, pretože obsahuje náhodné údaje."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Ak je určené"
+
+# GtkLabel label
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "Typ zväzku"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "S_krytý"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "_Systém Windows"
+
+# tooltip
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Odomkne zašifrovaný oddiel alebo jednotku systému Windows."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr ""
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Kľúčové súbory"
+
 # GtkButton label
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "Odo_mknúť"
 
@@ -4062,11 +4115,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovplyvnené zariadenia"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1411
+msgid "Error unmounting filesystem"
+msgstr "Chyba pri odpájaní súborového systému"
+
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Chyba pri zamykaní zariadenia"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Chyba pri zakázaní príznaku autoclear pre zariadenie slučky"
 
@@ -4087,6 +4144,18 @@ msgstr "Pevný disk pravdepodobne čoskoro zlyhá."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Preskúmať"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "Chyba pri odpájaní súborového systému kvôli oprave"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "Chyba pri odpájaní súborového systému kvôli zmene veľkosti"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Chyba pri odomykaní šifrovaného zariadenia"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "Chyba pri zamykaní šifrovaného zariadenia"
 
 # list store item
 #~ msgid "FAT"

@@ -11,23 +11,24 @@
 # Alexandre Franke <alexandre.franke@gmail.com>, 2013.
 # naybnet <naybnet@gmail.com>, 2014-2015.
 # Erwan Georget <dremor@dremor.info>, 2015.
-# Charles Monzat <superboa@hotmail.fr>, 2017.
 # Julien Hardelin <jhardlin@orange.fr>, 2017.
+# Charles Monzat <charles.monzat@numericable.fr>, 2017-2018.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2018-05-31 09:18+0000\n"
-"PO-Revision-Date: 2018-08-10 10:36+0200\n"
-"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2018-09-19 21:39+0000\n"
+"PO-Revision-Date: 2018-11-20 22:18+0100\n"
+"Last-Translator: Charles Monzat <charles.monzat@numericable.fr>\n"
+"Language-Team: français <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 3.30.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -97,6 +98,7 @@ msgid "The GNOME Project"
 msgstr "Le projet GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Disques"
 
@@ -129,7 +131,7 @@ msgstr "Autoriser l’écriture vers l’image"
 
 #: src/disk-image-mounter/main.c:82
 msgid "Select Disk Image(s) to Mount"
-msgstr "Sélectionner la ou les image(s) disque à monter"
+msgstr "Sélectionner la ou les images disque à monter"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
@@ -950,7 +952,7 @@ msgstr "Dernier échec (traitement) de l’auto-test"
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
-msgstr "Auto-test en cours — %d%% restant"
+msgstr "Auto-test en cours — %d %% restant"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
 #: src/disks/gduatasmartdialog.c:815
@@ -1112,14 +1114,14 @@ msgstr "Estimation"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
-msgstr "%d Mo/s"
+msgstr "%d Mo/s"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: src/disks/gdubenchmarkdialog.c:337
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%3g ms"
-msgstr "%3g ms"
+msgstr "%3g ms"
 
 #. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
 #: src/disks/gdubenchmarkdialog.c:661
@@ -1160,13 +1162,13 @@ msgstr "Ouverture du périphérique…"
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "Mesure du taux de transfert en cours (%2.1f%% effectué)…"
+msgstr "Mesure du taux de transfert en cours (%2.1f %% effectué)…"
 
 #: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
-msgstr "Mesure du temps d’accès (%2.1f%% effectué)…"
+msgstr "Mesure du temps d’accès (%2.1f %% effectué)…"
 
 #: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
@@ -1178,7 +1180,7 @@ msgstr "Une erreur est survenue"
 #, c-format
 msgctxt "benchmark-access-time"
 msgid "%.2f msec"
-msgstr "%.2f ms"
+msgstr "%.2f ms"
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdubenchmarkdialog.c:1180
@@ -1355,7 +1357,7 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
-"%2.1f%% (%s) des données sur le périphérique « %s » étaient illisibles et "
+"%2.1f %% (%s) des données sur le périphérique « %s » étaient illisibles et "
 "ont été remplacées par des zéros dans l’image disque créée. Cela arrive "
 "généralement si le médium est rayé ou s’il y a des dommages physiques sur le "
 "disque"
@@ -1562,12 +1564,6 @@ msgstr "L’étiquette correspond à l’actuelle"
 msgid "Error setting label"
 msgstr "Erreur lors de la définition de l’étiquette"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
-#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
-#: src/libgdu/gduutils.c:1411
-msgid "Error unmounting filesystem"
-msgstr "Erreur lors du démontage du système de fichiers"
-
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
@@ -1762,7 +1758,7 @@ msgstr ""
 
 #: src/disks/gducreateotherpage.c:121
 msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr "F2FS — Système de fichier adapté au stockage flash"
+msgstr "F2FS — Système de fichiers adapté au stockage flash"
 
 #: src/disks/gducreateotherpage.c:123
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
@@ -1780,7 +1776,7 @@ msgstr "Pas de système de fichiers"
 #: src/disks/gducreateotherpage.c:207
 #, c-format
 msgid "The utility %s is missing."
-msgstr "L'utilitaire %s est manquant."
+msgstr "L’utilitaire %s est manquant."
 
 #: src/disks/gducreatepasswordpage.c:124
 msgid "The passwords do not match"
@@ -1801,7 +1797,7 @@ msgstr "%s — %s"
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
 msgid "%s (%.1f%%)"
-msgstr "%s (%.1f%%)"
+msgstr "%s (%.1f %%)"
 
 #: src/disks/gdufstabdialog.c:155
 #, c-format
@@ -1918,12 +1914,12 @@ msgid "_Resize"
 msgstr "_Redimensionner"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "Erreur lors du redimensionnement du système de fichiers"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "Erreur lors du redimensionnement de la partition"
 
@@ -1940,27 +1936,19 @@ msgstr "Le redimensionnement n’est pas prêt"
 msgid "Waited too long for the filesystem"
 msgstr "Temps d’attente dépassé pour le système de fichiers"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "Erreur lors de la réparation du système de fichiers"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "Erreur au démontage du système de fichiers pour réparation"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "Erreur au démontage du système de fichiers pour redimensionnement"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "Erreur lors du montage du système de fichiers"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "Ajuster à la taille"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Erreur lors du montage du système de fichiers pour calculer la taille "
@@ -2228,7 +2216,7 @@ msgstr "%s de %s – %s"
 #: src/disks/gduwindow.c:2012
 #, c-format
 msgid "%s: %2.1f%%"
-msgstr "%s : %2.1f%%"
+msgstr "%s : %2.1f %%"
 
 #: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
 msgid "Block device is empty"
@@ -2261,7 +2249,7 @@ msgstr "Le périphérique boucle est vide"
 #: src/disks/gduwindow.c:2665
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr "%s — %s libre (%.1f%% occupé)"
+msgstr "%s — %s libre (%.1f %% occupé)"
 
 #: src/disks/gduwindow.c:2695
 msgctxt "partition type"
@@ -2355,11 +2343,11 @@ msgstr "Le système de fichiers %s sur %s a été réparé."
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Le système de fichiers %s sur %s n’a pas pu être réparé."
 
-#: src/disks/gduwindow.c:3246
+#: src/disks/gduwindow.c:3236
 msgid "Confirm Repair"
 msgstr "Confirmer la réparation"
 
-#: src/disks/gduwindow.c:3249
+#: src/disks/gduwindow.c:3239
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2370,60 +2358,60 @@ msgstr ""
 "utiliser des outils de récupération de données. Selon la quantité de "
 "données, cette opération peut prendre du temps."
 
-#: src/disks/gduwindow.c:3277
+#: src/disks/gduwindow.c:3267
 msgid "Error while checking filesystem"
 msgstr "Erreur lors de la vérification du système de fichiers"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem intact"
 msgstr "Système de fichiers intact"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem damaged"
 msgstr "Système de fichiers endommagé"
 
-#: src/disks/gduwindow.c:3307
+#: src/disks/gduwindow.c:3297
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Le système de fichiers %s sur %s est sain."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3313
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Le système de fichiers %s sur %s nécessite une réparation."
 
-#: src/disks/gduwindow.c:3373
+#: src/disks/gduwindow.c:3353
 msgid "Confirm Check"
 msgstr "Confirmer la vérification"
 
-#: src/disks/gduwindow.c:3376
+#: src/disks/gduwindow.c:3356
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Selon la quantité de données, la vérification du système de fichiers peut "
 "prendre du temps."
 
-#: src/disks/gduwindow.c:3576
+#: src/disks/gduwindow.c:3556
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Une erreur est survenue lors de la tentative de mise en veille du disque"
 
-#: src/disks/gduwindow.c:3622
+#: src/disks/gduwindow.c:3602
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Une erreur est survenue lors de la tentative de sortie de veille du disque"
 
-#: src/disks/gduwindow.c:3667
+#: src/disks/gduwindow.c:3647
 msgid "Error powering off drive"
 msgstr "Erreur lors de l’extinction du lecteur"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3719
+#: src/disks/gduwindow.c:3699
 msgid "Are you sure you want to power off the drives?"
 msgstr "Voulez-vous vraiment éteindre les lecteurs ?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3701
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2431,51 +2419,47 @@ msgstr ""
 "Cette action va préparer le système à éteindre les lecteurs suivants et les "
 "retirer."
 
-#: src/disks/gduwindow.c:3725
+#: src/disks/gduwindow.c:3705
 msgid "_Power Off"
 msgstr "É_teindre"
 
-#: src/disks/gduwindow.c:3802
+#: src/disks/gduwindow.c:3782
 msgid "Error mounting filesystem"
 msgstr "Erreur lors du montage du système de fichiers"
 
-#: src/disks/gduwindow.c:3911
+#: src/disks/gduwindow.c:3873
 msgid "Error deleting partition"
 msgstr "Erreur lors de la suppression de la partition"
 
-#: src/disks/gduwindow.c:3948
+#: src/disks/gduwindow.c:3910
 msgid "Are you sure you want to delete the partition?"
 msgstr "Voulez-vous vraiment supprimer la partition ?"
 
-#: src/disks/gduwindow.c:3949
+#: src/disks/gduwindow.c:3911
 msgid "All data on the partition will be lost"
 msgstr "Toutes les données de la partition seront perdues"
 
-#: src/disks/gduwindow.c:3950
+#: src/disks/gduwindow.c:3912
 msgid "_Delete"
 msgstr "_Supprimer"
 
-#: src/disks/gduwindow.c:3981
+#: src/disks/gduwindow.c:3943
 msgid "Error ejecting media"
 msgstr "Erreur lors de l’éjection du média"
 
-#: src/disks/gduwindow.c:4046
-msgid "Error locking encrypted device"
-msgstr "Erreur lors du verrouillage du périphérique chiffré"
-
-#: src/disks/gduwindow.c:4082
+#: src/disks/gduwindow.c:4026
 msgid "Error starting swap"
 msgstr "Erreur lors du démarrage de l’espace d’échange"
 
-#: src/disks/gduwindow.c:4119
+#: src/disks/gduwindow.c:4063
 msgid "Error stopping swap"
 msgstr "Erreur lors de l’arrêt de l’espace d’échange"
 
-#: src/disks/gduwindow.c:4161
+#: src/disks/gduwindow.c:4105
 msgid "Error setting autoclear flag"
 msgstr "Erreur lors de la définition du drapeau autoclear"
 
-#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
+#: src/disks/gduwindow.c:4158 src/disks/gduwindow.c:4222
 msgid "Error canceling job"
 msgstr "Erreur lors de l’annulation de la tâche"
 
@@ -2633,11 +2617,11 @@ msgstr ""
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
 msgstr ""
-"Nombre d’échantillons. Plus il est élevé, meilleure est la précision des "
-"modèles de temps d’accès, mais plus il est long."
+"Nombre d’échantillons. Plus il est élevé, meilleure est la précision du "
+"graphique, mais plus long est le test."
 
 #: src/disks/ui/benchmark-dialog.ui:495
 msgid ""
@@ -2657,13 +2641,13 @@ msgstr "Temps d’accès"
 msgid "Number of Sampl_es"
 msgstr "Nombre d’écha_ntillons"
 
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
 msgstr ""
-"Nombre d’échantillons. Plus il est élevé, meilleure est la précision du "
-"graphique, mais plus long est le test."
+"Nombre d’échantillons. Plus il est élevé, meilleure est la précision des "
+"modèles de temps d’accès, mais plus il est long."
 
 #: src/disks/ui/change-passphrase-dialog.ui:7
 msgid "Change Passphrase"
@@ -3035,7 +3019,7 @@ msgstr ""
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
-msgstr "Cache en écr_iture "
+msgstr "Cache en écr_iture"
 
 #: src/disks/ui/disks.ui:62
 msgid "Select a device"
@@ -3314,7 +3298,7 @@ msgstr "_Type"
 
 #: src/disks/ui/edit-dos-partition-dialog.ui:92
 msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Le type de la partition sous forme d’un entier non signé de 8-bits"
+msgstr "Le type de la partition sous forme d’un entier non signé de 8 bits"
 
 #: src/disks/ui/edit-dos-partition-dialog.ui:103
 msgid "_Bootable"
@@ -3878,6 +3862,10 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Périphériques concernés"
 
+#: src/libgdu/gduutils.c:1411
+msgid "Error unmounting filesystem"
+msgstr "Erreur lors du démontage du système de fichiers"
+
 #: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Erreur pendant le verrouillage du périphérique"
@@ -3904,3 +3892,12 @@ msgstr "Un disque dur va probablement bientôt tomber en panne."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examen"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "Erreur au démontage du système de fichiers pour réparation"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "Erreur au démontage du système de fichiers pour redimensionnement"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "Erreur lors du verrouillage du périphérique chiffré"

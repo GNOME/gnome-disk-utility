@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2018-08-31 10:48+0000\n"
-"PO-Revision-Date: 2018-09-02 20:06+0200\n"
+"POT-Creation-Date: 2018-09-19 10:52+0000\n"
+"PO-Revision-Date: 2018-12-28 13:26+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -107,8 +107,8 @@ msgstr ""
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: data/org.gnome.DiskUtility.desktop.in:9
-msgid "gnome-disks"
-msgstr "gnome-disks"
+msgid "org.gnome.DiskUtility"
+msgstr "org.gnome.DiskUtility"
 
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
@@ -1535,12 +1535,6 @@ msgstr "Etiketten är densamma som befintlig etikett"
 msgid "Error setting label"
 msgstr "Fel vid inställning av etiketten"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
-#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
-#: src/libgdu/gduutils.c:1411
-msgid "Error unmounting filesystem"
-msgstr "Fel vid avmontering av filsystemet"
-
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
@@ -1880,12 +1874,12 @@ msgid "_Resize"
 msgstr "Änd_ra storlek"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "Fel vid storleksändring av filsystemet"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "Fel vid storleksändring av partition"
 
@@ -1901,27 +1895,19 @@ msgstr "Storleksändring är inte redo"
 msgid "Waited too long for the filesystem"
 msgstr "Väntade för länge på filsystemet"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "Fel vid reparation av filsystemet"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "Fel vid avmontering av filsystemet för reparation"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "Fel vid avmontering av filsystemet för storleksändring"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "Fel vid montering av filsystemet"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "Anpassa till storlek"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Fel vid montering av filsystem för att beräkna minimal storlek"
 
@@ -2312,11 +2298,11 @@ msgstr "Filsystemet %s på %s har reparerats."
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Filsystemet %s på %s kunde inte repareras."
 
-#: src/disks/gduwindow.c:3246
+#: src/disks/gduwindow.c:3236
 msgid "Confirm Repair"
 msgstr "Bekräfta reparation"
 
-#: src/disks/gduwindow.c:3249
+#: src/disks/gduwindow.c:3239
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2327,56 +2313,56 @@ msgstr ""
 "återställer förlorade filer. Denna operation tar längre tid beroende på "
 "mängden data."
 
-#: src/disks/gduwindow.c:3277
+#: src/disks/gduwindow.c:3267
 msgid "Error while checking filesystem"
 msgstr "Fel vid kontroll av filsystemet"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem intact"
 msgstr "Filsystemet är intakt"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem damaged"
 msgstr "Filsystemet är skadat"
 
-#: src/disks/gduwindow.c:3307
+#: src/disks/gduwindow.c:3297
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Filsystemet %s på %s är oskadat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3313
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Filsystemet %s på %s behöver repareras."
 
-#: src/disks/gduwindow.c:3373
+#: src/disks/gduwindow.c:3353
 msgid "Confirm Check"
 msgstr "Bekräfta kontroll"
 
-#: src/disks/gduwindow.c:3376
+#: src/disks/gduwindow.c:3356
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "Beroende på mängden data tar filsystemskontrollen mer tid."
 
-#: src/disks/gduwindow.c:3576
+#: src/disks/gduwindow.c:3556
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ett fel uppstod vid försök att försätta disken i standby-läge"
 
-#: src/disks/gduwindow.c:3622
+#: src/disks/gduwindow.c:3602
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ett fel uppstod vid försök att väcka upp disken från standby-läge"
 
-#: src/disks/gduwindow.c:3667
+#: src/disks/gduwindow.c:3647
 msgid "Error powering off drive"
 msgstr "Fel vid avstängning av disk"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3719
+#: src/disks/gduwindow.c:3699
 msgid "Are you sure you want to power off the drives?"
 msgstr "Är du säker på att du vill stänga av diskarna?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3701
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2384,51 +2370,47 @@ msgstr ""
 "Denna operation förbereder systemet för att följande diskar stängs ner och "
 "tas bort."
 
-#: src/disks/gduwindow.c:3725
+#: src/disks/gduwindow.c:3705
 msgid "_Power Off"
 msgstr "_Stäng av"
 
-#: src/disks/gduwindow.c:3802
+#: src/disks/gduwindow.c:3782
 msgid "Error mounting filesystem"
 msgstr "Fel vid montering av filsystemet"
 
-#: src/disks/gduwindow.c:3911
+#: src/disks/gduwindow.c:3873
 msgid "Error deleting partition"
 msgstr "Fel vid borttagning av partition"
 
-#: src/disks/gduwindow.c:3948
+#: src/disks/gduwindow.c:3910
 msgid "Are you sure you want to delete the partition?"
 msgstr "Är du säker på att du vill ta bort partitionen?"
 
-#: src/disks/gduwindow.c:3949
+#: src/disks/gduwindow.c:3911
 msgid "All data on the partition will be lost"
 msgstr "All data på partitionen kommer att gå förlorad"
 
-#: src/disks/gduwindow.c:3950
+#: src/disks/gduwindow.c:3912
 msgid "_Delete"
 msgstr "_Ta bort"
 
-#: src/disks/gduwindow.c:3981
+#: src/disks/gduwindow.c:3943
 msgid "Error ejecting media"
 msgstr "Fel vid utmatning av media"
 
-#: src/disks/gduwindow.c:4046
-msgid "Error locking encrypted device"
-msgstr "Fel vid låsning av krypterad enhet"
-
-#: src/disks/gduwindow.c:4082
+#: src/disks/gduwindow.c:4026
 msgid "Error starting swap"
 msgstr "Fel vid startandet av växlingsutrymmet"
 
-#: src/disks/gduwindow.c:4119
+#: src/disks/gduwindow.c:4063
 msgid "Error stopping swap"
 msgstr "Fel vid stoppandet av växlingsutrymmet"
 
-#: src/disks/gduwindow.c:4161
+#: src/disks/gduwindow.c:4105
 msgid "Error setting autoclear flag"
 msgstr "Fel vid inställning av flaggan ”autoclear”"
 
-#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
+#: src/disks/gduwindow.c:4158 src/disks/gduwindow.c:4222
 msgid "Error canceling job"
 msgstr "Fel när jobb avbröts"
 
@@ -3825,6 +3807,10 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Berörda enheter"
 
+#: src/libgdu/gduutils.c:1411
+msgid "Error unmounting filesystem"
+msgstr "Fel vid avmontering av filsystemet"
+
 #: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Fel vid låsning av enheten"
@@ -3850,6 +3836,18 @@ msgstr "En hårddisk är troligen på väg att gå sönder snart."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Undersök"
+
+#~ msgid "gnome-disks"
+#~ msgstr "gnome-disks"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "Fel vid avmontering av filsystemet för reparation"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "Fel vid avmontering av filsystemet för storleksändring"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "Fel vid låsning av krypterad enhet"
 
 #~ msgid "Error unlocking encrypted device"
 #~ msgstr "Fel vid upplåsning av krypterad enhet"

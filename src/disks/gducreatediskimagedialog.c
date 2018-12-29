@@ -733,7 +733,6 @@ copy_thread_func (gpointer user_data)
   /* If supported, allocate space at once to ensure blocks are laid
    * out contigously, see http://lwn.net/Articles/226710/
    */
-#ifdef HAVE_FALLOCATE
   if (G_IS_FILE_DESCRIPTOR_BASED (data->output_file_stream))
     {
       gint output_fd = g_file_descriptor_based_get_fd (G_FILE_DESCRIPTOR_BASED (data->output_file_stream));
@@ -770,7 +769,6 @@ copy_thread_func (gpointer user_data)
       g_mutex_unlock (&data->copy_lock);
       g_idle_add (on_update_job, dialog_data_ref (data));
     }
-#endif
 
   page_size = sysconf (_SC_PAGESIZE);
   buffer_unaligned = g_new0 (guchar, buffer_size + page_size);

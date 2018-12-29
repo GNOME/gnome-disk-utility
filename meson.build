@@ -23,24 +23,6 @@ config_h = configuration_data()
 config_h.set_quoted('PACKAGE_VERSION', gdu_version)
 config_h.set_quoted('GETTEXT_PACKAGE', gdu_name)
 
-message('Checking for valid fallocate() function')
-
-fallocate_src = '''
-  #include <unistd.h>
-  #include <sys/types.h>
-  #include <linux/falloc.h>
-  #include <fcntl.h>
-  int main() {
-    long ret;
-
-    ret = fallocate(0, FALLOC_FL_KEEP_SIZE, 0xfffffffful, 0xfffffffful);
-    if (ret != 0) {
-      return 1;
-    }
-  };
-'''
-config_h.set('HAVE_FALLOCATE', cc.run(fallocate_src).returncode())
-
 # compiler flags
 compiler_flags = []
 

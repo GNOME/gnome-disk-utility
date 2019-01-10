@@ -13,10 +13,11 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkHPaned" id="main-hpane">
+          <object class="GtkPaned" id="main-hpane">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="position">250</property>
+            <property name="orientation">horizontal</property>
+            <property name="position">200</property>
             <property name="position_set">True</property>
             <child>
               <object class="GtkScrolledWindow" id="device-tree-scrolledwindow">
@@ -789,7 +790,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkToolButton" id="toolbutton-generic-menu">
+                                      <object class="GtkToolButton" id="toolbutton-volume-menu">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="tooltip_text" translatable="yes">Additional partition options</property>
@@ -1158,217 +1159,6 @@
             <property name="pack-type">end</property>
           </packing>
         </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkMenu" id="generic-drive-menu">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="halign">end</property>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-format-disk">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Format Disk…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="menuitem4">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-create-disk-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Create Disk Image…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-restore-disk-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Restore Disk Image…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-benchmark">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Benchmark Disk…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="generic-drive-menu-item-drive-sep-1">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-view-smart">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">SMART Data &amp; Self-Tests…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-disk-settings">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Drive Settings…</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="generic-drive-menu-item-drive-sep-2">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-standby-now">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Standby Now</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-resume-now">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Wake-Up from Standby</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-drive-menu-item-power-off">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Power Off…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-  </object>
-  <object class="GtkMenu" id="generic-menu">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="halign">start</property>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-format-volume">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Format Partition…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="menuitem3">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-edit-partition">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Edit Partition…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-edit-label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Edit Filesystem…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-change-passphrase">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Change Passphrase…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="menuitem2">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-resize">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Resize…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-check">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Check Filesystem…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-repair">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Repair Filesystem…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="generic-menu-item-separator">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-configure-fstab">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Edit Mount Options…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-configure-crypttab">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Edit Encryption Options…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkSeparatorMenuItem" id="menuitem1">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-create-volume-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Create Partition Image…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-restore-volume-image">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Restore Partition Image…</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="generic-menu-item-benchmark">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Benchmark Partition…</property>
       </object>
     </child>
   </object>

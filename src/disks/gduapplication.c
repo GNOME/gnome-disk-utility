@@ -316,6 +316,23 @@ attach_disk_image_activated (GSimpleAction *action,
 }
 
 static void
+shortcuts_activated (GSimpleAction *action,
+                     GVariant      *parameter,
+                     gpointer       user_data)
+{
+  GduApplication *app = GDU_APPLICATION (user_data);
+  GtkWidget *dialog;
+
+  dialog = GTK_WIDGET (gdu_application_new_widget (app,
+                                                   "shortcuts.ui",
+                                                   "shortcuts",
+                                                   NULL));
+
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
+  gtk_widget_show_all (dialog);
+}
+
+static void
 about_activated (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
@@ -377,8 +394,9 @@ static GActionEntry app_entries[] =
 {
   { "new_disk_image", new_disk_image_activated, NULL, NULL, NULL },
   { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
-  { "about", about_activated, NULL, NULL, NULL },
+  { "shortcuts", shortcuts_activated, NULL, NULL, NULL },
   { "help", help_activated, NULL, NULL, NULL },
+  { "about", about_activated, NULL, NULL, NULL },
   { "quit", quit_activated, NULL, NULL, NULL }
 };
 
@@ -386,21 +404,33 @@ static void
 gdu_application_startup (GApplication *_app)
 {
   GduApplication *app = GDU_APPLICATION (_app);
-  GMenuModel *app_menu;
-  GtkBuilder *builder;
+  const gchar **it;
+  const gchar *action_accels[] = {
+    "win.open-drive-menu",       "F10", NULL,
+    "win.open-volume-menu",      "<Shift>F10", NULL,
+
+    "win.format-disk",           "<Primary>D", NULL,
+    "win.restore-disk-image",    "<Primary>R", NULL,
+    "win.view-smart",            "<Primary>S", NULL,
+    "win.disk-settings",         "<Primary>E", NULL,
+
+    "win.format-partition",      "<Primary>P", NULL,
+
+    "app.new_disk_image",        "<Primary>N", NULL,
+    "app.attach_disk_image",     "<Primary>A", NULL,
+
+    "app.help",                  "F1", NULL,
+    "app.quit",                  "<Primary>Q", NULL,
+    NULL
+  };
 
   if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 
-  app_menu = G_MENU_MODEL (gdu_application_new_widget (app,
-                                                       "app-menu.ui",
-                                                       "app-menu",
-                                                       &builder));
-  gtk_application_set_app_menu (GTK_APPLICATION (app), app_menu);
-  g_object_unref (app_menu);
-  g_clear_object (&builder);
+  for (it = action_accels; it[0] != NULL; it += g_strv_length ((gchar **)it) + 1)
+    gtk_application_set_accels_for_action (GTK_APPLICATION (app), it[0], &it[1]);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
 # Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009.
-# Matej Urbančič <mateju@svn.gnome.org>, 2009–2018.
+# Matej Urbančič <mateju@svn.gnome.org>, 2009–2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-05-08 12:55+0000\n"
-"PO-Revision-Date: 2018-05-08 22:30+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2018-12-05 09:08+0000\n"
+"PO-Revision-Date: 2019-02-12 22:23+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Launchpad-Export-Date: 2011-04-11 06:24+0000\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -91,6 +91,7 @@ msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Diski"
 
@@ -1132,19 +1133,19 @@ msgstr "Podatki predhodnih primerjalnih preizkusov niso na voljo"
 #: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
-msgstr "Odpiranje naprave ..."
+msgstr "Odpiranje naprave …"
 
 #: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "Merjenje hitrosti prenosa (%2.1f%% končano) ..."
+msgstr "Merjenje hitrosti prenosa (%2.1f%% končano) …"
 
 #: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
-msgstr "Merjenje časa dostopa (%2.1f%% končano) ..."
+msgstr "Merjenje časa dostopa (%2.1f%% končano) …"
 
 #: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
@@ -1349,7 +1350,7 @@ msgstr "_Zapri"
 #: src/disks/gducreatediskimagedialog.c:722
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
-msgstr "Napaka določanja velikosti naprave:"
+msgstr "Napaka določanja velikosti naprave: "
 
 #: src/disks/gducreatediskimagedialog.c:729
 #: src/disks/gdurestorediskimagedialog.c:738
@@ -1359,7 +1360,7 @@ msgstr "Naprava je velikosti 0"
 
 #: src/disks/gducreatediskimagedialog.c:763
 msgid "Error allocating space for disk image file: "
-msgstr "Napaka dodeljevanja prostora za datoteko odtisa diska:"
+msgstr "Napaka dodeljevanja prostora za datoteko odtisa diska: "
 
 #: src/disks/gducreatediskimagedialog.c:924
 #: src/disks/gdunewdiskimagedialog.c:324
@@ -1540,12 +1541,6 @@ msgstr "Oznaka je enaka obstoječi."
 #: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
 msgstr "Napaka nastavljanja oznake"
-
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
-msgid "Error unmounting filesystem"
-msgstr "Napaka odklapljanja datotečnega sistema"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1892,12 +1887,12 @@ msgid "_Resize"
 msgstr "_Spremeni velikost"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "Napaka spreminjanja velikosti datotečnega sistema"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "Napaka spreminjanja velikosti razdelka"
 
@@ -1913,27 +1908,19 @@ msgstr "Spreminjanje velikosti ni mogoče"
 msgid "Waited too long for the filesystem"
 msgstr "Čas čakanja na odziv datotečnega sistema je potekel."
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "Napaka popravljanja datotečnega sistema"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "Napaka odklapljanja datotečnega sistema pred popravljanjem"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "Napaka odklapljanja datotečnega sistema za spreminjanje velikosti"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "Prilagodi velikosti"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Napaka priklapljanja datotečnega sistema za izračun najmanjše možne velikosti"
@@ -1999,13 +1986,26 @@ msgstr "Vsi obstoječi podatki bodo nepovratno izgubljeni."
 msgid "_Restore"
 msgstr "_Obnovi"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "Napaka odklepanja šifrirane naprave"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "Izbor datoteke ključa"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "Napaka odklepanja naprave"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "Neveljavna koda PIM"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrirna fraza je prebrana iz zbirke ključev"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "Nastavitev možnosti za odklepanje"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
@@ -2259,17 +2259,17 @@ msgstr "Ni dejavno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Odklenjeno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Zaklenjeno"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2811
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Razširjeni razdelek"
@@ -2278,45 +2278,45 @@ msgstr "Razširjeni razdelek"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2831
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s – %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2955
 msgid "Unallocated Space"
 msgstr "Nerazvrščeni prostor"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3148
 msgid "Error while repairing filesystem"
 msgstr "Prišlo je do napake med popravljanjem datotečnega sistema"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair successful"
 msgstr "Popravilo je uspešno zaključeno!"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3175
 msgid "Repair failed"
 msgstr "Popravilo je spodletelo!"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3178
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečnega sistema %s na %s je popravljen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3184
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečnega sistema %s na %s ni mogoče popraviti."
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3236
 msgid "Confirm Repair"
 msgstr "Potrdi popravilo"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3239
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2326,109 +2326,105 @@ msgstr ""
 "podatkov. Najprej je priporočljivo narediti varnostno kopijo. Opravilo bo "
 "dolgotrajno, če je treba premakniti veliko količino podatkov."
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3267
 msgid "Error while checking filesystem"
 msgstr "Prišlo je do napake med preverjanjem datotečnega sistema ..."
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem intact"
 msgstr "Datotečni sistem ni poškodovan."
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3294
 msgid "Filesystem damaged"
 msgstr "Datotečni sistem je poškodovan."
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3297
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sistem %s na %s je nepoškodovan."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sistem %s na %s zahteva popravilo."
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3353
 msgid "Confirm Check"
 msgstr "Potrdi preverjanje"
 
-#: src/disks/gduwindow.c:3372
+#: src/disks/gduwindow.c:3356
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr ""
 "Glede na količino podatkov na datotečnem sistemu je lahko opravilo "
 "dolgotrajno."
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3556
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Med poskusom pošiljanja v stanje pripravljenosti je prišlo do napake."
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3602
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Med poskusom povrnitve in stanja pripravljenosti je prišlo do napake."
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3647
 msgid "Error powering off drive"
 msgstr "Napaka izklapljanja pogona"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3699
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ali ste prepričani, da želite izklopiti pogone?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3701
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "To opravilo bo pripravilo sistem za izklop in odstranitev naslednjih pogonov."
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3705
 msgid "_Power Off"
 msgstr "Izklopljeno"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3782
 msgid "Error mounting filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3873
 msgid "Error deleting partition"
 msgstr "Napaka brisanja razdelka"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3910
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ali ste prepričani, da želite izbrisati razdelek?"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3911
 msgid "All data on the partition will be lost"
 msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni."
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3912
 msgid "_Delete"
 msgstr "_Izbriši"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3943
 msgid "Error ejecting media"
 msgstr "Napaka izmetavanja nosilca"
 
-#: src/disks/gduwindow.c:4042
-msgid "Error locking encrypted device"
-msgstr "Napaka zaklepanja šifrirane naprave"
-
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:4026
 msgid "Error starting swap"
 msgstr "Napaka začenjanja izmenjevalnega razdelka"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:4063
 msgid "Error stopping swap"
 msgstr "Napaka zaustavljanja izmenjevalnega razdelka"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:4105
 msgid "Error setting autoclear flag"
 msgstr "Napaka med nastavljanjem zastavice samodejnega počiščenja"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4158 src/disks/gduwindow.c:4222
 msgid "Error canceling job"
 msgstr "Napaka preklica posla"
 
@@ -2476,11 +2472,11 @@ msgstr ""
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
-msgstr "_Nov odtis diska ..."
+msgstr "_Nov odtis diska …"
 
 #: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
-msgstr "Priklopi _odtis diska ..."
+msgstr "Pripni nov _odtis diska …"
 
 #: src/disks/ui/app-menu.ui:17
 msgid "_Help"
@@ -2500,7 +2496,7 @@ msgstr "Primerjalni preizkus"
 
 #: src/disks/ui/benchmark-dialog.ui:23
 msgid "_Start Benchmark…"
-msgstr "_Začni primerjalni preizkus ..."
+msgstr "_Začni primerjalni preizkus …"
 
 #: src/disks/ui/benchmark-dialog.ui:38
 msgid "_Abort Benchmark"
@@ -2587,11 +2583,11 @@ msgstr ""
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
 msgstr ""
-"Število vzorcev. Večja številka poveča natančnost slike vzorcev časa "
-"dostopa, vendar je tudi opravilo časovno bolj zahtevno."
+"Število vzorcev. Pri večjem številu je diagram bolj natančen, primerjalni "
+"preizkus pa je na račun tega počasnejši."
 
 #: src/disks/ui/benchmark-dialog.ui:495
 msgid ""
@@ -2611,13 +2607,13 @@ msgstr "Čas zadnjega dostopa"
 msgid "Number of Sampl_es"
 msgstr "Število v_zorcev"
 
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
 msgstr ""
-"Število vzorcev. Pri večjem številu je diagram bolj natančen, primerjalni "
-"preizkus pa je na račun tega počasnejši."
+"Število vzorcev. Večja številka poveča natančnost slike vzorcev časa "
+"dostopa, vendar je tudi opravilo časovno bolj zahtevno."
 
 #: src/disks/ui/change-passphrase-dialog.ui:7
 msgid "Change Passphrase"
@@ -3095,7 +3091,7 @@ msgstr "Vrsta razdelka"
 
 #: src/disks/ui/disks.ui:1172
 msgid "Format Disk…"
-msgstr "Formatiraj disk ..."
+msgstr "Formatiraj disk …"
 
 #: src/disks/ui/disks.ui:1185
 msgid "Create Disk Image…"
@@ -3107,7 +3103,7 @@ msgstr "Obnovi odtis diska …"
 
 #: src/disks/ui/disks.ui:1199
 msgid "Benchmark Disk…"
-msgstr "Primerjalni preizkus …"
+msgstr "Primerjalni preizkus diska …"
 
 #: src/disks/ui/disks.ui:1212
 msgid "SMART Data & Self-Tests…"
@@ -3131,7 +3127,7 @@ msgstr "Izklopljeno …"
 
 #: src/disks/ui/disks.ui:1259
 msgid "Format Partition…"
-msgstr "Uredi razdelek …"
+msgstr "Formatiraj razdelek …"
 
 #: src/disks/ui/disks.ui:1273
 msgid "Edit Partition…"
@@ -3147,19 +3143,19 @@ msgstr "Spremeni šifrirno geslo …"
 
 #: src/disks/ui/disks.ui:1303
 msgid "Resize…"
-msgstr "Spremeni velikost ..."
+msgstr "Spremeni velikost …"
 
 #: src/disks/ui/disks.ui:1311
 msgid "Check Filesystem…"
-msgstr "Preveri celovitost datotečnega sistema"
+msgstr "Preveri celovitost datotečnega sistema …"
 
 #: src/disks/ui/disks.ui:1319
 msgid "Repair Filesystem…"
-msgstr "Popravi datotečni sistem ..."
+msgstr "Popravi datotečni sistem …"
 
 #: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
-msgstr "Uredi možnosti _priklapljanja …"
+msgstr "Uredi možnosti priklapljanja …"
 
 #: src/disks/ui/disks.ui:1341
 msgid "Edit Encryption Options…"
@@ -3167,7 +3163,7 @@ msgstr "Uredi možnosti šifriranja …"
 
 #: src/disks/ui/disks.ui:1355
 msgid "Create Partition Image…"
-msgstr "Ustvari odtis razdelka ..."
+msgstr "Ustvari odtis razdelka …"
 
 #: src/disks/ui/disks.ui:1363
 msgid "Restore Partition Image…"
@@ -3216,7 +3212,7 @@ msgid "Passphrase File"
 msgstr "Datoteko šifrirnega gesla"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "_Pokaži šifrirno geslo"
 
@@ -3229,7 +3225,7 @@ msgstr ""
 "naprave med nastavljanjem."
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "_Šifrirno geslo"
 
@@ -3312,7 +3308,7 @@ msgstr ""
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
-msgstr "I_stoveti kot ..."
+msgstr "I_stoveti kot …"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
 msgid ""
@@ -3517,7 +3513,7 @@ msgstr "Velikost odtisa za ustvarjanje"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
 msgid "Attach new _Image…"
-msgstr "Pripni nov _odtis diska ..."
+msgstr "Pripni nov _odtis diska …"
 
 #: src/disks/ui/resize-dialog.ui:19
 msgid "Resize Volume"
@@ -3575,11 +3571,11 @@ msgstr "Velikost odtisa"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:230
 msgid "_Start Restoring…"
-msgstr "_Začni z obnavljanjem ..."
+msgstr "_Začni z obnavljanjem …"
 
 #: src/disks/ui/smart-dialog.ui:7
 msgid "SMART Data & Self-Tests"
-msgstr "Podatki SMART in samopreizkusi …"
+msgstr "Podatki SMART in samopreizkusi"
 
 #: src/disks/ui/smart-dialog.ui:24
 msgid "_Start Self-test"
@@ -3641,11 +3637,60 @@ msgstr "Razširjeno"
 msgid "Conveyance"
 msgstr "Prenos"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Vnos šifrirnega gesla za odklepanje"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "Nosilec je morda šifriran s VeraCrypt, saj vsebuje naključne podatke."
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "Če je določeno"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "Vrsta nosilca"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "_Skrito"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr ""
+"Namesto odklepanja nosilca, poskusi odkleniti drugotni razdelek, skrit na "
+"njem."
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Sistem _Windows"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "Odkleni šifriran pogon ali sistemski razdelek Windows."
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"Izbrana nastavitev določa številčno vrednost kode VeraCrypt PIM (Personal "
+"Iterations Multiplier) za uporabo z nosilcem."
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "Datoteke ključev"
+
+#: src/disks/ui/unlock-device-dialog.ui:258
 msgid "_Unlock"
 msgstr "_Odkleni"
 
@@ -3791,11 +3836,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Prizadete naprave"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1411
+msgid "Error unmounting filesystem"
+msgstr "Napaka odklapljanja datotečnega sistema"
+
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Napaka zaklepanja naprave"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Napaka onemogočanja izvajanja ukaza autoclear zančne naprave"
 
@@ -3816,6 +3865,97 @@ msgstr "Trdi disk bo verjetno kmalu odpovedal."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Preuči"
+
+#~ msgid "org.gnome.DiskUtility"
+#~ msgstr "org.gnome.DiskUtility"
+
+#~ msgid "Total LBAs Written"
+#~ msgstr "Skupno zapisani podatki"
+
+#~ msgid "The amount of data written during the lifetime of the disk"
+#~ msgstr "Količina podatkov, zapisana v zgodovini delovanja diska"
+
+#~ msgid "Total LBAs Read"
+#~ msgstr "Skupno prebrani podatki"
+
+#~ msgid "The amount of data read during the lifetime of the disk"
+#~ msgstr "Količina podatkov, prebrana v zgodovini delovanja diska"
+
+#~ msgid "_Attach Disk Image… (.iso, .img)"
+#~ msgstr "Priklopi _odtis diska … (.iso, .img)"
+
+#~ msgid "_Keyboard Shortcuts"
+#~ msgstr "_Tipkovne bližnjice"
+
+#~ msgid "Drive Options"
+#~ msgstr "Možnosti pogona"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Splošno"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Create a new empty disk image"
+#~ msgstr "Ustvari nov prazen razdelek diska"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Attach an existing disk image"
+#~ msgstr "Pripni obstoječi odtis diska"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Help"
+#~ msgstr "Pomoč"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Drive"
+#~ msgstr "Diskovni pogon"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open the drive menu"
+#~ msgstr "Odpri meni pogona"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Format the drive"
+#~ msgstr "Formatiraj pogon"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Restore an image to the disk"
+#~ msgstr "Obnovi odtis diska na disk"
+
+#~ msgctxt "shortcut window"
+#~ msgid "SMART data"
+#~ msgstr "Podatki SMART"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Drive settings"
+#~ msgstr "Nastavitve pogona"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Partition"
+#~ msgstr "Razdelek"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open the volume menu"
+#~ msgstr "Odpri meni nosilca"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Format the selected volume"
+#~ msgstr "Formatiraj izbran nosilec"
+
+#~ msgid "Select a keyfile to unlock this volume"
+#~ msgstr "Izbor datoteke ključa za odklepanje nosilca"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "Napaka odklapljanja datotečnega sistema pred popravljanjem"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "Napaka odklapljanja datotečnega sistema za spreminjanje velikosti"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "Napaka zaklepanja šifrirane naprave"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "Napaka odklepanja šifrirane naprave"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"
@@ -4003,17 +4143,11 @@ msgstr "Preuči"
 #~ msgid "For example, “My RAID Array” or “Backup Data”"
 #~ msgstr "Na primer: “Moje polje RAID” ali “Varnostna kopija”"
 
-#~ msgid "Create a new partition"
-#~ msgstr "Ustvari nov razdelek"
-
 #~ msgid "Unmount the filesystem"
 #~ msgstr "Odklopi datotečni sistem"
 
 #~ msgid "Eject the media"
 #~ msgstr "Izvrzi nosilec"
-
-#~ msgid "Power off the drive"
-#~ msgstr "Temperatura pogona"
 
 #~ msgid "Unlock the encrypted device"
 #~ msgstr "Odkleni šifrirano napravo"
@@ -4081,9 +4215,6 @@ msgstr "Preuči"
 #~ msgstr ""
 #~ "Nastavljena možnost lahko povzroči priklapljanje vsebine razdelkov le za "
 #~ "branje namesto branje in pisanje"
-
-#~ msgid "H_idden"
-#~ msgstr "_Skrito"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "

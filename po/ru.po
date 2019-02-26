@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2018-05-31 09:18+0000\n"
-"PO-Revision-Date: 2018-09-06 23:32+0300\n"
+"POT-Creation-Date: 2019-01-15 19:56+0000\n"
+"PO-Revision-Date: 2019-02-26 21:14+0300\n"
 "Last-Translator: Stas Solovey <whats_up@tut.by>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Launchpad-Export-Date: 2011-06-15 15:18+0000\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -97,7 +97,8 @@ msgstr "Простой способ управления дисками"
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1128
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Диски"
 
@@ -116,8 +117,8 @@ msgstr ""
 
 #. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 #: data/org.gnome.DiskUtility.desktop.in:9
-msgid "gnome-disks"
-msgstr "gnome-disks"
+msgid "org.gnome.DiskUtility"
+msgstr "org.gnome.DiskUtility"
 
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
@@ -131,9 +132,9 @@ msgstr "Разрешить запись в образ"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Выберите образ(ы) диска для монтирования"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:828
 msgid "_Cancel"
 msgstr "_Отмена"
 
@@ -167,7 +168,7 @@ msgstr ""
 #: src/disk-image-mounter/main.c:192
 #, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
-msgstr "Не удалось открыть «%s» — проверьте, смонтирован ли том"
+msgstr "Не удалось открыть «%s» — проверьте, смонтирован ли том."
 
 #: src/disk-image-mounter/main.c:199
 #, c-format
@@ -229,13 +230,13 @@ msgstr "При использовани --xid необходимо указат�
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:336
+#: src/disks/gduapplication.c:353
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
 "UDisks %s (built against %d.%d.%d)"
 msgstr ""
-"Дисковая утилита GNOME %s\n"
+"gnome-disk-utility %s\n"
 "UDisks %s (сборка от %d.%d.%d)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -829,28 +830,50 @@ msgstr "Попытки повторного чтения"
 msgid "Number of errors while reading from a disk"
 msgstr "Количество ошибок чтения данных с диска"
 
-#: src/disks/gduatasmartdialog.c:637
+#. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+#. * or the next string for a longer explanation.
+#.
+#: src/disks/gduatasmartdialog.c:585
+msgid "Total LBAs Written"
+msgstr "Всего записанных LBA"
+
+#: src/disks/gduatasmartdialog.c:586
+msgid "The amount of data written during the lifetime of the disk"
+msgstr "Количество данных, записанных за время существования диска"
+
+#. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+#. * or the next string for a longer explanation.
+#.
+#: src/disks/gduatasmartdialog.c:593
+msgid "Total LBAs Read"
+msgstr "Всего прочитанных LBA"
+
+#: src/disks/gduatasmartdialog.c:594
+msgid "The amount of data read during the lifetime of the disk"
+msgstr "Количество данных, прочитанных за время существования диска"
+
+#: src/disks/gduatasmartdialog.c:653
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Нет описания для атрибута %d"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:684
+#: src/disks/gduatasmartdialog.c:700
 msgid "FAILING"
 msgstr "НЕИСПРАВЕН"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:693
+#: src/disks/gduatasmartdialog.c:709
 msgid "Failed in the past"
 msgstr "Неудачно в прошлом"
 
-#: src/disks/gduatasmartdialog.c:697
+#: src/disks/gduatasmartdialog.c:713
 msgid "OK"
 msgstr "ОК"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:724
+#: src/disks/gduatasmartdialog.c:740
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -865,7 +888,7 @@ msgstr[2] "%d секторов"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:736 src/disks/gduatasmartdialog.c:869
+#: src/disks/gduatasmartdialog.c:752 src/disks/gduatasmartdialog.c:885
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -876,99 +899,99 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:747 src/disks/gduatasmartdialog.c:1117
+#: src/disks/gduatasmartdialog.c:763 src/disks/gduatasmartdialog.c:1133
 msgid "N/A"
 msgstr "Н/Д"
 
-#: src/disks/gduatasmartdialog.c:767
+#: src/disks/gduatasmartdialog.c:783
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Последняя самодиагностика завершена без ошибок"
 
-#: src/disks/gduatasmartdialog.c:771
+#: src/disks/gduatasmartdialog.c:787
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Последняя самодиагностика была отменена"
 
-#: src/disks/gduatasmartdialog.c:775
+#: src/disks/gduatasmartdialog.c:791
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Последняя самодиагностика была прервана"
 
-#: src/disks/gduatasmartdialog.c:779
+#: src/disks/gduatasmartdialog.c:795
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Последняя самодиагностика не была выполнена"
 
-#: src/disks/gduatasmartdialog.c:783
+#: src/disks/gduatasmartdialog.c:799
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Последняя самодиагностика завершилась с ошибкой"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:788
+#: src/disks/gduatasmartdialog.c:804
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (электроника)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:793
+#: src/disks/gduatasmartdialog.c:809
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (сервопривод)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:798
+#: src/disks/gduatasmartdialog.c:814
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (чтение)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:803
+#: src/disks/gduatasmartdialog.c:819
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Последняя самодиагностика завершилась с ошибкой (обращение)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:808
+#: src/disks/gduatasmartdialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Выполняется самодиагностика — осталось %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:815
+#: src/disks/gduatasmartdialog.c:831
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Неизвестно (%s)"
 
-#: src/disks/gduatasmartdialog.c:840
+#: src/disks/gduatasmartdialog.c:856
 #, c-format
 msgid "%s ago"
 msgstr "%s назад"
 
-#: src/disks/gduatasmartdialog.c:903
+#: src/disks/gduatasmartdialog.c:919
 msgid "SMART is not supported"
 msgstr "SMART не поддерживается"
 
-#: src/disks/gduatasmartdialog.c:911
+#: src/disks/gduatasmartdialog.c:927
 msgid "SMART is not enabled"
 msgstr "SMART отключён"
 
-#: src/disks/gduatasmartdialog.c:921
+#: src/disks/gduatasmartdialog.c:937
 msgid "Self-test in progress"
 msgstr "Выполняется самодиагностика"
 
-#: src/disks/gduatasmartdialog.c:934 src/disks/gduatasmartdialog.c:943
+#: src/disks/gduatasmartdialog.c:950 src/disks/gduatasmartdialog.c:959
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "ВОЗМОЖНО, ДИСК СКОРО СЛОМАЕТСЯ"
 
-#: src/disks/gduatasmartdialog.c:966
+#: src/disks/gduatasmartdialog.c:982
 msgid "SELF-TEST FAILED"
 msgstr "ОШИБКА САМОДИАГНОСТИКИ"
 
-#: src/disks/gduatasmartdialog.c:975
+#: src/disks/gduatasmartdialog.c:991
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
@@ -976,7 +999,7 @@ msgstr[0] "Диск исправен, %d сбойный атрибут"
 msgstr[1] "Диск исправен, %d сбойных атрибута"
 msgstr[2] "Диск исправен, %d сбойных атрибутов"
 
-#: src/disks/gduatasmartdialog.c:986
+#: src/disks/gduatasmartdialog.c:1002
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
@@ -984,7 +1007,7 @@ msgstr[0] "Диск исправен, %d плохой сектор"
 msgstr[1] "Диск исправен, %d плохих сектора"
 msgstr[2] "Диск исправен, %d плохих секторов"
 
-#: src/disks/gduatasmartdialog.c:997
+#: src/disks/gduatasmartdialog.c:1013
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -993,7 +1016,7 @@ msgstr[1] "Диск исправен, ранее было %d сбойных ат
 msgstr[2] "Диск исправен, ранее было %d сбойных атрибутов"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1006
+#: src/disks/gduatasmartdialog.c:1022
 msgid "Disk is OK"
 msgstr "Диск исправен"
 
@@ -1001,96 +1024,96 @@ msgstr "Диск исправен"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1020
+#: src/disks/gduatasmartdialog.c:1036
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1105
+#: src/disks/gduatasmartdialog.c:1121
 msgid "Pre-Fail"
 msgstr "Риск отказа"
 
-#: src/disks/gduatasmartdialog.c:1107
+#: src/disks/gduatasmartdialog.c:1123
 msgid "Old-Age"
 msgstr "Износ"
 
-#: src/disks/gduatasmartdialog.c:1110
+#: src/disks/gduatasmartdialog.c:1126
 msgid "Online"
 msgstr "Мгновенное"
 
-#: src/disks/gduatasmartdialog.c:1112
+#: src/disks/gduatasmartdialog.c:1128
 msgid "Offline"
 msgstr "По требованию"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1221
+#: src/disks/gduatasmartdialog.c:1237
 msgid "Threshold exceeded"
 msgstr "Превышено пороговое значение"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1226
+#: src/disks/gduatasmartdialog.c:1242
 msgid "Threshold not exceeded"
 msgstr "Пороговые значения не превышены"
 
-#: src/disks/gduatasmartdialog.c:1302
+#: src/disks/gduatasmartdialog.c:1318
 msgid "Error refreshing SMART data"
 msgstr "Ошибка обновления данных SMART"
 
-#: src/disks/gduatasmartdialog.c:1334
+#: src/disks/gduatasmartdialog.c:1350
 msgid "Error aborting SMART self-test"
 msgstr "Ошибка отмены самодиагностики SMART"
 
-#: src/disks/gduatasmartdialog.c:1353
+#: src/disks/gduatasmartdialog.c:1369
 msgid "Error starting SMART self-test"
 msgstr "Ошибка запуска самодиагностики SMART"
 
-#: src/disks/gduatasmartdialog.c:1432
+#: src/disks/gduatasmartdialog.c:1448
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Возникла ошибка во время определения, включён ли SMART-режим"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1514
+#: src/disks/gduatasmartdialog.c:1530
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1526
+#: src/disks/gduatasmartdialog.c:1542
 msgid "Attribute"
 msgstr "Атрибут"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1540
+#: src/disks/gduatasmartdialog.c:1556
 msgid "Value"
 msgstr "Значение"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1552
+#: src/disks/gduatasmartdialog.c:1568
 msgid "Normalized"
 msgstr "Нормированное"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1564
+#: src/disks/gduatasmartdialog.c:1580
 msgid "Threshold"
 msgstr "Пороговое"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1576
+#: src/disks/gduatasmartdialog.c:1592
 msgid "Worst"
 msgstr "Наихудшее"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1588
+#: src/disks/gduatasmartdialog.c:1604
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Тип"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1600
+#: src/disks/gduatasmartdialog.c:1616
 msgid "Updates"
 msgstr "Обновление"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1612 src/disks/ui/disks.ui:302
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
 msgid "Assessment"
 msgstr "Состояние"
 
@@ -1283,6 +1306,23 @@ msgstr ""
 msgid "The strength of the passphrase"
 msgstr "Стойкость пароля"
 
+#. Translators: In most cases this should not need translation unless the
+#. *              separation character '—' is not appropriate. The strings come
+#. *              from UDisks, first is description, second the name:
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+#.
+#: src/disks/gducreateconfirmpage.c:110
+#, c-format
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
+#: src/disks/gducreateconfirmpage.c:128
+#, c-format
+msgid "%s (%.1f%%)"
+msgstr "%s (%.1f%%)"
+
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
@@ -1367,17 +1407,17 @@ msgstr "Ошибка определения размера устройства:
 msgid "Device is size 0"
 msgstr "Устройство имеет нулевой размер"
 
-#: src/disks/gducreatediskimagedialog.c:763
+#: src/disks/gducreatediskimagedialog.c:762
 msgid "Error allocating space for disk image file: "
 msgstr "Возникла ошибка при выделении пространства для файла образа диска: "
 
-#: src/disks/gducreatediskimagedialog.c:924
+#: src/disks/gducreatediskimagedialog.c:922
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Файл с именем «%s» уже существует. Хотите его заменить?"
 
-#: src/disks/gducreatediskimagedialog.c:927
+#: src/disks/gducreatediskimagedialog.c:925
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
@@ -1386,26 +1426,129 @@ msgstr ""
 "Файл уже существует в «%s». Замена файла приведёт к перезаписи его "
 "содержимого."
 
-#: src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gducreatediskimagedialog.c:928
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Переместить"
 
-#: src/disks/gducreatediskimagedialog.c:980
+#: src/disks/gducreatediskimagedialog.c:978
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Ошибка открытия файла для записи"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:996
+#: src/disks/gducreatediskimagedialog.c:994
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Копирование содержимого устройства в образ диска"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1002
+#: src/disks/gducreatediskimagedialog.c:1000
 msgid "Creating Disk Image"
 msgstr "Создание образа диска"
+
+#: src/disks/gducreateformatdialog.c:175
+msgid "_Previous"
+msgstr "_Назад"
+
+#: src/disks/gducreateformatdialog.c:181
+msgid "Cre_ate"
+msgstr "Соз_дать"
+
+#: src/disks/gducreateformatdialog.c:187
+msgid "Form_at"
+msgstr "_Форматировать"
+
+#: src/disks/gducreateformatdialog.c:194
+msgid "N_ext"
+msgstr "Да_лее"
+
+#: src/disks/gducreateformatdialog.c:221
+msgid "Error formatting volume"
+msgstr "Ошибка форматирования тома"
+
+#: src/disks/gducreateformatdialog.c:288
+msgid "Error creating partition"
+msgstr "Ошибка при создании раздела"
+
+#: src/disks/gducreateformatdialog.c:435
+msgid "Create Partition"
+msgstr "Создать раздел"
+
+#: src/disks/gducreateformatdialog.c:444
+msgid "Format Volume"
+msgstr "Форматировать том"
+
+#: src/disks/gducreateformatdialog.c:447
+msgid "Custom Format"
+msgstr "Другой формат"
+
+#: src/disks/gducreateformatdialog.c:450
+msgid "Set Password"
+msgstr "Установить пароль"
+
+#: src/disks/gducreateformatdialog.c:453
+msgid "Confirm Details"
+msgstr "Подтвердить подробности"
+
+#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+msgid "_Format"
+msgstr "_Форматировать"
+
+#: src/disks/gducreateotherpage.c:115
+msgid "XFS — Linux Filesystem"
+msgstr "XFS — файловая система Linux"
+
+#: src/disks/gducreateotherpage.c:117
+msgid "Linux Swap Partition"
+msgstr "Раздел подкачки Linux"
+
+#: src/disks/gducreateotherpage.c:119
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+msgstr ""
+"Btrfs — файловая система Linux, работающая по принципу «копирование при "
+"записи», для снапшотов"
+
+#: src/disks/gducreateotherpage.c:121
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr ""
+"F2FS — файловая система Linux, ориентированная на использование на флеш-"
+"памяти"
+
+#: src/disks/gducreateotherpage.c:123
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr ""
+"exFAT — файловая система Windows, ориентированная на использование на флеш-"
+"памяти, используется на картах SDXC"
+
+#: src/disks/gducreateotherpage.c:125
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr ""
+"UDF — универсальный дисковый формат, для съёмных устройств на многих системах"
+
+#: src/disks/gducreateotherpage.c:127
+msgid "No Filesystem"
+msgstr "Без файловой системы"
+
+#: src/disks/gducreateotherpage.c:207
+#, c-format
+msgid "The utility %s is missing."
+msgstr "Утилита %s отсутствует."
+
+#: src/disks/gducreatepartitionpage.c:320
+msgid ""
+"Cannot create a new partition. There are already four primary partitions."
+msgstr ""
+"Невозможно создать новый раздел. Можно создавать не более четырёх главных "
+"разделов."
+
+#: src/disks/gducreatepartitionpage.c:324
+msgid "This is the last primary partition that can be created."
+msgstr "Это последний главный раздел, который можно создать."
+
+#: src/disks/gducreatepasswordpage.c:124
+msgid "The passwords do not match"
+msgstr "Пароли не совпадают"
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1550,12 +1693,6 @@ msgstr "Метка совпадает с существующей меткой"
 msgid "Error setting label"
 msgstr "Ошибка установки метки"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3210
-#: src/disks/gduwindow.c:3338 src/disks/gduwindow.c:3839
-#: src/libgdu/gduutils.c:1411
-msgid "Error unmounting filesystem"
-msgstr "Ошибка отключения файловой системы"
-
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
@@ -1675,126 +1812,6 @@ msgstr ""
 "ATA_Secure_Erase'>ATA Secure Erase</a> и удостверьтесь, что вы понимаете "
 "возможные риски"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
-msgid "_Format"
-msgstr "_Форматировать"
-
-#: src/disks/gducreateformatdialog.c:175
-msgid "_Previous"
-msgstr "_Назад"
-
-#: src/disks/gducreateformatdialog.c:181
-msgid "Cre_ate"
-msgstr "Соз_дать"
-
-#: src/disks/gducreateformatdialog.c:187
-msgid "Form_at"
-msgstr "_Форматировать"
-
-#: src/disks/gducreateformatdialog.c:194
-msgid "N_ext"
-msgstr "Да_лее"
-
-#: src/disks/gducreateformatdialog.c:221
-msgid "Error formatting volume"
-msgstr "Ошибка форматирования тома"
-
-#: src/disks/gducreateformatdialog.c:288
-msgid "Error creating partition"
-msgstr "Ошибка при создании раздела"
-
-#: src/disks/gducreateformatdialog.c:435
-msgid "Create Partition"
-msgstr "Создать раздел"
-
-#: src/disks/gducreateformatdialog.c:444
-msgid "Format Volume"
-msgstr "Форматировать том"
-
-#: src/disks/gducreateformatdialog.c:447
-msgid "Custom Format"
-msgstr "Другой формат"
-
-#: src/disks/gducreateformatdialog.c:450
-msgid "Set Password"
-msgstr "Установить пароль"
-
-#: src/disks/gducreateformatdialog.c:453
-msgid "Confirm Details"
-msgstr "Подтвердить подробности"
-
-#: src/disks/gducreatepartitionpage.c:320
-msgid ""
-"Cannot create a new partition. There are already four primary partitions."
-msgstr ""
-"Невозможно создать новый раздел. Можно создавать не более четырёх главных "
-"разделов."
-
-#: src/disks/gducreatepartitionpage.c:324
-msgid "This is the last primary partition that can be created."
-msgstr "Это последний главный раздел, который можно создать."
-
-#: src/disks/gducreateotherpage.c:115
-msgid "XFS — Linux Filesystem"
-msgstr "XFS — файловая система Linux"
-
-#: src/disks/gducreateotherpage.c:117
-msgid "Linux Swap Partition"
-msgstr "Раздел подкачки Linux"
-
-#: src/disks/gducreateotherpage.c:119
-msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
-msgstr ""
-"Btrfs — файловая система Linux, работающая по принципу «копирование при "
-"записи», для снапшотов"
-
-#: src/disks/gducreateotherpage.c:121
-msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr ""
-"F2FS — файловая система Linux, ориентированная на использование на флеш-"
-"памяти"
-
-#: src/disks/gducreateotherpage.c:123
-msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
-msgstr ""
-"exFAT — файловая система Windows, ориентированная на использование на флеш-"
-"памяти, используется на картах SDXC"
-
-#: src/disks/gducreateotherpage.c:125
-msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr ""
-"UDF — универсальный дисковый формат, для съёмных устройств на многих системах"
-
-#: src/disks/gducreateotherpage.c:127
-msgid "No Filesystem"
-msgstr "Без файловой системы"
-
-#: src/disks/gducreateotherpage.c:207
-#, c-format
-msgid "The utility %s is missing."
-msgstr "Утилита %s отсутствует."
-
-#: src/disks/gducreatepasswordpage.c:124
-msgid "The passwords do not match"
-msgstr "Пароли не совпадают"
-
-#. Translators: In most cases this should not need translation unless the
-#. *              separation character '—' is not appropriate. The strings come
-#. *              from UDisks, first is description, second the name:
-#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
-#.
-#: src/disks/gducreateconfirmpage.c:110
-#, c-format
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
-#.
-#: src/disks/gducreateconfirmpage.c:128
-#, c-format
-msgid "%s (%.1f%%)"
-msgstr "%s (%.1f%%)"
-
 #: src/disks/gdufstabdialog.c:155
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
@@ -1909,12 +1926,12 @@ msgid "_Resize"
 msgstr "_Изменить размер"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "Ошибка изменения размера файловой системы"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "Ошибка при изменении размера раздела"
 
@@ -1930,27 +1947,19 @@ msgstr "Изменение размера не готово"
 msgid "Waited too long for the filesystem"
 msgstr "Слишком долгое ожидание файловой системы"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "Ошибка восстановления файловой системы"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "Ошибка отключения файловой системы для восстановления"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "Ошибка отключения файловой системы для изменения размера"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "Ошибка подключения файловой системы"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "Подогнать по размеру"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Ошибка при подключении файловой системы для вычисления минимального размера"
@@ -2041,7 +2050,7 @@ msgstr "Установка параметров для разблокировк�
 msgid "Volumes Grid"
 msgstr "Система томов"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2184
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2057
 msgid "No Media"
 msgstr "Нет носителя"
 
@@ -2083,30 +2092,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Свободное место"
 
-#: src/disks/gduwindow.c:627
+#: src/disks/gduwindow.c:652
 msgid "Error deleting loop device"
 msgstr "Ошибка удаления петлевого устройства"
 
-#: src/disks/gduwindow.c:727 src/disks/gduwindow.c:770
+#: src/disks/gduwindow.c:752 src/disks/gduwindow.c:795
 msgid "Error attaching disk image"
 msgstr "Ошибка отключения образа диска"
 
-#: src/disks/gduwindow.c:800
+#: src/disks/gduwindow.c:825
 msgid "Select Disk Image to Attach"
 msgstr "Выберите образ диска для присоединения"
 
-#: src/disks/gduwindow.c:804
+#: src/disks/gduwindow.c:829
 msgid "_Attach"
 msgstr "_Подключить"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:811
+#: src/disks/gduwindow.c:836
 msgid "Set up _read-only loop device"
 msgstr "Настроить _петлевое устройство только для чтения"
 
-#: src/disks/gduwindow.c:812
+#: src/disks/gduwindow.c:837
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2114,67 +2123,8 @@ msgstr ""
 "Если выбрано, loop-устройство будет доступно только для чтения. Это полезно, "
 "когда вы хотите избежать изменения используемого для устройства файла"
 
-#: src/disks/gduwindow.c:1010
-msgid "Power off this disk"
-msgstr "Отключить питание этого диска"
-
-#: src/disks/gduwindow.c:1016
-msgid "Eject this disk"
-msgstr "Извлечь этот диск"
-
-#: src/disks/gduwindow.c:1022
-msgid "Detach this loop device"
-msgstr "Отсоединить это петлевое устройство"
-
-#. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1447
-msgctxt "accelerator"
-msgid "F10"
-msgstr "F10"
-
-#. Translators: This is the short-cut to format a disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1455
-msgctxt "accelerator"
-msgid "<Ctrl>F"
-msgstr "<Ctrl>F"
-
-#. Translators: This is the short-cut to view SMART data for a disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1463
-msgctxt "accelerator"
-msgid "<Ctrl>S"
-msgstr "<Ctrl>S"
-
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1471
-msgctxt "accelerator"
-msgid "<Ctrl>E"
-msgstr "<Ctrl>E"
-
-#: src/disks/gduwindow.c:1486
-msgctxt "accelerator"
-msgid "<Shift>F10"
-msgstr "<Shift>F10"
-
-#. Translators: This is the short-cut to format a volume.
-#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
-#. *              You can however change to other English modifiers.
-#.
-#: src/disks/gduwindow.c:1496
-msgctxt "accelerator"
-msgid "<Shift><Ctrl>F"
-msgstr "<Shift><Ctrl>F"
-
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1826
+#: src/disks/gduwindow.c:1700
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (только для чтения)"
@@ -2183,7 +2133,7 @@ msgstr "%s (только для чтения)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1864
+#: src/disks/gduwindow.c:1738
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2192,7 +2142,7 @@ msgstr "Осталось %s (%s/с)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1872
+#: src/disks/gduwindow.c:1746
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2203,7 +2153,7 @@ msgstr "Осталось %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1887
+#: src/disks/gduwindow.c:1761
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s из %s — %s"
@@ -2212,17 +2162,17 @@ msgstr "%s из %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:2012
+#: src/disks/gduwindow.c:1886
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
+#: src/disks/gduwindow.c:1966 src/disks/gduwindow.c:2345
 msgid "Block device is empty"
 msgstr "Пустое блочное устройство"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2115
+#: src/disks/gduwindow.c:1989
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2231,11 +2181,11 @@ msgstr "Неизвестно (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2285
+#: src/disks/gduwindow.c:2148
 msgid "Connected to another seat"
 msgstr "Подключён к другому рабочему месту"
 
-#: src/disks/gduwindow.c:2432
+#: src/disks/gduwindow.c:2289
 msgid "Loop device is empty"
 msgstr "Loop-устройство пустое"
 
@@ -2245,62 +2195,62 @@ msgstr "Loop-устройство пустое"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2665
+#: src/disks/gduwindow.c:2506
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s свободно (%.1f%%)"
 
 # Раздел
-#: src/disks/gduwindow.c:2695
+#: src/disks/gduwindow.c:2536
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Неизвестный"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2733
+#: src/disks/gduwindow.c:2574
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Корневой том"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2741
+#: src/disks/gduwindow.c:2582
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Смонтировано на %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2747
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Не смонтировано"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2770
+#: src/disks/gduwindow.c:2611
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Активно"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2776
+#: src/disks/gduwindow.c:2617
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Не активно"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2791
+#: src/disks/gduwindow.c:2632
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Разблокирован"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2797
+#: src/disks/gduwindow.c:2638
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Заблокирован"
 
-#: src/disks/gduwindow.c:2811
+#: src/disks/gduwindow.c:2652
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Расширенный раздел"
@@ -2309,45 +2259,45 @@ msgstr "Расширенный раздел"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2831
+#: src/disks/gduwindow.c:2672
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2955
+#: src/disks/gduwindow.c:2796
 msgid "Unallocated Space"
 msgstr "Нераспределённое пространство"
 
-#: src/disks/gduwindow.c:3148
+#: src/disks/gduwindow.c:2988
 msgid "Error while repairing filesystem"
 msgstr "Ошибка при восстановлении файловой системы"
 
-#: src/disks/gduwindow.c:3175
+#: src/disks/gduwindow.c:3015
 msgid "Repair successful"
 msgstr "Успешно восстановлено"
 
-#: src/disks/gduwindow.c:3175
+#: src/disks/gduwindow.c:3015
 msgid "Repair failed"
 msgstr "Не удалось восстановить"
 
-#: src/disks/gduwindow.c:3178
+#: src/disks/gduwindow.c:3018
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Файловая система %s на %s была восстановлена."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3184
+#: src/disks/gduwindow.c:3024
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Файловая система %s на %s не может быть восстановлена."
 
-#: src/disks/gduwindow.c:3246
+#: src/disks/gduwindow.c:3077
 msgid "Confirm Repair"
 msgstr "Подтвердить восстановление"
 
-#: src/disks/gduwindow.c:3249
+#: src/disks/gduwindow.c:3080
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2358,56 +2308,56 @@ msgstr ""
 "использовать специальные инструменты для извлечения потерянных файлов. "
 "Продолжительность операции зависит от объёма данных."
 
-#: src/disks/gduwindow.c:3277
+#: src/disks/gduwindow.c:3108
 msgid "Error while checking filesystem"
 msgstr "Ошибка проверки файловой системы"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3135
 msgid "Filesystem intact"
 msgstr "Файловая система исправна"
 
-#: src/disks/gduwindow.c:3304
+#: src/disks/gduwindow.c:3135
 msgid "Filesystem damaged"
 msgstr "Файловая система повреждена"
 
-#: src/disks/gduwindow.c:3307
+#: src/disks/gduwindow.c:3138
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Файловая система %s на %s не повреждена."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3313
+#: src/disks/gduwindow.c:3144
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Файловой системе %s на %s требуется восстановление."
 
-#: src/disks/gduwindow.c:3373
+#: src/disks/gduwindow.c:3195
 msgid "Confirm Check"
 msgstr "Подтвердить проверку"
 
-#: src/disks/gduwindow.c:3376
+#: src/disks/gduwindow.c:3198
 msgid "Depending on the amount of data the filesystem check takes longer time."
 msgstr "Продолжительность проверки файловой системы зависит от объема данных."
 
-#: src/disks/gduwindow.c:3576
+#: src/disks/gduwindow.c:3437
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "При попытке перевести привод в режим ожидания произошла ошибка"
 
-#: src/disks/gduwindow.c:3622
+#: src/disks/gduwindow.c:3484
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "При попытке вывести привод из режима ожидания произошла ошибка"
 
-#: src/disks/gduwindow.c:3667
+#: src/disks/gduwindow.c:3530
 msgid "Error powering off drive"
 msgstr "Ошибка выключения устройства"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3719
+#: src/disks/gduwindow.c:3582
 msgid "Are you sure you want to power off the drives?"
 msgstr "Действительно выключить диски?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3584
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2415,51 +2365,47 @@ msgstr ""
 "Эта операция подготовит систему для выключения и удаления следующих "
 "устройств."
 
-#: src/disks/gduwindow.c:3725
+#: src/disks/gduwindow.c:3588 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "В_ыключить"
 
-#: src/disks/gduwindow.c:3802
+#: src/disks/gduwindow.c:3668
 msgid "Error mounting filesystem"
 msgstr "Ошибка подключения файловой системы"
 
-#: src/disks/gduwindow.c:3911
+#: src/disks/gduwindow.c:3754
 msgid "Error deleting partition"
 msgstr "Ошибка при удалении раздела"
 
-#: src/disks/gduwindow.c:3948
+#: src/disks/gduwindow.c:3791
 msgid "Are you sure you want to delete the partition?"
 msgstr "Действительно удалить раздел?"
 
-#: src/disks/gduwindow.c:3949
+#: src/disks/gduwindow.c:3792
 msgid "All data on the partition will be lost"
 msgstr "Все данные на разделе будут потеряны"
 
-#: src/disks/gduwindow.c:3950
+#: src/disks/gduwindow.c:3793
 msgid "_Delete"
 msgstr "_Удалить"
 
-#: src/disks/gduwindow.c:3981
+#: src/disks/gduwindow.c:3824
 msgid "Error ejecting media"
 msgstr "Ошибка извлечения носителя"
 
-#: src/disks/gduwindow.c:4046
-msgid "Error locking encrypted device"
-msgstr "Ошибка блокирования зашифрованного устройства"
-
-#: src/disks/gduwindow.c:4082
+#: src/disks/gduwindow.c:3907
 msgid "Error starting swap"
 msgstr "Ошибка запуска области подкачки"
 
-#: src/disks/gduwindow.c:4119
+#: src/disks/gduwindow.c:3944
 msgid "Error stopping swap"
 msgstr "Ошибка остановки области подкачки"
 
-#: src/disks/gduwindow.c:4161
+#: src/disks/gduwindow.c:3986
 msgid "Error setting autoclear flag"
 msgstr "Ошибка установки флага автоочистки"
 
-#: src/disks/gduwindow.c:4214 src/disks/gduwindow.c:4278
+#: src/disks/gduwindow.c:4039 src/disks/gduwindow.c:4103
 msgid "Error canceling job"
 msgstr "Ошибка отмены задания"
 
@@ -2498,27 +2444,27 @@ msgstr "Просмотр, изменение и управление диска�
 msgid "translator-credits"
 msgstr ""
 "Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2017.\n"
-"Stas Solovey <whats_up@tut.by>, 2011-2018."
+"Stas Solovey <whats_up@tut.by>, 2011-2019."
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
 msgstr "_Создать образ диска…"
 
 #: src/disks/ui/app-menu.ui:10
-msgid "Attach Disk _Image…"
-msgstr "Подключить _образ диска…"
+msgid "_Attach Disk Image… (.iso, .img)"
+msgstr "_Подключить образ диска… (.iso, .img)"
 
 #: src/disks/ui/app-menu.ui:17
+msgid "_Keyboard Shortcuts"
+msgstr "_Комбинации клавиш"
+
+#: src/disks/ui/app-menu.ui:21
 msgid "_Help"
 msgstr "_Справка"
 
-#: src/disks/ui/app-menu.ui:21
-msgid "_About"
+#: src/disks/ui/app-menu.ui:24
+msgid "_About Disks"
 msgstr "_О приложении"
-
-#: src/disks/ui/app-menu.ui:25
-msgid "_Quit"
-msgstr "_Завершить"
 
 #: src/disks/ui/benchmark-dialog.ui:7
 msgid "Benchmark"
@@ -2612,11 +2558,11 @@ msgstr ""
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
 msgstr ""
-"Количество фрагментов. Большее количество обеспечивает более точные данные о "
-"времени доступа, но занимает больше времени."
+"Количество фрагментов. Чем больше используется фрагментов, тем более "
+"равномерным будет график, но оценка займёт больше времени."
 
 #: src/disks/ui/benchmark-dialog.ui:495
 msgid ""
@@ -2636,13 +2582,13 @@ msgstr "Время доступа"
 msgid "Number of Sampl_es"
 msgstr "Ко_личество фрагментов"
 
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
 msgstr ""
-"Количество фрагментов. Чем больше используется фрагментов, тем более "
-"равномерным будет график, но оценка займёт больше времени."
+"Количество фрагментов. Большее количество обеспечивает более точные данные о "
+"времени доступа, но занимает больше времени."
 
 #: src/disks/ui/change-passphrase-dialog.ui:7
 msgid "Change Passphrase"
@@ -2702,7 +2648,7 @@ msgstr "Внимание: все данные на томе будут поте�
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Перед продолжением подтвердите данные текущего тома."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
 msgid "Device"
 msgstr "Устройство"
 
@@ -2715,7 +2661,7 @@ msgid "Used"
 msgstr "Использовано"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
 msgid "Location"
 msgstr "Расположение"
 
@@ -3020,191 +2966,139 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "_Кэш записи"
 
-#: src/disks/ui/disks.ui:62
+#: src/disks/ui/disks.ui:63
 msgid "Select a device"
 msgstr "Выберите устройство"
 
-#: src/disks/ui/disks.ui:121
+#: src/disks/ui/disks.ui:122
 msgid "Model"
 msgstr "Модель"
 
-#: src/disks/ui/disks.ui:154
+#: src/disks/ui/disks.ui:155
 msgid "Serial Number"
 msgstr "Серийный номер"
 
-#: src/disks/ui/disks.ui:191
+#: src/disks/ui/disks.ui:192
 msgid "World Wide Name"
 msgstr "Идентификатор WWN"
 
-#: src/disks/ui/disks.ui:265
+#: src/disks/ui/disks.ui:266
 msgid "Media"
 msgstr "Носитель"
 
-#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:1012
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
 msgid "Job"
 msgstr "Задание"
 
-#: src/disks/ui/disks.ui:438
+#: src/disks/ui/disks.ui:439
 msgid "Name"
 msgstr "Название"
 
-#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:830
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
 msgid "Size"
 msgstr "Размер"
 
-#: src/disks/ui/disks.ui:512
+#: src/disks/ui/disks.ui:513
 msgid "Auto-clear"
 msgstr "Автоочистка"
 
-#: src/disks/ui/disks.ui:533
+#: src/disks/ui/disks.ui:534
 msgid "Detach loop device after unmount action"
 msgstr "Отсоединить петлевое устройство после отмонтирования"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:556
+#: src/disks/ui/disks.ui:557
 msgid "Backing File"
 msgstr "Файл хранилища"
 
-#: src/disks/ui/disks.ui:593
+#: src/disks/ui/disks.ui:594
 msgid "Partitioning"
 msgstr "Разметка"
 
-#: src/disks/ui/disks.ui:637
+#: src/disks/ui/disks.ui:638
 msgid "_Volumes"
 msgstr "То_ма"
 
-#: src/disks/ui/disks.ui:691
+#: src/disks/ui/disks.ui:692
 msgid "Mount selected partition"
 msgstr "Примонтировать выбранный раздел"
 
-#: src/disks/ui/disks.ui:704
+#: src/disks/ui/disks.ui:705
 msgid "Unmount selected partition"
 msgstr "Отмонтировать выбранный раздел"
 
-#: src/disks/ui/disks.ui:717
+#: src/disks/ui/disks.ui:718
 msgid "Activate selected swap partition"
 msgstr "Включить выбранный раздел подкачки"
 
-#: src/disks/ui/disks.ui:730
+#: src/disks/ui/disks.ui:731
 msgid "Deactivate selected swap partition"
 msgstr "Выключить выбранный раздел подкачки"
 
-#: src/disks/ui/disks.ui:744
+#: src/disks/ui/disks.ui:745
 msgid "Unlock selected encrypted partition"
 msgstr "Разблокировать выбранный зашифрованный раздел"
 
-#: src/disks/ui/disks.ui:757
+#: src/disks/ui/disks.ui:758
 msgid "Lock selected encrypted partition"
 msgstr "Заблокировать выбранный зашифрованный раздел"
 
-#: src/disks/ui/disks.ui:769
+#: src/disks/ui/disks.ui:770
 msgid "Create partition in unallocated space"
 msgstr "Создать раздел в неразмеченной области"
 
-#: src/disks/ui/disks.ui:782
+#: src/disks/ui/disks.ui:783
 msgid "Delete selected partition"
 msgstr "Удалить выбранный раздел"
 
-#: src/disks/ui/disks.ui:795
+#: src/disks/ui/disks.ui:796
 msgid "Additional partition options"
 msgstr "Расширенные параметры раздела"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:863
+#: src/disks/ui/disks.ui:864
 msgid "Contents"
 msgstr "Содержимое"
 
-#: src/disks/ui/disks.ui:937
+#: src/disks/ui/disks.ui:938
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:974
+#: src/disks/ui/disks.ui:975
 msgid "Partition Type"
 msgstr "Тип раздела"
 
-#: src/disks/ui/disks.ui:1172
-msgid "Format Disk…"
-msgstr "Форматировать диск…"
+#: src/disks/ui/drive-menu.ui:6
+msgid "Format _Disk…"
+msgstr "_Форматировать диск…"
 
-#: src/disks/ui/disks.ui:1185
-msgid "Create Disk Image…"
-msgstr "Создать образ диска…"
+#: src/disks/ui/drive-menu.ui:12
+msgid "_Create Disk Image…"
+msgstr "_Создать образ диска…"
 
-#: src/disks/ui/disks.ui:1192
-msgid "Restore Disk Image…"
-msgstr "Восстановить образ диска…"
+#: src/disks/ui/drive-menu.ui:16
+msgid "_Restore Disk Image…"
+msgstr "_Восстановить образ диска…"
 
-#: src/disks/ui/disks.ui:1199
-msgid "Benchmark Disk…"
-msgstr "Оценить производительность диска…"
+#: src/disks/ui/drive-menu.ui:22
+msgid "_Benchmark Disk…"
+msgstr "_Оценить производительность диска…"
 
-#: src/disks/ui/disks.ui:1212
-msgid "SMART Data & Self-Tests…"
-msgstr "Данные самодиагностики и SMART…"
+#: src/disks/ui/drive-menu.ui:26
+msgid "_SMART Data & Self-Tests…"
+msgstr "_Данные самодиагностики и SMART…"
 
-#: src/disks/ui/disks.ui:1219
-msgid "Drive Settings…"
-msgstr "Параметры привода…"
+#: src/disks/ui/drive-menu.ui:30
+msgid "Drive S_ettings…"
+msgstr "_Настройки привода…"
 
-#: src/disks/ui/disks.ui:1232
-msgid "Standby Now"
-msgstr "Перевести в режим ожидания"
+#: src/disks/ui/drive-menu.ui:36
+msgid "S_tandby Now"
+msgstr "_Перевести в режим ожидания"
 
-#: src/disks/ui/disks.ui:1239
-msgid "Wake-Up from Standby"
-msgstr "Вывести из режима ожидания"
-
-#: src/disks/ui/disks.ui:1246
-msgid "Power Off…"
-msgstr "Выключить…"
-
-#: src/disks/ui/disks.ui:1259
-msgid "Format Partition…"
-msgstr "Форматировать раздел…"
-
-#: src/disks/ui/disks.ui:1273
-msgid "Edit Partition…"
-msgstr "Изменить раздел…"
-
-#: src/disks/ui/disks.ui:1281
-msgid "Edit Filesystem…"
-msgstr "Изменить файловую систему…"
-
-#: src/disks/ui/disks.ui:1289
-msgid "Change Passphrase…"
-msgstr "Изменить пароль…"
-
-#: src/disks/ui/disks.ui:1303
-msgid "Resize…"
-msgstr "Изменить размер…"
-
-#: src/disks/ui/disks.ui:1311
-msgid "Check Filesystem…"
-msgstr "Проверить файловую систему…"
-
-#: src/disks/ui/disks.ui:1319
-msgid "Repair Filesystem…"
-msgstr "Восстановить файловую систему…"
-
-#: src/disks/ui/disks.ui:1333
-msgid "Edit Mount Options…"
-msgstr "Изменить параметры монтирования…"
-
-#: src/disks/ui/disks.ui:1341
-msgid "Edit Encryption Options…"
-msgstr "Изменить параметры шифрования…"
-
-#: src/disks/ui/disks.ui:1355
-msgid "Create Partition Image…"
-msgstr "Создать образ раздела…"
-
-#: src/disks/ui/disks.ui:1363
-msgid "Restore Partition Image…"
-msgstr "Восстановить образ раздела…"
-
-#: src/disks/ui/disks.ui:1371
-msgid "Benchmark Partition…"
-msgstr "Оценить производительность раздела…"
+#: src/disks/ui/drive-menu.ui:40
+msgid "_Wake-Up from Standby"
+msgstr "_Вывести из режима ожидания"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:11
 msgid "Encryption Options"
@@ -3531,6 +3425,22 @@ msgstr "_Форматировать…"
 msgid "_Partitioning"
 msgstr "_Разметка"
 
+#: src/disks/ui/headerbar.ui:35
+msgid "Drive Options"
+msgstr "Параметры привода"
+
+#: src/disks/ui/headerbar.ui:50
+msgid "Power off this disk"
+msgstr "Отключить питание этого диска"
+
+#: src/disks/ui/headerbar.ui:65
+msgid "Eject this disk"
+msgstr "Извлечь этот диск"
+
+#: src/disks/ui/headerbar.ui:80
+msgid "Detach this loop device"
+msgstr "Отсоединить это петлевое устройство"
+
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
 msgstr "Создать образ диска"
@@ -3603,6 +3513,76 @@ msgstr "Размер образа"
 #: src/disks/ui/restore-disk-image-dialog.ui:230
 msgid "_Start Restoring…"
 msgstr "_Начать восстановление…"
+
+#: src/disks/ui/shortcuts.ui:13
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Основное"
+
+#: src/disks/ui/shortcuts.ui:17
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "Создать новый пустой образ диска"
+
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "Подключить существующий образа диска"
+
+#: src/disks/ui/shortcuts.ui:31
+msgctxt "shortcut window"
+msgid "Help"
+msgstr "Справка"
+
+#: src/disks/ui/shortcuts.ui:38
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Завершить"
+
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Drive"
+msgstr "Привод"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Open the drive menu"
+msgstr "Открыть меню привода"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Format the drive"
+msgstr "Форматировать привод"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Restore an image to the disk"
+msgstr "Восстановить образ на диск"
+
+#: src/disks/ui/shortcuts.ui:72
+msgctxt "shortcut window"
+msgid "SMART data"
+msgstr "Данные SMART"
+
+#: src/disks/ui/shortcuts.ui:79
+msgctxt "shortcut window"
+msgid "Drive settings"
+msgstr "Настройки привода"
+
+#: src/disks/ui/shortcuts.ui:88
+msgctxt "shortcut window"
+msgid "Partition"
+msgstr "Раздел"
+
+#: src/disks/ui/shortcuts.ui:92
+msgctxt "shortcut window"
+msgid "Open the volume menu"
+msgstr "Открыть меню тома"
+
+#: src/disks/ui/shortcuts.ui:99
+msgctxt "shortcut window"
+msgid "Format the selected volume"
+msgstr "Форматировать выбранный том"
 
 #: src/disks/ui/smart-dialog.ui:7
 msgid "SMART Data & Self-Tests"
@@ -3722,9 +3702,61 @@ msgstr ""
 msgid "Keyfiles"
 msgstr "Файлы-ключи"
 
-#: src/disks/ui/unlock-device-dialog.ui:258
+#: src/disks/ui/unlock-device-dialog.ui:220
+msgid "Select a keyfile to unlock this volume"
+msgstr "Выбрать файл ключа для разблокировки тома"
+
+#: src/disks/ui/unlock-device-dialog.ui:259
 msgid "_Unlock"
 msgstr "_Разблокировать"
+
+#: src/disks/ui/volume-menu.ui:6
+msgid "Format _Partition…"
+msgstr "_Форматировать раздел…"
+
+#: src/disks/ui/volume-menu.ui:12
+msgid "_Edit Partition…"
+msgstr "_Изменить раздел…"
+
+#: src/disks/ui/volume-menu.ui:16
+msgid "Edit _Filesystem…"
+msgstr "Изменить файловую _систему…"
+
+#: src/disks/ui/volume-menu.ui:20
+msgid "Change Pa_ssphrase…"
+msgstr "Из_менить пароль…"
+
+#: src/disks/ui/volume-menu.ui:26
+msgid "Resi_ze…"
+msgstr "И_зменить размер…"
+
+#: src/disks/ui/volume-menu.ui:30
+msgid "C_heck Filesystem…"
+msgstr "_Проверить файловую систему…"
+
+#: src/disks/ui/volume-menu.ui:34
+msgid "Rep_air Filesystem…"
+msgstr "_Восстановить файловую систему…"
+
+#: src/disks/ui/volume-menu.ui:40
+msgid "Edit _Mount Options…"
+msgstr "Изм_енить параметры монтирования…"
+
+#: src/disks/ui/volume-menu.ui:44
+msgid "Edit Encr_yption Options…"
+msgstr "Изме_нить параметры шифрования…"
+
+#: src/disks/ui/volume-menu.ui:50
+msgid "_Create Partition Image…"
+msgstr "_Создать образ раздела…"
+
+#: src/disks/ui/volume-menu.ui:54
+msgid "_Restore Partition Image…"
+msgstr "В_осстановить образ раздела…"
+
+#: src/disks/ui/volume-menu.ui:58
+msgid "_Benchmark Partition…"
+msgstr "О_ценить производительность раздела…"
 
 #: src/libgdu/gduutils.c:111
 msgid "All Files"
@@ -3861,6 +3893,10 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Затрагиваемые устройства"
 
+#: src/libgdu/gduutils.c:1411
+msgid "Error unmounting filesystem"
+msgstr "Ошибка отключения файловой системы"
+
 #: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Ошибка блокирования устройства"
@@ -3886,6 +3922,45 @@ msgstr "Возможно, этот жёсткий диск скоро выйде
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Проверить"
+
+#~ msgid "gnome-disks"
+#~ msgstr "gnome-disks"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "Ошибка отключения файловой системы для восстановления"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "Ошибка отключения файловой системы для изменения размера"
+
+#~ msgctxt "accelerator"
+#~ msgid "F10"
+#~ msgstr "F10"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>F"
+#~ msgstr "<Ctrl>F"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>S"
+#~ msgstr "<Ctrl>S"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>E"
+#~ msgstr "<Ctrl>E"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Shift>F10"
+#~ msgstr "<Shift>F10"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Shift><Ctrl>F"
+#~ msgstr "<Shift><Ctrl>F"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "Ошибка блокирования зашифрованного устройства"
+
+#~ msgid "Power Off…"
+#~ msgstr "Выключить…"
 
 #~ msgid "Error unlocking encrypted device"
 #~ msgstr "Ошибка разблокирования зашифрованного устройства"

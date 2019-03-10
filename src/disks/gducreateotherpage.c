@@ -139,7 +139,6 @@ on_other_fs_selected (GtkToggleButton *object, GduCreateOtherPage *page)
   priv->other_fs_type = g_object_get_data (G_OBJECT (object), "id");
 }
 
-#ifdef HAVE_UDISKS2_7_2
 static void
 can_format_cb (UDisksManager *manager,
                GAsyncResult  *res,
@@ -164,7 +163,6 @@ can_format_cb (UDisksManager *manager,
   row_adder (user_data, TRUE, available, util);
   g_free (util);
 }
-#endif
 
 static void
 row_adder (GduCreateOtherPage *page, gboolean tested, gboolean available, gchar *missing_util)
@@ -182,14 +180,12 @@ row_adder (GduCreateOtherPage *page, gboolean tested, gboolean available, gchar 
       return;
     }
 
-#ifdef HAVE_UDISKS2_7_2
    if (!tested)
     {
       udisks_manager_call_can_format (udisks_client_get_manager (priv->client), id,
                                       NULL, (GAsyncReadyCallback) can_format_cb, page);
       return;
     }
-#endif
 
   if (priv->prev_other_fs_radio != NULL)
     group = gtk_radio_button_get_group (priv->prev_other_fs_radio);

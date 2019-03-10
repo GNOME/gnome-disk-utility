@@ -77,7 +77,6 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
 gboolean gdu_utils_is_ntfs_available (UDisksClient *client);
 
-#ifdef HAVE_UDISKS2_7_2
 
 /* Defined by libblockdev/UDisks */
 typedef enum {
@@ -103,7 +102,6 @@ gboolean gdu_utils_can_check  (UDisksClient *client,
                                gboolean      flush,
                                gchar       **missing_util_out);
 
-#endif
 
 guint gdu_utils_get_max_label_length (const gchar *fstype);
 

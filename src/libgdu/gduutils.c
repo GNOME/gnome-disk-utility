@@ -67,7 +67,6 @@ gboolean
 gdu_utils_has_userspace_mount_option (UDisksBlock *block,
                                       const gchar *option)
 {
-#ifdef HAVE_UDISKS2_7_6
   const gchar *const *options;
   gboolean ret;
 
@@ -78,9 +77,6 @@ gdu_utils_has_userspace_mount_option (UDisksBlock *block,
     ret = g_strv_contains (options, option);
 
   return ret;
-#else
-  return FALSE;
-#endif
 }
 
 void
@@ -879,7 +875,6 @@ gdu_utils_is_ntfs_available (UDisksClient *client)
 
   if (g_once_init_enter (&once))
     {
-#ifdef HAVE_UDISKS2_7_2
       GVariant *out_available;
       gchar *missing_util;
 
@@ -890,13 +885,7 @@ gdu_utils_is_ntfs_available (UDisksClient *client)
           g_variant_unref (out_available);
           g_free (missing_util);
         }
-#else
-      gchar *path;
-      path = g_find_program_in_path ("mkntfs");
-      if (path != NULL)
-        available = TRUE;
-      g_free (path);
-#endif
+
       g_once_init_leave (&once, (gsize) 1);
     }
   return available;
@@ -904,7 +893,6 @@ gdu_utils_is_ntfs_available (UDisksClient *client)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-#ifdef HAVE_UDISKS2_7_2
 
 typedef struct
 {
@@ -1064,7 +1052,6 @@ gdu_utils_can_check (UDisksClient *client,
   return result ? result->available : FALSE;
 }
 
-#endif
 
 /* ---------------------------------------------------------------------------------------------------- */
 

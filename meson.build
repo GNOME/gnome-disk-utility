@@ -65,7 +65,7 @@ add_project_arguments(compiler_flags, language: 'c')
 
 gmodule_dep = dependency('gmodule-2.0')
 gio_unix_dep = dependency('gio-unix-2.0', version: '>= 2.31.0')
-udisk_dep = dependency('udisks2', version: '>= 2.1.1')
+udisk_dep = dependency('udisks2', version: '>= 2.7.6')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.16.0')
 libsecret_dep = dependency('libsecret-1', version: '>= 0.7')
 pwquality_dep = dependency('pwquality', version: '>= 1.0.0')
@@ -74,15 +74,6 @@ dvdread_dep = dependency('dvdread', version: '>= 4.2.0')
 libnotify_dep = dependency('libnotify', version: '>= 0.7')
 liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
 m_dep = cc.find_library('m')
-
-# *** Check for recent UDisks ***
-udisks2_7_2_dep = dependency('udisks2', version: '>= 2.7.2', required: false)
-config_h.set('HAVE_UDISKS2_7_2', udisks2_7_2_dep.found(),
-             description: 'Define to 1 if UDisks version >= 2.7.2 for resize, repair, check')
-
-udisks2_7_6_dep = dependency('udisks2', version: '>= 2.7.6', required: false)
-config_h.set('HAVE_UDISKS2_7_6', udisks2_7_6_dep.found(),
-             description: 'Define to 1 if UDisks version >= 2.7.6 for userspace mount options')
 
 # *** Check for libsystemd ***
 enable_libsystemd = get_option('libsystemd')

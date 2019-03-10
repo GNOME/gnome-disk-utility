@@ -26,6 +26,7 @@ sources = files(
   'gdunewdiskimagedialog.c',
   'gdupartitiondialog.c',
   'gdupasswordstrengthwidget.c',
+  'gduresizedialog.c',
   'gdurestorediskimagedialog.c',
   'gduunlockdialog.c',
   'gduvolumegrid.c',
@@ -33,10 +34,6 @@ sources = files(
   'gduxzdecompressor.c',
   'main.c'
 )
-
-if config_h.get('HAVE_UDISKS2_7_2')
-  sources += files('gduresizedialog.c')
-endif
 
 resource_data = files(
   'ui/about-dialog.ui',

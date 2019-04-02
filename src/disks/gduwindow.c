@@ -3186,7 +3186,7 @@ on_volume_menu_item_check (GSimpleAction *action,
                                                         _("Confirm Check"));
 
   gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s",
-                                              _("The check may take a long time , especially if the partition contains a lot of data."));
+                                              _("The check may take a long time, especially if the partition contains a lot of data."));
 
   ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
   gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");

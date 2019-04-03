@@ -3071,7 +3071,7 @@ on_volume_menu_item_repair (GSimpleAction *action,
                                               _("A filesystem repair is not always possible and can cause data loss. "
                                                 "Consider backing it up first in order to use forensic recovery tools "
                                                 "that retrieve lost files. "
-                                                "The check may take a long time, especially if the partition contains a lot of data."));
+                                                "The operation may take a long time, especially if the partition contains a lot of data."));
 
   ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
   gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");

@@ -28,8 +28,6 @@ struct _GduCreateFilesystemPagePrivate
   GtkRadioButton *windows_radiobutton;
   GtkRadioButton *all_radiobutton;
   GtkRadioButton *other_radiobutton;
-
-  gboolean complete;
 };
 
 enum
@@ -52,15 +50,10 @@ gdu_create_filesystem_page_get_property (GObject    *object,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GduCreateFilesystemPage *page = GDU_CREATE_FILESYSTEM_PAGE (object);
-  GduCreateFilesystemPagePrivate *priv;
-
-  priv = gdu_create_filesystem_page_get_instance_private (page);
-
   switch (property_id)
     {
     case PROP_COMPLETE:
-      g_value_set_boolean (value, priv->complete);
+      g_value_set_boolean (value, TRUE);
       break;
 
     default:
@@ -161,9 +154,6 @@ on_fs_name_changed (GObject *object, GParamSpec *pspec, gpointer user_data)
   GduCreateFilesystemPagePrivate *priv;
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
-
-  priv->complete = gtk_entry_get_text_length (priv->name_entry) > 0; /* require a label */
-  g_object_notify (G_OBJECT (page), "complete");
 
   _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (priv->name_entry),
                                     gdu_utils_get_max_label_length (gdu_create_filesystem_page_get_fs (page)));

@@ -29,7 +29,9 @@ struct _GduCreateFilesystemPagePrivate
   GtkRadioButton *all_radiobutton;
   GtkRadioButton *other_radiobutton;
 
-  gboolean complete;
+  UDisksClient *client;
+  UDisksDrive *drive;
+  UDisksObject *object;
 };
 
 enum
@@ -52,15 +54,10 @@ gdu_create_filesystem_page_get_property (GObject    *object,
                                          GValue     *value,
                                          GParamSpec *pspec)
 {
-  GduCreateFilesystemPage *page = GDU_CREATE_FILESYSTEM_PAGE (object);
-  GduCreateFilesystemPagePrivate *priv;
-
-  priv = gdu_create_filesystem_page_get_instance_private (page);
-
   switch (property_id)
     {
     case PROP_COMPLETE:
-      g_value_set_boolean (value, priv->complete);
+      g_value_set_boolean (value, TRUE);
       break;
 
     default:
@@ -162,9 +159,6 @@ on_fs_name_changed (GObject *object, GParamSpec *pspec, gpointer user_data)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  priv->complete = gtk_entry_get_text_length (priv->name_entry) > 0; /* require a label */
-  g_object_notify (G_OBJECT (page), "complete");
-
   _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (priv->name_entry),
                                     gdu_utils_get_max_label_length (gdu_create_filesystem_page_get_fs (page)));
 }
@@ -182,14 +176,82 @@ on_fs_type_changed (GtkToggleButton *object, gpointer user_data)
   g_object_notify (G_OBJECT (page), "complete");
 }
 
+void
+gdu_create_filesystem_page_fill_name (GduCreateFilesystemPage *page, guint64 size_info)
+{
+  GduCreateFilesystemPagePrivate *priv;
+  gchar *size_display;
+  UDisksObjectInfo *info;
+  gchar *identification;
+  gchar *name;
+
+  /* Suggest an appropriate name for the filesystem, combining an identifier and the size.
+   * Start with the vendor, and if not available, fallback to the model or the UDisks object name.
+   * Take only the first part of the model. If no model information is available, look at
+   * the UDisks object name, which might be a path to a device mapper mount point or a loopback
+   * file, and just take the last part (only until a delimiter is observed).
+   */
+  priv = gdu_create_filesystem_page_get_instance_private (page);
+  size_display = udisks_client_get_size_for_display (priv->client, size_info, FALSE, FALSE);
+  info = udisks_client_get_object_info (priv->client, priv->object);
+  identification = g_strdup (priv->drive != NULL ? udisks_drive_get_vendor (priv->drive) : "");
+  if (identification == NULL || strlen (identification) == 0)
+    {
+      gchar **maybe_long_name;
+
+      maybe_long_name = g_strsplit_set (priv->drive != NULL ? udisks_drive_get_model (priv->drive) : "", "_- /", 0);
+      if (maybe_long_name != NULL)
+        {
+          g_free (identification);
+          identification = g_strdup (maybe_long_name[0]);
+        }
+
+      g_strfreev (maybe_long_name);
+    }
+  if (identification == NULL || strlen (identification) == 0)
+    {
+      gchar **maybe_path_name;
+
+      maybe_path_name = g_strsplit (udisks_object_info_get_name (info), "/", 0);
+      if (maybe_path_name != NULL)
+        {
+          gchar **maybe_uuid;
+
+          maybe_uuid = g_strsplit_set (maybe_path_name[g_strv_length (maybe_path_name) - 1], "-_ ", 0);
+          if (maybe_uuid != NULL)
+            {
+              g_free (identification);
+              identification = g_strdup (maybe_uuid[0]);
+            }
+
+          g_strfreev (maybe_uuid);
+        }
+
+      g_strfreev (maybe_path_name);
+    }
+
+  name = g_strdup_printf ("%s %s", identification, size_display); /* No translation needed. */
+  gtk_entry_set_text (priv->name_entry, name);
+  _gtk_entry_buffer_truncate_bytes (gtk_entry_get_buffer (priv->name_entry),
+                                    gdu_utils_get_max_label_length (gdu_create_filesystem_page_get_fs (page)));
+
+  g_free (size_display);
+  g_free (identification);
+  g_free (name);
+  g_object_unref (info);
+}
+
 GduCreateFilesystemPage *
-gdu_create_filesystem_page_new (UDisksClient *client, gboolean show_custom, UDisksDrive *drive)
+gdu_create_filesystem_page_new (UDisksClient *client, gboolean show_custom, UDisksDrive *drive, UDisksObject *object)
 {
   GduCreateFilesystemPage *page;
   GduCreateFilesystemPagePrivate *priv;
 
   page = g_object_new (GDU_TYPE_CREATE_FILESYSTEM_PAGE, NULL);
   priv = gdu_create_filesystem_page_get_instance_private (page);
+  priv->client = client;
+  priv->drive = drive;
+  priv->object = object;
   g_signal_connect (priv->name_entry, "notify::text", G_CALLBACK (on_fs_name_changed), page);
   g_signal_connect (priv->internal_encrypt_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
   g_signal_connect (priv->internal_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);

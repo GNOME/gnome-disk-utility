@@ -104,6 +104,7 @@ update_dialog (GtkWidget *widget, GParamSpec *child_property, CreateFormatData *
   gboolean complete = FALSE;
   GtkWidget *child;
   gpointer page = NULL;
+  guint64 size_info = 0;
 
   g_value_init (&title, G_TYPE_STRING);
   child = gtk_stack_get_child_by_name (data->stack, data->current);
@@ -134,6 +135,9 @@ update_dialog (GtkWidget *widget, GParamSpec *child_property, CreateFormatData *
 
       if (gdu_create_filesystem_page_is_encrypted (data->filesystem_page))
         data->next = PASSWORD_PAGE;
+
+      size_info = data->add_partition ? gdu_create_partition_page_get_size (data->partition_page) : udisks_block_get_size (data->block);
+      gdu_create_filesystem_page_fill_name (data->filesystem_page, size_info);
     }
   else if (g_strcmp0 (data->current, OTHER_PAGE) == 0)
     {
@@ -440,7 +444,7 @@ gdu_create_format_show (UDisksClient *client,
       data->partition_page = NULL;
     }
 
-  data->filesystem_page = gdu_create_filesystem_page_new (data->client, show_custom, data->drive);
+  data->filesystem_page = gdu_create_filesystem_page_new (data->client, show_custom, data->drive, data->object);
   gtk_stack_add_titled (data->stack, GTK_WIDGET (data->filesystem_page), FORMAT_PAGE, _("Format Volume"));
   g_signal_connect (data->filesystem_page, "notify::complete", G_CALLBACK (update_dialog), data);
   data->other_page = gdu_create_other_page_new (data->client);

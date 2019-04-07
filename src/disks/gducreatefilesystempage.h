@@ -19,7 +19,8 @@ G_DECLARE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, GDU, 
 
 GduCreateFilesystemPage *gdu_create_filesystem_page_new          (UDisksClient *client,
                                                                   gboolean      show_custom,
-                                                                  UDisksDrive  *drive);
+                                                                  UDisksDrive  *drive,
+                                                                  UDisksObject *object);
 
 const gchar *            gdu_create_filesystem_page_get_name     (GduCreateFilesystemPage *page);
 
@@ -30,6 +31,9 @@ gboolean                 gdu_create_filesystem_page_is_other     (GduCreateFiles
 gboolean                 gdu_create_filesystem_page_is_encrypted (GduCreateFilesystemPage *page);
 
 const gchar *            gdu_create_filesystem_page_get_erase    (GduCreateFilesystemPage *page);
+
+void                     gdu_create_filesystem_page_fill_name    (GduCreateFilesystemPage *page,
+                                                                  guint64                  size_info);
 
 G_END_DECLS
 

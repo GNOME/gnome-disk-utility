@@ -17,13 +17,10 @@ deps = [
   udisk_dep,
   gtk_dep,
   libsecret_dep,
+  logind_dep,
   pwquality_dep,
   m_dep
 ]
-
-if enable_libsystemd
-  deps += libsystemd_dep
-endif
 
 cflags = [
   '-DPACKAGE_DATA_DIR="@0@"'.format(gdu_datadir),

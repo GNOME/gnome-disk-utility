@@ -19,7 +19,7 @@
 # include <features.h>
 #endif
 
-#if defined(HAVE_LIBSYSTEMD)
+#if defined(HAVE_LOGIND)
 #include <systemd/sd-login.h>
 #endif
 
@@ -405,7 +405,7 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
   g_free (opts);
 }
 
-#if defined(HAVE_LIBSYSTEMD)
+#if defined(HAVE_LOGIND)
 
 const gchar *
 gdu_utils_get_seat (void)

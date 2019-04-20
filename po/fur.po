@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-02-14 14:32+0000\n"
-"PO-Revision-Date: 2019-02-27 18:50+0100\n"
+"POT-Creation-Date: 2019-04-03 11:40+0000\n"
+"PO-Revision-Date: 2019-04-20 02:17+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -26,12 +26,6 @@ msgstr "Cjariadôr Imagjin Disc"
 #: data/gnome-disk-image-mounter.desktop.in:4
 msgid "Mount Disk Images"
 msgstr "Monte Imagjins Discs"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/gnome-disk-image-mounter.desktop.in:7
-#: data/gnome-disk-image-writer.desktop.in:7
-msgid "drive-removable-media"
-msgstr "drive-removable-media"
 
 #: data/gnome-disk-image-writer.desktop.in:3
 msgid "Disk Image Writer"
@@ -86,7 +80,7 @@ msgstr "Un mût sempliç par gjestî i tiei discs"
 msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1128
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
 #: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Discs"
@@ -104,11 +98,6 @@ msgstr ""
 "disc;discs;unitât;drive;disc fis;harddisk;hdd;volum;cdrom;cd;dvd;partizion;"
 "iso;imagjin;backup;benchmark;raid;luks;smart;S.M.A.R.T;cifrâ;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.DiskUtility.desktop.in:9
-msgid "org.gnome.DiskUtility"
-msgstr "org.gnome.DiskUtility"
-
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "Al è vignût fûr un erôr"
@@ -123,7 +112,7 @@ msgstr "Selezione imagjins disc di montâ"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:828
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
 msgid "_Cancel"
 msgstr "_Anule"
 
@@ -1514,7 +1503,7 @@ msgstr ""
 msgid "No Filesystem"
 msgstr "Nissun filesystem"
 
-#: src/disks/gducreateotherpage.c:207
+#: src/disks/gducreateotherpage.c:203
 #, c-format
 msgid "The utility %s is missing."
 msgstr "La utilitât %s e mancje."
@@ -2028,7 +2017,7 @@ msgstr "Stabilìs opzions par sblocâ"
 msgid "Volumes Grid"
 msgstr "Gridele volums"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2057
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
 msgid "No Media"
 msgstr "Nissun supuart"
 
@@ -2070,30 +2059,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Spazi libar"
 
-#: src/disks/gduwindow.c:652
+#: src/disks/gduwindow.c:649
 msgid "Error deleting loop device"
 msgstr "Erôr tal eliminâ il dispositîf di loop"
 
-#: src/disks/gduwindow.c:752 src/disks/gduwindow.c:795
+#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
 msgid "Error attaching disk image"
 msgstr "Erôr tal colegâ la imagjin disc"
 
-#: src/disks/gduwindow.c:825
+#: src/disks/gduwindow.c:822
 msgid "Select Disk Image to Attach"
 msgstr "Selezione la imagjin disc di colegâ"
 
-#: src/disks/gduwindow.c:829
+#: src/disks/gduwindow.c:826
 msgid "_Attach"
 msgstr "Co_leghe"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:836
+#: src/disks/gduwindow.c:833
 msgid "Set up _read-only loop device"
 msgstr "Configurâ il dispositîf di loop in dome-leture"
 
-#: src/disks/gduwindow.c:837
+#: src/disks/gduwindow.c:834
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2102,7 +2091,7 @@ msgstr ""
 "si vûl che il file disot al vegni midificât"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1700
+#: src/disks/gduwindow.c:1697
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (dome-leture)"
@@ -2111,7 +2100,7 @@ msgstr "%s (dome-leture)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1738
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2120,7 +2109,7 @@ msgstr "\"%s restants (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1746
+#: src/disks/gduwindow.c:1743
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2131,7 +2120,7 @@ msgstr "%s restants"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1761
+#: src/disks/gduwindow.c:1758
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s di %s — %s"
@@ -2140,17 +2129,17 @@ msgstr "%s di %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1886
+#: src/disks/gduwindow.c:1883
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1966 src/disks/gduwindow.c:2345
+#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
 msgid "Block device is empty"
 msgstr "Il dispositîf a blocs al è vueit"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1989
+#: src/disks/gduwindow.c:1986
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2159,11 +2148,11 @@ msgstr "No cognossût (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2148
+#: src/disks/gduwindow.c:2145
 msgid "Connected to another seat"
 msgstr "Tacât a une altre postazion"
 
-#: src/disks/gduwindow.c:2289
+#: src/disks/gduwindow.c:2286
 msgid "Loop device is empty"
 msgstr "Il dispositîf di loop al è vueit"
 
@@ -2173,61 +2162,61 @@ msgstr "Il dispositîf di loop al è vueit"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2506
+#: src/disks/gduwindow.c:2503
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libars (%.1f%% doprât)"
 
-#: src/disks/gduwindow.c:2536
+#: src/disks/gduwindow.c:2533
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "No cognossût"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2574
+#: src/disks/gduwindow.c:2571
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Filesystem root"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2582
+#: src/disks/gduwindow.c:2579
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montât su %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2588
+#: src/disks/gduwindow.c:2585
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "No montât"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2611
+#: src/disks/gduwindow.c:2608
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Atîf"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2617
+#: src/disks/gduwindow.c:2614
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "No atîf"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2632
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Sblocât"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2638
+#: src/disks/gduwindow.c:2635
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Blocât"
 
-#: src/disks/gduwindow.c:2652
+#: src/disks/gduwindow.c:2649
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partizion estese"
@@ -2236,109 +2225,112 @@ msgstr "Partizion estese"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2672
+#: src/disks/gduwindow.c:2669
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2796
+#: src/disks/gduwindow.c:2789
 msgid "Unallocated Space"
 msgstr "Spazi no assegnât"
 
-#: src/disks/gduwindow.c:2988
+#: src/disks/gduwindow.c:2979
 msgid "Error while repairing filesystem"
 msgstr "Erôr intal comedâ il filesystem"
 
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3006
 msgid "Repair successful"
 msgstr "Comedament lât a bon fin"
 
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3006
 msgid "Repair failed"
 msgstr "Comedament falît"
 
-#: src/disks/gduwindow.c:3018
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Il filesystem %s su %s al è stât comedât."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3024
+#: src/disks/gduwindow.c:3015
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Nol è stât pussibil comedâ il filesystem %s su %s."
 
-#: src/disks/gduwindow.c:3077
+#: src/disks/gduwindow.c:3068
 msgid "Confirm Repair"
 msgstr "Conferme riparazion"
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3071
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
-"lost files. Depending on the amount of data this operation takes longer time."
+"lost files. The operation may take a long time, especially if the partition "
+"contains a lot of data."
 msgstr ""
 "Nol è simpri pussibil comedâ un filesystem e al è pussibil pierdi dâts. Ten "
-"in considerazion la idee di fâ un backup prime, par podê doprâ struments di "
-"recupar forens che a recuperin i file pierdûts. In base ae cuantitât di dâts "
-"cheste operazion e pues cjoli tant timp."
+"in considerazion la idee di fâ prime un backup, par podê podopo doprâ "
+"struments di recupar forens che a recuperin i file pierdûts. La operazion e "
+"podarès cjapâ tant timp, soredut se la partizion e conten tancj dâts."
 
-#: src/disks/gduwindow.c:3108
+#: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
 msgstr "Erôr intal controlâ il filesystem"
 
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem intact"
 msgstr "Filesystem intat"
 
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem damaged"
 msgstr "Filesystem ruvinât"
 
-#: src/disks/gduwindow.c:3138
+#: src/disks/gduwindow.c:3129
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Il filesystem %s su %s nol è ruvinât."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3135
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Il filesystem %s su %s al à bisugne di riparazions."
 
-#: src/disks/gduwindow.c:3195
+#: src/disks/gduwindow.c:3186
 msgid "Confirm Check"
 msgstr "Conferme control"
 
-#: src/disks/gduwindow.c:3198
-msgid "Depending on the amount of data the filesystem check takes longer time."
+#: src/disks/gduwindow.c:3189
+msgid ""
+"The check may take a long time, especially if the partition contains a lot "
+"of data."
 msgstr ""
-"In base ae cuantitât di dâts il control dal filesystem al pues cjapâ tant "
-"timp."
+"Il control al podarès tirâle a dilunc, specialmentri se la partizion e "
+"conten tancj dâts."
 
-#: src/disks/gduwindow.c:3437
+#: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Al è vignût fûr un erôr intant che si cirive di meti in polse la unitât"
 
-#: src/disks/gduwindow.c:3484
+#: src/disks/gduwindow.c:3473
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Al è vignût fûr un erôr intant che si cirive di sveâ de polse la unitât"
 
-#: src/disks/gduwindow.c:3530
+#: src/disks/gduwindow.c:3519
 msgid "Error powering off drive"
 msgstr "Erôr tal studâ il dispositîf"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3582
+#: src/disks/gduwindow.c:3571
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sigûrs di studâ il dispositîf?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3584
+#: src/disks/gduwindow.c:3573
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2346,47 +2338,47 @@ msgstr ""
 "Cheste operazion a prontarà il sisteme par che chescj dispositîfs a vegnin "
 "studâts e gjavâts."
 
-#: src/disks/gduwindow.c:3588 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Stude"
 
-#: src/disks/gduwindow.c:3668
+#: src/disks/gduwindow.c:3657
 msgid "Error mounting filesystem"
 msgstr "Erôr tal montâ il filesystem"
 
-#: src/disks/gduwindow.c:3754
+#: src/disks/gduwindow.c:3743
 msgid "Error deleting partition"
 msgstr "Erôr tal eliminâ la partizion"
 
-#: src/disks/gduwindow.c:3791
+#: src/disks/gduwindow.c:3780
 msgid "Are you sure you want to delete the partition?"
 msgstr "Sigûrs di scancelâ la partizion?"
 
-#: src/disks/gduwindow.c:3792
+#: src/disks/gduwindow.c:3781
 msgid "All data on the partition will be lost"
 msgstr "Ducj i dâts te partizion a saran pierdûts"
 
-#: src/disks/gduwindow.c:3793
+#: src/disks/gduwindow.c:3782
 msgid "_Delete"
 msgstr "_Elimine"
 
-#: src/disks/gduwindow.c:3824
+#: src/disks/gduwindow.c:3813
 msgid "Error ejecting media"
 msgstr "Erôr tal parâ fûr il supuart"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3896
 msgid "Error starting swap"
 msgstr "Erôr tal ativâ il spazi di swap"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3933
 msgid "Error stopping swap"
 msgstr "Erôr tal disativâ il spazi di swap"
 
-#: src/disks/gduwindow.c:3986
+#: src/disks/gduwindow.c:3975
 msgid "Error setting autoclear flag"
 msgstr "Erôr tal stabilî la etichete di pulizie automatiche"
 
-#: src/disks/gduwindow.c:4039 src/disks/gduwindow.c:4103
+#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
 msgid "Error canceling job"
 msgstr "Erôr tal anulâ il lavôr"
 
@@ -3738,20 +3730,20 @@ msgstr "_Ripristine imagjin partizion…"
 msgid "_Benchmark Partition…"
 msgstr "Misure _prestazions partizion…"
 
-#: src/libgdu/gduutils.c:111
+#: src/libgdu/gduutils.c:107
 msgid "All Files"
 msgstr "Ducj i file"
 
-#: src/libgdu/gduutils.c:116
+#: src/libgdu/gduutils.c:112
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Imagjins disc (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:118
+#: src/libgdu/gduutils.c:114
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Imagjins disc (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:447
+#: src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3759,7 +3751,7 @@ msgstr[0] "%d an"
 msgstr[1] "%d agns"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:454
+#: src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3767,7 +3759,7 @@ msgstr[0] "%d mês"
 msgstr[1] "%d mês"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:461
+#: src/libgdu/gduutils.c:457
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3775,7 +3767,7 @@ msgstr[0] "%d zornade"
 msgstr[1] "%d diis"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:468
+#: src/libgdu/gduutils.c:464
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3783,7 +3775,7 @@ msgstr[0] "%d ore"
 msgstr[1] "%d oris"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:475
+#: src/libgdu/gduutils.c:471
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3791,7 +3783,7 @@ msgstr[0] "%d minût"
 msgstr[1] "%d minûts"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:482
+#: src/libgdu/gduutils.c:478
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3799,7 +3791,7 @@ msgstr[0] "%d secont"
 msgstr[1] "%d seconts"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:489
+#: src/libgdu/gduutils.c:485
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3807,74 +3799,74 @@ msgstr[0] "%d milisecont"
 msgstr[1] "%d miliseconts"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:553
+#: src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s e %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:558
+#: src/libgdu/gduutils.c:554
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:563
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:564
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s e %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:575
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s e %s"
 
-#: src/libgdu/gduutils.c:588
+#: src/libgdu/gduutils.c:584
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mancul di un minût"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:593
+#: src/libgdu/gduutils.c:589
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:599
+#: src/libgdu/gduutils.c:595
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:835
+#: src/libgdu/gduutils.c:831
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositîfs coinvolts"
 
-#: src/libgdu/gduutils.c:1411
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Erôr tal dismontâ il filesystem"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Erôr tal blocâ il dispositîf"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Erôr tal disabilitâ la netisie automatiche pal dispositîf di loop"
 
@@ -3895,6 +3887,18 @@ msgstr "Un disc fis si podarès rompi ca di pôc."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Esamine"
+
+#~ msgid "drive-removable-media"
+#~ msgstr "drive-removable-media"
+
+#~ msgid "org.gnome.DiskUtility"
+#~ msgstr "org.gnome.DiskUtility"
+
+#~ msgid ""
+#~ "Depending on the amount of data the filesystem check takes longer time."
+#~ msgstr ""
+#~ "In base ae cuantitât di dâts il control dal filesystem al pues cjapâ tant "
+#~ "timp."
 
 #~ msgctxt "accelerator"
 #~ msgid "F10"

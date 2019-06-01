@@ -1,3 +1,2 @@
-option('libelogind', type: 'feature', value: 'auto', description: 'build with libelogind')
-option('libsystemd', type: 'feature', value: 'auto', description: 'build with libsystemd')
+option('logind', type: 'combo', choices: ['libsystemd', 'libelogind', 'none'], value: 'libsystemd', description: 'build with logind')
 option('gsd_plugin', type: 'boolean', value: true, description: 'build gnome-settings-daemon plug-in')

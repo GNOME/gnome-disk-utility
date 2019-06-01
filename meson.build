@@ -76,14 +76,14 @@ liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
 m_dep = cc.find_library('m')
 
 # *** Check for logind ***
-assert(not (get_option('libsystemd').enabled() and get_option('libelogind').enabled()), 'Can not support systemd and elogind at once')
-if not get_option('libelogind').enabled()
-  logind_dep = dependency('libsystemd', version: '>= 209', required: get_option('libsystemd'))
+if get_option('logind') == 'libsystemd'
+  logind_dep = dependency('libsystemd', version: '>= 209')
 endif
-if get_option('libelogind').enabled() or not logind_dep.found()
-  logind_dep = dependency('libelogind', version: '>= 209', required: get_option('libelogind'))
+if get_option('logind') == 'libelogind'
+  logind_dep = dependency('libelogind', version: '>= 209')
 endif
-config_h.set('HAVE_LOGIND', logind_dep.found(),
+enable_logind = get_option('logind') != 'none'
+config_h.set('HAVE_LOGIND', enable_logind,
              description: 'Define to 1 if logind API is available')
 
 gnome = import('gnome')
@@ -126,9 +126,9 @@ output += '        libexecdir:                 ' + gdu_libexecdir + '\n'
 output += '        localedir:                  ' + gdu_localedir + '\n'
 output += '        mandir:                     ' + gdu_mandir + '\n'
 output += '        sysconfdir:                 ' + gdu_sysconfdir + '\n\n'
-output += '        Use logind:                 ' + logind_dep.found().to_string() + '\n'
+output += '        Use logind:                 ' + enable_logind.to_string() + '\n'
 output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
 output += '        compiler:                   ' + cc.get_id() + '\n'
 output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n\n'
-output += '        (Change with: meson configure BUILDDIR -D libelogind=auto|enabled|disabled -D libsystemd=auto|enabled|disabled -D gsd_plugin=true|false)\n\n'
+output += '        (Change with: meson configure BUILDDIR -D logind=libsystemd|libelogind|none -D gsd_plugin=true|false)\n\n'
 message(output)

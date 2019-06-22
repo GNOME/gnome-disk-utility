@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-03-24 19:57+0000\n"
-"PO-Revision-Date: 2019-04-01 00:48+0200\n"
+"POT-Creation-Date: 2019-04-03 11:40+0000\n"
+"PO-Revision-Date: 2019-06-22 18:32+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2016-09-22 19:56+0000\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -81,7 +81,7 @@ msgstr "Jednostavan način upravljanja vašim diskovima"
 msgid "The GNOME Project"
 msgstr "GNOME projekt"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1128
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
 #: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "Diskovi"
@@ -113,7 +113,7 @@ msgstr "Odaberi sliku(e) za montiranje"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:828
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
 msgid "_Cancel"
 msgstr "_Odustani"
 
@@ -1500,7 +1500,7 @@ msgstr ""
 msgid "No Filesystem"
 msgstr "Nema datotečnog sustava"
 
-#: src/disks/gducreateotherpage.c:207
+#: src/disks/gducreateotherpage.c:203
 #, c-format
 msgid "The utility %s is missing."
 msgstr "Alat %s nedostaje."
@@ -2014,7 +2014,7 @@ msgstr "Postavi mogućnost otključavanja"
 msgid "Volumes Grid"
 msgstr "Mreža uređaja"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2057
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
 msgid "No Media"
 msgstr "Nema medija"
 
@@ -2056,30 +2056,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Slobodan prostor"
 
-#: src/disks/gduwindow.c:652
+#: src/disks/gduwindow.c:649
 msgid "Error deleting loop device"
 msgstr "Greška brisanja virtualnog uređaja"
 
-#: src/disks/gduwindow.c:752 src/disks/gduwindow.c:795
+#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
 msgid "Error attaching disk image"
 msgstr "Greška priključivanja slike diska"
 
-#: src/disks/gduwindow.c:825
+#: src/disks/gduwindow.c:822
 msgid "Select Disk Image to Attach"
 msgstr "Odaberi sliku diska za priključivanje"
 
-#: src/disks/gduwindow.c:829
+#: src/disks/gduwindow.c:826
 msgid "_Attach"
 msgstr "_Priključi"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:836
+#: src/disks/gduwindow.c:833
 msgid "Set up _read-only loop device"
 msgstr "Postavi _samo-za-čitanje virtualni uređaj"
 
-#: src/disks/gduwindow.c:837
+#: src/disks/gduwindow.c:834
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2088,7 +2088,7 @@ msgstr ""
 "ako ne želite mijenjati nepromjenjivu datoteku"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1700
+#: src/disks/gduwindow.c:1697
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (samo-za-čitanje)"
@@ -2097,7 +2097,7 @@ msgstr "%s (samo-za-čitanje)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1738
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2106,7 +2106,7 @@ msgstr "%s preostalo (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1746
+#: src/disks/gduwindow.c:1743
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2117,7 +2117,7 @@ msgstr "%s preostalo"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1761
+#: src/disks/gduwindow.c:1758
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s od %s — %s"
@@ -2126,17 +2126,17 @@ msgstr "%s od %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1886
+#: src/disks/gduwindow.c:1883
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1966 src/disks/gduwindow.c:2345
+#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
 msgid "Block device is empty"
 msgstr "Blok uređaja je prazan"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1989
+#: src/disks/gduwindow.c:1986
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2145,11 +2145,11 @@ msgstr "Nepoznato (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2148
+#: src/disks/gduwindow.c:2145
 msgid "Connected to another seat"
 msgstr "Povezano na drugo mjesto"
 
-#: src/disks/gduwindow.c:2289
+#: src/disks/gduwindow.c:2286
 msgid "Loop device is empty"
 msgstr "Virtualni uređaj prazan"
 
@@ -2159,61 +2159,61 @@ msgstr "Virtualni uređaj prazan"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2506
+#: src/disks/gduwindow.c:2503
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s slobodno (%.1f%% iskorišteno)"
 
-#: src/disks/gduwindow.c:2536
+#: src/disks/gduwindow.c:2533
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Nepoznata"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2574
+#: src/disks/gduwindow.c:2571
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Korijenski datotečni sustav"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2582
+#: src/disks/gduwindow.c:2579
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montirano na %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2588
+#: src/disks/gduwindow.c:2585
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nije montiran"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2611
+#: src/disks/gduwindow.c:2608
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktivno"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2617
+#: src/disks/gduwindow.c:2614
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Nije aktivno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2632
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Otključano"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2638
+#: src/disks/gduwindow.c:2635
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Zaključano"
 
-#: src/disks/gduwindow.c:2652
+#: src/disks/gduwindow.c:2649
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Proširena particija"
@@ -2222,154 +2222,157 @@ msgstr "Proširena particija"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2672
+#: src/disks/gduwindow.c:2669
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2796
+#: src/disks/gduwindow.c:2789
 msgid "Unallocated Space"
 msgstr "Nedodjeljeni prostor"
 
-#: src/disks/gduwindow.c:2988
+#: src/disks/gduwindow.c:2979
 msgid "Error while repairing filesystem"
 msgstr "Greška popravljanja datotečnog sustava"
 
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3006
 msgid "Repair successful"
 msgstr "Popravljanje uspješno"
 
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3006
 msgid "Repair failed"
 msgstr "Popravljanje neuspješno"
 
-#: src/disks/gduwindow.c:3018
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečni sustav %s na %s je popravljen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3024
+#: src/disks/gduwindow.c:3015
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečni sustav %s na %s se ne može popraviti."
 
-#: src/disks/gduwindow.c:3077
+#: src/disks/gduwindow.c:3068
 msgid "Confirm Repair"
 msgstr "Potvrdi popravljanje"
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3071
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
-"lost files. Depending on the amount of data this operation takes longer time."
+"lost files. The operation may take a long time, especially if the partition "
+"contains a lot of data."
 msgstr ""
 "Popravljanje datotečnog sustava nije uvijek moguće i može prouzrokovati "
 "gubitak podataka. Razmotrite prvo stvaranje sigurnosne kopije kako bi mogli "
 "koristiti forenzičke alate za obnovu izgubljenih datoteka. Ovisno o količini "
-"podataka ova radnja može potrajati dulje vrijeme."
+"podataka na particiji ova radnja može potrajati dulje vrijeme."
 
-#: src/disks/gduwindow.c:3108
+#: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
 msgstr "Greška provjere datotečnog sustava"
 
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem intact"
 msgstr "Datotečni sustav je netaknut"
 
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem damaged"
 msgstr "Datotečni sustav je oštećen"
 
-#: src/disks/gduwindow.c:3138
+#: src/disks/gduwindow.c:3129
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sustav %s na %s je neoštećen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:3135
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sustav %s na %s je potrebno popraviti."
 
-#: src/disks/gduwindow.c:3195
+#: src/disks/gduwindow.c:3186
 msgid "Confirm Check"
 msgstr "Potvrdi provjeru"
 
-#: src/disks/gduwindow.c:3198
-msgid "Depending on the amount of data the filesystem check takes longer time."
+#: src/disks/gduwindow.c:3189
+msgid ""
+"The check may take a long time, especially if the partition contains a lot "
+"of data."
 msgstr ""
-"Ovisno o količini podataka provjera datotečnog sustava može potrajati dulje "
-"vrijeme."
+"Provjera može potrajati dulje vrijeme, osobito ako particija sadrži mnogo "
+"podataka."
 
-#: src/disks/gduwindow.c:3437
+#: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Greška se dogodila pri pokušaju stavljanja diska u način pripravnosti"
 
-#: src/disks/gduwindow.c:3484
+#: src/disks/gduwindow.c:3473
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Greška se dogodila pri pokušaju buđenja diska iz načina pripravnosti"
 
-#: src/disks/gduwindow.c:3530
+#: src/disks/gduwindow.c:3519
 msgid "Error powering off drive"
 msgstr "Greška isključivanja diska"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3582
+#: src/disks/gduwindow.c:3571
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sigurno želite isključiti disk?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3584
+#: src/disks/gduwindow.c:3573
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Ova radnja će pripremiti sustav na disku za isključivanje i uklanjanje."
 
-#: src/disks/gduwindow.c:3588 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Isključi"
 
-#: src/disks/gduwindow.c:3668
+#: src/disks/gduwindow.c:3657
 msgid "Error mounting filesystem"
 msgstr "Greška montiranja datotečnog sustava"
 
-#: src/disks/gduwindow.c:3754
+#: src/disks/gduwindow.c:3743
 msgid "Error deleting partition"
 msgstr "Greška brisanja particije"
 
-#: src/disks/gduwindow.c:3791
+#: src/disks/gduwindow.c:3780
 msgid "Are you sure you want to delete the partition?"
 msgstr "Sigurno želite obrisati particiju?"
 
-#: src/disks/gduwindow.c:3792
+#: src/disks/gduwindow.c:3781
 msgid "All data on the partition will be lost"
 msgstr "Svi podaci na particiji će biti izgubljeni"
 
-#: src/disks/gduwindow.c:3793
+#: src/disks/gduwindow.c:3782
 msgid "_Delete"
 msgstr "_Obriši"
 
-#: src/disks/gduwindow.c:3824
+#: src/disks/gduwindow.c:3813
 msgid "Error ejecting media"
 msgstr "Greška izbacivanja medija"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3896
 msgid "Error starting swap"
 msgstr "Greška pokretanja swapa"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3933
 msgid "Error stopping swap"
 msgstr "Greška zaustavljanja swapa"
 
-#: src/disks/gduwindow.c:3986
+#: src/disks/gduwindow.c:3975
 msgid "Error setting autoclear flag"
 msgstr "Greška postavljanja 'autoclear' oznake"
 
-#: src/disks/gduwindow.c:4039 src/disks/gduwindow.c:4103
+#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
 msgid "Error canceling job"
 msgstr "Greška prekidanja zadatka"
 
@@ -3719,20 +3722,20 @@ msgstr "_Vrati sliku particije…"
 msgid "_Benchmark Partition…"
 msgstr "_Testiraj particiju…"
 
-#: src/libgdu/gduutils.c:111
+#: src/libgdu/gduutils.c:107
 msgid "All Files"
 msgstr "Sve datoteke"
 
-#: src/libgdu/gduutils.c:116
+#: src/libgdu/gduutils.c:112
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Slike diska (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:118
+#: src/libgdu/gduutils.c:114
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Slike diska (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:447
+#: src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3741,7 +3744,7 @@ msgstr[1] "%d godine"
 msgstr[2] "%d godina"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:454
+#: src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3750,7 +3753,7 @@ msgstr[1] "%d mjeseca"
 msgstr[2] "%d mjeseca"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:461
+#: src/libgdu/gduutils.c:457
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3759,7 +3762,7 @@ msgstr[1] "%d dana"
 msgstr[2] "%d dana"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:468
+#: src/libgdu/gduutils.c:464
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3768,7 +3771,7 @@ msgstr[1] "%d sata"
 msgstr[2] "%d sata"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:475
+#: src/libgdu/gduutils.c:471
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3777,7 +3780,7 @@ msgstr[1] "%d minute"
 msgstr[2] "%d minuta"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:482
+#: src/libgdu/gduutils.c:478
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3786,7 +3789,7 @@ msgstr[1] "%d sekunde"
 msgstr[2] "%d sekundi"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:489
+#: src/libgdu/gduutils.c:485
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3795,74 +3798,74 @@ msgstr[1] "%d millisekunde"
 msgstr[2] "%d millisekundi"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:553
+#: src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s i %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:558
+#: src/libgdu/gduutils.c:554
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:563
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:564
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s i %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:575
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s i %s"
 
-#: src/libgdu/gduutils.c:588
+#: src/libgdu/gduutils.c:584
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "manje od minute"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:593
+#: src/libgdu/gduutils.c:589
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:599
+#: src/libgdu/gduutils.c:595
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:835
+#: src/libgdu/gduutils.c:831
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Obuhvaćeni uređaji"
 
-#: src/libgdu/gduutils.c:1411
+#: src/libgdu/gduutils.c:1398
 msgid "Error unmounting filesystem"
 msgstr "Greška odmontiranja datotečnog sustava"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
 msgstr "Greška zaključavanja uređaja"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1439
 msgid "Error disabling autoclear for loop device"
 msgstr "Greška onemogućavanja virtualnog uređaja"
 
@@ -3883,6 +3886,12 @@ msgstr "Čvrsti disk će se najvjerojatnije uskoro pokvariti."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Istraži"
+
+#~ msgid ""
+#~ "Depending on the amount of data the filesystem check takes longer time."
+#~ msgstr ""
+#~ "Ovisno o količini podataka provjera datotečnog sustava može potrajati "
+#~ "dulje vrijeme."
 
 #~ msgid "drive-removable-media"
 #~ msgstr "drive-removable-media"

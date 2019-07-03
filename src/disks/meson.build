@@ -32,7 +32,7 @@ sources = files(
   'gduvolumegrid.c',
   'gduwindow.c',
   'gduxzdecompressor.c',
-  'main.c'
+  'main.c',
 )
 
 resource_data = files(
@@ -62,7 +62,7 @@ resource_data = files(
   'ui/resize-dialog.ui',
   'ui/restore-disk-image-dialog.ui',
   'ui/smart-dialog.ui',
-  'ui/unlock-device-dialog.ui'
+  'ui/unlock-device-dialog.ui',
 )
 
 sources += gnome.compile_resources(
@@ -70,7 +70,7 @@ sources += gnome.compile_resources(
   'gnome-disks.gresource.xml',
   source_dir: '.',
   dependencies: resource_data,
-  export: true
+  export: true,
 )
 
 enum = 'gduenumtypes'
@@ -79,7 +79,7 @@ sources += gnome.mkenums(
   enum,
   sources: enum_headers,
   c_template: enum + '.c.template',
-  h_template: enum + '.h.template'
+  h_template: enum + '.h.template',
 )
 
 deps = [
@@ -93,13 +93,13 @@ deps = [
   dvdread_dep,
   liblzma_dep,
   libgdu_dep,
-  m_dep
+  m_dep,
 ]
 
 cflags = [
   '-DPACKAGE_DATA_DIR="@0@"'.format(gdu_datadir),
   '-DG_LOG_DOMAIN="@0@"'.format(name),
-  '-DGNOMELOCALEDIR="@0@"'.format(gdu_localedir)
+  '-DGNOMELOCALEDIR="@0@"'.format(gdu_localedir),
 ]
 
 executable(
@@ -108,5 +108,5 @@ executable(
   include_directories: top_inc,
   dependencies: deps,
   c_args: cflags,
-  install: true
+  install: true,
 )

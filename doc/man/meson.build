@@ -3,12 +3,12 @@ xsltproc_cmd = [
   '--output', '@OUTPUT@',
   '--nonet',
   'http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl',
-  '@INPUT@'
+  '@INPUT@',
 ]
 
 mans = [
   'gnome-disks',
-  'gnome-disk-image-mounter'
+  'gnome-disk-image-mounter',
 ]
 
 foreach man: mans
@@ -20,6 +20,6 @@ foreach man: mans
     output: output,
     command: xsltproc_cmd,
     install: true,
-    install_dir: join_paths(gdu_mandir, 'man1')
+    install_dir: join_paths(gdu_mandir, 'man1'),
   )
 endforeach

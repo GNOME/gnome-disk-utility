@@ -1,6 +1,6 @@
 sources = files(
   'gdusdmonitor.c',
-  'main.c'
+  'main.c',
 )
 
 deps = [
@@ -8,7 +8,7 @@ deps = [
   gio_unix_dep,
   udisk_dep,
   gtk_dep,
-  libnotify_dep
+  libnotify_dep,
 ]
 
 executable(
@@ -17,7 +17,7 @@ executable(
   include_directories: top_inc,
   dependencies: deps,
   install: true,
-  install_dir: gdu_libexecdir
+  install_dir: gdu_libexecdir,
 )
 
 desktop_conf = configuration_data()
@@ -30,5 +30,5 @@ configure_file(
   output: desktop,
   configuration: desktop_conf,
   install: true,
-  install_dir: join_paths(gdu_sysconfdir, 'xdg', 'autostart')
+  install_dir: join_paths(gdu_sysconfdir, 'xdg', 'autostart'),
 )

@@ -3,7 +3,7 @@ project(
   version: '3.33.3',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.50.0'
+  meson_version: '>= 0.50.0',
 )
 
 gdu_name = 'gnome-disk-utility'
@@ -55,7 +55,7 @@ if get_option('buildtype').contains('debug')
     '-Wswitch-enum',
     '-Wundef',
     '-Wunused-but-set-variable',
-    '-Wwrite-strings'
+    '-Wwrite-strings',
   ]
 
   compiler_flags += cc.get_supported_arguments(test_cflags)
@@ -109,12 +109,12 @@ subdir('doc/man')
 
 configure_file(
   output: 'config.h',
-  configuration: config_h
+  configuration: config_h,
 )
 
 meson.add_install_script(
   'meson_post_install.py',
-  gdu_datadir
+  gdu_datadir,
 )
 
 output = '\n        gnome-disk-utility ' + gdu_version + '\n'

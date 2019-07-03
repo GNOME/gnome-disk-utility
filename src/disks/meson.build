@@ -108,6 +108,5 @@ executable(
   include_directories: top_inc,
   dependencies: deps,
   c_args: cflags,
-  install: true,
-  install_dir: gdu_bindir
+  install: true
 )

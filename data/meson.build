@@ -14,7 +14,7 @@ foreach desktop: desktops
     output: desktop,
     po_dir: po_dir,
     install: true,
-    install_dir: join_paths(gdu_datadir, 'applications'),
+    install_dir: gdu_datadir / 'applications',
   )
 endforeach
 
@@ -27,13 +27,13 @@ configure_file(
   input: service + '.in',
   output: service,
   install: true,
-  install_dir: join_paths(gdu_datadir, 'dbus-1', 'services'),
+  install_dir: gdu_datadir / 'dbus-1/services',
   configuration: service_conf,
 )
 
 install_data(
   'org.gnome.Disks.gschema.xml',
-  install_dir: join_paths(gdu_datadir, 'glib-2.0', 'schemas'),
+  install_dir: gdu_datadir / 'glib-2.0/schemas',
 )
 
 info = 'org.gnome.DiskUtility.appdata.xml'
@@ -44,5 +44,5 @@ i18n.merge_file(
   output: info,
   po_dir: po_dir,
   install: true,
-  install_dir: join_paths(gdu_datadir, 'metainfo'),
+  install_dir: gdu_datadir / 'metainfo',
 )

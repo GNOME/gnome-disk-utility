@@ -10,12 +10,12 @@ gdu_name = 'gnome-disk-utility'
 gdu_version = meson.project_version()
 
 gdu_prefix = get_option('prefix')
-gdu_bindir = join_paths(gdu_prefix, get_option('bindir'))
-gdu_datadir = join_paths(gdu_prefix, get_option('datadir'))
-gdu_libexecdir = join_paths(gdu_prefix, get_option('libexecdir'))
-gdu_localedir = join_paths(gdu_prefix, get_option('localedir'))
-gdu_mandir = join_paths(gdu_prefix, get_option('mandir'))
-gdu_sysconfdir = join_paths(gdu_prefix, get_option('sysconfdir'))
+gdu_bindir = gdu_prefix / get_option('bindir')
+gdu_datadir = gdu_prefix / get_option('datadir')
+gdu_libexecdir = gdu_prefix / get_option('libexecdir')
+gdu_localedir = gdu_prefix / get_option('localedir')
+gdu_mandir = gdu_prefix / get_option('mandir')
+gdu_sysconfdir = gdu_prefix / get_option('sysconfdir')
 
 cc = meson.get_compiler('c')
 
@@ -89,7 +89,7 @@ config_h.set('HAVE_LOGIND', enable_logind,
 gnome = import('gnome')
 i18n = import('i18n')
 
-po_dir = join_paths(meson.source_root(), 'po')
+po_dir = meson.source_root() / 'po'
 
 top_inc = include_directories('.', 'src')
 

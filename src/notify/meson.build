@@ -30,5 +30,5 @@ configure_file(
   output: desktop,
   configuration: desktop_conf,
   install: true,
-  install_dir: join_paths(gdu_sysconfdir, 'xdg', 'autostart'),
+  install_dir: gdu_sysconfdir / 'xdg/autostart',
 )

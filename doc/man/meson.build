@@ -20,6 +20,6 @@ foreach man: mans
     output: output,
     command: xsltproc_cmd,
     install: true,
-    install_dir: join_paths(gdu_mandir, 'man1'),
+    install_dir: gdu_mandir / 'man1',
   )
 endforeach

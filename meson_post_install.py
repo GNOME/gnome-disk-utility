@@ -5,12 +5,12 @@ import subprocess
 import sys
 
 if not os.environ.get('DESTDIR'):
-  datadir = sys.argv[1]
+  prefix = os.environ['MESON_INSTALL_PREFIX']
 
-  icondir = os.path.join(datadir, 'icons', 'hicolor')
+  icondir = os.path.join(prefix, sys.argv[1], 'icons', 'hicolor')
   print('Update icon cache...')
   subprocess.call(['gtk-update-icon-cache', '-f', '-t', icondir])
 
-  schemadir = os.path.join(datadir, 'glib-2.0', 'schemas')
+  schemadir = os.path.join(prefix, sys.argv[1], 'glib-2.0', 'schemas')
   print('Compile gsettings schemas...')
   subprocess.call(['glib-compile-schemas', schemadir])

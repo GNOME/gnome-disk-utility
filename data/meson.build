@@ -19,7 +19,7 @@ foreach desktop: desktops
 endforeach
 
 service_conf = configuration_data()
-service_conf.set('bindir', gdu_bindir)
+service_conf.set('bindir', gdu_prefix / gdu_bindir)
 
 service = 'org.gnome.DiskUtility.service'
 

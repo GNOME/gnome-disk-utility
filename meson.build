@@ -10,12 +10,12 @@ gdu_name = 'gnome-disk-utility'
 gdu_version = meson.project_version()
 
 gdu_prefix = get_option('prefix')
-gdu_bindir = gdu_prefix / get_option('bindir')
-gdu_datadir = gdu_prefix / get_option('datadir')
-gdu_libexecdir = gdu_prefix / get_option('libexecdir')
-gdu_localedir = gdu_prefix / get_option('localedir')
-gdu_mandir = gdu_prefix / get_option('mandir')
-gdu_sysconfdir = gdu_prefix / get_option('sysconfdir')
+gdu_bindir = get_option('bindir')
+gdu_datadir = get_option('datadir')
+gdu_libexecdir = get_option('libexecdir')
+gdu_localedir = get_option('localedir')
+gdu_mandir = get_option('mandir')
+gdu_sysconfdir = get_option('sysconfdir')
 
 cc = meson.get_compiler('c')
 

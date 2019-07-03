@@ -26,9 +26,9 @@ if enable_logind
 endif
 
 cflags = [
-  '-DPACKAGE_DATA_DIR="@0@"'.format(gdu_datadir),
+  '-DPACKAGE_DATA_DIR="@0@"'.format(gdu_prefix / gdu_datadir),
   '-DG_LOG_DOMAIN="libgdu"',
-  '-DGNOMELOCALEDIR="@0@"'.format(gdu_localedir),
+  '-DGNOMELOCALEDIR="@0@"'.format(gdu_prefix / gdu_localedir),
 ]
 
 libgdu = static_library(

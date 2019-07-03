@@ -21,7 +21,7 @@ executable(
 )
 
 desktop_conf = configuration_data()
-desktop_conf.set('libexecdir', gdu_libexecdir)
+desktop_conf.set('libexecdir', gdu_prefix / gdu_libexecdir)
 
 desktop = 'org.gnome.SettingsDaemon.DiskUtilityNotify.desktop'
 

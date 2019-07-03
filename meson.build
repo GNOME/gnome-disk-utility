@@ -75,6 +75,12 @@ libnotify_dep = dependency('libnotify', version: '>= 0.7')
 liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
 m_dep = cc.find_library('m')
 
+gio_schemasdir = dependency('gio-2.0').get_pkgconfig_variable(
+  'schemasdir',
+  define_variable: ['datadir', gdu_prefix / gdu_datadir],
+  default: gdu_prefix / gdu_datadir / 'glib-2.0/schemas',
+)
+
 # *** Check for logind ***
 if get_option('logind') == 'libsystemd'
   logind_dep = dependency('libsystemd', version: '>= 209')
@@ -115,6 +121,7 @@ configure_file(
 meson.add_install_script(
   'meson_post_install.py',
   gdu_datadir,
+  gio_schemasdir,
 )
 
 output = '\n        gnome-disk-utility ' + gdu_version + '\n'

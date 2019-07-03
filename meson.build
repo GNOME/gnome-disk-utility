@@ -3,7 +3,7 @@ project(
   version: '3.33.3',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.47.0'
+  meson_version: '>= 0.50.0'
 )
 
 gdu_name = 'gnome-disk-utility'

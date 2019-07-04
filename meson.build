@@ -88,13 +88,11 @@ gio_schemasdir = dependency('gio-2.0').get_pkgconfig_variable(
 )
 
 # *** Check for logind ***
-if get_option('logind') == 'libsystemd'
-  logind_dep = dependency('libsystemd', version: '>= 209')
+logind = get_option('logind')
+enable_logind = (logind != 'none')
+if enable_logind
+  logind_dep = dependency(logind, version: '>= 209')
 endif
-if get_option('logind') == 'libelogind'
-  logind_dep = dependency('libelogind', version: '>= 209')
-endif
-enable_logind = get_option('logind') != 'none'
 config_h.set('HAVE_LOGIND', enable_logind,
              description: 'Define to 1 if logind API is available')
 
@@ -132,7 +130,7 @@ output += '        libexecdir:                 ' + gdu_libexecdir + '\n'
 output += '        localedir:                  ' + gdu_localedir + '\n'
 output += '        mandir:                     ' + gdu_mandir + '\n'
 output += '        sysconfdir:                 ' + gdu_sysconfdir + '\n\n'
-output += '        Use logind:                 ' + enable_logind.to_string() + '\n'
+output += '        Use logind:                 ' + logind + '\n'
 output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
 output += '        compiler:                   ' + cc.get_id() + '\n'
 output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n\n'

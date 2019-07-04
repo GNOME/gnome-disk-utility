@@ -34,7 +34,7 @@ config_h.set_quoted('GETTEXT_PACKAGE', gdu_name)
 compiler_flags = []
 
 if get_option('buildtype').contains('debug')
-  test_cflags = [
+  compiler_flags += cc.get_supported_arguments([
     '-fno-strict-aliasing',
     '-Wcast-align',
     '-Wdeclaration-after-statement',
@@ -63,9 +63,7 @@ if get_option('buildtype').contains('debug')
     '-Wundef',
     '-Wunused-but-set-variable',
     '-Wwrite-strings',
-  ]
-
-  compiler_flags += cc.get_supported_arguments(test_cflags)
+  ])
 endif
 
 add_project_arguments(compiler_flags, language: 'c')

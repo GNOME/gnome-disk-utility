@@ -68,7 +68,6 @@ resource_data = files(
 sources += gnome.compile_resources(
   'resources',
   'gnome-disks.gresource.xml',
-  source_dir: '.',
   dependencies: resource_data,
   export: true,
 )

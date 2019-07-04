@@ -37,7 +37,7 @@ info = 'org.gnome.DiskUtility.appdata.xml'
 
 i18n.merge_file(
   info,
-  input: 'org.gnome.DiskUtility.appdata.xml.in',
+  input: info + '.in',
   output: info,
   po_dir: po_dir,
   install: true,

@@ -39,6 +39,6 @@ libgdu = static_library(
 libgdu_dep = declare_dependency(
   sources: enum_sources[1],
   link_with: libgdu,
-  include_directories: include_directories('.'),
+  include_directories: '.',
   dependencies: deps,
 )

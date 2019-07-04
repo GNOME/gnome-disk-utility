@@ -20,11 +20,10 @@ executable(
   install_dir: gdu_libexecdir,
 )
 
-desktop = 'org.gnome.SettingsDaemon.DiskUtilityNotify.desktop'
 
 configure_file(
-  input: desktop + '.in',
-  output: desktop,
+  input: 'org.gnome.SettingsDaemon.DiskUtilityNotify.desktop.in',
+  output: '@BASENAME@',
   configuration: {'libexecdir': gdu_prefix / gdu_libexecdir},
   install: true,
   install_dir: gdu_sysconfdir / 'xdg/autostart',

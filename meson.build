@@ -6,7 +6,7 @@ project(
   meson_version: '>= 0.50.0',
 )
 
-gdu_name = 'gnome-disk-utility'
+gdu_name = meson.project_name()
 gdu_version = meson.project_version()
 
 gdu_prefix = get_option('prefix')

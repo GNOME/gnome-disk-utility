@@ -4,11 +4,11 @@ sources = files(
 )
 
 deps = [
-  gmodule_dep,
   gio_unix_dep,
-  udisk_dep,
+  gmodule_dep,
   gtk_dep,
   libnotify_dep,
+  udisk_dep,
 ]
 
 executable(

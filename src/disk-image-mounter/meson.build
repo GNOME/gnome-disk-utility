@@ -1,11 +1,11 @@
 name = 'gnome-disk-image-mounter'
 
 deps = [
-  gmodule_dep,
   gio_unix_dep,
-  udisk_dep,
+  gmodule_dep,
   gtk_dep,
   libgdu_dep,
+  udisk_dep,
 ]
 
 cflags = [

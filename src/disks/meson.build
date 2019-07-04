@@ -83,17 +83,17 @@ sources += gnome.mkenums(
 )
 
 deps = [
-  gmodule_dep,
-  gio_unix_dep,
-  udisk_dep,
-  gtk_dep,
-  libsecret_dep,
-  pwquality_dep,
-  libcanberra_dep,
   dvdread_dep,
-  liblzma_dep,
+  gio_unix_dep,
+  gmodule_dep,
+  gtk_dep,
+  libcanberra_dep,
   libgdu_dep,
+  liblzma_dep,
+  libsecret_dep,
   m_dep,
+  pwquality_dep,
+  udisk_dep,
 ]
 
 cflags = [

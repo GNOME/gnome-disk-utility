@@ -68,16 +68,17 @@ endif
 
 add_project_arguments(compiler_flags, language: 'c')
 
-gmodule_dep = dependency('gmodule-2.0')
+dvdread_dep = dependency('dvdread', version: '>= 4.2.0')
 gio_unix_dep = dependency('gio-unix-2.0', version: '>= 2.31.0')
-udisk_dep = dependency('udisks2', version: '>= 2.7.6')
+gmodule_dep = dependency('gmodule-2.0')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.16.0')
+libcanberra_dep = dependency('libcanberra-gtk3', version: '>= 0.1')
+liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
+libnotify_dep = dependency('libnotify', version: '>= 0.7')
 libsecret_dep = dependency('libsecret-1', version: '>= 0.7')
 pwquality_dep = dependency('pwquality', version: '>= 1.0.0')
-libcanberra_dep = dependency('libcanberra-gtk3', version: '>= 0.1')
-dvdread_dep = dependency('dvdread', version: '>= 4.2.0')
-libnotify_dep = dependency('libnotify', version: '>= 0.7')
-liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
+udisk_dep = dependency('udisks2', version: '>= 2.7.6')
+
 m_dep = cc.find_library('m')
 
 gio_schemasdir = dependency('gio-2.0').get_pkgconfig_variable(

@@ -17,6 +17,13 @@ gdu_localedir = get_option('localedir')
 gdu_mandir = get_option('mandir')
 gdu_sysconfdir = get_option('sysconfdir')
 
+gnome = import('gnome')
+i18n = import('i18n')
+
+po_dir = meson.current_source_dir() / 'po'
+
+top_inc = include_directories('.', 'src')
+
 cc = meson.get_compiler('c')
 
 config_h = configuration_data()
@@ -91,13 +98,6 @@ endif
 enable_logind = get_option('logind') != 'none'
 config_h.set('HAVE_LOGIND', enable_logind,
              description: 'Define to 1 if logind API is available')
-
-gnome = import('gnome')
-i18n = import('i18n')
-
-po_dir = meson.source_root() / 'po'
-
-top_inc = include_directories('.', 'src')
 
 subdir('src/libgdu')
 subdir('src/disks')

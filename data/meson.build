@@ -18,17 +18,14 @@ foreach desktop: desktops
   )
 endforeach
 
-service_conf = configuration_data()
-service_conf.set('bindir', gdu_prefix / gdu_bindir)
-
 service = 'org.gnome.DiskUtility.service'
 
 configure_file(
   input: service + '.in',
   output: service,
+  configuration: {'bindir': gdu_prefix / gdu_bindir},
   install: true,
   install_dir: gdu_datadir / 'dbus-1/services',
-  configuration: service_conf,
 )
 
 install_data(

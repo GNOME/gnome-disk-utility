@@ -2,10 +2,7 @@ name = 'gnome-disk-image-mounter'
 
 deps = [
   gio_unix_dep,
-  gmodule_dep,
-  gtk_dep,
   libgdu_dep,
-  udisk_dep,
 ]
 
 cflags = [
@@ -16,7 +13,7 @@ cflags = [
 
 executable(
   name,
-  ['main.c']  + libgduenumtypes,
+  'main.c',
   include_directories: top_inc,
   dependencies: deps,
   c_args: cflags,

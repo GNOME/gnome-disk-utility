@@ -4,25 +4,22 @@ sources = files('gduutils.c')
 
 enum = 'libgduenumtypes'
 
-libgduenumtypes = gnome.mkenums(
+enum_sources = gnome.mkenums(
   enum,
   sources: enum_headers,
   c_template: enum + '.c.template',
   h_template: enum + '.h.template',
 )
 
+private_deps = [m_dep]
+
 deps = [
-  gio_unix_dep,
-  gmodule_dep,
   gtk_dep,
-  libsecret_dep,
-  m_dep,
-  pwquality_dep,
   udisk_dep,
 ]
 
 if enable_logind
-  deps += logind_dep
+  private_deps += logind_dep
 endif
 
 cflags = [
@@ -33,13 +30,14 @@ cflags = [
 
 libgdu = static_library(
   'gdu',
-  sources: sources + libgduenumtypes,
+  sources: sources + enum_sources,
   include_directories: top_inc,
-  dependencies: deps,
+  dependencies: deps + private_deps,
   c_args: cflags,
 )
 
 libgdu_dep = declare_dependency(
+  sources: enum_sources[1],
   link_with: libgdu,
   include_directories: include_directories('.'),
   dependencies: deps,

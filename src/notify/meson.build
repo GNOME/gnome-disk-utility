@@ -4,7 +4,6 @@ sources = files(
 )
 
 deps = [
-  gio_unix_dep,
   gmodule_dep,
   gtk_dep,
   libnotify_dep,

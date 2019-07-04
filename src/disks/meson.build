@@ -86,14 +86,12 @@ deps = [
   dvdread_dep,
   gio_unix_dep,
   gmodule_dep,
-  gtk_dep,
   libcanberra_dep,
   libgdu_dep,
   liblzma_dep,
   libsecret_dep,
   m_dep,
   pwquality_dep,
-  udisk_dep,
 ]
 
 cflags = [
@@ -101,6 +99,10 @@ cflags = [
   '-DG_LOG_DOMAIN="@0@"'.format(name),
   '-DGNOMELOCALEDIR="@0@"'.format(gdu_prefix / gdu_localedir),
 ]
+
+if enable_logind
+  deps += logind_dep
+endif
 
 executable(
   name.to_lower(),

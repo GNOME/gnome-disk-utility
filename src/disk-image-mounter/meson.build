@@ -6,7 +6,6 @@ deps = [
 ]
 
 cflags = [
-  '-DPACKAGE_DATA_DIR="@0@"'.format(gdu_prefix / gdu_datadir),
   '-DG_LOG_DOMAIN="@0@"'.format(name),
   '-DGNOMELOCALEDIR="@0@"'.format(gdu_prefix / gdu_localedir),
 ]

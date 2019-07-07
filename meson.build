@@ -105,7 +105,11 @@ endif
 
 subdir('data')
 subdir('po')
-subdir('doc/man')
+
+enable_man = get_option('man')
+if enable_man
+  subdir('doc/man')
+endif
 
 configure_file(
   output: 'config.h',

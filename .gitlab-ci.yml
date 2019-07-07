@@ -1,0 +1,19 @@
+image: fedora:rawhide
+stages:
+  - build
+
+variables:
+  DEPENDENCIES: glib-devel gtk3-devel libcanberra-devel libdvdread-devel
+                libnotify-devel libsecret-devel libpwquality-devel
+                libudisks2-devel xz-devel systemd-devel meson gcc
+                glibc-devel gettext
+  OPTIONS: -Dman=false
+
+build:
+  stage: build
+  before_script:
+    - dnf update -y --nogpgcheck && dnf install -y --nogpgcheck $DEPENDENCIES
+  script:
+    - meson . _build $OPTIONS
+    - ninja -C _build
+    - ninja -C _build install

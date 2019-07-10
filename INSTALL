@@ -23,10 +23,67 @@ compile:
 run GNOME Disks:
   builddir/src/disks/gnome-disks
 
+to install to the configured prefix (defaults to system-wide /usr/local):
+  cd builddir
+  ninja install
+
 produce a release tarball:
   cd builddir
   ninja dist
 
-This will build against the system libraries.
-JHBuild can build against recent library versions:
-https://wiki.gnome.org/HowDoI/Jhbuild
+
+
+The above steps will build GNOME Disks against the system libraries
+and the version of UDisks provided by the system.
+This will fail if you cannot install the right dependencies.
+Both JHBuild and BuildStream currently do not
+have UDisks and libblockdev in their build manifests,
+but it's possible to use Flatpak to build
+GNOME Disks against UDisks and libblockdev
+from git, and then start the built UDisks binary,
+replacing the system daemon:
+
+Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
+  flatpak-builder app flatpak/org.gnome.DiskUtility.json
+  sudo LD_LIBRARY_PATH=app/files/lib/ app/files/libexec/udisks2/udisksd -r
+  # in a new terminal in the current folder:
+  flatpak-builder --run app flatpak/org.gnome.DiskUtility.json gnome-disks
+  # or LD_LIBRARY_PATH=app/files/lib/ app/files/bin/gnome-disks to run without any sandboxing
+You can also install the resulting Flatpak in your system:
+  flatpak-builder --force-clean --install app flatpak/org.gnome.DiskUtility.json
+  flatpak run org.gnome.DiskUtility
+  # and uninstall it when it's not needed anymore:
+  flatpak --user uninstall org.gnome.DiskUtility
+
+This runs/installs GNOME Disks built against UDisks and libblockdev from git
+but if you do not start a the new udisksd with the LD_LIBRARY_PATH trick, 
+the resulting Flatpak app will still use the UDisks version provided by the system. 
+That is because Flatpak cannot run the built UDisks as new system service.
+
+Note that the UDisks built with Flatpak is currently minimal
+and does not include many UDisks features because the main
+use case for Flatpak is currently running in the CI.
+It's not meant for end users due to the fact that UDisks
+cannot be bundled and people unaware of the version mismatch
+will probably report strange bugs when running UDisks from
+an old distribution.
+
+Build a Flatpak app with your local source code changes:
+  flatpak-builder --force-clean --stop-at=gnome-disk-utility app flatpak/org.gnome.DiskUtility.json gnome-disks
+  flatpak build app meson --prefix=/app _build
+  flatpak build app ninja -C _build install
+  flatpak-builder --finish-only --repo=repo app flatpak/org.gnome.DiskUtility.json
+  # Now you can already run it the same as above and with UDisks through the LD_LIBRARY_PATH trick
+  # or you can continue to do the following step to create a Flatpak bundle.
+  flatpak build-bundle repo org.gnome.DiskUtility.flatpak --runtime-repo=https://sdk.gnome.org/gnome-nightly.flatpakrepo org.gnome.DiskUtility
+  # Install the resulting org.gnome.DiskUtility.flatpak file:
+  flatpak --user install org.gnome.DiskUtility.flatpak
+  # Finally, run the app:
+  flatpak run org.gnome.DiskUtility
+  # and uninstall it when you are done:
+  flatpak --user uninstall org.gnome.DiskUtility
+
+If you want to test things in your own development branches of UDisks or libblockdev,
+you need to change the Flatpak manifest and point it to your repository/branch.
+Note that the parted release that the Flatpak build uses does not have bugfixes
+which the distributions have patched since years.

@@ -50,7 +50,7 @@ Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
   flatpak-builder --run app flatpak/org.gnome.DiskUtility.json gnome-disks
   # or LD_LIBRARY_PATH=app/files/lib/ app/files/bin/gnome-disks to run without any sandboxing
 You can also install the resulting Flatpak in your system:
-  flatpak-builder --force-clean --install app flatpak/org.gnome.DiskUtility.json
+  flatpak-builder --force-clean --user --install app flatpak/org.gnome.DiskUtility.json
   flatpak run org.gnome.DiskUtility
   # and uninstall it when it's not needed anymore:
   flatpak --user uninstall org.gnome.DiskUtility

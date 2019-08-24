@@ -45,7 +45,8 @@ replacing the system daemon:
 
 Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
   flatpak-builder app flatpak/org.gnome.DiskUtility.json
-  sudo LD_LIBRARY_PATH=app/files/lib/ app/files/libexec/udisks2/udisksd -r
+  # now run UDisks as system service, replacing your system's instance
+  sudo bwrap --tmpfs / --proc /proc --bind /sys /sys --dev-bind /dev /dev --dir /tmp --ro-bind /home/kai/.local/share/flatpak/runtime/org.gnome.Platform/x86_64/master/active/files /usr --bind /etc /etc --bind /var /var --bind /run /run --symlink usr/lib64 /lib64 --ro-bind app/files /app --chdir / --die-with-parent /app/libexec/udisks2/udisksd -r
   # in a new terminal in the current folder:
   flatpak-builder --run app flatpak/org.gnome.DiskUtility.json gnome-disks
   # or LD_LIBRARY_PATH=app/files/lib/ app/files/bin/gnome-disks to run without any sandboxing

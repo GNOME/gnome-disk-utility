@@ -44,9 +44,13 @@ from git, and then start the built UDisks binary,
 replacing the system daemon:
 
 Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
+  # (skip these two steps if you already installed the nightly GNOME runtime)
+  flatpak --user remote-add --if-not-exists gnome-nightly https://sdk.gnome.org/gnome-nightly.flatpakrepo
+  flatpak --user install gnome-nightly org.gnome.Platform//master org.gnome.Sdk//master
+  # build GNOME Disks and all dependencies
   flatpak-builder app flatpak/org.gnome.DiskUtility.json
   # now run UDisks as system service, replacing your system's instance
-  sudo bwrap --tmpfs / --proc /proc --bind /sys /sys --dev-bind /dev /dev --dir /tmp --ro-bind /home/kai/.local/share/flatpak/runtime/org.gnome.Platform/x86_64/master/active/files /usr --bind /etc /etc --bind /var /var --bind /run /run --symlink usr/lib64 /lib64 --ro-bind app/files /app --chdir / --die-with-parent /app/libexec/udisks2/udisksd -r
+  sudo bwrap --tmpfs / --proc /proc --bind /sys /sys --dev-bind /dev /dev --dir /tmp --ro-bind ~/.local/share/flatpak/runtime/org.gnome.Platform/x86_64/master/active/files /usr --bind /etc /etc --bind /var /var --bind /run /run --symlink usr/lib64 /lib64 --ro-bind app/files /app --chdir / --die-with-parent /app/libexec/udisks2/udisksd -r
   # in a new terminal in the current folder:
   flatpak-builder --run app flatpak/org.gnome.DiskUtility.json gnome-disks
   # or LD_LIBRARY_PATH=app/files/lib/ app/files/bin/gnome-disks to run without any sandboxing
@@ -74,7 +78,7 @@ Build a Flatpak app with your local source code changes:
   flatpak build app meson --prefix=/app _build
   flatpak build app ninja -C _build install
   flatpak-builder --finish-only --repo=repo app flatpak/org.gnome.DiskUtility.json
-  # Now you can already run it the same as above and with UDisks through the LD_LIBRARY_PATH trick
+  # Now you can already run it the same way as above (flatpak-builder --run app …, and restart UDisks through bwrap)
   # or you can continue to do the following step to create a Flatpak bundle.
   flatpak build-bundle repo org.gnome.DiskUtility.flatpak --runtime-repo=https://sdk.gnome.org/gnome-nightly.flatpakrepo org.gnome.DiskUtility
   # Install the resulting org.gnome.DiskUtility.flatpak file:

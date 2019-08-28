@@ -13,7 +13,7 @@
 # Felipe Braga <fbobraga@gmail.com>, 2015.
 # Gustavo Marques <gutodisse@gmail.com>, 2016.
 # Ovídio José Francisco <ovidiojf@gmail.com>, 2017.
-# Enrico Nicoletto <liverig@gmail.com>, 2009, 2013, 2014, 2015, 2018.
+# Enrico Nicoletto <liverig@gmail.com>, 2009, 2013, 2014, 2015, 2018, 2019.
 # Bruno Lopes da Silva <brunolopesbldsb@gmail.com>, 2018.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2012-2019.
 #
@@ -22,16 +22,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-04-03 11:40+0000\n"
-"PO-Revision-Date: 2019-07-22 00:54-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2019-07-29 21:55+0000\n"
+"PO-Revision-Date: 2019-08-28 10:39-0300\n"
+"Last-Translator: Enrico Nicoletto <enriconlto@src.gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 3.32.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.2.3\n"
 "X-Project-Style: gnome\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -1531,7 +1531,7 @@ msgstr "Sem sistema de arquivos"
 #: src/disks/gducreateotherpage.c:203
 #, c-format
 msgid "The utility %s is missing."
-msgstr "O utilitário %s não foi encontrado"
+msgstr "Não foi encontrado o utilitário %s."
 
 #: src/disks/gducreatepartitionpage.c:320
 msgid ""
@@ -2297,11 +2297,6 @@ msgid "Confirm Repair"
 msgstr "Confirmar a correção"
 
 #: src/disks/gduwindow.c:3071
-#| msgid ""
-#| "A filesystem repair is not always possible and can cause data loss. "
-#| "Consider backing it up first in order to use forensic recovery tools that "
-#| "retrieve lost files. Depending on the amount of data this operation takes "
-#| "longer time."
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2666,7 +2661,7 @@ msgstr "Atenção: todos os dados no volume serão perdidos"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Confirme os detalhes do volume atual antes de prosseguir."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Dispositivo"
 
@@ -2721,8 +2716,9 @@ msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
-"O nome do sistema de arquivos. Útil se você desejar referir-se ao "
-"dispositivo através de um link simbólico no diretório /dev/disk/by-label"
+"Representa o nome a ser usado pelo sistema de arquivos. Útil se você desejar "
+"referir-se ao dispositivo através de um link simbólico no diretório /dev/"
+"disk/by-label"
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
@@ -3005,7 +3001,7 @@ msgstr "Nome mundial"
 msgid "Media"
 msgstr "Mídia"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
 msgid "Job"
 msgstr "Trabalho"
 
@@ -3013,7 +3009,7 @@ msgstr "Trabalho"
 msgid "Name"
 msgstr "Nome"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
 msgid "Size"
 msgstr "Tamanho"
 
@@ -3042,49 +3038,94 @@ msgstr "_Volumes"
 msgid "Mount selected partition"
 msgstr "Montar partição selecionada"
 
-#: src/disks/ui/disks.ui:705
+#: src/disks/ui/disks.ui:693
+msgctxt "Accessibility label for toolbutton-mount"
+msgid "Mount"
+msgstr "Montar"
+
+#: src/disks/ui/disks.ui:706
 msgid "Unmount selected partition"
 msgstr "Desmontar partição selecionada"
 
-#: src/disks/ui/disks.ui:718
+#: src/disks/ui/disks.ui:707
+msgctxt "Accessibility label for toolbutton-unmount"
+msgid "Unmount"
+msgstr "Desmontar"
+
+#: src/disks/ui/disks.ui:720
 msgid "Activate selected swap partition"
 msgstr "Ativar partição swap selecionada"
 
-#: src/disks/ui/disks.ui:731
+#: src/disks/ui/disks.ui:721
+msgctxt "Accessibility label for toolbutton-activate-swap"
+msgid "Activate swap"
+msgstr "Ativar swap"
+
+#: src/disks/ui/disks.ui:734
 msgid "Deactivate selected swap partition"
 msgstr "Desativar partição swap selecionada"
 
-#: src/disks/ui/disks.ui:745
+#: src/disks/ui/disks.ui:735
+msgctxt "Accessibility label for toolbutton-deactivate-swap"
+msgid "Deactivate swap"
+msgstr "Desativar swap"
+
+#: src/disks/ui/disks.ui:748
 msgid "Unlock selected encrypted partition"
 msgstr "Desbloquear a partição criptografada selecionada"
 
-#: src/disks/ui/disks.ui:758
+#: src/disks/ui/disks.ui:749
+msgctxt "Accessibility label for toolbutton-unlock"
+msgid "Unlock"
+msgstr "Desbloquear"
+
+#: src/disks/ui/disks.ui:762
 msgid "Lock selected encrypted partition"
 msgstr "Bloquear a partição criptografada selecionada"
 
+#: src/disks/ui/disks.ui:763
+msgctxt "Accessibility label for toolbutton-lock"
+msgid "Lock"
+msgstr "Bloquear"
+
 # Adotei a tradução "em espaço vazio" ao invés de "em espaço desalocado", para deixar a sentença menos formal e com menos caracteres. --Enrico
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:776
 msgid "Create partition in unallocated space"
 msgstr "Criar partição em espaço vazio"
 
-#: src/disks/ui/disks.ui:783
+#: src/disks/ui/disks.ui:777
+msgctxt "Accessibility label for toolbutton-partition-create"
+msgid "Create partition"
+msgstr "Criar partição"
+
+#: src/disks/ui/disks.ui:790
 msgid "Delete selected partition"
 msgstr "Excluir partição selecionada"
 
-#: src/disks/ui/disks.ui:796
+#: src/disks/ui/disks.ui:791
+msgctxt "Accessibility label for toolbutton-partition-delete"
+msgid "Delete partition"
+msgstr "Excluir partição"
+
+#: src/disks/ui/disks.ui:804
 msgid "Additional partition options"
 msgstr "Opções adicionais de partição"
 
+#: src/disks/ui/disks.ui:805
+msgctxt "Accessibility label for toolbutton-volume-menu"
+msgid "Menu"
+msgstr "Menu"
+
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:864
+#: src/disks/ui/disks.ui:873
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: src/disks/ui/disks.ui:938
+#: src/disks/ui/disks.ui:947
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:975
+#: src/disks/ui/disks.ui:984
 msgid "Partition Type"
 msgstr "Tipo de partição"
 

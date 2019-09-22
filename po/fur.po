@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-04-03 11:40+0000\n"
-"PO-Revision-Date: 2019-04-20 02:17+0200\n"
+"POT-Creation-Date: 2019-09-09 05:39+0000\n"
+"PO-Revision-Date: 2019-09-22 07:53+0200\n"
 "Last-Translator: Fabio Tomat <f.t.public@gmail.com>\n"
 "Language-Team: Friulian <f.t.public@gmail.com>\n"
 "Language: fur\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.3\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -81,7 +81,7 @@ msgid "The GNOME Project"
 msgstr "Il progjet GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Discs"
 
@@ -2620,7 +2620,7 @@ msgstr "Avertiment: ducj i dâts sul volum a laran pierdûts"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Conferme i detais dal volum atuâl prime di procedi."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Dispositîf"
 
@@ -2953,7 +2953,7 @@ msgstr "Non World Wide (WWN)"
 msgid "Media"
 msgstr "Supuart"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
 msgid "Job"
 msgstr "Vore"
 
@@ -2961,7 +2961,7 @@ msgstr "Vore"
 msgid "Name"
 msgstr "Non"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
 msgid "Size"
 msgstr "Dimension"
 
@@ -2990,48 +2990,93 @@ msgstr "_Volums"
 msgid "Mount selected partition"
 msgstr "Monte la partizion selezionade"
 
-#: src/disks/ui/disks.ui:705
+#: src/disks/ui/disks.ui:693
+msgctxt "Accessibility label for toolbutton-mount"
+msgid "Mount"
+msgstr "Monte"
+
+#: src/disks/ui/disks.ui:706
 msgid "Unmount selected partition"
 msgstr "Smonte la partizion selezionade"
 
-#: src/disks/ui/disks.ui:718
+#: src/disks/ui/disks.ui:707
+msgctxt "Accessibility label for toolbutton-unmount"
+msgid "Unmount"
+msgstr "Dismonte"
+
+#: src/disks/ui/disks.ui:720
 msgid "Activate selected swap partition"
 msgstr "Ative la partizion swap selezionade"
 
-#: src/disks/ui/disks.ui:731
+#: src/disks/ui/disks.ui:721
+msgctxt "Accessibility label for toolbutton-activate-swap"
+msgid "Activate swap"
+msgstr "Ative la partizion di swap"
+
+#: src/disks/ui/disks.ui:734
 msgid "Deactivate selected swap partition"
 msgstr "Disative la partizion swap selezionade"
 
-#: src/disks/ui/disks.ui:745
+#: src/disks/ui/disks.ui:735
+msgctxt "Accessibility label for toolbutton-deactivate-swap"
+msgid "Deactivate swap"
+msgstr "Disative la partizion di swap"
+
+#: src/disks/ui/disks.ui:748
 msgid "Unlock selected encrypted partition"
 msgstr "Sbloche la partizion critografade selezionade"
 
-#: src/disks/ui/disks.ui:758
+#: src/disks/ui/disks.ui:749
+msgctxt "Accessibility label for toolbutton-unlock"
+msgid "Unlock"
+msgstr "Sbloche"
+
+#: src/disks/ui/disks.ui:762
 msgid "Lock selected encrypted partition"
 msgstr "Bloche la partizion critografade selezionade"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:763
+msgctxt "Accessibility label for toolbutton-lock"
+msgid "Lock"
+msgstr "Bloche"
+
+#: src/disks/ui/disks.ui:776
 msgid "Create partition in unallocated space"
 msgstr "Cree partizion tal spazi no doprât"
 
-#: src/disks/ui/disks.ui:783
+#: src/disks/ui/disks.ui:777
+msgctxt "Accessibility label for toolbutton-partition-create"
+msgid "Create partition"
+msgstr "Cree partizion"
+
+#: src/disks/ui/disks.ui:790
 msgid "Delete selected partition"
 msgstr "Elimine la partizion"
 
-#: src/disks/ui/disks.ui:796
+#: src/disks/ui/disks.ui:791
+msgctxt "Accessibility label for toolbutton-partition-delete"
+msgid "Delete partition"
+msgstr "Elimine partizion"
+
+#: src/disks/ui/disks.ui:804
 msgid "Additional partition options"
 msgstr "Opzions adizionai pe partizion"
 
+#: src/disks/ui/disks.ui:805
+msgctxt "Accessibility label for toolbutton-volume-menu"
+msgid "Menu"
+msgstr "Menù"
+
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:864
+#: src/disks/ui/disks.ui:873
 msgid "Contents"
 msgstr "Contignût"
 
-#: src/disks/ui/disks.ui:938
+#: src/disks/ui/disks.ui:947
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:975
+#: src/disks/ui/disks.ui:984
 msgid "Partition Type"
 msgstr "Gjenar di partizion"
 

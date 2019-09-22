@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2019-09-04 13:23+0000\n"
-"PO-Revision-Date: 2019-09-05 20:44+0000\n"
+"POT-Creation-Date: 2019-09-22 05:56+0000\n"
+"PO-Revision-Date: 2019-09-22 09:52+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <translate@ifsug.org>\n"
 "Language: fa\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-DamnedLies-Scope: partial\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -37,6 +37,18 @@ msgstr "نویسندهٔ تصویر دیسک"
 #: data/gnome-disk-image-writer.desktop.in:4
 msgid "Write Disk Images to Devices"
 msgstr "نوشتن تصویر دیسک روی افزاره‌ها"
+
+#: data/org.gnome.Disks.gschema.xml:6
+msgid "Default location for the Create/Restore disk image dialogs"
+msgstr "موقعیت پیش گزیده برای محاوره‌های ایجاد/بازگردانی تصویر دیسک"
+
+#: data/org.gnome.Disks.gschema.xml:7
+msgid ""
+"Default location for the Create/Restore disk image dialogs. If blank the ~/"
+"Documents folder is used."
+msgstr ""
+"موقعیت پیش گزیده برای محاوره‌های ایجاد/بازگردانی تصویر دیسک. در صورت خالی بودن، "
+"شاخهٔ ‪~/Documents‬ استفاده می‌شود."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -184,11 +196,11 @@ msgstr "بازگردانی تصویر دیسک"
 
 #: src/disks/gduapplication.c:210
 msgid "--format-device must be used together with --block-device\n"
-msgstr ""
+msgstr "‪--format-device‬ باید همراه با --block-device‬ استفاده شود\n"
 
 #: src/disks/gduapplication.c:216
 msgid "--format-device must be specified when using --xid\n"
-msgstr ""
+msgstr "باید هنگام استفاده از ‪--xid‬، مقدار ‪--format-device‬ مشخّص شود\n"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
@@ -1111,13 +1123,13 @@ msgstr "در حال گشودن افزاره…"
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr ""
+msgstr "سنجش آهنگ انتقال (%I2.1f٪)…"
 
 #: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
-msgstr ""
+msgstr "سنجش زمان دسترسی (%I2.1f٪)"
 
 #: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
@@ -1184,13 +1196,13 @@ msgstr "خطا در پیش‌خوانی %Illd بایت از جابه‌جایی 
 #, c-format
 msgctxt "benchmarking"
 msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr ""
+msgstr "خطا در نوشتن %Illd بایت در جابه‌جایی %Illd: %m"
 
 #: src/disks/gdubenchmarkdialog.c:1353
 #, c-format
 msgctxt "benchmarking"
 msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
+msgstr "انتظار نوشتن %Illd بایت، تنها %Illd بایت نوشته شد: %m"
 
 #: src/disks/gdubenchmarkdialog.c:1363
 #, c-format
@@ -1323,6 +1335,9 @@ msgid ""
 "zeroes in the created disk image file. This typically happens if the medium is "
 "scratched or if there is physical damage to the drive"
 msgstr ""
+"%I2.1f٪ (%s) از داده‌های روی افزارهٔ %s غیرقابل خواندن بودند و پروندهٔ تصویر دیسک "
+"ایجاد شده، با صفر پر شدند. این اتّفاق عموماً وقتی می‌افتد که واسط خراشیده شده یا "
+"آسیبی فیزیکی به گرداننده وارد شده باشد"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: src/disks/gducreatediskimagedialog.c:495
@@ -1734,28 +1749,28 @@ msgstr ""
 #: src/disks/gdufstabdialog.c:155
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
-msgstr ""
+msgstr "افراز %Iu افزاره مطابق با داده‌های محصول حیاتی داده شده"
 
 #: src/disks/gdufstabdialog.c:158
 msgid "Matches the whole disk of the device with the given vital product data"
-msgstr ""
+msgstr "کل دیسک افزاره مطابق با داده‌های محصول حیاتی داده شده"
 
 #: src/disks/gdufstabdialog.c:163
 #, c-format
 msgid "Matches partition %u of any device connected at the given port or address"
-msgstr ""
+msgstr "افراز %Iu همهٔ افزاره‌های متصّل، مطابق با داده‌های محصول حیاتی داده شده"
 
 #: src/disks/gdufstabdialog.c:166
 msgid "Matches the whole disk of any device connected at the given port or address"
-msgstr ""
+msgstr "کل دیسک همهٔ افزاره‌های متصّل، مطابق با داده‌های محصول حیاتی داده شده"
 
 #: src/disks/gdufstabdialog.c:170
 msgid "Matches any device with the given label"
-msgstr ""
+msgstr "مطابق با همهٔ افزاره‌ها با برچسب داده‌شده"
 
 #: src/disks/gdufstabdialog.c:174
 msgid "Matches the device with the given UUID"
-msgstr ""
+msgstr "مطابق با افزارهٔ با شناسهٔ یکتای داده‌شده"
 
 #: src/disks/gdufstabdialog.c:178
 msgid "Matches the given device"
@@ -1783,7 +1798,7 @@ msgstr "خطا در هنگام بروزرسانیِ ورودیِ ‪/etc/fstab�
 #: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
-msgstr ""
+msgstr "بی‌نام ‪(%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
 msgid "Error writing file"
@@ -2072,7 +2087,7 @@ msgstr "%s اط %s — %s"
 #: src/disks/gduwindow.c:1883
 #, c-format
 msgid "%s: %2.1f%%"
-msgstr ""
+msgstr "%s: %I2.1f٪"
 
 #: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
 msgid "Block device is empty"
@@ -2105,7 +2120,7 @@ msgstr "افزارهٔ حلقه‌ای خالیست"
 #: src/disks/gduwindow.c:2503
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr ""
+msgstr "%s — %s آزاد (%I.1f٪ پر)"
 
 #: src/disks/gduwindow.c:2533
 msgctxt "partition type"
@@ -2210,6 +2225,10 @@ msgid ""
 "files. The operation may take a long time, especially if the partition contains a "
 "lot of data."
 msgstr ""
+"تعمیر سامانه‌پرونده همیشه امکان‌پذبر نیست و ممکن است منجر به از دست دادن داده شود. "
+"برای استفاده از ابزارهای بازیابی خارجی که پرونده‌های از دست رفته را بازمی‌گردانند، "
+"گرفتن پشتیبان را در نظر داشته باشید. ممکن است عملیات خیلی طول بکشد، مخصوصاً اگر "
+"افراز شامل داده‌های زیادی باشد."
 
 #: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
@@ -2418,6 +2437,9 @@ msgid ""
 "as well as measuring how long it takes to seek from one random area to another. "
 "Please back up important data before using the write benchmark."
 msgstr ""
+"محک‌زنی شامل سنجش آهنگ انتقال روی نواحی مختلفی از افزاره به همراه سنجش مدّت زمان "
+"دسترسی از یک ناحیهٔ تصادفی به ناحیه‌ای دیگر است. لطفاً  پیش از استفاده از مجک نوشتن، "
+"از داده‌ّای مهم پشتیبان بگیرید."
 
 #: src/disks/ui/benchmark-dialog.ui:397
 msgid "Transfer Rate"
@@ -2445,6 +2467,12 @@ msgid ""
 "hand exclusive access to the device is not needed (e.g. the disk or device can be "
 "in use)."
 msgstr ""
+"مجک آهنگ نوشتن یک دیسک، نیاز به دسترسی اختصاصی به دیسک دارد (برای مثال، دیسک یا "
+"افرازهایش نمی‌توانند سوار شده یا استفاده شوند) و شامل خواندن داده‌ها و نوشتن دوبارهٔ "
+"آن‌هاست. در نتیجه،‌محتویات دیسک تغییر نمی‌کنند.\n"
+"\n"
+"اگر گزیده نشده باشد، بخش نوشتن محک انجام نخواهد شد، ولی از آن سو، نیاز به دسترسی "
+"اختصاصی به افزاره نیز نیست (برای مثال، دیسک یا افزاره می‌تواند استفاده شود)."
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
@@ -2459,6 +2487,8 @@ msgid ""
 "tend to produce more accurate benchmarks at the cost of the benchmark taking more "
 "time."
 msgstr ""
+"نعداد میبی‌بایت‌ها(۱۰۴۸۵۷۶ بایت) برای خواندن/نوشتن برای هر نمونه. اندازهٔ نمونه‌های "
+"بزرگ، محک دقیق‌تری در ازای زمان بیش‌تر فراهم می‌کنند."
 
 #: src/disks/ui/benchmark-dialog.ui:533
 msgid "Access Time"
@@ -2630,6 +2660,8 @@ msgid ""
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
 msgstr ""
+"در صورتی که گزینه‌های پیش‌گزیده مطابق نیازتان نیستند، یکی از سامانه‌پرونده‌ّای زیر را "
+"برگزینید. از تفاوت‌های فنّی آگاه بوده و دربارهٔ مورد استفاده‌تان تحقیق کنید."
 
 #: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
@@ -2715,6 +2747,8 @@ msgid ""
 "Data stored in the volume will only be accessible with the correct password. Be "
 "careful not to forget it."
 msgstr ""
+"داده‌ّای ذخیره‌شده در حجم تنها با گذرواژهٔ درست قابل دسترسیند. مواظب باشید فراموشش "
+"نکنید."
 
 #: src/disks/ui/create-password-page.ui:34
 msgid "_Password"
@@ -2734,7 +2768,7 @@ msgstr "_نمایش گذرواژه"
 
 #: src/disks/ui/create-password-page.ui:134
 msgid "Mix uppercase and lowercase and try to use a number or two."
-msgstr ""
+msgstr "حروف بزرگ و کوچک را ادغام کنید و از یک یا چند عدد هم استفاده کنید."
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -2748,6 +2782,7 @@ msgstr "اعمال تنظیمات زمان آماده به کار شدن"
 msgid ""
 "Turn on to configure Standby Timeout at startup and when the disk is connected"
 msgstr ""
+"برای پیکربندی زمان آماده‌به‌کار هنگام راه‌اندازی و وقتی دیسک وصل شده‌است، روشن کنید"
 
 #: src/disks/ui/disk-settings-dialog.ui:104
 msgid "Enter Standby After"
@@ -2763,7 +2798,7 @@ msgstr "اعمال تنظیمات مدیریت نیروی پیشرفته"
 
 #: src/disks/ui/disk-settings-dialog.ui:199
 msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr ""
+msgstr "برای پیکربندی APM هنگام راه‌اندازی و وقتی دیسک وصل شده‌است، روشن کنید"
 
 #: src/disks/ui/disk-settings-dialog.ui:232
 msgid "APM Level"
@@ -2774,6 +2809,8 @@ msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please check "
 "the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"کاهش سرعت تهاجمی، ممکن است موجب استهلاک زودرس گرداننده شود. هر از گاه، ویژگی "
+"«شمارش شروع/پایان» SMART را بررسی کنید"
 
 #: src/disks/ui/disk-settings-dialog.ui:308
 msgid "A_PM"
@@ -2785,7 +2822,7 @@ msgstr "اعمال تنظیمات مدیریت صدای خودکار"
 
 #: src/disks/ui/disk-settings-dialog.ui:350
 msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr ""
+msgstr "برای پیکربندی AAM هنگام راه‌اندازی و وقتی دیسک وصل شده‌است، روشن کنید"
 
 #: src/disks/ui/disk-settings-dialog.ui:384
 msgid "Vendor Recommended"
@@ -2807,6 +2844,8 @@ msgstr "اعمال تنظمیات انبارهٔ نوشتن"
 msgid ""
 "Turn on to configure Write Cache setting at startup and when the disk is connected"
 msgstr ""
+"برای پیکربندی تنظیمات انبارهٔ نوشتن هنگام راه‌اندازی و وقتی دیسک وصل شده‌است، روشن "
+"کنید"
 
 #: src/disks/ui/disk-settings-dialog.ui:549
 msgid "S_etting"
@@ -2825,6 +2864,8 @@ msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
 msgstr ""
+"با به کار انداختن انبارهٔ نوشتن، بازدهی افزایش می‌یابد، ولی سامانه در خطر از دست "
+"رفتن داده‌ها هنگام قطع برق قرار می‌گیرد"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
@@ -3023,6 +3064,9 @@ msgid ""
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr ""
+"برای مدیریت گزینه‌های رمزنگاری و عبارت‌عبور برای افزاره، <i>پیش گزیده‌های نشست "
+"کاربر</i> را خاموش کنید. گزینه‌ها مطابق با یک ورودی در پروندهٔ <b>‪/etc/crypttab‬</b> "
+"هستند"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
@@ -3033,6 +3077,8 @@ msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
+"نام مورد استفاده برای افزارهٔ قفل‌گشوده — افزاره به عنوان یک نام پیشوندی با <b>‪/dev/"
+"mapper‬</b> برپا می‌شود/"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:196
 msgid "Options to use when unlocking the device"
@@ -3100,6 +3146,9 @@ msgid ""
 "from. Sometimes the partition with this flag set is referred to as the <i>active</"
 "i> partition"
 msgstr ""
+"پرچمی که به دست بارکنندهٔ راه‌اندازی بن‌سازه برای تشخیص این که سیستم‌عامل باید از کجا "
+"بار شود استفاده می‌شود. گاهی از افراز با این پرچم با عنوان افزار <i>فعّال</i> یاد "
+"می‌شود"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:7
 msgid "Change Filesystem Label"
@@ -3107,7 +3156,7 @@ msgstr "تغییر برچسب سامانه‌پرونده"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:72
 msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr ""
+msgstr "این سامانه‌پرونده پیش از هر تغییری، به صورت خودکار پیاده خواهد شد."
 
 #: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
@@ -3122,22 +3171,28 @@ msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount options "
 "for the device. The options correspond to an entry in the <b>/etc/fstab</b> file"
 msgstr ""
+"برای مدیریت گزینه‌ها و نقطه‌های اتّصال برای افزاره، <i>پیش گزیده‌های نشست کاربر</i> "
+"را خاموش کنید. گزینه‌ها مطابق با یک ورودی در پروندهٔ <b>‪/etc/fstab‬</b> هستند"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
-msgstr ""
+msgstr "_شناخته‌شده به عنوان"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> hierarchy "
 "to control the scope of the entry"
 msgstr ""
+"<b>پروندهٔ افزارهٔ ویژه</b> — برای واپایش حوزهٔ ورودی از پیوندهای نرم در سلسله‌مراتب "
+"<b>‪/dev/disk‬</b> استفاده کنید"
 
 #: src/disks/ui/edit-fstab-dialog.ui:111
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control the "
 "scope of the entry"
 msgstr ""
+"پروندهٔ افزارهٔ ویژه — برای واپایش حوزهٔ ورودی از پیوندهای نرم در سلسله‌مراتب ‪/dev/"
+"dik‬ استفاده کنید"
 
 #: src/disks/ui/edit-fstab-dialog.ui:141
 msgid "Mount _Point"
@@ -3161,7 +3216,7 @@ msgstr "_نام نمایشی"
 
 #: src/disks/ui/edit-fstab-dialog.ui:238
 msgid "If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
+msgstr "در صورت تنظیم، نام مورد استفاده برای افزاره در رابط کاربری ‪[x-gvfs-name=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:255
 msgid "Icon Na_me"
@@ -3172,6 +3227,7 @@ msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-gvfs-"
 "icon=]"
 msgstr ""
+"در صورت تنظیم، نام نقشک مورد استفاده در افزاره در رابط کاربری ‪[x-gvfs-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Sho_w in user interface"
@@ -3182,6 +3238,8 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what its "
 "directory is [x-gvfs-show]"
 msgstr ""
+"در صورت گزینش، افزاره همواره بدون توجّه به شاخه‌اش، در رابط کاربری نشان داده می‌شود "
+"[x-gvfs-show]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Require additional authori_zation to mount"
@@ -3192,6 +3250,8 @@ msgid ""
 "If checked, additional authorization is required to mount the device [x-udisks-"
 "auth]"
 msgstr ""
+"در صورت گزینش، تصدیق‌هویت بیشتری برای سوار شدن افزاره لازم خواهد بود [x-udisks-"
+"auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
 msgid "Mount at system _startup"
@@ -3210,6 +3270,8 @@ msgid ""
 "If set, the name of the symbolic icon to use in the device in the user interface "
 "[x-gvfs-symbolic-icon=]"
 msgstr ""
+"در صورت تنظیم، نام نقشک نمادین مورد استفاده در افزاره در رابط کاربری ‪[x-gvfs-"
+"symbolic-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:396
 msgid "Mount Opt_ions"
@@ -3217,17 +3279,19 @@ msgstr "_گزینه‌های سوار شدن"
 
 #: src/disks/ui/edit-fstab-dialog.ui:415
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+msgstr "گزینه‌های سوار شدن نگه‌داری شده در پروندهٔ <b>‪/etc/fstab‬</b>"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:93
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr ""
+msgstr "گونهٔ افراز ارائه‌شده به عنوان یک <i>GUID</i> ۳۲بیتی"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:125
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want to "
 "refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> directory"
 msgstr ""
+"نام افراز (تا ۳۶ نویسهٔ یونی‌کد). اگر می‌خواهید از طریق یک پیوند نرم در شاخهٔ <b>‪/dev/"
+"disk/by-partlabel‬</b> به افزاره اشاره کنید مفید است"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:138
 msgid "_System Partition"
@@ -3239,6 +3303,8 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or overwrite the "
 "contents"
 msgstr ""
+"استفاده‌شده برای نشان دادن این که افراز و محتویاتش برای کارکرد سیستم‌عامل/سامانه "
+"لازمند. نیازمند مراقبت‌های ویژه برای حذف یا بازنویسی نشدن محتویاش"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:157
 msgid "Legacy BIOS _Bootable"
@@ -3249,6 +3315,8 @@ msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is normally "
 "only used for GPT partitions on MBR systems"
 msgstr ""
+"این معادل پرچم <i>bootable</i> در MBR است. معمولاً برای افرازهای GPT روی سامانه‌های "
+"MBR استفاده می‌شود"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3263,6 +3331,8 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and not "
 "try to read from it"
 msgstr ""
+"نشان می‌دهد که میان‌افزار EFI باید محتوای افراز را نادیده گرفته و برای خواندن از آن "
+"تلاش نکند"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3331,6 +3401,10 @@ msgid ""
 "The minimal size is calculated according to the current content. Keep additional "
 "free space for the filesystem to work fast and reliably."
 msgstr ""
+"تغییر اندازهٔ یم سامانه‌پرونده می‌تواند منجر به از دست دادن داده شود. توصیه می‌شود "
+"قبلش از داده‌هایتان پشتیبان بگیرید. اگر داده‌های زیادی نیاز به جابه‌جایی داشته "
+"باشند، عملیات تغییر اندازه بیش‌تر طول خواهد کشید. کمینهٔ اندازه با توجّه به محتوای "
+"فعلی محاسبه شده است. برای کارکردن سریع و مطمئن، فضای خالی اضافی بگذارید."
 
 #: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
@@ -3460,11 +3534,11 @@ msgstr "توقف خودآزمایی‌ها"
 
 #: src/disks/ui/smart-dialog.ui:44
 msgid "Click to stop the SMART self-test currently in progress"
-msgstr ""
+msgstr "کلیک برای توقّف خودآزمایی SMART در حال اجرا"
 
 #: src/disks/ui/smart-dialog.ui:74
 msgid "Click to force re-reading SMART data from the hard disk"
-msgstr ""
+msgstr "کلیک برای اجبار به بازخوانی داده‌های SMART از دیسک سخت"
 
 #: src/disks/ui/smart-dialog.ui:113
 msgid "Powered On"
@@ -3488,7 +3562,7 @@ msgstr "ارزیابی کلّی"
 
 #: src/disks/ui/smart-dialog.ui:317
 msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr ""
+msgstr "کلیک برای تغییر وضعیت به کار انداختن SMART برای دیسک سخت"
 
 #: src/disks/ui/smart-dialog.ui:339
 msgid "SMART _Attributes"
@@ -3512,11 +3586,11 @@ msgstr "<ورود عبارت‌عبور برای قفل‌گشایی"
 
 #: src/disks/ui/unlock-device-dialog.ui:41
 msgid "This volume might be a VeraCrypt volume as it contains random data."
-msgstr ""
+msgstr "از آن‌جا که این حجم شامل دادهّای تصادفی است، ممکن است یک حجم وراکریپت باشد."
 
 #: src/disks/ui/unlock-device-dialog.ui:79 src/disks/ui/unlock-device-dialog.ui:186
 msgid "If specified"
-msgstr ""
+msgstr "در صورت تصریح"
 
 #: src/disks/ui/unlock-device-dialog.ui:117
 msgid "Volume type"
@@ -3530,7 +3604,7 @@ msgstr "_پنهان"
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume hidden "
 "inside."
-msgstr ""
+msgstr "به جای قفل‌گشایی این حجم، سعی کنید حجم ثانویهٔ پنهان در آن را بگشایید."
 
 #: src/disks/ui/unlock-device-dialog.ui:149
 msgid "Windows _system"
@@ -3538,7 +3612,7 @@ msgstr "_سامانهٔ ویندوزی"
 
 #: src/disks/ui/unlock-device-dialog.ui:150
 msgid "Unlock an encrypted Windows system partition or drive."
-msgstr ""
+msgstr "قفل‌گشایی یک گرداننده یا افراز سامانه‌ای ویندوزی رمزشده."
 
 #: src/disks/ui/unlock-device-dialog.ui:171
 msgid "PI_M"
@@ -3548,7 +3622,7 @@ msgstr "PI_M"
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to use "
 "for this volume."
-msgstr ""
+msgstr "در صورت تنظیم، مقدار عددی PIM وراکریپت مورد استفاده برای این حجم."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
 msgid "Keyfiles"

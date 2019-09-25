@@ -22,15 +22,15 @@
 # Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011, 2012, 2015, 2017, 2018.
 # Wouter Bolsterlee <wbolster@gnome.org>, 2011, 2012.
 # Erwin Poeze <donnut@outlook.com>, 2013, 2014.
-# Nathan Follens <nthn@unseen.is>, 2015-2018.
+# Nathan Follens <nthn@unseen.is>, 2015-2019.
 # Justin van Steijn <jvs@fsfe.org>, 2016, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-04-03 11:40+0000\n"
-"PO-Revision-Date: 2019-06-18 10:06+0200\n"
+"POT-Creation-Date: 2019-09-22 05:55+0000\n"
+"PO-Revision-Date: 2019-09-25 12:14+0200\n"
 "Last-Translator: Nathan Follens <nthn@unseen.is>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
 "Language: nl\n"
@@ -102,7 +102,7 @@ msgid "The GNOME Project"
 msgstr "Het Gnome-project"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Schijven"
 
@@ -2652,7 +2652,7 @@ msgstr "Waarschuwing: alle gegevens op het volume zullen verloren gaan"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Details van het huidige volume bevestigen alvorens verder te gaan."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Apparaat"
 
@@ -2991,7 +2991,7 @@ msgstr "Naam wereldwijd"
 msgid "Media"
 msgstr "Media"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
 msgid "Job"
 msgstr "Taak"
 
@@ -2999,7 +2999,7 @@ msgstr "Taak"
 msgid "Name"
 msgstr "Naam"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
 msgid "Size"
 msgstr "Grootte"
 
@@ -3028,48 +3028,93 @@ msgstr "_Volumen"
 msgid "Mount selected partition"
 msgstr "De geselecteerde partitie aankoppelen"
 
-#: src/disks/ui/disks.ui:705
+#: src/disks/ui/disks.ui:693
+msgctxt "Accessibility label for toolbutton-mount"
+msgid "Mount"
+msgstr "Aankoppelen"
+
+#: src/disks/ui/disks.ui:706
 msgid "Unmount selected partition"
 msgstr "De geselecteerde partitie afkoppelen"
 
-#: src/disks/ui/disks.ui:718
+#: src/disks/ui/disks.ui:707
+msgctxt "Accessibility label for toolbutton-unmount"
+msgid "Unmount"
+msgstr "Ontkoppelen"
+
+#: src/disks/ui/disks.ui:720
 msgid "Activate selected swap partition"
 msgstr "Geselecteerd wisselbestand activeren"
 
-#: src/disks/ui/disks.ui:731
+#: src/disks/ui/disks.ui:721
+msgctxt "Accessibility label for toolbutton-activate-swap"
+msgid "Activate swap"
+msgstr "Wisselgeheugen activeren"
+
+#: src/disks/ui/disks.ui:734
 msgid "Deactivate selected swap partition"
 msgstr "Geselecteerd wisselbestand uitschakelen"
 
-#: src/disks/ui/disks.ui:745
+#: src/disks/ui/disks.ui:735
+msgctxt "Accessibility label for toolbutton-deactivate-swap"
+msgid "Deactivate swap"
+msgstr "Wisselgeheugen deactiveren"
+
+#: src/disks/ui/disks.ui:748
 msgid "Unlock selected encrypted partition"
 msgstr "Geselecteerde versleutelde partitie toegankelijk maken"
 
-#: src/disks/ui/disks.ui:758
+#: src/disks/ui/disks.ui:749
+msgctxt "Accessibility label for toolbutton-unlock"
+msgid "Unlock"
+msgstr "Ontgrendelen"
+
+#: src/disks/ui/disks.ui:762
 msgid "Lock selected encrypted partition"
 msgstr "Geselecteerde versleutelde partitie vergrendelen"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:763
+msgctxt "Accessibility label for toolbutton-lock"
+msgid "Lock"
+msgstr "Vergrendelen"
+
+#: src/disks/ui/disks.ui:776
 msgid "Create partition in unallocated space"
 msgstr "Partitie aanmaken in niet-toegewezen ruimte"
 
-#: src/disks/ui/disks.ui:783
+#: src/disks/ui/disks.ui:777
+msgctxt "Accessibility label for toolbutton-partition-create"
+msgid "Create partition"
+msgstr "Partitie aanmaken"
+
+#: src/disks/ui/disks.ui:790
 msgid "Delete selected partition"
 msgstr "De geselecteerde partitie verwijderen"
 
-#: src/disks/ui/disks.ui:796
+#: src/disks/ui/disks.ui:791
+msgctxt "Accessibility label for toolbutton-partition-delete"
+msgid "Delete partition"
+msgstr "Partitie verwijderen"
+
+#: src/disks/ui/disks.ui:804
 msgid "Additional partition options"
 msgstr "Extra partitie-opties"
 
+#: src/disks/ui/disks.ui:805
+msgctxt "Accessibility label for toolbutton-volume-menu"
+msgid "Menu"
+msgstr "Menu"
+
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:864
+#: src/disks/ui/disks.ui:873
 msgid "Contents"
 msgstr "Inhoud"
 
-#: src/disks/ui/disks.ui:938
+#: src/disks/ui/disks.ui:947
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:975
+#: src/disks/ui/disks.ui:984
 msgid "Partition Type"
 msgstr "Partitietype"
 
@@ -4749,9 +4794,6 @@ msgstr "Onderzoeken"
 #~ msgid "Formatting %s Volume (%s)"
 #~ msgstr "Volume %s (%s) aan het formatteren"
 
-#~ msgid "Unmounting..."
-#~ msgstr "Bezig met ontkoppelen…"
-
 #~ msgid "Unable to format '%s'"
 #~ msgstr "Kan '%s' niet formatteren"
 
@@ -5884,9 +5926,6 @@ msgstr "Onderzoeken"
 
 #~ msgid "Creating Partition Table"
 #~ msgstr "Partitietabel aan het aanmaken"
-
-#~ msgid "Deleting Partition"
-#~ msgstr "Partitie aan het verwijderen"
 
 #~ msgid "Creating Partition"
 #~ msgstr "Partitie aan het aanmaken"

@@ -1,23 +1,29 @@
 # Japanese translation for gnome-disk-utility.
 # Copyright (C) 2009-2011 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Shushi Kurose <md81bird@hitaki.net>, 2009-2010.
+# Mitsuya Shibata <mty.shibata@gmail.com>, 2009.
+# Shushi Kurose <md81bird@hitaki.net>, 2009-2013, 2017.
 # Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 2010.
-# Takayoshi OKANO <kano@na.rim.or.jp>, 2011.
+# Takayoshi OKANO <kano@na.rim.or.jp>, 2011, 2013.
 # Hajime Taira <htaira@redhat.com>, 2012.
+# Akira Tanaka <root.167d36d4acb91@gmail.com>, 2012-2014, 2016.
 # Jiro Matsuzawa <jmatsuzawa@gnome.org>, 2013.
+# Naoki Matsumoto <nekomatu@gmail.com>, 2014.
 # Ikuya Awashiro <ikuya@fruitsbasket.info>, 2014.
-# Kentaro KAZUHAMA <kazken3@gmail.com>, 2014, 2015.
+# Kentaro KAZUHAMA <kazken3@gmail.com>, 2014-2015.
 # Tsuji Kento <tuziemon@pclives.org>, 2015.
+# sujiniku <sujinikusityuu@gmail.com>, 2016.
+# Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>, 2016-2017.
+# sicklylife <translation@sicklylife.jp>, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2018-05-31 09:23+0000\n"
-"PO-Revision-Date:  2016-05-29 18:06+0900\n"
-"Last-Translator: Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>\n"
+"POT-Creation-Date: 2019-09-28 11:07+0000\n"
+"PO-Revision-Date:  2019-08-28 20:45+0900\n"
+"Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -32,12 +38,6 @@ msgstr "ディスクイメージマウンター"
 #: data/gnome-disk-image-mounter.desktop.in:4
 msgid "Mount Disk Images"
 msgstr "ディスクイメージをマウントします"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/gnome-disk-image-mounter.desktop.in:7
-#: data/gnome-disk-image-writer.desktop.in:7
-msgid "drive-removable-media"
-msgstr ""
 
 #: data/gnome-disk-image-writer.desktop.in:3
 msgid "Disk Image Writer"
@@ -76,27 +76,20 @@ msgstr ""
 "ング、設定を簡単にできるようにするユーティリティです。"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#, fuzzy
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
-#| "physical disks, and image USB sticks. Tasks are executed in the "
-#| "background, even after the application has been closed by the user."
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
 msgstr ""
-"GNOME Disks を使うと、SMART データの確認、RAID デバイスの管理、物理ディスクの"
-"ベンチマーク、USB メモリーへのディスクイメージ書き込みができます。各タスクは"
-"バックグランドで実行され、GNOME Disks を閉じても実行中のタスクは完了まで継続"
-"されます。"
+"GNOME Disks を使うと、SMART データの確認、デバイスの管理、物理ディスクのベン"
+"チマーク、USB メモリーへのディスクイメージ書き込みができます。"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
-msgstr ""
+msgstr "ディスク管理の手軽な手段"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:34
 msgid "The GNOME Project"
-msgstr ""
+msgstr "The GNOME Project"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
 msgid "Disks"
@@ -116,11 +109,6 @@ msgstr ""
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;ドライブ;ボリューム;"
 "ハードディスク;パーティション;イメージ;バックアップ;リストア;復旧;修復;ベンチ"
 "マーク;暗号化;"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.DiskUtility.desktop.in:9
-msgid "gnome-disks"
-msgstr ""
 
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
@@ -150,10 +138,6 @@ msgid "Set up _read-only mount"
 msgstr "読み込み専用マウントに設定(_R)"
 
 #: src/disk-image-mounter/main.c:95
-#, fuzzy
-#| msgid ""
-#| "If checked, the mount will be read-only. This is useful if you don't want "
-#| "the underlying disk image to be modified"
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -171,16 +155,14 @@ msgid "Attach and mount one or more disk image files."
 msgstr "任意のディスクイメージファイルをアタッチおよびマウント"
 
 #: src/disk-image-mounter/main.c:192
-#, fuzzy, c-format
-#| msgid "Cannot open `%s' - maybe the volume isn't mounted?"
+#, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
-msgstr "`%s' が開けません。ボリュームはすでにマウント済みですか?"
+msgstr "“%s”が開けません。ボリュームはすでにマウント済みですか?"
 
 #: src/disk-image-mounter/main.c:199
-#, fuzzy, c-format
-#| msgid "Error opening `%s': %m"
+#, c-format
 msgid "Error opening “%s”: %m"
-msgstr "デバイス `%s' のオープン中にエラーが発生しました: %m"
+msgstr "“%s”のオープン中にエラーが発生しました: %m"
 
 #: src/disk-image-mounter/main.c:220
 #, c-format
@@ -188,20 +170,18 @@ msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "ディスクイメージのアタッチ中にエラーが発生しました: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:92
-#, fuzzy
-#| msgctxt "mdraid"
-#| msgid "Not running"
 msgid "Stop running jobs?"
-msgstr "非稼働"
+msgstr "実行中のジョブを停止しますか?"
 
 #: src/disks/gduapplication.c:94
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr ""
+"現在実行中のジョブを停止すると、正常な結果を得られないおそれがあります。"
 
 #: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error opening %s: %s"
-msgstr "`%s' のオープン中にエラー: %s"
+msgstr "%s のオープン中にエラー: %s"
 
 #: src/disks/gduapplication.c:151
 #, c-format
@@ -281,7 +261,7 @@ msgstr "Spinup Time"
 
 #: src/disks/gduatasmartdialog.c:170
 msgid "Time needed to spin up the disk"
-msgstr "ディスクのスピンアップに必要な時間です。"
+msgstr "ディスクのスピンアップに必要な時間"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -308,8 +288,8 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "リマッピング処理が適用されたセクター数。ハードディスクが読み込み/書き込み/ベ"
-"リファイ中にエラーを発見すると、そのセクターは \"reallocated\" としてマークさ"
-"れ、データはスペシャルな予約領域(スペア領域)へデータが転送されます。"
+"リファイ中にエラーを発見すると、そのセクターは“reallocated”としてマークされ、"
+"データはスペシャルな予約領域 (スペア領域) へデータが転送されます。"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -331,7 +311,7 @@ msgstr "Seek Error Rate"
 
 #: src/disks/gduatasmartdialog.c:204
 msgid "Frequency of errors while positioning"
-msgstr "位置決めの際のエラーの頻度です。"
+msgstr "位置決めの際のエラーの頻度"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -353,7 +333,7 @@ msgstr "Power-On Hours"
 
 #: src/disks/gduatasmartdialog.c:220 src/disks/gduatasmartdialog.c:545
 msgid "Number of hours elapsed in the power-on state"
-msgstr "パワーオンステートになってからの経過時間です。"
+msgstr "パワーオンステートになってからの経過時間"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -476,7 +456,7 @@ msgstr "温度"
 
 #: src/disks/gduatasmartdialog.c:309
 msgid "Current internal temperature of the drive"
-msgstr "現在の内部の温度(摂氏)"
+msgstr "現在の内部の温度 (摂氏)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -487,7 +467,7 @@ msgstr "Hardware ECC Recovered"
 
 #: src/disks/gduatasmartdialog.c:317
 msgid "Number of ECC on-the-fly errors"
-msgstr "ECCで検知したエラーの回数"
+msgstr "ECC で検知したエラーの回数"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -564,7 +544,7 @@ msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
-"ディスク書き込み時のエラー発生回数 (または) multi-zone errorの発生率 (また"
+"ディスク書き込み時のエラー発生回数 (または) multi-zone error の発生率 (また"
 "は) ヘッド距離"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -631,7 +611,7 @@ msgstr "Flying Height"
 
 #: src/disks/gduatasmartdialog.c:414
 msgid "Height of heads above the disk surface"
-msgstr "ディスク表面上のヘッドの高度です"
+msgstr "ディスク表面上のヘッドの高度"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -642,7 +622,7 @@ msgstr "Spin High Current"
 
 #: src/disks/gduatasmartdialog.c:422
 msgid "Amount of high current used to spin up the drive"
-msgstr "ドライブのスピンアップ時に使用した高電流量です"
+msgstr "ドライブのスピンアップ時に使用した高電流量"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -697,7 +677,7 @@ msgstr "Loaded Hours"
 
 #: src/disks/gduatasmartdialog.c:463
 msgid "Number of hours in general operational state"
-msgstr "パワーオンステートになってからの経過時間です。"
+msgstr "パワーオンステートになってからの経過時間"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -712,7 +692,7 @@ msgid ""
 "recording, positioning of heads, etc"
 msgstr ""
 "ドライブにおいて、読み込みや記録、ヘッドの移動などのオペレーションが再実行さ"
-"れたことを記録しています。"
+"れたことを記録しています"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -723,7 +703,7 @@ msgstr "Load Friction"
 
 #: src/disks/gduatasmartdialog.c:480
 msgid "Load on drive caused by friction in mechanical parts of the store"
-msgstr "ドライブにおいて、保存中に機械的なこすれが生じたことを記録しています。"
+msgstr "ドライブにおいて、保存中に機械的なこすれが生じたことを記録しています"
 
 #: src/disks/gduatasmartdialog.c:488
 msgid "Total number of load cycles"
@@ -738,7 +718,7 @@ msgstr "Load-in Time"
 
 #: src/disks/gduatasmartdialog.c:496
 msgid "General time for loading in a drive"
-msgstr "ドライブで読み込みにかかる平均時間です。"
+msgstr "ドライブで読み込みにかかる平均時間"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -749,11 +729,11 @@ msgstr "Torque Amplification Count"
 
 #: src/disks/gduatasmartdialog.c:504
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr "ドライブの回転不良時の試行回数です"
+msgstr "ドライブの回転不良時の試行回数"
 
 #: src/disks/gduatasmartdialog.c:512
 msgid "Number of power-off retract events"
-msgstr "電源オフによるリトラクトが発生した回数です"
+msgstr "電源オフによるリトラクトが発生した回数"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -764,7 +744,7 @@ msgstr "GMR Head Amplitude"
 
 #: src/disks/gduatasmartdialog.c:520
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
-msgstr "動作モード時のヘッドの振動の振幅 (GMRヘッド)"
+msgstr "動作モード時のヘッドの振動の振幅 (GMR ヘッド)"
 
 #: src/disks/gduatasmartdialog.c:528
 msgid "Temperature of the drive"
@@ -783,7 +763,7 @@ msgid ""
 "the maximum physical erase cycles the drive supports"
 msgstr ""
 "完了した物理的消去サイクルの数で、ドライブがサポートしている最大の物理的消去"
-"サイクルと比較したパーセンテージです"
+"サイクルと比較したパーセンテージ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -794,7 +774,7 @@ msgstr "Uncorrectable ECC Count"
 
 #: src/disks/gduatasmartdialog.c:553
 msgid "Number of uncorrectable ECC errors"
-msgstr "ECCで検知したエラーの回数"
+msgstr "ECC で検知したエラーの回数"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -809,7 +789,6 @@ msgid ""
 "reserved blocks"
 msgstr ""
 "利用可能なリマップブロックの数で、予約ブロックの総数と比較したパーセンテージ"
-"です"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -963,9 +942,8 @@ msgid "Self-test in progress"
 msgstr "セルフテストを実行中"
 
 #: src/disks/gduatasmartdialog.c:934 src/disks/gduatasmartdialog.c:943
-#, fuzzy
 msgid "DISK IS LIKELY TO FAIL SOON"
-msgstr "まもなくディスクが故障しそうです"
+msgstr "しばらくするとディスクが故障する可能性があります"
 
 #: src/disks/gduatasmartdialog.c:966
 msgid "SELF-TEST FAILED"
@@ -1039,15 +1017,15 @@ msgstr "SMART データの再読み込み中にエラーが発生しました"
 
 #: src/disks/gduatasmartdialog.c:1334
 msgid "Error aborting SMART self-test"
-msgstr "SMART セルフテスト実施中にエラーが発生し強制終了しました。"
+msgstr "SMART セルフテスト実施中にエラーが発生し強制終了しました"
 
 #: src/disks/gduatasmartdialog.c:1353
 msgid "Error starting SMART self-test"
-msgstr "SMART セルフテスト実施中にエラーが発生しました。"
+msgstr "SMART セルフテスト実施中にエラーが発生しました"
 
 #: src/disks/gduatasmartdialog.c:1432
 msgid "An error occurred when trying to toggle whether SMART is enabled"
-msgstr "SMARTを有効に切り替える時にエラーが発生しました"
+msgstr "SMART を有効に切り替える時にエラーが発生しました"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: src/disks/gduatasmartdialog.c:1514
@@ -1189,13 +1167,13 @@ msgstr "ページサイズを取得中にエラーが発生しました: %m\n"
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld"
-msgstr "シーク中(オフセット %lld)にエラーが発生しました"
+msgstr "シーク中 (オフセット %lld) にエラーが発生しました"
 
 #: src/disks/gdubenchmarkdialog.c:1261
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %s from offset %s"
-msgstr "%s (オフセット %s)を先読み中にエラーが発生しました"
+msgstr "%s (オフセット %s) を先読み中にエラーが発生しました"
 
 #: src/disks/gdubenchmarkdialog.c:1273
 #, c-format
@@ -1207,13 +1185,13 @@ msgstr "オフセット %s をシーク中にエラーが発生しました"
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
-msgstr "%s (オフセット %s)を読み込み中にエラーが発生しました"
+msgstr "%s (オフセット %s) を読み込み中にエラーが発生しました"
 
 #: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
 msgctxt "benchmarking"
 msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "%lld バイト先読み中(オフセット %lld)にエラーが発生しました"
+msgstr "%lld バイト先読み中 (オフセット %lld) にエラーが発生しました"
 
 #: src/disks/gdubenchmarkdialog.c:1343
 #, c-format
@@ -1237,25 +1215,21 @@ msgstr "同期中にエラーが発生しました (オフセット %lld): %m"
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr "シーク中(オフセット %lld)にエラーが発生しました: %m"
+msgstr "シーク中 (オフセット %lld) にエラーが発生しました: %m"
 
 #: src/disks/gdubenchmarkdialog.c:1415
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
-msgstr "%lld バイト読み込み中(オフセット %lld)にエラーが発生しました"
+msgstr "%lld バイト読み込み中 (オフセット %lld) にエラーが発生しました"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#, fuzzy
-#| msgid "Enter passphrase to unlock"
 msgid "The passphrases do not match"
-msgstr "ロック解除するためのパスフレーズを入力"
+msgstr "パスフレーズが一致しません"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#, fuzzy
-#| msgid "The strength of the passphrase"
 msgid "The passphrase matches the existing passphrase"
-msgstr "パスフレーズの強度"
+msgstr "既存のパスフレーズと一致します"
 
 #: src/disks/gduchangepassphrasedialog.c:189
 msgid "Error updating /etc/crypttab"
@@ -1356,12 +1330,12 @@ msgstr "ディスクイメージファイルを削除(_D)"
 
 #: src/disks/gducreatediskimagedialog.c:497
 msgid "_Close"
-msgstr ""
+msgstr "閉じる(_C)"
 
 #: src/disks/gducreatediskimagedialog.c:722
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
-msgstr "デバイスのサイズ判断中にエラーが発生しました:"
+msgstr "デバイスのサイズ判断中にエラーが発生しました: "
 
 #: src/disks/gducreatediskimagedialog.c:729
 #: src/disks/gdurestorediskimagedialog.c:738
@@ -1371,20 +1345,21 @@ msgstr "デバイスのサイズは 0 バイトです"
 
 #: src/disks/gducreatediskimagedialog.c:763
 msgid "Error allocating space for disk image file: "
-msgstr "ディスクイメージファイルのための容量を割り当て中にエラーが発生しました"
+msgstr ""
+"ディスクイメージファイルのための容量を割り当て中にエラーが発生しました: "
 
 #: src/disks/gducreatediskimagedialog.c:924
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
-msgstr "ファイル名 \"%s\" がすでに存在します。このファイルを置き換えますか？"
+msgstr "ファイル名“%s”がすでに存在します。このファイルを置き換えますか?"
 
 #: src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr "\"%s\" の中にファイルがすでに存在します。その内容は上書きされます。"
+msgstr "“%s”の中にファイルがすでに存在します。その内容は上書きされます。"
 
 #: src/disks/gducreatediskimagedialog.c:930
 #: src/disks/gdunewdiskimagedialog.c:330
@@ -1438,7 +1413,7 @@ msgid ""
 msgstr ""
 "唯一、<i>/etc/crypttab</i> ファイルで参照されるパスフレーズが変更されます。"
 "ディスクのパスフレーズを変更するには <i>パスフレーズの変更</i> をクリックして"
-"ください。…"
+"ください…"
 
 #: src/disks/gdudevicetreemodel.c:496
 msgid "(None)"
@@ -1545,7 +1520,7 @@ msgstr "うるさい (速い)"
 
 #: src/disks/gdufilesystemdialog.c:86
 msgid "The label matches the existing label"
-msgstr ""
+msgstr "既存のラベルと一致します"
 
 #: src/disks/gdufilesystemdialog.c:108
 msgid "Error setting label"
@@ -1617,7 +1592,7 @@ msgstr "GPT"
 
 #: src/disks/gduformatdiskdialog.c:282
 msgid "No partitioning"
-msgstr "パーティション無し"
+msgstr "パーティションなし"
 
 #: src/disks/gduformatdiskdialog.c:283
 msgid "Empty"
@@ -1668,13 +1643,13 @@ msgid ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
 msgstr ""
-"<b>警告</b>: Secure Eraseコマンドは完了するまでに多くの時間を必要とします。"
+"<b>警告</b>: Secure Erase コマンドは完了するまでに多くの時間を必要とします。"
 "ハードウェアによってはキャンセル処理ができなかったり、キャンセル処理がうまく"
-"動作しないことがことがあります。最悪の場合、しばらくドライブが使用できなく"
-"なったり、お使いのシステムがクラッシュまたはフリーズする場合があります。実施"
-"する前に <a href='https://ata.wiki.kernel.org/index.php/"
-"ATA_Secure_Erase'>ATA Secure Erase</a>  についての記事を読んでください。そし"
-"てリスクを理解した上で行ってください。"
+"動作しないことがあります。最悪の場合、しばらくドライブが使用できなくなった"
+"り、お使いのシステムがクラッシュまたはフリーズする場合があります。実施する前"
+"に <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
+"Secure Erase</a> についての記事を読んでください。そしてリスクを理解した上で"
+"行ってください。"
 
 #: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
 msgid "_Format"
@@ -1682,21 +1657,19 @@ msgstr "初期化(_F)"
 
 #: src/disks/gducreateformatdialog.c:175
 msgid "_Previous"
-msgstr ""
+msgstr "前へ(_P)"
 
 #: src/disks/gducreateformatdialog.c:181
 msgid "Cre_ate"
-msgstr ""
+msgstr "作成(_A)"
 
 #: src/disks/gducreateformatdialog.c:187
-#, fuzzy
-#| msgid "_Format"
 msgid "Form_at"
-msgstr "初期化(_F)"
+msgstr "初期化(_A)"
 
 #: src/disks/gducreateformatdialog.c:194
 msgid "N_ext"
-msgstr ""
+msgstr "次へ(_E)"
 
 #: src/disks/gducreateformatdialog.c:221
 msgid "Error formatting volume"
@@ -1715,18 +1688,16 @@ msgid "Format Volume"
 msgstr "ボリュームを初期化"
 
 #: src/disks/gducreateformatdialog.c:447
-#, fuzzy
-#| msgid "Custom"
 msgid "Custom Format"
-msgstr "カスタム"
+msgstr "カスタムフォーマット"
 
 #: src/disks/gducreateformatdialog.c:450
 msgid "Set Password"
-msgstr ""
+msgstr "パスワードを設定"
 
 #: src/disks/gducreateformatdialog.c:453
 msgid "Confirm Details"
-msgstr ""
+msgstr "詳細の確認"
 
 #: src/disks/gducreatepartitionpage.c:320
 msgid ""
@@ -1741,47 +1712,43 @@ msgstr "これが作成できる最後の基本パーティションです。"
 
 #: src/disks/gducreateotherpage.c:115
 msgid "XFS — Linux Filesystem"
-msgstr ""
+msgstr "XFS — Linux ファイルシステム"
 
 #: src/disks/gducreateotherpage.c:117
-#, fuzzy
-#| msgid "Edit Partition"
 msgid "Linux Swap Partition"
-msgstr "パーティションを編集"
+msgstr "Linux Swap パーティション"
 
 #: src/disks/gducreateotherpage.c:119
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
+"Btrfs — スナップショットのためのコピーオンライト Linux ファイルシステム"
 
 #: src/disks/gducreateotherpage.c:121
 msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr ""
+msgstr "F2FS — フラッシュストレージ用の Linux ファイルシステム"
 
 #: src/disks/gducreateotherpage.c:123
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
+"exFAT — SDXC カードで使用されるフラッシュストレージ用の Windows ファイルシス"
+"テム"
 
 #: src/disks/gducreateotherpage.c:125
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr ""
+msgstr "UDF — リムーバブルデバイス用のユニバーサルディスクフォーマット"
 
 #: src/disks/gducreateotherpage.c:127
-#, fuzzy
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
-msgstr "ファイルシステム"
+msgstr "ファイルシステムなし"
 
 #: src/disks/gducreateotherpage.c:207
-#, fuzzy, c-format
-#| msgid "%d disk is missing"
-#| msgid_plural "%d disks are missing"
+#, c-format
 msgid "The utility %s is missing."
-msgstr "%d 個のディスクが見つかりません。"
+msgstr "ユーティリティ %s が見つかりません。"
 
 #: src/disks/gducreatepasswordpage.c:124
 msgid "The passwords do not match"
-msgstr ""
+msgstr "パスワードが一致しません"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
@@ -1789,19 +1756,16 @@ msgstr ""
 #. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
 #.
 #: src/disks/gducreateconfirmpage.c:110
-#, fuzzy, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
+#, c-format
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
 #.
 #: src/disks/gducreateconfirmpage.c:128
-#, fuzzy, c-format
-#| msgid "%s: %2.1f%%"
+#, c-format
 msgid "%s (%.1f%%)"
-msgstr "%s: %2.1f%%"
+msgstr "%s (%.1f%%)"
 
 #: src/disks/gdufstabdialog.c:155
 #, c-format
@@ -1859,13 +1823,11 @@ msgstr "/etc/fstab のエントリを更新中にエラーが発生しました"
 #: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
-msgstr ""
+msgstr "無名の (%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
-#, fuzzy
-#| msgid "Error showing item"
 msgid "Error writing file"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr "ファイルの書き込み中にエラーが発生しました"
 
 #: src/disks/gdupartitiondialog.c:351
 msgid "Error setting partition type"
@@ -1900,86 +1862,63 @@ msgid "Strong"
 msgstr "強い"
 
 #: src/disks/gduresizedialog.c:188
-#, fuzzy
-#| msgid "Chunk _Size"
 msgid "Current Size"
-msgstr "チャンクサイズ(_S)"
+msgstr "現在のサイズ"
 
 #: src/disks/gduresizedialog.c:199
-#, fuzzy
-#| msgid "Image Size"
 msgid "Minimal Size"
-msgstr "イメージのサイズ"
+msgstr "最小サイズ"
 
 #: src/disks/gduresizedialog.c:249
-#, fuzzy
-#| msgid "_Restore"
 msgid "_Resize"
-msgstr "リストア(_R)"
+msgstr "リサイズ(_R)"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr "ファイルシステムのリサイズ中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:575
-#, fuzzy
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
-msgstr "パーティションの作成中にエラーが発生しました"
+msgstr "パーティションのリサイズ中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#, fuzzy
-#| msgid "Error opening file for reading"
 msgid "Error repairing filesystem after resize"
-msgstr "読み込み用にファイルをオープン中にエラーが発生しました"
+msgstr "リサイズ後のファイルシステム修復中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:464
 msgid "Resizing not ready"
 msgstr ""
 
 #: src/disks/gduresizedialog.c:466
-#, fuzzy
-#| msgid "Mount the filesystem"
 msgid "Waited too long for the filesystem"
-msgstr "ファイルシステムをマウントします"
+msgstr ""
 
 #: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr "ファイルシステムの修復中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:551
-#, fuzzy
-#| msgid "Error unmounting filesystem"
 msgid "Error unmounting filesystem for repairing"
-msgstr "ファイルシステムのアンマウント中にエラーが発生しました"
+msgstr ""
 
 #: src/disks/gduresizedialog.c:692
-#, fuzzy
-#| msgid "Error unmounting filesystem"
 msgid "Error unmounting filesystem for resizing"
-msgstr "ファイルシステムのアンマウント中にエラーが発生しました"
+msgstr ""
 
 #: src/disks/gduresizedialog.c:760
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "ファイルシステムのマウント中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:802
 msgid "Fit to size"
-msgstr ""
+msgstr "サイズに合わせる"
 
 #: src/disks/gduresizedialog.c:837
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr ""
+"最小サイズ算出のためのファイルシステムのマウント中にエラーが発生しました"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -2219,10 +2158,9 @@ msgstr "残り %s"
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
 #: src/disks/gduwindow.c:1887
-#, fuzzy, c-format
-#| msgid "%s of %s – %s"
+#, c-format
 msgid "%s of %s — %s"
-msgstr "%s / %s - %s"
+msgstr "%s / %s — %s"
 
 #. Translators: Used in job progress bar.
 #. *              The %s is the job description (e.g. "Erasing Device").
@@ -2264,7 +2202,7 @@ msgstr "Loop デバイスは空です"
 #: src/disks/gduwindow.c:2665
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
-msgstr "%s - %s 空き (%.1f%% 使用)"
+msgstr "%s — %s 空き (%.1f%% 使用)"
 
 #: src/disks/gduwindow.c:2695
 msgctxt "partition type"
@@ -2276,7 +2214,7 @@ msgstr "不明"
 #: src/disks/gduwindow.c:2733
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
-msgstr "ファイルシステムルート(/)"
+msgstr "ファイルシステムルート (/)"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
 #: src/disks/gduwindow.c:2741
@@ -2336,35 +2274,31 @@ msgid "Unallocated Space"
 msgstr "未割り当て領域"
 
 #: src/disks/gduwindow.c:3144
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error while repairing filesystem"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr "ファイルシステム修復時にエラーが発生しました"
 
 #: src/disks/gduwindow.c:3171
 msgid "Repair successful"
-msgstr ""
+msgstr "修復に成功しました"
 
 #: src/disks/gduwindow.c:3171
 msgid "Repair failed"
-msgstr ""
+msgstr "修復に失敗しました"
 
 #: src/disks/gduwindow.c:3174
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
-msgstr ""
+msgstr "ファイルシステム %s (%s) を修復しました。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3180
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
-msgstr ""
+msgstr "ファイルシステム %s (%s) を修復できませんでした。"
 
 #: src/disks/gduwindow.c:3242
-#, fuzzy
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Repair"
-msgstr "パスフレーズの確認(_O)"
+msgstr "修復の確認"
 
 #: src/disks/gduwindow.c:3245
 msgid ""
@@ -2372,47 +2306,41 @@ msgid ""
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. Depending on the amount of data this operation takes longer time."
 msgstr ""
+"ファイルシステムの修復は常に成功するとは限らず、データ損失の可能性がありま"
+"す。ファイルを失った場合にフォレンジックツールを使用して復元できるよう、バッ"
+"クアップをとっておくことを検討してください。データ量が多ければ多いほど、作業に"
+"かかる時間は長くなります。"
 
 #: src/disks/gduwindow.c:3273
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error while checking filesystem"
-msgstr "ファイルシステムのマウント中にエラーが発生しました"
+msgstr "ファイルシステムチェック時にエラーが発生しました"
 
 #: src/disks/gduwindow.c:3300
-#, fuzzy
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
 msgid "Filesystem intact"
-msgstr "ファイルシステムルート(/)"
+msgstr "ファイルシステムは無傷です"
 
 #: src/disks/gduwindow.c:3300
-#, fuzzy
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "Filesystem damaged"
-msgstr "ファイルシステム"
+msgstr "ファイルシステムは損傷しています"
 
 #: src/disks/gduwindow.c:3303
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
-msgstr ""
+msgstr "ファイルシステム %s (%s) は損傷していませんでした。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3309
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
-msgstr ""
+msgstr "ファイルシステム %s (%s) は修復が必要です。"
 
 #: src/disks/gduwindow.c:3369
-#, fuzzy
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Check"
-msgstr "パスフレーズの確認(_O)"
+msgstr "チェックの確認"
 
 #: src/disks/gduwindow.c:3372
 msgid "Depending on the amount of data the filesystem check takes longer time."
-msgstr ""
+msgstr "ファイルシステムのチェックにかかる時間はデータ量に依存します。"
 
 #: src/disks/gduwindow.c:3572
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -2506,17 +2434,14 @@ msgid "Need more input"
 msgstr "入力がさらに必要です"
 
 #: src/disks/ui/about-dialog.ui:12
-#, fuzzy
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
 "Copyright © 2009-2017 The GNOME Project\n"
 msgstr ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen"
+"Copyright © 2008-2013 David Zeuthen\n"
+"Copyright © 2009-2017 The GNOME Project\n"
 
 #: src/disks/ui/about-dialog.ui:16
 msgid "View, modify and configure disks and media"
@@ -2526,20 +2451,25 @@ msgstr "ディスクとメディアを表示、変更、設定します"
 msgid "translator-credits"
 msgstr ""
 "草野 貴之 <AE5T-KSN@asahi-net.or.jp>\n"
-"日本GNOMEユーザー会 <http://www.gnome.gr.jp/>\n"
+"日本 GNOME ユーザー会 <http://www.gnome.gr.jp/>\n"
 "やまねひでき <henrich@debian.org>\n"
+"Akira Tanaka <root.167d36d4acb91@gmail.com>\n"
 "Hajime Taira <htaira@redhat.com>\n"
-"Launchpad Contributions:\n"
-"  Fumihito YOSHIDA https://launchpad.net/~hito\n"
-"  Ichizu Machi https://launchpad.net/~ichizu\n"
-"  Mitsuya Shibata https://launchpad.net/~cosmos-door\n"
-"  Shushi Kurose https://launchpad.net/~kurokuro"
+"Ikuya Awashiro <ikuya@fruitsbasket.info>\n"
+"Jiro Matsuzawa <jmatsuzawa@gnome.org>\n"
+"Kentaro KAZUHAMA <kazken3@gmail.com>\n"
+"Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>\n"
+"Mitsuya Shibata <mty.shibata@gmail.com>\n"
+"Naoki Matsumoto <nekomatu@gmail.com>\n"
+"Shushi Kurose <md81bird@hitaki.net>\n"
+"sicklylife <translation@sicklylife.jp>\n"
+"sujiniku <sujinikusityuu@gmail.com>\n"
+"Takayoshi OKANO <kano@na.rim.or.jp>\n"
+"Tsuji Kento <tuziemon@pclives.org>"
 
 #: src/disks/ui/app-menu.ui:6
-#, fuzzy
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
-msgstr "ディスクイメージを作成…"
+msgstr "新しいディスクイメージ(_N)…"
 
 #: src/disks/ui/app-menu.ui:10
 msgid "Attach Disk _Image…"
@@ -2636,13 +2566,13 @@ msgid ""
 "device can be in use)."
 msgstr ""
 "ディスクの書き込み速度のベンチマークを行うには、ディスクへの排他的アクセスが"
-"必要です(例えば、ディスクまたはパーティションが使用中またはマウント中はできま"
-"せん)。また、データを読み取った後に書き込みを行います。そのためディスの内容に"
-"変更はありません。\n"
+"必要です (例えば、ディスクまたはパーティションが使用中またはマウント中はでき"
+"ません)。また、データを読み取った後に書き込みを行います。そのためディスクの内"
+"容に変更はありません。\n"
 "\n"
 "チェックされていない場合、ベンチマークの書き込み試験は行いません。また、デバ"
-"イスへの排他的アクセス(例えばディスクやデバイスが使用中であっても実施できる)"
-"は必要ありません。"
+"イスへの排他的アクセス (例えばディスクやデバイスが使用中であっても実施でき"
+"る) は必要ありません。"
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
@@ -2658,9 +2588,9 @@ msgid ""
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
-"MiB(1048576 バイト)単位で読み込み/書き込みを行います。大きなサンプルサイズを"
-"指定するとベンチマークにより多くの時間が必要となりますが、正確性の高いベンチ"
-"マーク結果を生成する傾向にあります。"
+"MiB (1048576 バイト) 単位で読み込み/書き込みを行います。大きなサンプルサイズ"
+"を指定するとベンチマークにより多くの時間が必要となりますが、正確性の高いベン"
+"チマーク結果を生成する傾向にあります。"
 
 #: src/disks/ui/benchmark-dialog.ui:533
 msgid "Access Time"
@@ -2731,28 +2661,24 @@ msgid "New _Passphrase"
 msgstr "新しいパスフレーズ(_P)"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#, fuzzy
-#| msgid "All data on the volume will be lost"
 msgid "Warning: all data on the volume will be lost"
-msgstr "ボリュームのすべてのデータは失われます"
+msgstr "警告: ボリュームにあるすべてのデータが失われます"
 
 #: src/disks/ui/create-confirm-page.ui:33
 msgid "Confirm the details of the current volume before proceeding."
-msgstr ""
+msgstr "続ける前に現在のボリュームの詳細を確認してください。"
 
 #: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
 msgid "Device"
 msgstr "デバイス"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#, fuzzy
-#| msgid "_Volumes"
 msgid "Volume"
-msgstr "ボリューム(_V)"
+msgstr "ボリューム"
 
 #: src/disks/ui/create-confirm-page.ui:98
 msgid "Used"
-msgstr ""
+msgstr "使用済み"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
 #: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
@@ -2789,28 +2715,20 @@ msgid "_Start Creating…"
 msgstr "作成開始(_S)…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#, fuzzy
-#| msgid "_Volumes"
 msgid "Volume _Name"
-msgstr "ボリューム(_V)"
+msgstr "ボリューム名(_N)"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#, fuzzy
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
-"ファイルシステムの名前として使われます。/dev/disk/by-label ディレクトリの中の"
-"シンボリックリンクを介してデバイスを参照したい場合に便利です。"
+"ファイルシステムに使用する名前です。これは /dev/disk/by-label ディレクトリに"
+"あるシンボリックリンク経由でデバイスを参照したい場合に便利です。"
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#, fuzzy
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "例えば、\"My Files\" とか \"Backup Data\""
+msgstr "例: “Angela’s Files”や“Backup”など。"
 
 #: src/disks/ui/create-filesystem-page.ui:74
 #: src/disks/ui/format-disk-dialog.ui:103
@@ -2818,33 +2736,29 @@ msgid "_Erase"
 msgstr "消去(_E)"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#, fuzzy
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
-msgstr "既存のデータをゼロで上書きする"
+msgstr "既存のデータを上書きするため時間がかかります。"
 
 #: src/disks/ui/create-filesystem-page.ui:115
 msgid "_Internal disk for use with Linux systems only (Ext4)"
-msgstr ""
+msgstr "Linux 用の内蔵ディスクとして使用する (Ext4)(_I)"
 
 #: src/disks/ui/create-filesystem-page.ui:131
 #: src/disks/ui/create-other-page.ui:46
 msgid "_Password protect volume (LUKS)"
-msgstr ""
+msgstr "ボリュームをパスワードで保護する (LUKS)(_P)"
 
 #: src/disks/ui/create-filesystem-page.ui:147
 msgid "For use with _Windows (NTFS)"
-msgstr ""
+msgstr "Windows で使用する (NTFS)(_W)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#, fuzzy
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
-msgstr "すべてのシステムおよびデバイスと互換"
+msgstr "すべてのシステムとデバイスで使用する (FAT)(_S)"
 
 #: src/disks/ui/create-filesystem-page.ui:179
 msgid "_Other"
-msgstr ""
+msgstr "その他(_O)"
 
 #: src/disks/ui/create-other-page.ui:17
 msgid ""
@@ -2852,16 +2766,17 @@ msgid ""
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
 msgstr ""
+"デフォルトのオプションがニーズに合わない場合は、以下のファイルシステムの中か"
+"ら選択してください。それぞれの技術的な差異を理解したうえで、使用事例を十分確"
+"認してください。"
 
 #: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "パーティションサイズ(_S)"
 
 #: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
-#, fuzzy
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the partition to create"
-msgstr "作成するパーティションのサイズ (MB)"
+msgstr "作成するパーティションのサイズ"
 
 #: src/disks/ui/create-partition-page.ui:111
 #: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
@@ -2923,51 +2838,44 @@ msgid "Free Space _Following"
 msgstr "残り空き容量(_F)"
 
 #: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
-#, fuzzy
-#| msgid "The free space following the partition, in megabytes"
 msgid "The free space following the partition"
-msgstr "パーティション後の空き容量 (MB)"
+msgstr "パーティションの後ろの空き容量"
 
 #: src/disks/ui/create-partition-page.ui:173
-#, fuzzy
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "拡張パーティション"
 
 #: src/disks/ui/create-partition-page.ui:177
 msgid "Extended Partitions can contain Logical Partitions"
-msgstr ""
+msgstr "拡張パーティションは論理パーティションを含むことができます"
 
 #: src/disks/ui/create-password-page.ui:18
 msgid ""
 "Data stored in the volume will only be accessible with the correct password. "
 "Be careful not to forget it."
 msgstr ""
+"ボリュームに保存されたデータは、正しいパスワードがないとアクセスできません。"
+"忘れないように注意してください。"
 
 #: src/disks/ui/create-password-page.ui:34
-#, fuzzy
-#| msgid "_Passphrase"
 msgid "_Password"
-msgstr "パスフレーズ(_P)"
+msgstr "パスワード(_P)"
 
 #: src/disks/ui/create-password-page.ui:48
 msgid "_Confirm"
-msgstr ""
+msgstr "確認(_C)"
 
 #: src/disks/ui/create-password-page.ui:63
 msgid "Enter passphrase used to protect the data"
 msgstr "データを保護するのに使うパスフレーズを入力してください"
 
 #: src/disks/ui/create-password-page.ui:95
-#, fuzzy
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
-msgstr "パスフレーズを表示(_W)"
+msgstr "パスワードを表示する(_O)"
 
 #: src/disks/ui/create-password-page.ui:134
 msgid "Mix uppercase and lowercase and try to use a number or two."
-msgstr ""
+msgstr "大文字、小文字を混在させ、さらに数字を1つか2つは使用してください。"
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -3000,8 +2908,8 @@ msgstr "Advanced Power Management の設定を適用"
 #: src/disks/ui/disk-settings-dialog.ui:199
 msgid "Turn on to configure APM at startup and when the disk is connected"
 msgstr ""
-"起動時にAPMを設定するには、電源オンした時にディスクが接続されている必要があり"
-"ます。"
+"起動時に APM を設定するには、電源オンした時にディスクが接続されている必要があ"
+"ります。"
 
 #: src/disks/ui/disk-settings-dialog.ui:232
 msgid "APM Level"
@@ -3013,11 +2921,11 @@ msgid ""
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
 "頻繁にスピンダウンするとドライブが予想以上に摩耗する可能性があります。時々 "
-"SMART の \"Start/Stop Count\" 属性をチェックしてください。"
+"SMART の“Start/Stop Count”属性をチェックしてください。"
 
 #: src/disks/ui/disk-settings-dialog.ui:308
 msgid "A_PM"
-msgstr "A_PM"
+msgstr "APM(_P)"
 
 #: src/disks/ui/disk-settings-dialog.ui:333
 msgid "Apply Automatic Acoustic Management Settings"
@@ -3026,8 +2934,8 @@ msgstr "Automatic Acoustic Managementの設定を適用"
 #: src/disks/ui/disk-settings-dialog.ui:350
 msgid "Turn on to configure AAM at startup and when the disk is connected"
 msgstr ""
-"起動時にAAMを設定するには、電源オンした時にディスクが接続されている必要があり"
-"ます。"
+"起動時に AAM を設定するには、電源オンした時にディスクが接続されている必要があ"
+"ります。"
 
 #: src/disks/ui/disk-settings-dialog.ui:384
 msgid "Vendor Recommended"
@@ -3039,7 +2947,7 @@ msgstr "AAM レベル"
 
 #: src/disks/ui/disk-settings-dialog.ui:473
 msgid "_AAM"
-msgstr "_AAM"
+msgstr "AAM(_A)"
 
 #: src/disks/ui/disk-settings-dialog.ui:498
 msgid "Apply Write Cache Settings"
@@ -3050,8 +2958,8 @@ msgid ""
 "Turn on to configure Write Cache setting at startup and when the disk is "
 "connected"
 msgstr ""
-"起動時にライトキャッシュを設定するには、電源オンした時にディスクが接続されて"
-"いる必要があります。"
+"起動時に書き込みキャッシュを設定するには、電源オンした時にディスクが接続され"
+"ている必要があります。"
 
 #: src/disks/ui/disk-settings-dialog.ui:549
 msgid "S_etting"
@@ -3070,8 +2978,8 @@ msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
 msgstr ""
-"ライトキャッシュを有効にすることでパフォーマンスが向上しますが、しかし、シス"
-"テムに電源障害が発生した場合に影響を受けやすくなります。"
+"書き込みキャッシュを有効にするとパフォーマンスが向上しますが、停電が発生した"
+"際にシステムがデータ損失の影響を受けやすくなります"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
@@ -3173,7 +3081,7 @@ msgstr "内容"
 
 #: src/disks/ui/disks.ui:937
 msgid "UUID"
-msgstr ""
+msgstr "UUID"
 
 #: src/disks/ui/disks.ui:974
 msgid "Partition Type"
@@ -3233,23 +3141,19 @@ msgstr "パスフレーズを変更…"
 
 #: src/disks/ui/disks.ui:1303
 msgid "Resize…"
-msgstr ""
+msgstr "リサイズ…"
 
 #: src/disks/ui/disks.ui:1311
-#, fuzzy
-#| msgid "Edit Filesystem…"
 msgid "Check Filesystem…"
-msgstr "ファイルシステムを編集…"
+msgstr "ファイルシステムをチェック…"
 
 #: src/disks/ui/disks.ui:1319
-#, fuzzy
-#| msgid "Edit Filesystem…"
 msgid "Repair Filesystem…"
-msgstr "ファイルシステムを編集…"
+msgstr "ファイルシステムを修復…"
 
 #: src/disks/ui/disks.ui:1333
 msgid "Edit Mount Options…"
-msgstr "マウントオプションの編集…"
+msgstr "マウントオプションを編集…"
 
 #: src/disks/ui/disks.ui:1341
 msgid "Edit Encryption Options…"
@@ -3273,37 +3177,28 @@ msgstr "暗号化オプション"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
 msgid "Us_er Session Defaults"
-msgstr ""
+msgstr "ユーザーセッションのデフォルト(_E)"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr ""
-"暗号化オプションおよびパスフレーズを管理しているデバイスの <i>自動暗号化オプ"
-"ション</i>をオフにします。なお、オプションは <b>/etc/crypttab</b> のファイル"
-"内のエントリに対応付けられています。"
+"デバイスのパスフレーズと暗号化オプションを管理するには、<i>ユーザーセッション"
+"のデフォルト</i>をオフにします。オプションは <b>/etc/crypttab</b> ファイルの"
+"エントリーに準じます。"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Opt_ions"
 msgstr "オプション(_I)"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:179
-#, fuzzy
-#| msgid ""
-#| "The name to use for the unlocked device - the device is set up as the "
-#| "name prefixed with <b>/dev/mapper</b>/"
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
-"アンロックデバイスを使う時に使用する名前 - デバイスは <b>/dev/mapper/</b> の"
+"アンロックデバイスを使う時に使用する名前 — デバイスは <b>/dev/mapper/</b> の"
 "プレフィックスとして使われます"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:196
@@ -3333,16 +3228,12 @@ msgid "_Passphrase"
 msgstr "パスフレーズ(_P)"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#, fuzzy
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
-msgstr "起動時にロック解除する(_U)"
+msgstr "システム起動時にロック解除する(_U)"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#, fuzzy
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr "チェックした場合、起動時にデバイスをロック解除します [!noauto]"
+msgstr "チェックした場合、システム起動時にデバイスをロック解除します [!noauto]"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:325
 msgid "Require additional authori_zation to unlock"
@@ -3382,9 +3273,9 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
-"プラットフォームのブートローダーが読み込むべきOSの場所を決定するために使用す"
-"るフラグです。このフラグが設定されたパーティションは、<i>アクティブ</i> パー"
-"ティションとも呼ばれています。"
+"プラットフォームのブートローダーが読み込むべき OS の場所を決定するために使用"
+"するフラグです。このフラグが設定されたパーティションは、<i>アクティブ</i> "
+"パーティションとも呼ばれています。"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:7
 msgid "Change Filesystem Label"
@@ -3403,46 +3294,33 @@ msgid "Mount Options"
 msgstr "マウントオプション"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
-"マウントポイントとマウントオプションを管理しているデバイスの <i>自動マウント"
-"オプション</i> をオフに切り替えます。このオプションは <b>/etc/fstab</b> ファ"
-"イルのエントリーに対応しています。"
+"デバイスのマウントオプションとマウントポイントを管理するには、<i>ユーザーセッ"
+"ションのデフォルト</i>をオフにします。オプションは <b>/etc/fstab</b> ファイル"
+"のエントリーに準じます。"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid "I_dentify As"
 msgstr "識別名(_D)"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
-#, fuzzy
-#| msgid ""
-#| "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-#| "hierarchy to control the scope of the entry"
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
-"<b>スペシャルデバイスファイル</b> - <b>/dev/disk</b> の中のシンボリックリンク"
+"<b>スペシャルデバイスファイル</b> — <b>/dev/disk</b> の中のシンボリックリンク"
 "を使って階層型のエントリーの範囲を制御します。"
 
 #: src/disks/ui/edit-fstab-dialog.ui:111
-#, fuzzy
-#| msgid ""
-#| "The special device file - use symlinks in the /dev/disk hierarchy to "
-#| "control the scope of the entry"
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
-"スペシャルデバイスファイル - /dev/disk の中のシンボリックリンクを使って階層型"
+"スペシャルデバイスファイル — /dev/disk の中のシンボリックリンクを使って階層型"
 "のエントリーの範囲を制御します。"
 
 #: src/disks/ui/edit-fstab-dialog.ui:141
@@ -3470,7 +3348,7 @@ msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
 "指定した場合、ユーザーインターフェースの中で指定したデバイス名がこのデバイス"
-"に使われます。[x-gvfs-name=]"
+"に使われます [x-gvfs-name=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:255
 msgid "Icon Na_me"
@@ -3482,7 +3360,7 @@ msgid ""
 "gvfs-icon=]"
 msgstr ""
 "指定した場合、ユーザーインターフェースの中で指定した名前のアイコンがこのデバ"
-"イスに使われます。[x-gvfs-icon=]"
+"イスに使われます [x-gvfs-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Sho_w in user interface"
@@ -3493,8 +3371,8 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
-"チェックした場合、ユーザーインターフェースの中でデバイスが常に表示されます。"
-"それがディレクトリであっても構いません。[x-gvfs-show]"
+"チェックした場合、ユーザーインターフェースの中でデバイスが常に表示されます "
+"(それがディレクトリであっても構いません) [x-gvfs-show]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Require additional authori_zation to mount"
@@ -3505,20 +3383,16 @@ msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
-"チェックした場合、デバイスをマウントする時に追加の認証が必要になります。[x-"
+"チェックした場合、デバイスをマウントする時に追加の認証が必要になります [x-"
 "udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#, fuzzy
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
-msgstr "起動時にマウントする(_S)"
+msgstr "システム起動時にマウントする(_S)"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#, fuzzy
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
-msgstr "チェックした場合、起動時にデバイスをマウントします [!noauto]"
+msgstr "チェックした場合、システム起動時にデバイスをマウントします [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:350
 msgid "S_ymbolic Icon Name"
@@ -3530,7 +3404,7 @@ msgid ""
 "interface [x-gvfs-symbolic-icon=]"
 msgstr ""
 "指定した場合、ユーザーインターフェースの中で指定した名前のアイコンがデバイス"
-"のシンボリックリンクのアイコンとして使われます。[x-gvfs-symbolic-icon=]"
+"のシンボリックリンクのアイコンとして使われます [x-gvfs-symbolic-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:396
 msgid "Mount Opt_ions"
@@ -3542,7 +3416,7 @@ msgstr "マウントオプションは <b>/etc/fstab</b> ファイルに保存�
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:93
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "パーティションタイプは 32-bit <i>GUID</i> として表現されています。"
+msgstr "パーティションタイプは 32-bit <i>GUID</i> として表現されています"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:125
 msgid ""
@@ -3550,9 +3424,9 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
-"パーティション名(上限としてUnicode 36文字まで) <b>/dev/disk/by-partlabel</b> "
-"ディレクトリの中のシンボリックリンクを介してデバイスを参照したい場合に便利で"
-"す。"
+"パーティション名 (上限として Unicode 36 文字まで)。<b>/dev/disk/by-"
+"partlabel</b> ディレクトリの中のシンボリックリンクを介してデバイスを参照した"
+"い場合に便利です。"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:138
 msgid "_System Partition"
@@ -3564,27 +3438,21 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
-"パーティションとその内容が機能するためにOS /プラットフォームに対して必要性を"
+"パーティションとその内容が機能するよう OS やプラットフォームに対して必要性を"
 "示すために使用します。内容を削除したり、上書きしないようにするための特別な配"
 "慮です。"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:157
 msgid "Legacy BIOS _Bootable"
-msgstr "レガシーBIOSでブート可能(_B)"
+msgstr "レガシー BIOS でブート可能(_B)"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#, fuzzy
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
-"レガシーBIOSブート可能というのは、Master Boot Recordに<i>bootable</i> フラグ"
-"が付与されているのと同じです。MBRベースのシステム上のGPTパーティションに通常"
-"使用されています。"
+"これは Master Boot Record に <i>bootable</i> フラグが付与されているのと同じで"
+"す。MBR ベースのシステム上の GPT パーティションに通常使用されています。"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3625,34 +3493,24 @@ msgid "_Partitioning"
 msgstr "パーティション(_P)"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#, fuzzy
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
-msgstr "ディスクイメージを作成"
+msgstr "新しいディスクイメージ"
 
 #: src/disks/ui/new-disk-image-dialog.ui:29
-#, fuzzy
-#| msgid "Image Size"
 msgid "Image _Size"
-msgstr "イメージのサイズ"
+msgstr "イメージサイズ(_S)"
 
 #: src/disks/ui/new-disk-image-dialog.ui:86
-#, fuzzy
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the image to create"
-msgstr "作成するパーティションのサイズ (MB)"
+msgstr "作成するイメージのサイズ"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
-#, fuzzy
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
-msgstr "ディスクイメージをアタッチ(_I)…"
+msgstr "新しいイメージをアタッチ(_I)…"
 
 #: src/disks/ui/resize-dialog.ui:19
-#, fuzzy
-#| msgid "New Volume"
 msgid "Resize Volume"
-msgstr "新しいボリューム"
+msgstr "ボリュームのリサイズ"
 
 #: src/disks/ui/resize-dialog.ui:53
 msgid ""
@@ -3661,14 +3519,18 @@ msgid ""
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr ""
+"ファイルシステムのリサイズはデータ損失につながる可能性があるため、作業前に"
+"データをバックアップしておくことをお勧めします。移動するデータが多いほど、リ"
+"サイズに時間がかかります。最小サイズは現在の内容から算出されます。ファイルシ"
+"ステムが高速かつ確実に動作ように、ある程度の空き領域を確保してください。"
 
 #: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
-msgstr ""
+msgstr "差分(_D)"
 
 #: src/disks/ui/resize-dialog.ui:214
 msgid "The difference to the previous partition size"
-msgstr ""
+msgstr "以前のパーティションとの差異"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
@@ -3712,7 +3574,7 @@ msgstr "セルフテストを開始(_S)"
 
 #: src/disks/ui/smart-dialog.ui:28
 msgid "Click to start a SMART self-test"
-msgstr "クリックするとSMARTセルフテストを開始します"
+msgstr "クリックすると SMART セルフテストを開始します"
 
 #: src/disks/ui/smart-dialog.ui:40
 msgid "_Stop Self-test"
@@ -3720,11 +3582,12 @@ msgstr "セルフテストを停止(_S)"
 
 #: src/disks/ui/smart-dialog.ui:44
 msgid "Click to stop the SMART self-test currently in progress"
-msgstr "クリックすると現在実行中のSMARTセルフテストを停止します"
+msgstr "クリックすると現在実行中の SMART セルフテストを停止します"
 
 #: src/disks/ui/smart-dialog.ui:74
 msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "クリックするとハードディスクからSMARTデータを強制的に再読み込みします"
+msgstr ""
+"クリックするとハードディスクから SMART データを強制的に再読み込みします"
 
 #: src/disks/ui/smart-dialog.ui:113
 msgid "Powered On"
@@ -3748,7 +3611,7 @@ msgstr "総合評価"
 
 #: src/disks/ui/smart-dialog.ui:317
 msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "クリックするとハードディスクのSMARTの有効/無効を切り替えます"
+msgstr "クリックするとハードディスクの SMART の有効/無効を切り替えます"
 
 #: src/disks/ui/smart-dialog.ui:339
 msgid "SMART _Attributes"
@@ -3798,7 +3661,7 @@ msgstr[0] "%d 年"
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] "%d か月"
+msgstr[0] "%d ヶ月"
 
 #. Translators: Used for number of days
 #: src/libgdu/gduutils.c:461
@@ -3900,10 +3763,8 @@ msgid "Error locking device"
 msgstr "デバイスのロック中にエラー"
 
 #: src/libgdu/gduutils.c:1452
-#, fuzzy
-#| msgid "Error deleting loop device"
 msgid "Error disabling autoclear for loop device"
-msgstr "ループデバイスの削除中にエラーが発生しました"
+msgstr ""
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3913,16 +3774,139 @@ msgstr "ハードディスクの問題を検出しました"
 
 #. Translators: This is used as the text of the SMART failure notification
 #: src/notify/gdusdmonitor.c:358
-#, fuzzy
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
-msgstr "まもなくハードディスクが故障しそうです。"
+msgstr "ハードディスクがもうすぐ故障する可能性があります。"
 
 #. Translators: Text for button in SMART failure notification
 #: src/notify/gdusdmonitor.c:362
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "検査"
+
+#~ msgid "Total LBAs Written"
+#~ msgstr "Total LBAs Written"
+
+#~ msgid "Total LBAs Read"
+#~ msgstr "Total LBAs Read"
+
+#~ msgctxt "create-inhibit-message"
+#~ msgid "Benchmarking device"
+#~ msgstr "ベンチマーク中のデバイス"
+
+#~ msgid "Select a Keyfile"
+#~ msgstr "キーファイルを選択"
+
+#~ msgid "Error unlocking device"
+#~ msgstr "デバイスのロック解除中にエラーが発生しました"
+
+#~ msgid "Invalid PIM"
+#~ msgstr "無効な PIM"
+
+#~ msgid "_Attach Disk Image… (.iso, .img)"
+#~ msgstr "ディスクイメージをアタッチ(_A)… (.iso, .img)"
+
+#~ msgid "_Keyboard Shortcuts"
+#~ msgstr "キーボードショートカット(_K)"
+
+#~ msgid "Drive Options"
+#~ msgstr "ドライブのオプション"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "全般"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Create a new empty disk image"
+#~ msgstr "新しい空のディスクイメージを作成する"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Attach an existing disk image"
+#~ msgstr "既存のディスクイメージをアタッチする"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Help"
+#~ msgstr "ヘルプを表示する"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Drive"
+#~ msgstr "ドライブ"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open the drive menu"
+#~ msgstr "ドライブメニューを開く"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Format the drive"
+#~ msgstr "ドライブを初期化する"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Restore an image to the disk"
+#~ msgstr "イメージをディスクにリストアする"
+
+#~ msgctxt "shortcut window"
+#~ msgid "SMART data"
+#~ msgstr "SMART データ"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Drive settings"
+#~ msgstr "ドライブの設定"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Partition"
+#~ msgstr "パーティション"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open the volume menu"
+#~ msgstr "ボリュームメニューを開く"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Format the selected volume"
+#~ msgstr "選択したボリュームを初期化する"
+
+#~ msgid "This volume might be a VeraCrypt volume as it contains random data."
+#~ msgstr ""
+#~ "このボリュームはランダムデータを含んでいるため、VeraCrypt ボリュームである"
+#~ "可能性があります。"
+
+#~ msgid "If specified"
+#~ msgstr "指定する場合"
+
+#~ msgid "Volume type"
+#~ msgstr "ボリュームのタイプ"
+
+#~ msgid "_Hidden"
+#~ msgstr "隠しボリューム(_H)"
+
+#~ msgid ""
+#~ "Instead of unlocking this volume, attempt to unlock a secondary volume "
+#~ "hidden inside."
+#~ msgstr ""
+#~ "このボリュームではなく、内部に隠されたセカンダリボリュームのロック解除を試"
+#~ "みます。"
+
+#~ msgid "Windows _system"
+#~ msgstr "Windows のシステム(_S)"
+
+#~ msgid "Unlock an encrypted Windows system partition or drive."
+#~ msgstr ""
+#~ "暗号化された Windows のシステムパーティション、またはシステムドライブを"
+#~ "ロック解除します。"
+
+#~ msgid "PI_M"
+#~ msgstr "PIM(_M)"
+
+#~ msgid "Keyfiles"
+#~ msgstr "キーファイル"
+
+#~ msgid "Select a keyfile to unlock this volume"
+#~ msgstr "このボリュームをロック解除するためのキーファイルを選択します"
+
+#~ msgid "drive-removable-media"
+#~ msgstr "drive-removable-media"
+
+#~ msgid "org.gnome.DiskUtility"
+#~ msgstr "org.gnome.DiskUtility"
 
 #~ msgid "Activation of this plugin"
 #~ msgstr "このプラグインを有効化"
@@ -4078,9 +4062,6 @@ msgstr "検査"
 #~ msgid "For example, “My RAID Array” or “Backup Data”"
 #~ msgstr "例えば、\"My RAID Array\"とか\"Backup Data\""
 
-#~ msgid "Create a new partition"
-#~ msgstr "新規パーティションを作成します"
-
 #~ msgid "Unmount the filesystem"
 #~ msgstr "ファイルシステムをアンマウントします"
 
@@ -4134,9 +4115,6 @@ msgstr "検査"
 #~ msgstr ""
 #~ "指定した場合、いくつかのOSが読み込み専用としてパーティションの内容を使用す"
 #~ "ることができます。"
-
-#~ msgid "H_idden"
-#~ msgstr "隠しパーティション(_I)"
 
 #~ msgid ""
 #~ "If set, some OSes may hide the contents of the partition in their user "
@@ -4558,14 +4536,8 @@ msgstr "検査"
 #~ msgid "_Format..."
 #~ msgstr "初期化(_F)..."
 
-#~ msgid "View SMART Data..."
-#~ msgstr "SMART データを表示..."
-
 #~ msgid "Format..."
 #~ msgstr "初期化..."
-
-#~ msgid "Attach Disk Image..."
-#~ msgstr "ディスクイメージをアタッチ..."
 
 #~ msgid "In Use"
 #~ msgstr "使用中"

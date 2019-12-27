@@ -1,5 +1,5 @@
 # Simplified Chinese translation of gnome-disk-utility.
-# Copyright (C) 2009-2018 gnome-disk-utility's COPYRIGHT HOLDER
+# Copyright (C) 2009-2019 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Wei Mingzhi <whistler_wmz@163.com>, 2009.
 # Hinker <hinkerliu@163.com>, 2009.
@@ -13,23 +13,23 @@
 # lainme <lainme993@gmail.com>, 2013.
 # Wylmer Wang <wantinghard@gmail.com>, 2013.
 # Mingcong Bai <jeffbai@aosc.xyz>, 2017, 2018.
-# Dingzhong Chen <wsxy162@@gmail.com>, 2017, 2018.
+# Dingzhong Chen <wsxy162@gmail.com>, 2017, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
-"Report-Msgid-Bugs-To: https://bugzilla.gnome.org/enter_bug.cgi?product=gnome-"
-"disk-utility&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2018-05-08 20:32+0000\n"
-"PO-Revision-Date: 2018-05-10 11:18-0500\n"
-"Last-Translator: Mingcong Bai <jeffbai@aosc.xyz>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
+"POT-Creation-Date: 2019-04-03 11:40+0000\n"
+"PO-Revision-Date: 2019-04-13 21:28+0800\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 "X-Launchpad-Export-Date: 2016-03-22 13:56+0000\n"
 "X-DamnedLies-Scope: partial\n"
 
@@ -40,12 +40,6 @@ msgstr "磁盘映像挂载器"
 #: data/gnome-disk-image-mounter.desktop.in:4
 msgid "Mount Disk Images"
 msgstr "挂载磁盘映像"
-
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/gnome-disk-image-mounter.desktop.in:7
-#: data/gnome-disk-image-writer.desktop.in:7
-msgid "drive-removable-media"
-msgstr "drive-removable-media"
 
 #: data/gnome-disk-image-writer.desktop.in:3
 msgid "Disk Image Writer"
@@ -95,7 +89,8 @@ msgstr "易用的磁盘管理工具"
 msgid "The GNOME Project"
 msgstr "GNOME 项目"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1110
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
+#: src/disks/ui/about-dialog.ui:11
 msgid "Disks"
 msgstr "磁盘"
 
@@ -113,11 +108,6 @@ msgstr ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 
-#. Translators: Do NOT translate or transliterate this text (this is an icon file name)!
-#: data/org.gnome.DiskUtility.desktop.in:9
-msgid "gnome-disks"
-msgstr "gnome-disks"
-
 #: src/disk-image-mounter/main.c:46
 msgid "An error occurred"
 msgstr "发生一个错误"
@@ -130,9 +120,9 @@ msgstr "允许写入到映像"
 msgid "Select Disk Image(s) to Mount"
 msgstr "选择要挂载的磁盘映像"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:929
+#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:803
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
 msgid "_Cancel"
 msgstr "取消(_C)"
 
@@ -222,7 +212,7 @@ msgstr "当使用 --xid 时必须指定 --format-device\n"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:336
+#: src/disks/gduapplication.c:353
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -564,7 +554,7 @@ msgstr "数据地址标记错误数"
 
 #: src/disks/gduatasmartdialog.c:382
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
-msgstr "数据地址标记 (DAM) 错误数（或）供应商特定的含义"
+msgstr "数据地址标记（DAM）错误数（或）供应商特定的含义"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -800,28 +790,50 @@ msgstr "读取错误重试率"
 msgid "Number of errors while reading from a disk"
 msgstr "从磁盘读取时出错的数目"
 
-#: src/disks/gduatasmartdialog.c:637
+#. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+#. * or the next string for a longer explanation.
+#.
+#: src/disks/gduatasmartdialog.c:585
+msgid "Total LBAs Written"
+msgstr "LBA 写入总数"
+
+#: src/disks/gduatasmartdialog.c:586
+msgid "The amount of data written during the lifetime of the disk"
+msgstr "磁盘运行期间写入的数据量"
+
+#. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
+#. * or the next string for a longer explanation.
+#.
+#: src/disks/gduatasmartdialog.c:593
+msgid "Total LBAs Read"
+msgstr "LBA 读取总数"
+
+#: src/disks/gduatasmartdialog.c:594
+msgid "The amount of data read during the lifetime of the disk"
+msgstr "磁盘运行期间读取的数据量"
+
+#: src/disks/gduatasmartdialog.c:653
 #, c-format
 msgid "No description for attribute %d"
 msgstr "没有 %d 属性的描述"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:684
+#: src/disks/gduatasmartdialog.c:700
 msgid "FAILING"
 msgstr "失败"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:693
+#: src/disks/gduatasmartdialog.c:709
 msgid "Failed in the past"
 msgstr "以往的失败"
 
-#: src/disks/gduatasmartdialog.c:697
+#: src/disks/gduatasmartdialog.c:713
 msgid "OK"
 msgstr "确定"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:724
+#: src/disks/gduatasmartdialog.c:740
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -834,7 +846,7 @@ msgstr[0] "%d 个扇区"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:736 src/disks/gduatasmartdialog.c:869
+#: src/disks/gduatasmartdialog.c:752 src/disks/gduatasmartdialog.c:885
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -845,118 +857,118 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:747 src/disks/gduatasmartdialog.c:1117
+#: src/disks/gduatasmartdialog.c:763 src/disks/gduatasmartdialog.c:1133
 msgid "N/A"
 msgstr "不可用"
 
-#: src/disks/gduatasmartdialog.c:767
+#: src/disks/gduatasmartdialog.c:783
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "上次自检成功完成"
 
-#: src/disks/gduatasmartdialog.c:771
+#: src/disks/gduatasmartdialog.c:787
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "上次自检被取消"
 
-#: src/disks/gduatasmartdialog.c:775
+#: src/disks/gduatasmartdialog.c:791
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "上次自检被中断"
 
-#: src/disks/gduatasmartdialog.c:779
+#: src/disks/gduatasmartdialog.c:795
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "上次自检未完成"
 
-#: src/disks/gduatasmartdialog.c:783
+#: src/disks/gduatasmartdialog.c:799
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "上次自检失败"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:788
+#: src/disks/gduatasmartdialog.c:804
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "上次自检失败（电气）"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:793
+#: src/disks/gduatasmartdialog.c:809
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "上次自检失败（伺服器）"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:798
+#: src/disks/gduatasmartdialog.c:814
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "上次自检失败（读取）"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:803
+#: src/disks/gduatasmartdialog.c:819
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "上次自检失败（装卸）"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:808
+#: src/disks/gduatasmartdialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "自检进行中 — 剩余 %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:815
+#: src/disks/gduatasmartdialog.c:831
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
-msgstr "未知 (%s)"
+msgstr "未知（%s）"
 
-#: src/disks/gduatasmartdialog.c:840
+#: src/disks/gduatasmartdialog.c:856
 #, c-format
 msgid "%s ago"
 msgstr "%s 之前"
 
-#: src/disks/gduatasmartdialog.c:903
+#: src/disks/gduatasmartdialog.c:919
 msgid "SMART is not supported"
 msgstr "不支持 SMART"
 
-#: src/disks/gduatasmartdialog.c:911
+#: src/disks/gduatasmartdialog.c:927
 msgid "SMART is not enabled"
 msgstr "SMART 未激活"
 
-#: src/disks/gduatasmartdialog.c:921
+#: src/disks/gduatasmartdialog.c:937
 msgid "Self-test in progress"
 msgstr "自检正在进行"
 
-#: src/disks/gduatasmartdialog.c:934 src/disks/gduatasmartdialog.c:943
+#: src/disks/gduatasmartdialog.c:950 src/disks/gduatasmartdialog.c:959
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "磁盘看起来即将在不久后损坏"
 
-#: src/disks/gduatasmartdialog.c:966
+#: src/disks/gduatasmartdialog.c:982
 msgid "SELF-TEST FAILED"
 msgstr "自检失败"
 
-#: src/disks/gduatasmartdialog.c:975
+#: src/disks/gduatasmartdialog.c:991
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "磁盘状况良好，但是有 %d 个属性指示为“失败”状态"
 
-#: src/disks/gduatasmartdialog.c:986
+#: src/disks/gduatasmartdialog.c:1002
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "磁盘总体良好，但有 %d 个坏扇区"
 
-#: src/disks/gduatasmartdialog.c:997
+#: src/disks/gduatasmartdialog.c:1013
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "磁盘状况良好，但是有 %d 个属性曾经处于“失败”状态"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1006
+#: src/disks/gduatasmartdialog.c:1022
 msgid "Disk is OK"
 msgstr "磁盘状况正常"
 
@@ -964,96 +976,96 @@ msgstr "磁盘状况正常"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1020
+#: src/disks/gduatasmartdialog.c:1036
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1105
+#: src/disks/gduatasmartdialog.c:1121
 msgid "Pre-Fail"
 msgstr "即将故障"
 
-#: src/disks/gduatasmartdialog.c:1107
+#: src/disks/gduatasmartdialog.c:1123
 msgid "Old-Age"
 msgstr "使用很久"
 
-#: src/disks/gduatasmartdialog.c:1110
+#: src/disks/gduatasmartdialog.c:1126
 msgid "Online"
 msgstr "在线"
 
-#: src/disks/gduatasmartdialog.c:1112
+#: src/disks/gduatasmartdialog.c:1128
 msgid "Offline"
 msgstr "离线"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1221
+#: src/disks/gduatasmartdialog.c:1237
 msgid "Threshold exceeded"
 msgstr "已超过阈值"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1226
+#: src/disks/gduatasmartdialog.c:1242
 msgid "Threshold not exceeded"
 msgstr "未超过阈值"
 
-#: src/disks/gduatasmartdialog.c:1302
+#: src/disks/gduatasmartdialog.c:1318
 msgid "Error refreshing SMART data"
 msgstr "刷新 SMART 数据出错"
 
-#: src/disks/gduatasmartdialog.c:1334
+#: src/disks/gduatasmartdialog.c:1350
 msgid "Error aborting SMART self-test"
 msgstr "中断 SMART 自检出错"
 
-#: src/disks/gduatasmartdialog.c:1353
+#: src/disks/gduatasmartdialog.c:1369
 msgid "Error starting SMART self-test"
 msgstr "开始 SMART 自检出错"
 
-#: src/disks/gduatasmartdialog.c:1432
+#: src/disks/gduatasmartdialog.c:1448
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "在试图切换 SMART 开启状态时出错"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1514
+#: src/disks/gduatasmartdialog.c:1530
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1526
+#: src/disks/gduatasmartdialog.c:1542
 msgid "Attribute"
 msgstr "属性"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1540
+#: src/disks/gduatasmartdialog.c:1556
 msgid "Value"
 msgstr "值"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1552
+#: src/disks/gduatasmartdialog.c:1568
 msgid "Normalized"
 msgstr "标准化"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1564
+#: src/disks/gduatasmartdialog.c:1580
 msgid "Threshold"
 msgstr "阈值"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1576
+#: src/disks/gduatasmartdialog.c:1592
 msgid "Worst"
 msgstr "最差"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1588
+#: src/disks/gduatasmartdialog.c:1604
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "类型"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1600
+#: src/disks/gduatasmartdialog.c:1616
 msgid "Updates"
 msgstr "更新方法"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1612 src/disks/ui/disks.ui:302
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
 msgid "Assessment"
 msgstr "评估"
 
@@ -1243,6 +1255,23 @@ msgstr ""
 msgid "The strength of the passphrase"
 msgstr "密钥串强度"
 
+#. Translators: In most cases this should not need translation unless the
+#. *              separation character '—' is not appropriate. The strings come
+#. *              from UDisks, first is description, second the name:
+#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+#.
+#: src/disks/gducreateconfirmpage.c:110
+#, c-format
+msgid "%s — %s"
+msgstr "%s — %s"
+
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
+#: src/disks/gducreateconfirmpage.c:128
+#, c-format
+msgid "%s (%.1f%%)"
+msgstr "%s (%.1f%%)"
+
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
@@ -1250,7 +1279,7 @@ msgstr "密钥串强度"
 #: src/disks/gducreatediskimagedialog.c:274
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr "%s (%s).img 中的磁盘映像"
+msgstr "%s（%s）.img 中的磁盘映像"
 
 #. Translators: A descriptive string for the sound played when
 #. * there's a read error that's being ignored, see
@@ -1326,43 +1355,137 @@ msgstr "确定设备大小时出错： "
 msgid "Device is size 0"
 msgstr "设备大小为 0"
 
-#: src/disks/gducreatediskimagedialog.c:763
+#: src/disks/gducreatediskimagedialog.c:762
 msgid "Error allocating space for disk image file: "
 msgstr "为磁盘映像分配空间时出错： "
 
-#: src/disks/gducreatediskimagedialog.c:924
+#: src/disks/gducreatediskimagedialog.c:922
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "名称为“%s”的文件已存在，是否替换？"
 
-#: src/disks/gducreatediskimagedialog.c:927
+#: src/disks/gducreatediskimagedialog.c:925
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr "文件已存在于“%s”。进行替换将覆盖其内容。"
 
-#: src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gducreatediskimagedialog.c:928
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "替换(_R)"
 
-#: src/disks/gducreatediskimagedialog.c:980
+#: src/disks/gducreatediskimagedialog.c:978
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "打开文件以便写入时出错"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:996
+#: src/disks/gducreatediskimagedialog.c:994
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "正在将设备数据复制到磁盘映像"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1002
+#: src/disks/gducreatediskimagedialog.c:1000
 msgid "Creating Disk Image"
 msgstr "创建磁盘映像"
+
+#: src/disks/gducreateformatdialog.c:175
+msgid "_Previous"
+msgstr "上一个(_P)"
+
+#: src/disks/gducreateformatdialog.c:181
+msgid "Cre_ate"
+msgstr "创建(_A)"
+
+#: src/disks/gducreateformatdialog.c:187
+msgid "Form_at"
+msgstr "格式化(_A)"
+
+#: src/disks/gducreateformatdialog.c:194
+msgid "N_ext"
+msgstr "下一个(_E)"
+
+#: src/disks/gducreateformatdialog.c:221
+msgid "Error formatting volume"
+msgstr "格式化卷时出错"
+
+#: src/disks/gducreateformatdialog.c:288
+msgid "Error creating partition"
+msgstr "创建分区时出错"
+
+#: src/disks/gducreateformatdialog.c:435
+msgid "Create Partition"
+msgstr "创建分区"
+
+#: src/disks/gducreateformatdialog.c:444
+msgid "Format Volume"
+msgstr "格式化卷"
+
+#: src/disks/gducreateformatdialog.c:447
+msgid "Custom Format"
+msgstr "自定义格式"
+
+#: src/disks/gducreateformatdialog.c:450
+msgid "Set Password"
+msgstr "设置密码"
+
+#: src/disks/gducreateformatdialog.c:453
+msgid "Confirm Details"
+msgstr "确认细节"
+
+#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+msgid "_Format"
+msgstr "格式化(_F)"
+
+#: src/disks/gducreateotherpage.c:115
+msgid "XFS — Linux Filesystem"
+msgstr "XFS——Linux 文件系统"
+
+#: src/disks/gducreateotherpage.c:117
+msgid "Linux Swap Partition"
+msgstr "Linux 交换分区"
+
+#: src/disks/gducreateotherpage.c:119
+msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+msgstr "Btrfs——写时复制 Linux 文件系统，用于快照"
+
+#: src/disks/gducreateotherpage.c:121
+msgid "F2FS — Flash Storage Linux Filesystem"
+msgstr "F2FS——闪存存储 Linux 文件系统"
+
+#: src/disks/gducreateotherpage.c:123
+msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr "exFAT——闪存存储Linux文件系统，用在 SDXC 卡上"
+
+#: src/disks/gducreateotherpage.c:125
+msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgstr "UDF——通用磁盘格式，用在多个系统的可移动设备上"
+
+#: src/disks/gducreateotherpage.c:127
+msgid "No Filesystem"
+msgstr "无文件系统"
+
+#: src/disks/gducreateotherpage.c:203
+#, c-format
+msgid "The utility %s is missing."
+msgstr "缺失实用工具 %s。"
+
+#: src/disks/gducreatepartitionpage.c:320
+msgid ""
+"Cannot create a new partition. There are already four primary partitions."
+msgstr "无法创建分区。已经有四个主分区了。"
+
+#: src/disks/gducreatepartitionpage.c:324
+msgid "This is the last primary partition that can be created."
+msgstr "这是可创建的最后一个主分区。"
+
+#: src/disks/gducreatepasswordpage.c:124
+msgid "The passwords do not match"
+msgstr "密码不匹配"
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1507,12 +1630,6 @@ msgstr "卷标与老卷标一致"
 msgid "Error setting label"
 msgstr "设置卷标时出错"
 
-#: src/disks/gdufilesystemdialog.c:128 src/disks/gduwindow.c:3206
-#: src/disks/gduwindow.c:3334 src/disks/gduwindow.c:3835
-#: src/libgdu/gduutils.c:1398
-msgid "Error unmounting filesystem"
-msgstr "卸载文件系统时出错"
-
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
@@ -1624,117 +1741,6 @@ msgstr ""
 "或锁定。在执行之前，请阅读有关 <a href='https://ata.wiki.kernel.org/index."
 "php/ATA_Secure_Erase'>ATA 安全擦除的文章并确保您已了解风险"
 
-#: src/disks/gduformatdiskdialog.c:444 src/disks/gducreateformatdialog.c:456
-msgid "_Format"
-msgstr "格式化(_F)"
-
-#: src/disks/gducreateformatdialog.c:175
-msgid "_Previous"
-msgstr "上一个(_P)"
-
-#: src/disks/gducreateformatdialog.c:181
-msgid "Cre_ate"
-msgstr "创建(_A)"
-
-#: src/disks/gducreateformatdialog.c:187
-msgid "Form_at"
-msgstr "格式化(_A)"
-
-#: src/disks/gducreateformatdialog.c:194
-msgid "N_ext"
-msgstr "下一个(_E)"
-
-#: src/disks/gducreateformatdialog.c:221
-msgid "Error formatting volume"
-msgstr "格式化卷时出错"
-
-#: src/disks/gducreateformatdialog.c:288
-msgid "Error creating partition"
-msgstr "创建分区时出错"
-
-#: src/disks/gducreateformatdialog.c:435
-msgid "Create Partition"
-msgstr "创建分区"
-
-#: src/disks/gducreateformatdialog.c:444
-msgid "Format Volume"
-msgstr "格式化卷"
-
-#: src/disks/gducreateformatdialog.c:447
-msgid "Custom Format"
-msgstr "自定义格式"
-
-#: src/disks/gducreateformatdialog.c:450
-msgid "Set Password"
-msgstr "设置密码"
-
-#: src/disks/gducreateformatdialog.c:453
-msgid "Confirm Details"
-msgstr "确认细节"
-
-#: src/disks/gducreatepartitionpage.c:320
-msgid ""
-"Cannot create a new partition. There are already four primary partitions."
-msgstr "无法创建分区。已经有四个主分区了。"
-
-#: src/disks/gducreatepartitionpage.c:324
-msgid "This is the last primary partition that can be created."
-msgstr "这是可创建的最后一个主分区。"
-
-#: src/disks/gducreateotherpage.c:115
-msgid "XFS — Linux Filesystem"
-msgstr "XFS——Linux 文件系统"
-
-#: src/disks/gducreateotherpage.c:117
-msgid "Linux Swap Partition"
-msgstr "Linux 交换分区"
-
-#: src/disks/gducreateotherpage.c:119
-msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
-msgstr "Btrfs——写时复制 Linux 文件系统，用于快照"
-
-#: src/disks/gducreateotherpage.c:121
-msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr "F2FS——闪存存储 Linux 文件系统"
-
-#: src/disks/gducreateotherpage.c:123
-msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
-msgstr "exFAT——闪存存储Linux文件系统，用在 SDXC 卡上"
-
-#: src/disks/gducreateotherpage.c:125
-msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr "UDF——通用磁盘格式，用在多个系统的可移动设备上"
-
-#: src/disks/gducreateotherpage.c:127
-msgid "No Filesystem"
-msgstr "无文件系统"
-
-#: src/disks/gducreateotherpage.c:207
-#, c-format
-msgid "The utility %s is missing."
-msgstr "缺失实用工具 %s。"
-
-#: src/disks/gducreatepasswordpage.c:124
-msgid "The passwords do not match"
-msgstr "密码不匹配"
-
-#. Translators: In most cases this should not need translation unless the
-#. *              separation character '—' is not appropriate. The strings come
-#. *              from UDisks, first is description, second the name:
-#. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
-#.
-#: src/disks/gducreateconfirmpage.c:110
-#, c-format
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
-#.
-#: src/disks/gducreateconfirmpage.c:128
-#, c-format
-msgid "%s (%.1f%%)"
-msgstr "%s (%.1f%%)"
-
 #: src/disks/gdufstabdialog.c:155
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
@@ -1789,7 +1795,7 @@ msgstr "更新 /etc/fstab 中的项目时出错"
 #: src/disks/gdunewdiskimagedialog.c:192
 #, c-format
 msgid "Unnamed (%s).img"
-msgstr "未命名 (%s).img"
+msgstr "未命名（%s）.img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
 msgid "Error writing file"
@@ -1840,12 +1846,12 @@ msgid "_Resize"
 msgstr "调整大小(_R)"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:601 src/disks/gduresizedialog.c:624
+#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
 msgstr "调整文件系统大小时出错"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:575
+#: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
 msgstr "调整分区大小时出错"
 
@@ -1861,27 +1867,19 @@ msgstr "调整大小未就绪"
 msgid "Waited too long for the filesystem"
 msgstr "等待文件系统时间过长"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:648
+#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
 msgid "Error repairing filesystem"
 msgstr "修复文件系统时出错"
 
-#: src/disks/gduresizedialog.c:551
-msgid "Error unmounting filesystem for repairing"
-msgstr "卸载文件系统以修复时出错"
-
-#: src/disks/gduresizedialog.c:692
-msgid "Error unmounting filesystem for resizing"
-msgstr "卸载文件系统以调整大小时出错"
-
-#: src/disks/gduresizedialog.c:760
+#: src/disks/gduresizedialog.c:748
 msgid "Error mounting the filesystem"
 msgstr "挂载文件系统时出错"
 
-#: src/disks/gduresizedialog.c:802
+#: src/disks/gduresizedialog.c:790
 msgid "Fit to size"
 msgstr "自适应大小"
 
-#: src/disks/gduresizedialog.c:837
+#: src/disks/gduresizedialog.c:825
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "挂载文件系统以计算最小大小时出错"
 
@@ -1946,19 +1944,32 @@ msgstr "所有现存的数据都会丢失"
 msgid "_Restore"
 msgstr "恢复(_R)"
 
-#: src/disks/gduunlockdialog.c:86
-msgid "Error unlocking encrypted device"
-msgstr "解锁加密的设备时出错"
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+msgid "Select a Keyfile"
+msgstr "选择一个密钥文件"
 
-#: src/disks/gduunlockdialog.c:143
+#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+msgid "Error unlocking device"
+msgstr "解锁设备时出错"
+
+#: src/disks/gduunlockdialog.c:224
+#, c-format
+msgid "Invalid PIM"
+msgstr "PIM 无效"
+
+#: src/disks/gduunlockdialog.c:261
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "加密口令已经从密钥环恢复"
+
+#: src/disks/gduunlockdialog.c:305
+msgid "Set options to unlock"
+msgstr "设置选项以解锁"
 
 #: src/disks/gduvolumegrid.c:262
 msgid "Volumes Grid"
 msgstr "Gird 卷"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2184
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
 msgid "No Media"
 msgstr "无介质"
 
@@ -2000,96 +2011,37 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "剩余空间"
 
-#: src/disks/gduwindow.c:627
+#: src/disks/gduwindow.c:649
 msgid "Error deleting loop device"
 msgstr "删除回环设备时出错"
 
-#: src/disks/gduwindow.c:727 src/disks/gduwindow.c:770
+#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
 msgid "Error attaching disk image"
 msgstr "附加磁盘映像时出错"
 
-#: src/disks/gduwindow.c:800
+#: src/disks/gduwindow.c:822
 msgid "Select Disk Image to Attach"
 msgstr "选择要附加的磁盘映像"
 
-#: src/disks/gduwindow.c:804
+#: src/disks/gduwindow.c:826
 msgid "_Attach"
 msgstr "附加(_A)"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:811
+#: src/disks/gduwindow.c:833
 msgid "Set up _read-only loop device"
 msgstr "设置只读的回环设备(_R)"
 
-#: src/disks/gduwindow.c:812
+#: src/disks/gduwindow.c:834
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr "如果勾选，回环设备将会是只读的。这在您不希望文件被修改时有用"
 
-#: src/disks/gduwindow.c:1010
-msgid "Power off this disk"
-msgstr "关闭此磁盘"
-
-#: src/disks/gduwindow.c:1016
-msgid "Eject this disk"
-msgstr "弹出磁盘"
-
-#: src/disks/gduwindow.c:1022
-msgid "Detach this loop device"
-msgstr "断开此回环设备"
-
-#. Translators: This is the short-cut to open the disks/drive gear menu
-#: src/disks/gduwindow.c:1447
-msgctxt "accelerator"
-msgid "F10"
-msgstr "F10"
-
-#. Translators: This is the short-cut to format a disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1455
-msgctxt "accelerator"
-msgid "<Ctrl>F"
-msgstr "<Ctrl>F"
-
-#. Translators: This is the short-cut to view SMART data for a disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1463
-msgctxt "accelerator"
-msgid "<Ctrl>S"
-msgstr "<Ctrl>S"
-
-#. Translators: This is the short-cut to view the "Drive Settings" dialog for a hard disk.
-#. *              The Ctrl modifier must not be translated or parsing will fail.
-#. *              You can however change to another English modifier (e.g. <Shift>).
-#.
-#: src/disks/gduwindow.c:1471
-msgctxt "accelerator"
-msgid "<Ctrl>E"
-msgstr "<Ctrl>E"
-
-#: src/disks/gduwindow.c:1486
-msgctxt "accelerator"
-msgid "<Shift>F10"
-msgstr "<Shift>F10"
-
-#. Translators: This is the short-cut to format a volume.
-#. *              The Shift and Ctrl modifiers must not be translated or parsing will fail.
-#. *              You can however change to other English modifiers.
-#.
-#: src/disks/gduwindow.c:1496
-msgctxt "accelerator"
-msgid "<Shift><Ctrl>F"
-msgstr "<Shift><Ctrl>F"
-
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1826
+#: src/disks/gduwindow.c:1697
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s（只读）"
@@ -2098,7 +2050,7 @@ msgstr "%s（只读）"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1864
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2107,7 +2059,7 @@ msgstr "剩余 %s（%s/秒）"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1872
+#: src/disks/gduwindow.c:1743
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2118,7 +2070,7 @@ msgstr "剩余 %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1887
+#: src/disks/gduwindow.c:1758
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s/%s — %s"
@@ -2127,30 +2079,30 @@ msgstr "%s/%s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:2012
+#: src/disks/gduwindow.c:1883
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s：%2.1f%%"
 
-#: src/disks/gduwindow.c:2092 src/disks/gduwindow.c:2496
+#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
 msgid "Block device is empty"
 msgstr "块设备为空"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:2115
+#: src/disks/gduwindow.c:1986
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
-msgstr "未知 (%s)"
+msgstr "未知（%s）"
 
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2285
+#: src/disks/gduwindow.c:2145
 msgid "Connected to another seat"
 msgstr "连接到另一个位置"
 
-#: src/disks/gduwindow.c:2432
+#: src/disks/gduwindow.c:2286
 msgid "Loop device is empty"
 msgstr "回环设备为空"
 
@@ -2160,61 +2112,61 @@ msgstr "回环设备为空"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2665
+#: src/disks/gduwindow.c:2503
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s 可用（已用 %.1f%%）"
 
-#: src/disks/gduwindow.c:2695
+#: src/disks/gduwindow.c:2533
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "未知"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2733
+#: src/disks/gduwindow.c:2571
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "文件系统根目录"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2741
+#: src/disks/gduwindow.c:2579
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "已挂载到 %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2747
+#: src/disks/gduwindow.c:2585
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "未挂载"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2770
+#: src/disks/gduwindow.c:2608
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "活动"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2776
+#: src/disks/gduwindow.c:2614
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "不活动"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2791
-msgctxt "volume-content-luks"
+#: src/disks/gduwindow.c:2629
+msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "已解锁"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2797
-msgctxt "volume-content-luks"
+#: src/disks/gduwindow.c:2635
+msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "已锁定"
 
-#: src/disks/gduwindow.c:2807
+#: src/disks/gduwindow.c:2649
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "扩展分区"
@@ -2223,153 +2175,152 @@ msgstr "扩展分区"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2827
+#: src/disks/gduwindow.c:2669
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2951
+#: src/disks/gduwindow.c:2789
 msgid "Unallocated Space"
 msgstr "未分配空间"
 
-#: src/disks/gduwindow.c:3144
+#: src/disks/gduwindow.c:2979
 msgid "Error while repairing filesystem"
 msgstr "修复文件系统时出错"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3006
 msgid "Repair successful"
 msgstr "修复成功"
 
-#: src/disks/gduwindow.c:3171
+#: src/disks/gduwindow.c:3006
 msgid "Repair failed"
 msgstr "修复失败"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "已经修复 %2$s 上的文件系统 %1$s。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3180
+#: src/disks/gduwindow.c:3015
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "无法修复 %2$s 上的文件系统 %1$s。"
 
-#: src/disks/gduwindow.c:3242
+#: src/disks/gduwindow.c:3068
 msgid "Confirm Repair"
 msgstr "确认修复"
 
-#: src/disks/gduwindow.c:3245
+#: src/disks/gduwindow.c:3071
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
-"lost files. Depending on the amount of data this operation takes longer time."
+"lost files. The operation may take a long time, especially if the partition "
+"contains a lot of data."
 msgstr ""
 "文件系统修复不总是有效并且可能造成数据丢失。在使用数据恢复工具来检索丢失的文"
-"件前，先考虑备份文件。此操作需要的时间取决于数据量。"
+"件前，先考虑备份文件。此操作可能需要很长时间，尤其是分区包含大量数据时。"
 
-#: src/disks/gduwindow.c:3273
+#: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
 msgstr "检查文件系统时出错"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem intact"
 msgstr "文件系统完好"
 
-#: src/disks/gduwindow.c:3300
+#: src/disks/gduwindow.c:3126
 msgid "Filesystem damaged"
 msgstr "文件系统损坏"
 
-#: src/disks/gduwindow.c:3303
+#: src/disks/gduwindow.c:3129
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s 上的文件系统 %1$s 未损坏。"
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3309
+#: src/disks/gduwindow.c:3135
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s 上的文件系统 %1$s 需要修复。"
 
-#: src/disks/gduwindow.c:3369
+#: src/disks/gduwindow.c:3186
 msgid "Confirm Check"
 msgstr "确认检查"
 
-#: src/disks/gduwindow.c:3372
-msgid "Depending on the amount of data the filesystem check takes longer time."
-msgstr "文件系统检查需要的时间取决于数据量。"
+#: src/disks/gduwindow.c:3189
+msgid ""
+"The check may take a long time, especially if the partition contains a lot "
+"of data."
+msgstr "检查可能需要很长时间，尤其是分区包含大量数据时。"
 
-#: src/disks/gduwindow.c:3572
+#: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "试图将驱动器进入待机模式时出错"
 
-#: src/disks/gduwindow.c:3618
+#: src/disks/gduwindow.c:3473
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "试图将驱动器从待机模式唤醒时出错"
 
-#: src/disks/gduwindow.c:3663
+#: src/disks/gduwindow.c:3519
 msgid "Error powering off drive"
 msgstr "设备断电出错"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3715
+#: src/disks/gduwindow.c:3571
 msgid "Are you sure you want to power off the drives?"
 msgstr "您确定要断掉驱动器的电源吗？"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3717
+#: src/disks/gduwindow.c:3573
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "该操作将让系统对以下驱动器断电并移除。"
 
-#: src/disks/gduwindow.c:3721
+#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "断电(_P)"
 
-#: src/disks/gduwindow.c:3798
+#: src/disks/gduwindow.c:3657
 msgid "Error mounting filesystem"
 msgstr "挂载文件系统时出错"
 
-#: src/disks/gduwindow.c:3907
+#: src/disks/gduwindow.c:3743
 msgid "Error deleting partition"
 msgstr "删除分区时发生错误"
 
-#: src/disks/gduwindow.c:3944
+#: src/disks/gduwindow.c:3780
 msgid "Are you sure you want to delete the partition?"
 msgstr "您确定要删除此分区吗？"
 
-#: src/disks/gduwindow.c:3945
+#: src/disks/gduwindow.c:3781
 msgid "All data on the partition will be lost"
 msgstr "分区上的所有数据都将丢失"
 
-#: src/disks/gduwindow.c:3946
+#: src/disks/gduwindow.c:3782
 msgid "_Delete"
 msgstr "删除(_D)"
 
-#: src/disks/gduwindow.c:3977
+#: src/disks/gduwindow.c:3813
 msgid "Error ejecting media"
 msgstr "弹出媒体时出错"
 
-#: src/disks/gduwindow.c:4042
-msgid "Error locking encrypted device"
-msgstr "锁定加密的设备时出错"
-
-#: src/disks/gduwindow.c:4078
+#: src/disks/gduwindow.c:3896
 msgid "Error starting swap"
 msgstr "启动交换分区时出错"
 
-#: src/disks/gduwindow.c:4115
+#: src/disks/gduwindow.c:3933
 msgid "Error stopping swap"
 msgstr "停止交换分区时出错"
 
-#: src/disks/gduwindow.c:4157
+#: src/disks/gduwindow.c:3975
 msgid "Error setting autoclear flag"
 msgstr "设置自动清理标志时出错"
 
-#: src/disks/gduwindow.c:4210 src/disks/gduwindow.c:4274
+#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
 msgid "Error canceling job"
 msgstr "取消作业时出错"
 
@@ -2439,20 +2390,20 @@ msgid "_New Disk Image…"
 msgstr "新建磁盘映像(_N)…"
 
 #: src/disks/ui/app-menu.ui:10
-msgid "Attach Disk _Image…"
-msgstr "附加磁盘映像(_I)…"
+msgid "_Attach Disk Image… (.iso, .img)"
+msgstr "附加磁盘映像(_A)…（.iso, .img）"
 
 #: src/disks/ui/app-menu.ui:17
+msgid "_Keyboard Shortcuts"
+msgstr "键盘快捷键(_K)"
+
+#: src/disks/ui/app-menu.ui:21
 msgid "_Help"
 msgstr "帮助(_H)"
 
-#: src/disks/ui/app-menu.ui:21
-msgid "_About"
-msgstr "关于(_A)"
-
-#: src/disks/ui/app-menu.ui:25
-msgid "_Quit"
-msgstr "退出(_Q)"
+#: src/disks/ui/app-menu.ui:24
+msgid "_About Disks"
+msgstr "关于磁盘(_A)"
 
 #: src/disks/ui/benchmark-dialog.ui:7
 msgid "Benchmark"
@@ -2542,9 +2493,9 @@ msgstr ""
 
 #: src/disks/ui/benchmark-dialog.ui:478
 msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr "取样数量。较大的数量会得出更精确的存取时间模式图，但这会花费更多时间。"
+"Number of samples. Bigger number produces more smooth graphs but the "
+"benchmark will take more time."
+msgstr "取样数量。较大的数量会得出更平滑的图形，但测试会花费更多时间。"
 
 #: src/disks/ui/benchmark-dialog.ui:495
 msgid ""
@@ -2563,11 +2514,11 @@ msgstr "存取时间"
 msgid "Number of Sampl_es"
 msgstr "取样数量(_E)"
 
-#: src/disks/ui/benchmark-dialog.ui:575 src/disks/ui/benchmark-dialog.ui:576
+#: src/disks/ui/benchmark-dialog.ui:575
 msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr "取样数量。较大的数量会得出更平滑的图形，但测试会花费更多时间。"
+"Number of samples. Bigger number produces a more accurate picture of access "
+"time patterns but takes more time."
+msgstr "取样数量。较大的数量会得出更精确的存取时间模式图，但这会花费更多时间。"
 
 #: src/disks/ui/change-passphrase-dialog.ui:7
 msgid "Change Passphrase"
@@ -2627,7 +2578,7 @@ msgstr "警告：卷上的所有数据都将丢失"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "在处理前确认当前卷的细节。"
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:900
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
 msgid "Device"
 msgstr "设备"
 
@@ -2640,7 +2591,7 @@ msgid "Used"
 msgstr "已用"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:228
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
 msgid "Location"
 msgstr "位置"
 
@@ -2700,20 +2651,20 @@ msgstr "覆盖已存在的数据，时间会更长。"
 
 #: src/disks/ui/create-filesystem-page.ui:115
 msgid "_Internal disk for use with Linux systems only (Ext4)"
-msgstr "只用于 Linux 系统的内部磁盘 (Ext4)(_I)"
+msgstr "只用于 Linux 系统的内部磁盘（Ext4）(_I)"
 
 #: src/disks/ui/create-filesystem-page.ui:131
 #: src/disks/ui/create-other-page.ui:46
 msgid "_Password protect volume (LUKS)"
-msgstr "密码保护卷 (LUKS)(_P)"
+msgstr "密码保护卷（LUKS）(_P)"
 
 #: src/disks/ui/create-filesystem-page.ui:147
 msgid "For use with _Windows (NTFS)"
-msgstr "与 _Windows 共用 (NTFS)"
+msgstr "与 _Windows 共用（NTFS）"
 
 #: src/disks/ui/create-filesystem-page.ui:163
 msgid "For use with all _systems and devices (FAT)"
-msgstr "所有系统和设备共用 (FAT)(_S)"
+msgstr "所有系统和设备共用（FAT）(_S)"
 
 #: src/disks/ui/create-filesystem-page.ui:179
 msgid "_Other"
@@ -2857,11 +2808,11 @@ msgstr "待机(_S)"
 
 #: src/disks/ui/disk-settings-dialog.ui:182
 msgid "Apply Advanced Power Management Settings"
-msgstr "应用高级电源管理 (APM) 设置"
+msgstr "应用高级电源管理（APM）设置"
 
 #: src/disks/ui/disk-settings-dialog.ui:199
 msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "开启以配置启动及磁盘连接时的高级电源管理 (APM) 设置"
+msgstr "开启以配置启动及磁盘连接时的高级电源管理（APM）设置"
 
 #: src/disks/ui/disk-settings-dialog.ui:232
 msgid "APM Level"
@@ -2879,11 +2830,11 @@ msgstr "A_PM"
 
 #: src/disks/ui/disk-settings-dialog.ui:333
 msgid "Apply Automatic Acoustic Management Settings"
-msgstr "应用自动声音管理 (AAM) 设置"
+msgstr "应用自动声音管理（AAM）设置"
 
 #: src/disks/ui/disk-settings-dialog.ui:350
 msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "开启以配置启动及磁盘连接时的自动声音管理 (AAM) 设置"
+msgstr "开启以配置启动及磁盘连接时的自动声音管理（AAM）设置"
 
 #: src/disks/ui/disk-settings-dialog.ui:384
 msgid "Vendor Recommended"
@@ -2929,191 +2880,139 @@ msgstr "启用写入缓存会提高性能，但系统在断电时易发生数据
 msgid "Wr_ite Cache"
 msgstr "写入缓存(_I)"
 
-#: src/disks/ui/disks.ui:62
+#: src/disks/ui/disks.ui:63
 msgid "Select a device"
 msgstr "选择一个设备"
 
-#: src/disks/ui/disks.ui:121
+#: src/disks/ui/disks.ui:122
 msgid "Model"
 msgstr "型号"
 
-#: src/disks/ui/disks.ui:154
+#: src/disks/ui/disks.ui:155
 msgid "Serial Number"
 msgstr "序列号"
 
-#: src/disks/ui/disks.ui:191
+#: src/disks/ui/disks.ui:192
 msgid "World Wide Name"
 msgstr "全球通用名称"
 
-#: src/disks/ui/disks.ui:265
+#: src/disks/ui/disks.ui:266
 msgid "Media"
 msgstr "介质"
 
-#: src/disks/ui/disks.ui:340 src/disks/ui/disks.ui:1012
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
 msgid "Job"
 msgstr "作业"
 
-#: src/disks/ui/disks.ui:438
+#: src/disks/ui/disks.ui:439
 msgid "Name"
 msgstr "名称"
 
-#: src/disks/ui/disks.ui:475 src/disks/ui/disks.ui:830
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
 msgid "Size"
 msgstr "大小"
 
-#: src/disks/ui/disks.ui:512
+#: src/disks/ui/disks.ui:513
 msgid "Auto-clear"
 msgstr "自动清除"
 
-#: src/disks/ui/disks.ui:533
+#: src/disks/ui/disks.ui:534
 msgid "Detach loop device after unmount action"
 msgstr "卸载时取消回环设备的挂载"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:556
+#: src/disks/ui/disks.ui:557
 msgid "Backing File"
 msgstr "正在备份文件"
 
-#: src/disks/ui/disks.ui:593
+#: src/disks/ui/disks.ui:594
 msgid "Partitioning"
 msgstr "分区"
 
-#: src/disks/ui/disks.ui:637
+#: src/disks/ui/disks.ui:638
 msgid "_Volumes"
 msgstr "卷(_V)"
 
-#: src/disks/ui/disks.ui:691
+#: src/disks/ui/disks.ui:692
 msgid "Mount selected partition"
 msgstr "挂载所选的分区"
 
-#: src/disks/ui/disks.ui:704
+#: src/disks/ui/disks.ui:705
 msgid "Unmount selected partition"
 msgstr "卸载所选的分区"
 
-#: src/disks/ui/disks.ui:717
+#: src/disks/ui/disks.ui:718
 msgid "Activate selected swap partition"
 msgstr "激活所选的交换分区"
 
-#: src/disks/ui/disks.ui:730
+#: src/disks/ui/disks.ui:731
 msgid "Deactivate selected swap partition"
 msgstr "停用所选的交换分区"
 
-#: src/disks/ui/disks.ui:744
+#: src/disks/ui/disks.ui:745
 msgid "Unlock selected encrypted partition"
 msgstr "解锁所选的加密分区"
 
-#: src/disks/ui/disks.ui:757
+#: src/disks/ui/disks.ui:758
 msgid "Lock selected encrypted partition"
 msgstr "锁定选中的加密分区"
 
-#: src/disks/ui/disks.ui:769
+#: src/disks/ui/disks.ui:770
 msgid "Create partition in unallocated space"
 msgstr "在未分配空间创建分区"
 
-#: src/disks/ui/disks.ui:782
+#: src/disks/ui/disks.ui:783
 msgid "Delete selected partition"
 msgstr "删除所选分区"
 
-#: src/disks/ui/disks.ui:795
+#: src/disks/ui/disks.ui:796
 msgid "Additional partition options"
 msgstr "其他分区选项"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:863
+#: src/disks/ui/disks.ui:864
 msgid "Contents"
 msgstr "内容"
 
-#: src/disks/ui/disks.ui:937
+#: src/disks/ui/disks.ui:938
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:974
+#: src/disks/ui/disks.ui:975
 msgid "Partition Type"
 msgstr "分区类型"
 
-#: src/disks/ui/disks.ui:1172
-msgid "Format Disk…"
-msgstr "格式化磁盘…"
+#: src/disks/ui/drive-menu.ui:6
+msgid "Format _Disk…"
+msgstr "格式化磁盘(_D)…"
 
-#: src/disks/ui/disks.ui:1185
-msgid "Create Disk Image…"
-msgstr "创建磁盘映像…"
+#: src/disks/ui/drive-menu.ui:12
+msgid "_Create Disk Image…"
+msgstr "创建磁盘映像(_C)…"
 
-#: src/disks/ui/disks.ui:1192
-msgid "Restore Disk Image…"
-msgstr "从磁盘映像恢复…"
+#: src/disks/ui/drive-menu.ui:16
+msgid "_Restore Disk Image…"
+msgstr "恢复磁盘映像(_R)…"
 
-#: src/disks/ui/disks.ui:1199
-msgid "Benchmark Disk…"
-msgstr "磁盘性能测试…"
+#: src/disks/ui/drive-menu.ui:22
+msgid "_Benchmark Disk…"
+msgstr "测试磁盘性能(_B)…"
 
-#: src/disks/ui/disks.ui:1212
-msgid "SMART Data & Self-Tests…"
-msgstr "SMART 数据和自检…"
+#: src/disks/ui/drive-menu.ui:26
+msgid "_SMART Data & Self-Tests…"
+msgstr "SMART 数据和自检(_S)…"
 
-#: src/disks/ui/disks.ui:1219
-msgid "Drive Settings…"
-msgstr "驱动器设置…"
+#: src/disks/ui/drive-menu.ui:30
+msgid "Drive S_ettings…"
+msgstr "驱动器设置(_E)…"
 
-#: src/disks/ui/disks.ui:1232
-msgid "Standby Now"
-msgstr "立即待机"
+#: src/disks/ui/drive-menu.ui:36
+msgid "S_tandby Now"
+msgstr "立即待机(_T)"
 
-#: src/disks/ui/disks.ui:1239
-msgid "Wake-Up from Standby"
-msgstr "从待机唤醒"
-
-#: src/disks/ui/disks.ui:1246
-msgid "Power Off…"
-msgstr "断电…"
-
-#: src/disks/ui/disks.ui:1259
-msgid "Format Partition…"
-msgstr "格式化分区…"
-
-#: src/disks/ui/disks.ui:1273
-msgid "Edit Partition…"
-msgstr "编辑分区…"
-
-#: src/disks/ui/disks.ui:1281
-msgid "Edit Filesystem…"
-msgstr "编辑文件系统…"
-
-#: src/disks/ui/disks.ui:1289
-msgid "Change Passphrase…"
-msgstr "更改密码…"
-
-#: src/disks/ui/disks.ui:1303
-msgid "Resize…"
-msgstr "调整大小…"
-
-#: src/disks/ui/disks.ui:1311
-msgid "Check Filesystem…"
-msgstr "检查文件系统…"
-
-#: src/disks/ui/disks.ui:1319
-msgid "Repair Filesystem…"
-msgstr "修复文件系统…"
-
-#: src/disks/ui/disks.ui:1333
-msgid "Edit Mount Options…"
-msgstr "编辑挂载选项…"
-
-#: src/disks/ui/disks.ui:1341
-msgid "Edit Encryption Options…"
-msgstr "编辑加密选项…"
-
-#: src/disks/ui/disks.ui:1355
-msgid "Create Partition Image…"
-msgstr "创建分区映像…"
-
-#: src/disks/ui/disks.ui:1363
-msgid "Restore Partition Image…"
-msgstr "从分区映像恢复…"
-
-#: src/disks/ui/disks.ui:1371
-msgid "Benchmark Partition…"
-msgstr "分区性能测试…"
+#: src/disks/ui/drive-menu.ui:40
+msgid "_Wake-Up from Standby"
+msgstr "从待机唤醒(_W)"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:11
 msgid "Encryption Options"
@@ -3153,7 +3052,7 @@ msgid "Passphrase File"
 msgstr "密钥串文件"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:76
+#: src/disks/ui/unlock-device-dialog.ui:97
 msgid "Sho_w passphrase"
 msgstr "显示密钥串(_W)"
 
@@ -3164,7 +3063,7 @@ msgid ""
 msgstr "输入设备的密钥串，或者留空以在用户设置设备时再请求输入"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:43
+#: src/disks/ui/unlock-device-dialog.ui:63
 msgid "_Passphrase"
 msgstr "密钥串(_P)"
 
@@ -3415,6 +3314,22 @@ msgstr "格式化(_F)…"
 msgid "_Partitioning"
 msgstr "分区(_P)"
 
+#: src/disks/ui/headerbar.ui:35
+msgid "Drive Options"
+msgstr "驱动器选项"
+
+#: src/disks/ui/headerbar.ui:50
+msgid "Power off this disk"
+msgstr "关闭此磁盘"
+
+#: src/disks/ui/headerbar.ui:65
+msgid "Eject this disk"
+msgstr "弹出磁盘"
+
+#: src/disks/ui/headerbar.ui:80
+msgid "Detach this loop device"
+msgstr "断开此回环设备"
+
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
 msgstr "创建磁盘映像"
@@ -3486,6 +3401,76 @@ msgstr "映像大小"
 msgid "_Start Restoring…"
 msgstr "开始恢复(_S)…"
 
+#: src/disks/ui/shortcuts.ui:13
+msgctxt "shortcut window"
+msgid "General"
+msgstr "常规"
+
+#: src/disks/ui/shortcuts.ui:17
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "新建空磁盘映像"
+
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "附加现有磁盘映像"
+
+#: src/disks/ui/shortcuts.ui:31
+msgctxt "shortcut window"
+msgid "Help"
+msgstr "帮助"
+
+#: src/disks/ui/shortcuts.ui:38
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "退出"
+
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Drive"
+msgstr "驱动器"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Open the drive menu"
+msgstr "打开驱动器菜单"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Format the drive"
+msgstr "格式化驱动器"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Restore an image to the disk"
+msgstr "恢复映像到磁盘"
+
+#: src/disks/ui/shortcuts.ui:72
+msgctxt "shortcut window"
+msgid "SMART data"
+msgstr "SMART 数据"
+
+#: src/disks/ui/shortcuts.ui:79
+msgctxt "shortcut window"
+msgid "Drive settings"
+msgstr "驱动器设置"
+
+#: src/disks/ui/shortcuts.ui:88
+msgctxt "shortcut window"
+msgid "Partition"
+msgstr "分区"
+
+#: src/disks/ui/shortcuts.ui:92
+msgctxt "shortcut window"
+msgid "Open the volume menu"
+msgstr "打开卷菜单"
+
+#: src/disks/ui/shortcuts.ui:99
+msgctxt "shortcut window"
+msgid "Format the selected volume"
+msgstr "格式化所选卷"
+
 #: src/disks/ui/smart-dialog.ui:7
 msgid "SMART Data & Self-Tests"
 msgstr "SMART 数据和自检"
@@ -3550,134 +3535,237 @@ msgstr "扩展"
 msgid "Conveyance"
 msgstr "传输"
 
-#: src/disks/ui/unlock-device-dialog.ui:7
+#: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "输入密码以解锁"
 
-#: src/disks/ui/unlock-device-dialog.ui:121
+#: src/disks/ui/unlock-device-dialog.ui:41
+msgid "This volume might be a VeraCrypt volume as it contains random data."
+msgstr "该卷可能是 VeraCrypt 卷，因为该卷包含随机数据。"
+
+#: src/disks/ui/unlock-device-dialog.ui:79
+#: src/disks/ui/unlock-device-dialog.ui:186
+msgid "If specified"
+msgstr "如指定"
+
+#: src/disks/ui/unlock-device-dialog.ui:117
+msgid "Volume type"
+msgstr "卷类型"
+
+#: src/disks/ui/unlock-device-dialog.ui:136
+msgid "_Hidden"
+msgstr "隐藏卷(_H)"
+
+#: src/disks/ui/unlock-device-dialog.ui:137
+msgid ""
+"Instead of unlocking this volume, attempt to unlock a secondary volume "
+"hidden inside."
+msgstr "尝试解锁内藏的第二卷而不直接解锁该卷。"
+
+#: src/disks/ui/unlock-device-dialog.ui:149
+msgid "Windows _system"
+msgstr "Windows 系统(_S)"
+
+#: src/disks/ui/unlock-device-dialog.ui:150
+msgid "Unlock an encrypted Windows system partition or drive."
+msgstr "解锁已加密的 Windows 系统分区或驱动器。"
+
+#: src/disks/ui/unlock-device-dialog.ui:171
+msgid "PI_M"
+msgstr "PI_M"
+
+#: src/disks/ui/unlock-device-dialog.ui:187
+msgid ""
+"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
+"use for this volume."
+msgstr ""
+"如设定此项，VeraCrypt 的 PIM（Personal Iterations Multiplier）数值将用于此"
+"卷。"
+
+#: src/disks/ui/unlock-device-dialog.ui:204
+msgid "Keyfiles"
+msgstr "密钥文件"
+
+#: src/disks/ui/unlock-device-dialog.ui:220
+msgid "Select a keyfile to unlock this volume"
+msgstr "选择密钥文件以解锁此卷"
+
+#: src/disks/ui/unlock-device-dialog.ui:259
 msgid "_Unlock"
 msgstr "解锁(_U)"
 
-#: src/libgdu/gduutils.c:111
+#: src/disks/ui/volume-menu.ui:6
+msgid "Format _Partition…"
+msgstr "格式化分区(_P)…"
+
+#: src/disks/ui/volume-menu.ui:12
+msgid "_Edit Partition…"
+msgstr "编辑分区(_E)…"
+
+#: src/disks/ui/volume-menu.ui:16
+msgid "Edit _Filesystem…"
+msgstr "编辑文件系统(_F)…"
+
+#: src/disks/ui/volume-menu.ui:20
+msgid "Change Pa_ssphrase…"
+msgstr "更改密码(_S)…"
+
+#: src/disks/ui/volume-menu.ui:26
+msgid "Resi_ze…"
+msgstr "调整大小(_Z)…"
+
+#: src/disks/ui/volume-menu.ui:30
+msgid "C_heck Filesystem…"
+msgstr "检查文件系统(_H)…"
+
+#: src/disks/ui/volume-menu.ui:34
+msgid "Rep_air Filesystem…"
+msgstr "修复文件系统(_A)…"
+
+#: src/disks/ui/volume-menu.ui:40
+msgid "Edit _Mount Options…"
+msgstr "编辑挂载选项(_M)…"
+
+#: src/disks/ui/volume-menu.ui:44
+msgid "Edit Encr_yption Options…"
+msgstr "编辑加密选项(_Y)…"
+
+#: src/disks/ui/volume-menu.ui:50
+msgid "_Create Partition Image…"
+msgstr "创建分区映像(_C)…"
+
+#: src/disks/ui/volume-menu.ui:54
+msgid "_Restore Partition Image…"
+msgstr "恢复分区映像(_R)…"
+
+#: src/disks/ui/volume-menu.ui:58
+msgid "_Benchmark Partition…"
+msgstr "测试分区性能(_B)…"
+
+#: src/libgdu/gduutils.c:107
 msgid "All Files"
 msgstr "所有文件"
 
-#: src/libgdu/gduutils.c:116
+#: src/libgdu/gduutils.c:112
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
-msgstr "磁盘映像 (*.img, *.img.xz, *.iso)"
+msgstr "磁盘映像（*.img、*.img.xz、*.iso）"
 
-#: src/libgdu/gduutils.c:118
+#: src/libgdu/gduutils.c:114
 msgid "Disk Images (*.img, *.iso)"
-msgstr "磁盘映像 (*.img, *.iso)"
+msgstr "磁盘映像（*.img、*.iso）"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:447
+#: src/libgdu/gduutils.c:443
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d 年"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:454
+#: src/libgdu/gduutils.c:450
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d 月"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:461
+#: src/libgdu/gduutils.c:457
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 天"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:468
+#: src/libgdu/gduutils.c:464
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小时"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:475
+#: src/libgdu/gduutils.c:471
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分钟"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:482
+#: src/libgdu/gduutils.c:478
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:489
+#: src/libgdu/gduutils.c:485
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d 毫秒"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:553
+#: src/libgdu/gduutils.c:549
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
-msgstr "%s, %s %s"
+msgstr "%s，%s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:558
+#: src/libgdu/gduutils.c:554
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:563
+#: src/libgdu/gduutils.c:559
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:568
+#: src/libgdu/gduutils.c:564
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:579
+#: src/libgdu/gduutils.c:575
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s %s"
 
-#: src/libgdu/gduutils.c:588
+#: src/libgdu/gduutils.c:584
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "不到一分钟"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:593
+#: src/libgdu/gduutils.c:589
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:599
+#: src/libgdu/gduutils.c:595
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:835
+#: src/libgdu/gduutils.c:831
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "受影响的设备"
+
+#: src/libgdu/gduutils.c:1398
+msgid "Error unmounting filesystem"
+msgstr "卸载文件系统时出错"
 
 #: src/libgdu/gduutils.c:1418
 msgid "Error locking device"
@@ -3704,6 +3792,55 @@ msgstr "一个硬盘可能即将发生故障。"
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "检测"
+
+#~ msgid "drive-removable-media"
+#~ msgstr "drive-removable-media"
+
+#~ msgid "gnome-disks"
+#~ msgstr "gnome-disks"
+
+#~ msgid "Error unmounting filesystem for repairing"
+#~ msgstr "卸载文件系统以修复时出错"
+
+#~ msgid "Error unmounting filesystem for resizing"
+#~ msgstr "卸载文件系统以调整大小时出错"
+
+#~ msgctxt "accelerator"
+#~ msgid "F10"
+#~ msgstr "F10"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>F"
+#~ msgstr "<Ctrl>F"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>S"
+#~ msgstr "<Ctrl>S"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Ctrl>E"
+#~ msgstr "<Ctrl>E"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Shift>F10"
+#~ msgstr "<Shift>F10"
+
+#~ msgctxt "accelerator"
+#~ msgid "<Shift><Ctrl>F"
+#~ msgstr "<Shift><Ctrl>F"
+
+#~ msgid ""
+#~ "Depending on the amount of data the filesystem check takes longer time."
+#~ msgstr "文件系统检查需要的时间取决于数据量。"
+
+#~ msgid "Error locking encrypted device"
+#~ msgstr "锁定加密的设备时出错"
+
+#~ msgid "Power Off…"
+#~ msgstr "断电…"
+
+#~ msgid "Error unlocking encrypted device"
+#~ msgstr "解锁加密的设备时出错"
 
 #~ msgid "FAT"
 #~ msgstr "FAT"

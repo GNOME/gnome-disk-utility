@@ -3,23 +3,23 @@
 # Tournaris Pavlos <p.tournaris@gmail.com>, 2009.
 # Georgios Stefanakis <george.stefanakis@gmail.com>, 2010.
 # Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2012, 2013, 2015.
-# Efstathios Iosifidis <iosifidis@opensuse.org>, 2013, 2014, 2015, 2018.
+# Efstathios Iosifidis <iosifidis@opensuse.org>, 2013-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk_utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-04-03 11:40+0000\n"
-"PO-Revision-Date: 2019-06-17 00:48+0300\n"
-"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
-"Language-Team: Ελληνικά <>\n"
+"POT-Creation-Date: 2019-12-27 13:10+0000\n"
+"PO-Revision-Date: 2020-01-07 00:59+0200\n"
+"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"Language-Team: Greek, Modern (1453-) <gnome-el-list@gnome.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-DamnedLies-Scope: partial\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
@@ -86,7 +86,7 @@ msgid "The GNOME Project"
 msgstr "Το έργο GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Δίσκοι"
 
@@ -386,7 +386,7 @@ msgstr "Αναφερθέντα μη διορθώσιμα σφάλματα"
 
 #: src/disks/gduatasmartdialog.c:261
 msgid "Number of errors that could not be recovered using hardware ECC"
-msgstr "Αριθμός σφαλμάτων που δεν μπορούν να διορθωθούν με χρήση υλικού ECC."
+msgstr "Αριθμός σφαλμάτων που δεν μπορούν να διορθωθούν με χρήση υλικού ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -411,7 +411,7 @@ msgstr "Θερμοκρασία κυκλοφορίας αέρα"
 
 #: src/disks/gduatasmartdialog.c:277
 msgid "Airflow temperature of the drive"
-msgstr "Θερμοκρασία κυκλοφορίας αέρα του δίσκου."
+msgstr "Θερμοκρασία κυκλοφορίας αέρα του δίσκου"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -467,7 +467,7 @@ msgstr "Ανάκτηση υλικού ECC"
 
 #: src/disks/gduatasmartdialog.c:317
 msgid "Number of ECC on-the-fly errors"
-msgstr "Αριθμός σφαλμάτων ECC on-the-fly."
+msgstr "Αριθμός σφαλμάτων ECC on-the-fly"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -485,7 +485,7 @@ msgstr ""
 "Αριθμός επαναποθετημένων εργασιών. Η ακατέργαστη τιμή αυτού του "
 "χαρακτηριστικού δείχνει το συνολικό αριθμό των (επιτυχών ή μη επιτυχών) "
 "προσπαθειών για μεταφορά δεδομένων από επαναποθετημένους τομείς σε μία "
-"εφεδρική περιοχή."
+"εφεδρική περιοχή"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -505,7 +505,7 @@ msgstr ""
 "αναμένει επαναχαρτογράφηση αναγνωσθεί και εγγραφεί με επιτυχία, τότε αυτή η "
 "τιμή μειώνεται και ο τομέας δεν επαναχαρτογραφείται. Τα σφάλματα ανάγνωσης "
 "στον τομέα δεν θα επαναχαρτογραφήσουν τον τομέα, θα επαναχαρτογραφηθεί μόνο "
-"σε προσπάθεια αποτυχίας εγγραφής."
+"σε προσπάθεια αποτυχίας εγγραφής"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -522,8 +522,7 @@ msgid ""
 msgstr ""
 "Ο συνολικός αριθμός μη διορθωμένων σφαλμάτων όταν γίνεται ανάγνωση/εγγραφή "
 "ενός τομέα. Μια αύξηση στην τιμή αυτού του χαρακτηριστικού προσδιορίζει "
-"ελαττώματα στην επιφάνεια του δίσκου και/ή προβλήματα στο μηχανικό "
-"υποσύστημα."
+"ελαττώματα στην επιφάνεια του δίσκου και/ή προβλήματα στο μηχανικό υποσύστημα"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -534,7 +533,7 @@ msgstr "Ρυθμός σφάλματος UDMA CRC"
 
 #: src/disks/gduatasmartdialog.c:358
 msgid "Number of CRC errors during UDMA mode"
-msgstr "Αριθμός σφαλμάτων CRC κατά την διάρκεια της λειτουργίας UDMA."
+msgstr "Αριθμός σφαλμάτων CRC κατά την διάρκεια της λειτουργίας UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -549,7 +548,7 @@ msgid ""
 "flying-height"
 msgstr ""
 "Ο αριθμός σφαλμάτων κατά την εγγραφή στο δίσκο (ή) σφάλμα πολλαπλής-ζώνης "
-"(ή) ύψος-πτήσης."
+"(ή) ύψος-πτήσης"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -699,7 +698,7 @@ msgid ""
 "recording, positioning of heads, etc"
 msgstr ""
 "Η φόρτιση στον δίσκο προκλήθηκε από πολυάριθμες επαναλήψεις λειτουργιών, "
-"όπως ανάγνωση, εγγραφή, τοποθέτηση κεφαλών, κ.τ.λ."
+"όπως ανάγνωση, εγγραφή, τοποθέτηση κεφαλών, κτλ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1184,11 +1183,9 @@ msgstr "%.2f msec"
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdubenchmarkdialog.c:1180
-#, fuzzy
-#| msgid "Error benchmarking drive"
 msgctxt "create-inhibit-message"
 msgid "Benchmarking device"
-msgstr "Σφάλμα μέτρησης απόδοσης συσκευής"
+msgstr "Γίνεται μέτρηση απόδοσης συσκευής"
 
 #: src/disks/gdubenchmarkdialog.c:1206
 #, c-format
@@ -1495,7 +1492,7 @@ msgstr "XFS — Σύστημα αρχείων Linux"
 
 #: src/disks/gducreateotherpage.c:117
 msgid "Linux Swap Partition"
-msgstr "Διαμέρισμα Linux Swap "
+msgstr "Διαμέρισμα Linux Swap"
 
 #: src/disks/gducreateotherpage.c:119
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
@@ -1777,7 +1774,7 @@ msgstr ""
 "<b>Συμβουλή</b>: Αν πρόκειται να ανακυκλώσετε, να πουλήσετε ή να δώσετε τον "
 "παλιό σας υπολογιστή ή τον δίσκο, τότε πρέπει να χρησιμοποιήσετε μια πιο "
 "εξονυχιστική μέθοδο διαγραφής δεδομένων, για να κρατήσετε τις ιδιωτικές σας "
-"πληροφορίες μακρυά από λάθος χέρια."
+"πληροφορίες μακρυά από λάθος χέρια"
 
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:428
@@ -2021,7 +2018,7 @@ msgstr "Όλα τα υπάρχοντα δεδομένα θα χαθούν"
 msgid "_Restore"
 msgstr "Ε_παναφορά"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 #, fuzzy
 #| msgid "Select a device"
 msgid "Select a Keyfile"
@@ -2237,16 +2234,14 @@ msgstr "Ανενεργά"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2629
-#, fuzzy
 #| msgctxt "volume-content-luks"
 #| msgid "Unlocked"
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
-msgstr "Ξεκλείδωμένα"
+msgstr "Ξεκλειδωμένα"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2635
-#, fuzzy
 #| msgctxt "volume-content-luks"
 #| msgid "Locked"
 msgctxt "volume-content-crypto"
@@ -2301,12 +2296,6 @@ msgid "Confirm Repair"
 msgstr "Επιβεβαίωση επιδιόρθωσης"
 
 #: src/disks/gduwindow.c:3071
-#, fuzzy
-#| msgid ""
-#| "A filesystem repair is not always possible and can cause data loss. "
-#| "Consider backing it up first in order to use forensic recovery tools that "
-#| "retrieve lost files. Depending on the amount of data this operation takes "
-#| "longer time."
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2678,7 +2667,7 @@ msgstr "Προειδοποίηση: Θα χαθούν όλα τα δεδομέν
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Επιβεβαιώστε τις λεπτομέρειες του τρέχοντος τόμου πριν προχωρήσετε."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:901
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Συσκευή"
 
@@ -2726,7 +2715,7 @@ msgstr "Έ_ναρξη δημιουργίας…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
 msgid "Volume _Name"
-msgstr "Ό_νομα τόμου:"
+msgstr "Ό_νομα τόμου"
 
 #: src/disks/ui/create-filesystem-page.ui:33
 msgid ""
@@ -2739,7 +2728,7 @@ msgstr ""
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "Για παράδειγμα: «Τα αρχεία μου» ή «Αντίγραφο ασφαλείας»"
+msgstr "Για παράδειγμα: «Τα αρχεία μου» ή «Αντίγραφο ασφαλείας»."
 
 #: src/disks/ui/create-filesystem-page.ui:74
 #: src/disks/ui/format-disk-dialog.ui:103
@@ -3019,7 +3008,7 @@ msgstr "Διεθνές όνομα"
 msgid "Media"
 msgstr "Μέσο"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1013
+#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
 msgid "Job"
 msgstr "Εργασία"
 
@@ -3027,7 +3016,7 @@ msgstr "Εργασία"
 msgid "Name"
 msgstr "Όνομα"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:831
+#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -3056,48 +3045,102 @@ msgstr "_Τόμοι"
 msgid "Mount selected partition"
 msgstr "Προσάρτηση επιλεγμένης κατάτμησης"
 
-#: src/disks/ui/disks.ui:705
+#: src/disks/ui/disks.ui:693
+#| msgid "_Mount"
+msgctxt "Accessibility label for toolbutton-mount"
+msgid "Mount"
+msgstr "Προσάρτηση"
+
+#: src/disks/ui/disks.ui:706
 msgid "Unmount selected partition"
 msgstr "Αποπροσάρτηση επιλεγμένης κατάτμησης"
 
-#: src/disks/ui/disks.ui:718
+#: src/disks/ui/disks.ui:707
+#| msgid "_Unmount"
+msgctxt "Accessibility label for toolbutton-unmount"
+msgid "Unmount"
+msgstr "Αποπροσάρτηση"
+
+#: src/disks/ui/disks.ui:720
 msgid "Activate selected swap partition"
 msgstr "Ενεργοποίηση του επιλεγμένου swap χώρου"
 
-#: src/disks/ui/disks.ui:731
+#: src/disks/ui/disks.ui:721
+#| msgctxt "volume-content-swap"
+#| msgid "Active"
+msgctxt "Accessibility label for toolbutton-activate-swap"
+msgid "Activate swap"
+msgstr "Ενεργοποίηση μνήμης swap"
+
+#: src/disks/ui/disks.ui:734
 msgid "Deactivate selected swap partition"
 msgstr "Απενεργοποίηση του επιλεγμένου swap χώρου"
 
-#: src/disks/ui/disks.ui:745
+#: src/disks/ui/disks.ui:735
+#| msgid "Deactivate selected swap partition"
+msgctxt "Accessibility label for toolbutton-deactivate-swap"
+msgid "Deactivate swap"
+msgstr "Απενεργοποίηση μνήμης swap"
+
+#: src/disks/ui/disks.ui:748
 msgid "Unlock selected encrypted partition"
 msgstr "Ξεκλείδωμα της επιλεγμένης κρυπτογραφημένης κατάτμησης"
 
-#: src/disks/ui/disks.ui:758
+#: src/disks/ui/disks.ui:749
+#| msgid "_Unlock"
+msgctxt "Accessibility label for toolbutton-unlock"
+msgid "Unlock"
+msgstr "Ξεκλείδωμα"
+
+#: src/disks/ui/disks.ui:762
 msgid "Lock selected encrypted partition"
 msgstr "Κλείδωμα της επιλεγμένης κρυπτογραφημένης κατάτμησης"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:763
+#| msgid "_Lock"
+msgctxt "Accessibility label for toolbutton-lock"
+msgid "Lock"
+msgstr "Κλείδωμα"
+
+#: src/disks/ui/disks.ui:776
 msgid "Create partition in unallocated space"
 msgstr "Δημιουργία κατάτμησης στον μη εκχωρημένο χώρο"
 
-#: src/disks/ui/disks.ui:783
+#: src/disks/ui/disks.ui:777
+#| msgid "Create Partition"
+msgctxt "Accessibility label for toolbutton-partition-create"
+msgid "Create partition"
+msgstr "Δημιουργία κατάτμησης"
+
+#: src/disks/ui/disks.ui:790
 msgid "Delete selected partition"
 msgstr "Διαγραφή επιλεγμένης κατάτμησης"
 
-#: src/disks/ui/disks.ui:796
+#: src/disks/ui/disks.ui:791
+#| msgid "Deleting Partition"
+msgctxt "Accessibility label for toolbutton-partition-delete"
+msgid "Delete partition"
+msgstr "Διαγραφή κατάτμησης"
+
+#: src/disks/ui/disks.ui:804
 msgid "Additional partition options"
 msgstr "Επιπλέον επιλογές κατάτμησης"
 
+#: src/disks/ui/disks.ui:805
+msgctxt "Accessibility label for toolbutton-volume-menu"
+msgid "Menu"
+msgstr "Μενού"
+
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:864
+#: src/disks/ui/disks.ui:873
 msgid "Contents"
 msgstr "Περιεχόμενα"
 
-#: src/disks/ui/disks.ui:938
+#: src/disks/ui/disks.ui:947
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:975
+#: src/disks/ui/disks.ui:984
 msgid "Partition Type"
 msgstr "Τύπος κατάτμησης"
 
@@ -3114,10 +3157,8 @@ msgid "_Restore Disk Image…"
 msgstr "_Επαναφορά εικόνας δίσκου…"
 
 #: src/disks/ui/drive-menu.ui:22
-#, fuzzy
-#| msgid "Benchmark Disk…"
 msgid "_Benchmark Disk…"
-msgstr "Έλεγχος επιδόσεων…"
+msgstr "Έλεγχος _επιδόσεων δίσκου…"
 
 #: src/disks/ui/drive-menu.ui:26
 msgid "_SMART Data & Self-Tests…"
@@ -3570,11 +3611,10 @@ msgid "Create a new empty disk image"
 msgstr "Δημιουργία νέας άδειας εικόνας δίσκου"
 
 #: src/disks/ui/shortcuts.ui:24
-#, fuzzy
 #| msgid "Error attaching disk image"
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
-msgstr "Σφάλμα επισύναψης εικόνας δίσκου"
+msgstr "Επισύναψη υπάρχουσας εικόνας δίσκου"
 
 #: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
@@ -3709,17 +3749,15 @@ msgstr ""
 #: src/disks/ui/unlock-device-dialog.ui:79
 #: src/disks/ui/unlock-device-dialog.ui:186
 msgid "If specified"
-msgstr ""
+msgstr "Εάν έχει καθοριστεί"
 
 #: src/disks/ui/unlock-device-dialog.ui:117
 msgid "Volume type"
 msgstr "Τύπος τόμου"
 
 #: src/disks/ui/unlock-device-dialog.ui:136
-#, fuzzy
-#| msgid "H_idden"
 msgid "_Hidden"
-msgstr "Κρ_υμμένο"
+msgstr "_Κρυφό"
 
 #: src/disks/ui/unlock-device-dialog.ui:137
 msgid ""
@@ -3734,7 +3772,6 @@ msgid "Windows _system"
 msgstr "_Σύστημα Windows"
 
 #: src/disks/ui/unlock-device-dialog.ui:150
-#, fuzzy
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr ""
 "Ξεκλείδωμα της κρυπτογραφημένης κατάτμησης με σύστημα Windows ή του δίσκου."
@@ -3750,16 +3787,16 @@ msgid ""
 msgstr ""
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
+msgid "_Keyfiles"
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 #, fuzzy
 #| msgid "View files on the volume"
 msgid "Select a keyfile to unlock this volume"
 msgstr "Προβολή αρχείων στον τόμο"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "_Ξεκλείδωμα"
 
@@ -3773,7 +3810,7 @@ msgstr "_Επεξεργασία κατάτμησης…"
 
 #: src/disks/ui/volume-menu.ui:16
 msgid "Edit _Filesystem…"
-msgstr "Επεξεργασία _συστήματος αρχείων"
+msgstr "Επεξεργασία _συστήματος αρχείων…"
 
 #: src/disks/ui/volume-menu.ui:20
 msgid "Change Pa_ssphrase…"
@@ -3781,11 +3818,11 @@ msgstr "Αλλαγή _συνθηματικού…"
 
 #: src/disks/ui/volume-menu.ui:26
 msgid "Resi_ze…"
-msgstr "Αλλαγή _μεγέθους..."
+msgstr "Αλλαγή _μεγέθους…"
 
 #: src/disks/ui/volume-menu.ui:30
 msgid "C_heck Filesystem…"
-msgstr "Έ_λεγχος συστήματος αρχείων..."
+msgstr "Έ_λεγχος συστήματος αρχείων…"
 
 #: src/disks/ui/volume-menu.ui:34
 msgid "Rep_air Filesystem…"
@@ -3808,10 +3845,8 @@ msgid "_Restore Partition Image…"
 msgstr "_Επαναφορά εικόνας κατάτμησης…"
 
 #: src/disks/ui/volume-menu.ui:58
-#, fuzzy
-#| msgid "Benchmark Partition…"
 msgid "_Benchmark Partition…"
-msgstr "Επιδόσεις κατάτμησης…"
+msgstr "_Επιδόσεις κατάτμησης…"
 
 #: src/libgdu/gduutils.c:107
 msgid "All Files"
@@ -5553,9 +5588,6 @@ msgstr "Εξέταση"
 #~ "Μία ή παραπάνω εφαρμογές χρησιμοποιούν τον τόμο. Τερματίστε τις εφαρμογές "
 #~ "και προσπαθήστε να τον αποπροσαρτήσετε ξανά."
 
-#~ msgid "_Unmount"
-#~ msgstr "_Αποπροσάρτηση"
-
 #~ msgid "Passphrases do not differ"
 #~ msgstr "Οι συνθηματικές φράσεις  πρέπει να είναι ίδιες"
 
@@ -6000,9 +6032,6 @@ msgstr "Εξέταση"
 
 #~ msgid "Creating Partition Table"
 #~ msgstr "Δημιουργία πίνακα διαμερίσματος"
-
-#~ msgid "Deleting Partition"
-#~ msgstr "Διαγραφή διαμερίσματος"
 
 #~ msgid "Modifying Partition"
 #~ msgstr "Τροποποίηση διαμερίσματος"
@@ -7658,9 +7687,6 @@ msgstr "Εξέταση"
 #~ msgstr ""
 #~ "Ξεκλείδωμα της κρυπτογραφημένης συσκευής, δημιουργία των δεδομένων ως "
 #~ "διαθέσιμα στο cleartext"
-
-#~ msgid "_Lock"
-#~ msgstr "_Κλείδωμα"
 
 #~ msgid "_Stop"
 #~ msgstr "_Διακοπή"

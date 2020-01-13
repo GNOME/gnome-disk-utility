@@ -421,6 +421,8 @@ gdu_application_startup (GApplication *_app)
 
     "app.help",                  "F1", NULL,
     "app.quit",                  "<Primary>Q", NULL,
+    "app.shortcuts",             "<Primary>question", NULL,
+
     NULL
   };
 

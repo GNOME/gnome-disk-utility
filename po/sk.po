@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-12-27 13:10+0000\n"
-"PO-Revision-Date: 2020-01-13 11:30+0100\n"
+"POT-Creation-Date: 2020-01-13 10:31+0000\n"
+"PO-Revision-Date: 2020-01-26 21:17+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -2342,12 +2342,6 @@ msgid "Confirm Repair"
 msgstr "Potvrdenie opravy"
 
 #: src/disks/gduwindow.c:3071
-#, fuzzy
-#| msgid ""
-#| "A filesystem repair is not always possible and can cause data loss. "
-#| "Consider backing it up first in order to use forensic recovery tools that "
-#| "retrieve lost files. Depending on the amount of data this operation takes "
-#| "longer time."
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2356,8 +2350,8 @@ msgid ""
 msgstr ""
 "Oprava súborového systému nie je vždy možná a môže viesť k strate údajov. "
 "Zvážte najskôr vykonanie zálohy, aby ste sa vyhli forenzným nástrojom na "
-"obnovu stratených súborov. V závislosti na množstve údajov môže táto "
-"operácia trvať dlhšiu dobu."
+"obnovu stratených súborov. Operácia môže trvať dlhšiu dobu, obzvlášť, ak "
+"oddiel obsahuje veľké množstvo údajov."
 
 #: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
@@ -3986,11 +3980,14 @@ msgstr "Typ zväzku"
 msgid "_Hidden"
 msgstr "S_krytý"
 
+# tooltip
 #: src/disks/ui/unlock-device-dialog.ui:137
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
 msgstr ""
+"Pokúsi sa odomknúť vedľajší skrytý zväzok vo vnútri, namiesto odomknutia "
+"tohoto zväzku."
 
 #: src/disks/ui/unlock-device-dialog.ui:149
 msgid "Windows _system"
@@ -4012,14 +4009,13 @@ msgid ""
 msgstr ""
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-#, fuzzy
-#| msgid "Keyfiles"
 msgid "_Keyfiles"
-msgstr "Kľúčové súbory"
+msgstr "_Kľúčové súbory"
 
+# tooltip
 #: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
-msgstr ""
+msgstr "Vyberie kľúčový súbor na odomknutie tohoto zväzku"
 
 # GtkButton label
 #: src/disks/ui/unlock-device-dialog.ui:260

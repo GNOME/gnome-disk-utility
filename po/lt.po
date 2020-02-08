@@ -4,15 +4,15 @@
 # Žygimantas Beručka <zygis@gnome.org>, 2009.
 # Rytis Umbrasas <rytumb@gmail.com>, 2009.
 # Gintautas Miliauskas <gintautas@miliauskas.lt>, 2009, 2010.
-# Aurimas Černius <aurisc4@gmail.com>, 2013-2019.
+# Aurimas Černius <aurisc4@gmail.com>, 2013-2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-07-29 21:55+0000\n"
-"PO-Revision-Date: 2019-08-20 13:05+0300\n"
+"POT-Creation-Date: 2020-01-06 23:02+0000\n"
+"PO-Revision-Date: 2020-02-08 14:46+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.32.1\n"
+"X-Generator: Gtranslator 3.34.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -84,7 +84,7 @@ msgid "The GNOME Project"
 msgstr "GNOME projektas"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Diskai"
 
@@ -1997,7 +1997,7 @@ msgstr "Visi esame duomenys bus prarasti"
 msgid "_Restore"
 msgstr "_Atstatyti"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "Pasirinkite raktų failą"
 
@@ -2269,11 +2269,6 @@ msgid "Confirm Repair"
 msgstr "Patvirtinkite taisymą"
 
 #: src/disks/gduwindow.c:3071
-#| msgid ""
-#| "A filesystem repair is not always possible and can cause data loss. "
-#| "Consider backing it up first in order to use forensic recovery tools that "
-#| "retrieve lost files. Depending on the amount of data this operation takes "
-#| "longer time."
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2999,7 +2994,6 @@ msgid "Mount selected partition"
 msgstr "Prijungti pažymėtą skaidinį"
 
 #: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Prijungti"
@@ -3009,7 +3003,6 @@ msgid "Unmount selected partition"
 msgstr "Atjungti pažymėtą skaidinį"
 
 #: src/disks/ui/disks.ui:707
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Atjungti"
@@ -3019,8 +3012,6 @@ msgid "Activate selected swap partition"
 msgstr "Aktyvinti pažymėtą mainų srities skaidinį"
 
 #: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Įjungti mainų sritį"
@@ -3030,7 +3021,6 @@ msgid "Deactivate selected swap partition"
 msgstr "Išjungti pažymėtą mainų srities skaidinį"
 
 #: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Išjungti mainų sritį"
@@ -3040,7 +3030,6 @@ msgid "Unlock selected encrypted partition"
 msgstr "Atrakinti pažymėtą šifruotą skaidinį"
 
 #: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Atrakinti"
@@ -3050,8 +3039,6 @@ msgid "Lock selected encrypted partition"
 msgstr "Užrakinti pažymėtą šifruotą skaidinį"
 
 #: src/disks/ui/disks.ui:763
-#| msgctxt "volume-content-crypto"
-#| msgid "Locked"
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Užrakinti"
@@ -3061,7 +3048,6 @@ msgid "Create partition in unallocated space"
 msgstr "Sukurti skaidinį nepaskirstytoji vietoje"
 
 #: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Sukurti skaidinį"
@@ -3071,7 +3057,6 @@ msgid "Delete selected partition"
 msgstr "Ištrinti pažymėtą skaidinį"
 
 #: src/disks/ui/disks.ui:791
-#| msgid "Delete selected partition"
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Ištrinti skaidinį"
@@ -3725,14 +3710,15 @@ msgstr ""
 "naudotina šiam tomui."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "Raktų failai"
+#| msgid "Keyfiles"
+msgid "_Keyfiles"
+msgstr "Ra_ktų failai"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "Pasirinkite rakto failą tomui atrakinti"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "_Atrakinti"
 

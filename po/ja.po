@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-12-27 13:10+0000\n"
-"PO-Revision-Date:  2020-02-09 23:00+0900\n"
+"POT-Creation-Date: 2020-02-09 16:00+0000\n"
+"PO-Revision-Date:  2020-02-10 06:30+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -1209,7 +1209,7 @@ msgstr "オフセット %s へのシーク中にエラーが発生しました"
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %s from offset %s"
-msgstr "%s (オフセット %s) からの読み込み中にエラーが発生しました"
+msgstr "%s (オフセット %s) の読み取り中にエラーが発生しました"
 
 #: src/disks/gdubenchmarkdialog.c:1322
 #, c-format
@@ -1386,8 +1386,7 @@ msgstr "デバイスのサイズは 0 バイトです"
 
 #: src/disks/gducreatediskimagedialog.c:762
 msgid "Error allocating space for disk image file: "
-msgstr ""
-"ディスクイメージファイルのための容量割り当て中にエラーが発生しました: "
+msgstr "ディスクイメージファイルのための容量割り当て中にエラーが発生しました: "
 
 #: src/disks/gducreatediskimagedialog.c:922
 #: src/disks/gdunewdiskimagedialog.c:324
@@ -1536,15 +1535,15 @@ msgstr "削除する"
 
 #: src/disks/gducrypttabdialog.c:263
 msgid "Error removing /etc/crypttab entry"
-msgstr "/etc/crypttab のエントリー削除中にエラーが発生しました"
+msgstr "/etc/crypttab のエントリーの削除中にエラーが発生しました"
 
 #: src/disks/gducrypttabdialog.c:347
 msgid "Error adding /etc/crypttab entry"
-msgstr "/etc/crypttab へエントリー追加中にエラーが発生しました"
+msgstr "/etc/crypttab へのエントリーの追加中にエラーが発生しました"
 
 #: src/disks/gducrypttabdialog.c:370
 msgid "Error updating /etc/crypttab entry"
-msgstr "/etc/crypttab のエントリー更新中にエラーが発生しました"
+msgstr "/etc/crypttab のエントリーの更新中にエラーが発生しました"
 
 #: src/disks/gducrypttabdialog.c:493
 msgid ""
@@ -1889,21 +1888,21 @@ msgstr "最小サイズ"
 
 #: src/disks/gduresizedialog.c:249
 msgid "_Resize"
-msgstr "サイズ変更(_R)"
+msgstr "サイズを変更(_R)"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
 msgid "Error resizing filesystem"
-msgstr "ファイルシステムのサイズ変更中にエラーが発生しました"
+msgstr "ファイルシステムのサイズの変更中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:569
 msgid "Error resizing partition"
-msgstr "パーティションのサイズ変更中にエラーが発生しました"
+msgstr "パーティションのサイズの変更中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
 msgid "Error repairing filesystem after resize"
-msgstr "サイズ変更後のファイルシステム修復中にエラーが発生しました"
+msgstr "サイズ変更後のファイルシステムの修復中にエラーが発生しました"
 
 #: src/disks/gduresizedialog.c:464
 msgid "Resizing not ready"
@@ -2239,7 +2238,7 @@ msgstr "未割り当て領域"
 
 #: src/disks/gduwindow.c:2979
 msgid "Error while repairing filesystem"
-msgstr "ファイルシステム修復中にエラーが発生しました"
+msgstr "ファイルシステムの修復中にエラーが発生しました"
 
 #: src/disks/gduwindow.c:3006
 msgid "Repair successful"
@@ -2321,7 +2320,7 @@ msgstr "ドライブをウェイクアップさせようとしたときにエラ
 
 #: src/disks/gduwindow.c:3519
 msgid "Error powering off drive"
-msgstr "ディスクの電源をオフにするときにエラーが発生しました"
+msgstr "ドライブの電源をオフにするときにエラーが発生しました"
 
 #. Translators: Heading for powering off a device with multiple drives
 #: src/disks/gduwindow.c:3571
@@ -3498,9 +3497,10 @@ msgid ""
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr ""
 "ファイルシステムのサイズ変更はデータ損失につながる可能性があるため、作業前に"
-"データをバックアップしておくことをお勧めします。移動するデータが多いほど、サ"
-"イズ変更に時間がかかります。最小サイズは現在の内容から算出されます。ファイル"
-"システムが高速かつ確実に動作ように、ある程度の空き領域を確保してください。"
+"データをバックアップしておくことをお勧めします。サイズ変更時に移動させる必要"
+"があるデータ量が多いほど、作業に時間がかかります。最小サイズは現在の内容を元"
+"に算出されます。ファイルシステムが高速かつ確実に動作するように、ある程度の空"
+"き領域を確保してください。"
 
 #: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
@@ -3758,7 +3758,7 @@ msgstr "パスフレーズを変更(_S)…"
 
 #: src/disks/ui/volume-menu.ui:26
 msgid "Resi_ze…"
-msgstr "サイズ変更(_Z)…"
+msgstr "サイズを変更(_Z)…"
 
 #: src/disks/ui/volume-menu.ui:30
 msgid "C_heck Filesystem…"
@@ -4232,8 +4232,7 @@ msgstr "検査"
 #~ msgstr "起動時にデバイスを待たない"
 
 #~ msgid "If checked, the system won't wait for the device at startup [nofail]"
-#~ msgstr ""
-#~ "チェックを入れると、起動時にシステムはデバイスを待ちません [nofail]"
+#~ msgstr "チェックを入れると、起動時にシステムはデバイスを待ちません [nofail]"
 
 #~ msgid "What's this?"
 #~ msgstr "これは何?"

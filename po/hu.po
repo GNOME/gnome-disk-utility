@@ -1,17 +1,17 @@
 # Hungarian translation for gnome-disk-utility.
-# Copyright (C) 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software Foundation, Inc.
+# Copyright (C) 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2009, 2010, 2012, 2013, 2014, 2015, 2017.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2015, 2016, 2017, 2018, 2019.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2015, 2016, 2017, 2018, 2019, 2020.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2019-07-29 21:55+0000\n"
-"PO-Revision-Date: 2019-08-24 20:48+0200\n"
+"POT-Creation-Date: 2020-01-06 23:02+0000\n"
+"PO-Revision-Date: 2020-02-13 20:02+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 18.12.3\n"
+"X-Generator: Lokalize 19.04.3\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -83,7 +83,7 @@ msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Lemezek"
 
@@ -1994,7 +1994,7 @@ msgstr "Minden meglévő adat elvész"
 msgid "_Restore"
 msgstr "_Visszaállítás"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "Válasszon egy kulcsfájlt"
 
@@ -3000,7 +3000,6 @@ msgid "Mount selected partition"
 msgstr "A kiválasztott partíció csatolása"
 
 #: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Csatolás"
@@ -3010,7 +3009,6 @@ msgid "Unmount selected partition"
 msgstr "A kiválasztott partíció leválasztása"
 
 #: src/disks/ui/disks.ui:707
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Leválasztás"
@@ -3020,8 +3018,6 @@ msgid "Activate selected swap partition"
 msgstr "A kiválasztott cserehely bekapcsolása"
 
 #: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Cserehely bekapcsolása"
@@ -3031,7 +3027,6 @@ msgid "Deactivate selected swap partition"
 msgstr "A kiválasztott cserehely kikapcsolása"
 
 #: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Cserehely kikapcsolása"
@@ -3041,7 +3036,6 @@ msgid "Unlock selected encrypted partition"
 msgstr "A kiválasztott titkosított partíció feloldása"
 
 #: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Feloldás"
@@ -3051,8 +3045,6 @@ msgid "Lock selected encrypted partition"
 msgstr "A kiválasztott titkosított partíció zárolása"
 
 #: src/disks/ui/disks.ui:763
-#| msgctxt "volume-content-crypto"
-#| msgid "Locked"
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Zárolás"
@@ -3062,7 +3054,6 @@ msgid "Create partition in unallocated space"
 msgstr "Partíció létrehozása a lefoglalatlan területen"
 
 #: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Partíció létrehozása"
@@ -3072,7 +3063,6 @@ msgid "Delete selected partition"
 msgstr "A kiválasztott partíció törlése"
 
 #: src/disks/ui/disks.ui:791
-#| msgid "Delete selected partition"
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Partíció törlése"
@@ -3736,14 +3726,15 @@ msgstr ""
 "Iterations Multiplier) számérték."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "Kulcsfájlok"
+#| msgid "Keyfiles"
+msgid "_Keyfiles"
+msgstr "_Kulcsfájlok"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "Kulcsfájl kiválasztása a kötet feloldásához"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "_Feloldás"
 

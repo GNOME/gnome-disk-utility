@@ -3,9 +3,9 @@
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
 # Namhyung Kim <namhyung@gmail.com>, 2009, 2010
-# Changwoo Ryu <cwryu@debian.org>, 2011-2015, 2018.
-# Seong-ho Cho <shcho@gnome.org>, 2012, 2016-2017, 2019.
 # SeongMan Jang <brian.jang11@gmail.com>, 2017.
+# Changwoo Ryu <cwryu@debian.org>, 2011-2015, 2018.
+# Seong-ho Cho <shcho@gnome.org>, 2012, 2016-2017, 2019-2020.
 #
 # 새로 번역하시는 분은 아래 translator-credits에 추가하세요.
 #
@@ -24,8 +24,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-07-29 21:55+0000\n"
-"PO-Revision-Date: 2019-08-29 10:27+0900\n"
+"POT-Creation-Date: 2020-02-16 14:20+0000\n"
+"PO-Revision-Date: 2020-02-18 16:22+0900\n"
 "Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -99,7 +99,7 @@ msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "디스크"
 
@@ -151,7 +151,7 @@ msgid ""
 "the underlying disk image to be modified"
 msgstr ""
 "표시하면, 읽기 전용으로 마운트합니다. 내부의 디스크 이미지를 수정하고 싶지 않"
-"을 때 좋습니다."
+"을 때 좋습니다"
 
 #: src/disk-image-mounter/main.c:136
 #, c-format
@@ -984,7 +984,7 @@ msgstr[0] "디스크에 이상이 없지만, 속성 %d개가 실패했습니다"
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
-msgstr[0] "디스크가 정상이지만, 불량 섹터 %d개가 있습니다."
+msgstr[0] "디스크가 정상이지만, 불량 섹터 %d개가 있습니다"
 
 #: src/disks/gduatasmartdialog.c:1013
 #, c-format
@@ -1247,11 +1247,11 @@ msgstr "%2$lld 오프셋으로부터 %1$lld 바이트를 읽는 중 오류"
 
 #: src/disks/gduchangepassphrasedialog.c:120
 msgid "The passphrases do not match"
-msgstr "암호가 일치하지 않습니다."
+msgstr "암호가 일치하지 않습니다"
 
 #: src/disks/gduchangepassphrasedialog.c:129
 msgid "The passphrase matches the existing passphrase"
-msgstr "기존 암호와 동일한 암호입니다."
+msgstr "기존 암호와 동일한 암호입니다"
 
 #: src/disks/gduchangepassphrasedialog.c:189
 msgid "Error updating /etc/crypttab"
@@ -1267,7 +1267,7 @@ msgstr "설정 데이터를 찾아오는 중 오류"
 
 #: src/disks/gduchangepassphrasedialog.c:321
 msgid "/etc/crypttab configuration data is malformed"
-msgstr "/etc/crypytab 설정 데이터가 잘못되었습니다."
+msgstr "/etc/crypytab 설정 데이터가 잘못되었습니다"
 
 #: src/disks/gduchangepassphrasedialog.c:354
 msgid ""
@@ -1360,7 +1360,7 @@ msgid ""
 msgstr ""
 "“%3$s” 장치의 데이터의 %1$2.1f%%(%2$s)의 데이터를 읽을 수 없으므로, 디스크 이"
 "미지에서는 0으로 대신합니다. 보통 미디어에 일부 문제가 있거나 물리적으로 손상"
-"된 경우입니다."
+"된 경우입니다"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
 #: src/disks/gducreatediskimagedialog.c:495
@@ -1374,7 +1374,7 @@ msgstr "닫기(_C)"
 #: src/disks/gducreatediskimagedialog.c:722
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
-msgstr "장치의 크기를 결정하는 중 오류:"
+msgstr "장치의 크기를 결정하는 중 오류: "
 
 #: src/disks/gducreatediskimagedialog.c:729
 #: src/disks/gdurestorediskimagedialog.c:738
@@ -1515,7 +1515,7 @@ msgstr "만들 수 있는 마지막 주 파티션입니다."
 
 #: src/disks/gducreatepasswordpage.c:124
 msgid "The passwords do not match"
-msgstr "암호가 일치하지 않습니다."
+msgstr "암호가 일치하지 않습니다"
 
 #: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
 msgid "Will be created"
@@ -1750,7 +1750,7 @@ msgid ""
 "private information from falling into the wrong hands"
 msgstr ""
 "<b>조언</b>: 오래된 컴퓨터나 디스크를 재활용, 판매, 양도할 계획이 있으시다"
-"면, 좀 더 철저한 소거 방식을 사용해 개인 정보가 흘러가는 것을 막으십시오."
+"면, 좀 더 철저한 소거 방식을 사용해 개인 정보가 흘러가는 것을 막으십시오"
 
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:428
@@ -1758,8 +1758,7 @@ msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
 msgstr ""
-"데스크의 모든 데이터를 덮어 쓰므로, 데이터 복구 서비스에서 복구할 수 없습니"
-"다."
+"데스크의 모든 데이터를 덮어 쓰므로, 데이터 복구 서비스에서 복구할 수 없습니다"
 
 #: src/disks/gduformatdiskdialog.c:436
 msgid ""
@@ -1774,7 +1773,7 @@ msgstr ""
 "없고, 어떤 하드웨어에서는 제대로 동작하지 않을 수도 있습니다. 최악의 상황에서"
 "는 드라이브를 사용하지 못하거나, 시스템이 중단되거나 멈출 수 있습니다. 수행하"
 "기 전에 <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
-"보안 소거</a>에 대한 내용을 읽어주시고, 위험성에 대해 충분히 이해하십시오."
+"보안 소거</a>에 대한 내용을 읽어주시고, 위험성에 대해 충분히 이해하십시오"
 
 #: src/disks/gdufstabdialog.c:155
 #, c-format
@@ -1981,7 +1980,7 @@ msgstr "기존의 데이터가 모두 지워집니다"
 msgid "_Restore"
 msgstr "복구(_R)"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "키 파일을 선택하십시오"
 
@@ -2722,7 +2721,7 @@ msgstr "바이트"
 #: src/disks/ui/create-partition-page.ui:112
 #: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
 msgid "kB"
-msgstr "KB"
+msgstr "kB"
 
 #: src/disks/ui/create-partition-page.ui:113
 #: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
@@ -2853,7 +2852,7 @@ msgid ""
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
 "갑작스런 회전수 감소는 예상보다 빨리 드라이브를 망가지게 할 수 있습니다. “시"
-"작/정지 카운트” SMART 속성을 종종 확인해 보십시오."
+"작/정지 카운트” SMART 속성을 종종 확인해 보십시오"
 
 #: src/disks/ui/disk-settings-dialog.ui:308
 msgid "A_PM"
@@ -2866,7 +2865,7 @@ msgstr "자동 소음 관리 설정 적용"
 
 #: src/disks/ui/disk-settings-dialog.ui:350
 msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "켜면 시작할 때와 디스크를 연결할 때 AAM을 설정합니다."
+msgstr "켜면 시작할 때와 디스크를 연결할 때 AAM을 설정합니다"
 
 #: src/disks/ui/disk-settings-dialog.ui:384
 msgid "Vendor Recommended"
@@ -2888,7 +2887,7 @@ msgstr "쓰기 캐시 설정 적용"
 msgid ""
 "Turn on to configure Write Cache setting at startup and when the disk is "
 "connected"
-msgstr "켜면 시작할 때와 디스크를 연결할 때 쓰기 캐시 설정을 적용합니다."
+msgstr "켜면 시작할 때와 디스크를 연결할 때 쓰기 캐시 설정을 적용합니다"
 
 #: src/disks/ui/disk-settings-dialog.ui:549
 msgid "S_etting"
@@ -2908,7 +2907,7 @@ msgid ""
 "susceptible to data loss in the event of a power failure"
 msgstr ""
 "쓰기 캐시를 사용하면 성능이 좋아지지만, 시스템에서 전원에 문제가 있을 때 데이"
-"터를 잃을 수 있습니다."
+"터를 잃을 수 있습니다"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
@@ -3192,7 +3191,7 @@ msgid ""
 "the <i>active</i> partition"
 msgstr ""
 "플랫폼 부트로더에서 OS를 어디서 불러올지 결정할 때 사용하는 플래그입니다. 이 "
-"플래그가 설정된 파티션을 <i>활성</i> 파티션으로 인식하기도 합니다."
+"플래그가 설정된 파티션을 <i>활성</i> 파티션으로 인식하기도 합니다"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:7
 msgid "Change Filesystem Label"
@@ -3200,7 +3199,7 @@ msgstr "파일 시스템 레이블"
 
 #: src/disks/ui/edit-filesystem-dialog.ui:72
 msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr "모든 변경 전에 파일 시스템은 자동으로 마운트 해제 될 것입니다."
+msgstr "어떤 설정이든 바꾸기 전 파일 시스템을 자동으로 마운트 해제합니다."
 
 #: src/disks/ui/edit-filesystem-dialog.ui:92
 msgid "_Label"
@@ -3378,7 +3377,7 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
-"EFI 펌웨어에서 이 파티션의 내용을 무시하고 내용을 읽지 않도록 표시합니다."
+"EFI 펌웨어에서 이 파티션의 내용을 무시하고 내용을 읽지 않도록 표시합니다"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3514,53 +3513,58 @@ msgstr "도움말"
 
 #: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "키보드 바로 가기 키"
+
+#: src/disks/ui/shortcuts.ui:45
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "끝내기"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:54
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "드라이브"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:58
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "드라이브 메뉴 열기"
 
 # 커맨드 설명, 문장으로 번역
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "드라이브 포맷"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "디스크 이미지 복구"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART 데이터"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "드라이브 설정"
 
-#: src/disks/ui/shortcuts.ui:88
+#: src/disks/ui/shortcuts.ui:95
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "파티션"
 
 # Note: 디스크 '볼륨' 레이블의 볼륨을 말함.
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "볼륨 메뉴 열기"
 
 # 커맨드 설명, 문장으로 번역
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "선택한 볼륨 포맷"
@@ -3579,7 +3583,7 @@ msgstr "SMART 자체 검사를 시작하려면 누르십시오"
 
 #: src/disks/ui/smart-dialog.ui:40
 msgid "_Stop Self-test"
-msgstr "자체 검사 중지(_S)..."
+msgstr "자체 검사 중지(_S)"
 
 #: src/disks/ui/smart-dialog.ui:44
 msgid "Click to stop the SMART self-test currently in progress"
@@ -3668,7 +3672,7 @@ msgstr "암호화한 윈도우 시스템 파티션 또는 드라이브의 잠금
 
 #: src/disks/ui/unlock-device-dialog.ui:171
 msgid "PI_M"
-msgstr "PI_M"
+msgstr "PIM(_M)"
 
 #: src/disks/ui/unlock-device-dialog.ui:187
 msgid ""
@@ -3679,14 +3683,14 @@ msgstr ""
 "Multiplier) 숫자 값."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "키 파일"
+msgid "_Keyfiles"
+msgstr "키 파일(_K)"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "이 볼륨의 잠금을 해제할 키 파일을 선택하십시오"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "풀기(_U)"
 

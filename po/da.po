@@ -21,8 +21,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-07-29 21:55+0000\n"
-"PO-Revision-Date: 2019-10-02 05:04+0200\n"
+"POT-Creation-Date: 2020-02-16 14:20+0000\n"
+"PO-Revision-Date: 2020-02-26 19:08+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -95,7 +95,7 @@ msgid "The GNOME Project"
 msgstr "GNOME-projektet"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Diske"
 
@@ -2002,7 +2002,7 @@ msgstr "Alle eksisterende data vil gå tabt"
 msgid "_Restore"
 msgstr "_Gendan"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "Vælg en nøglefil"
 
@@ -2280,7 +2280,11 @@ msgid ""
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
-msgstr "Det er ikke altid muligt at reparere et filsystem, og dette kan føre til tab af data. Overvej at tage en sikkerhedskopi først, og dernæst bruge genskabelsesværktøjer som genopretter tabte filer. Denne handling kan tage lang tid, især hvis partitionen indeholder meget data."
+msgstr ""
+"Det er ikke altid muligt at reparere et filsystem, og dette kan føre til tab "
+"af data. Overvej at tage en sikkerhedskopi først, og dernæst bruge "
+"genskabelsesværktøjer som genopretter tabte filer. Denne handling kan tage "
+"lang tid, især hvis partitionen indeholder meget data."
 
 #: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
@@ -2313,7 +2317,8 @@ msgstr "Bekræft kontrol"
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
-msgstr "Denne kontrol kan tage lang tid, især hvis partitionen indeholder meget data."
+msgstr ""
+"Denne kontrol kan tage lang tid, især hvis partitionen indeholder meget data."
 
 #: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -3559,50 +3564,55 @@ msgstr "Hjælp"
 
 #: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Tastaturgenveje"
+
+#: src/disks/ui/shortcuts.ui:45
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Afslut"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:54
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Drev"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:58
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Åbn drevmenuen"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formatér drevet"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Gendan et aftryk til disken"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART-data"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Drevindstillinger"
 
-#: src/disks/ui/shortcuts.ui:88
+#: src/disks/ui/shortcuts.ui:95
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Partition"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Åbn menuen for diskenheder"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formatér valgte diskenhed"
@@ -3724,14 +3734,14 @@ msgstr ""
 "Iterations Multiplier) for denne diskenhed."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "Nøglefiler"
+msgid "_Keyfiles"
+msgstr "_Nøglefiler"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "Vælg en nøglefil for at låse denne diskenhed op"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "Lås _op"
 

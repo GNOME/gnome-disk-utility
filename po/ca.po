@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-08-01 16:12+0000\n"
+"POT-Creation-Date: 2020-02-16 14:20+0000\n"
 "PO-Revision-Date: 2019-08-06 19:10+0200\n"
 "Last-Translator: Jordi Mas <jmas@softcatala.org>\n"
 "Language-Team: Catalan <info@softcatala.org>\n"
@@ -74,7 +74,7 @@ msgid ""
 "disks, and image USB sticks."
 msgstr ""
 "Amb el Discs, podeu veure les dades SMART, gestionar dispositius, test de "
-"referència dels discs i imatges en llapis USB. "
+"referència dels discs i imatges en llapis USB."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
@@ -85,7 +85,7 @@ msgid "The GNOME Project"
 msgstr "El projecte GNOME"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Discs"
 
@@ -2015,7 +2015,7 @@ msgstr "Es perdran totes les dades"
 msgid "_Restore"
 msgstr "_Restaura"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "Seleccioneu un fitxer de clau"
 
@@ -2330,7 +2330,8 @@ msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
-"La comprovació pot trigar bastant de temps, especialment si la partició conté moltes dades."
+"La comprovació pot trigar bastant de temps, especialment si la partició "
+"conté moltes dades."
 
 #: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -2700,7 +2701,7 @@ msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
-"El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-vos "
+"El nom que s'utilitzarà per al sistema de fitxers. És útil si voleu referir-vos "
 "al dispositiu a través d'un enllaç simbòlic al directori /dev/disk/by-label."
 
 #: src/disks/ui/create-filesystem-page.ui:47
@@ -3168,7 +3169,7 @@ msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
-"El nom que es farà servir pel dispositiu desbloquejat - el dispositiu "
+"El nom que es farà servir per al dispositiu desbloquejat - el dispositiu "
 "s'estableix com el nom amb el prefix <b>/dev/mapper</b>/"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:196
@@ -3321,7 +3322,7 @@ msgstr "_Nom que es mostrarà"
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
-"Si s'estableix, serà el nom que s'utilitzarà pel dispositiu a la interfície "
+"Si s'estableix, serà el nom que s'utilitzarà per al dispositiu a la interfície "
 "d'usuari [x-gvfs-name=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:255
@@ -3333,7 +3334,7 @@ msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
-"Si s'estableix, serà el nom de la icona que s'utilitzarà pel dispositiu a la "
+"Si s'estableix, serà el nom de la icona que s'utilitzarà per al dispositiu a la "
 "interfície d'usuari [x-gvfs-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:288
@@ -3443,7 +3444,7 @@ msgid ""
 "not try to read from it"
 msgstr ""
 "Indica que el firmware EFI hauria d'ignorar el contingut de la partició i no "
-"intentar llegir d'ella."
+"intentar llegir d'ella"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3562,7 +3563,7 @@ msgstr "_Inicia la restauració…"
 #: src/disks/ui/shortcuts.ui:13
 msgctxt "shortcut window"
 msgid "General"
-msgstr "General "
+msgstr "General"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
@@ -3581,50 +3582,55 @@ msgstr "Ajuda"
 
 #: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Dreceres de teclat"
+
+#: src/disks/ui/shortcuts.ui:45
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Surt"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:54
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Unitat"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:58
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Obre el menú d'unitat"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formata la unitat"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Restaura una imatge al disc"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Dades SMART"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Paràmetres de la unitat"
 
-#: src/disks/ui/shortcuts.ui:88
+#: src/disks/ui/shortcuts.ui:95
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Partició"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Obre el menú del volum"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formata el volum seleccionat"
@@ -3744,14 +3750,14 @@ msgstr ""
 "Multiplier) a usar per aquest volum."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "Fitxers de clau"
+msgid "_Keyfiles"
+msgstr "_Fitxers de clau"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "Seleccioneu un fitxer de clau per desbloquejar aquest volum"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "_Desbloca"
 
@@ -3963,610 +3969,3 @@ msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examina"
 
-#~ msgid "drive-removable-media"
-#~ msgstr "drive-removable-media"
-
-#~ msgid "org.gnome.DiskUtility"
-#~ msgstr "org.gnome.DiskUtility"
-
-#~ msgid ""
-#~ "Depending on the amount of data the filesystem check takes longer time."
-#~ msgstr ""
-#~ "Depenent de la quantitat de dades, la comprovació del sistema de fitxers "
-#~ "triga molt de temps."
-
-#~ msgid "gnome-disks"
-#~ msgstr "gnome-disks"
-
-#~ msgid "Error unmounting filesystem for repairing"
-#~ msgstr ""
-#~ "S'ha produït un error en desmuntar el sistema de fitxers per reparar-lo"
-
-#~ msgid "Error unmounting filesystem for resizing"
-#~ msgstr ""
-#~ "S'ha produït un error en desmuntar el sistema de fitxers per canviar-ne "
-#~ "la mida"
-
-#~ msgid "Error unlocking encrypted device"
-#~ msgstr "S'ha produït un error en desblocar el dispositiu encriptat"
-
-#~ msgctxt "accelerator"
-#~ msgid "F10"
-#~ msgstr "F10"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Ctrl>F"
-#~ msgstr "<Ctrl>F"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Ctrl>S"
-#~ msgstr "<Ctrl>S"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Ctrl>E"
-#~ msgstr "<Ctrl>E"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Shift>F10"
-#~ msgstr "<Maj>F10"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Shift><Ctrl>F"
-#~ msgstr "<Ctrl><Maj>F"
-
-#~ msgid "Error locking encrypted device"
-#~ msgstr "S'ha produït un error en bloquejar el dispositiu encriptat"
-
-#~ msgid "Power Off…"
-#~ msgstr "Atura…"
-
-#~ msgid "FAT"
-#~ msgstr "FAT"
-
-#~ msgid "Compatible with most systems"
-#~ msgstr "Compatible amb la majoria de sistemes"
-
-#~ msgid "NTFS"
-#~ msgstr "NTFS"
-
-#~ msgid "Compatible with Linux systems"
-#~ msgstr "Compatible amb sistemes Linux"
-
-#~ msgid "Ext4"
-#~ msgstr "Ext4"
-
-#~ msgid "Encrypted, compatible with Linux systems"
-#~ msgstr "Encriptat, compatible amb sistemes Linux"
-
-#~ msgid "LUKS + Ext4"
-#~ msgstr "LUKS + Ext4"
-
-#~ msgid "Enter filesystem type"
-#~ msgstr "Introduïu el tipus de sistema de fitxers"
-
-#~ msgid "Error formatting partition"
-#~ msgstr "S'ha produït un error en formatar la partició"
-
-#~ msgid "Extended partition"
-#~ msgstr "Partició ampliada"
-
-#~ msgid "For logical partitions"
-#~ msgstr "Per a particions lògiques"
-
-#~ msgid "Are you sure you want to format the volume?"
-#~ msgstr "Segur que voleu formatar el volum?"
-
-#~ msgid ""
-#~ "All data on the volume will be lost but may still be recoverable by data "
-#~ "recovery services"
-#~ msgstr ""
-#~ "Es perdran totes les dades del volum però encara es podrien recuperar amb "
-#~ "sistemes de recuperació de dades"
-
-#~ msgid ""
-#~ "All data on the volume will be overwritten and will likely not be "
-#~ "recoverable by data recovery services"
-#~ msgstr ""
-#~ "Se sobreescriuran totes les dades del volum i segurament no es podran "
-#~ "recuperar amb sistemes de recuperació de dades"
-
-#~ msgid "C_reate"
-#~ msgstr "C_rea"
-
-#~ msgid "F_ilesystem"
-#~ msgstr "Sistema de _fitxers"
-
-#~ msgid ""
-#~ "The custom filesystem type to create e.g. <i>btrfs</i>, <i>xfs</i> or "
-#~ "<i>swap</i>"
-#~ msgstr ""
-#~ "El tipus de sistema de fitxers que es crearà, p. ex. el <i>btrfs</i>, "
-#~ "l'<i>xfs</i> o el <i>swap</i>"
-
-#~ msgid "The custom filesystem type to create e.g. btrfs, xfs or swap"
-#~ msgstr ""
-#~ "El tipus de sistema de fitxers que es crearà, p. ex. el btrfs, l'xfs o el "
-#~ "swap"
-
-#~ msgid ""
-#~ "The name to use for the filesystem. This is useful if you want to refer "
-#~ "to the device via a symlink in the <b>/dev/disk/by-label</b> directory"
-#~ msgstr ""
-#~ "El nom que s'utilitzarà pel sistema de fitxers. És útil si voleu referir-"
-#~ "vos al dispositiu a través d'un enllaç simbòlic al directori <b>/dev/disk/"
-#~ "by-label</b>"
-
-#~ msgid "ATA Secure Erase / Enhanced Secure Erase"
-#~ msgstr "Esborrat segur d'ATA/esborrat segur millorat"
-
-#~ msgid "If Available, Slow"
-#~ msgstr "Si és disponible, més lent"
-
-#~ msgid "Error erasing device %s"
-#~ msgstr "S'ha produït un error en esborrar el dispositiu %s"
-
-#~ msgid "Are you sure you want to erase the disks?"
-#~ msgstr "Segur que voleu esborrar els discs?"
-
-#~ msgid ""
-#~ "All data on the selected disks will be lost but may still be recoverable "
-#~ "by data recovery services"
-#~ msgstr ""
-#~ "Es perdran totes les dades dels discs seleccionats, però encara es "
-#~ "podrien recuperar amb sistemes de recuperació de dades"
-
-#~ msgid ""
-#~ "All data on the selected disks will be overwritten and will likely not be "
-#~ "recoverable by data recovery services"
-#~ msgstr ""
-#~ "Es sobreescriuran totes les dades dels discs i segurament no serà "
-#~ "possible recuperar-la amb sistemes de recuperació de dades"
-
-#~ msgid "_Automatic Encryption Options"
-#~ msgstr "Opcions d'encriptació _automàtica"
-
-#~ msgid "_Automatic Mount Options"
-#~ msgstr "Opcions de muntatge _automàtic"
-
-#~ msgid "Activation of this plugin"
-#~ msgstr "Activació d'aquest connector"
-
-#~ msgid ""
-#~ "Whether this plugin would be activated by gnome-settings-daemon or not"
-#~ msgstr "Si el gnome-settings-daemon hauria d'activar aquest connector"
-
-#~ msgid "Priority to use for this plugin"
-#~ msgstr "Prioritat del connector"
-
-#~ msgid ""
-#~ "Priority to use for this plugin in gnome-settings-daemon startup queue"
-#~ msgstr ""
-#~ "La prioritat en la cua d'inici per utilitzar aquest connector del gnome-"
-#~ "settings-daemon"
-
-#~ msgid "Disks Problem Monitor"
-#~ msgstr "Monitor de problemes en els discs"
-
-#~ msgid "Warns about problems with disks and storage devices"
-#~ msgstr ""
-#~ "Avisa de problemes en els discs i en els dispositius d'emmagatzematge"
-
-#~ msgid "Show help options"
-#~ msgstr "Mostra les opcions d'ajuda"
-
-#~ msgid "Format…"
-#~ msgstr "Formata…"
-
-#~ msgid "Create RAID Array"
-#~ msgstr "Crea una matriu RAID"
-
-#~ msgid "C_reate…"
-#~ msgstr "C_rea…"
-
-#~ msgid "RAID _Level"
-#~ msgstr "_Nivell de RAID"
-
-#~ msgid "Usable Size"
-#~ msgstr "Mida utilitzable"
-
-#~ msgid "Number of Disks"
-#~ msgstr "Nombre de discs"
-
-#~ msgid "For example, “My RAID Array” or “Backup Data”"
-#~ msgstr "Per exemple: «La meva matriu RAID» o «Còpia de seguretat»"
-
-#~ msgid "Unmount the filesystem"
-#~ msgstr "Desmunta el sistema de fitxers"
-
-#~ msgid "More actions"
-#~ msgstr "Més accions"
-
-#~ msgid "Start RAID Array"
-#~ msgstr "Inicia la matriu RAID"
-
-#~ msgid "Stop RAID Array"
-#~ msgstr "Atura la matriu RAID"
-
-#~ msgid "_Devices"
-#~ msgstr "_Dispositius"
-
-#~ msgid "Click to select multiple disks to perform operations on"
-#~ msgstr "Feu clic per seleccionar diversos discs sobre els que actuar"
-
-#~ msgid "Done"
-#~ msgstr "Fet"
-
-#~ msgid "Eject the medium in the drive"
-#~ msgstr "Expulsa el suport de la unitat"
-
-#~ msgid "RAID Level"
-#~ msgstr "Nivell de RAID"
-
-#~ msgid "State"
-#~ msgstr "Estat"
-
-#~ msgid "Bitmap"
-#~ msgstr "Mapa de bits"
-
-#~ msgid "RAID Disks…"
-#~ msgstr "Discs de la RAID…"
-
-#~ msgid "Start Data Scrubbing…"
-#~ msgstr "Inicia la comprovació de dades…"
-
-#~ msgid "Stop Data Scrubbing"
-#~ msgstr "Atura la comprovació de dades"
-
-#~ msgid "Create RAID"
-#~ msgstr "Crea una RAID"
-
-#~ msgid ""
-#~ "If set, some OSes may mount or use the contents of the partition as read-"
-#~ "only instead of read-write"
-#~ msgstr ""
-#~ "Si s'estableix, alguns sistemes operatius muntaran o utilitzaran el "
-#~ "contingut de la partició només en mode lectura en lloc de lectura i "
-#~ "escriptura"
-
-#~ msgid ""
-#~ "If set, some OSes may hide the contents of the partition in their user "
-#~ "interfaces"
-#~ msgstr ""
-#~ "Si s'estableix, alguns sistemes operatius ocultaran el contingut de la "
-#~ "partició de les interfícies d'usuari"
-
-#~ msgid "Do Not _Automount"
-#~ msgstr "No la muntis _automàticament"
-
-#~ msgid "If set, some OSes may not automount the contents of the partition"
-#~ msgstr ""
-#~ "Si s'estableix, alguns sistemes operatius no muntaran automàticament el "
-#~ "contingut de la partició"
-
-#~ msgid "RAID Disks"
-#~ msgstr "Discs RAID"
-
-#~ msgid "%d disk"
-#~ msgid_plural "%d disks"
-#~ msgstr[0] "%d disc"
-#~ msgstr[1] "%d discs"
-
-#~ msgid "%s of %s each"
-#~ msgstr "%s de %s cada un"
-
-#~ msgid "Error creating RAID array"
-#~ msgstr "S'ha produït un error en crear la matriu RAID"
-
-#~ msgid "Are you sure you want to use the disks for a RAID array?"
-#~ msgstr "Segur que voleu fer servir els discs per una matriu RAID?"
-
-#~ msgid "Existing content on the devices will be erased"
-#~ msgstr "S'esborrarà el contingut que hi hagi en els dispositius"
-
-#~ msgid "RAID Arrays"
-#~ msgstr "Matrius RAID"
-
-#~ msgctxt "md-raid-tree-primary"
-#~ msgid "%s RAID Array"
-#~ msgstr "Matriu RAID de %s"
-
-#~ msgctxt "md-raid-tree-primary"
-#~ msgid "RAID Array"
-#~ msgstr "Matriu RAID"
-
-#~ msgctxt "md-raid-tree-secondary"
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
-
-#~ msgid "%s <span size=\"smaller\">(Read-Only)</span>"
-#~ msgstr "%s <span size=\"smaller\">(només lectura)</span>"
-
-#~ msgid "An error occurred when removing a disk from the RAID Array"
-#~ msgstr "S'ha produït un error quan s'ha tret un disc de la matriu RAID"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Are you sure you want to remove the disk?"
-#~ msgstr "Segur que voleu treure el disc?"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Removing a disk from a RAID array may degrade it"
-#~ msgstr "Si es treu un disc de la matriu RAID, aquesta pot quedar degradada"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "_Remove"
-#~ msgstr "_Treu"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "FAILED"
-#~ msgstr "FALLA"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "In Sync"
-#~ msgstr "Sincronitzant-se"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "Spare"
-#~ msgstr "Recanvi"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "Recovering"
-#~ msgstr "Recuperant-se"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "Write-mostly"
-#~ msgstr "Majoritàriament d'escriptura"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "Blocked"
-#~ msgstr "Bloquejat"
-
-#~ msgctxt "mdraid-disks-state"
-#~ msgid "Unknown (%s)"
-#~ msgstr "Desconegut (%s)"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Position"
-#~ msgstr "Posició"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Disk"
-#~ msgstr "Disc"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "State"
-#~ msgstr "Estat"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Errors"
-#~ msgstr "Errors"
-
-#~ msgid "An error occurred when adding a disk to the RAID Array"
-#~ msgstr "S'ha produït un error en afegir un disc a la matriu RAID"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "Are you sure you want to add the disk to the array?"
-#~ msgstr "Segur que voleu afegir el disc a la matriu?"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "All existing data on the disk will be lost"
-#~ msgstr "Es perdran totes les dades del disc"
-
-#~ msgctxt "mdraid-disks"
-#~ msgid "_Add"
-#~ msgstr "_Afegeix"
-
-#~ msgctxt "mdraid-add"
-#~ msgid "No disks of suitable size available"
-#~ msgstr "No hi ha cap disc de la mida necessària disponible"
-
-#~ msgctxt "mdraid-add"
-#~ msgid "Select disk to add"
-#~ msgstr "Seleccioneu el disc per afegir"
-
-#~ msgctxt "volume-grid"
-#~ msgid "%s [local to %s]"
-#~ msgstr "%s [hostatjat a %s]"
-
-#~ msgctxt "accelerator"
-#~ msgid "<Ctrl>R"
-#~ msgstr "<Ctrl>R"
-
-#~ msgid "RAID array is not running"
-#~ msgstr "La RAID no està funcionant"
-
-#~ msgctxt "md-raid-window"
-#~ msgid "%s RAID Array"
-#~ msgstr "Matriu RAID de %s"
-
-#~ msgctxt "md-raid-window"
-#~ msgid "RAID Array"
-#~ msgstr "Matriu RAID"
-
-#~ msgctxt "mdraid"
-#~ msgid "%s (local to %s)"
-#~ msgstr "%s (hostatjat a %s)"
-
-#~ msgid "%d Disk"
-#~ msgid_plural "%d Disks"
-#~ msgstr[0] "%d disc"
-#~ msgstr[1] "%d discs"
-
-#~ msgctxt "mdraid-disks-and-chunk-size"
-#~ msgid "%s, %s Chunk"
-#~ msgstr "%s, fragments de %s"
-
-#~ msgctxt "mdraid"
-#~ msgid "%s, %s"
-#~ msgstr "%s de %s"
-
-#~ msgctxt "mdraid"
-#~ msgid "ARRAY IS DEGRADED"
-#~ msgstr "LA MATRIU ESTÀ DEGRADADA"
-
-#~ msgctxt "mdraid-degraded"
-#~ msgid "%s — %s"
-#~ msgstr "%s — %s"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Running"
-#~ msgstr "En funcionament"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Not running"
-#~ msgstr "Sense funcionar"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Data Scrubbing"
-#~ msgstr "Comprovació de dades"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Data Scrubbing and Repair"
-#~ msgstr "Comprovació de dades i reparació"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Resyncing"
-#~ msgstr "S'està resincronitzant"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Recovering"
-#~ msgstr "S'està recuperant"
-
-#~ msgctxt "mdraid-state"
-#~ msgid "Frozen"
-#~ msgstr "Congelat"
-
-#~ msgctxt "raid-split-brain"
-#~ msgid "RAID ARRAY IS MISCONFIGURED"
-#~ msgstr "LA MATRIU RAID NO ESTÀ BEN CONFIGURADA"
-
-#~ msgctxt "raid-split-brain"
-#~ msgid "Split-Brain"
-#~ msgstr "Inconsistència de dades (split-brain)"
-
-#~ msgctxt "raid-split-brain"
-#~ msgid "%s (%s)"
-#~ msgstr "%s (%s)"
-
-#~ msgctxt "raid-state-progress"
-#~ msgid "%s: %s"
-#~ msgstr "%s: %s"
-
-#~ msgctxt "mdraid-sync-op"
-#~ msgid "%s remaining (%s/sec)"
-#~ msgstr "Manquen %s (%s/s)"
-
-#~ msgctxt "volume-contents-raid"
-#~ msgid "Go To Array"
-#~ msgstr "Vés a la matriu"
-
-#~ msgctxt "volume-contents-raid"
-#~ msgid "%s — %s"
-#~ msgstr "%s — %s"
-
-#~ msgid "An error occurred when requesting data redundancy check"
-#~ msgstr ""
-#~ "S'ha produït un error quan s'ha demanat de fer la comprovació de dades "
-#~ "redundants"
-
-#~ msgctxt "mdraid-scrub-dialog"
-#~ msgid "Data Scrubbing"
-#~ msgstr "Comprovació de dades"
-
-#~ msgctxt "mdraid-scrub-dialog"
-#~ msgid ""
-#~ "As storage devices can develop bad blocks at any time it is valuable to "
-#~ "regularly read all blocks on all disks in a RAID array so as to catch "
-#~ "such bad blocks early.\n"
-#~ "\n"
-#~ "The RAID array will remain operational for the duration of the operation "
-#~ "but performance will be impacted. For more information about data "
-#~ "scrubbing, see the <a href='https://raid.wiki.kernel.org/index.php/"
-#~ "RAID_Administration'>RAID Administration</a> article."
-#~ msgstr ""
-#~ "Els dispositius d'emmagatzematge poden generar blocs erronis en qualsevol "
-#~ "moment, de manera que és important llegir tots els blocs de tots els "
-#~ "discs de la matriu RAID per tal de descobrir aquests blocs erronis "
-#~ "l'abans possible.\n"
-#~ "\n"
-#~ "La matriu RAID continuarà sent funcional durant aquesta operació però el "
-#~ "seu rendiment disminuirà. Vegeu l'article <a href='https://raid.wiki."
-#~ "kernel.org/index.php/RAID_Administration'>administració RAID</a> per "
-#~ "saber-ne més sobre la comprovació de dades."
-
-#~ msgctxt "mdraid-scrub-dialog"
-#~ msgid "_Start"
-#~ msgstr "_Inicia"
-
-#~ msgctxt "mdraid-scrub-dialog"
-#~ msgid "_Repair mismatched blocks, if possible"
-#~ msgstr "_Repara els blocs no coincidents, si és possible"
-
-#~ msgid "Error starting RAID array"
-#~ msgstr "S'ha produït un error en iniciar la matriu RAID"
-
-#~ msgid "Error stopping RAID array"
-#~ msgstr "S'ha produït un error en aturar la matriu RAID"
-
-#~ msgid "Error setting bitmap for the RAID array"
-#~ msgstr ""
-#~ "S'ha produït un error en establir el mapa de bits per la matriu RAID"
-
-#~ msgctxt "multi-disk-menu"
-#~ msgid "No _Devices Selected"
-#~ msgstr "No s'ha seleccionat cap _dispositiu"
-
-#~ msgid "%d _Device Selected (%s)"
-#~ msgid_plural "%d _Devices Selected (%s)"
-#~ msgstr[0] "%d _dispositiu seleccionat (%s)"
-#~ msgstr[1] "%d _dispositius seleccionats (%s)"
-
-#~ msgid "RAID 0"
-#~ msgstr "RAID 0"
-
-#~ msgid "Stripe"
-#~ msgstr "Partit"
-
-#~ msgid "RAID 1"
-#~ msgstr "RAID 1"
-
-#~ msgid "Mirror"
-#~ msgstr "Rèplica"
-
-#~ msgid "RAID 4"
-#~ msgstr "RAID 4"
-
-#~ msgid "Dedicated Parity"
-#~ msgstr "Paritat dedicada"
-
-#~ msgid "RAID 5"
-#~ msgstr "RAID 5"
-
-#~ msgid "Distributed Parity"
-#~ msgstr "Paritat distribuïda"
-
-#~ msgid "RAID 6"
-#~ msgstr "RAID 6"
-
-#~ msgid "Double Distributed Parity"
-#~ msgstr "Doble paritat distribuïda"
-
-#~ msgid "RAID 10"
-#~ msgstr "RAID 10"
-
-#~ msgid "Stripe of Mirrors"
-#~ msgstr "Rèpliques partides"
-
-#~ msgid "RAID (%s)"
-#~ msgstr "RAID (%s)"
-
-#~ msgctxt "notify-mdraid"
-#~ msgid "RAID Problems Detected"
-#~ msgstr "S'han detectat problemes a una RAID"
-
-#~ msgctxt "notify-mdraid"
-#~ msgid "A RAID array is degraded."
-#~ msgstr "La matriu RAID està degradada."
-
-#~ msgctxt "notify-mdraid"
-#~ msgid "Examine"
-#~ msgstr "Examina"

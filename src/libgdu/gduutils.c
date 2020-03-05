@@ -1351,6 +1351,7 @@ typedef struct
   GList *object_iter;
   GTask *task;
   GCancellable *cancellable; /* borrowed ref */
+  guint last_mount_point_list_size; /* only for unuse_unmount_cb to check against a race in UDisks */
 } UnuseData;
 
 static void
@@ -1399,6 +1400,18 @@ unuse_unmount_cb (UDisksFilesystem *filesystem,
     }
   else
     {
+      gint64 end_usec;
+      const gchar *const *mount_points;
+
+      end_usec = g_get_monotonic_time () + (G_USEC_PER_SEC * 5);
+
+      while (mount_points = udisks_filesystem_get_mount_points (filesystem),
+             (mount_points ? g_strv_length ((gchar **) mount_points) : 0) == data->last_mount_point_list_size &&
+             g_get_monotonic_time () < end_usec)
+      {
+        udisks_client_settle (data->client);
+      }
+
       unuse_data_iterate (data);
     }
 }
@@ -1492,6 +1505,10 @@ unuse_data_iterate (UnuseData *data)
 
   if (filesystem_to_unmount != NULL)
     {
+      const gchar *const *mount_points;
+
+      mount_points = udisks_filesystem_get_mount_points (filesystem_to_unmount);
+      data->last_mount_point_list_size = mount_points ? g_strv_length ((gchar **) mount_points) : 0;
       udisks_filesystem_call_unmount (filesystem_to_unmount,
                                       g_variant_new ("a{sv}", NULL), /* options */
                                       data->cancellable, /* cancellable */

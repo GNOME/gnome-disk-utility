@@ -15,6 +15,9 @@ flatpak:
   image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
   stage: test
 
+  tags:
+    - flatpak
+
   variables:
     BUNDLE: "org.gnome.DiskUtility.flatpak"
     MANIFEST_PATH: "flatpak/org.gnome.DiskUtility.json"
@@ -23,11 +26,11 @@ flatpak:
     RUNTIME_REPO: "https://sdk.gnome.org/gnome-nightly.flatpakrepo"
 
   script:
-    - flatpak-builder --stop-at=${FLATPAK_MODULE} app ${MANIFEST_PATH}
+    - flatpak-builder --user --disable-rofiles-fuse --stop-at=${FLATPAK_MODULE} app ${MANIFEST_PATH}
     - flatpak build app meson --prefix=/app ${OPTIONS} _build
     - flatpak build app ninja -C _build install
 
-    - flatpak-builder --finish-only --repo=repo app ${MANIFEST_PATH}
+    - flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo app ${MANIFEST_PATH}
     - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${DBUS_ID}
 
   artifacts:

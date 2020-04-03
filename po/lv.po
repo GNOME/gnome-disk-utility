@@ -5,15 +5,15 @@
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 # Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2010.
-# Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019.
+# Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
 # Peteris Krisjanis <pecisk@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2019-07-29 21:55+0000\n"
-"PO-Revision-Date: 2019-08-24 17:00+0200\n"
+"POT-Creation-Date: 2020-03-31 16:26+0000\n"
+"PO-Revision-Date: 2020-04-03 23:39+0300\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
 " 2);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 19.12.3\n"
 "X-Launchpad-Export-Date: 2010-05-09 08:28+0000\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -87,7 +87,7 @@ msgid "The GNOME Project"
 msgstr "GNOME projekts"
 
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
 msgid "Disks"
 msgstr "Diski"
 
@@ -1988,7 +1988,7 @@ msgstr "Visi esošie dati tiks zaudēti"
 msgid "_Restore"
 msgstr "_Atjaunot"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:218
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
 msgid "Select a Keyfile"
 msgstr "Izvēlieties atslēgdatni"
 
@@ -2260,11 +2260,6 @@ msgid "Confirm Repair"
 msgstr "Apstiprināt labošanu"
 
 #: src/disks/gduwindow.c:3071
-#| msgid ""
-#| "A filesystem repair is not always possible and can cause data loss. "
-#| "Consider backing it up first in order to use forensic recovery tools that "
-#| "retrieve lost files. Depending on the amount of data this operation takes "
-#| "longer time."
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2272,8 +2267,8 @@ msgid ""
 "contains a lot of data."
 msgstr ""
 "Datņu sistēmas salabošana ne vienmēr ir iespējama un var beigties ar datu "
-"zaudēšanu. Darbība var aizņemt daudz laika, it īpaši, ja nodalījums satur"
-" daudz datu."
+"zaudēšanu. Darbība var aizņemt daudz laika, it īpaši, ja nodalījums satur "
+"daudz datu."
 
 #: src/disks/gduwindow.c:3099
 msgid "Error while checking filesystem"
@@ -2990,7 +2985,6 @@ msgid "Mount selected partition"
 msgstr "Montēt izvēlēto nodalījumu"
 
 #: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Montēt"
@@ -3000,7 +2994,6 @@ msgid "Unmount selected partition"
 msgstr "Atmontēt izvēlēto nodalījumu"
 
 #: src/disks/ui/disks.ui:707
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Atmontēt"
@@ -3010,8 +3003,6 @@ msgid "Activate selected swap partition"
 msgstr "Aktivizēt izvēlēto maiņvietas nodalījumu"
 
 #: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Aktivizēt maiņvietu"
@@ -3021,7 +3012,6 @@ msgid "Deactivate selected swap partition"
 msgstr "Deaktivizēt izvēlēto maiņvietas nodalījumu"
 
 #: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Deaktivizēt maiņvietu"
@@ -3031,7 +3021,6 @@ msgid "Unlock selected encrypted partition"
 msgstr "Atbloķēt izvēlēto šifrēto nodalījumu"
 
 #: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Atbloķēt"
@@ -3041,8 +3030,6 @@ msgid "Lock selected encrypted partition"
 msgstr "Bloķēt izvēlēto šifrēto nodalījumu"
 
 #: src/disks/ui/disks.ui:763
-#| msgctxt "volume-content-crypto"
-#| msgid "Locked"
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Bloķēt"
@@ -3052,7 +3039,6 @@ msgid "Create partition in unallocated space"
 msgstr "Izveidot nodalījumu neizmantotajā apgabalā"
 
 #: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Izveidot nodalījumu"
@@ -3062,7 +3048,6 @@ msgid "Delete selected partition"
 msgstr "Dzēst izvēlēto nodalījumu"
 
 #: src/disks/ui/disks.ui:791
-#| msgid "Delete selected partition"
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Dzēst nodalījumu"
@@ -3553,51 +3538,57 @@ msgid "Help"
 msgstr "Palīdzība"
 
 #: src/disks/ui/shortcuts.ui:38
+#| msgid "_Keyboard Shortcuts"
+msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Tastatūras īsinājumtaustiņi"
+
+#: src/disks/ui/shortcuts.ui:45
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Iziet"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:54
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Dzinis"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:58
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Atvērt dziņu izvēlni"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formatēt dzini"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Atjaunot attēlu no diska"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART dati"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Dziņa iestatījumi"
 
-#: src/disks/ui/shortcuts.ui:88
+#: src/disks/ui/shortcuts.ui:95
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Nodalījums"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Atvērt sējuma vietu"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formatēt izvēlēto sējumu"
@@ -3718,14 +3709,15 @@ msgstr ""
 "vērtība, ko izmantot šim sējumam."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
-msgid "Keyfiles"
-msgstr "Atslēgdatnes"
+#| msgid "Keyfiles"
+msgid "_Keyfiles"
+msgstr "_Atslēgdatnes"
 
-#: src/disks/ui/unlock-device-dialog.ui:220
+#: src/disks/ui/unlock-device-dialog.ui:221
 msgid "Select a keyfile to unlock this volume"
 msgstr "Izvēlieties atslēgdatni, lai atslēgtu šo sējumu"
 
-#: src/disks/ui/unlock-device-dialog.ui:259
+#: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
 msgstr "_Atbloķēt"
 
@@ -3912,15 +3904,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ietekmētās ierīces"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1399
 msgid "Error unmounting filesystem"
 msgstr "Kļūda, atmontējot datņu sistēmu"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Kļūda, bloķējot ierīci"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Kļūda, izslēdzot automātisko attīrīšanu cikla ierīcei"
 

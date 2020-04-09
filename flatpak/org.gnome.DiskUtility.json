@@ -220,6 +220,7 @@
         {
             "name" : "polkit",
             "config-opts" : [
+            	"--disable-polkitd",
                 "--enable-libelogind=no",
                 "--enable-libsystemd-login=no",
                 "--disable-introspection",
@@ -227,11 +228,21 @@
                 "--disable-test",
                 "--with-systemdsystemunitdir=no"
             ],
+            "rm-configure" : true,
             "sources" : [
                 {
-                    "type" : "git",
-                    "url" : "https://gitlab.freedesktop.org/polkit/polkit.git",
-                    "branch" : "master"
+                    "type" : "archive",
+                    "url" : "https://www.freedesktop.org/software/polkit/releases/polkit-0.116.tar.gz",
+                    "sha256" : "88170c9e711e8db305a12fdb8234fac5706c61969b94e084d0f117d8ec5d34b1"
+                },
+                {
+                    "type" : "patch",
+                    "path" : "polkit-build-Add-option-to-build-without-polkitd.patch"
+                },
+                {
+                    "type" : "file",
+                    "path" : "polkit-autogen",
+                    "dest-filename" : "autogen.sh"
                 }
             ]
         },
@@ -243,6 +254,23 @@
                     "type" : "archive",
                     "url" : "http://0pointer.de/public/libatasmart-0.19.tar.xz",
                     "sha256" : "61f0ea345f63d28ab2ff0dc352c22271661b66bf09642db3a4049ac9dbdb0f8d"
+                }
+            ]
+        },
+        {
+            "name" : "libcanberra",
+            "buildsystem" : "autotools",
+            "config-opts" : [
+                "--enable-gtk3",
+                "--disable-gtk",
+                "--disable-oss",
+                "--with-systemdsystemunitdir=no"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz",
+                    "sha256" : "c2b671e67e0c288a69fc33dc1b6f1b534d07882c2aceed37004bf48c601afa72"
                 }
             ]
         },

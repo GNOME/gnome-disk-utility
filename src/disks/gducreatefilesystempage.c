@@ -173,7 +173,7 @@ on_fs_type_changed (GtkToggleButton *object, gpointer user_data)
 }
 
 GduCreateFilesystemPage *
-gdu_create_filesystem_page_new (UDisksClient *client, gboolean show_custom, UDisksDrive *drive)
+gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
 {
   GduCreateFilesystemPage *page;
   GduCreateFilesystemPagePrivate *priv;
@@ -188,9 +188,6 @@ gdu_create_filesystem_page_new (UDisksClient *client, gboolean show_custom, UDis
   g_signal_connect (priv->other_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
 
   g_object_bind_property (priv->internal_radiobutton, "active", priv->internal_encrypt_checkbutton, "sensitive", G_BINDING_SYNC_CREATE);
-
-  if (!show_custom)
-    gtk_widget_hide (GTK_WIDGET (priv->other_radiobutton));
 
   /* Default to FAT or NTFS for removable drives... */
   if (drive != NULL && udisks_drive_get_removable (drive))

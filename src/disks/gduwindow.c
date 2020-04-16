@@ -3266,7 +3266,7 @@ on_volume_menu_item_format_volume (GSimpleAction *action,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_create_format_show (gdu_window_get_client (window), GTK_WINDOW (window), object, TRUE, FALSE, 0, 0, NULL, NULL);
+  gdu_create_format_show (gdu_window_get_client (window), GTK_WINDOW (window), object, FALSE, 0, 0, NULL, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3717,7 +3717,6 @@ on_partition_create_tool_button_clicked (GtkToolButton *button, gpointer user_da
   gdu_create_format_show (window->client,
                           GTK_WINDOW (window),
                           object,
-                          TRUE,
                           TRUE,
                           gdu_volume_grid_get_selected_offset (GDU_VOLUME_GRID (window->volume_grid)),
                           gdu_volume_grid_get_selected_size (GDU_VOLUME_GRID (window->volume_grid)),

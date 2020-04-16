@@ -258,14 +258,14 @@ gdu_application_command_line (GApplication            *_app,
           gdu_window_select_object (app->window, object_to_select);
           if (opt_format)
             gdu_create_format_show (app->client, GTK_WINDOW (app->window), object_to_select,
-                                    FALSE, FALSE, 0, 0, NULL, NULL);
+                                    FALSE, 0, 0, NULL, NULL);
         }
     }
   else if (opt_format)
     {
       g_application_hold (_app);
       gdu_create_format_show (app->client, NULL, object_to_select,
-                              FALSE, FALSE, 0, 0, (GCallback) g_application_release, _app);
+                              FALSE, 0, 0, (GCallback) g_application_release, _app);
     }
 
   if (opt_restore_disk_image != NULL)

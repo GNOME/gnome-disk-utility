@@ -17,7 +17,6 @@ G_BEGIN_DECLS
 void gdu_create_format_show (UDisksClient *client,
                              GtkWindow    *parent_window,
                              UDisksObject *object,
-                             gboolean      show_custom,
                              gboolean      add_partition,
                              guint64       add_partition_offset,
                              guint64       add_partition_maxsize,

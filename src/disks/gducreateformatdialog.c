@@ -368,6 +368,22 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
         }
 
       size = gdu_create_partition_page_get_size (data->partition_page);
+      /* Normal alignments of a few MB are expected to happen and normally it works well
+       * to pass a slightly larger size.
+       * Yet sometimes there are huge amounts of alignment enforced by libblockdev/libparted
+       * and it's unclear how many MB should be left when creating a partition on a 1 TB
+       * drive. The maximal size we present to the user is based on the size of unallocated
+       * space which may be too large.
+       * To address this issue, rely on the maximal size being found automatically by passing
+       * the special argument 0.
+       * However, this won't cover cases where the user substracts a few MB and now wonders
+       * why the partition can't be created. Heuristics for these corner cases could be
+       * implemented or libblockdev improved to handle these cases better but it would be
+       * easier and more accurate to create a partition with a maximal size first and then
+       * shrink it to the user's desired size if needed.
+       */
+      if (size == data->add_partition_maxsize)
+        size = 0;
       udisks_partition_table_call_create_partition (data->table,
                                                     data->add_partition_offset,
                                                     size,

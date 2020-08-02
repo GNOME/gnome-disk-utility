@@ -1,4 +1,5 @@
-image: fedora:rawhide
+include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
+
 stages:
   - build
   - test
@@ -12,37 +13,17 @@ variables:
 
 flatpak:
   image: registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master
-  stage: test
-
-  tags:
-    - flatpak
-
   variables:
     BUNDLE: "org.gnome.DiskUtility.flatpak"
     MANIFEST_PATH: "flatpak/org.gnome.DiskUtility.json"
     FLATPAK_MODULE: "gnome-disk-utility"
-    DBUS_ID: "org.gnome.DiskUtility"
+    APP_ID: "org.gnome.DiskUtility"
     RUNTIME_REPO: "https://sdk.gnome.org/gnome-nightly.flatpakrepo"
+  extends: .flatpak
 
-  script:
-    - flatpak-builder --user --disable-rofiles-fuse --stop-at=${FLATPAK_MODULE} app ${MANIFEST_PATH}
-    - flatpak build app meson --prefix=/app ${OPTIONS} _build
-    - flatpak build app ninja -C _build install
-
-    - flatpak-builder --user --disable-rofiles-fuse --finish-only --repo=repo app ${MANIFEST_PATH}
-    - flatpak build-bundle repo ${BUNDLE} --runtime-repo=${RUNTIME_REPO} ${DBUS_ID}
-
-  artifacts:
-    paths:
-      - ${BUNDLE}
-      - _build/meson-logs/meson-log.txt
-    expire_in: 6 hours
-
-  cache:
-    paths:
-      - .flatpak-builder/cache
 
 build:
+  image: fedora:rawhide
   stage: build
   before_script:
     - dnf update -y --nogpgcheck && dnf install -y --nogpgcheck $DEPENDENCIES

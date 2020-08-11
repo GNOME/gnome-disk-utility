@@ -90,3 +90,18 @@ Build a Flatpak app with your local source code changes:
 
 If you want to test things in your own development branches of UDisks or libblockdev,
 you need to change the Flatpak manifest and point it to your repository/branch.
+Here an example for the temporary change you need to do for libblockdev:
+diff --git a/flatpak/org.gnome.DiskUtility.json b/flatpak/org.gnome.DiskUtility.json
+index 2f89e2e3..16a20deb 100644
+--- a/flatpak/org.gnome.DiskUtility.json
++++ b/flatpak/org.gnome.DiskUtility.json
+@@ -189,7 +189,8 @@
+             "sources" : [
+                 {
+                     "type" : "git",
+-                    "url" : "https://github.com/storaged-project/libblockdev.git"
++                    "url" : "https://github.com/MYFORK/libblockdev.git",
++                    "branch" : "MYBRANCH"
+                 }
+             ]
+         },

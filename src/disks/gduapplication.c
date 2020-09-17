@@ -406,6 +406,7 @@ gdu_application_startup (GApplication *_app)
   GduApplication *app = GDU_APPLICATION (_app);
   const gchar **it;
   const gchar *action_accels[] = {
+    "win.go-back",               "Escape", NULL,
     "win.open-drive-menu",       "F10", NULL,
     "win.open-volume-menu",      "<Shift>F10", NULL,
 

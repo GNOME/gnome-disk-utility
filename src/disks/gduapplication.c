@@ -429,6 +429,8 @@ gdu_application_startup (GApplication *_app)
   if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
+  hdy_init ();
+
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 
   for (it = action_accels; it[0] != NULL; it += g_strv_length ((gchar **)it) + 1)

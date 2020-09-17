@@ -11,6 +11,7 @@
 #define __GDU_WINDOW_H__
 
 #include <gtk/gtk.h>
+#include "handy.h"
 #include "gdutypes.h"
 
 G_BEGIN_DECLS

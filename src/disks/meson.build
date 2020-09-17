@@ -87,6 +87,7 @@ deps = [
   gmodule_dep,
   libcanberra_dep,
   libgdu_dep,
+  libhandy_dep,
   liblzma_dep,
   libsecret_dep,
   m_dep,

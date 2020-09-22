@@ -10,16 +10,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk_utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2019-12-27 13:10+0000\n"
-"PO-Revision-Date: 2020-01-07 00:59+0200\n"
-"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"POT-Creation-Date: 2020-06-25 07:34+0000\n"
+"PO-Revision-Date: 2020-09-22 12:08+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek, Modern (1453-) <gnome-el-list@gnome.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-DamnedLies-Scope: partial\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Project-Style: gnome\n"
@@ -100,7 +100,7 @@ msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"δίσκος;drive;όγκος;σκληρός δίσκος;hdd;δίσκος;cdrom;dvd;κατάτμηση;iso;εικόνα;"
+"δίσκος;drive;τόμος;σκληρός δίσκος;hdd;δίσκος;cdrom;dvd;κατάτμηση;iso;εικόνα;"
 "αντίγραφο ασφαλείας;επαναφορά;έλεγχος επιδόσεων;raid;luks;κρυπτογράφηση;S.M."
 "A.R.T.;smart;"
 
@@ -117,7 +117,7 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Επιλέξτε εικόνα(ες) δίσκου για προσάρτηση"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:454
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
 msgid "_Cancel"
 msgstr "Α_κύρωση"
@@ -826,7 +826,7 @@ msgstr "Αριθμός σφαλμάτων κατά την ανάγνωση απ�
 #.
 #: src/disks/gduatasmartdialog.c:585
 msgid "Total LBAs Written"
-msgstr ""
+msgstr "Συνολικά εγγεγραμμένα LBA"
 
 #: src/disks/gduatasmartdialog.c:586
 msgid "The amount of data written during the lifetime of the disk"
@@ -838,7 +838,7 @@ msgstr ""
 #.
 #: src/disks/gduatasmartdialog.c:593
 msgid "Total LBAs Read"
-msgstr ""
+msgstr "Συνολικά αναγνωσμένα LBA"
 
 #: src/disks/gduatasmartdialog.c:594
 msgid "The amount of data read during the lifetime of the disk"
@@ -1462,27 +1462,27 @@ msgstr "Σφάλμα διαμόρφωσης τόμου"
 msgid "Error creating partition"
 msgstr "Σφάλμα δημιουργίας κατάτμησης"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:434
 msgid "Create Partition"
 msgstr "Δημιουργία κατάτμησης"
 
-#: src/disks/gducreateformatdialog.c:444
+#: src/disks/gducreateformatdialog.c:443
 msgid "Format Volume"
 msgstr "Διαμόρφωση τόμου"
 
-#: src/disks/gducreateformatdialog.c:447
+#: src/disks/gducreateformatdialog.c:446
 msgid "Custom Format"
 msgstr "Προσαρμοσμένη διαμόρφωση"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:449
 msgid "Set Password"
 msgstr "Ορισμός συνθηματικού"
 
-#: src/disks/gducreateformatdialog.c:453
+#: src/disks/gducreateformatdialog.c:452
 msgid "Confirm Details"
 msgstr "Επιβεβαίωση λεπτομερειών"
 
-#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:455 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Διαμόρφωση"
 
@@ -2019,10 +2019,8 @@ msgid "_Restore"
 msgstr "Ε_παναφορά"
 
 #: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
-#, fuzzy
-#| msgid "Select a device"
 msgid "Select a Keyfile"
-msgstr "Επιλέξτε μια συσκευή"
+msgstr "Επιλέξτε ένα αρχείο κλειδιού"
 
 #: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
 msgid "Error unlocking device"
@@ -2234,16 +2232,12 @@ msgstr "Ανενεργά"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2629
-#| msgctxt "volume-content-luks"
-#| msgid "Unlocked"
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Ξεκλειδωμένα"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
 #: src/disks/gduwindow.c:2635
-#| msgctxt "volume-content-luks"
-#| msgid "Locked"
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Κλειδωμένα"
@@ -2340,6 +2334,8 @@ msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
+"Ο έλεγχος μπορεί να διαρκέσει πολύ, ειδικά εάν η κατάτμηση περιέχει πολλά "
+"δεδομένα."
 
 #: src/disks/gduwindow.c:3426
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -2379,39 +2375,39 @@ msgstr "_Απενεργοποίηση"
 msgid "Error mounting filesystem"
 msgstr "Σφάλμα κατά την προσάρτηση του συστήματος αρχείων"
 
-#: src/disks/gduwindow.c:3743
+#: src/disks/gduwindow.c:3742
 msgid "Error deleting partition"
 msgstr "Σφάλμα κατά την διαγραφή κατάτμησης"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3779
 msgid "Are you sure you want to delete the partition?"
 msgstr "Είστε σίγουροι ότι θέλετε την διαγραφή της κατάτμησης;"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3780
 msgid "All data on the partition will be lost"
 msgstr "Όλα τα δεδομένα στη κατάτμηση θα χαθούν"
 
-#: src/disks/gduwindow.c:3782
+#: src/disks/gduwindow.c:3781
 msgid "_Delete"
 msgstr "_Διαγραφή"
 
-#: src/disks/gduwindow.c:3813
+#: src/disks/gduwindow.c:3812
 msgid "Error ejecting media"
 msgstr "Σφάλμα αποβολής μέσου"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:3895
 msgid "Error starting swap"
 msgstr "Σφάλμα εκκίνησης του swap"
 
-#: src/disks/gduwindow.c:3933
+#: src/disks/gduwindow.c:3932
 msgid "Error stopping swap"
 msgstr "Σφάλμα διακοπής του swap"
 
-#: src/disks/gduwindow.c:3975
+#: src/disks/gduwindow.c:3974
 msgid "Error setting autoclear flag"
 msgstr "Σφάλμα ρύθμισης σημαίας αυτοκαθαρισμού"
 
-#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4027 src/disks/gduwindow.c:4091
 msgid "Error canceling job"
 msgstr "Σφάλμα ακύρωσης της εργασίας"
 
@@ -3046,7 +3042,6 @@ msgid "Mount selected partition"
 msgstr "Προσάρτηση επιλεγμένης κατάτμησης"
 
 #: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Προσάρτηση"
@@ -3056,7 +3051,6 @@ msgid "Unmount selected partition"
 msgstr "Αποπροσάρτηση επιλεγμένης κατάτμησης"
 
 #: src/disks/ui/disks.ui:707
-#| msgid "_Unmount"
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Αποπροσάρτηση"
@@ -3066,8 +3060,6 @@ msgid "Activate selected swap partition"
 msgstr "Ενεργοποίηση του επιλεγμένου swap χώρου"
 
 #: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Ενεργοποίηση μνήμης swap"
@@ -3077,7 +3069,6 @@ msgid "Deactivate selected swap partition"
 msgstr "Απενεργοποίηση του επιλεγμένου swap χώρου"
 
 #: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Απενεργοποίηση μνήμης swap"
@@ -3087,7 +3078,6 @@ msgid "Unlock selected encrypted partition"
 msgstr "Ξεκλείδωμα της επιλεγμένης κρυπτογραφημένης κατάτμησης"
 
 #: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Ξεκλείδωμα"
@@ -3097,7 +3087,6 @@ msgid "Lock selected encrypted partition"
 msgstr "Κλείδωμα της επιλεγμένης κρυπτογραφημένης κατάτμησης"
 
 #: src/disks/ui/disks.ui:763
-#| msgid "_Lock"
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Κλείδωμα"
@@ -3107,7 +3096,6 @@ msgid "Create partition in unallocated space"
 msgstr "Δημιουργία κατάτμησης στον μη εκχωρημένο χώρο"
 
 #: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Δημιουργία κατάτμησης"
@@ -3117,7 +3105,6 @@ msgid "Delete selected partition"
 msgstr "Διαγραφή επιλεγμένης κατάτμησης"
 
 #: src/disks/ui/disks.ui:791
-#| msgid "Deleting Partition"
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Διαγραφή κατάτμησης"
@@ -3173,10 +3160,8 @@ msgid "S_tandby Now"
 msgstr "Α_ναμονή τώρα"
 
 #: src/disks/ui/drive-menu.ui:40
-#, fuzzy
-#| msgid "Wake-Up from Standby"
 msgid "_Wake-Up from Standby"
-msgstr "Ξεκίνημα από αναμονή"
+msgstr "_Αφύπνιση από την κατάσταση αναμονής"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:11
 msgid "Encryption Options"
@@ -3459,18 +3444,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "Το παλιό _εκκινήσιμο BIOS"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#, fuzzy
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Το παλιό εκκινήσιμο BIOS. Αυτό ισοδυναμεί με τη σημαία για το <i>εκκινήσιμο</"
-"i> Master Boot Record. Χρησιμοποιείται κανονικά μόνο για κατατμήσεις GPT σε "
-"συστήματα MBR"
+"Αυτό ισοδυναμεί με τη σημαία για το <i>εκκινήσιμο</i> Master Boot Record. "
+"Χρησιμοποιείται κανονικά μόνο για κατατμήσεις GPT σε συστήματα MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3485,6 +3464,8 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
+"Υποδεικνύει ότι το υλικολογισμικό EFI πρέπει να αγνοήσει το περιεχόμενο της "
+"κατάτμησης και να μην προσπαθήσει να διαβάσει από αυτό"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3611,7 +3592,6 @@ msgid "Create a new empty disk image"
 msgstr "Δημιουργία νέας άδειας εικόνας δίσκου"
 
 #: src/disks/ui/shortcuts.ui:24
-#| msgid "Error attaching disk image"
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
 msgstr "Επισύναψη υπάρχουσας εικόνας δίσκου"
@@ -3623,50 +3603,55 @@ msgstr "Βοήθεια"
 
 #: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
+msgid "Keyboard shortcuts"
+msgstr "Συντομεύσεις πληκτρολογίου"
+
+#: src/disks/ui/shortcuts.ui:45
+msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Έξοδος"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:54
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Δίσκος"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:58
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Άνοιγμα του μενού του δίσκου"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Διαμόρφωση δίσκου"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Επαναφορά εικόνας στον δίσκο"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Δεδομένα SMART"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Ρυθμίσεις δίσκου"
 
-#: src/disks/ui/shortcuts.ui:88
+#: src/disks/ui/shortcuts.ui:95
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Κατάτμηση"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Άνοιγμα του μενού του τόμου"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Διαμόρφωση επιλεγμένου τόμου"
@@ -3745,6 +3730,8 @@ msgstr "Εισάγετε συνθηματικό για ξεκλείδωμα"
 #: src/disks/ui/unlock-device-dialog.ui:41
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
+"Αυτός ο τόμος μπορεί να είναι ένας τόμος VeraCrypt καθώς περιέχει τυχαία "
+"δεδομένα."
 
 #: src/disks/ui/unlock-device-dialog.ui:79
 #: src/disks/ui/unlock-device-dialog.ui:186
@@ -3785,16 +3772,16 @@ msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr ""
+"Εάν οριστεί, η αριθμητική τιμή VIMCrypt PIM (Personal Iterations Multiplier) "
+"θα χρησιμοποιηθεί για αυτόν τον τόμο."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
 msgid "_Keyfiles"
-msgstr ""
+msgstr "_Αρχεία κλειδιά"
 
 #: src/disks/ui/unlock-device-dialog.ui:221
-#, fuzzy
-#| msgid "View files on the volume"
 msgid "Select a keyfile to unlock this volume"
-msgstr "Προβολή αρχείων στον τόμο"
+msgstr "Επιλέξτε ένα αρχείο κλειδιού για να ξεκλειδώσετε αυτό τον τόμο"
 
 #: src/disks/ui/unlock-device-dialog.ui:260
 msgid "_Unlock"
@@ -3976,15 +3963,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Επηρεαζόμενες συσκευές"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1399
 msgid "Error unmounting filesystem"
 msgstr "Σφάλμα κατά την αποπροσάρτηση του συστήματος αρχείων"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Σφάλμα κλειδώματος συσκευής"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Σφάλμα κατά την απενεργοποίηση του αυτοκαθαρισμού της συσκευής βρόχου"
 

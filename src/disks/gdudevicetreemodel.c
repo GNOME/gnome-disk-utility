@@ -1201,7 +1201,7 @@ should_include_block (UDisksObject *object)
 
   /* RAM devices are useless */
   device = udisks_block_get_device (block);
-  if (g_str_has_prefix (device, "/dev/ram"))
+  if (g_str_has_prefix (device, "/dev/ram") || g_str_has_prefix (device, "/dev/zram"))
     goto out;
 
   /* Don't show loop devices of size zero - they're unused.

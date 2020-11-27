@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2020-02-16 14:20+0000\n"
-"PO-Revision-Date: 2020-03-14 17:30+0200\n"
+"POT-Creation-Date: 2020-09-20 21:45+0000\n"
+"PO-Revision-Date: 2020-11-27 17:28+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
 "=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 20.03.70\n"
+"X-Generator: Lokalize 20.11.70\n"
 "X-Project-Style: gnome\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -70,16 +70,12 @@ msgstr ""
 "налаштовувати диски і пристрої."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
-#| "physical disks, and image USB sticks. Tasks are executed in the "
-#| "background, even after the application has been closed by the user."
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
 msgstr ""
-"За допомогою «Дисків» ви зможете переглядати дані SMART, керувати пристроями, "
-"випробовувати фізичні диски і записувати образи на флешки USB."
+"За допомогою «Дисків» ви зможете переглядати дані SMART, керувати "
+"пристроями, випробовувати фізичні диски і записувати образи на флешки USB."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "An easy way to manage your disks"
@@ -89,8 +85,8 @@ msgstr "Простий спосіб організування дисків"
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1090
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Диски"
 
@@ -120,8 +116,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Виберіть образи дисків для монтування"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:800
 msgid "_Cancel"
 msgstr "_Скасувати"
 
@@ -167,8 +163,6 @@ msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Помилка під'єднання образу диска: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:92
-#| msgctxt "mdraid"
-#| msgid "Not running"
 msgid "Stop running jobs?"
 msgstr "Припинити виконання завдань?"
 
@@ -1098,7 +1092,7 @@ msgid "Updates"
 msgstr "Оновлення"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:452
 msgid "Assessment"
 msgstr "Оцінка"
 
@@ -1178,7 +1172,6 @@ msgstr "%.2f млс"
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdubenchmarkdialog.c:1180
-#| msgid "Error benchmarking drive"
 msgctxt "create-inhibit-message"
 msgid "Benchmarking device"
 msgstr "Вимірювання швидкодії пристрою"
@@ -1257,12 +1250,10 @@ msgid "Error reading %lld bytes from offset %lld"
 msgstr "Помилка читання %lld байтів з відступу %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#| msgid "Passphrases do not match"
 msgid "The passphrases do not match"
 msgstr "Паролі не збігаються"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#| msgid "To change the passphrase, enter both the current and new passphrase"
 msgid "The passphrase matches the existing passphrase"
 msgstr "Пароль збігається із наявним паролем"
 
@@ -1301,8 +1292,6 @@ msgstr "Міцність паролю"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s — %s"
 
@@ -1310,7 +1299,6 @@ msgstr "%s — %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1444,7 +1432,6 @@ msgid "Cre_ate"
 msgstr "С_творити"
 
 #: src/disks/gducreateformatdialog.c:187
-#| msgid "_Format"
 msgid "Form_at"
 msgstr "_Форматувати"
 
@@ -1460,29 +1447,27 @@ msgstr "Помилка при форматуванні тому"
 msgid "Error creating partition"
 msgstr "Помилка створення розділу"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Create Partition"
 msgstr "Створити розділ"
 
-#: src/disks/gducreateformatdialog.c:444
+#: src/disks/gducreateformatdialog.c:459
 msgid "Format Volume"
 msgstr "Форматувати том"
 
-#: src/disks/gducreateformatdialog.c:447
-#| msgid "Custom"
+#: src/disks/gducreateformatdialog.c:462
 msgid "Custom Format"
 msgstr "Інший формат"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:465
 msgid "Set Password"
 msgstr "Встановіть пароль"
 
-#: src/disks/gducreateformatdialog.c:453
-#| msgid "Details"
+#: src/disks/gducreateformatdialog.c:468
 msgid "Confirm Details"
 msgstr "Підтвердити подробиці"
 
-#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "Форм_атувати"
 
@@ -1497,7 +1482,8 @@ msgstr "Розділ вивантаження Linux"
 #: src/disks/gducreateotherpage.c:119
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
-"Btrfs — файлова система із копіюванням при записі у Linux, для знімків системи"
+"Btrfs — файлова система із копіюванням при записі у Linux, для знімків "
+"системи"
 
 #: src/disks/gducreateotherpage.c:121
 msgid "F2FS — Flash Storage Linux Filesystem"
@@ -1506,24 +1492,21 @@ msgstr "F2FS — файлова система для флешок у Linux"
 #: src/disks/gducreateotherpage.c:123
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
-"exFAT — файлова система для флешок у Windows, використовується для карток SDXC"
+"exFAT — файлова система для флешок у Windows, використовується для карток "
+"SDXC"
 
 #: src/disks/gducreateotherpage.c:125
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgstr ""
-"UDF — Universal Disk Format (універсальний формат дисків), призначено для"
-" змінних дисків на багатьох системах"
+"UDF — Universal Disk Format (універсальний формат дисків), призначено для "
+"змінних дисків на багатьох системах"
 
 #: src/disks/gducreateotherpage.c:127
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
 msgstr "Немає файлової системи"
 
 #: src/disks/gducreateotherpage.c:203
 #, c-format
-#| msgid "%d disk is missing"
-#| msgid_plural "%d disks are missing"
 msgid "The utility %s is missing."
 msgstr "Не вистачає програми %s."
 
@@ -1537,7 +1520,6 @@ msgid "This is the last primary partition that can be created."
 msgstr "Це останній первинний розділ, який можна створити."
 
 #: src/disks/gducreatepasswordpage.c:124
-#| msgid "Passphrases do not match"
 msgid "The passwords do not match"
 msgstr "Паролі не збігаються"
 
@@ -1865,7 +1847,6 @@ msgid "Unnamed (%s).img"
 msgstr "Без назви (%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
-#| msgid "Error writing to image"
 msgid "Error writing file"
 msgstr "Помилка при записі до файлу"
 
@@ -1902,34 +1883,28 @@ msgid "Strong"
 msgstr "Надійний"
 
 #: src/disks/gduresizedialog.c:188
-#| msgid "Chunk _Size"
 msgid "Current Size"
 msgstr "Поточний розмір"
 
 #: src/disks/gduresizedialog.c:199
-#| msgid "Minimum Size"
 msgid "Minimal Size"
 msgstr "Мінімальний розмір"
 
 #: src/disks/gduresizedialog.c:249
-#| msgid "_Restore"
 msgid "_Resize"
 msgstr "З_мінити розмір"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
 msgstr "Помилка під час зміни розмірів файлової системи"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:569
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
 msgstr "Помилка під час зміни розмірів розділу"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#| msgid "Error checking filesystem on volume"
 msgid "Error repairing filesystem after resize"
 msgstr "Помилка під час відновлення файлової системи після зміни розміру"
 
@@ -1938,17 +1913,14 @@ msgid "Resizing not ready"
 msgstr "Немає готовності до зміни розміру"
 
 #: src/disks/gduresizedialog.c:466
-#| msgid "Change the label of the filesystem"
 msgid "Waited too long for the filesystem"
 msgstr "Надто довге очікування на готовність файлової системи"
 
 #: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
 msgstr "Помилка під час виправлення файлової системи"
 
 #: src/disks/gduresizedialog.c:748
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "Помилка під час монтування файлової системи"
 
@@ -1957,11 +1929,10 @@ msgid "Fit to size"
 msgstr "Підібрати за розміром"
 
 #: src/disks/gduresizedialog.c:825
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
-"Помилка під час монтування файлової системи для обчислення мінімального"
-" розміру"
+"Помилка під час монтування файлової системи для обчислення мінімального "
+"розміру"
 
 #: src/disks/gdurestorediskimagedialog.c:277
 msgid "File does not appear to be XZ compressed"
@@ -2025,12 +1996,10 @@ msgid "_Restore"
 msgstr "Від_новити"
 
 #: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
-#| msgid "Select a device"
 msgid "Select a Keyfile"
 msgstr "Виберіть файл ключа"
 
 #: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
-#| msgid "Error locking device"
 msgid "Error unlocking device"
 msgstr "Помилка під час спроби розблокувати пристрій"
 
@@ -2051,7 +2020,7 @@ msgstr "Встановити параметри розблокування"
 msgid "Volumes Grid"
 msgstr "Сітка томів"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
 msgid "No Media"
 msgstr "Немає носія"
 
@@ -2093,30 +2062,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Вільне місце"
 
-#: src/disks/gduwindow.c:649
+#: src/disks/gduwindow.c:624
 msgid "Error deleting loop device"
 msgstr "Помилка вилучення циклічного пристрою"
 
-#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
+#: src/disks/gduwindow.c:724 src/disks/gduwindow.c:767
 msgid "Error attaching disk image"
 msgstr "Помилка під'єднання образу диска"
 
-#: src/disks/gduwindow.c:822
+#: src/disks/gduwindow.c:797
 msgid "Select Disk Image to Attach"
 msgstr "Вибрати образ диска для під'єднання"
 
-#: src/disks/gduwindow.c:826
+#: src/disks/gduwindow.c:801
 msgid "_Attach"
 msgstr "_Під'єднати"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:833
+#: src/disks/gduwindow.c:808
 msgid "Set up _read-only loop device"
 msgstr "Налаштувати лише для _читання циклічний пристрій"
 
-#: src/disks/gduwindow.c:834
+#: src/disks/gduwindow.c:809
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2125,7 +2094,7 @@ msgstr ""
 "не бажаєте, щоб файл змінювався."
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1697
+#: src/disks/gduwindow.c:1674
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (тільки для читання)"
@@ -2134,7 +2103,7 @@ msgstr "%s (тільки для читання)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1712
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2143,7 +2112,7 @@ msgstr "Залишилось %s (%s/сек)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1743
+#: src/disks/gduwindow.c:1720
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2154,7 +2123,7 @@ msgstr "Залишилось %s "
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1758
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s з %s — %s"
@@ -2163,17 +2132,17 @@ msgstr "%s з %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1883
+#: src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
+#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
 msgid "Block device is empty"
 msgstr "Блоковий пристрій порожній"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1986
+#: src/disks/gduwindow.c:1963
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2182,11 +2151,11 @@ msgstr "Невідомо (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2145
+#: src/disks/gduwindow.c:2122
 msgid "Connected to another seat"
 msgstr "Під'єднано до іншого місця"
 
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2267
 msgid "Loop device is empty"
 msgstr "Циклічний пристрій порожній"
 
@@ -2196,65 +2165,61 @@ msgstr "Циклічний пристрій порожній"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2484
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s вільно (%.1f%% заповнено)"
 
-#: src/disks/gduwindow.c:2533
+#: src/disks/gduwindow.c:2514
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Невідомо"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2571
+#: src/disks/gduwindow.c:2552
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Корінь файлової системи"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2579
+#: src/disks/gduwindow.c:2560
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Змонтовано на %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2585
+#: src/disks/gduwindow.c:2566
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Не змонтовано"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2589
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Увімкнуто"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2614
+#: src/disks/gduwindow.c:2595
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Вимкнено"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2629
-#| msgctxt "volume-content-luks"
-#| msgid "Unlocked"
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Розблоковано"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2635
-#| msgctxt "volume-content-luks"
-#| msgid "Locked"
+#: src/disks/gduwindow.c:2616
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Заблоковано"
 
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2630
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Розширений розділ"
@@ -2263,170 +2228,160 @@ msgstr "Розширений розділ"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2669
+#: src/disks/gduwindow.c:2650
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2770
 msgid "Unallocated Space"
 msgstr "Незайнятий простір"
 
-#: src/disks/gduwindow.c:2979
-#| msgid "Error mounting filesystem"
+#: src/disks/gduwindow.c:2971
 msgid "Error while repairing filesystem"
 msgstr "Помилка під час спроби виправити файлову систему"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2998
 msgid "Repair successful"
 msgstr "Успішне виправлення"
 
-#: src/disks/gduwindow.c:3006
-#| msgid "The operation failed"
+#: src/disks/gduwindow.c:2998
 msgid "Repair failed"
 msgstr "Невдала спроба виправлення"
 
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3001
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Файлову систему %s на %s було відновлено."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3007
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Не вдалося виправити файлову систему %s на %s."
 
-#: src/disks/gduwindow.c:3068
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3060
 msgid "Confirm Repair"
 msgstr "Підтвердження виправлення"
 
-#: src/disks/gduwindow.c:3071
+#: src/disks/gduwindow.c:3063
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
 msgstr ""
-"Виправлення файлової системи є не завжди можливим і може призвести до втрати"
-" даних. Перш за все, вам варто створити резервну копію даних для використання"
-" інженерних засобів відновлення даних, які здатні відновити файли."
-" Виправлення може бути тривалою справою, особливо якщо на розділі"
-" зберігається багато даних."
+"Виправлення файлової системи є не завжди можливим і може призвести до втрати "
+"даних. Перш за все, вам варто створити резервну копію даних для використання "
+"інженерних засобів відновлення даних, які здатні відновити файли. "
+"Виправлення може бути тривалою справою, особливо якщо на розділі "
+"зберігається багато даних."
 
-#: src/disks/gduwindow.c:3099
-#| msgid "Error checking filesystem on volume"
+#: src/disks/gduwindow.c:3091
 msgid "Error while checking filesystem"
 msgstr "Помилка під час спроби перевірити файлову систему"
 
-#: src/disks/gduwindow.c:3126
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem intact"
 msgstr "Файлова система лишилася незміненою"
 
-#: src/disks/gduwindow.c:3126
-#| msgid "Filesystem label"
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem damaged"
 msgstr "Файлову систему ушкоджено."
 
-#: src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3121
 #, c-format
-#| msgid "Filesystem tools not installed"
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Файлову систему %s на %s не ушкоджено."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3127
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Файлова система %s на %s потребує виправлення."
 
-#: src/disks/gduwindow.c:3186
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3178
 msgid "Confirm Check"
 msgstr "Підтвердження перевірки"
 
-#: src/disks/gduwindow.c:3189
+#: src/disks/gduwindow.c:3181
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
-"Перевірка може бути тривалою, особливо якщо на розділі зберігається багато"
-" даних."
+"Перевірка може бути тривалою, особливо якщо на розділі зберігається багато "
+"даних."
 
-#: src/disks/gduwindow.c:3426
+#: src/disks/gduwindow.c:3433
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Виникла помилка, коли спробували встановити пристрій у режим чергування"
 
-#: src/disks/gduwindow.c:3473
+#: src/disks/gduwindow.c:3480
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Виникла помилка, коли спробували розбудити пристрій з режиму чергування"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3526
 msgid "Error powering off drive"
 msgstr "Помилка вимкнення пристрою"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3578
 msgid "Are you sure you want to power off the drives?"
 msgstr "Вимкнути пристрої?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3573
+#: src/disks/gduwindow.c:3580
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Ця операція підготує систему до пристроїв, які буде вимкнено та вилучено."
 
-#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3584 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "Ви_мкнути"
 
-#: src/disks/gduwindow.c:3657
+#: src/disks/gduwindow.c:3664
 msgid "Error mounting filesystem"
 msgstr "Помилка монтування файлової системи"
 
-#: src/disks/gduwindow.c:3743
+#: src/disks/gduwindow.c:3749
 msgid "Error deleting partition"
 msgstr "При знищенні розділу трапилася помилка"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3786
 msgid "Are you sure you want to delete the partition?"
 msgstr "Вилучити пристрій?"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3787
 msgid "All data on the partition will be lost"
 msgstr "Усі дані на розділі буде втрачено"
 
-#: src/disks/gduwindow.c:3782
+#: src/disks/gduwindow.c:3788
 msgid "_Delete"
 msgstr "В_илучити"
 
-#: src/disks/gduwindow.c:3813
+#: src/disks/gduwindow.c:3819
 msgid "Error ejecting media"
 msgstr "Помилка витягування носія"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:3902
 msgid "Error starting swap"
 msgstr "Помилка запускання свопінгу"
 
-#: src/disks/gduwindow.c:3933
+#: src/disks/gduwindow.c:3939
 msgid "Error stopping swap"
 msgstr "Помилка зупинення свопінгу"
 
-#: src/disks/gduwindow.c:3975
+#: src/disks/gduwindow.c:3981
 msgid "Error setting autoclear flag"
 msgstr "Помилка налаштування прапорців автоматичного очищення"
 
-#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4034 src/disks/gduwindow.c:4098
 msgid "Error canceling job"
 msgstr "Помилка скасування завдання"
 
@@ -2448,9 +2403,6 @@ msgid "Need more input"
 msgstr "Потрібно більше вхідних даних"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2472,12 +2424,10 @@ msgstr ""
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
 #: src/disks/ui/app-menu.ui:6
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
 msgstr "С_творити образ диска…"
 
 #: src/disks/ui/app-menu.ui:10
-#| msgid "Attach Disk _Image…"
 msgid "_Attach Disk Image… (.iso, .img)"
 msgstr "Під'єднати _образ диска… (.iso, .img)"
 
@@ -2490,7 +2440,6 @@ msgid "_Help"
 msgstr "_Довідка"
 
 #: src/disks/ui/app-menu.ui:24
-#| msgid "_About"
 msgid "_About Disks"
 msgstr "_Про «Диски»"
 
@@ -2670,7 +2619,6 @@ msgid "New _Passphrase"
 msgstr "Новий па_роль"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#| msgid "All data on the volume will be lost"
 msgid "Warning: all data on the volume will be lost"
 msgstr "Попередження: усі дані тому буде втрачено"
 
@@ -2678,12 +2626,11 @@ msgstr "Попередження: усі дані тому буде втраче
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Підтвердьте дані щодо поточного тому, перш ніж продовжувати."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:1059
 msgid "Device"
 msgstr "Пристрій"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#| msgid "_Volumes"
 msgid "Volume"
 msgstr "Гучність"
 
@@ -2692,7 +2639,7 @@ msgid "Used"
 msgstr "Використано"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:378
 msgid "Location"
 msgstr "Адреса"
 
@@ -2726,14 +2673,10 @@ msgid "_Start Creating…"
 msgstr "_Запустити створення…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#| msgid "Volume Name:"
 msgid "Volume _Name"
 msgstr "_Назва тому"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
@@ -2742,7 +2685,6 @@ msgstr ""
 "через символічне посилання у каталозі /dev/disk/by-label."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Приклади: «Файли Тетяни» або «Резервна копія»."
 
@@ -2752,7 +2694,6 @@ msgid "_Erase"
 msgstr "_Стерти"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
 msgstr "Перезаписує наявні дані, але є тривалішим."
 
@@ -2770,7 +2711,6 @@ msgid "For use with _Windows (NTFS)"
 msgstr "Для _користування спільно з Windows (NTFS)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
 msgstr "Для користування в _усіх системах та пристроях (FAT)"
 
@@ -2784,16 +2724,15 @@ msgid ""
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
 msgstr ""
-"Якщо типові параметри не відповідають вашим потребам, виберіть одну із"
-" вказаних нижче файлових систем. Зважайте на технічні відмінності —"
-" попередньо вивчіть бажані для вас варіанти."
+"Якщо типові параметри не відповідають вашим потребам, виберіть одну із "
+"вказаних нижче файлових систем. Зважайте на технічні відмінності — "
+"попередньо вивчіть бажані для вас варіанти."
 
 #: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
 msgid "Partition _Size"
 msgstr "_Розмір розділу"
 
 #: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the partition to create"
 msgstr "Розмір розділу, який слід створити"
 
@@ -2857,18 +2796,14 @@ msgid "Free Space _Following"
 msgstr "Вільного місця _після"
 
 #: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
-#| msgid "The free space following the partition, in megabytes"
 msgid "The free space following the partition"
 msgstr "Вільне місце після розділу"
 
 #: src/disks/ui/create-partition-page.ui:173
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "Розширений розділ"
 
 #: src/disks/ui/create-partition-page.ui:177
-#| msgid "Container for Logical Partitions"
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr "Розширені розділи можуть містити логічні розділи"
 
@@ -2877,11 +2812,10 @@ msgid ""
 "Data stored in the volume will only be accessible with the correct password. "
 "Be careful not to forget it."
 msgstr ""
-"Дані, які зберігаються на томі, будуть доступними, лише якщо вказано"
-" правильний пароль. Добре запам'ятайте його."
+"Дані, які зберігаються на томі, будуть доступними, лише якщо вказано "
+"правильний пароль. Добре запам'ятайте його."
 
 #: src/disks/ui/create-password-page.ui:34
-#| msgid "Passed"
 msgid "_Password"
 msgstr "_Пароль"
 
@@ -2894,7 +2828,6 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Вести пароль для захисту даних"
 
 #: src/disks/ui/create-password-page.ui:95
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
 msgstr "_Показати пароль"
 
@@ -3006,201 +2939,207 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Ке_ш записування"
 
-#: src/disks/ui/disks.ui:63
-msgid "Select a device"
-msgstr "Вибрати пристрій"
+#: src/disks/ui/disks.ui:93
+msgid "Go back to main view"
+msgstr "Повернутися до головної панелі перегляду"
 
-#: src/disks/ui/disks.ui:122
+#: src/disks/ui/disks.ui:108
+msgid "Drive Options"
+msgstr "Параметри диска"
+
+#: src/disks/ui/disks.ui:123
+msgid "Power off this disk"
+msgstr "Вимкнути цей диск"
+
+#: src/disks/ui/disks.ui:138
+msgid "Eject this disk"
+msgstr "Витягнути цей диск"
+
+#: src/disks/ui/disks.ui:153
+msgid "Detach this loop device"
+msgstr "Відокремити цей циклічний пристрій"
+
+#: src/disks/ui/disks.ui:196
+msgid "No Device Selected"
+msgstr "Не вибрано жодного пристрою"
+
+#: src/disks/ui/disks.ui:208
+#| msgid "Select a device"
+msgid "Select a device to manage"
+msgstr "Вибрати пристрій для керування"
+
+#: src/disks/ui/disks.ui:271
 msgid "Model"
 msgstr "Модель"
 
-#: src/disks/ui/disks.ui:155
+#: src/disks/ui/disks.ui:304
 msgid "Serial Number"
 msgstr "Серійний номер"
 
-#: src/disks/ui/disks.ui:192
+#: src/disks/ui/disks.ui:341
 msgid "World Wide Name"
 msgstr "Світова назва"
 
-#: src/disks/ui/disks.ui:266
+#: src/disks/ui/disks.ui:415
 msgid "Media"
 msgstr "Носій"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:490 src/disks/ui/disks.ui:1171
 msgid "Job"
 msgstr "Завдання"
 
-#: src/disks/ui/disks.ui:439
+#: src/disks/ui/disks.ui:588
 msgid "Name"
 msgstr "Назва"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
+#: src/disks/ui/disks.ui:625 src/disks/ui/disks.ui:989
 msgid "Size"
 msgstr "Розмір"
 
-#: src/disks/ui/disks.ui:513
+#: src/disks/ui/disks.ui:662
 msgid "Auto-clear"
 msgstr "Автоматичне очищення"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:683
 msgid "Detach loop device after unmount action"
 msgstr "Вилучити циклічний пристрій після дії з демонтування"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:557
+#: src/disks/ui/disks.ui:706
 msgid "Backing File"
 msgstr "Резервне копіювання файла"
 
-#: src/disks/ui/disks.ui:594
+#: src/disks/ui/disks.ui:743
 msgid "Partitioning"
 msgstr "Розбиття"
 
-#: src/disks/ui/disks.ui:638
+#: src/disks/ui/disks.ui:787
 msgid "_Volumes"
 msgstr "_Томи"
 
-#: src/disks/ui/disks.ui:692
+#: src/disks/ui/disks.ui:841
 msgid "Mount selected partition"
 msgstr "Змонтувати вибраний розділ"
 
-#: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
+#: src/disks/ui/disks.ui:842
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Змонтувати"
 
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:855
 msgid "Unmount selected partition"
 msgstr "Демонтувати вибраний розділ"
 
-#: src/disks/ui/disks.ui:707
-#| msgid "Unmounting..."
+#: src/disks/ui/disks.ui:856
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Демонтувати"
 
-#: src/disks/ui/disks.ui:720
+#: src/disks/ui/disks.ui:869
 msgid "Activate selected swap partition"
 msgstr "Увімкнути вибраний розділ свопінгу"
 
-#: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
+#: src/disks/ui/disks.ui:870
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Задіяти свопінг"
 
-#: src/disks/ui/disks.ui:734
+#: src/disks/ui/disks.ui:883
 msgid "Deactivate selected swap partition"
 msgstr "Вимкнути вибраний розділ свопінгу"
 
-#: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
+#: src/disks/ui/disks.ui:884
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Вимкнути свопінг"
 
-#: src/disks/ui/disks.ui:748
+#: src/disks/ui/disks.ui:897
 msgid "Unlock selected encrypted partition"
 msgstr "Розблокувати вибраний зашифрований розділ"
 
-#: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
+#: src/disks/ui/disks.ui:898
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Розблокувати"
 
-#: src/disks/ui/disks.ui:762
+#: src/disks/ui/disks.ui:911
 msgid "Lock selected encrypted partition"
 msgstr "Заблокувати вибраний зашифрований розділ"
 
-#: src/disks/ui/disks.ui:763
-#| msgctxt "volume-content-luks"
-#| msgid "Locked"
+#: src/disks/ui/disks.ui:912
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Заблокувати"
 
-#: src/disks/ui/disks.ui:776
+#: src/disks/ui/disks.ui:925
 msgid "Create partition in unallocated space"
 msgstr "Створити розділ на нерозподіленому просторі"
 
-#: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
+#: src/disks/ui/disks.ui:926
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Створити розділ"
 
-#: src/disks/ui/disks.ui:790
+#: src/disks/ui/disks.ui:939
 msgid "Delete selected partition"
 msgstr "Вилучити вибраний розділ"
 
-#: src/disks/ui/disks.ui:791
-#| msgid "Deleting Partition"
+#: src/disks/ui/disks.ui:940
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Вилучити розділ"
 
-#: src/disks/ui/disks.ui:804
+#: src/disks/ui/disks.ui:953
 msgid "Additional partition options"
 msgstr "Додаткові параметри розділу"
 
-#: src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:954
 msgctxt "Accessibility label for toolbutton-volume-menu"
 msgid "Menu"
 msgstr "Меню"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:873
+#: src/disks/ui/disks.ui:1022
 msgid "Contents"
 msgstr "Складові"
 
-#: src/disks/ui/disks.ui:947
-#| msgid "UUID: %s"
+#: src/disks/ui/disks.ui:1096
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:984
+#: src/disks/ui/disks.ui:1133
 msgid "Partition Type"
 msgstr "Тип розділу"
 
 #: src/disks/ui/drive-menu.ui:6
-#| msgid "Format Disk…"
 msgid "Format _Disk…"
 msgstr "Форматувати д_иск…"
 
 #: src/disks/ui/drive-menu.ui:12
-#| msgid "Create Disk Image…"
 msgid "_Create Disk Image…"
 msgstr "Створити _образ диска…"
 
 #: src/disks/ui/drive-menu.ui:16
-#| msgid "Restore Disk Image…"
 msgid "_Restore Disk Image…"
 msgstr "Від_новити образ диска…"
 
 #: src/disks/ui/drive-menu.ui:22
-#| msgid "Benchmark Disk…"
 msgid "_Benchmark Disk…"
 msgstr "П_ротестувати диск…"
 
 #: src/disks/ui/drive-menu.ui:26
-#| msgid "SMART Data & Self-Tests…"
 msgid "_SMART Data & Self-Tests…"
 msgstr "Д_ані SMART і самоперевірки…"
 
 #: src/disks/ui/drive-menu.ui:30
-#| msgid "Drive Settings…"
 msgid "Drive S_ettings…"
 msgstr "Пара_метри пристрою…"
 
 #: src/disks/ui/drive-menu.ui:36
-#| msgid "Standby Now"
 msgid "S_tandby Now"
 msgstr "Режим _чергування зараз"
 
 #: src/disks/ui/drive-menu.ui:40
-#| msgid "Wake-Up from Standby"
 msgid "_Wake-Up from Standby"
 msgstr "Про_кинутись з режиму чергування"
 
@@ -3213,10 +3152,6 @@ msgid "Us_er Session Defaults"
 msgstr "_Типові параметри сеансу користувача"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3231,9 +3166,6 @@ msgid "Opt_ions"
 msgstr "_Параметри"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:179
-#| msgid ""
-#| "The name to use for the unlocked device - the device is set up as the "
-#| "name prefixed with <b>/dev/mapper</b>/"
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
@@ -3267,12 +3199,10 @@ msgid "_Passphrase"
 msgstr "_Пароль"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
 msgstr "Роз_блоковувати під час запуску системи"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
 "Якщо позначено, пристрій буде розблоковано під час запуску системи [!noauto]"
@@ -3336,10 +3266,6 @@ msgid "Mount Options"
 msgstr "Параметри монтування"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3354,9 +3280,6 @@ msgid "I_dentify As"
 msgstr "_Ідентифікувати як"
 
 #: src/disks/ui/edit-fstab-dialog.ui:110
-#| msgid ""
-#| "The <b>special device file</b> - use symlinks in the <b>/dev/disk</b> "
-#| "hierarchy to control the scope of the entry"
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
@@ -3365,9 +3288,6 @@ msgstr ""
 "ієрархію <b>/dev/disk</b>, щоб контролювати обсяги записів"
 
 #: src/disks/ui/edit-fstab-dialog.ui:111
-#| msgid ""
-#| "The special device file - use symlinks in the /dev/disk hierarchy to "
-#| "control the scope of the entry"
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
@@ -3437,12 +3357,10 @@ msgstr ""
 "udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
 msgstr "Монтувати під час зап_уску системи"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
 "Якщо позначено, пристрій буде монтуватись під час запуску системи [!noauto]"
@@ -3499,16 +3417,12 @@ msgid "Legacy BIOS _Bootable"
 msgstr "_Завантажувальний BIOS"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
-"Еквівалентне до <i>завантажувальний</i> в основному записі завантаження"
-" (MBR). Зазвичай, це лише для розділів GPT на системах MBR"
+"Еквівалентне до <i>завантажувальний</i> в основному записі завантаження "
+"(MBR). Зазвичай, це лише для розділів GPT на системах MBR"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Flags"
@@ -3523,8 +3437,8 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
-"Вказує на те, що мікропрограма EFI має ігнорувати вміст розділу і не"
-" намагатися виконати читання з нього"
+"Вказує на те, що мікропрограма EFI має ігнорувати вміст розділу і не "
+"намагатися виконати читання з нього"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3550,45 +3464,23 @@ msgstr "_Форматувати…"
 msgid "_Partitioning"
 msgstr "Поділ на _розділи"
 
-#: src/disks/ui/headerbar.ui:35
-#| msgid "Drive Settings"
-msgid "Drive Options"
-msgstr "Параметри диска"
-
-#: src/disks/ui/headerbar.ui:50
-msgid "Power off this disk"
-msgstr "Вимкнути цей диск"
-
-#: src/disks/ui/headerbar.ui:65
-msgid "Eject this disk"
-msgstr "Витягнути цей диск"
-
-#: src/disks/ui/headerbar.ui:80
-msgid "Detach this loop device"
-msgstr "Відокремити цей циклічний пристрій"
-
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
 msgstr "Новий образ диска"
 
 #: src/disks/ui/new-disk-image-dialog.ui:29
-#| msgid "Image Size"
 msgid "Image _Size"
 msgstr "_Розмір образу"
 
 #: src/disks/ui/new-disk-image-dialog.ui:86
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the image to create"
 msgstr "Розмір образу, який слід створити"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
 msgstr "Під'єднати новий _образ…"
 
 #: src/disks/ui/resize-dialog.ui:19
-#| msgid "New Volume"
 msgid "Resize Volume"
 msgstr "Зміна розмірів тому"
 
@@ -3599,20 +3491,19 @@ msgid ""
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr ""
-"Зміна розмірів файлової системи може призвести до втрати даних. Перш ніж його"
-" виконувати, рекомендуємо вам виконати резервне копіювання важливих для вас"
-" даних. Дія зі зміни розмірів файлової системи буде тривалішою, якщо для її"
-" виконання слід пересунути багато даних. Мінімальний розмір обчислюється"
-" відповідно до поточних відомостей щодо записаних на розділ даних. У файловій"
-" системі має бути хоч трохи вільного місця, щоб вона працювала швидше і"
-" надійніше."
+"Зміна розмірів файлової системи може призвести до втрати даних. Перш ніж "
+"його виконувати, рекомендуємо вам виконати резервне копіювання важливих для "
+"вас даних. Дія зі зміни розмірів файлової системи буде тривалішою, якщо для "
+"її виконання слід пересунути багато даних. Мінімальний розмір обчислюється "
+"відповідно до поточних відомостей щодо записаних на розділ даних. У файловій "
+"системі має бути хоч трохи вільного місця, щоб вона працювала швидше і "
+"надійніше."
 
 #: src/disks/ui/resize-dialog.ui:197
 msgid "_Difference"
 msgstr "_Різниця"
 
 #: src/disks/ui/resize-dialog.ui:214
-#| msgid "The requested partition size"
 msgid "The difference to the previous partition size"
 msgstr "Різниця із попереднім розміром розділу"
 
@@ -3649,89 +3540,81 @@ msgid "_Start Restoring…"
 msgstr "_Запустити відновлення…"
 
 #: src/disks/ui/shortcuts.ui:13
-#| msgid "General"
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Загальні"
 
 #: src/disks/ui/shortcuts.ui:17
-#| msgid "Create a new partition"
 msgctxt "shortcut window"
 msgid "Create a new empty disk image"
 msgstr "Створити порожній образ диска"
 
 #: src/disks/ui/shortcuts.ui:24
-#| msgid "Error attaching disk image"
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
 msgstr "Долучити наявний образ диска"
 
 #: src/disks/ui/shortcuts.ui:31
-#| msgid "_Help"
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Зняти вибір з поточного диска"
+
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Help"
 msgstr "Довідка"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:45
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: src/disks/ui/shortcuts.ui:45
-#| msgid "Quit"
+#: src/disks/ui/shortcuts.ui:52
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Вийти"
 
-#: src/disks/ui/shortcuts.ui:54
-#| msgid "Drive"
+#: src/disks/ui/shortcuts.ui:61
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Диск"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Відкрити меню диска"
 
-#: src/disks/ui/shortcuts.ui:65
-#| msgid "Format _Drive"
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Форматувати диск"
 
-#: src/disks/ui/shortcuts.ui:72
-#| msgid "The temperature of the disk"
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Відновити образ на диску"
 
-#: src/disks/ui/shortcuts.ui:79
-#| msgid "SMART Data"
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Дані SMART"
 
-#: src/disks/ui/shortcuts.ui:86
-#| msgid "Drive Settings"
+#: src/disks/ui/shortcuts.ui:93
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Параметри диска"
 
-#: src/disks/ui/shortcuts.ui:95
-#| msgid "Partitioned"
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Розділ диска"
 
-#: src/disks/ui/shortcuts.ui:99
-#| msgid "Mount the volume"
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Відкрити меню тому"
 
-#: src/disks/ui/shortcuts.ui:106
-#| msgid "Format selected device"
+#: src/disks/ui/shortcuts.ui:113
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Форматувати позначений том"
@@ -3807,8 +3690,8 @@ msgstr "Ввести пароль для розблокування"
 #: src/disks/ui/unlock-device-dialog.ui:41
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
-"Цей том може бути томом VeraCrypt, оскільки містить на перший погляд"
-" випадкові дані."
+"Цей том може бути томом VeraCrypt, оскільки містить на перший погляд "
+"випадкові дані."
 
 #: src/disks/ui/unlock-device-dialog.ui:79
 #: src/disks/ui/unlock-device-dialog.ui:186
@@ -3816,12 +3699,10 @@ msgid "If specified"
 msgstr "Якщо вказано"
 
 #: src/disks/ui/unlock-device-dialog.ui:117
-#| msgid "Volume Name:"
 msgid "Volume type"
 msgstr "Тип тому"
 
 #: src/disks/ui/unlock-device-dialog.ui:136
-#| msgid "H_idden"
 msgid "_Hidden"
 msgstr "При_хований"
 
@@ -3830,15 +3711,14 @@ msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
 msgstr ""
-"Замість розблокування тому спробувати розблокувати вторинний том, який"
-" приховано всередині."
+"Замість розблокування тому спробувати розблокувати вторинний том, який "
+"приховано всередині."
 
 #: src/disks/ui/unlock-device-dialog.ui:149
 msgid "Windows _system"
 msgstr "С_истема Windows"
 
 #: src/disks/ui/unlock-device-dialog.ui:150
-#| msgid "Unlock selected encrypted partition"
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Розблокувати зашифрований системних розділ або диск Windows."
 
@@ -3851,15 +3731,14 @@ msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr ""
-"Якщо позначено, для цього тому буде використано числове значення PIM"
-" (Personal Iterations Multiplier) VeraCrypt."
+"Якщо позначено, для цього тому буде використано числове значення PIM "
+"(Personal Iterations Multiplier) VeraCrypt."
 
 #: src/disks/ui/unlock-device-dialog.ui:204
 msgid "_Keyfiles"
 msgstr "Файли _ключів"
 
 #: src/disks/ui/unlock-device-dialog.ui:221
-#| msgid "View files on the volume"
 msgid "Select a keyfile to unlock this volume"
 msgstr "Виберіть файл ключа для розблокування цього тому"
 
@@ -3868,22 +3747,18 @@ msgid "_Unlock"
 msgstr "_Розблокувати"
 
 #: src/disks/ui/volume-menu.ui:6
-#| msgid "Format Partition…"
 msgid "Format _Partition…"
 msgstr "_Форматувати розділ…"
 
 #: src/disks/ui/volume-menu.ui:12
-#| msgid "Edit Partition…"
 msgid "_Edit Partition…"
 msgstr "Р_едагувати розділ…"
 
 #: src/disks/ui/volume-menu.ui:16
-#| msgid "Edit Filesystem…"
 msgid "Edit _Filesystem…"
 msgstr "Р_едагувати файлову систему…"
 
 #: src/disks/ui/volume-menu.ui:20
-#| msgid "Change Passphrase…"
 msgid "Change Pa_ssphrase…"
 msgstr "З_мінити пароль…"
 
@@ -3892,37 +3767,30 @@ msgid "Resi_ze…"
 msgstr "З_мірити розмір…"
 
 #: src/disks/ui/volume-menu.ui:30
-#| msgid "_Check Filesystem"
 msgid "C_heck Filesystem…"
 msgstr "Перев_ірити файлову систему…"
 
 #: src/disks/ui/volume-menu.ui:34
-#| msgid "Edit Filesystem…"
 msgid "Rep_air Filesystem…"
 msgstr "Випр_авити файлову систему…"
 
 #: src/disks/ui/volume-menu.ui:40
-#| msgid "Edit Mount Options…"
 msgid "Edit _Mount Options…"
 msgstr "Реда_гувати параметри монтування…"
 
 #: src/disks/ui/volume-menu.ui:44
-#| msgid "Edit Encryption Options…"
 msgid "Edit Encr_yption Options…"
 msgstr "Редагувати параметри _шифрування…"
 
 #: src/disks/ui/volume-menu.ui:50
-#| msgid "Create Partition Image…"
 msgid "_Create Partition Image…"
 msgstr "С_творити образ розділу…"
 
 #: src/disks/ui/volume-menu.ui:54
-#| msgid "Restore Partition Image…"
 msgid "_Restore Partition Image…"
 msgstr "Від_новити образ розділу…"
 
 #: src/disks/ui/volume-menu.ui:58
-#| msgid "Benchmark Partition…"
 msgid "_Benchmark Partition…"
 msgstr "Про_тестувати розділ…"
 
@@ -4061,16 +3929,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Задіяні пристрої"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1399
 msgid "Error unmounting filesystem"
 msgstr "Помилка демонтування файлової системи"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Помилка блокувального пристрою"
 
-#: src/libgdu/gduutils.c:1439
-#| msgid "Error deleting loop device"
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Помилка під час спроби вимкнути автоматичне очищення для циклічного пристрою"

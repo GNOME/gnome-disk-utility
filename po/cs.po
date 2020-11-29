@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2020-02-16 14:20+0000\n"
-"PO-Revision-Date: 2020-02-23 10:56+0100\n"
+"POT-Creation-Date: 2020-09-20 21:45+0000\n"
+"PO-Revision-Date: 2020-11-29 01:49+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: čeština <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -86,8 +86,8 @@ msgstr "Snadný způsob správy disků"
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1090
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Disky"
 
@@ -117,8 +117,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Výběr obrazu(ů) disku pro připojení"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:800
 msgid "_Cancel"
 msgstr "_Zrušit"
 
@@ -1093,7 +1093,7 @@ msgid "Updates"
 msgstr "Aktualizace"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:452
 msgid "Assessment"
 msgstr "Posouzení"
 
@@ -1449,27 +1449,27 @@ msgstr "Chyba při formátování svazku"
 msgid "Error creating partition"
 msgstr "Chyba při vytváření oddílu"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Create Partition"
 msgstr "Vytvoření oddílu"
 
-#: src/disks/gducreateformatdialog.c:444
+#: src/disks/gducreateformatdialog.c:459
 msgid "Format Volume"
 msgstr "Formátování svazku"
 
-#: src/disks/gducreateformatdialog.c:447
+#: src/disks/gducreateformatdialog.c:462
 msgid "Custom Format"
 msgstr "Vlastní formát"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:465
 msgid "Set Password"
 msgstr "Nastavit heslo"
 
-#: src/disks/gducreateformatdialog.c:453
+#: src/disks/gducreateformatdialog.c:468
 msgid "Confirm Details"
 msgstr "Potvrdit údaje"
 
-#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Formátovat"
 
@@ -2020,7 +2020,7 @@ msgstr "Nastavení voleb pro odemknutí"
 msgid "Volumes Grid"
 msgstr "Mřížka svazků"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
 msgid "No Media"
 msgstr "Bez média"
 
@@ -2062,30 +2062,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Volné místo"
 
-#: src/disks/gduwindow.c:649
+#: src/disks/gduwindow.c:624
 msgid "Error deleting loop device"
 msgstr "Chyba při mazání zařízení místní smyčky"
 
-#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
+#: src/disks/gduwindow.c:724 src/disks/gduwindow.c:767
 msgid "Error attaching disk image"
 msgstr "Chyba při připojování obrazu disku"
 
-#: src/disks/gduwindow.c:822
+#: src/disks/gduwindow.c:797
 msgid "Select Disk Image to Attach"
 msgstr "Výběr obrazu disku pro připojení"
 
-#: src/disks/gduwindow.c:826
+#: src/disks/gduwindow.c:801
 msgid "_Attach"
 msgstr "_Připojit"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:833
+#: src/disks/gduwindow.c:808
 msgid "Set up _read-only loop device"
 msgstr "Nastavit místní smyčku jen ke čtení"
 
-#: src/disks/gduwindow.c:834
+#: src/disks/gduwindow.c:809
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2094,7 +2094,7 @@ msgstr ""
 "když nechcete, aby došlo ke změnám v podkladovém souboru."
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1697
+#: src/disks/gduwindow.c:1674
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (jen ke čtení)"
@@ -2103,7 +2103,7 @@ msgstr "%s (jen ke čtení)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1712
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2112,7 +2112,7 @@ msgstr "Zbývá %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1743
+#: src/disks/gduwindow.c:1720
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2123,7 +2123,7 @@ msgstr "Zbývá %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1758
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s z %s – %s"
@@ -2132,17 +2132,17 @@ msgstr "%s z %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1883
+#: src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f %%"
 
-#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
+#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
 msgid "Block device is empty"
 msgstr "Blokové zařízení je prázdné"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1986
+#: src/disks/gduwindow.c:1963
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2151,11 +2151,11 @@ msgstr "Neznámý (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2145
+#: src/disks/gduwindow.c:2122
 msgid "Connected to another seat"
 msgstr "Připojeno do jiného místa"
 
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2267
 msgid "Loop device is empty"
 msgstr "Zařízení místní smyčky je prázdné"
 
@@ -2165,61 +2165,61 @@ msgstr "Zařízení místní smyčky je prázdné"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2484
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s volných (%.1f %% obsazeno)"
 
-#: src/disks/gduwindow.c:2533
+#: src/disks/gduwindow.c:2514
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Neznámý"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2571
+#: src/disks/gduwindow.c:2552
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Kořen souborového systému"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2579
+#: src/disks/gduwindow.c:2560
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Připojeno v %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2585
+#: src/disks/gduwindow.c:2566
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nepřipojeno"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2589
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktivní"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2614
+#: src/disks/gduwindow.c:2595
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Neaktivní"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Odemknuto"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2635
+#: src/disks/gduwindow.c:2616
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Zamknuto"
 
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2630
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Rozšířený oddíl"
@@ -2228,45 +2228,45 @@ msgstr "Rozšířený oddíl"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2669
+#: src/disks/gduwindow.c:2650
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2770
 msgid "Unallocated Space"
 msgstr "Nepřidělený prostor"
 
-#: src/disks/gduwindow.c:2979
+#: src/disks/gduwindow.c:2971
 msgid "Error while repairing filesystem"
 msgstr "Chyba při opravě souborového systému"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2998
 msgid "Repair successful"
 msgstr "Oprava byla úspěšná"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2998
 msgid "Repair failed"
 msgstr "Oprava selhala"
 
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3001
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Souborový systém %s na %s byl opraven."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3007
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Souborový systém %s na %s nemohl být opraven."
 
-#: src/disks/gduwindow.c:3068
+#: src/disks/gduwindow.c:3060
 msgid "Confirm Repair"
 msgstr "Potvrzení opravy"
 
-#: src/disks/gduwindow.c:3071
+#: src/disks/gduwindow.c:3063
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2278,105 +2278,105 @@ msgstr ""
 "vyhledávání ztracených souborů. Oprava může trvat opravdu dlouho, zvláště "
 "pokud oddíl obsahuje hodně dat."
 
-#: src/disks/gduwindow.c:3099
+#: src/disks/gduwindow.c:3091
 msgid "Error while checking filesystem"
 msgstr "Chyba při kontrole souborového systému"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem intact"
 msgstr "Souborový systém je nedotčený"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem damaged"
 msgstr "Souborový systém je poškozený"
 
-#: src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3121
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Souborový systém %s na %s je nepoškozený."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3127
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Souborový systém %s na %s potřebuje opravu."
 
-#: src/disks/gduwindow.c:3186
+#: src/disks/gduwindow.c:3178
 msgid "Confirm Check"
 msgstr "Potvrzení kontroly"
 
-#: src/disks/gduwindow.c:3189
+#: src/disks/gduwindow.c:3181
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
 "Kontrola může trvat opravdu dlouho, zvláště pokud oddíl obsahuje hodně dat."
 
-#: src/disks/gduwindow.c:3426
+#: src/disks/gduwindow.c:3433
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Vyskytla se chyba při pokusu o přechod disku do režimu spánku"
 
-#: src/disks/gduwindow.c:3473
+#: src/disks/gduwindow.c:3480
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Vyskytla se chyba při pokusu probudit disk z režimu spánku"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3526
 msgid "Error powering off drive"
 msgstr "Chyba při vypínání disku"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3578
 msgid "Are you sure you want to power off the drives?"
 msgstr "Opravdu chcete disk vypnout?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3573
+#: src/disks/gduwindow.c:3580
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "Tato operace připraví systém k vypnutí a odebrání následujících disků."
 
-#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3584 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "Vy_pnout"
 
-#: src/disks/gduwindow.c:3657
+#: src/disks/gduwindow.c:3664
 msgid "Error mounting filesystem"
 msgstr "Chyba při připojování souborového systému"
 
-#: src/disks/gduwindow.c:3743
+#: src/disks/gduwindow.c:3749
 msgid "Error deleting partition"
 msgstr "Chyba při mazání oddílu"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3786
 msgid "Are you sure you want to delete the partition?"
 msgstr "Opravdu chcete oddíl vymazat?"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3787
 msgid "All data on the partition will be lost"
 msgstr "Všechna data na oddílu budou ztracena"
 
-#: src/disks/gduwindow.c:3782
+#: src/disks/gduwindow.c:3788
 msgid "_Delete"
 msgstr "Vy_mazat"
 
-#: src/disks/gduwindow.c:3813
+#: src/disks/gduwindow.c:3819
 msgid "Error ejecting media"
 msgstr "Chyba při vysouvání média"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:3902
 msgid "Error starting swap"
 msgstr "Chyba při spouštění odkládacího oddílu"
 
-#: src/disks/gduwindow.c:3933
+#: src/disks/gduwindow.c:3939
 msgid "Error stopping swap"
 msgstr "Chyba při zastavování odkládacího oddílu"
 
-#: src/disks/gduwindow.c:3975
+#: src/disks/gduwindow.c:3981
 msgid "Error setting autoclear flag"
 msgstr "Chyba při nastavování příznaku automatického mazání"
 
-#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4034 src/disks/gduwindow.c:4098
 msgid "Error canceling job"
 msgstr "Chyba při rušení úlohy"
 
@@ -2619,7 +2619,7 @@ msgstr "Varování: všechna data na svazku budou ztracena"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Před pokračováním prosím potvrďte údaje aktuálního svazku."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:1059
 msgid "Device"
 msgstr "Zařízení"
 
@@ -2632,7 +2632,7 @@ msgid "Used"
 msgstr "Použito"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:378
 msgid "Location"
 msgstr "Umístění"
 
@@ -2932,150 +2932,174 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Mezipaměť pro záp_is"
 
-#: src/disks/ui/disks.ui:63
-msgid "Select a device"
-msgstr "Vyberte zařízení"
+#: src/disks/ui/disks.ui:93
+msgid "Go back to main view"
+msgstr "Zpět do hlavního zobrazení"
 
-#: src/disks/ui/disks.ui:122
+#: src/disks/ui/disks.ui:108
+msgid "Drive Options"
+msgstr "Volby disku"
+
+#: src/disks/ui/disks.ui:123
+msgid "Power off this disk"
+msgstr "Vypnout tento disk"
+
+#: src/disks/ui/disks.ui:138
+msgid "Eject this disk"
+msgstr "Vysunout tento disk"
+
+#: src/disks/ui/disks.ui:153
+msgid "Detach this loop device"
+msgstr "Vyjmout toto zařízení místní smyčky"
+
+#: src/disks/ui/disks.ui:196
+msgid "No Device Selected"
+msgstr "Není vybrané žádné zařízení"
+
+#: src/disks/ui/disks.ui:208
+msgid "Select a device to manage"
+msgstr "Vyberte zařízení, které chcete spravovat."
+
+#: src/disks/ui/disks.ui:271
 msgid "Model"
 msgstr "Model"
 
-#: src/disks/ui/disks.ui:155
+#: src/disks/ui/disks.ui:304
 msgid "Serial Number"
 msgstr "Sériové číslo"
 
-#: src/disks/ui/disks.ui:192
+#: src/disks/ui/disks.ui:341
 msgid "World Wide Name"
 msgstr "Jedinečný název WWN"
 
-#: src/disks/ui/disks.ui:266
+#: src/disks/ui/disks.ui:415
 msgid "Media"
 msgstr "Médium"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:490 src/disks/ui/disks.ui:1171
 msgid "Job"
 msgstr "Úkol"
 
-#: src/disks/ui/disks.ui:439
+#: src/disks/ui/disks.ui:588
 msgid "Name"
 msgstr "Název"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
+#: src/disks/ui/disks.ui:625 src/disks/ui/disks.ui:989
 msgid "Size"
 msgstr "Velikost"
 
-#: src/disks/ui/disks.ui:513
+#: src/disks/ui/disks.ui:662
 msgid "Auto-clear"
 msgstr "Automaticky mazat"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:683
 msgid "Detach loop device after unmount action"
 msgstr "Vyjmout zařízení místní smyčky po provedení odpojení"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:557
+#: src/disks/ui/disks.ui:706
 msgid "Backing File"
 msgstr "Podkladový soubor"
 
-#: src/disks/ui/disks.ui:594
+#: src/disks/ui/disks.ui:743
 msgid "Partitioning"
 msgstr "Rozdělení"
 
-#: src/disks/ui/disks.ui:638
+#: src/disks/ui/disks.ui:787
 msgid "_Volumes"
 msgstr "S_vazky"
 
-#: src/disks/ui/disks.ui:692
+#: src/disks/ui/disks.ui:841
 msgid "Mount selected partition"
 msgstr "Připojit vybraný oddíl"
 
-#: src/disks/ui/disks.ui:693
+#: src/disks/ui/disks.ui:842
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Připojit"
 
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:855
 msgid "Unmount selected partition"
 msgstr "Odpojit vybraný oddíl"
 
-#: src/disks/ui/disks.ui:707
+#: src/disks/ui/disks.ui:856
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Odpojit"
 
-#: src/disks/ui/disks.ui:720
+#: src/disks/ui/disks.ui:869
 msgid "Activate selected swap partition"
 msgstr "Aktivovat vybraný odkládací oddíl"
 
-#: src/disks/ui/disks.ui:721
+#: src/disks/ui/disks.ui:870
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Aktivovat odkládací oddíl"
 
-#: src/disks/ui/disks.ui:734
+#: src/disks/ui/disks.ui:883
 msgid "Deactivate selected swap partition"
 msgstr "Deaktivovat vybraný odkládací oddíl"
 
-#: src/disks/ui/disks.ui:735
+#: src/disks/ui/disks.ui:884
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Deaktivovat odkládací oddíl"
 
-#: src/disks/ui/disks.ui:748
+#: src/disks/ui/disks.ui:897
 msgid "Unlock selected encrypted partition"
 msgstr "Odemknout vybraný šifrovaný oddíl"
 
-#: src/disks/ui/disks.ui:749
+#: src/disks/ui/disks.ui:898
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Odemknout"
 
-#: src/disks/ui/disks.ui:762
+#: src/disks/ui/disks.ui:911
 msgid "Lock selected encrypted partition"
 msgstr "Zamknout vybraný šifrovaný oddíl"
 
-#: src/disks/ui/disks.ui:763
+#: src/disks/ui/disks.ui:912
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Zamknout"
 
-#: src/disks/ui/disks.ui:776
+#: src/disks/ui/disks.ui:925
 msgid "Create partition in unallocated space"
 msgstr "Vytvořit oddíl na nepřiděleném prostoru"
 
-#: src/disks/ui/disks.ui:777
+#: src/disks/ui/disks.ui:926
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Vytvořit oddíl"
 
-#: src/disks/ui/disks.ui:790
+#: src/disks/ui/disks.ui:939
 msgid "Delete selected partition"
 msgstr "Smazat vybraný oddíl"
 
-#: src/disks/ui/disks.ui:791
+#: src/disks/ui/disks.ui:940
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Smazat oddíl"
 
-#: src/disks/ui/disks.ui:804
+#: src/disks/ui/disks.ui:953
 msgid "Additional partition options"
 msgstr "Dodatečné volby oddílu"
 
-#: src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:954
 msgctxt "Accessibility label for toolbutton-volume-menu"
 msgid "Menu"
 msgstr "Nabídka"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:873
+#: src/disks/ui/disks.ui:1022
 msgid "Contents"
 msgstr "Obsah"
 
-#: src/disks/ui/disks.ui:947
+#: src/disks/ui/disks.ui:1096
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:984
+#: src/disks/ui/disks.ui:1133
 msgid "Partition Type"
 msgstr "Typ oddílu"
 
@@ -3435,22 +3459,6 @@ msgstr "_Formátovat…"
 msgid "_Partitioning"
 msgstr "_Rozdělení"
 
-#: src/disks/ui/headerbar.ui:35
-msgid "Drive Options"
-msgstr "Volby disku"
-
-#: src/disks/ui/headerbar.ui:50
-msgid "Power off this disk"
-msgstr "Vypnout tento disk"
-
-#: src/disks/ui/headerbar.ui:65
-msgid "Eject this disk"
-msgstr "Vysunout tento disk"
-
-#: src/disks/ui/headerbar.ui:80
-msgid "Detach this loop device"
-msgstr "Vyjmout toto zařízení místní smyčky"
-
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
 msgstr "Nový obraz disku"
@@ -3542,60 +3550,65 @@ msgstr "Připojit existující obrazu disku"
 
 #: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Zrušit výběr aktuálního disku"
+
+#: src/disks/ui/shortcuts.ui:38
+msgctxt "shortcut window"
 msgid "Help"
 msgstr "Nápověda"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:45
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:52
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Ukončit"
 
-#: src/disks/ui/shortcuts.ui:54
+#: src/disks/ui/shortcuts.ui:61
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Zařízení"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Otevřít nabídku zařízení"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Naformátovat vybrané zařízení"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Obnovit obrazu na disk"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Data SMART"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:93
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Nastavení zařízení"
 
-#: src/disks/ui/shortcuts.ui:95
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Oddíl"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Otevřít nabídku svazku"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:113
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Naformátovat vybraný svazek"
@@ -3909,15 +3922,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovlivněná zařízení"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1399
 msgid "Error unmounting filesystem"
 msgstr "Chyba při odpojování souborového systému"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Chyba při zamykání zařízení"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 msgid "Error disabling autoclear for loop device"
 msgstr "Chyba při vypínání automatického mazání pro zařízení místní smyčky"
 

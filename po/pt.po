@@ -13,16 +13,16 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2020-06-25 07:34+0000\n"
-"PO-Revision-Date: 2020-09-13 07:44-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@protonmail.com>\n"
+"POT-Creation-Date: 2020-09-20 21:45+0000\n"
+"PO-Revision-Date: 2021-01-06 14:35+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Project-Style: gnome\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
@@ -71,10 +71,6 @@ msgstr ""
 "e configurar discos e dispositivos de blocos."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark "
-#| "physical disks, and image USB sticks. Tasks are executed in the "
-#| "background, even after the application has been closed by the user."
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -88,10 +84,10 @@ msgstr "Uma forma simples de gerir os seus discos"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:34
 msgid "The GNOME Project"
-msgstr "Projeto GNOME"
+msgstr "O Projeto GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1090
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Discos"
 
@@ -121,8 +117,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Selecionar as imagens de disco a montar"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:454
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:800
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -168,8 +164,6 @@ msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Erro ao anexar imagem de disco: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:92
-#| msgctxt "mdraid"
-#| msgid "Not running"
 msgid "Stop running jobs?"
 msgstr "Parar atividades em execução?"
 
@@ -241,7 +235,7 @@ msgid ""
 msgstr ""
 "Frequência de erros ao ler dados em bruto a partir do disco. Um valor "
 "diferente de zero indica um problema com a superfície do disco ou com as "
-"cabeças de leitura/escrita."
+"cabeças de leitura/escrita"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -592,7 +586,7 @@ msgstr "Número de erros ECC"
 #.
 #: src/disks/gduatasmartdialog.c:397
 msgid "Soft ECC correction"
-msgstr "Correção recuperável ECC "
+msgstr "Correção recuperável ECC"
 
 #: src/disks/gduatasmartdialog.c:398
 msgid "Number of errors corrected by software ECC"
@@ -1102,7 +1096,7 @@ msgid "Updates"
 msgstr "Atualizações"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:452
 msgid "Assessment"
 msgstr "Avaliação"
 
@@ -1153,19 +1147,19 @@ msgstr "Sem dados de análise de desempenho disponíveis"
 #: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
-msgstr "A abrir dispositivo..."
+msgstr "A abrir dispositivo…"
 
 #: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "A medir taxa de transferência (%2.1f%% concluídos)..."
+msgstr "A medir taxa de transferência (%2.1f%% concluídos)…"
 
 #: src/disks/gdubenchmarkdialog.c:745
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring access time (%2.1f%% complete)…"
-msgstr "A medir tempo de acesso (%2.1f%% concluídos)..."
+msgstr "A medir tempo de acesso (%2.1f%% concluídos)…"
 
 #: src/disks/gdubenchmarkdialog.c:811
 msgctxt "benchmarking"
@@ -1181,7 +1175,6 @@ msgstr "%.2f msec"
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdubenchmarkdialog.c:1180
-#| msgid "Benchmark Settings"
 msgctxt "create-inhibit-message"
 msgid "Benchmarking device"
 msgstr "A analisar dispositivo"
@@ -1260,12 +1253,10 @@ msgid "Error reading %lld bytes from offset %lld"
 msgstr "Erro ao ler %lld bytes a partir do desvio %lld"
 
 #: src/disks/gduchangepassphrasedialog.c:120
-#| msgid "Enter passphrase to unlock"
 msgid "The passphrases do not match"
 msgstr "As frases-senha não coincidem"
 
 #: src/disks/gduchangepassphrasedialog.c:129
-#| msgid "The strength of the passphrase"
 msgid "The passphrase matches the existing passphrase"
 msgstr "A frase-senha coincide com a frase-senha existente"
 
@@ -1304,8 +1295,6 @@ msgstr "Força da frase-senha"
 #.
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
-#| msgctxt "volume-contents-combiner"
-#| msgid "%s — %s"
 msgid "%s — %s"
 msgstr "%s — %s"
 
@@ -1313,7 +1302,6 @@ msgstr "%s — %s"
 #.
 #: src/disks/gducreateconfirmpage.c:128
 #, c-format
-#| msgid "%s: %2.1f%%"
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1393,7 +1381,7 @@ msgstr "_Fechar"
 #: src/disks/gducreatediskimagedialog.c:722
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
-msgstr "Erro ao determinar o tamanho do dispositivo:"
+msgstr "Erro ao determinar o tamanho do dispositivo: "
 
 #: src/disks/gducreatediskimagedialog.c:729
 #: src/disks/gdurestorediskimagedialog.c:738
@@ -1403,7 +1391,7 @@ msgstr "Dispositivo tem tamanho 0"
 
 #: src/disks/gducreatediskimagedialog.c:762
 msgid "Error allocating space for disk image file: "
-msgstr "Erro ao alocar espaço para o ficheiro de imagem de disco:"
+msgstr "Erro ao alocar espaço para o ficheiro de imagem de disco: "
 
 #: src/disks/gducreatediskimagedialog.c:922
 #: src/disks/gdunewdiskimagedialog.c:324
@@ -1449,7 +1437,6 @@ msgid "Cre_ate"
 msgstr "_Criar"
 
 #: src/disks/gducreateformatdialog.c:187
-#| msgid "_Format"
 msgid "Form_at"
 msgstr "_Formatar"
 
@@ -1465,28 +1452,27 @@ msgstr "Erro ao formatar volume"
 msgid "Error creating partition"
 msgstr "Erro ao criar partição"
 
-#: src/disks/gducreateformatdialog.c:434
+#: src/disks/gducreateformatdialog.c:450
 msgid "Create Partition"
 msgstr "Criar partição"
 
-#: src/disks/gducreateformatdialog.c:443
+#: src/disks/gducreateformatdialog.c:459
 msgid "Format Volume"
 msgstr "Formatar volume"
 
-#: src/disks/gducreateformatdialog.c:446
-#| msgid "Custom"
+#: src/disks/gducreateformatdialog.c:462
 msgid "Custom Format"
 msgstr "Personalizar a formatação"
 
-#: src/disks/gducreateformatdialog.c:449
+#: src/disks/gducreateformatdialog.c:465
 msgid "Set Password"
 msgstr "Definir senha"
 
-#: src/disks/gducreateformatdialog.c:452
+#: src/disks/gducreateformatdialog.c:468
 msgid "Confirm Details"
 msgstr "Confirmar detalhes"
 
-#: src/disks/gducreateformatdialog.c:455 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Formatar"
 
@@ -1495,7 +1481,6 @@ msgid "XFS — Linux Filesystem"
 msgstr "XFS — Sistema de ficheiros para Linux"
 
 #: src/disks/gducreateotherpage.c:117
-#| msgid "Edit Partition"
 msgid "Linux Swap Partition"
 msgstr "Partição swap para Linux"
 
@@ -1503,7 +1488,7 @@ msgstr "Partição swap para Linux"
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
 "Btrfs — Sistema de ficheiros para Linux com otimização Copy-on-write para "
-"capturas do sistema."
+"capturas do sistema"
 
 #: src/disks/gducreateotherpage.c:121
 msgid "F2FS — Flash Storage Linux Filesystem"
@@ -1523,15 +1508,11 @@ msgstr ""
 "sistemas"
 
 #: src/disks/gducreateotherpage.c:127
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
 msgid "No Filesystem"
 msgstr "Nenhum sistema de ficheiros"
 
 #: src/disks/gducreateotherpage.c:203
 #, c-format
-#| msgid "%d disk is missing"
-#| msgid_plural "%d disks are missing"
 msgid "The utility %s is missing."
 msgstr "Não foi encontrado o utilitário %s."
 
@@ -1879,7 +1860,6 @@ msgid "Unnamed (%s).img"
 msgstr "Sem nome (%s).img"
 
 #: src/disks/gdunewdiskimagedialog.c:267
-#| msgid "Error powering off drive"
 msgid "Error writing file"
 msgstr "Erro ao escrever o ficheiro"
 
@@ -1916,34 +1896,28 @@ msgid "Strong"
 msgstr "Forte"
 
 #: src/disks/gduresizedialog.c:188
-#| msgid "Chunk _Size"
 msgid "Current Size"
 msgstr "Tamanho atual"
 
 #: src/disks/gduresizedialog.c:199
-#| msgid "Image Size"
 msgid "Minimal Size"
 msgstr "Tamanho mínimo"
 
 #: src/disks/gduresizedialog.c:249
-#| msgid "_Restore"
 msgid "_Resize"
 msgstr "_Redimensionar"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
 #: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
 msgstr "Erro ao redimensionar o sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
 #: src/disks/gduresizedialog.c:569
-#| msgid "Error creating partition"
 msgid "Error resizing partition"
 msgstr "Erro ao redimensionar a partição"
 
 #: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-#| msgid "Error opening file for reading"
 msgid "Error repairing filesystem after resize"
 msgstr "Erro ao reparar o sistema de ficheiros após redimensionamento"
 
@@ -1952,17 +1926,14 @@ msgid "Resizing not ready"
 msgstr "O redimensionamento não está pronto"
 
 #: src/disks/gduresizedialog.c:466
-#| msgid "Mount the filesystem"
 msgid "Waited too long for the filesystem"
 msgstr "Demasiado tempo em espera pelo sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
-#| msgid "Error mounting filesystem"
 msgid "Error repairing filesystem"
 msgstr "Erro ao reparar o sistema de ficheiros"
 
 #: src/disks/gduresizedialog.c:748
-#| msgid "Error mounting filesystem"
 msgid "Error mounting the filesystem"
 msgstr "Erro ao montar o sistema de ficheiros"
 
@@ -1971,7 +1942,6 @@ msgid "Fit to size"
 msgstr "Ajustar ao tamanho"
 
 #: src/disks/gduresizedialog.c:825
-#| msgid "Error mounting filesystem"
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Erro ao montar o sistema de ficheiros para calcular o tamanho mínimo"
 
@@ -2037,12 +2007,10 @@ msgid "_Restore"
 msgstr "_Restaurar"
 
 #: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
-#| msgid "Select a device"
 msgid "Select a Keyfile"
 msgstr "Selecionar um ficheiro de chave"
 
 #: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
-#| msgid "Error locking device"
 msgid "Error unlocking device"
 msgstr "Erro ao desbloquear dispositivo"
 
@@ -2063,7 +2031,7 @@ msgstr "Definir opções para desbloquear"
 msgid "Volumes Grid"
 msgstr "Grelha de volumes"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
 msgid "No Media"
 msgstr "Nenhum suporte"
 
@@ -2105,30 +2073,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espaço livre"
 
-#: src/disks/gduwindow.c:649
+#: src/disks/gduwindow.c:624
 msgid "Error deleting loop device"
 msgstr "Erro ao apagar dispositivo de loop"
 
-#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
+#: src/disks/gduwindow.c:724 src/disks/gduwindow.c:767
 msgid "Error attaching disk image"
 msgstr "Erro ao anexar imagem de disco"
 
-#: src/disks/gduwindow.c:822
+#: src/disks/gduwindow.c:797
 msgid "Select Disk Image to Attach"
 msgstr "Selecionar a imagem de disco a anexar"
 
-#: src/disks/gduwindow.c:826
+#: src/disks/gduwindow.c:801
 msgid "_Attach"
 msgstr "_Anexar"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:833
+#: src/disks/gduwindow.c:808
 msgid "Set up _read-only loop device"
 msgstr "Configurar dispositivo de loop só de _leitura"
 
-#: src/disks/gduwindow.c:834
+#: src/disks/gduwindow.c:809
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2137,7 +2105,7 @@ msgstr ""
 "quiser que o ficheiro subjacente seja modificado"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1697
+#: src/disks/gduwindow.c:1674
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (só de leitura)"
@@ -2146,7 +2114,7 @@ msgstr "%s (só de leitura)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1712
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2155,7 +2123,7 @@ msgstr "%s restantes (%s/seg)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1743
+#: src/disks/gduwindow.c:1720
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2166,7 +2134,7 @@ msgstr "%s restantes"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1758
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s de %s — %s"
@@ -2175,17 +2143,17 @@ msgstr "%s de %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1883
+#: src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
+#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
 msgid "Block device is empty"
 msgstr "O dispositivo de blocos está vazio"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1986
+#: src/disks/gduwindow.c:1963
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2194,11 +2162,11 @@ msgstr "Desconhecido (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2145
+#: src/disks/gduwindow.c:2122
 msgid "Connected to another seat"
 msgstr "Ligado a outro lugar"
 
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2267
 msgid "Loop device is empty"
 msgstr "Dispositivo de loop está vazio"
 
@@ -2208,65 +2176,61 @@ msgstr "Dispositivo de loop está vazio"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2484
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s disponíveis (%.1f%% ocupados)"
 
-#: src/disks/gduwindow.c:2533
+#: src/disks/gduwindow.c:2514
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconhecido"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2571
+#: src/disks/gduwindow.c:2552
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Raiz do sistema de ficheiros"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2579
+#: src/disks/gduwindow.c:2560
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montado em %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2585
+#: src/disks/gduwindow.c:2566
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Não montado"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2589
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Ativo"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2614
+#: src/disks/gduwindow.c:2595
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Não ativo"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2629
-#| msgctxt "volume-content-luks"
-#| msgid "Unlocked"
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Desbloqueado"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2635
-#| msgctxt "volume-content-luks"
-#| msgid "Locked"
+#: src/disks/gduwindow.c:2616
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Bloqueado"
 
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2630
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partição estendida"
@@ -2275,47 +2239,45 @@ msgstr "Partição estendida"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2669
+#: src/disks/gduwindow.c:2650
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2770
 msgid "Unallocated Space"
 msgstr "Espaço não alocado"
 
-#: src/disks/gduwindow.c:2979
-#| msgid "Error mounting filesystem"
+#: src/disks/gduwindow.c:2971
 msgid "Error while repairing filesystem"
 msgstr "Erro ao reparar o sistema de ficheiros"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2998
 msgid "Repair successful"
 msgstr "A reparação teve sucesso"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2998
 msgid "Repair failed"
 msgstr "A reparação falhou"
 
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3001
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "O sistema de ficheiros %s em %s foi reparado."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3007
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "O sistema de ficheiros %s em %s não pôde ser reparado."
 
-#: src/disks/gduwindow.c:3068
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3060
 msgid "Confirm Repair"
 msgstr "Confirmar reparação"
 
-#: src/disks/gduwindow.c:3071
+#: src/disks/gduwindow.c:3063
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2328,40 +2290,34 @@ msgstr ""
 "operação pode demorar bastante, especialmente se a partição contiver muitos "
 "dados."
 
-#: src/disks/gduwindow.c:3099
-#| msgid "Error mounting filesystem"
+#: src/disks/gduwindow.c:3091
 msgid "Error while checking filesystem"
 msgstr "Erro ao verificar o sistema de ficheiros"
 
-#: src/disks/gduwindow.c:3126
-#| msgctxt "volume-content-fs"
-#| msgid "Filesystem Root"
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem intact"
 msgstr "Sistema de ficheiros intacto"
 
-#: src/disks/gduwindow.c:3126
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
+#: src/disks/gduwindow.c:3118
 msgid "Filesystem damaged"
 msgstr "Sistema de ficheiros danificado"
 
-#: src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3121
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "O sistema de ficheiros %s em %s está sem danos."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3127
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "O sistema de ficheiros %s em %s precisa de reparação."
 
-#: src/disks/gduwindow.c:3186
-#| msgid "C_onfirm Passphrase"
+#: src/disks/gduwindow.c:3178
 msgid "Confirm Check"
 msgstr "Confirmar verificação"
 
-#: src/disks/gduwindow.c:3189
+#: src/disks/gduwindow.c:3181
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2369,25 +2325,25 @@ msgstr ""
 "A verificação pode demorar muito, especialmente se a partição contiver "
 "muitos dados."
 
-#: src/disks/gduwindow.c:3426
+#: src/disks/gduwindow.c:3433
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ocorreu um erro ao tentar colocar a unidade em modo de espera"
 
-#: src/disks/gduwindow.c:3473
+#: src/disks/gduwindow.c:3480
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ocorreu um erro ao tentar retirar a unidade do modo de espera"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3526
 msgid "Error powering off drive"
 msgstr "Erro ao desligar unidade"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3578
 msgid "Are you sure you want to power off the drives?"
 msgstr "Tem a certeza que deseja desligar as unidades?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3573
+#: src/disks/gduwindow.c:3580
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2395,47 +2351,47 @@ msgstr ""
 "Esta operação irá preparar o sistema para que os seguintes dispositivos "
 "sejam desligados e removidos."
 
-#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3584 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Desligar"
 
-#: src/disks/gduwindow.c:3657
+#: src/disks/gduwindow.c:3664
 msgid "Error mounting filesystem"
 msgstr "Erro ao montar sistema de ficheiros"
 
-#: src/disks/gduwindow.c:3742
+#: src/disks/gduwindow.c:3749
 msgid "Error deleting partition"
 msgstr "Erro ao apagar partição"
 
-#: src/disks/gduwindow.c:3779
+#: src/disks/gduwindow.c:3786
 msgid "Are you sure you want to delete the partition?"
 msgstr "Tem a certeza que deseja eliminar a partição?"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3787
 msgid "All data on the partition will be lost"
 msgstr "Todos os dados na partição serão perdidos"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3788
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: src/disks/gduwindow.c:3812
+#: src/disks/gduwindow.c:3819
 msgid "Error ejecting media"
 msgstr "Erro ao ejetar suporte"
 
-#: src/disks/gduwindow.c:3895
+#: src/disks/gduwindow.c:3902
 msgid "Error starting swap"
 msgstr "Erro ao iniciar conjunto swap"
 
-#: src/disks/gduwindow.c:3932
+#: src/disks/gduwindow.c:3939
 msgid "Error stopping swap"
 msgstr "Erro ao parar conjunto swap"
 
-#: src/disks/gduwindow.c:3974
+#: src/disks/gduwindow.c:3981
 msgid "Error setting autoclear flag"
 msgstr "Erro ao definir o parâmetro autoclear"
 
-#: src/disks/gduwindow.c:4027 src/disks/gduwindow.c:4091
+#: src/disks/gduwindow.c:4034 src/disks/gduwindow.c:4098
 msgid "Error canceling job"
 msgstr "Erro ao cancelar a tarefa"
 
@@ -2457,9 +2413,6 @@ msgid "Need more input"
 msgstr "São necessários mais dados de entrada"
 
 #: src/disks/ui/about-dialog.ui:12
-#| msgid ""
-#| "Copyright © 2008-2013 Red Hat, Inc.\n"
-#| "Copyright © 2008-2013 David Zeuthen"
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2479,15 +2432,15 @@ msgstr ""
 "António Lima <amrlima@gmail.com>\n"
 "Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Tiago Santos <tiagofsantos81@sapo.pt>\n"
-"José Vieira <jvieira33@sapo.pt>"
+"José Vieira <jvieira33@sapo.pt>\n"
+"Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Juliano S. Camargo <julianosc@pm.me>"
 
 #: src/disks/ui/app-menu.ui:6
-#| msgid "Create Disk Image…"
 msgid "_New Disk Image…"
 msgstr "_Nova imagem de disco…"
 
 #: src/disks/ui/app-menu.ui:10
-#| msgid "Attach Disk _Image…"
 msgid "_Attach Disk Image… (.iso, .img)"
 msgstr "_Anexar imagem de disco… (.iso, .img)"
 
@@ -2500,9 +2453,8 @@ msgid "_Help"
 msgstr "A_juda"
 
 #: src/disks/ui/app-menu.ui:24
-#| msgid "_About"
 msgid "_About Disks"
-msgstr "_Sobre o Discos"
+msgstr "_Acerca do Discos"
 
 #: src/disks/ui/benchmark-dialog.ui:7
 msgid "Benchmark"
@@ -2510,7 +2462,7 @@ msgstr "Análise de desempenho"
 
 #: src/disks/ui/benchmark-dialog.ui:23
 msgid "_Start Benchmark…"
-msgstr "_Iniciar análise de desempenho..."
+msgstr "_Iniciar análise de desempenho…"
 
 #: src/disks/ui/benchmark-dialog.ui:38
 msgid "_Abort Benchmark"
@@ -2546,7 +2498,7 @@ msgstr "Definições da análise de desempenho"
 
 #: src/disks/ui/benchmark-dialog.ui:349
 msgid "_Start Benchmarking…"
-msgstr "_Iniciar análise de desempenho..."
+msgstr "_Iniciar análise de desempenho…"
 
 #: src/disks/ui/benchmark-dialog.ui:381
 msgid ""
@@ -2680,7 +2632,6 @@ msgid "New _Passphrase"
 msgstr "Nova _frase-senha"
 
 #: src/disks/ui/create-confirm-page.ui:17
-#| msgid "All data on the partition will be lost"
 msgid "Warning: all data on the volume will be lost"
 msgstr "Aviso: todos os dados na partição serão perdidos"
 
@@ -2688,12 +2639,11 @@ msgstr "Aviso: todos os dados na partição serão perdidos"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Confirme os detalhes da unidade atual antes de prosseguir."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:1059
 msgid "Device"
 msgstr "Dispositivo"
 
 #: src/disks/ui/create-confirm-page.ui:72
-#| msgid "_Volumes"
 msgid "Volume"
 msgstr "Volume"
 
@@ -2702,7 +2652,7 @@ msgid "Used"
 msgstr "Usado"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:378
 msgid "Location"
 msgstr "Localização"
 
@@ -2733,27 +2683,22 @@ msgstr "Origem"
 
 #: src/disks/ui/create-disk-image-dialog.ui:153
 msgid "_Start Creating…"
-msgstr "_Começar a criar..."
+msgstr "_Começar a criar…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
-#| msgid "_Volumes"
 msgid "Volume _Name"
 msgstr "_Nome do volume"
 
 #: src/disks/ui/create-filesystem-page.ui:33
-#| msgid ""
-#| "The name to use for the filesystem. This is useful if you want to refer "
-#| "to the device via a symlink in the /dev/disk/by-label directory"
 msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
 "O nome a utilizar para o sistema de ficheiros. É útil se desejar referir-se "
 "ao dispositivo através de uma ligação simbólica no diretório /dev/disk/by-"
-"label"
+"label."
 
 #: src/disks/ui/create-filesystem-page.ui:47
-#| msgid "For example, “My Files” or “Backup Data”"
 msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Por exemplo: “Ficheiros da Ângela” ou “Cópia de segurança”."
 
@@ -2763,7 +2708,6 @@ msgid "_Erase"
 msgstr "A_pagar"
 
 #: src/disks/ui/create-filesystem-page.ui:89
-#| msgid "Overwrite existing data with zeroes"
 msgid "Overwrites existing data, but takes longer."
 msgstr "Substitui os dados existentes, mas é mais demorado."
 
@@ -2781,7 +2725,6 @@ msgid "For use with _Windows (NTFS)"
 msgstr "Para uso com o _Windows (NTFS)"
 
 #: src/disks/ui/create-filesystem-page.ui:163
-#| msgid "Compatible with all systems and devices"
 msgid "For use with all _systems and devices (FAT)"
 msgstr "Compatível com todos os _sistemas e dispositivos (FAT)"
 
@@ -2804,7 +2747,6 @@ msgid "Partition _Size"
 msgstr "_Tamanho de partição"
 
 #: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the partition to create"
 msgstr "O tamanho da partição a ser criada"
 
@@ -2868,13 +2810,10 @@ msgid "Free Space _Following"
 msgstr "Espaço livre _subsequente"
 
 #: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
-#| msgid "The free space following the partition, in megabytes"
 msgid "The free space following the partition"
 msgstr "O espaço livre disponível após a partição"
 
 #: src/disks/ui/create-partition-page.ui:173
-#| msgctxt "volume-grid"
-#| msgid "Extended Partition"
 msgid "Extended Partition"
 msgstr "Partição estendida"
 
@@ -2891,7 +2830,6 @@ msgstr ""
 "Tenha cuidado para não a esquecer."
 
 #: src/disks/ui/create-password-page.ui:34
-#| msgid "_Passphrase"
 msgid "_Password"
 msgstr "_Senha"
 
@@ -2904,7 +2842,6 @@ msgid "Enter passphrase used to protect the data"
 msgstr "Insira a frase-senha utilizada para proteger os dados"
 
 #: src/disks/ui/create-password-page.ui:95
-#| msgid "Sho_w Passphrases"
 msgid "Sh_ow Password"
 msgstr "_Mostrar a senha"
 
@@ -3017,200 +2954,206 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Cache de escr_ita"
 
-#: src/disks/ui/disks.ui:63
-msgid "Select a device"
-msgstr "Selecionar um dispositivo"
+#: src/disks/ui/disks.ui:93
+msgid "Go back to main view"
+msgstr "Voltar à vista principal"
 
-#: src/disks/ui/disks.ui:122
+#: src/disks/ui/disks.ui:108
+msgid "Drive Options"
+msgstr "Definições da unidade"
+
+#: src/disks/ui/disks.ui:123
+msgid "Power off this disk"
+msgstr "Desligar este disco"
+
+#: src/disks/ui/disks.ui:138
+msgid "Eject this disk"
+msgstr "Ejetar este disco"
+
+#: src/disks/ui/disks.ui:153
+msgid "Detach this loop device"
+msgstr "Desanexar este dispositivo de loop"
+
+#: src/disks/ui/disks.ui:196
+msgid "No Device Selected"
+msgstr "Nenhum dispositivo selecionado"
+
+#: src/disks/ui/disks.ui:208
+msgid "Select a device to manage"
+msgstr "Selecionar um dispositivo para gerir"
+
+#: src/disks/ui/disks.ui:271
 msgid "Model"
 msgstr "Modelo"
 
-#: src/disks/ui/disks.ui:155
+#: src/disks/ui/disks.ui:304
 msgid "Serial Number"
 msgstr "Número de série"
 
-#: src/disks/ui/disks.ui:192
+#: src/disks/ui/disks.ui:341
 msgid "World Wide Name"
 msgstr "Nome global"
 
-#: src/disks/ui/disks.ui:266
+#: src/disks/ui/disks.ui:415
 msgid "Media"
 msgstr "Suporte"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:490 src/disks/ui/disks.ui:1171
 msgid "Job"
 msgstr "Atividade"
 
-#: src/disks/ui/disks.ui:439
+#: src/disks/ui/disks.ui:588
 msgid "Name"
 msgstr "Nome"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
+#: src/disks/ui/disks.ui:625 src/disks/ui/disks.ui:989
 msgid "Size"
 msgstr "Tamanho"
 
-#: src/disks/ui/disks.ui:513
+#: src/disks/ui/disks.ui:662
 msgid "Auto-clear"
 msgstr "Limpar automaticamente"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:683
 msgid "Detach loop device after unmount action"
 msgstr "Desanexar dispositivo de loop após ação de desmontagem"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:557
+#: src/disks/ui/disks.ui:706
 msgid "Backing File"
 msgstr "Ficheiro de cópia"
 
-#: src/disks/ui/disks.ui:594
+#: src/disks/ui/disks.ui:743
 msgid "Partitioning"
 msgstr "Particionamento"
 
-#: src/disks/ui/disks.ui:638
+#: src/disks/ui/disks.ui:787
 msgid "_Volumes"
 msgstr "_Volumes"
 
-#: src/disks/ui/disks.ui:692
+#: src/disks/ui/disks.ui:841
 msgid "Mount selected partition"
 msgstr "Montar partição selecionada"
 
-#: src/disks/ui/disks.ui:693
-#| msgid "_Mount"
+#: src/disks/ui/disks.ui:842
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Montar"
 
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:855
 msgid "Unmount selected partition"
 msgstr "Desmontar partição selecionada"
 
-#: src/disks/ui/disks.ui:707
-#| msgid "_Mount"
+#: src/disks/ui/disks.ui:856
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Desmontar"
 
-#: src/disks/ui/disks.ui:720
+#: src/disks/ui/disks.ui:869
 msgid "Activate selected swap partition"
 msgstr "Ativar a partição swap selecionada"
 
-#: src/disks/ui/disks.ui:721
-#| msgctxt "volume-content-swap"
-#| msgid "Active"
+#: src/disks/ui/disks.ui:870
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Ativar swap"
 
-#: src/disks/ui/disks.ui:734
+#: src/disks/ui/disks.ui:883
 msgid "Deactivate selected swap partition"
 msgstr "Desativar a partição swap selecionada"
 
-#: src/disks/ui/disks.ui:735
-#| msgid "Deactivate selected swap partition"
+#: src/disks/ui/disks.ui:884
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Desativar swap"
 
-#: src/disks/ui/disks.ui:748
+#: src/disks/ui/disks.ui:897
 msgid "Unlock selected encrypted partition"
 msgstr "Desbloquear a partição encriptada selecionada"
 
-#: src/disks/ui/disks.ui:749
-#| msgid "_Unlock"
+#: src/disks/ui/disks.ui:898
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Desbloquear"
 
-#: src/disks/ui/disks.ui:762
+#: src/disks/ui/disks.ui:911
 msgid "Lock selected encrypted partition"
 msgstr "Bloquear a partição encriptada selecionada"
 
-#: src/disks/ui/disks.ui:763
-#| msgctxt "volume-content-luks"
-#| msgid "Locked"
+#: src/disks/ui/disks.ui:912
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Bloquear"
 
-#: src/disks/ui/disks.ui:776
+#: src/disks/ui/disks.ui:925
 msgid "Create partition in unallocated space"
 msgstr "Criar partição em espaço não atribuído"
 
-#: src/disks/ui/disks.ui:777
-#| msgid "Create Partition"
+#: src/disks/ui/disks.ui:926
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Criar partição"
 
-#: src/disks/ui/disks.ui:790
+#: src/disks/ui/disks.ui:939
 msgid "Delete selected partition"
 msgstr "Eliminar partição selecionada"
 
-#: src/disks/ui/disks.ui:791
-#| msgid "Delete selected partition"
+#: src/disks/ui/disks.ui:940
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Eliminar partição"
 
-#: src/disks/ui/disks.ui:804
+#: src/disks/ui/disks.ui:953
 msgid "Additional partition options"
 msgstr "Opções adicionais de partições"
 
-#: src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:954
 msgctxt "Accessibility label for toolbutton-volume-menu"
 msgid "Menu"
 msgstr "Menu"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:873
+#: src/disks/ui/disks.ui:1022
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: src/disks/ui/disks.ui:947
+#: src/disks/ui/disks.ui:1096
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:984
+#: src/disks/ui/disks.ui:1133
 msgid "Partition Type"
 msgstr "Tipo de partição"
 
 #: src/disks/ui/drive-menu.ui:6
-#| msgid "Format Disk…"
 msgid "Format _Disk…"
 msgstr "Formatar _disco…"
 
 #: src/disks/ui/drive-menu.ui:12
-#| msgid "Create Disk Image…"
 msgid "_Create Disk Image…"
 msgstr "_Criar imagem de disco…"
 
 #: src/disks/ui/drive-menu.ui:16
-#| msgid "Restore Disk Image…"
 msgid "_Restore Disk Image…"
 msgstr "_Restaurar imagem de disco…"
 
 #: src/disks/ui/drive-menu.ui:22
-#| msgid "Benchmark Disk…"
 msgid "_Benchmark Disk…"
 msgstr "A_nalisar desempenho do disco…"
 
 #: src/disks/ui/drive-menu.ui:26
-#| msgid "SMART Data & Self-Tests…"
 msgid "_SMART Data & Self-Tests…"
 msgstr "Dados do _SMART e autotestes…"
 
 #: src/disks/ui/drive-menu.ui:30
-#| msgid "Drive Settings…"
 msgid "Drive S_ettings…"
-msgstr "C_onfigurações da unidade..."
+msgstr "D_efinições da unidade…"
 
 #: src/disks/ui/drive-menu.ui:36
-#| msgid "Standby Now"
 msgid "S_tandby Now"
 msgstr "_Colocar em espera agora"
 
 #: src/disks/ui/drive-menu.ui:40
-#| msgid "Wake-Up from Standby"
 msgid "_Wake-Up from Standby"
 msgstr "Sa_ir do modo de espera"
 
@@ -3223,10 +3166,6 @@ msgid "Us_er Session Defaults"
 msgstr "Predefinições de s_essão de utilizador"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:112
-#| msgid ""
-#| "Switch off <i>Automatic Encryption Options</i> to manage encryption "
-#| "options and passphrase for the device. The options correspond to an entry "
-#| "in the <b>/etc/crypttab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3275,12 +3214,10 @@ msgid "_Passphrase"
 msgstr "_Frase-senha"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:304
-#| msgid "_Unlock at startup"
 msgid "_Unlock at system startup"
 msgstr "_Desbloquear no arranque do sistema"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:310
-#| msgid "If checked, the device will be unlocked at startup [!noauto]"
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr "Se marcado, o dispositivo será desbloqueado no arranque [!noauto]"
 
@@ -3345,10 +3282,6 @@ msgid "Mount Options"
 msgstr "Opções de montagem"
 
 #: src/disks/ui/edit-fstab-dialog.ui:64
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount "
-#| "options for the device. The options correspond to an entry in the <b>/etc/"
-#| "fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3442,12 +3375,10 @@ msgstr ""
 "[x-udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:328
-#| msgid "Mount at _startup"
 msgid "Mount at system _startup"
 msgstr "Montar no _arranque do sistema"
 
 #: src/disks/ui/edit-fstab-dialog.ui:333
-#| msgid "If checked, the device will be mounted at startup [!noauto]"
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr "Se marcado, o dispositivo será montado no arranque do sistema[!noauto]"
 
@@ -3501,13 +3432,9 @@ msgstr ""
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:157
 msgid "Legacy BIOS _Bootable"
-msgstr "Iniciável com _BIOS antigo "
+msgstr "Iniciável com _BIOS antigo"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:162
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record "
-#| "<i>bootable</i> flag. It is normally only used for GPT partitions on MBR "
-#| "systems"
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
@@ -3555,40 +3482,19 @@ msgstr "_Formatar…"
 msgid "_Partitioning"
 msgstr "_Particionamento"
 
-#: src/disks/ui/headerbar.ui:35
-#| msgid "Drive Settings"
-msgid "Drive Options"
-msgstr "Definições da unidade"
-
-#: src/disks/ui/headerbar.ui:50
-msgid "Power off this disk"
-msgstr "Desligar este disco"
-
-#: src/disks/ui/headerbar.ui:65
-msgid "Eject this disk"
-msgstr "Ejetar este disco"
-
-#: src/disks/ui/headerbar.ui:80
-msgid "Detach this loop device"
-msgstr "Desanexar este dispositivo de loop"
-
 #: src/disks/ui/new-disk-image-dialog.ui:8
-#| msgid "Create Disk Image"
 msgid "New Disk Image"
 msgstr "Nova imagem de disco"
 
 #: src/disks/ui/new-disk-image-dialog.ui:29
-#| msgid "Image Size"
 msgid "Image _Size"
 msgstr "_Tamanho da imagem"
 
 #: src/disks/ui/new-disk-image-dialog.ui:86
-#| msgid "The size of the partition to create, in megabytes"
 msgid "The size of the image to create"
 msgstr "O tamanho da imagem a ser criada"
 
 #: src/disks/ui/new-disk-image-dialog.ui:187
-#| msgid "Attach Disk _Image…"
 msgid "Attach new _Image…"
 msgstr "Anexar nova _imagem…"
 
@@ -3648,7 +3554,7 @@ msgstr "Tamanho da imagem"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:230
 msgid "_Start Restoring…"
-msgstr "_Começar a restaurar..."
+msgstr "_Começar a restaurar…"
 
 #: src/disks/ui/shortcuts.ui:13
 msgctxt "shortcut window"
@@ -3656,92 +3562,87 @@ msgid "General"
 msgstr "Geral"
 
 #: src/disks/ui/shortcuts.ui:17
-#| msgid "Create a new partition"
 msgctxt "shortcut window"
 msgid "Create a new empty disk image"
 msgstr "Cria uma nova imagem de disco vazia"
 
 #: src/disks/ui/shortcuts.ui:24
-#| msgid "Error attaching disk image"
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
 msgstr "Anexar uma imagem de disco existente"
 
 #: src/disks/ui/shortcuts.ui:31
-#| msgid "_Help"
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Desselecionar o disco atual"
+
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:45
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Atalhos de teclado"
 
-#: src/disks/ui/shortcuts.ui:45
-#| msgid "_Quit"
+#: src/disks/ui/shortcuts.ui:52
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Sair"
 
-#: src/disks/ui/shortcuts.ui:54
-#| msgid "Disk Drives"
+#: src/disks/ui/shortcuts.ui:61
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Unidade"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Abre o menu da unidade"
 
-#: src/disks/ui/shortcuts.ui:65
-#| msgid "Format selected device"
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formatar a unidade"
 
-#: src/disks/ui/shortcuts.ui:72
-#| msgid "Restore disk image"
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Restaurar uma imagem no disco"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Dados SMART"
 
-#: src/disks/ui/shortcuts.ui:86
-#| msgid "Drive Settings"
+#: src/disks/ui/shortcuts.ui:93
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Definições da unidade"
 
-#: src/disks/ui/shortcuts.ui:95
-#| msgid "Partitioning"
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Partição"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Abre o menu do volume"
 
-#: src/disks/ui/shortcuts.ui:106
-#| msgid "Format selected device"
+#: src/disks/ui/shortcuts.ui:113
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formatar o volume selecionado"
 
 #: src/disks/ui/smart-dialog.ui:7
 msgid "SMART Data & Self-Tests"
-msgstr "Dados SMART e autotestes..."
+msgstr "Dados SMART e autotestes"
 
 #: src/disks/ui/smart-dialog.ui:24
 msgid "_Start Self-test"
-msgstr "_Iniciar autoteste..."
+msgstr "_Iniciar autoteste"
 
 #: src/disks/ui/smart-dialog.ui:28
 msgid "Click to start a SMART self-test"
@@ -3813,12 +3714,10 @@ msgid "If specified"
 msgstr "Se especificado"
 
 #: src/disks/ui/unlock-device-dialog.ui:117
-#| msgid "_Volumes"
 msgid "Volume type"
 msgstr "Tipo de volume"
 
 #: src/disks/ui/unlock-device-dialog.ui:136
-#| msgid "H_idden"
 msgid "_Hidden"
 msgstr "_Oculto"
 
@@ -3835,7 +3734,6 @@ msgid "Windows _system"
 msgstr "_Sistema Windows"
 
 #: src/disks/ui/unlock-device-dialog.ui:150
-#| msgid "Unlock selected encrypted partition"
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Desbloquear uma partição de sistema Windows ou uma unidade."
 
@@ -3864,22 +3762,18 @@ msgid "_Unlock"
 msgstr "_Desbloquear"
 
 #: src/disks/ui/volume-menu.ui:6
-#| msgid "Format Partition…"
 msgid "Format _Partition…"
 msgstr "Formatar _partição…"
 
 #: src/disks/ui/volume-menu.ui:12
-#| msgid "Edit Partition…"
 msgid "_Edit Partition…"
 msgstr "_Editar partição…"
 
 #: src/disks/ui/volume-menu.ui:16
-#| msgid "Edit Filesystem…"
 msgid "Edit _Filesystem…"
 msgstr "Editar s_istema de ficheiros…"
 
 #: src/disks/ui/volume-menu.ui:20
-#| msgid "Change Passphrase…"
 msgid "Change Pa_ssphrase…"
 msgstr "Alterar fra_se-senha…"
 
@@ -3888,39 +3782,32 @@ msgid "Resi_ze…"
 msgstr "Redimensio_nar…"
 
 #: src/disks/ui/volume-menu.ui:30
-#| msgid "Edit Filesystem…"
 msgid "C_heck Filesystem…"
 msgstr "_Verificar sistema de ficheiros…"
 
 #: src/disks/ui/volume-menu.ui:34
-#| msgid "Edit Filesystem…"
 msgid "Rep_air Filesystem…"
-msgstr "Rep_arar sistema de ficheiros..."
+msgstr "Rep_arar sistema de ficheiros…"
 
 #: src/disks/ui/volume-menu.ui:40
-#| msgid "Edit Mount Options…"
 msgid "Edit _Mount Options…"
 msgstr "Editar opções de _montagem…"
 
 #: src/disks/ui/volume-menu.ui:44
-#| msgid "Edit Encryption Options…"
 msgid "Edit Encr_yption Options…"
-msgstr "Editar opções de encriptação..."
+msgstr "Editar opções de encriptação…"
 
 #: src/disks/ui/volume-menu.ui:50
-#| msgid "Create Partition Image…"
 msgid "_Create Partition Image…"
 msgstr "_Criar imagem de partição…"
 
 #: src/disks/ui/volume-menu.ui:54
-#| msgid "Restore Partition Image…"
 msgid "_Restore Partition Image…"
-msgstr "_Restaurar imagem de partição..."
+msgstr "_Restaurar imagem de partição…"
 
 #: src/disks/ui/volume-menu.ui:58
-#| msgid "Benchmark Partition…"
 msgid "_Benchmark Partition…"
-msgstr "A_nalisar desempenho de partição..."
+msgstr "A_nalisar desempenho de partição…"
 
 #: src/libgdu/gduutils.c:107
 msgid "All Files"
@@ -4059,7 +3946,6 @@ msgid "Error locking device"
 msgstr "Erro ao bloquear dispositivo"
 
 #: src/libgdu/gduutils.c:1452
-#| msgid "Error deleting loop device"
 msgid "Error disabling autoclear for loop device"
 msgstr "Erro ao desativar a limpeza automática para o dispositivo de loop"
 
@@ -4605,10 +4491,6 @@ msgstr "Examinar"
 
 #~ msgid "Error setting bitmap for the RAID array"
 #~ msgstr "Erro ao definir o mapa de bits para o conjunto RAID"
-
-#~ msgctxt "multi-disk-menu"
-#~ msgid "No _Devices Selected"
-#~ msgstr "Nenhum _Dispositivo Selecionado"
 
 #~ msgid "%d _Device Selected (%s)"
 #~ msgid_plural "%d _Devices Selected (%s)"

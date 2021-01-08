@@ -16,10 +16,11 @@
         "--socket=session-bus",
         "--socket=system-bus",
         "--socket=wayland",
-        "--socket=x11"
+        "--socket=x11",
+        "--env=G_ENABLE_DIAGNOSTIC=1"
     ],
     "build-options" : {
-        "cflags" : "-O2 -g",
+        "cflags" : "-O2 -g -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED",
         "cxxflags" : "-O2 -g",
         "env" : {
             "V" : "1"

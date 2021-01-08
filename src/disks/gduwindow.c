@@ -74,9 +74,13 @@ struct _GduWindow
 
   GtkWidget *main_box;
   GtkWidget *main_leaflet;
-  GtkWidget *details_notebook;
+  GtkWidget *details_stack;
   GtkWidget *device_tree_scrolledwindow;
   GtkWidget *device_tree_treeview;
+
+  GtkWidget *disks_empty_state_box;
+  GtkWidget *disks_not_implemented;
+  GtkWidget *disks_devtab;
 
   GtkWidget *devtab_app_menu_button;
   GtkWidget *devtab_drive_loop_detach_button;
@@ -133,8 +137,12 @@ static const struct {
   {G_STRUCT_OFFSET (GduWindow, main_leaflet), "main-leaflet"},
   {G_STRUCT_OFFSET (GduWindow, device_tree_scrolledwindow), "device-tree-scrolledwindow"},
 
+  {G_STRUCT_OFFSET (GduWindow, disks_empty_state_box), "disks-empty-state-box"},
+  {G_STRUCT_OFFSET (GduWindow, disks_not_implemented), "disks-not-implemented"},
+  {G_STRUCT_OFFSET (GduWindow, disks_devtab), "disks-devtab"},
+
   {G_STRUCT_OFFSET (GduWindow, device_tree_treeview), "device-tree-treeview"},
-  {G_STRUCT_OFFSET (GduWindow, details_notebook), "disks-notebook"},
+  {G_STRUCT_OFFSET (GduWindow, details_stack), "disks-stack"},
   {G_STRUCT_OFFSET (GduWindow, devtab_drive_table), "devtab-drive-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_table), "devtab-table"},
   {G_STRUCT_OFFSET (GduWindow, devtab_grid_hbox), "devtab-grid-hbox"},
@@ -1119,9 +1127,6 @@ gdu_window_constructed (GObject *object)
       gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
     }
 
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (window->details_notebook), FALSE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (window->details_notebook), FALSE);
-
   context = gtk_widget_get_style_context (window->device_tree_scrolledwindow);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
 
@@ -1582,19 +1587,11 @@ block_compare_on_preferred (UDisksObject *a,
 static void update_empty_page (GduWindow *window);
 static void update_device_page (GduWindow *window, ShowFlags *show_flags, gboolean is_delayed_job_update);
 
-/* Keep in sync with tabs in disks.ui file */
-typedef enum
-{
-  DETAILS_PAGE_NOT_SELECTED,
-  DETAILS_PAGE_NOT_IMPLEMENTED,
-  DETAILS_PAGE_DEVICE,
-} DetailsPage;
-
 static void
 update_all (GduWindow *window, gboolean is_delayed_job_update)
 {
   ShowFlags show_flags = {0};
-  DetailsPage page = DETAILS_PAGE_NOT_IMPLEMENTED;
+  GtkWidget *page = window->disks_not_implemented;
 
   /* figure out page to display */
   if (window->current_object != NULL)
@@ -1602,37 +1599,29 @@ update_all (GduWindow *window, gboolean is_delayed_job_update)
       if (udisks_object_peek_drive (window->current_object) != NULL ||
           udisks_object_peek_block (window->current_object) != NULL)
         {
-          page = DETAILS_PAGE_DEVICE;
+          page = window->disks_devtab;
         }
     }
   else
     {
-      page = DETAILS_PAGE_NOT_SELECTED;
+      page = window->disks_empty_state_box;
     }
 
-  if (page == DETAILS_PAGE_NOT_IMPLEMENTED)
+  if (page == window->disks_not_implemented)
     {
       g_warning ("no page for object %s", g_dbus_object_get_object_path (G_DBUS_OBJECT (window->current_object)));
     }
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (window->details_notebook), page);
+  gtk_stack_set_visible_child (GTK_STACK (window->details_stack), page);
 
-  switch (page)
+  if (page == window->disks_empty_state_box)
     {
-    case DETAILS_PAGE_NOT_SELECTED:
       update_empty_page (window);
-      break;
-
-    case DETAILS_PAGE_NOT_IMPLEMENTED:
-      /* Nothing to update */
-      break;
-
-    case DETAILS_PAGE_DEVICE:
-      update_device_page (window, &show_flags, is_delayed_job_update);
-      break;
-
-    default:
-      g_assert_not_reached ();
     }
+  else if (page == window->disks_devtab)
+    {
+      update_device_page (window, &show_flags, is_delayed_job_update);
+    }
+
   update_for_show_flags (window, &show_flags);
 }
 

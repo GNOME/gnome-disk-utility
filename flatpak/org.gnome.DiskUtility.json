@@ -156,13 +156,39 @@
             ]
         },
         {
+            "name" : "json-c",
+            "buildsystem" : "cmake",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://s3.amazonaws.com/json-c_releases/releases/json-c-0.15.tar.gz",
+                    "sha256" : "b8d80a1ddb718b3ba7492916237bbf86609e9709fb007e7f7d4322f02341a4c6"
+                }
+            ]
+        },
+        {
             "name" : "cryptsetup",
             "buildsystem" : "autotools",
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://www.kernel.org/pub/linux/utils/cryptsetup/v1.7/cryptsetup-1.7.5.tar.xz",
-                    "sha256" : "2b30cd1d0dd606a53ac77b406e1d37798d4b0762fa89de6ea546201906a251bd"
+                    "url" : "https://mirrors.edge.kernel.org/pub/linux/utils/cryptsetup/v2.3/cryptsetup-2.3.4.tar.gz",
+                    "sha256" : "8bc16c0b1c987867f13f0f2114fc4182d92bc866d1f84bb725c2cb9bcc55bf93"
+                }
+            ]
+        },
+        {
+            "name" : "keyutils",
+            "buildsystem" : "simple",
+            "build-commands": [
+                "make",
+                "make LIBDIR=/app/lib BINDIR=/app/bin SBINDIR=/app/sbin INCLUDEDIR=/app/include MANDIR=/app/share/man SHAREDIR=/app/share/keyutils install"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://people.redhat.com/~dhowells/keyutils/keyutils-1.6.1.tar.bz2",
+                    "sha256" : "c8b15722ae51d95b9ad76cc6d49a4c2cc19b0c60f72f61fb9bf43eea7cbd64ce"
                 }
             ]
         },

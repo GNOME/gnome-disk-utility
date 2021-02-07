@@ -195,25 +195,17 @@ gdu_application_command_line (GApplication            *_app,
   gchar *error_message = NULL;
   gboolean opt_format = FALSE;
   const gchar *opt_restore_disk_image = NULL;
-  gint opt_xid = -1;
   GVariantDict *options;
 
   options = g_application_command_line_get_options_dict (command_line);
 
   g_variant_dict_lookup (options, "block-device", "&s", &opt_block_device);
   g_variant_dict_lookup (options, "format-device", "b", &opt_format);
-  g_variant_dict_lookup (options, "xid", "i", &opt_xid);
   g_variant_dict_lookup (options, "restore-disk-image", "^&ay", &opt_restore_disk_image);
  
   if (opt_format && opt_block_device == NULL)
     {
       g_application_command_line_printerr (command_line, _("--format-device must be used together with --block-device\n"));
-      goto out;
-    }
-
-  if (opt_xid != -1 && !opt_format)
-    {
-      g_application_command_line_printerr (command_line, _("--format-device must be specified when using --xid\n"));
       goto out;
     }
 
@@ -241,31 +233,22 @@ gdu_application_command_line (GApplication            *_app,
         }
     }
 
-  if (opt_xid == -1)
+  if (app->window == NULL)
     {
-      if (app->window == NULL)
-        {
-          g_application_activate (G_APPLICATION (app));
-        }
-      else
-        {
-          /* TODO: startup notification stuff */
-          gtk_window_present (GTK_WINDOW (app->window));
-        }
-
-      if (object_to_select != NULL)
-        {
-          gdu_window_select_object (app->window, object_to_select);
-          if (opt_format)
-            gdu_create_format_show (app->client, GTK_WINDOW (app->window), object_to_select,
-                                    FALSE, 0, 0, NULL, NULL);
-        }
+      g_application_activate (G_APPLICATION (app));
     }
-  else if (opt_format)
+  else
     {
-      g_application_hold (_app);
-      gdu_create_format_show (app->client, NULL, object_to_select,
-                              FALSE, 0, 0, (GCallback) g_application_release, _app);
+      /* TODO: startup notification stuff */
+      gtk_window_present (GTK_WINDOW (app->window));
+    }
+
+  if (object_to_select != NULL)
+    {
+      gdu_window_select_object (app->window, object_to_select);
+      if (opt_format)
+        gdu_create_format_show (app->client, GTK_WINDOW (app->window), object_to_select,
+                                FALSE, 0, 0, NULL, NULL);
     }
 
   if (opt_restore_disk_image != NULL)

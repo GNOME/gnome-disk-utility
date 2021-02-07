@@ -209,6 +209,12 @@ gdu_application_command_line (GApplication            *_app,
       goto out;
     }
 
+  if (opt_format && opt_restore_disk_image != NULL)
+    {
+      g_application_command_line_printerr (command_line, _("--format-device must not be used together with --restore-disk-image"));
+      goto out;
+    }
+
   gdu_application_ensure_client (app);
 
   if (opt_block_device != NULL)

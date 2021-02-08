@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-01-04 12:01+0000\n"
-"PO-Revision-Date: 2021-01-05 10:37+0100\n"
+"POT-Creation-Date: 2021-02-07 23:37+0000\n"
+"PO-Revision-Date: 2021-02-08 01:05+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -187,27 +187,27 @@ msgid "Format selected device"
 msgstr "Formatera vald enhet"
 
 #: src/disks/gduapplication.c:175
-msgid "Parent window XID for the format dialog"
-msgstr "Föräldrafönstrets XID för formateringsdialogen"
+msgid "Ignored, kept for compatibility"
+msgstr "Ignorerad, behålls för kompatibilitet"
 
 #: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Återställ diskavbild"
 
-#: src/disks/gduapplication.c:210
+#: src/disks/gduapplication.c:208
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device måste användas tillsammans med --block-device\n"
 
-#: src/disks/gduapplication.c:216
-msgid "--format-device must be specified when using --xid\n"
-msgstr "--format-device måste vara angivet vid användning av --xid\n"
+#: src/disks/gduapplication.c:214
+msgid "--format-device must not be used together with --restore-disk-image"
+msgstr "--format-device får inte användas tillsammans med --restore-disk-image"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:353
+#: src/disks/gduapplication.c:342
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -3943,6 +3943,12 @@ msgstr "En hårddisk är troligen på väg att gå sönder snart."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Undersök"
+
+#~ msgid "Parent window XID for the format dialog"
+#~ msgstr "Föräldrafönstrets XID för formateringsdialogen"
+
+#~ msgid "--format-device must be specified when using --xid\n"
+#~ msgstr "--format-device måste vara angivet vid användning av --xid\n"
 
 #~ msgid "drive-removable-media"
 #~ msgstr "drive-removable-media"

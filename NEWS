@@ -1,3 +1,38 @@
+40.beta - February 11, 2020
+===========================
+
+Bastien Nocera:
+ * build: Pin libhandy wrapper to a specific version
+   (the subprojects/libhandy repository meson uses as fallback)
+ * build: Bump required libhandy to version 1.1.90
+
+Christopher Davis:
+ * ci: Add dependencies for libhandy
+ * dialogs: Remove redundant and deprecated child props
+ * about-dialog: Remove useless child
+ * ui: Make disks-devtab a scrolledwindow
+ * ui: move margins from stack to devtab
+ * ui: Use HdyStatusPage for empty view
+ * ui: Replace GtkTable with GtkGrid
+ * ui: Replace Notebook with stack in the main window
+ * ui: Replace GtkHBox and GtkVBox
+ * disks.ui: Remove GtkAlignment
+ * ui: Adjust margins
+ * flatpak: Enable diagnostics and disable deprecated API
+
+Kai Lüke:
+ * Don't allow to specify both --format-device and --restore-disk-image
+ * Ignore the --xid option when formatting from Nautilus
+   (this aligns the behavior under X11 with that on Wayland)
+ * Flatpak build fixes
+
+Updated translations:
+ * Anders Jonsson (sv), Asier Sarasua Garmendia (eu), Daniel Mustieles (es),
+   Daniel Șerbănescu (ro), Emin Tufan Çetin (tr), Fran Dieguez (gl),
+   Hugo Carvalho (pt), Jordi Mas (ca), Kjartan Maraas (nb), Kukuh Syafaat (id),
+   Luna Jernberg (sv), Matej Urbančič (sl), Yuri Chornoivan (uk)
+
+
 40.alpha - January 9, 2020
 ==========================
 

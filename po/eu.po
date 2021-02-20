@@ -9,8 +9,8 @@
 msgid ""
 msgstr "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2020-09-20 21:45+0000\n"
-"PO-Revision-Date: 2021-01-10 10:00+0100\n"
+"POT-Creation-Date: 2021-02-11 14:27+0000\n"
+"PO-Revision-Date: 2021-02-20 10:00+0100\n"
 "Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -73,7 +73,7 @@ msgstr "Diskoak kudeatzeko modu erraza"
 msgid "The GNOME Project"
 msgstr "GNOME proiektua"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1090
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Diskoak"
@@ -103,7 +103,7 @@ msgstr "Hautatu disko-irudiak muntatzeko"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:800
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
 msgid "_Cancel"
 msgstr "_Utzi"
 
@@ -173,27 +173,27 @@ msgid "Format selected device"
 msgstr "Eman formatua hautatutako gailuari"
 
 #: src/disks/gduapplication.c:175
-msgid "Parent window XID for the format dialog"
-msgstr "Leiho gurasoaren XID formatuaren elkarrizketa-koadroarentzako"
+msgid "Ignored, kept for compatibility"
+msgstr "Ezikusi egin, bateragarritasuna bermatzeko mantendu da"
 
 #: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Berreskuratu disko-irudia"
 
-#: src/disks/gduapplication.c:210
+#: src/disks/gduapplication.c:208
 msgid "--format-device must be used together with --block-device\n"
 msgstr "'--format-device' erabili behar da '--block-device' aukerarekin batera\n"
 
-#: src/disks/gduapplication.c:216
-msgid "--format-device must be specified when using --xid\n"
-msgstr "'--format-device' zehaztu behar da '--xid' erabiltzean\n"
+#: src/disks/gduapplication.c:214
+msgid "--format-device must not be used together with --restore-disk-image"
+msgstr "'--format-device' ez da erabili behar '--restore-disk-image' aukerarekin batera"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:353
+#: src/disks/gduapplication.c:342
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -420,7 +420,7 @@ msgstr "Posizioaren zonan kokatze kopurua"
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:179
+#: src/disks/ui/smart-dialog.ui:163
 msgid "Temperature"
 msgstr "Tenperatura"
 
@@ -1041,7 +1041,7 @@ msgid "Updates"
 msgstr "Eguneraketak"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:452
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
 msgid "Assessment"
 msgstr "Estimazioa"
 
@@ -1910,7 +1910,7 @@ msgstr "Existitzen diren datu guztiak ezabatu egingo dira"
 msgid "_Restore"
 msgstr "_Berrezarri"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
 msgid "Select a Keyfile"
 msgstr "Hautatu gako-fitxategia"
 
@@ -1935,7 +1935,7 @@ msgstr "Ezarri desblokeorako aukerak"
 msgid "Volumes Grid"
 msgstr "Bolumenen sareta"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
 msgid "No Media"
 msgstr "Euskarririk ez"
 
@@ -1977,37 +1977,37 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Ez dago nahikoa leku librerik"
 
-#: src/disks/gduwindow.c:624
+#: src/disks/gduwindow.c:632
 msgid "Error deleting loop device"
 msgstr "Errorea gailuaren begizta ezabatzean"
 
-#: src/disks/gduwindow.c:724 src/disks/gduwindow.c:767
+#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
 msgid "Error attaching disk image"
 msgstr "Errorea disko-irudia eranstean"
 
-#: src/disks/gduwindow.c:797
+#: src/disks/gduwindow.c:805
 msgid "Select Disk Image to Attach"
 msgstr "Hautatu disko-irudiak eransteko"
 
-#: src/disks/gduwindow.c:801
+#: src/disks/gduwindow.c:809
 msgid "_Attach"
 msgstr "_Erantsi"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:808
+#: src/disks/gduwindow.c:816
 msgid "Set up _read-only loop device"
 msgstr "Konfiguratu begizta ('loop') motako gailua irakurtzeko _soilik gisa"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:817
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr "Gaitzen bada, begiztaren gailua irakurtzeko soilik izango da. Erabilgarria da ez baduzu bere fitxategiak aldatzerik nahi"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1674
+#: src/disks/gduwindow.c:1663
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (irakurtzeko soilik)"
@@ -2016,7 +2016,7 @@ msgstr "%s (irakurtzeko soilik)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1712
+#: src/disks/gduwindow.c:1701
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2025,7 +2025,7 @@ msgstr "%s geratzen da (%s/seg)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1720
+#: src/disks/gduwindow.c:1709
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2036,7 +2036,7 @@ msgstr "%s falta"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1724
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s / %s — %s"
@@ -2045,17 +2045,17 @@ msgstr "%s / %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1860
+#: src/disks/gduwindow.c:1849
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %%%2.1f"
 
-#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
+#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
 msgid "Block device is empty"
 msgstr "Blokeen gailua hutsik dago"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1963
+#: src/disks/gduwindow.c:1952
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2064,11 +2064,11 @@ msgstr "Ezezaguna (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2122
+#: src/disks/gduwindow.c:2111
 msgid "Connected to another seat"
 msgstr "Konektatu beste eserlekura"
 
-#: src/disks/gduwindow.c:2267
+#: src/disks/gduwindow.c:2256
 msgid "Loop device is empty"
 msgstr "Begiztaren gailua hutsik dago"
 
@@ -2078,61 +2078,61 @@ msgstr "Begiztaren gailua hutsik dago"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2484
+#: src/disks/gduwindow.c:2473
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s libre (%%%.1f beteta)"
 
-#: src/disks/gduwindow.c:2514
+#: src/disks/gduwindow.c:2503
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Ezezaguna"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2552
+#: src/disks/gduwindow.c:2541
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Fitxategi-sistemaren erroa"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2560
+#: src/disks/gduwindow.c:2549
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "%s(e)n muntatuta"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2566
+#: src/disks/gduwindow.c:2555
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Muntatu gabe"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2589
+#: src/disks/gduwindow.c:2578
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2595
+#: src/disks/gduwindow.c:2584
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ez aktibo"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2610
+#: src/disks/gduwindow.c:2599
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Desblokeatuta"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2616
+#: src/disks/gduwindow.c:2605
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Blokeatuta"
 
-#: src/disks/gduwindow.c:2630
+#: src/disks/gduwindow.c:2619
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Hedatutako partizioa"
@@ -2141,45 +2141,45 @@ msgstr "Hedatutako partizioa"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2650
+#: src/disks/gduwindow.c:2639
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2770
+#: src/disks/gduwindow.c:2759
 msgid "Unallocated Space"
 msgstr "Esleitu gabeko lekua"
 
-#: src/disks/gduwindow.c:2971
+#: src/disks/gduwindow.c:2960
 msgid "Error while repairing filesystem"
 msgstr "Errorea fitxategi-sistema konpontzean"
 
-#: src/disks/gduwindow.c:2998
+#: src/disks/gduwindow.c:2987
 msgid "Repair successful"
 msgstr "Ongi konpondu da"
 
-#: src/disks/gduwindow.c:2998
+#: src/disks/gduwindow.c:2987
 msgid "Repair failed"
 msgstr "Konponketak huts egin du"
 
-#: src/disks/gduwindow.c:3001
+#: src/disks/gduwindow.c:2990
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%s fitxategi-sistema, %s(e)n, konpondu da."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3007
+#: src/disks/gduwindow.c:2996
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%s fitxategi-sistema, %s(e)n, ezin izan da konpondu."
 
-#: src/disks/gduwindow.c:3060
+#: src/disks/gduwindow.c:3049
 msgid "Confirm Repair"
 msgstr "Berretsi konpontzea"
 
-#: src/disks/gduwindow.c:3063
+#: src/disks/gduwindow.c:3052
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2187,104 +2187,104 @@ msgid ""
 "contains a lot of data."
 msgstr "Batzuetan ezin izaten da fitxategi-sistema bat konpondu, eta datuen galera gerta daiteke. Aurrenik babeskopia bat egitea komeni da berreskuratzeko forentse-tresnak erabil ahal izateko. Eragiketak denbora luzekoa izan daiteke, batez ere partizioak datuen kopuru handia badu."
 
-#: src/disks/gduwindow.c:3091
+#: src/disks/gduwindow.c:3080
 msgid "Error while checking filesystem"
 msgstr "Errorea fitxategi-sistema egiaztatzean"
 
-#: src/disks/gduwindow.c:3118
+#: src/disks/gduwindow.c:3107
 msgid "Filesystem intact"
 msgstr "Fitxategi-sistema oso osorik"
 
-#: src/disks/gduwindow.c:3118
+#: src/disks/gduwindow.c:3107
 msgid "Filesystem damaged"
 msgstr "Fitxategi-sistema hondatuta"
 
-#: src/disks/gduwindow.c:3121
+#: src/disks/gduwindow.c:3110
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s(e)ko %1$s fitxategi-sistemak ez dauka kalterik."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3127
+#: src/disks/gduwindow.c:3116
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s(e)ko %1$s fitxategi-sistemak konpontzea behar ditu."
 
-#: src/disks/gduwindow.c:3178
+#: src/disks/gduwindow.c:3167
 msgid "Confirm Check"
 msgstr "Berretsi egiaztaketa"
 
-#: src/disks/gduwindow.c:3181
+#: src/disks/gduwindow.c:3170
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Egiaztaketa denboran asko luzatu daiteke, batez ere partizioak datuen kopuru handia badu."
 
-#: src/disks/gduwindow.c:3433
+#: src/disks/gduwindow.c:3422
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Errorea gertatu da unitatea egonean moduan jartzen saiatzean"
 
-#: src/disks/gduwindow.c:3480
+#: src/disks/gduwindow.c:3469
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Errorea gertatu da unitatea egonean modutik esnatzen saiatzean"
 
-#: src/disks/gduwindow.c:3526
+#: src/disks/gduwindow.c:3515
 msgid "Error powering off drive"
 msgstr "Errorea unitatea itzaltzean"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3578
+#: src/disks/gduwindow.c:3567
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ziur zaude unitateak itzaltzea nahi dituzula?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3580
+#: src/disks/gduwindow.c:3569
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr "Eragiketa honek sistema prestatuko du unitate hauek itzali eta kentzeko"
 
-#: src/disks/gduwindow.c:3584 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Itzali"
 
-#: src/disks/gduwindow.c:3664
+#: src/disks/gduwindow.c:3653
 msgid "Error mounting filesystem"
 msgstr "Errorea fitxategi-sistema muntatzean"
 
-#: src/disks/gduwindow.c:3749
+#: src/disks/gduwindow.c:3738
 msgid "Error deleting partition"
 msgstr "Errorea partizioa ezabatzean"
 
-#: src/disks/gduwindow.c:3786
+#: src/disks/gduwindow.c:3775
 msgid "Are you sure you want to delete the partition?"
 msgstr "Ziur zaude partizioa ezabatzea nahi duzula?"
 
-#: src/disks/gduwindow.c:3787
+#: src/disks/gduwindow.c:3776
 msgid "All data on the partition will be lost"
 msgstr "Partizioan dauden datu guztiak galdu egingo dira"
 
-#: src/disks/gduwindow.c:3788
+#: src/disks/gduwindow.c:3777
 msgid "_Delete"
 msgstr "Ez_abatu"
 
-#: src/disks/gduwindow.c:3819
+#: src/disks/gduwindow.c:3808
 msgid "Error ejecting media"
 msgstr "Errorea euskarria egoztean"
 
-#: src/disks/gduwindow.c:3902
+#: src/disks/gduwindow.c:3891
 msgid "Error starting swap"
 msgstr "Errorea swap abiaraztean"
 
-#: src/disks/gduwindow.c:3939
+#: src/disks/gduwindow.c:3928
 msgid "Error stopping swap"
 msgstr "Errorea swap gelditzean"
 
-#: src/disks/gduwindow.c:3981
+#: src/disks/gduwindow.c:3970
 msgid "Error setting autoclear flag"
 msgstr "Errorea garbiketa automatikoaren bandera ezartzean"
 
-#: src/disks/gduwindow.c:4034 src/disks/gduwindow.c:4098
+#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
 msgid "Error canceling job"
 msgstr "Errorea lana bertan behera uztean"
 
@@ -2350,66 +2350,66 @@ msgstr "Errendimenduaren proba"
 msgid "_Start Benchmark…"
 msgstr "_Hasi errendimenduaren proba…"
 
-#: src/disks/ui/benchmark-dialog.ui:38
+#: src/disks/ui/benchmark-dialog.ui:35
 msgid "_Abort Benchmark"
 msgstr "Errendimenduaren probari _buruz"
 
-#: src/disks/ui/benchmark-dialog.ui:101
+#: src/disks/ui/benchmark-dialog.ui:83
 msgid "Last Benchmarked"
 msgstr "Azken errendimendu-proba"
 
-#: src/disks/ui/benchmark-dialog.ui:118
+#: src/disks/ui/benchmark-dialog.ui:100
 msgid "Average Read Rate"
 msgstr "Batez besteko irakurketa-emaria"
 
-#: src/disks/ui/benchmark-dialog.ui:135
+#: src/disks/ui/benchmark-dialog.ui:117
 msgid "Average Write Rate"
 msgstr "Batez besteko idazketa-emaria"
 
-#: src/disks/ui/benchmark-dialog.ui:152
+#: src/disks/ui/benchmark-dialog.ui:134
 msgid "Average Access Time"
 msgstr "Batez besteko atzipen-denbora"
 
-#: src/disks/ui/benchmark-dialog.ui:233
+#: src/disks/ui/benchmark-dialog.ui:215
 msgid "Disk or Device"
 msgstr "Disko edo gailua"
 
-#: src/disks/ui/benchmark-dialog.ui:266
+#: src/disks/ui/benchmark-dialog.ui:248
 msgid "Sample Size"
 msgstr "Lagin-tamaina"
 
-#: src/disks/ui/benchmark-dialog.ui:319
+#: src/disks/ui/benchmark-dialog.ui:291
 msgid "Benchmark Settings"
 msgstr "Errendimenduaren probaren ezarpenak"
 
-#: src/disks/ui/benchmark-dialog.ui:349
+#: src/disks/ui/benchmark-dialog.ui:316
 msgid "_Start Benchmarking…"
 msgstr "_Hasi errendimenduaren proba…"
 
-#: src/disks/ui/benchmark-dialog.ui:381
+#: src/disks/ui/benchmark-dialog.ui:340
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr "Errendimenduaren probak gailuaren area batzuetan transferentzia-emaria neurtzea inplikatzen du, baita ausazko area batetik beste batera kokatzeak eskatzen  dion denbora neurtzea ere. Egin ezazu datu garrantzitsuen babeskopia idazketaren proba-bankua erabili aurretik."
 
-#: src/disks/ui/benchmark-dialog.ui:397
+#: src/disks/ui/benchmark-dialog.ui:356
 msgid "Transfer Rate"
 msgstr "Transferentzi-emaria"
 
-#: src/disks/ui/benchmark-dialog.ui:420
+#: src/disks/ui/benchmark-dialog.ui:374
 msgid "Number of S_amples"
 msgstr "La_gin kopurua"
 
-#: src/disks/ui/benchmark-dialog.ui:439
+#: src/disks/ui/benchmark-dialog.ui:393
 msgid "Sample S_ize (MiB)"
 msgstr "Lagin-tamaina (MiB)"
 
-#: src/disks/ui/benchmark-dialog.ui:455
+#: src/disks/ui/benchmark-dialog.ui:409
 msgid "Perform _write-benchmark"
 msgstr "Landu i_dazketaren errendimendu-proba"
 
-#: src/disks/ui/benchmark-dialog.ui:459
+#: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -2423,28 +2423,28 @@ msgstr "Disko baten idazketa-emaria neurtzeko errendimenduaren proba lantzeak di
 "\n"
 "Ez bada egiaztatzen, errendimenduaren probaren idazketaren zatia ez da landuko, baina bestetik, gailuaren atzipen esklusiboa ez da beharko (diskoa edo gailua erabili ahalko da)."
 
-#: src/disks/ui/benchmark-dialog.ui:478
+#: src/disks/ui/benchmark-dialog.ui:432
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr "Laginen kopurua. Kopuru handiagoek grafiko leunagoak sortzen dituzten, baina probak denbora gehiago behar izaten du."
 
-#: src/disks/ui/benchmark-dialog.ui:495
+#: src/disks/ui/benchmark-dialog.ui:449
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr "MiB (1048576 byte) kopurua lagin bakoitza irakurtzeko/idazteko. Lagin-tamaina handiek errendimendu-proben neurketa zehatzagoa lortzen du, probak ordea denbora gehiago beharko du."
 
-#: src/disks/ui/benchmark-dialog.ui:533
+#: src/disks/ui/benchmark-dialog.ui:482
 msgid "Access Time"
 msgstr "Atzipen-denbora"
 
-#: src/disks/ui/benchmark-dialog.ui:556
+#: src/disks/ui/benchmark-dialog.ui:500
 msgid "Number of Sampl_es"
 msgstr "La_gin kopurua"
 
-#: src/disks/ui/benchmark-dialog.ui:575
+#: src/disks/ui/benchmark-dialog.ui:519
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -2454,49 +2454,49 @@ msgstr "Laginen kopurua. Kopuru handiagoak atzipen-denboraren ereduen argazki ze
 msgid "Change Passphrase"
 msgstr "Aldatu pasaesaldia"
 
-#: src/disks/ui/change-passphrase-dialog.ui:37
-#: src/disks/ui/edit-dos-partition-dialog.ui:41
-#: src/disks/ui/edit-filesystem-dialog.ui:41
-#: src/disks/ui/edit-gpt-partition-dialog.ui:41
-#: src/disks/ui/edit-partition-dialog.ui:41
+#: src/disks/ui/change-passphrase-dialog.ui:32
+#: src/disks/ui/edit-dos-partition-dialog.ui:36
+#: src/disks/ui/edit-filesystem-dialog.ui:36
+#: src/disks/ui/edit-gpt-partition-dialog.ui:36
+#: src/disks/ui/edit-partition-dialog.ui:36
 msgid "C_hange"
 msgstr "_Aldatu"
 
-#: src/disks/ui/change-passphrase-dialog.ui:86
+#: src/disks/ui/change-passphrase-dialog.ui:68
 msgid "Curr_ent Passphrase"
 msgstr "_Uneko pasaesaldia"
 
-#: src/disks/ui/change-passphrase-dialog.ui:106
-#: src/disks/ui/change-passphrase-dialog.ui:107
+#: src/disks/ui/change-passphrase-dialog.ui:88
+#: src/disks/ui/change-passphrase-dialog.ui:89
 msgid "Enter current passphrase used to protect the data"
 msgstr "Sartu uneko pasaesaldia (datuak babesteko erabilitakoa)"
 
-#: src/disks/ui/change-passphrase-dialog.ui:123
+#: src/disks/ui/change-passphrase-dialog.ui:105
 msgid "Sho_w Passphrases"
 msgstr "Erakutsi _pasaesaldiak"
 
-#: src/disks/ui/change-passphrase-dialog.ui:129
-#: src/disks/ui/change-passphrase-dialog.ui:130
+#: src/disks/ui/change-passphrase-dialog.ui:111
+#: src/disks/ui/change-passphrase-dialog.ui:112
 #: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "Aktibatu koadro hau goian sartutako pasaesaldiak ikusteko"
 
-#: src/disks/ui/change-passphrase-dialog.ui:164
-#: src/disks/ui/change-passphrase-dialog.ui:165
+#: src/disks/ui/change-passphrase-dialog.ui:146
+#: src/disks/ui/change-passphrase-dialog.ui:147
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Berretsi goian sartutako pasaesaldia"
 
-#: src/disks/ui/change-passphrase-dialog.ui:185
-#: src/disks/ui/change-passphrase-dialog.ui:186
+#: src/disks/ui/change-passphrase-dialog.ui:167
+#: src/disks/ui/change-passphrase-dialog.ui:168
 msgid "Enter new passphrase used to protect the data"
 msgstr "Sartu pasaesaldi berria (datuak babesteko erabilitakoa)"
 
-#: src/disks/ui/change-passphrase-dialog.ui:206
+#: src/disks/ui/change-passphrase-dialog.ui:188
 msgid "C_onfirm Passphrase"
 msgstr "Be_rretsi pasaesaldia"
 
-#: src/disks/ui/change-passphrase-dialog.ui:226
+#: src/disks/ui/change-passphrase-dialog.ui:208
 msgid "New _Passphrase"
 msgstr "_Pasaesaldi berria"
 
@@ -2508,7 +2508,7 @@ msgstr "Abisua: bolumeneko datu guztiak galdu egingo dira."
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Baieztatu uneko bolumenaren xehetasunak jarraitu baino lehen."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:1059
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
 msgid "Device"
 msgstr "Gailua"
 
@@ -2521,7 +2521,7 @@ msgid "Used"
 msgstr "Erabilita"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:378
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
 msgid "Location"
 msgstr "Kokalekua"
 
@@ -2530,8 +2530,8 @@ msgid "Create Disk Image"
 msgstr "Sortu disko-irudia"
 
 #: src/disks/ui/create-disk-image-dialog.ui:29
-#: src/disks/ui/edit-crypttab-dialog.ui:140
-#: src/disks/ui/edit-gpt-partition-dialog.ui:107
+#: src/disks/ui/edit-crypttab-dialog.ui:104
+#: src/disks/ui/edit-gpt-partition-dialog.ui:91
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Izena"
@@ -2550,7 +2550,7 @@ msgstr "Hautatu karpeta"
 msgid "Source"
 msgstr "Iturburua"
 
-#: src/disks/ui/create-disk-image-dialog.ui:153
+#: src/disks/ui/create-disk-image-dialog.ui:143
 msgid "_Start Creating…"
 msgstr "_Hasi sortzen…"
 
@@ -2569,7 +2569,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Adibidez, “Lorearen fitxategiak\" edo \"Babeskopiako datuak\""
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:103
+#: src/disks/ui/format-disk-dialog.ui:87
 msgid "_Erase"
 msgstr "_Ezabatu"
 
@@ -2582,7 +2582,7 @@ msgid "_Internal disk for use with Linux systems only (Ext4)"
 msgstr "Linux sistemekin soilik erabiltzeko _barneko diskoa (Ext4)"
 
 #: src/disks/ui/create-filesystem-page.ui:131
-#: src/disks/ui/create-other-page.ui:46
+#: src/disks/ui/create-other-page.ui:36
 msgid "_Password protect volume (LUKS)"
 msgstr "_Pasahitzez babestutako bolumena (LUKS)"
 
@@ -2605,82 +2605,82 @@ msgid ""
 "about your use case."
 msgstr "Aukera lehenetsiak zure beharretara egokitzen ez badira, hautatu hurrengo fitxategi-sistemetako bat. Kontuan hartu desberdintasun teknikoak eta aztertu zure kasu zehatza."
 
-#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
 msgstr "Partizioaren _tamaina"
 
-#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
 msgid "The size of the partition to create"
 msgstr "Partizioaren tamaina sortzeko"
 
-#: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/create-partition-page.ui:103
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "byte"
 
-#: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/create-partition-page.ui:104
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
 msgid "kB"
 msgstr "kB"
 
-#: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/create-partition-page.ui:105
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
 msgid "MB"
 msgstr "MB"
 
-#: src/disks/ui/create-partition-page.ui:114
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
+#: src/disks/ui/create-partition-page.ui:106
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
 msgid "GB"
 msgstr "GB"
 
-#: src/disks/ui/create-partition-page.ui:115
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
+#: src/disks/ui/create-partition-page.ui:107
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
 msgid "TB"
 msgstr "TB"
 
-#: src/disks/ui/create-partition-page.ui:116
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
+#: src/disks/ui/create-partition-page.ui:108
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
 msgid "PB"
 msgstr "PB"
 
-#: src/disks/ui/create-partition-page.ui:117
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
+#: src/disks/ui/create-partition-page.ui:109
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-page.ui:118
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
+#: src/disks/ui/create-partition-page.ui:110
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-page.ui:119
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
+#: src/disks/ui/create-partition-page.ui:111
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-page.ui:120
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
+#: src/disks/ui/create-partition-page.ui:112
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-page.ui:121
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
+#: src/disks/ui/create-partition-page.ui:113
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:127 src/disks/ui/resize-dialog.ui:143
 msgid "Free Space _Following"
 msgstr "Espazio libre _jarraia"
 
-#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
+#: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
 msgid "The free space following the partition"
 msgstr "Partizioari jarraitzen dion espazio librea"
 
-#: src/disks/ui/create-partition-page.ui:173
+#: src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Hedatutako partizioa"
 
-#: src/disks/ui/create-partition-page.ui:177
+#: src/disks/ui/create-partition-page.ui:169
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr "Hedatutako partizioek partizio logikoak eduki ditzakete"
 
@@ -2810,170 +2810,170 @@ msgstr "I_dazketa-cachea"
 msgid "Go back to main view"
 msgstr "Itzuli ikuspegi nagusira"
 
-#: src/disks/ui/disks.ui:108
+#: src/disks/ui/disks.ui:105
 msgid "Drive Options"
 msgstr "Unitatearen aukerak"
 
-#: src/disks/ui/disks.ui:123
+#: src/disks/ui/disks.ui:120
 msgid "Power off this disk"
 msgstr "Itzali disko hau"
 
-#: src/disks/ui/disks.ui:138
+#: src/disks/ui/disks.ui:135
 msgid "Eject this disk"
 msgstr "Egotzi disko hau"
 
-#: src/disks/ui/disks.ui:153
+#: src/disks/ui/disks.ui:150
 msgid "Detach this loop device"
 msgstr "Askatu begizta gailu hau"
 
-#: src/disks/ui/disks.ui:196
+#: src/disks/ui/disks.ui:173
 msgid "No Device Selected"
 msgstr "Ez da gailurik hautatu"
 
-#: src/disks/ui/disks.ui:208
-msgid "Select a device to manage"
-msgstr "Hautatu kudeatu nahi den gailua"
+#: src/disks/ui/disks.ui:174
+msgid "Select a device to manage."
+msgstr "Hautatu kudeatu nahi den gailua."
 
-#: src/disks/ui/disks.ui:271
+#: src/disks/ui/disks.ui:209
 msgid "Model"
 msgstr "Modeloa"
 
-#: src/disks/ui/disks.ui:304
+#: src/disks/ui/disks.ui:238
 msgid "Serial Number"
 msgstr "Serie-zenbakia"
 
-#: src/disks/ui/disks.ui:341
+#: src/disks/ui/disks.ui:267
 msgid "World Wide Name"
 msgstr "Mundu zabaleko izena (WWN)"
 
-#: src/disks/ui/disks.ui:415
+#: src/disks/ui/disks.ui:325
 msgid "Media"
 msgstr "Euskarria"
 
-#: src/disks/ui/disks.ui:490 src/disks/ui/disks.ui:1171
+#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
 msgid "Job"
 msgstr "Lana"
 
-#: src/disks/ui/disks.ui:588
+#: src/disks/ui/disks.ui:476
 msgid "Name"
 msgstr "Izena"
 
-#: src/disks/ui/disks.ui:625 src/disks/ui/disks.ui:989
+#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
 msgid "Size"
 msgstr "Tamaina"
 
-#: src/disks/ui/disks.ui:662
+#: src/disks/ui/disks.ui:534
 msgid "Auto-clear"
 msgstr "Automatikoki garbitu"
 
-#: src/disks/ui/disks.ui:683
+#: src/disks/ui/disks.ui:552
 msgid "Detach loop device after unmount action"
 msgstr "Askatu begizta gailua desmuntatze ekintzaren ondoren"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:566
 msgid "Backing File"
 msgstr "Fitxategiaren babeskopia egiten"
 
-#: src/disks/ui/disks.ui:743
+#: src/disks/ui/disks.ui:595
 msgid "Partitioning"
 msgstr "Partizioa egitea"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:626
 msgid "_Volumes"
 msgstr "_Bolumenak"
 
-#: src/disks/ui/disks.ui:841
+#: src/disks/ui/disks.ui:668
 msgid "Mount selected partition"
 msgstr "Muntatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:842
+#: src/disks/ui/disks.ui:669
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Muntatu"
 
-#: src/disks/ui/disks.ui:855
+#: src/disks/ui/disks.ui:682
 msgid "Unmount selected partition"
 msgstr "Desmuntatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:856
+#: src/disks/ui/disks.ui:683
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Desmuntatu"
 
-#: src/disks/ui/disks.ui:869
+#: src/disks/ui/disks.ui:696
 msgid "Activate selected swap partition"
 msgstr "Aktibatu hautatutako trukatze-partizioa"
 
-#: src/disks/ui/disks.ui:870
+#: src/disks/ui/disks.ui:697
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Aktibatu trukatze-partizioa"
 
-#: src/disks/ui/disks.ui:883
+#: src/disks/ui/disks.ui:710
 msgid "Deactivate selected swap partition"
 msgstr "Desaktibatu hautatutako trukatze-partizioa"
 
-#: src/disks/ui/disks.ui:884
+#: src/disks/ui/disks.ui:711
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Desaktibatu trukatze-partizioa"
 
-#: src/disks/ui/disks.ui:897
+#: src/disks/ui/disks.ui:724
 msgid "Unlock selected encrypted partition"
 msgstr "Desblokeatu hautatutako zifratutako partizioa"
 
-#: src/disks/ui/disks.ui:898
+#: src/disks/ui/disks.ui:725
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Desblokeatu"
 
-#: src/disks/ui/disks.ui:911
+#: src/disks/ui/disks.ui:738
 msgid "Lock selected encrypted partition"
 msgstr "Blokeatu hautatutako zifratutako partizioa"
 
-#: src/disks/ui/disks.ui:912
+#: src/disks/ui/disks.ui:739
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Blokeatu"
 
-#: src/disks/ui/disks.ui:925
+#: src/disks/ui/disks.ui:752
 msgid "Create partition in unallocated space"
 msgstr "Sortu partizioa esleitu gabeko lekuan"
 
-#: src/disks/ui/disks.ui:926
+#: src/disks/ui/disks.ui:753
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Sortu partizioa"
 
-#: src/disks/ui/disks.ui:939
+#: src/disks/ui/disks.ui:766
 msgid "Delete selected partition"
 msgstr "Ezabatu hautatutako partizioa"
 
-#: src/disks/ui/disks.ui:940
+#: src/disks/ui/disks.ui:767
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Ezabatu partizioa"
 
-#: src/disks/ui/disks.ui:953
+#: src/disks/ui/disks.ui:780
 msgid "Additional partition options"
 msgstr "Partizioaren aukera gehigarriak"
 
-#: src/disks/ui/disks.ui:954
+#: src/disks/ui/disks.ui:781
 msgctxt "Accessibility label for toolbutton-volume-menu"
 msgid "Menu"
 msgstr "Menua"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:834
 msgid "Contents"
 msgstr "Edukia"
 
-#: src/disks/ui/disks.ui:1096
+#: src/disks/ui/disks.ui:892
 msgid "UUID"
 msgstr "UUIDa"
 
-#: src/disks/ui/disks.ui:1133
+#: src/disks/ui/disks.ui:921
 msgid "Partition Type"
 msgstr "Partizio mota"
 
@@ -3013,64 +3013,64 @@ msgstr "_Iratzarri egonetik"
 msgid "Encryption Options"
 msgstr "Zifratzeko aukerak"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
 msgstr "_Erabiltzailearen saioaren lehenespenak"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:112
+#: src/disks/ui/edit-crypttab-dialog.ui:86
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr "Desaktibatu <i>Erabiltzailearen saioaren lehenespenak</i> gailua zifratzeko aukerak eta pasaesaldia kudeatzeko. Aukerak <b>/etc/crypttab</b> fitxategiko sarrera bati dagokie."
 
-#: src/disks/ui/edit-crypttab-dialog.ui:160
+#: src/disks/ui/edit-crypttab-dialog.ui:124
 msgid "Opt_ions"
 msgstr "A_ukerak"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:179
+#: src/disks/ui/edit-crypttab-dialog.ui:143
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr "Gailua desblokeatzeko erabiliko den izena. Gailuaren izena <b>/dev/mapper</b>/ aurrizkiarekin konfiguratzen da."
 
-#: src/disks/ui/edit-crypttab-dialog.ui:196
+#: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Options to use when unlocking the device"
 msgstr "Aukerak gailua desblokeatzean erabiltzeko"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:213
+#: src/disks/ui/edit-crypttab-dialog.ui:177
 msgid "Passphrase File"
 msgstr "Pasaesaldiaren fitxategia"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:97
+#: src/disks/ui/edit-crypttab-dialog.ui:207
+#: src/disks/ui/unlock-device-dialog.ui:87
 msgid "Sho_w passphrase"
 msgstr "_Erakutsi pasaesaldia"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:265
+#: src/disks/ui/edit-crypttab-dialog.ui:229
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr "Gailuaren pasaesaldia, edo utzi hutsik gailua konfiguratzean erabiltzaileari galdetzeko"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:63
+#: src/disks/ui/edit-crypttab-dialog.ui:246
+#: src/disks/ui/unlock-device-dialog.ui:53
 msgid "_Passphrase"
 msgstr "_Pasaesaldia"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:304
+#: src/disks/ui/edit-crypttab-dialog.ui:268
 msgid "_Unlock at system startup"
 msgstr "_Desblokeatu sistemaren abioan"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:310
+#: src/disks/ui/edit-crypttab-dialog.ui:274
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr "Aktibatzen bada, gailua sistemaren abioan desblokeatuko da [!ez-automatikoa]"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:325
+#: src/disks/ui/edit-crypttab-dialog.ui:289
 msgid "Require additional authori_zation to unlock"
 msgstr "Eskatu autorizazio gehigarria desblokeatzeko"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:331
+#: src/disks/ui/edit-crypttab-dialog.ui:295
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
@@ -3082,21 +3082,21 @@ msgstr "Aktibatzen bada, autorizazio gehigarria beharko da gailua desblokeatzeko
 msgid "Edit Partition"
 msgstr "Editatu partizioa"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-#: src/disks/ui/edit-gpt-partition-dialog.ui:75
-#: src/disks/ui/edit-partition-dialog.ui:75
+#: src/disks/ui/edit-dos-partition-dialog.ui:60
+#: src/disks/ui/edit-gpt-partition-dialog.ui:59
+#: src/disks/ui/edit-partition-dialog.ui:59
 msgid "_Type"
 msgstr "_Mota"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
+#: src/disks/ui/edit-dos-partition-dialog.ui:76
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "Partizio mota zeinurik gabeko 8 biteko osoko bat da"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:103
+#: src/disks/ui/edit-dos-partition-dialog.ui:87
 msgid "_Bootable"
 msgstr "_Abiarazgarria"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:108
+#: src/disks/ui/edit-dos-partition-dialog.ui:92
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -3107,11 +3107,11 @@ msgstr "Plataformaren abio-kargatzaileak erabilitako bandera bat Sist. eragilea 
 msgid "Change Filesystem Label"
 msgstr "Aldatu fitxategi-sistemaren etiketa"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:72
+#: src/disks/ui/edit-filesystem-dialog.ui:56
 msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr "Fitxategi-sistema hau edozer aldaketen aurretik automatikoki desmuntatuko da."
 
-#: src/disks/ui/edit-filesystem-dialog.ui:92
+#: src/disks/ui/edit-filesystem-dialog.ui:71
 msgid "_Label"
 msgstr "_Etiketa"
 
@@ -3119,151 +3119,151 @@ msgstr "_Etiketa"
 msgid "Mount Options"
 msgstr "Muntatze-aukerak"
 
-#: src/disks/ui/edit-fstab-dialog.ui:64
+#: src/disks/ui/edit-fstab-dialog.ui:54
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr "Desaktibatu <i>Erabiltzailearen saioaren lehenespenak</i> gailuaren muntatzeko lekua eta aukerak kudeatzeko. Aukerak <b>/etc/fstab</b> fitxategiko sarrera bati dagokie."
 
-#: src/disks/ui/edit-fstab-dialog.ui:91
+#: src/disks/ui/edit-fstab-dialog.ui:71
 msgid "I_dentify As"
 msgstr "_Identifikatu honela"
 
-#: src/disks/ui/edit-fstab-dialog.ui:110
+#: src/disks/ui/edit-fstab-dialog.ui:90
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr "<b>Gailu-fitxategi berezia</b> — erabili esteka sinbolikoak <b>/dev/disk</b> hierarkian sarreraren esparrua kontrolatzeko"
 
-#: src/disks/ui/edit-fstab-dialog.ui:111
+#: src/disks/ui/edit-fstab-dialog.ui:91
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr "Gailu-fitxategi berezia — erabili esteka sinbolikoak /dev/disk hierarkian sarreraren esparrua kontrolatzeko"
 
-#: src/disks/ui/edit-fstab-dialog.ui:141
+#: src/disks/ui/edit-fstab-dialog.ui:121
 msgid "Mount _Point"
 msgstr "Muntatze-_puntua"
 
-#: src/disks/ui/edit-fstab-dialog.ui:160
+#: src/disks/ui/edit-fstab-dialog.ui:140
 msgid "Filesystem _Type"
 msgstr "Fitxategi-sistema _mota"
 
-#: src/disks/ui/edit-fstab-dialog.ui:179 src/disks/ui/edit-fstab-dialog.ui:180
+#: src/disks/ui/edit-fstab-dialog.ui:159 src/disks/ui/edit-fstab-dialog.ui:160
 msgid "The directory to mount the device in"
 msgstr "Direktorioa gailua hor muntatzeko"
 
-#: src/disks/ui/edit-fstab-dialog.ui:196 src/disks/ui/edit-fstab-dialog.ui:197
+#: src/disks/ui/edit-fstab-dialog.ui:176 src/disks/ui/edit-fstab-dialog.ui:177
 msgid "The filesystem type to use"
 msgstr "Fitxategi-sistema mota erabiltzeko"
 
-#: src/disks/ui/edit-fstab-dialog.ui:219
+#: src/disks/ui/edit-fstab-dialog.ui:199
 msgid "Display _Name"
 msgstr "Bistaratu _izena"
 
-#: src/disks/ui/edit-fstab-dialog.ui:238
+#: src/disks/ui/edit-fstab-dialog.ui:218
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr "Ezartzen bada, gailuarentzako erabiliko den izena erabiltzailearen interfazean [x-gvfs-name=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:255
+#: src/disks/ui/edit-fstab-dialog.ui:235
 msgid "Icon Na_me"
 msgstr "Ikono-i_zena"
 
-#: src/disks/ui/edit-fstab-dialog.ui:274
+#: src/disks/ui/edit-fstab-dialog.ui:254
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr "Ezartzen bada, gailuarentzako erabiliko den ikono-izena erabiltzailearen interfazean [x-gvfs-icon=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:288
+#: src/disks/ui/edit-fstab-dialog.ui:268
 msgid "Sho_w in user interface"
 msgstr "E_rakutsi erabiltzaile-interfazean"
 
-#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
+#: src/disks/ui/edit-fstab-dialog.ui:273 src/disks/ui/edit-fstab-dialog.ui:274
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr "Aktibatzen bada, gailua beti erakutsiko da erabiltzaile-interfazean, berdin iolarik zein direktorio den [x-gvfs-show]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:308
+#: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Require additional authori_zation to mount"
 msgstr "Eskatu autorizazio gehigarria muntatzeko"
 
-#: src/disks/ui/edit-fstab-dialog.ui:313 src/disks/ui/edit-fstab-dialog.ui:314
+#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr "Aktibatzen bada, autorizazio gehigarria beharko da gailua muntatzeko [x-udisks-auth]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:328
+#: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Mount at system _startup"
 msgstr "Muntatu sistemaren _abioan"
 
-#: src/disks/ui/edit-fstab-dialog.ui:333
+#: src/disks/ui/edit-fstab-dialog.ui:313
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr "Aktibatzen bada, gailua sistemaren abioan muntatuko da [!ez-automatikoa]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:350
+#: src/disks/ui/edit-fstab-dialog.ui:330
 msgid "S_ymbolic Icon Name"
 msgstr "Ikono-izen _sinbolikoa"
 
-#: src/disks/ui/edit-fstab-dialog.ui:369 src/disks/ui/edit-fstab-dialog.ui:370
+#: src/disks/ui/edit-fstab-dialog.ui:349 src/disks/ui/edit-fstab-dialog.ui:350
 msgid ""
 "If set, the name of the symbolic icon to use in the device in the user "
 "interface [x-gvfs-symbolic-icon=]"
 msgstr "Ezartzen bada, gailuarentzako erabiliko den ikono-izen sinbolikoa erabiltzailearen interfazean [x-gvfs-symbolic-icon=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:396
+#: src/disks/ui/edit-fstab-dialog.ui:376
 msgid "Mount Opt_ions"
 msgstr "Muntatze-_aukerak"
 
-#: src/disks/ui/edit-fstab-dialog.ui:415
+#: src/disks/ui/edit-fstab-dialog.ui:395
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr "Muntatze-aukerak <b>/etc/fstab</b> fitxategian gordetzen dira"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:93
+#: src/disks/ui/edit-gpt-partition-dialog.ui:77
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgstr "Partizio mota 32 biteko <i>GUID</i> batekin adierazten da"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:125
+#: src/disks/ui/edit-gpt-partition-dialog.ui:109
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want "
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr "Partizio-izena (36 unicode karaktere arte). Erabilgarria da gailua adierazteko esteka sinboliko baten bidez <b>/dev/disk/by-partlabel</b> direktorioan erabiltzea nahi baduzu"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:138
+#: src/disks/ui/edit-gpt-partition-dialog.ui:122
 msgid "_System Partition"
 msgstr "_Sistemaren partizioa"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:143
+#: src/disks/ui/edit-gpt-partition-dialog.ui:127
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr "Sist. Eragileak edo plataformak funtzionatzeko partizioa eta bere edukia  behar duela adierazteko erabiltzen da. Kontu berezia eduki behar da edukia ez ezabatzeko edo gainidazteko"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:157
+#: src/disks/ui/edit-gpt-partition-dialog.ui:141
 msgid "Legacy BIOS _Bootable"
 msgstr "BIOS zahar _abiarazgarria"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:162
+#: src/disks/ui/edit-gpt-partition-dialog.ui:146
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr "Master Boot Record-eko <i> abiarazgarria</i> banderaren baliokidea da hau. MBR sistemetako GPT partizioetan soilik erabili ohi da."
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
+#: src/disks/ui/edit-gpt-partition-dialog.ui:163
 msgid "Flags"
 msgstr "Banderak"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:195
+#: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Hide from _Firmware"
 msgstr "Ezkutatu _firmwareagatik"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+#: src/disks/ui/edit-gpt-partition-dialog.ui:184
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
@@ -3273,11 +3273,11 @@ msgstr "EFI firmwareak partizioaren edukia ez ikusi beharko lukeela eta handik i
 msgid "Erase Multiple Disks"
 msgstr "Ezabatu disko-anitzak"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:36
+#: src/disks/ui/erase-multiple-disks-dialog.ui:31
 msgid "_Erase…"
 msgstr "_Ezabatu…"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:68
+#: src/disks/ui/erase-multiple-disks-dialog.ui:52
 msgid "Erase _Type"
 msgstr "Ezabatze _mota"
 
@@ -3285,11 +3285,11 @@ msgstr "Ezabatze _mota"
 msgid "Format Disk"
 msgstr "Formateatu diskoa"
 
-#: src/disks/ui/format-disk-dialog.ui:39
+#: src/disks/ui/format-disk-dialog.ui:34
 msgid "_Format…"
 msgstr "_Formatua…"
 
-#: src/disks/ui/format-disk-dialog.ui:86
+#: src/disks/ui/format-disk-dialog.ui:70
 msgid "_Partitioning"
 msgstr "_Partizioa egitea"
 
@@ -3305,7 +3305,7 @@ msgstr "Irudi-_tamaina"
 msgid "The size of the image to create"
 msgstr "Irudiaren tamaina sortzeko"
 
-#: src/disks/ui/new-disk-image-dialog.ui:187
+#: src/disks/ui/new-disk-image-dialog.ui:177
 msgid "Attach new _Image…"
 msgstr "Erantsi _irudia berria…"
 
@@ -3313,7 +3313,7 @@ msgstr "Erantsi _irudia berria…"
 msgid "Resize Volume"
 msgstr "Aldatu bolumena tamainaz"
 
-#: src/disks/ui/resize-dialog.ui:53
+#: src/disks/ui/resize-dialog.ui:48
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3321,11 +3321,11 @@ msgid ""
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr "Fitxategi-sistema bat tamainaz aldatzeak datuak galtzea eragin dezake. Zure datuen babeskopia egin beharko zenuke aurrenik. Lekuz aldatu beharreko datuen kopuruaren arabera, tamaina aldatzeko eragiketak luze jo dezake. Gutxieneko tamaina kalkulatu da uneko edukian oinarrituz. Mantendu fitxategi-sistemaren leku libre gehigarria azkar eta fidagarritasunez lan egiteko."
 
-#: src/disks/ui/resize-dialog.ui:197
+#: src/disks/ui/resize-dialog.ui:189
 msgid "_Difference"
 msgstr "_Diferentzia"
 
-#: src/disks/ui/resize-dialog.ui:214
+#: src/disks/ui/resize-dialog.ui:206
 msgid "The difference to the previous partition size"
 msgstr "Partizioaren aurreko tamainarekiko diferentzia"
 
@@ -3453,55 +3453,55 @@ msgstr "_Hasi auto-proba"
 msgid "Click to start a SMART self-test"
 msgstr "Egin klik SMART auto-proba hasteko"
 
-#: src/disks/ui/smart-dialog.ui:40
+#: src/disks/ui/smart-dialog.ui:37
 msgid "_Stop Self-test"
 msgstr "_Gelditu auto-proba"
 
-#: src/disks/ui/smart-dialog.ui:44
+#: src/disks/ui/smart-dialog.ui:41
 msgid "Click to stop the SMART self-test currently in progress"
 msgstr "Egin klik unean lantzen ari den SMART auto-proba gelditzeko"
 
-#: src/disks/ui/smart-dialog.ui:74
+#: src/disks/ui/smart-dialog.ui:63
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Egin klik SMART datuak disko gogorretik berriro irakurtzea derrigortzeko"
 
-#: src/disks/ui/smart-dialog.ui:113
+#: src/disks/ui/smart-dialog.ui:97
 msgid "Powered On"
 msgstr "Piztuta"
 
-#: src/disks/ui/smart-dialog.ui:146
+#: src/disks/ui/smart-dialog.ui:130
 msgid "Updated"
 msgstr "Eguneratuta"
 
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/smart-dialog.ui:196
 msgid "Self-test Result"
 msgstr "Auto-probaren emaitzak"
 
-#: src/disks/ui/smart-dialog.ui:229
+#: src/disks/ui/smart-dialog.ui:213
 msgid "Self-assessment"
 msgstr "Bere estimazioa"
 
-#: src/disks/ui/smart-dialog.ui:246
+#: src/disks/ui/smart-dialog.ui:230
 msgid "Overall Assessment"
 msgstr "Estimazio orokorra"
 
-#: src/disks/ui/smart-dialog.ui:317
+#: src/disks/ui/smart-dialog.ui:296
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Egin klik disko gogorraren SMART gaitzeko/desgaitzeko"
 
-#: src/disks/ui/smart-dialog.ui:339
+#: src/disks/ui/smart-dialog.ui:307
 msgid "SMART _Attributes"
 msgstr "SMART _atributuak"
 
-#: src/disks/ui/smart-dialog.ui:413
+#: src/disks/ui/smart-dialog.ui:364
 msgid "Short"
 msgstr "Laburra"
 
-#: src/disks/ui/smart-dialog.ui:421
+#: src/disks/ui/smart-dialog.ui:372
 msgid "Extended"
 msgstr "Hedatuta"
 
-#: src/disks/ui/smart-dialog.ui:429
+#: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "Transferentzia"
 
@@ -3509,56 +3509,56 @@ msgstr "Transferentzia"
 msgid "Enter passphrase to unlock"
 msgstr "Sartu pasaesaldia desblokeatzeko"
 
-#: src/disks/ui/unlock-device-dialog.ui:41
+#: src/disks/ui/unlock-device-dialog.ui:36
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr "Bolumen hau VeraCrypt bolumena izan daiteke, ausazko datuak baititu."
 
-#: src/disks/ui/unlock-device-dialog.ui:79
-#: src/disks/ui/unlock-device-dialog.ui:186
+#: src/disks/ui/unlock-device-dialog.ui:69
+#: src/disks/ui/unlock-device-dialog.ui:176
 msgid "If specified"
 msgstr "Zehazten bada"
 
-#: src/disks/ui/unlock-device-dialog.ui:117
+#: src/disks/ui/unlock-device-dialog.ui:107
 msgid "Volume type"
 msgstr "Bolumen mota"
 
-#: src/disks/ui/unlock-device-dialog.ui:136
+#: src/disks/ui/unlock-device-dialog.ui:126
 msgid "_Hidden"
 msgstr "Ez_kutua"
 
-#: src/disks/ui/unlock-device-dialog.ui:137
+#: src/disks/ui/unlock-device-dialog.ui:127
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
 msgstr "Bolumen hau desblokeatu ordez, saiatu barruan ezkutuan dagoen bigarren bolumen bat desblokeatzen."
 
-#: src/disks/ui/unlock-device-dialog.ui:149
+#: src/disks/ui/unlock-device-dialog.ui:139
 msgid "Windows _system"
 msgstr "Windows _sistema"
 
-#: src/disks/ui/unlock-device-dialog.ui:150
+#: src/disks/ui/unlock-device-dialog.ui:140
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Desblokeatu Windows sistemako partizio edo gailu zifratu bat."
 
-#: src/disks/ui/unlock-device-dialog.ui:171
+#: src/disks/ui/unlock-device-dialog.ui:161
 msgid "PI_M"
 msgstr "PI_M"
 
-#: src/disks/ui/unlock-device-dialog.ui:187
+#: src/disks/ui/unlock-device-dialog.ui:177
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr "Ezartzen bada, bolumen honetarako erabiliko den VeraCrypt PIM (Personal Iterations Multiplier) zenbakizko balioa."
 
-#: src/disks/ui/unlock-device-dialog.ui:204
+#: src/disks/ui/unlock-device-dialog.ui:194
 msgid "_Keyfiles"
 msgstr "_Gako-fitxategiak"
 
-#: src/disks/ui/unlock-device-dialog.ui:221
+#: src/disks/ui/unlock-device-dialog.ui:211
 msgid "Select a keyfile to unlock this volume"
 msgstr "Hautatu bolumen hau desblokeatzeko gako-fitxategia"
 
-#: src/disks/ui/unlock-device-dialog.ui:260
+#: src/disks/ui/unlock-device-dialog.ui:240
 msgid "_Unlock"
 msgstr "_Desblokeatu"
 
@@ -3767,3 +3767,9 @@ msgstr "Disko gogorra agian hutsegin egingo du"
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Aztertu"
+
+#~ msgid "Parent window XID for the format dialog"
+#~ msgstr "Leiho gurasoaren XID formatuaren elkarrizketa-koadroarentzako"
+
+#~ msgid "--format-device must be specified when using --xid\n"
+#~ msgstr "'--format-device' zehaztu behar da '--xid' erabiltzean\n"

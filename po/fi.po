@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2020-02-16 14:20+0000\n"
-"PO-Revision-Date: 2020-02-22 16:58+0200\n"
+"POT-Creation-Date: 2021-02-08 00:13+0000\n"
+"PO-Revision-Date: 2021-02-22 11:17+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-POT-Import-Date: 2012-03-05 14:48:13+0000\n"
 "X-Project-Style: gnome\n"
 
@@ -89,8 +89,8 @@ msgstr "Vaivaton tapa hallita levyjä"
 msgid "The GNOME Project"
 msgstr "Gnome-projekti"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Levyt"
 
@@ -121,8 +121,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Valitse liitettävä levykuva"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
 msgid "_Cancel"
 msgstr "_Peru"
 
@@ -196,29 +196,31 @@ msgid "Format selected device"
 msgstr "Alusta valittu laite"
 
 #: src/disks/gduapplication.c:175
-msgid "Parent window XID for the format dialog"
-msgstr "Alustamisikkunan pääikkunan XID"
+msgid "Ignored, kept for compatibility"
+msgstr "Ei huomioida, jätetty yhteensopivuuden vuoksi"
 
 #: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Palauta levykuva"
 
-#: src/disks/gduapplication.c:210
+#: src/disks/gduapplication.c:208
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 "valitsinta --format-device on käytettävä yhdessä valitsimen --block-device "
 "kanssa\n"
 
-#: src/disks/gduapplication.c:216
-msgid "--format-device must be specified when using --xid\n"
-msgstr "--format-device on annettava käytettäessä valitsinta --xid\n"
+#: src/disks/gduapplication.c:214
+msgid "--format-device must not be used together with --restore-disk-image"
+msgstr ""
+"valitsinta --format-device ei voi käyttää yhdessä valitsimen --restore-disk-"
+"image kanssa"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:353
+#: src/disks/gduapplication.c:342
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -454,7 +456,7 @@ msgstr "Kiertojen lukumäärä laskeutumisalueen sijaintiin"
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:179
+#: src/disks/ui/smart-dialog.ui:163
 msgid "Temperature"
 msgstr "Lämpötila"
 
@@ -1101,7 +1103,7 @@ msgid "Updates"
 msgstr "Päivitykset"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
 msgid "Assessment"
 msgstr "Arviointi"
 
@@ -1458,27 +1460,27 @@ msgstr "Virhe alustettaessa taltiota"
 msgid "Error creating partition"
 msgstr "Virhe luotaessa osiota"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:450
 msgid "Create Partition"
 msgstr "Luo osio"
 
-#: src/disks/gducreateformatdialog.c:444
+#: src/disks/gducreateformatdialog.c:459
 msgid "Format Volume"
 msgstr "Alusta taltio"
 
-#: src/disks/gducreateformatdialog.c:447
+#: src/disks/gducreateformatdialog.c:462
 msgid "Custom Format"
 msgstr "Mukautettu alustus"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:465
 msgid "Set Password"
 msgstr "Aseta salasana"
 
-#: src/disks/gducreateformatdialog.c:453
+#: src/disks/gducreateformatdialog.c:468
 msgid "Confirm Details"
 msgstr "Vahvista tiedot"
 
-#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Alusta"
 
@@ -2007,7 +2009,7 @@ msgstr "Kaikki nykyiset tiedot poistetaan"
 msgid "_Restore"
 msgstr "Pa_lauta"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
 msgid "Select a Keyfile"
 msgstr "Valitse avaintiedosto"
 
@@ -2034,7 +2036,7 @@ msgstr "Aseta valinnat lukituksen avaamiseen"
 msgid "Volumes Grid"
 msgstr "_Taltiot"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
 msgid "No Media"
 msgstr "Ei mediaa"
 
@@ -2076,30 +2078,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Vapaa tila"
 
-#: src/disks/gduwindow.c:649
+#: src/disks/gduwindow.c:632
 msgid "Error deleting loop device"
 msgstr "Virhe havaittaessa takaisinkytkentälaitetta"
 
-#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
+#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
 msgid "Error attaching disk image"
 msgstr "Virhe liitettäessä levykuvaa"
 
-#: src/disks/gduwindow.c:822
+#: src/disks/gduwindow.c:805
 msgid "Select Disk Image to Attach"
 msgstr "Valitse liitettävä levykuva"
 
-#: src/disks/gduwindow.c:826
+#: src/disks/gduwindow.c:809
 msgid "_Attach"
 msgstr "Liit_ä"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:833
+#: src/disks/gduwindow.c:816
 msgid "Set up _read-only loop device"
 msgstr "Liitä takaisinkytkentälaite _kirjoitussuojattuna"
 
-#: src/disks/gduwindow.c:834
+#: src/disks/gduwindow.c:817
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2108,7 +2110,7 @@ msgstr ""
 "jos et halua perustana olevaa tiedostoa muokattavan"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1697
+#: src/disks/gduwindow.c:1663
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (vain luku)"
@@ -2117,7 +2119,7 @@ msgstr "%s (vain luku)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1701
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2126,7 +2128,7 @@ msgstr "%s jäljellä (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1743
+#: src/disks/gduwindow.c:1709
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2137,7 +2139,7 @@ msgstr "%s jäljellä"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1758
+#: src/disks/gduwindow.c:1724
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s/%s — %s"
@@ -2146,17 +2148,17 @@ msgstr "%s/%s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1883
+#: src/disks/gduwindow.c:1849
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
+#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
 msgid "Block device is empty"
 msgstr "Lohkolaite on tyhjä"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1986
+#: src/disks/gduwindow.c:1952
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2165,11 +2167,11 @@ msgstr "Tuntematon (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2145
+#: src/disks/gduwindow.c:2111
 msgid "Connected to another seat"
 msgstr "Yhdistetty toiseen käyttöpaikkaan"
 
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2256
 msgid "Loop device is empty"
 msgstr "Takaisinkytkentälaite on tyhjä"
 
@@ -2179,61 +2181,61 @@ msgstr "Takaisinkytkentälaite on tyhjä"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2473
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s vapaana (%.1f% % täynnä)"
 
-#: src/disks/gduwindow.c:2533
+#: src/disks/gduwindow.c:2503
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Tuntematon"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2571
+#: src/disks/gduwindow.c:2541
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Tiedostojärjestelmän juuri"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2579
+#: src/disks/gduwindow.c:2549
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Liitoskohta %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2585
+#: src/disks/gduwindow.c:2555
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Ei liitetty"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2578
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktiivinen"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2614
+#: src/disks/gduwindow.c:2584
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Ei aktiivinen"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2599
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Lukitsematon"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2635
+#: src/disks/gduwindow.c:2605
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Lukittu"
 
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2619
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Laajennettu osio"
@@ -2242,45 +2244,45 @@ msgstr "Laajennettu osio"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2669
+#: src/disks/gduwindow.c:2639
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2759
 msgid "Unallocated Space"
 msgstr "Varaamaton tila"
 
-#: src/disks/gduwindow.c:2979
+#: src/disks/gduwindow.c:2960
 msgid "Error while repairing filesystem"
 msgstr "Virhe tiedostojärjestelmää korjatessa"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2987
 msgid "Repair successful"
 msgstr "Korjaus onnistui"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:2987
 msgid "Repair failed"
 msgstr "Korjaus epäonnistui"
 
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:2990
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Tiedostojärjestelmä %s osiolla %s on korjattu."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:2996
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Tiedostojärjestelmää %s osiolla %s ei voitu korjata."
 
-#: src/disks/gduwindow.c:3068
+#: src/disks/gduwindow.c:3049
 msgid "Confirm Repair"
 msgstr "Vahvista korjaus"
 
-#: src/disks/gduwindow.c:3071
+#: src/disks/gduwindow.c:3052
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2293,58 +2295,58 @@ msgstr ""
 "yrittää palauttaa myöhemmin erikoisohjelmien avulla. Toimenpide voi kestää "
 "kauan, varsinkin jos osio sisältää paljon tietoa."
 
-#: src/disks/gduwindow.c:3099
+#: src/disks/gduwindow.c:3080
 msgid "Error while checking filesystem"
 msgstr "Virhe tiedostojärjestelmää tarkistaessa"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3107
 msgid "Filesystem intact"
 msgstr "Tiedostojärjestelmä on ehjä"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3107
 msgid "Filesystem damaged"
 msgstr "Tiedostojärjestelmä on vahingoittunut"
 
-#: src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3110
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Tiedostojärjestelmä %s osiolla %s on vahingoittumaton."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3116
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Tiedostojärjestelmä %s osiolla %s tarvitsee korjausta."
 
-#: src/disks/gduwindow.c:3186
+#: src/disks/gduwindow.c:3167
 msgid "Confirm Check"
 msgstr "Vahvista tarkistus"
 
-#: src/disks/gduwindow.c:3189
+#: src/disks/gduwindow.c:3170
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Tarkistus voi kestää kauan, varsinkin jos osio sisältää paljon tietoa."
 
-#: src/disks/gduwindow.c:3426
+#: src/disks/gduwindow.c:3422
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Levyä asettaessa valmiustilaan tapahtui virhe"
 
-#: src/disks/gduwindow.c:3473
+#: src/disks/gduwindow.c:3469
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Levyä palauttaessa valmiustilasta tapahtui virhe"
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3515
 msgid "Error powering off drive"
 msgstr "Virhe sammuttaessa asemaa"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3567
 msgid "Are you sure you want to power off the drives?"
 msgstr "Haluatko varmasti sammuttaa levyt?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3573
+#: src/disks/gduwindow.c:3569
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2352,47 +2354,47 @@ msgstr ""
 "Tämä toiminto valmistelee järjestelmän seuraavien levyjen sammuttamista ja "
 "poistamista varten."
 
-#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Sammuta"
 
-#: src/disks/gduwindow.c:3657
+#: src/disks/gduwindow.c:3653
 msgid "Error mounting filesystem"
 msgstr "Virhe tiedostojärjestelmää liittäessä"
 
-#: src/disks/gduwindow.c:3743
+#: src/disks/gduwindow.c:3738
 msgid "Error deleting partition"
 msgstr "Virhe poistettaessa osiota"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3775
 msgid "Are you sure you want to delete the partition?"
 msgstr "Haluatko varmasti poistaa osion?"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3776
 msgid "All data on the partition will be lost"
 msgstr "Kaikki osion tiedot menetetään"
 
-#: src/disks/gduwindow.c:3782
+#: src/disks/gduwindow.c:3777
 msgid "_Delete"
 msgstr "_Poista"
 
-#: src/disks/gduwindow.c:3813
+#: src/disks/gduwindow.c:3808
 msgid "Error ejecting media"
 msgstr "Virhe irrottaessa mediaa"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:3891
 msgid "Error starting swap"
 msgstr "Virhe käynnistettäessä näennäismuistia"
 
-#: src/disks/gduwindow.c:3933
+#: src/disks/gduwindow.c:3928
 msgid "Error stopping swap"
 msgstr "Virhe pysäytettäessä näennäismuistia"
 
-#: src/disks/gduwindow.c:3975
+#: src/disks/gduwindow.c:3970
 msgid "Error setting autoclear flag"
 msgstr "Virhe asettaessa autoclear-lippua"
 
-#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
 msgid "Error canceling job"
 msgstr "Virhe työtä peruessa"
 
@@ -2430,7 +2432,7 @@ msgstr "Tarkastele, muokkaa ja hallitse levyjä sekä medioita"
 #: src/disks/ui/about-dialog.ui:19
 msgid "translator-credits"
 msgstr ""
-"Jiri Grönroos, 2010-2020\n"
+"Jiri Grönroos, 2010-2021\n"
 "Ilkka Tuohela, 2009\n"
 "\n"
 "https://l10n.gnome.org/teams/fi/\n"
@@ -2469,43 +2471,43 @@ msgstr "Suorituskykytesti"
 msgid "_Start Benchmark…"
 msgstr "_Käynnistä suorityskykytesti…"
 
-#: src/disks/ui/benchmark-dialog.ui:38
+#: src/disks/ui/benchmark-dialog.ui:35
 msgid "_Abort Benchmark"
 msgstr "_Peru suorituskykytesti"
 
-#: src/disks/ui/benchmark-dialog.ui:101
+#: src/disks/ui/benchmark-dialog.ui:83
 msgid "Last Benchmarked"
 msgstr "Viimeksi mitattu"
 
-#: src/disks/ui/benchmark-dialog.ui:118
+#: src/disks/ui/benchmark-dialog.ui:100
 msgid "Average Read Rate"
 msgstr "Keskimääräinen lukunopeus"
 
-#: src/disks/ui/benchmark-dialog.ui:135
+#: src/disks/ui/benchmark-dialog.ui:117
 msgid "Average Write Rate"
 msgstr "Keskimääräinen kirjoitusnopeus"
 
-#: src/disks/ui/benchmark-dialog.ui:152
+#: src/disks/ui/benchmark-dialog.ui:134
 msgid "Average Access Time"
 msgstr "Keskimääräinen hakunopeus"
 
-#: src/disks/ui/benchmark-dialog.ui:233
+#: src/disks/ui/benchmark-dialog.ui:215
 msgid "Disk or Device"
 msgstr "Levyasema tai laite"
 
-#: src/disks/ui/benchmark-dialog.ui:266
+#: src/disks/ui/benchmark-dialog.ui:248
 msgid "Sample Size"
 msgstr "Näytekoko"
 
-#: src/disks/ui/benchmark-dialog.ui:319
+#: src/disks/ui/benchmark-dialog.ui:291
 msgid "Benchmark Settings"
 msgstr "Suorituskykytestin asetukset"
 
-#: src/disks/ui/benchmark-dialog.ui:349
+#: src/disks/ui/benchmark-dialog.ui:316
 msgid "_Start Benchmarking…"
 msgstr "_Käynnistä suorituskykytesti…"
 
-#: src/disks/ui/benchmark-dialog.ui:381
+#: src/disks/ui/benchmark-dialog.ui:340
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
@@ -2515,23 +2517,23 @@ msgstr ""
 "laitteen eri osissa. Luo varmuuskopiot tärkeistä tiedostoistasi ennen "
 "kirjoitusnopeusmittausta."
 
-#: src/disks/ui/benchmark-dialog.ui:397
+#: src/disks/ui/benchmark-dialog.ui:356
 msgid "Transfer Rate"
 msgstr "Siirtonopeus"
 
-#: src/disks/ui/benchmark-dialog.ui:420
+#: src/disks/ui/benchmark-dialog.ui:374
 msgid "Number of S_amples"
 msgstr "N_äytteiden lukumäärä"
 
-#: src/disks/ui/benchmark-dialog.ui:439
+#: src/disks/ui/benchmark-dialog.ui:393
 msgid "Sample S_ize (MiB)"
 msgstr "Näytt_een koko (MiB)"
 
-#: src/disks/ui/benchmark-dialog.ui:455
+#: src/disks/ui/benchmark-dialog.ui:409
 msgid "Perform _write-benchmark"
 msgstr "_Suorita kirjoitusnopeustesti"
 
-#: src/disks/ui/benchmark-dialog.ui:459
+#: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -2550,7 +2552,7 @@ msgstr ""
 "Jos kirjoitusmittausta ei suoriteta, mittaus ei tarvitse yksinoikeutta levyn "
 "käyttämiseen eli levy tai laite voi olla käytössä samanaikaisesti."
 
-#: src/disks/ui/benchmark-dialog.ui:478
+#: src/disks/ui/benchmark-dialog.ui:432
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
@@ -2558,7 +2560,7 @@ msgstr ""
 "Näytteiden määrä. Suurempi arvo tuottaa tarkemman kaavion mutta pidentää "
 "mittauksen kestoa."
 
-#: src/disks/ui/benchmark-dialog.ui:495
+#: src/disks/ui/benchmark-dialog.ui:449
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
@@ -2568,15 +2570,15 @@ msgstr ""
 "näytettä kohden. Suuri näytekoko parantaa mittauksen tarkkuutta, mutta "
 "pidentää mittauksen kestoa."
 
-#: src/disks/ui/benchmark-dialog.ui:533
+#: src/disks/ui/benchmark-dialog.ui:482
 msgid "Access Time"
 msgstr "Hakuaika"
 
-#: src/disks/ui/benchmark-dialog.ui:556
+#: src/disks/ui/benchmark-dialog.ui:500
 msgid "Number of Sampl_es"
 msgstr "Näyttei_den lukumäärä"
 
-#: src/disks/ui/benchmark-dialog.ui:575
+#: src/disks/ui/benchmark-dialog.ui:519
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -2588,49 +2590,49 @@ msgstr ""
 msgid "Change Passphrase"
 msgstr "Vaihda tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:37
-#: src/disks/ui/edit-dos-partition-dialog.ui:41
-#: src/disks/ui/edit-filesystem-dialog.ui:41
-#: src/disks/ui/edit-gpt-partition-dialog.ui:41
-#: src/disks/ui/edit-partition-dialog.ui:41
+#: src/disks/ui/change-passphrase-dialog.ui:32
+#: src/disks/ui/edit-dos-partition-dialog.ui:36
+#: src/disks/ui/edit-filesystem-dialog.ui:36
+#: src/disks/ui/edit-gpt-partition-dialog.ui:36
+#: src/disks/ui/edit-partition-dialog.ui:36
 msgid "C_hange"
 msgstr "_Muuta"
 
-#: src/disks/ui/change-passphrase-dialog.ui:86
+#: src/disks/ui/change-passphrase-dialog.ui:68
 msgid "Curr_ent Passphrase"
 msgstr "_Nykyinen tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:106
-#: src/disks/ui/change-passphrase-dialog.ui:107
+#: src/disks/ui/change-passphrase-dialog.ui:88
+#: src/disks/ui/change-passphrase-dialog.ui:89
 msgid "Enter current passphrase used to protect the data"
 msgstr "Anna tietojen salaamiseen käytettävä tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:123
+#: src/disks/ui/change-passphrase-dialog.ui:105
 msgid "Sho_w Passphrases"
 msgstr "Nä_ytä tunnuslauseet"
 
-#: src/disks/ui/change-passphrase-dialog.ui:129
-#: src/disks/ui/change-passphrase-dialog.ui:130
+#: src/disks/ui/change-passphrase-dialog.ui:111
+#: src/disks/ui/change-passphrase-dialog.ui:112
 #: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "Valitse tämä, jos haluat nähdä yllä olevat tunnuslauseet"
 
-#: src/disks/ui/change-passphrase-dialog.ui:164
-#: src/disks/ui/change-passphrase-dialog.ui:165
+#: src/disks/ui/change-passphrase-dialog.ui:146
+#: src/disks/ui/change-passphrase-dialog.ui:147
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Vahvista annettu tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:185
-#: src/disks/ui/change-passphrase-dialog.ui:186
+#: src/disks/ui/change-passphrase-dialog.ui:167
+#: src/disks/ui/change-passphrase-dialog.ui:168
 msgid "Enter new passphrase used to protect the data"
 msgstr "Anna uusi tietojen suojaamiseen käytettävä tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:206
+#: src/disks/ui/change-passphrase-dialog.ui:188
 msgid "C_onfirm Passphrase"
 msgstr "Va_hvista tunnuslause"
 
-#: src/disks/ui/change-passphrase-dialog.ui:226
+#: src/disks/ui/change-passphrase-dialog.ui:208
 msgid "New _Passphrase"
 msgstr "Uusi _tunnuslause"
 
@@ -2642,7 +2644,7 @@ msgstr "Varoitus: kaikki taltion sisältämät tiedot hukataan pysyvästi"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Vahvista nykyisen taltion tiedot ennen jatkamista."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
 msgid "Device"
 msgstr "Laite"
 
@@ -2655,7 +2657,7 @@ msgid "Used"
 msgstr "Käytetty"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
 msgid "Location"
 msgstr "Sijainti"
 
@@ -2664,8 +2666,8 @@ msgid "Create Disk Image"
 msgstr "Luo levykuva"
 
 #: src/disks/ui/create-disk-image-dialog.ui:29
-#: src/disks/ui/edit-crypttab-dialog.ui:140
-#: src/disks/ui/edit-gpt-partition-dialog.ui:107
+#: src/disks/ui/edit-crypttab-dialog.ui:104
+#: src/disks/ui/edit-gpt-partition-dialog.ui:91
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Nimi"
@@ -2684,7 +2686,7 @@ msgstr "Valitse kansio"
 msgid "Source"
 msgstr "Lähde"
 
-#: src/disks/ui/create-disk-image-dialog.ui:153
+#: src/disks/ui/create-disk-image-dialog.ui:143
 msgid "_Start Creating…"
 msgstr "_Aloita luonti…"
 
@@ -2705,7 +2707,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Esimerkiksi \"Omat tiedostot\" tai \"Varmuuskopion data\"."
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:103
+#: src/disks/ui/format-disk-dialog.ui:87
 msgid "_Erase"
 msgstr "_Tyhjennä"
 
@@ -2718,7 +2720,7 @@ msgid "_Internal disk for use with Linux systems only (Ext4)"
 msgstr "_Sisäinen levy vain Linux-järjestelmien käytettäväksi (Ext4)"
 
 #: src/disks/ui/create-filesystem-page.ui:131
-#: src/disks/ui/create-other-page.ui:46
+#: src/disks/ui/create-other-page.ui:36
 msgid "_Password protect volume (LUKS)"
 msgstr "_Salasanasuojattu taltio (LUKS)"
 
@@ -2744,82 +2746,82 @@ msgstr ""
 "tiedostojärjestelmistä. Ota huomioon tekniset eroavaisuudet ja tutki mikä "
 "sopii parhaiten käyttötarkoituksiisi."
 
-#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
 msgstr "Osion _koko"
 
-#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
 msgid "The size of the partition to create"
 msgstr "Luotavan osion koko"
 
-#: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/create-partition-page.ui:103
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "tavua"
 
-#: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/create-partition-page.ui:104
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
 msgid "kB"
 msgstr "kt"
 
-#: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/create-partition-page.ui:105
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
 msgid "MB"
 msgstr "Mt"
 
-#: src/disks/ui/create-partition-page.ui:114
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
+#: src/disks/ui/create-partition-page.ui:106
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
 msgid "GB"
 msgstr "Gt"
 
-#: src/disks/ui/create-partition-page.ui:115
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
+#: src/disks/ui/create-partition-page.ui:107
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
 msgid "TB"
 msgstr "Tt"
 
-#: src/disks/ui/create-partition-page.ui:116
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
+#: src/disks/ui/create-partition-page.ui:108
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
 msgid "PB"
 msgstr "Pt"
 
-#: src/disks/ui/create-partition-page.ui:117
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
+#: src/disks/ui/create-partition-page.ui:109
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
 msgid "KiB"
 msgstr "KiB"
 
-#: src/disks/ui/create-partition-page.ui:118
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
+#: src/disks/ui/create-partition-page.ui:110
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
 msgid "MiB"
 msgstr "MiB"
 
-#: src/disks/ui/create-partition-page.ui:119
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
+#: src/disks/ui/create-partition-page.ui:111
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
 msgid "GiB"
 msgstr "GiB"
 
-#: src/disks/ui/create-partition-page.ui:120
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
+#: src/disks/ui/create-partition-page.ui:112
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
 msgid "TiB"
 msgstr "TiB"
 
-#: src/disks/ui/create-partition-page.ui:121
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
+#: src/disks/ui/create-partition-page.ui:113
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
 msgid "PiB"
 msgstr "PiB"
 
-#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:127 src/disks/ui/resize-dialog.ui:143
 msgid "Free Space _Following"
 msgstr "Vapaata tilaa _jälkeen"
 
-#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
+#: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
 msgid "The free space following the partition"
 msgstr "Osion jälkeen tuleva tyhjä tila"
 
-#: src/disks/ui/create-partition-page.ui:173
+#: src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Laajennettu osio"
 
-#: src/disks/ui/create-partition-page.ui:177
+#: src/disks/ui/create-partition-page.ui:169
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr "Laajennetut osiot voivat sisältää loogisia osioita"
 
@@ -2959,150 +2961,174 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "_Kirjoitusvälimuisti"
 
-#: src/disks/ui/disks.ui:63
-msgid "Select a device"
-msgstr "Valitse laite"
+#: src/disks/ui/disks.ui:93
+msgid "Go back to main view"
+msgstr "Siirry päänäkymään"
 
-#: src/disks/ui/disks.ui:122
+#: src/disks/ui/disks.ui:105
+msgid "Drive Options"
+msgstr "Aseman asetukset"
+
+#: src/disks/ui/disks.ui:120
+msgid "Power off this disk"
+msgstr "Sammuta virta tästä asemasta"
+
+#: src/disks/ui/disks.ui:135
+msgid "Eject this disk"
+msgstr "Irrota tämä levy"
+
+#: src/disks/ui/disks.ui:150
+msgid "Detach this loop device"
+msgstr "Irrota tämä takaisinkytkentälaite"
+
+#: src/disks/ui/disks.ui:173
+msgid "No Device Selected"
+msgstr "Laitetta ei ole valittu"
+
+#: src/disks/ui/disks.ui:174
+msgid "Select a device to manage."
+msgstr "Valitse hallittava laite."
+
+#: src/disks/ui/disks.ui:209
 msgid "Model"
 msgstr "Malli"
 
-#: src/disks/ui/disks.ui:155
+#: src/disks/ui/disks.ui:238
 msgid "Serial Number"
 msgstr "Sarjanumero"
 
-#: src/disks/ui/disks.ui:192
+#: src/disks/ui/disks.ui:267
 msgid "World Wide Name"
 msgstr "Maailmanlaajuinen nimi (WWN)"
 
-#: src/disks/ui/disks.ui:266
+#: src/disks/ui/disks.ui:325
 msgid "Media"
 msgstr "Media"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
 msgid "Job"
 msgstr "Työ"
 
-#: src/disks/ui/disks.ui:439
+#: src/disks/ui/disks.ui:476
 msgid "Name"
 msgstr "Nimi"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
+#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
 msgid "Size"
 msgstr "Koko"
 
-#: src/disks/ui/disks.ui:513
+#: src/disks/ui/disks.ui:534
 msgid "Auto-clear"
 msgstr ""
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:552
 msgid "Detach loop device after unmount action"
 msgstr ""
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:557
+#: src/disks/ui/disks.ui:566
 msgid "Backing File"
 msgstr "Taustatiedosto"
 
-#: src/disks/ui/disks.ui:594
+#: src/disks/ui/disks.ui:595
 msgid "Partitioning"
 msgstr "Osiointi"
 
-#: src/disks/ui/disks.ui:638
+#: src/disks/ui/disks.ui:626
 msgid "_Volumes"
 msgstr "_Taltiot"
 
-#: src/disks/ui/disks.ui:692
+#: src/disks/ui/disks.ui:668
 msgid "Mount selected partition"
 msgstr "Liitä valittu osio"
 
-#: src/disks/ui/disks.ui:693
+#: src/disks/ui/disks.ui:669
 msgctxt "Accessibility label for toolbutton-mount"
 msgid "Mount"
 msgstr "Liitä"
 
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:682
 msgid "Unmount selected partition"
 msgstr "Irrota valittu osio"
 
-#: src/disks/ui/disks.ui:707
+#: src/disks/ui/disks.ui:683
 msgctxt "Accessibility label for toolbutton-unmount"
 msgid "Unmount"
 msgstr "Irrota liitos"
 
-#: src/disks/ui/disks.ui:720
+#: src/disks/ui/disks.ui:696
 msgid "Activate selected swap partition"
 msgstr "Aktivoi valittu swap-osio"
 
-#: src/disks/ui/disks.ui:721
+#: src/disks/ui/disks.ui:697
 msgctxt "Accessibility label for toolbutton-activate-swap"
 msgid "Activate swap"
 msgstr "Aktivoi swap"
 
-#: src/disks/ui/disks.ui:734
+#: src/disks/ui/disks.ui:710
 msgid "Deactivate selected swap partition"
 msgstr "Poista käytöstä valittu swap-tila"
 
-#: src/disks/ui/disks.ui:735
+#: src/disks/ui/disks.ui:711
 msgctxt "Accessibility label for toolbutton-deactivate-swap"
 msgid "Deactivate swap"
 msgstr "Poista swapin aktivointi"
 
-#: src/disks/ui/disks.ui:748
+#: src/disks/ui/disks.ui:724
 msgid "Unlock selected encrypted partition"
 msgstr "Avaa valittu salattu osio"
 
-#: src/disks/ui/disks.ui:749
+#: src/disks/ui/disks.ui:725
 msgctxt "Accessibility label for toolbutton-unlock"
 msgid "Unlock"
 msgstr "Avaa lukitus"
 
-#: src/disks/ui/disks.ui:762
+#: src/disks/ui/disks.ui:738
 msgid "Lock selected encrypted partition"
 msgstr "Lukitse valittu salattu osio"
 
-#: src/disks/ui/disks.ui:763
+#: src/disks/ui/disks.ui:739
 msgctxt "Accessibility label for toolbutton-lock"
 msgid "Lock"
 msgstr "Lukitse"
 
-#: src/disks/ui/disks.ui:776
+#: src/disks/ui/disks.ui:752
 msgid "Create partition in unallocated space"
 msgstr "Luo osio varaamattomaan tilaan"
 
-#: src/disks/ui/disks.ui:777
+#: src/disks/ui/disks.ui:753
 msgctxt "Accessibility label for toolbutton-partition-create"
 msgid "Create partition"
 msgstr "Luo osio"
 
-#: src/disks/ui/disks.ui:790
+#: src/disks/ui/disks.ui:766
 msgid "Delete selected partition"
 msgstr "Poista valittu osio"
 
-#: src/disks/ui/disks.ui:791
+#: src/disks/ui/disks.ui:767
 msgctxt "Accessibility label for toolbutton-partition-delete"
 msgid "Delete partition"
 msgstr "Poista osio"
 
-#: src/disks/ui/disks.ui:804
+#: src/disks/ui/disks.ui:780
 msgid "Additional partition options"
 msgstr "Osion lisävalinnat"
 
-#: src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:781
 msgctxt "Accessibility label for toolbutton-volume-menu"
 msgid "Menu"
 msgstr "Valikko"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:873
+#: src/disks/ui/disks.ui:834
 msgid "Contents"
 msgstr "Sisältö"
 
-#: src/disks/ui/disks.ui:947
+#: src/disks/ui/disks.ui:892
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:984
+#: src/disks/ui/disks.ui:921
 msgid "Partition Type"
 msgstr "Osion tyyppi"
 
@@ -3142,11 +3168,11 @@ msgstr "_Herätä valmiustilasta"
 msgid "Encryption Options"
 msgstr "Salausasetukset"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
 msgstr "K_äyttäjäistunnon oletukset"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:112
+#: src/disks/ui/edit-crypttab-dialog.ui:86
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3156,31 +3182,31 @@ msgstr ""
 "salausasetuksia ja tunnuslausetta. Nämä asetukset vastaavat riviä <b>/etc/"
 "crypttab</b>-tiedostossa"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:160
+#: src/disks/ui/edit-crypttab-dialog.ui:124
 msgid "Opt_ions"
 msgstr "Val_innat"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:179
+#: src/disks/ui/edit-crypttab-dialog.ui:143
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
 "Avatulle laittelle käytettävä nimi - nimen eteen tulee <b>/dev/mapper</b>/"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:196
+#: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Options to use when unlocking the device"
 msgstr "Asetukset, joita käytetään laitetta avattaessa"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:213
+#: src/disks/ui/edit-crypttab-dialog.ui:177
 msgid "Passphrase File"
 msgstr "Tunnuslausetiedosto"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:97
+#: src/disks/ui/edit-crypttab-dialog.ui:207
+#: src/disks/ui/unlock-device-dialog.ui:87
 msgid "Sho_w passphrase"
 msgstr "N_äytä tunnuslause"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:265
+#: src/disks/ui/edit-crypttab-dialog.ui:229
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
@@ -3188,26 +3214,26 @@ msgstr ""
 "Laitteen tunnuslause. Jos tyhjä, tunnulausetta kysytään laitteen liittämisen "
 "yhteydessä"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:63
+#: src/disks/ui/edit-crypttab-dialog.ui:246
+#: src/disks/ui/unlock-device-dialog.ui:53
 msgid "_Passphrase"
 msgstr "_Tunnuslause"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:304
+#: src/disks/ui/edit-crypttab-dialog.ui:268
 msgid "_Unlock at system startup"
 msgstr "_Avaa lukitus käynnistyksen yhteydessä"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:310
+#: src/disks/ui/edit-crypttab-dialog.ui:274
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
 "Jos valittu, laitteen lukitus avataan järjestelmän käynnistyksen yhteydessä "
 "[!noauto]"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:325
+#: src/disks/ui/edit-crypttab-dialog.ui:289
 msgid "Require additional authori_zation to unlock"
 msgstr "Vaadi _tunnistautuminen laitteen avaamiseksi"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:331
+#: src/disks/ui/edit-crypttab-dialog.ui:295
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
@@ -3220,21 +3246,21 @@ msgstr ""
 msgid "Edit Partition"
 msgstr "Muokkaa osiota"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-#: src/disks/ui/edit-gpt-partition-dialog.ui:75
-#: src/disks/ui/edit-partition-dialog.ui:75
+#: src/disks/ui/edit-dos-partition-dialog.ui:60
+#: src/disks/ui/edit-gpt-partition-dialog.ui:59
+#: src/disks/ui/edit-partition-dialog.ui:59
 msgid "_Type"
 msgstr "_Tyyppi"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
+#: src/disks/ui/edit-dos-partition-dialog.ui:76
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "Laitteen tyyppi 8-bittisenä etumerkittömänä kokonaislukuna"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:103
+#: src/disks/ui/edit-dos-partition-dialog.ui:87
 msgid "_Bootable"
 msgstr "_Käynnistettävissä"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:108
+#: src/disks/ui/edit-dos-partition-dialog.ui:92
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -3248,12 +3274,12 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Muuta tiedostojärjestelmän nimikettä"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:72
+#: src/disks/ui/edit-filesystem-dialog.ui:56
 msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr ""
 "Tämä tiedostojärjestelmä irrotetaan, ennen kuin mitään muutoksia tehdään."
 
-#: src/disks/ui/edit-filesystem-dialog.ui:92
+#: src/disks/ui/edit-filesystem-dialog.ui:71
 msgid "_Label"
 msgstr "_Nimike"
 
@@ -3261,7 +3287,7 @@ msgstr "_Nimike"
 msgid "Mount Options"
 msgstr "Liittämisvalinnat"
 
-#: src/disks/ui/edit-fstab-dialog.ui:64
+#: src/disks/ui/edit-fstab-dialog.ui:54
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
@@ -3271,54 +3297,54 @@ msgstr ""
 "laitteen liitospistettä ja -asetuksia. Nämä asetukset vastaavat riviä <b>/"
 "etc/fstab</b>-tiedostossa"
 
-#: src/disks/ui/edit-fstab-dialog.ui:91
+#: src/disks/ui/edit-fstab-dialog.ui:71
 msgid "I_dentify As"
 msgstr "_Tunnistusperuste"
 
-#: src/disks/ui/edit-fstab-dialog.ui:110
+#: src/disks/ui/edit-fstab-dialog.ui:90
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:111
+#: src/disks/ui/edit-fstab-dialog.ui:91
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:141
+#: src/disks/ui/edit-fstab-dialog.ui:121
 msgid "Mount _Point"
 msgstr "Liitos_kohta"
 
-#: src/disks/ui/edit-fstab-dialog.ui:160
+#: src/disks/ui/edit-fstab-dialog.ui:140
 msgid "Filesystem _Type"
 msgstr "Tie_dostojärjestelmän tyyppi"
 
-#: src/disks/ui/edit-fstab-dialog.ui:179 src/disks/ui/edit-fstab-dialog.ui:180
+#: src/disks/ui/edit-fstab-dialog.ui:159 src/disks/ui/edit-fstab-dialog.ui:160
 msgid "The directory to mount the device in"
 msgstr "Hakemisto, johon laite liitetään"
 
-#: src/disks/ui/edit-fstab-dialog.ui:196 src/disks/ui/edit-fstab-dialog.ui:197
+#: src/disks/ui/edit-fstab-dialog.ui:176 src/disks/ui/edit-fstab-dialog.ui:177
 msgid "The filesystem type to use"
 msgstr "Käytettävän tiedostojärjestelmän tyyppi"
 
-#: src/disks/ui/edit-fstab-dialog.ui:219
+#: src/disks/ui/edit-fstab-dialog.ui:199
 msgid "Display _Name"
 msgstr "N_äyttönimi"
 
-#: src/disks/ui/edit-fstab-dialog.ui:238
+#: src/disks/ui/edit-fstab-dialog.ui:218
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
 "Jos asetettu, tämä nimi näytetään laitteen nimenä käyttöliittymässä [x-gvfs-"
 "name=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:255
+#: src/disks/ui/edit-fstab-dialog.ui:235
 msgid "Icon Na_me"
 msgstr "Ku_vakkeen nimi"
 
-#: src/disks/ui/edit-fstab-dialog.ui:274
+#: src/disks/ui/edit-fstab-dialog.ui:254
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
@@ -3326,11 +3352,11 @@ msgstr ""
 "Jos asetettu, tämä kuvake näytetään laitteen kuvakkeena käyttöliittymässä [x-"
 "gvfs-icon=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:288
+#: src/disks/ui/edit-fstab-dialog.ui:268
 msgid "Sho_w in user interface"
 msgstr "Näytä kä_yttöliittymässä"
 
-#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
+#: src/disks/ui/edit-fstab-dialog.ui:273 src/disks/ui/edit-fstab-dialog.ui:274
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
@@ -3338,11 +3364,11 @@ msgstr ""
 "Jos valittu, laite näytetään käyttöliittymässä sen hakemistosta riippumatta "
 "[x-gvfs-show]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:308
+#: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Require additional authori_zation to mount"
 msgstr "Vaadi tunnistautuminen liittämistä varten"
 
-#: src/disks/ui/edit-fstab-dialog.ui:313 src/disks/ui/edit-fstab-dialog.ui:314
+#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
@@ -3350,20 +3376,20 @@ msgstr ""
 "Jos valittu, tunnistautuminen vaaditaan laitteen liittämiseksi [x-udisks-"
 "auth]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:328
+#: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Mount at system _startup"
 msgstr "Liitä järjestelmän _käynnistyksen yhteydessä"
 
-#: src/disks/ui/edit-fstab-dialog.ui:333
+#: src/disks/ui/edit-fstab-dialog.ui:313
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
 "Jos valittu, laite liitetään järjestelmän käynnistyksen yhteydessä [!noauto]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:350
+#: src/disks/ui/edit-fstab-dialog.ui:330
 msgid "S_ymbolic Icon Name"
 msgstr "_Symbolisen kuvakkeen nimi"
 
-#: src/disks/ui/edit-fstab-dialog.ui:369 src/disks/ui/edit-fstab-dialog.ui:370
+#: src/disks/ui/edit-fstab-dialog.ui:349 src/disks/ui/edit-fstab-dialog.ui:350
 msgid ""
 "If set, the name of the symbolic icon to use in the device in the user "
 "interface [x-gvfs-symbolic-icon=]"
@@ -3371,19 +3397,19 @@ msgstr ""
 "Jos asetettu, tämä symbolinen kuvake näytetään laitteen kuvakkeena "
 "käyttöliittymässä [x-gvfs-symbolic-icon=]"
 
-#: src/disks/ui/edit-fstab-dialog.ui:396
+#: src/disks/ui/edit-fstab-dialog.ui:376
 msgid "Mount Opt_ions"
 msgstr "Liito_sasetukset"
 
-#: src/disks/ui/edit-fstab-dialog.ui:415
+#: src/disks/ui/edit-fstab-dialog.ui:395
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr "<b>/etc/fstab</b>-tiedostoon tallennetut liitosvalinnat"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:93
+#: src/disks/ui/edit-gpt-partition-dialog.ui:77
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgstr "Osion tyyppi esitettynä 32-bittisenä <i>GUID</i>:nä"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:125
+#: src/disks/ui/edit-gpt-partition-dialog.ui:109
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want "
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
@@ -3393,11 +3419,11 @@ msgstr ""
 "haluat viitata laitteeseen symbolisella linkillä <b>/dev/disk/by-partlabel</"
 "b> -hakemistossa"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:138
+#: src/disks/ui/edit-gpt-partition-dialog.ui:122
 msgid "_System Partition"
 msgstr "_Järjestelmäosio"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:143
+#: src/disks/ui/edit-gpt-partition-dialog.ui:127
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
@@ -3406,11 +3432,11 @@ msgstr ""
 "Ilmoittaa, että osio ja sen sisältö vaaditaan käyttöjärjestelmän tai "
 "laitteen toimintaan ja että osion sisältöä ei tule poistaa tai ylikirjoittaa"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:157
+#: src/disks/ui/edit-gpt-partition-dialog.ui:141
 msgid "Legacy BIOS _Bootable"
 msgstr "Legacy BIOS _käynnistettävissä"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:162
+#: src/disks/ui/edit-gpt-partition-dialog.ui:146
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
@@ -3418,15 +3444,15 @@ msgstr ""
 "Tämä vastaa Master Boot Recordin <i>käynnistettävissä</i>-lippua. Tätä "
 "käytetään yleensä vain GPT-osioille MBR-järjestelmissä"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
+#: src/disks/ui/edit-gpt-partition-dialog.ui:163
 msgid "Flags"
 msgstr "Liput"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:195
+#: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Hide from _Firmware"
 msgstr "Piilota _firmwarelta"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+#: src/disks/ui/edit-gpt-partition-dialog.ui:184
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
@@ -3438,11 +3464,11 @@ msgstr ""
 msgid "Erase Multiple Disks"
 msgstr "Tyhjennä lukuisia levyjä"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:36
+#: src/disks/ui/erase-multiple-disks-dialog.ui:31
 msgid "_Erase…"
 msgstr "Tyhjennä…"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:68
+#: src/disks/ui/erase-multiple-disks-dialog.ui:52
 msgid "Erase _Type"
 msgstr "Tyhjennyksen _tyyppi"
 
@@ -3450,29 +3476,13 @@ msgstr "Tyhjennyksen _tyyppi"
 msgid "Format Disk"
 msgstr "Alusta levy"
 
-#: src/disks/ui/format-disk-dialog.ui:39
+#: src/disks/ui/format-disk-dialog.ui:34
 msgid "_Format…"
 msgstr "_Alusta…"
 
-#: src/disks/ui/format-disk-dialog.ui:86
+#: src/disks/ui/format-disk-dialog.ui:70
 msgid "_Partitioning"
 msgstr "_Osiointi"
-
-#: src/disks/ui/headerbar.ui:35
-msgid "Drive Options"
-msgstr "Aseman asetukset"
-
-#: src/disks/ui/headerbar.ui:50
-msgid "Power off this disk"
-msgstr "Sammuta virta tästä asemasta"
-
-#: src/disks/ui/headerbar.ui:65
-msgid "Eject this disk"
-msgstr "Irrota tämä levy"
-
-#: src/disks/ui/headerbar.ui:80
-msgid "Detach this loop device"
-msgstr "Irrota tämä takaisinkytkentälaite"
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
@@ -3486,7 +3496,7 @@ msgstr "Levykuvan _koko"
 msgid "The size of the image to create"
 msgstr "Luotavan levykuvan koko"
 
-#: src/disks/ui/new-disk-image-dialog.ui:187
+#: src/disks/ui/new-disk-image-dialog.ui:177
 msgid "Attach new _Image…"
 msgstr "L_iitä uusi levykuva…"
 
@@ -3494,7 +3504,7 @@ msgstr "L_iitä uusi levykuva…"
 msgid "Resize Volume"
 msgstr "Muuta taltion kokoa"
 
-#: src/disks/ui/resize-dialog.ui:53
+#: src/disks/ui/resize-dialog.ui:48
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3507,11 +3517,11 @@ msgstr ""
 "nykyisen sisällön mukaisesti. Pidä vapaata tilaa tiedostojärjestelmässä, "
 "jotta se toimii nopeasti ja luotettavasti."
 
-#: src/disks/ui/resize-dialog.ui:197
+#: src/disks/ui/resize-dialog.ui:189
 msgid "_Difference"
 msgstr "_Erotus"
 
-#: src/disks/ui/resize-dialog.ui:214
+#: src/disks/ui/resize-dialog.ui:206
 msgid "The difference to the previous partition size"
 msgstr "Erotus aiempaan osion kokoon"
 
@@ -3564,60 +3574,65 @@ msgstr "Liitä olemassa oleva levykuva"
 
 #: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Poista nykyisen levyn valinta"
+
+#: src/disks/ui/shortcuts.ui:38
+msgctxt "shortcut window"
 msgid "Help"
 msgstr "Ohje"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:45
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:52
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Lopeta"
 
-#: src/disks/ui/shortcuts.ui:54
+#: src/disks/ui/shortcuts.ui:61
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Asema"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Avaa levyvalikko"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:72
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Alusta asema"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Palauta levykuva levylle"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:86
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART-tiedot"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:93
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Aseman asetukset"
 
-#: src/disks/ui/shortcuts.ui:95
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Osio"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Avaa taltiovalikko"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:113
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Alusta valittu taltio"
@@ -3634,55 +3649,55 @@ msgstr "_Käynnistä levytesti"
 msgid "Click to start a SMART self-test"
 msgstr "Virhe aloittaessa SMART-testiä"
 
-#: src/disks/ui/smart-dialog.ui:40
+#: src/disks/ui/smart-dialog.ui:37
 msgid "_Stop Self-test"
 msgstr "_Pysäytä levytestit"
 
-#: src/disks/ui/smart-dialog.ui:44
+#: src/disks/ui/smart-dialog.ui:41
 msgid "Click to stop the SMART self-test currently in progress"
 msgstr "Napsauta käynnissä olevan SMART-itsetestin lopettamiseksi"
 
-#: src/disks/ui/smart-dialog.ui:74
+#: src/disks/ui/smart-dialog.ui:63
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Napsauta pakottaaksesi SMART-datan lukemisen uudelleen levyltä"
 
-#: src/disks/ui/smart-dialog.ui:113
+#: src/disks/ui/smart-dialog.ui:97
 msgid "Powered On"
 msgstr "Käynnistettynä"
 
-#: src/disks/ui/smart-dialog.ui:146
+#: src/disks/ui/smart-dialog.ui:130
 msgid "Updated"
 msgstr "Päivitetty"
 
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/smart-dialog.ui:196
 msgid "Self-test Result"
 msgstr "Levytestin tulos"
 
-#: src/disks/ui/smart-dialog.ui:229
+#: src/disks/ui/smart-dialog.ui:213
 msgid "Self-assessment"
 msgstr "Itsearviointi"
 
-#: src/disks/ui/smart-dialog.ui:246
+#: src/disks/ui/smart-dialog.ui:230
 msgid "Overall Assessment"
 msgstr "Yleisarviointi"
 
-#: src/disks/ui/smart-dialog.ui:317
+#: src/disks/ui/smart-dialog.ui:296
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Käytetäänkö SMARTia kiintolevylle"
 
-#: src/disks/ui/smart-dialog.ui:339
+#: src/disks/ui/smart-dialog.ui:307
 msgid "SMART _Attributes"
 msgstr "SMART-määreet"
 
-#: src/disks/ui/smart-dialog.ui:413
+#: src/disks/ui/smart-dialog.ui:364
 msgid "Short"
 msgstr "Lyhyt"
 
-#: src/disks/ui/smart-dialog.ui:421
+#: src/disks/ui/smart-dialog.ui:372
 msgid "Extended"
 msgstr "Laajennettu"
 
-#: src/disks/ui/smart-dialog.ui:429
+#: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "Kuljetus"
 
@@ -3690,25 +3705,25 @@ msgstr "Kuljetus"
 msgid "Enter passphrase to unlock"
 msgstr "Anna tunnuslause avataksesi lukituksen"
 
-#: src/disks/ui/unlock-device-dialog.ui:41
+#: src/disks/ui/unlock-device-dialog.ui:36
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
 "Tämä taltio saattaa olla VeraCrypt-taltio, koska se sisältää satunnaisdataa."
 
-#: src/disks/ui/unlock-device-dialog.ui:79
-#: src/disks/ui/unlock-device-dialog.ui:186
+#: src/disks/ui/unlock-device-dialog.ui:69
+#: src/disks/ui/unlock-device-dialog.ui:176
 msgid "If specified"
 msgstr "Jos määritetty"
 
-#: src/disks/ui/unlock-device-dialog.ui:117
+#: src/disks/ui/unlock-device-dialog.ui:107
 msgid "Volume type"
 msgstr "Taltion tyyppi"
 
-#: src/disks/ui/unlock-device-dialog.ui:136
+#: src/disks/ui/unlock-device-dialog.ui:126
 msgid "_Hidden"
 msgstr "P_iilotettu"
 
-#: src/disks/ui/unlock-device-dialog.ui:137
+#: src/disks/ui/unlock-device-dialog.ui:127
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
@@ -3716,19 +3731,19 @@ msgstr ""
 "Tämän taltion lukituksen avaamisen sijaan yritä avata toissijaisen, sisälle "
 "piilotetun taltion lukitus."
 
-#: src/disks/ui/unlock-device-dialog.ui:149
+#: src/disks/ui/unlock-device-dialog.ui:139
 msgid "Windows _system"
 msgstr "_Windows-järjestelmä"
 
-#: src/disks/ui/unlock-device-dialog.ui:150
+#: src/disks/ui/unlock-device-dialog.ui:140
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Avaa salatun Windows-järjestelmäosion tai -aseman salaus."
 
-#: src/disks/ui/unlock-device-dialog.ui:171
+#: src/disks/ui/unlock-device-dialog.ui:161
 msgid "PI_M"
 msgstr "PI_M"
 
-#: src/disks/ui/unlock-device-dialog.ui:187
+#: src/disks/ui/unlock-device-dialog.ui:177
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
@@ -3736,15 +3751,15 @@ msgstr ""
 "Jos asetettu, VeraCryptin PIM (Personal Iterations Multiplier) numeerinen "
 "arvo tälle taltiolle."
 
-#: src/disks/ui/unlock-device-dialog.ui:204
+#: src/disks/ui/unlock-device-dialog.ui:194
 msgid "_Keyfiles"
 msgstr "_Avaintiedostot"
 
-#: src/disks/ui/unlock-device-dialog.ui:221
+#: src/disks/ui/unlock-device-dialog.ui:211
 msgid "Select a keyfile to unlock this volume"
 msgstr "Valitse avaintiedosto avataksesi tämän taltion"
 
-#: src/disks/ui/unlock-device-dialog.ui:260
+#: src/disks/ui/unlock-device-dialog.ui:240
 msgid "_Unlock"
 msgstr "_Avaa lukitus"
 
@@ -3924,15 +3939,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Kohdistuu laitteisiin"
 
-#: src/libgdu/gduutils.c:1398
+#: src/libgdu/gduutils.c:1399
 msgid "Error unmounting filesystem"
 msgstr "Virhe irrotettaessa tiedostojärjestelmää"
 
-#: src/libgdu/gduutils.c:1418
+#: src/libgdu/gduutils.c:1431
 msgid "Error locking device"
 msgstr "Virhe lukittaessa laitetta"
 
-#: src/libgdu/gduutils.c:1439
+#: src/libgdu/gduutils.c:1452
 #, fuzzy
 #| msgid "Error deleting loop device"
 msgid "Error disabling autoclear for loop device"
@@ -3955,6 +3970,12 @@ msgstr "Kiintolevy hajonnee pian."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Tutki"
+
+#~ msgid "Parent window XID for the format dialog"
+#~ msgstr "Alustamisikkunan pääikkunan XID"
+
+#~ msgid "--format-device must be specified when using --xid\n"
+#~ msgstr "--format-device on annettava käytettäessä valitsinta --xid\n"
 
 #~ msgid "drive-removable-media"
 #~ msgstr "drive-removable-media"
@@ -4446,10 +4467,6 @@ msgstr "Tutki"
 
 #~ msgid "Error stopping RAID array"
 #~ msgstr "Virhe pysäyttäessä RAID-pakkaa"
-
-#~ msgctxt "multi-disk-menu"
-#~ msgid "No _Devices Selected"
-#~ msgstr "Ei _laitteita valittuna"
 
 #~ msgid "%d _Device Selected (%s)"
 #~ msgid_plural "%d _Devices Selected (%s)"

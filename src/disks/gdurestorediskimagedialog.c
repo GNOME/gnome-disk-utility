@@ -844,6 +844,13 @@ copy_thread_func (gpointer user_data)
 
   if (error != NULL)
     {
+      gboolean wipe_after_error = TRUE;
+
+      if (error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED)
+        {
+          wipe_after_error = FALSE;
+        }
+
       /* show error in GUI */
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
         {
@@ -853,7 +860,7 @@ copy_thread_func (gpointer user_data)
       g_clear_error (&error);
 
       /* Wipe the device */
-      if (!udisks_block_call_format_sync (data->block,
+      if (wipe_after_error && !udisks_block_call_format_sync (data->block,
                                           "empty",
                                           g_variant_new ("a{sv}", NULL), /* options */
                                           NULL, /* cancellable */

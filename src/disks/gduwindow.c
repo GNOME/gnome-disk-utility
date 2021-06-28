@@ -2542,7 +2542,7 @@ update_device_page_for_block (GduWindow          *window,
             }
           else
             {
-              s = g_strdup_printf ("<a href=\"file://%s\">%s</a>",
+              s = g_markup_printf_escaped ("<a href=\"file://%s\">%s</a>",
                                    mount_points[0], mount_points[0]);
             }
           /* Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar */

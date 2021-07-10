@@ -443,7 +443,7 @@ gdu_format_disk_dialog_show (GduWindow    *window,
                                         str->str,
                                         _("_Format"),
                                         NULL, NULL,
-                                        gdu_window_get_client (data->window), objects))
+                                        gdu_window_get_client (data->window), objects, TRUE))
         {
           g_list_free (objects);
           g_string_free (str, TRUE);

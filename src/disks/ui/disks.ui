@@ -654,137 +654,176 @@
                                       </object>
                                     </child>
                                     <child>
-                                      <object class="GtkToolbar" id="devtab-grid-toolbar">
+                                      <object class="GtkBox" id="devtab-grid-toolbar">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="icon_size">1</property>
                                         <style>
                                           <class name="inline-toolbar"/>
                                         </style>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-mount">
+                                          <object class="GtkButton" id="toolbutton-mount">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Mount selected partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-mount">Mount</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">media-playback-start-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">media-playback-start-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-unmount">
+                                          <object class="GtkButton" id="toolbutton-unmount">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Unmount selected partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-unmount">Unmount</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">media-playback-stop-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">media-playback-stop-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-activate-swap">
+                                          <object class="GtkButton" id="toolbutton-activate-swap">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Activate selected swap partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-activate-swap">Activate swap</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">media-playback-start-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">media-playback-start-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-deactivate-swap">
+                                          <object class="GtkButton" id="toolbutton-deactivate-swap">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Deactivate selected swap partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-deactivate-swap">Deactivate swap</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">media-playback-stop-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">media-playback-stop-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-unlock">
+                                          <object class="GtkButton" id="toolbutton-unlock">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Unlock selected encrypted partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-unlock">Unlock</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">changes-allow-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">changes-allow-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-lock">
+                                          <object class="GtkButton" id="toolbutton-lock">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Lock selected encrypted partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-lock">Lock</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">changes-prevent-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">changes-prevent-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-partition-create">
+                                          <object class="GtkButton" id="toolbutton-partition-create">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Create partition in unallocated space</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-partition-create">Create partition</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">list-add-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">list-add-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkToolButton" id="toolbutton-partition-delete">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="tooltip_text" translatable="yes">Delete selected partition</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-partition-delete">Delete partition</property>
-                                            <property name="use_underline">True</property>
-                                            <property name="icon_name">list-remove-symbolic</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkToolButton" id="toolbutton-volume-menu">
+                                          <object class="GtkButton" id="toolbutton-volume-menu">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="tooltip_text" translatable="yes">Additional partition options</property>
-                                            <property name="label" translatable="yes" context="Accessibility label for toolbutton-volume-menu">Menu</property>
                                             <property name="use_underline">True</property>
-                                            <property name="icon_name">system-run-symbolic</property>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">system-run-symbolic</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
-                                            <property name="homogeneous">True</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSeparator">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <property name="halign">GTK_ALIGN_START</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="toolbutton-partition-delete">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="tooltip_text" translatable="yes">Delete selected partition</property>
+                                            <property name="use_underline">True</property>
+                                            <style>
+                                              <class name="destructive-action"/>
+                                            </style>
+                                            <child>
+                                              <object class="GtkImage">
+                                                <property name="visible">True</property>
+                                                <property name="icon-name">list-remove-symbolic</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
                                           </packing>
                                         </child>
                                       </object>

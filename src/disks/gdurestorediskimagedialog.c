@@ -1036,7 +1036,7 @@ on_dialog_response (GtkDialog     *dialog,
                                         _("All existing data will be lost"),
                                         _("_Restore"),
                                         NULL, NULL,
-                                        gdu_window_get_client (data->window), objects))
+                                        gdu_window_get_client (data->window), objects, TRUE))
         {
           dialog_data_complete_and_unref (data);
           goto out;

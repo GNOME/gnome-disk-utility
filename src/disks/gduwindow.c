@@ -3572,7 +3572,7 @@ do_power_off (GduWindow *window)
                                         message,
                                         _("_Power Off"),
                                         NULL, NULL,
-                                        window->client, objects))
+                                        window->client, objects, FALSE))
         goto out;
     }
 
@@ -3776,7 +3776,7 @@ on_partition_delete_tool_button_clicked (GtkToolButton *button, gpointer user_da
                                     _("All data on the partition will be lost"),
                                     _("_Delete"),
                                     NULL, NULL,
-                                    window->client, objects))
+                                    window->client, objects, TRUE))
     goto out;
 
   gdu_window_ensure_unused (window,

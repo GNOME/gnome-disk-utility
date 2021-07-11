@@ -229,6 +229,7 @@ typedef enum
   SHOW_FLAGS_VOLUME_MENU_RESIZE                = (1<<9),
   SHOW_FLAGS_VOLUME_MENU_REPAIR                = (1<<10),
   SHOW_FLAGS_VOLUME_MENU_CHECK                 = (1<<11),
+  SHOW_FLAGS_VOLUME_MENU_TAKE_OWNERSHIP        = (1<<12),
 } ShowFlagsVolumeMenu;
 
 typedef struct
@@ -308,6 +309,9 @@ static void on_volume_menu_item_resize (GSimpleAction *action,
 static void on_volume_menu_item_repair (GSimpleAction *action,
                                         GVariant      *parameter,
                                         gpointer       user_data);
+static void on_volume_menu_item_take_ownership (GSimpleAction *action,
+                                                GVariant      *parameter,
+                                                gpointer       user_data);
 static void on_volume_menu_item_check (GSimpleAction *action,
                                        GVariant      *parameter,
                                        gpointer       user_data);
@@ -371,6 +375,7 @@ static const GActionEntry actions[] = {
 	{ "resize", on_volume_menu_item_resize },
 	{ "check-fs", on_volume_menu_item_check },
 	{ "repair-fs", on_volume_menu_item_repair },
+	{ "take-ownership", on_volume_menu_item_take_ownership },
 
 	{ "configure-fstab", on_volume_menu_item_configure_fstab },
 	{ "configure-crypttab", on_volume_menu_item_configure_crypttab },
@@ -515,6 +520,9 @@ update_for_show_flags (GduWindow *window,
   g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "repair-fs")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_REPAIR);
+  g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
+                              "take-ownership")),
+                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_TAKE_OWNERSHIP);
   g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window),
                               "check-fs")),
                               show_flags->volume_menu & SHOW_FLAGS_VOLUME_MENU_CHECK);
@@ -2676,6 +2684,9 @@ update_device_page_for_block (GduWindow          *window,
       if (!read_only && gdu_utils_can_repair (window->client, type, FALSE, NULL))
         show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_REPAIR;
 
+      if (!read_only && gdu_utils_can_take_ownership (type))
+        show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_TAKE_OWNERSHIP;
+
       if (gdu_utils_can_check (window->client, type, FALSE, NULL))
         show_flags->volume_menu |= SHOW_FLAGS_VOLUME_MENU_CHECK;
     }
@@ -3062,6 +3073,46 @@ on_volume_menu_item_repair (GSimpleAction *action,
                               NULL, g_object_ref (object));
 
   gtk_widget_destroy (message_dialog);
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+fs_take_ownership_cb (UDisksFilesystem *filesystem,
+                      GAsyncResult     *res,
+                      GduWindow        *window)
+{
+  GError *error = NULL;
+
+  if (!udisks_filesystem_call_take_ownership_finish (filesystem, res, &error))
+    {
+      gdu_utils_show_error (GTK_WINDOW (window),
+                            _("Error while taking filesystem ownership"),
+                            error);
+
+      g_error_free (error);
+    }
+}
+
+static void
+on_volume_menu_item_take_ownership (GSimpleAction *action,
+                                    GVariant      *parameter,
+                                    gpointer       user_data)
+{
+  GduWindow *window;
+  UDisksObject *object;
+  UDisksFilesystem *filesystem;
+
+  window = GDU_WINDOW (user_data);
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+  g_assert (object != NULL);
+
+  filesystem = udisks_object_peek_filesystem (object);
+  udisks_filesystem_call_take_ownership (filesystem,
+                                         g_variant_new ("a{sv}", NULL),
+                                         NULL,
+                                         (GAsyncReadyCallback) fs_take_ownership_cb,
+                                         window);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

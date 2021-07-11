@@ -98,6 +98,8 @@ gboolean gdu_utils_can_repair (UDisksClient *client,
                                gboolean      flush,
                                gchar       **missing_util_out);
 
+gboolean gdu_utils_can_take_ownership (const gchar  *fstype);
+
 gboolean gdu_utils_can_check  (UDisksClient *client,
                                const gchar  *fstype,
                                gboolean      flush,

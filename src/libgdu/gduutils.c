@@ -1013,6 +1013,18 @@ gdu_utils_can_repair (UDisksClient *client,
   return result ? result->available : FALSE;
 }
 
+gboolean
+gdu_utils_can_take_ownership (const gchar *fstype)
+{
+  if (g_strcmp0 (fstype, "ntfs") == 0 ||
+      g_strcmp0 (fstype, "vfat") == 0 ||
+      g_strcmp0 (fstype, "exfat") == 0)
+    {
+      return FALSE;
+    }
+  return TRUE;
+}
+
 G_LOCK_DEFINE (can_check_lock);
 
 gboolean

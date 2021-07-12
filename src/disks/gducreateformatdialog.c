@@ -251,8 +251,12 @@ ensure_unused_cb (UDisksClient *client, GAsyncResult *res, CreateFormatData *dat
     }
 
   if (get_encrypt (data))
-    g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase",
-                           g_variant_new_string (gdu_create_password_page_get_password (data->password_page)));
+    {
+      g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase",
+                             g_variant_new_string (gdu_create_password_page_get_password (data->password_page)));
+
+      g_variant_builder_add (&options_builder, "{sv}", "encrypt.type", g_variant_new_string ("luks2"));
+    }
 
   if (erase_type != NULL)
     g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));

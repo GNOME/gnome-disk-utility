@@ -264,6 +264,7 @@ static void on_devtab_drive_power_off_button_clicked (GtkButton *button, gpointe
 static void on_go_back (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 static void on_drive_menu_open (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 static void on_volume_menu_open (GSimpleAction *action, GVariant *parameter, gpointer user_data);
+static void on_app_menu_open (GSimpleAction *action, GVariant *parameter, gpointer user_data);
 
 static void on_drive_menu_item_view_smart (GSimpleAction *action,
                                            GVariant      *parameter,
@@ -357,6 +358,7 @@ static const GActionEntry actions[] = {
 	{ "go-back", on_go_back },
 	{ "open-drive-menu", on_drive_menu_open },
 	{ "open-volume-menu", on_volume_menu_open },
+	{ "open-app-menu", on_app_menu_open },
 
 	{ "format-disk", on_drive_menu_item_format_disk },
 	{ "create-disk-image", on_drive_menu_item_create_disk_image },
@@ -3254,6 +3256,19 @@ on_drive_menu_open (GSimpleAction *action,
 
   update_all (window, FALSE);
   gtk_popover_popup (GTK_POPOVER (window->drive_menu));
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+static void
+on_app_menu_open (GSimpleAction *action,
+                    GVariant      *parameter,
+                    gpointer       user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+
+  update_all (window, FALSE);
+  gtk_popover_popup (GTK_POPOVER (window->app_menu));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

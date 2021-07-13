@@ -398,6 +398,7 @@ gdu_application_startup (GApplication *_app)
     "win.go-back",               "Escape", NULL,
     "win.open-drive-menu",       "F10", NULL,
     "win.open-volume-menu",      "<Shift>F10", NULL,
+    "win.open-app-menu",         "F9", NULL,
 
     "win.format-disk",           "<Primary>D", NULL,
     "win.restore-disk-image",    "<Primary>R", NULL,

@@ -3239,10 +3239,15 @@ on_volume_menu_open (GSimpleAction *action,
                      GVariant      *parameter,
                      gpointer       user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
+  GduWindow *window;
 
+  window = GDU_WINDOW (user_data);
   update_all (window, FALSE);
-  gtk_popover_popup (GTK_POPOVER (window->volume_menu));
+
+  if (!gtk_widget_get_visible (window->volume_menu))
+    gtk_popover_popup (GTK_POPOVER (window->volume_menu));
+  else
+    gtk_popover_popdown (GTK_POPOVER (window->volume_menu));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3252,23 +3257,33 @@ on_drive_menu_open (GSimpleAction *action,
                     GVariant      *parameter,
                     gpointer       user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
+  GduWindow *window;
 
+  window = GDU_WINDOW (user_data);
   update_all (window, FALSE);
-  gtk_popover_popup (GTK_POPOVER (window->drive_menu));
+
+  if (!gtk_widget_get_visible (window->drive_menu))
+    gtk_popover_popup (GTK_POPOVER (window->drive_menu));
+  else
+    gtk_popover_popdown (GTK_POPOVER (window->drive_menu));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
 on_app_menu_open (GSimpleAction *action,
-                    GVariant      *parameter,
-                    gpointer       user_data)
+                  GVariant      *parameter,
+                  gpointer       user_data)
 {
-  GduWindow *window = GDU_WINDOW (user_data);
+  GduWindow *window;
 
+  window = GDU_WINDOW (user_data);
   update_all (window, FALSE);
-  gtk_popover_popup (GTK_POPOVER (window->app_menu));
+
+  if (!gtk_widget_get_visible (window->app_menu))
+    gtk_popover_popup (GTK_POPOVER (window->app_menu));
+  else
+    gtk_popover_popdown (GTK_POPOVER (window->app_menu));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <object class="GtkMessageDialog" id="take-ownership-dialog">
+        <property name="text" translatable="yes">Confirm Taking Ownership</property>
+        <property name="secondary-text" translatable="yes">Changes ownership of the filesystem to your user and group. The recursive mode does also change the ownership of all subdirectories and files, this can lead to destructive results when the filesystem contains a directory structure where ownership should belong to different users (e.g., a system backup or a filesystem that is accessed by multiple users).</property>
+        <property name="resizable">False</property>
+        <property name="modal">True</property>
+        <property name="window_position">center-on-parent</property>
+        <child internal-child="vbox">
+            <object class="GtkBox">
+                <child>
+                    <object class="GtkCheckButton" id="recursive-checkbutton">
+                        <property name="label" translatable="yes">Enable _recursive mode</property>
+                        <property name="visible">True</property>
+                        <property name="use_underline">True</property>
+                        <property name="margin-start">40</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child type="action">
+            <object class="GtkButton">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+                <property name="has-focus">True</property>
+            </object>
+        </child>
+        <child type="action">
+            <object class="GtkButton" id="ok-button">
+                <property name="label">gtk-ok</property>
+                <property name="visible">True</property>
+                <property name="use_underline">True</property>
+                <property name="use_stock">True</property>
+                <style>
+                    <class name="suggested-action"/>
+                </style>
+            </object>
+        </child>
+        <action-widgets>
+            <action-widget response="ok">ok-button</action-widget>
+        </action-widgets>
+    </object>
+</interface>

@@ -3080,6 +3080,24 @@ on_volume_menu_item_repair (GSimpleAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_recursive_checkbutton (GtkToggleButton *togglebutton,
+                          gpointer         user_data)
+{
+  GtkWidget *ok_button = GTK_WIDGET (user_data);
+
+  if (gtk_toggle_button_get_active (togglebutton))
+    {
+      gtk_style_context_remove_class (gtk_widget_get_style_context (ok_button), "suggested-action");
+      gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");
+    }
+  else
+    {
+      gtk_style_context_remove_class (gtk_widget_get_style_context (ok_button), "destructive-action");
+      gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");
+    }
+}
+
+static void
 fs_take_ownership_cb (UDisksFilesystem *filesystem,
                       GAsyncResult     *res,
                       GduWindow        *window)
@@ -3102,19 +3120,42 @@ on_volume_menu_item_take_ownership (GSimpleAction *action,
                                     gpointer       user_data)
 {
   GduWindow *window;
+  GtkBuilder *builder;
+  GVariantBuilder options_builder;
+  GtkWidget *dialog;
+  GtkWidget *recursive_checkbutton;
+  GtkWidget *ok_button;
   UDisksObject *object;
   UDisksFilesystem *filesystem;
 
   window = GDU_WINDOW (user_data);
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-
   filesystem = udisks_object_peek_filesystem (object);
-  udisks_filesystem_call_take_ownership (filesystem,
-                                         g_variant_new ("a{sv}", NULL),
-                                         NULL,
-                                         (GAsyncReadyCallback) fs_take_ownership_cb,
-                                         window);
+
+  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/take-ownership-dialog.ui");
+  dialog = GTK_WIDGET (gtk_builder_get_object (builder, "take-ownership-dialog"));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+
+  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  recursive_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "recursive-checkbutton"));
+  g_signal_connect (recursive_checkbutton, "toggled", G_CALLBACK (on_recursive_checkbutton), ok_button);
+
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+    {
+      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (recursive_checkbutton)))
+        g_variant_builder_add (&options_builder, "{sv}", "recursive", g_variant_new_boolean (TRUE));
+
+      udisks_filesystem_call_take_ownership (filesystem,
+                                             g_variant_builder_end (&options_builder),
+                                             NULL,
+                                             (GAsyncReadyCallback) fs_take_ownership_cb,
+                                             window);
+    }
+
+  gtk_widget_destroy (dialog);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

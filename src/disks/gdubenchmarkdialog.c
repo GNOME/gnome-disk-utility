@@ -1517,6 +1517,7 @@ start_benchmark (DialogData *data)
   GtkWidget *sample_size_spinbutton;
   GtkWidget *write_checkbutton;
   GtkWidget *num_access_samples_spinbutton;
+  GSettings *settings;
   gint response;
 
   g_assert (!data->bm_in_progress);
@@ -1534,6 +1535,17 @@ start_benchmark (DialogData *data)
   sample_size_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "sample-size-spinbutton"));
   write_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "write-checkbutton"));
   num_access_samples_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "num-access-samples-spinbutton"));
+
+  settings = g_settings_new ("org.gnome.Disks.benchmark");
+  data->bm_num_samples = g_settings_get_int (settings, "num-samples");
+  data->bm_sample_size_mib = g_settings_get_int (settings, "sample-size-mib");
+  data->bm_do_write = g_settings_get_boolean (settings, "do-write");
+  data->bm_num_access_samples = g_settings_get_int (settings, "num-access-samples");
+
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_samples_spinbutton), data->bm_num_samples);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(sample_size_spinbutton), data->bm_sample_size_mib);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), data->bm_do_write);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_access_samples_spinbutton), data->bm_num_access_samples);
 
   /* if device is read-only, uncheck the "perform write-test"
    * check-button and also make it insensitive
@@ -1563,6 +1575,11 @@ start_benchmark (DialogData *data)
   data->bm_do_write = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (write_checkbutton));
   data->bm_num_access_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_access_samples_spinbutton));
 
+  g_settings_set_int (settings, "num-samples", data->bm_num_samples);
+  g_settings_set_int (settings, "sample-size-mib", data->bm_sample_size_mib);
+  g_settings_set_boolean (settings, "do-write", data->bm_do_write);
+  g_settings_set_int (settings, "num-access-samples", data->bm_num_access_samples);
+
   //g_print ("num_samples=%d\n", data->bm_num_samples);
   //g_print ("sample_size=%d MB\n", data->bm_sample_size_mib);
   //g_print ("do_write=%d\n", data->bm_do_write);
@@ -1585,6 +1602,7 @@ start_benchmark (DialogData *data)
  out:
   gtk_widget_destroy (dialog);
   g_clear_object (&builder);
+  g_clear_object (&settings);
   update_dialog (data);
 }
 

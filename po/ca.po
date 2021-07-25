@@ -5,14 +5,14 @@
 # Gil Forcada <gilforcada@guifi.net>, 2009, 2010, 2012, 2013, 2016.
 # Carles Ferrando Garcia <carles.ferrando@gmail.com>, 2017.
 # Xavi Ivars <xavi.ivars@gmail.com>, 2018.
-# Jordi Mas <jmas@softcatala.org>, 2019
+# Jordi Mas <jmas@softcatala.org>, 2019, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2021-02-11 14:27+0000\n"
+"POT-Creation-Date: 2021-07-23 21:35+0000\n"
 "PO-Revision-Date: 2020-12-23 09:22+0100\n"
-"Last-Translator: Miquel-Àngel Burgos i Fradeja <miquel.angel.burgos@gmail.com>\n"
+"Last-Translator: Jordi Mas <jmas@softcatala.org>Jordi Mas <jmas@softcatala.org>,\n"
 "Language-Team: Catalan <info@softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr "Una manera fàcil de gestionar els discs"
 msgid "The GNOME Project"
 msgstr "El projecte GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Discs"
@@ -115,8 +115,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Seleccioneu les imatges de disc a muntar"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "_Cancel·la"
 
@@ -452,7 +452,7 @@ msgstr "Nombre de cicles dins de la posició de la zona de cerca"
 #. http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:163
+#: src/disks/ui/smart-dialog.ui:162
 msgid "Temperature"
 msgstr "Temperatura"
 
@@ -1123,7 +1123,7 @@ msgstr "Actualitzacions"
 
 #. Translators: This string is used as the column title in the treeview for
 #. the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Avaluació"
 
@@ -1487,31 +1487,31 @@ msgstr "S_egüent"
 msgid "Error formatting volume"
 msgstr "S'ha produït un error en formatar el volum"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "S'ha produït un error en crear la partició"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "Creació d'una partició"
 
-#: src/disks/gducreateformatdialog.c:459
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "Formata el volum"
 
-#: src/disks/gducreateformatdialog.c:462
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "Format personalitzat"
 
-#: src/disks/gducreateformatdialog.c:465
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "Defineix una contrasenya"
 
-#: src/disks/gducreateformatdialog.c:468
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "Confirmeu els detalls"
 
-#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Formata"
 
@@ -2027,34 +2027,34 @@ msgstr "La imatge de disc és %s més gran que el dispositiu"
 msgid "Error restoring disk image"
 msgstr "S'ha produït un error en restaurar la imatge de disc"
 
-#: src/disks/gdurestorediskimagedialog.c:923
+#: src/disks/gdurestorediskimagedialog.c:930
 msgid "Error opening file for reading"
 msgstr "S'ha produït un error en obrir el fitxer per a llegir-lo"
 
-#: src/disks/gdurestorediskimagedialog.c:938
+#: src/disks/gdurestorediskimagedialog.c:945
 msgid "Error determining size of file"
 msgstr "S'ha produït un error en determinar la mida del fitxer"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:966
+#: src/disks/gdurestorediskimagedialog.c:973
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "S'està copiant la imatge de disc al dispositiu"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:972
+#: src/disks/gdurestorediskimagedialog.c:979
 msgid "Restoring Disk Image"
 msgstr "S'està restaurant una imatge de disc"
 
-#: src/disks/gdurestorediskimagedialog.c:1028
+#: src/disks/gdurestorediskimagedialog.c:1035
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Segur que voleu escriure la imatge de disc al dispositiu?"
 
-#: src/disks/gdurestorediskimagedialog.c:1029
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "All existing data will be lost"
 msgstr "Es perdran totes les dades"
 
-#: src/disks/gdurestorediskimagedialog.c:1030
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "_Restore"
 msgstr "_Restaura"
 
@@ -2083,7 +2083,7 @@ msgstr "Estableix opcions de desbloqueig"
 msgid "Volumes Grid"
 msgstr "Xarxa de volums"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "Cap suport"
 
@@ -2125,30 +2125,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Espai lliure"
 
-#: src/disks/gduwindow.c:632
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr "S'ha produït un error en suprimir el dispositiu de bucle"
 
-#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "S'ha produït un error en adjuntar la imatge de disc"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "Seleccioneu la imatge de disc a adjuntar"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "_Adjunta"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:816
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
 msgstr "Configura el dispositiu de bucle en mode _només lectura"
 
-#: src/disks/gduwindow.c:817
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2158,7 +2158,7 @@ msgstr ""
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g.
 #. /dev/sdb1
-#: src/disks/gduwindow.c:1663
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Només lectura)"
@@ -2168,7 +2168,7 @@ msgstr "%s (Només lectura)"
 #. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per
 #. second (ex. "8.9 MB").
-#: src/disks/gduwindow.c:1701
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2177,7 +2177,7 @@ msgstr "Manquen %s (%s/s)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex.
 #. "1 minute" or "5 minutes").
-#: src/disks/gduwindow.c:1709
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2192,7 +2192,7 @@ msgstr "Manquen %s"
 #. *              The third %s is the estimated amount of time remaining
 #. including speed (if known) (ex. "1 minute remaining", "5 minutes remaining
 #. (42.3 MB/s)", "Less than a minute remaining").
-#: src/disks/gduwindow.c:1724
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s de %s – %s"
@@ -2200,18 +2200,18 @@ msgstr "%s de %s – %s"
 #. Translators: Used in job progress bar.
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "El dispositiu de bloc és buit"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-
 #. level type.
-#: src/disks/gduwindow.c:1952
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2220,11 +2220,11 @@ msgstr "Desconeguda (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat
 #. than where
 #. * our application is running.
-#: src/disks/gduwindow.c:2111
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "Connectat a un altre terminal"
 
-#: src/disks/gduwindow.c:2256
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr "El dispositiu de bucle és buit"
 
@@ -2236,26 +2236,26 @@ msgstr "El dispositiu de bucle és buit"
 #. *              The second %s is a short string with the space free (e.g.
 #. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
-#: src/disks/gduwindow.c:2473
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s lliure (%.1f%% en ús)"
 
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Desconeguda"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit
 #. as a hyperlink
-#: src/disks/gduwindow.c:2541
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Arrel del sistema de fitxers"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount
 #. point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2549
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
@@ -2263,40 +2263,40 @@ msgstr "Muntat a %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use"
 #. label
-#: src/disks/gduwindow.c:2555
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Sense muntar"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in
 #. use
-#: src/disks/gduwindow.c:2578
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not
 #. in use
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "No actiu"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is
 #. unlocked
-#: src/disks/gduwindow.c:2599
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Desblocat"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is
 #. unlocked
-#: src/disks/gduwindow.c:2605
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Blocat"
 
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partició ampliada"
@@ -2307,45 +2307,45 @@ msgstr "Partició ampliada"
 #. or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not
 #. Mounted, "Active", "Not Active", "Unlocked" or "Locked".
-#: src/disks/gduwindow.c:2639
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2759
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "Espai no ubicat"
 
-#: src/disks/gduwindow.c:2960
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "S'ha produït un error en reparar el sistema de fitxers"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "La reparació ha estat un èxit"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "La reparació ha fallat"
 
-#: src/disks/gduwindow.c:2990
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "El sistema de fitxers %s en %s ha estat reparat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:2996
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "El sistema de fitxers %s en %s no s'ha pogut reparar."
 
-#: src/disks/gduwindow.c:3049
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "Confirmeu la reparació"
 
-#: src/disks/gduwindow.c:3052
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider"
 " backing it up first in order to use forensic recovery tools that retrieve "
@@ -2354,38 +2354,41 @@ msgid ""
 msgstr ""
 "Una reparació del sistema de fitxers no sempre és possible i pot provocar "
 "pèrdua de dades. Considereu fer una còpia de seguretat primer abans "
-"d'utilitzar eines de recuperació forenses per a recuperar fitxers "
-"perduts. Depenent de la quantitat de dades, aquesta operació triga més "
-"temps."
+"d'utilitzar eines de recuperació forenses per a recuperar fitxers perduts. "
+"Depenent de la quantitat de dades, aquesta operació triga més temps."
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "S'ha produït un error en prendre la propietat del sistema de fitxers"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "S'ha produït un error en comprovar el sistema de fitxers"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Sistema de fitxers intacte"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Sistema de fitxers danyat"
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "El sistema de fitxers %s en %s està no danyat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3116
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "El sistema de fitxers %s en %s necessita reparació."
 
-#: src/disks/gduwindow.c:3167
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Confirmeu la comprovació"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2393,27 +2396,27 @@ msgstr ""
 "La comprovació pot trigar bastant de temps, especialment si la partició "
 "conté moltes dades."
 
-#: src/disks/gduwindow.c:3422
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava posar la unitat en mode de repòs"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "S'ha produït un error quan s'intentava despertar la unitat del mode de repòs"
 
-#: src/disks/gduwindow.c:3515
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "S'ha produït un error en apagar el dispositiu"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3567
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "Segur que voleu apagar els dispositius?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3569
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2421,47 +2424,47 @@ msgstr ""
 "Aquesta operació prepararà el sistema perquè es puguin apagar i treure els "
 "dispositius següents."
 
-#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Apaga"
 
-#: src/disks/gduwindow.c:3653
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "S'ha produït un error en muntar el sistema de fitxers"
 
-#: src/disks/gduwindow.c:3738
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "S'ha produït un error en suprimir particions"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "Segur que voleu suprimir la partició?"
 
-#: src/disks/gduwindow.c:3776
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Es perdran totes les dades de la partició"
 
-#: src/disks/gduwindow.c:3777
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_Suprimeix"
 
-#: src/disks/gduwindow.c:3808
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "S'ha produït un error en expulsar el suport"
 
-#: src/disks/gduwindow.c:3891
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "S'ha produït un error en iniciar la memòria d'intercanvi"
 
-#: src/disks/gduwindow.c:3928
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "S'ha produït un error en aturar la memòria d'intercanvi"
 
-#: src/disks/gduwindow.c:3970
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "S'ha produït un error en establir el senyalador d'autoneteja"
 
-#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "S'ha produït un error en cancel·lar la tasca"
 
@@ -2697,7 +2700,7 @@ msgstr "Es perdran totes les dades de la partició"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Confirmeu els detalls del volum actual abans de procedir."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
 msgid "Device"
 msgstr "Dispositiu"
 
@@ -2711,7 +2714,7 @@ msgstr "Utilitzat"
 
 #. The physical location of the drive, could be 'Connected to another seat'
 #. or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "Ubicació"
 
@@ -3018,81 +3021,85 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Memòria cau d'_escriptura"
 
-#: src/disks/ui/disks.ui:93
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "Menú d'aplicacions"
+
+#: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
 msgstr "Torna a la vista principal"
 
-#: src/disks/ui/disks.ui:105
+#: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "Paràmetres de la unitat"
 
-#: src/disks/ui/disks.ui:120
+#: src/disks/ui/disks.ui:121
 msgid "Power off this disk"
 msgstr "Atura la unitat"
 
-#: src/disks/ui/disks.ui:135
+#: src/disks/ui/disks.ui:136
 msgid "Eject this disk"
 msgstr "Expulsa el suport"
 
-#: src/disks/ui/disks.ui:150
+#: src/disks/ui/disks.ui:151
 msgid "Detach this loop device"
 msgstr "Separa el dispositiu de bucle"
 
-#: src/disks/ui/disks.ui:173
+#: src/disks/ui/disks.ui:174
 msgid "No Device Selected"
 msgstr "No s'ha seleccionat cap dispositiu"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:175
 msgid "Select a device to manage."
 msgstr "Seleccioneu un dispositiu a gestionar."
 
-#: src/disks/ui/disks.ui:209
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "Model"
 
-#: src/disks/ui/disks.ui:238
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "Número de sèrie"
 
-#: src/disks/ui/disks.ui:267
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr "Nom global a tot el món (WWN)"
 
-#: src/disks/ui/disks.ui:325
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "Suport"
 
-#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
 msgid "Job"
 msgstr "Tasca"
 
-#: src/disks/ui/disks.ui:476
+#: src/disks/ui/disks.ui:477
 msgid "Name"
 msgstr "Nom"
 
-#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
 msgid "Size"
 msgstr "Mida"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:535
 msgid "Auto-clear"
 msgstr "Neteja automàtica"
 
-#: src/disks/ui/disks.ui:552
+#: src/disks/ui/disks.ui:553
 msgid "Detach loop device after unmount action"
 msgstr "Desacobla el dispositiu de bucle després de desmuntar-lo"
 
 #. The filename or URI of the file that is used as backing store for the loop
 #. device.
-#: src/disks/ui/disks.ui:566
+#: src/disks/ui/disks.ui:567
 msgid "Backing File"
 msgstr "S'està creant una còpia del fitxer"
 
-#: src/disks/ui/disks.ui:595
+#: src/disks/ui/disks.ui:596
 msgid "Partitioning"
 msgstr "Particionat"
 
-#: src/disks/ui/disks.ui:626
+#: src/disks/ui/disks.ui:627
 msgid "_Volumes"
 msgstr "_Volums"
 
@@ -3100,94 +3107,49 @@ msgstr "_Volums"
 msgid "Mount selected partition"
 msgstr "Munta la partició seleccionada"
 
-#: src/disks/ui/disks.ui:669
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "Munta"
-
-#: src/disks/ui/disks.ui:682
+#: src/disks/ui/disks.ui:685
 msgid "Unmount selected partition"
 msgstr "Desmunta la partició seleccionada"
 
-#: src/disks/ui/disks.ui:683
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "Desmunta"
-
-#: src/disks/ui/disks.ui:696
+#: src/disks/ui/disks.ui:702
 msgid "Activate selected swap partition"
 msgstr "Activa la partició d'intercanvi seleccionada"
 
-#: src/disks/ui/disks.ui:697
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "Activa l'intercanvi"
-
-#: src/disks/ui/disks.ui:710
+#: src/disks/ui/disks.ui:719
 msgid "Deactivate selected swap partition"
 msgstr "Desactiva la partició d'intercanvi seleccionada"
 
-#: src/disks/ui/disks.ui:711
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "Desactiva l'intercanvi"
-
-#: src/disks/ui/disks.ui:724
+#: src/disks/ui/disks.ui:736
 msgid "Unlock selected encrypted partition"
 msgstr "Desbloca la partició encriptada seleccionada"
 
-#: src/disks/ui/disks.ui:725
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "Desbloca"
-
-#: src/disks/ui/disks.ui:738
+#: src/disks/ui/disks.ui:753
 msgid "Lock selected encrypted partition"
 msgstr "Bloca la partició encriptada seleccionada"
 
-#: src/disks/ui/disks.ui:739
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "Bloca"
-
-#: src/disks/ui/disks.ui:752
+#: src/disks/ui/disks.ui:770
 msgid "Create partition in unallocated space"
 msgstr "Crea una partició en l'espai no assignat"
 
-#: src/disks/ui/disks.ui:753
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "Creació d'una partició"
-
-#: src/disks/ui/disks.ui:766
-msgid "Delete selected partition"
-msgstr "Suprimeix la partició seleccionada"
-
-#: src/disks/ui/disks.ui:767
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "Suprimeix la partició"
-
-#: src/disks/ui/disks.ui:780
+#: src/disks/ui/disks.ui:787
 msgid "Additional partition options"
 msgstr "Opcions de la partició addicionals"
 
-#: src/disks/ui/disks.ui:781
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr "Menú"
+#: src/disks/ui/disks.ui:814
+msgid "Delete selected partition"
+msgstr "Suprimeix la partició seleccionada"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)',
 #. 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:834
+#: src/disks/ui/disks.ui:874
 msgid "Contents"
 msgstr "Contingut"
 
-#: src/disks/ui/disks.ui:892
+#: src/disks/ui/disks.ui:932
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:921
+#: src/disks/ui/disks.ui:961
 msgid "Partition Type"
 msgstr "Tipus de partició"
 
@@ -3635,75 +3597,85 @@ msgstr "General"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "Crea una imatge de disc nova buida"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "Adjunta una imatge de disc existent"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr "Desselecciona el disc actual"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "Obre el menú d'aplicacions"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Dreceres de teclat"
 
-#: src/disks/ui/shortcuts.ui:52
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Surt"
 
-#: src/disks/ui/shortcuts.ui:61
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "Discs"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "Crea una imatge de disc nova buida"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "Adjunta una imatge de disc existent"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Desselecciona el disc actual"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Unitat"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Obre el menú d'unitat"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formata la unitat"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Restaura una imatge al disc"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Dades SMART"
 
-#: src/disks/ui/shortcuts.ui:93
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Paràmetres de la unitat"
 
-#: src/disks/ui/shortcuts.ui:102
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Partició"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Obre el menú del volum"
 
-#: src/disks/ui/shortcuts.ui:113
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formata el volum seleccionat"
@@ -3733,31 +3705,31 @@ msgid "Click to force re-reading SMART data from the hard disk"
 msgstr ""
 "Feu clic per a forçar la relectura de les dades de l'SMART del disc dur"
 
-#: src/disks/ui/smart-dialog.ui:97
+#: src/disks/ui/smart-dialog.ui:96
 msgid "Powered On"
 msgstr "Connectat"
 
-#: src/disks/ui/smart-dialog.ui:130
+#: src/disks/ui/smart-dialog.ui:129
 msgid "Updated"
 msgstr "Actualitzat"
 
-#: src/disks/ui/smart-dialog.ui:196
+#: src/disks/ui/smart-dialog.ui:195
 msgid "Self-test Result"
 msgstr "Resultat de l'autocomprovació"
 
-#: src/disks/ui/smart-dialog.ui:213
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Self-assessment"
 msgstr "Autoavaluació"
 
-#: src/disks/ui/smart-dialog.ui:230
+#: src/disks/ui/smart-dialog.ui:229
 msgid "Overall Assessment"
 msgstr "Avaluació general"
 
-#: src/disks/ui/smart-dialog.ui:296
+#: src/disks/ui/smart-dialog.ui:295
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Feu clic per a canviar l'estat d'activació de l'SMART en el disc dur"
 
-#: src/disks/ui/smart-dialog.ui:307
+#: src/disks/ui/smart-dialog.ui:306
 msgid "SMART _Attributes"
 msgstr "_Atributs de l'SMART"
 
@@ -3772,6 +3744,29 @@ msgstr "Ampliat"
 #: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "Conformitat"
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "Confirma el canvi de propietat"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"Canvia la propietat del sistema de fitxers al vostre usuari i grup. El mode "
+"recursiu també canvia la propietat de tots els subdirectoris i fitxers, això"
+" pot conduir a resultats destructius quan el sistema de fitxers conté una "
+"estructura de directori on la propietat ha de pertànyer a diferents usuaris "
+"(p. ex., una còpia de seguretat del sistema o un sistema de fitxers al qual "
+"accedeixen diversos usuaris)."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "Habilita _el mode recursiu"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3863,23 +3858,27 @@ msgstr "_Comprova el sistema de fitxers…"
 msgid "Rep_air Filesystem…"
 msgstr "_Repara el sistema de fitxers…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "_Pren la propietat..."
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "_Edita les opcions de muntatge…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "_Edita les opcions d'encriptació…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "_Crea una imatge de la partició…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "_Restaura una imatge de la partició…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "_Test de referència de la partició…"
 
@@ -4015,20 +4014,20 @@ msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will
 #. be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dispositius afectats"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "S'ha produït un error en desmuntar el sistema de fitxers"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "S'ha produït un error en blocar el dispositiu"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "S'ha produït un error en desactivar l'autoneteja per al dispositiu de bucle"
@@ -4050,6 +4049,42 @@ msgstr "Segurament fallarà un disc dur aviat."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Examina"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "Munta"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "Desmunta"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "Activa l'intercanvi"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "Desactiva l'intercanvi"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "Desbloca"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "Bloca"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "Creació d'una partició"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "Suprimeix la partició"
+
+#~ msgctxt "Accessibility label for toolbutton-volume-menu"
+#~ msgid "Menu"
+#~ msgstr "Menú"
 
 #~ msgid "Parent window XID for the format dialog"
 #~ msgstr "L'XID de la finestra pare del diàleg de formatació"

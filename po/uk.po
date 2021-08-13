@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2021-07-23 21:35+0000\n"
-"PO-Revision-Date: 2021-07-24 09:28+0300\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-13 20:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -50,6 +50,27 @@ msgid ""
 msgstr ""
 "Типова адреса для вікон створення та відновлення образів. Якщо нічого немає, "
 "використовується тека ~/Документи."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr ""
+"Кількість зразків, які буде включено до тестування читання-запису."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr ""
+"Кількість МіБ (блоків у 1048576 байтів) для кожного зі зразків читання-запису."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr ""
+"Увімкнути або вимкнути тестування запису."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr ""
+"Кількість зразків, які буде включено до тестування часу доступу."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -2628,7 +2649,7 @@ msgstr "Попередження: усі дані тому буде втраче
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Підтвердьте дані щодо поточного тому, перш ніж продовжувати."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Пристрій"
 
@@ -2989,85 +3010,85 @@ msgstr "Світова назва"
 msgid "Media"
 msgstr "Носій"
 
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Завдання"
 
-#: src/disks/ui/disks.ui:477
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Назва"
 
-#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Розмір"
 
-#: src/disks/ui/disks.ui:535
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Автоматичне очищення"
 
-#: src/disks/ui/disks.ui:553
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Вилучити циклічний пристрій після дії з демонтування"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:567
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Резервне копіювання файла"
 
-#: src/disks/ui/disks.ui:596
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Розбиття"
 
-#: src/disks/ui/disks.ui:627
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Томи"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Змонтувати вибраний розділ"
 
-#: src/disks/ui/disks.ui:685
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Демонтувати вибраний розділ"
 
-#: src/disks/ui/disks.ui:702
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Увімкнути вибраний розділ свопінгу"
 
-#: src/disks/ui/disks.ui:719
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Вимкнути вибраний розділ свопінгу"
 
-#: src/disks/ui/disks.ui:736
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Розблокувати вибраний зашифрований розділ"
 
-#: src/disks/ui/disks.ui:753
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Заблокувати вибраний зашифрований розділ"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Створити розділ на нерозподіленому просторі"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Додаткові параметри розділу"
 
-#: src/disks/ui/disks.ui:814
+#: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
 msgstr "Вилучити вибраний розділ"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:874
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Складові"
 
-#: src/disks/ui/disks.ui:932
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:961
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Тип розділу"
 
@@ -3654,7 +3675,6 @@ msgid "Conveyance"
 msgstr "Перевезення"
 
 #: src/disks/ui/take-ownership-dialog.ui:4
-#| msgid "_Take Ownership"
 msgid "Confirm Taking Ownership"
 msgstr "Підтвердження перейняття права власності"
 
@@ -3666,10 +3686,14 @@ msgid ""
 "structure where ownership should belong to different users (e.g., a system "
 "backup or a filesystem that is accessed by multiple users)."
 msgstr ""
-"Змінює власника файлової системи на вашого користувача і групу. У рекурсивному режимі право власності буде змінено для усіх підлеглих каталогів та файлів. Це може призвести до руйнівних результатів у файлових системах, де у структурі каталогів права власності мають належати різним користувачам (наприклад, у резервних копіях систем або у файлових системах, доступ до яких має здійснюватися від імені декількох користувачів)."
+"Змінює власника файлової системи на вашого користувача і групу. У "
+"рекурсивному режимі право власності буде змінено для усіх підлеглих "
+"каталогів та файлів. Це може призвести до руйнівних результатів у файлових "
+"системах, де у структурі каталогів права власності мають належати різним "
+"користувачам (наприклад, у резервних копіях систем або у файлових системах, "
+"доступ до яких має здійснюватися від імені декількох користувачів)."
 
 #: src/disks/ui/take-ownership-dialog.ui:13
-#| msgid "Enable Write Cache"
 msgid "Enable _recursive mode"
 msgstr "Увімкнути _рекурсивний режим"
 
@@ -3765,7 +3789,6 @@ msgid "Rep_air Filesystem…"
 msgstr "Випр_авити файлову систему…"
 
 #: src/disks/ui/volume-menu.ui:38
-#| msgid "_Take Ownership"
 msgid "_Take Ownership…"
 msgstr "П_ерейняти право власності…"
 

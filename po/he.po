@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-07-23 21:35+0000\n"
-"PO-Revision-Date: 2021-08-07 20:11+0300\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-15 02:17+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
@@ -49,6 +49,22 @@ msgid ""
 msgstr ""
 "Default location for the Create/Restore disk image dialogs. If blank the ~/"
 "Documents folder is used."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid "The number of samples the benchmark will include for the read/write test."
+msgstr "מספר הדגימות שמדידת הביצועים תכלול בבדיקת קריאה/כתיבה."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "מספר ה־MiB ‏(1048576 בתים) לקריאה/כתיבה לכל דגימה."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "כדי להפעיל או להשבית את בדיקת הכתיבה."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "מספר הדגימות שמדידת הביצועים תבצע לבדיקת זמן הגישה."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -151,7 +167,7 @@ msgstr "לא ניתן לפתוח את „%s” - ייתכן שהכרך אינו 
 #: src/disk-image-mounter/main.c:199
 #, c-format
 msgid "Error opening “%s”: %m"
-msgstr "שגיאה בפתיחת ‏‎„%s”‏:‏‏ %m"
+msgstr "שגיאה בפתיחת „%s”:‏ %m"
 
 #: src/disk-image-mounter/main.c:220
 #, c-format
@@ -927,7 +943,7 @@ msgstr "מתבצעת בדיקה עצמית – נותרו %d%%"
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
-msgstr "לא ידוע (%s)"
+msgstr "לא ידועה (%s)"
 
 #: src/disks/gduatasmartdialog.c:856
 #, c-format
@@ -1087,7 +1103,7 @@ msgstr "הערכה"
 #, c-format
 msgctxt "benchmark-graph"
 msgid "%d MB/s"
-msgstr "‏%d מ״ב/ש׳"
+msgstr "‏%d מ״ב/שנ׳"
 
 #. Translators: This is used in the benchmark graph - %g is number of milliseconds
 #: src/disks/gdubenchmarkdialog.c:337
@@ -1101,7 +1117,7 @@ msgstr "‏%3g אלפיות השנייה"
 #, c-format
 msgctxt "benchmark-transfer-rate"
 msgid "%s/s"
-msgstr "‏%s/ש׳"
+msgstr "‏%s/שנ׳"
 
 #: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
 #, c-format
@@ -1131,13 +1147,13 @@ msgstr "אין נתוני מדידת ביצועים זמינים"
 #: src/disks/gdubenchmarkdialog.c:734
 msgctxt "benchmark-updated"
 msgid "Opening Device…"
-msgstr "פתיחת התקן…"
+msgstr "ההתקן נפתח…"
 
 #: src/disks/gdubenchmarkdialog.c:738
 #, c-format
 msgctxt "benchmark-updated"
 msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "מדד קצב העברה  (%2.1f%% הושלמו)…"
+msgstr "מדד קצב העברה (%2.1f%% הושלמו)…"
 
 #: src/disks/gdubenchmarkdialog.c:745
 #, c-format
@@ -1561,7 +1577,7 @@ msgstr "שמור"
 #: src/disks/gdudisksettingsdialog.c:332
 msgctxt "apm-level"
 msgid "255 (Disabled)"
-msgstr "255 (מנוטרל)"
+msgstr "255 (מושבת)"
 
 #: src/disks/gdudisksettingsdialog.c:336
 #, c-format
@@ -1578,7 +1594,7 @@ msgstr "‫%d (האטת סיבוב אינה מאופשרת)"
 #: src/disks/gdudisksettingsdialog.c:355
 msgctxt "aam-level"
 msgid "0 (Disabled)"
-msgstr "0 (מנוטרל)"
+msgstr "0 (מושבת)"
 
 #: src/disks/gdudisksettingsdialog.c:384
 msgid "Error setting configuration"
@@ -2588,7 +2604,7 @@ msgstr "אזהרה: כל הנתונים בכרך יאבדו"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "יש לאמת את הפרטים של הכרך הנוכחי לפני המשך."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "התקן"
 
@@ -2942,85 +2958,85 @@ msgstr "שם כלל עולמי"
 msgid "Media"
 msgstr "מדיה"
 
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "משימה"
 
-#: src/disks/ui/disks.ui:477
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "שם"
 
-#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "גודל"
 
-#: src/disks/ui/disks.ui:535
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "ניקוי אוטומטי"
 
-#: src/disks/ui/disks.ui:553
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "הפרדת התקן מחזורי לאחר פעולת הניתוק"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:567
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "הקובץ מגובה"
 
-#: src/disks/ui/disks.ui:596
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "הפרדה למחיצות"
 
-#: src/disks/ui/disks.ui:627
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_כרכים"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "עיגון מחיצה נבחרת"
 
-#: src/disks/ui/disks.ui:685
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "ביטול עיגון מחיצה נבחרת"
 
-#: src/disks/ui/disks.ui:702
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "הפעלת מחיצת הפעלה נבחרת"
 
-#: src/disks/ui/disks.ui:719
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "השבתת מחיצת החלפה נבחרת"
 
-#: src/disks/ui/disks.ui:736
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "שחרור מחיצה מוצפנת נבחרת"
 
-#: src/disks/ui/disks.ui:753
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "נעילת מחיצה מוצפנת נבחרת"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "יצירת מחיצה במרחב הלא־מוקצה"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "אפשרויות מחיצה נוספות"
 
-#: src/disks/ui/disks.ui:814
+#: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
 msgstr "מחיקת מחיצה נבחרת"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:874
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "תכנים"
 
-#: src/disks/ui/disks.ui:932
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:961
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "סוג המחיצה"
 
@@ -3735,7 +3751,7 @@ msgstr "דמויות כונן (‎*.img, *.iso)"
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] "שנה אחת"
+msgstr[0] "שנה"
 msgstr[1] "שנתיים"
 msgstr[2] "‏‫%d שנים"
 msgstr[3] "‏‫%d שנים"
@@ -3745,7 +3761,7 @@ msgstr[3] "‏‫%d שנים"
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
-msgstr[0] "חודש אחד"
+msgstr[0] "חודש"
 msgstr[1] "חודשיים"
 msgstr[2] "‏‫%d חודשים"
 msgstr[3] "‏‫%d חודשים"
@@ -3755,7 +3771,7 @@ msgstr[3] "‏‫%d חודשים"
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] "יום אחד"
+msgstr[0] "יום"
 msgstr[1] "יומיים"
 msgstr[2] "‏‫%d ימים"
 msgstr[3] "‏‫%d ימים"
@@ -3765,7 +3781,7 @@ msgstr[3] "‏‫%d ימים"
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] "שעה אחת"
+msgstr[0] "שעה"
 msgstr[1] "שעתיים"
 msgstr[2] "‏‫%d שעות"
 msgstr[3] "‏‫%d שעות"
@@ -3775,7 +3791,7 @@ msgstr[3] "‏‫%d שעות"
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "דקה אחת"
+msgstr[0] "דקה"
 msgstr[1] "שתי דקות"
 msgstr[2] "‏‫%d דקות"
 msgstr[3] "‏‫%d דקות"
@@ -3785,7 +3801,7 @@ msgstr[3] "‏‫%d דקות"
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "שנייה אחת"
+msgstr[0] "שנייה"
 msgstr[1] "שתי שניות"
 msgstr[2] "‏‫%d שניות"
 msgstr[3] "‏‫%d שניות"

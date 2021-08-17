@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-07-23 21:35+0000\n"
-"PO-Revision-Date: 2021-07-24 14:51+0300\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-14 17:03+0300\n"
 "Last-Translator: Alexey Rubtsov <rushills@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -57,6 +57,25 @@ msgid ""
 msgstr ""
 "Местоположение по умолчанию диалоговых окон создания/восстановления дисковых "
 "образов. Если не указано, используется папка ~/Документы."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr ""
+"Количество образцов для теста чтения/записи, которое будет использовано при "
+"измерениях."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "Размер в MiB (1048576 байтов) для записи/чтения каждого из образцов."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "Для разрешения или запрещения теста записи."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "Количество образцов в измерениях скорости доступа."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -2648,7 +2667,7 @@ msgstr "Внимание: все данные на томе будут поте�
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Перед продолжением подтвердите данные текущего тома."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Устройство"
 
@@ -3014,85 +3033,85 @@ msgstr "Идентификатор WWN"
 msgid "Media"
 msgstr "Носитель"
 
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Задание"
 
-#: src/disks/ui/disks.ui:477
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Название"
 
-#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Размер"
 
-#: src/disks/ui/disks.ui:535
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Автоочистка"
 
-#: src/disks/ui/disks.ui:553
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Отсоединить петлевое устройство после отмонтирования"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:567
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Файл хранилища"
 
-#: src/disks/ui/disks.ui:596
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Разметка"
 
-#: src/disks/ui/disks.ui:627
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "То_ма"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Примонтировать выбранный раздел"
 
-#: src/disks/ui/disks.ui:685
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Отмонтировать выбранный раздел"
 
-#: src/disks/ui/disks.ui:702
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Включить выбранный раздел подкачки"
 
-#: src/disks/ui/disks.ui:719
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Выключить выбранный раздел подкачки"
 
-#: src/disks/ui/disks.ui:736
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Разблокировать выбранный зашифрованный раздел"
 
-#: src/disks/ui/disks.ui:753
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Заблокировать выбранный зашифрованный раздел"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Создать раздел в неразмеченной области"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Расширенные параметры раздела"
 
-#: src/disks/ui/disks.ui:814
+#: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
 msgstr "Удалить выбранный раздел"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:874
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Содержимое"
 
-#: src/disks/ui/disks.ui:932
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:961
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Тип раздела"
 

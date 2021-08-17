@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-07-13 21:27+0000\n"
-"PO-Revision-Date: 2021-07-14 10:10+0200\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-17 13:43+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -51,6 +51,27 @@ msgid ""
 msgstr ""
 "Ubicación predeterminada para los diálogos de Crear/restaurar imágenes de "
 "discos. Si está en blanco, se usará la carpeta ~/Documentos."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr ""
+"El número de muestras que la prueba de rendimiento incluirá el test de "
+"lectura/escritura."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "El número de MiB (1048576 bytes) que leer/escribir en cada muestra."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "Para activar o desactivar el test de escritura."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr ""
+"El número de muestras que la prueba de rendimiento hará para comprobar el "
+"tiempo de acceso."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -2286,39 +2307,38 @@ msgstr ""
 "usar herramientas de análisis forense que recuperen los datos perdidos. El "
 "tiempo que dure esta operación depende de la cantidad de datos."
 
-#: src/disks/gduwindow.c:3092
-#| msgid "Error while checking filesystem"
+#: src/disks/gduwindow.c:3110
 msgid "Error while taking filesystem ownership"
 msgstr "Error al tomar la propiedad del sistema de archivos"
 
-#: src/disks/gduwindow.c:3133
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "Error al comprobar el sistema de archivos"
 
-#: src/disks/gduwindow.c:3160
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Sistema de archivos intacto"
 
-#: src/disks/gduwindow.c:3160
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Sistema de archivos dañado"
 
-#: src/disks/gduwindow.c:3163
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "El sistema de archivos %s en %s no está dañado."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "El sistema de archivos %s en %s necesita reparación."
 
-#: src/disks/gduwindow.c:3220
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Confirmar comprobación"
 
-#: src/disks/gduwindow.c:3223
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2326,25 +2346,25 @@ msgstr ""
 "La comprobación puede tardar un tiempo, especialmente si la partición "
 "contiene muchos datos."
 
-#: src/disks/gduwindow.c:3503
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ocurrió un error al intentar poner la unidad en reposo"
 
-#: src/disks/gduwindow.c:3550
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ocurrió un error al intentar que la unidad saliera del reposo"
 
-#: src/disks/gduwindow.c:3596
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "Error al apagar el dispositivo"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3648
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "¿Está seguro de que quiere apagar las unidades?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3650
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2352,47 +2372,47 @@ msgstr ""
 "Esta operación preparará el sistema para extraer y apagar las siguientes "
 "unidades."
 
-#: src/disks/gduwindow.c:3654 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Apagar"
 
-#: src/disks/gduwindow.c:3734
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "Error al montar el sistema de archivos"
 
-#: src/disks/gduwindow.c:3819
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "Error al eliminar la partición"
 
-#: src/disks/gduwindow.c:3856
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "¿Está seguro de que quiere eliminar la partición?"
 
-#: src/disks/gduwindow.c:3857
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Se perderán todos los datos de la partición"
 
-#: src/disks/gduwindow.c:3858
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_Eliminar"
 
-#: src/disks/gduwindow.c:3889
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "Error al expulsar el soporte"
 
-#: src/disks/gduwindow.c:3972
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "Error al iniciar el intercambio"
 
-#: src/disks/gduwindow.c:4009
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "Error al detener el intercambio"
 
-#: src/disks/gduwindow.c:4051
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "Error al establecer la opción de limpieza automática"
 
-#: src/disks/gduwindow.c:4104 src/disks/gduwindow.c:4168
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "Error al cancelar el trabajo"
 
@@ -2637,7 +2657,7 @@ msgstr "Advertencia: se perderán todos los datos del disco"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Confirme los detalles del volumen actual antes de seguir."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Dispositivo"
 
@@ -2954,7 +2974,6 @@ msgid "Wr_ite Cache"
 msgstr "Caché de _escritura:"
 
 #: src/disks/ui/disks.ui:34
-#| msgid "Apple Partition Map"
 msgid "Application Menu"
 msgstr "Menú de la aplicación"
 
@@ -3002,85 +3021,85 @@ msgstr "Nombre a nivel mundial"
 msgid "Media"
 msgstr "Soporte"
 
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Tarea"
 
-#: src/disks/ui/disks.ui:477
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Nombre"
 
-#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Tamaño"
 
-#: src/disks/ui/disks.ui:535
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Limpieza automática"
 
-#: src/disks/ui/disks.ui:553
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Desacoplar el dispositivo «loop» después de desmontar"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:567
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Respaldando archivo"
 
-#: src/disks/ui/disks.ui:596
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Particionado"
 
-#: src/disks/ui/disks.ui:627
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Volúmenes"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Montar la partición seleccionada"
 
-#: src/disks/ui/disks.ui:685
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Desmontar la partición seleccionada"
 
-#: src/disks/ui/disks.ui:702
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Activar la partición de intercambio seleccionada"
 
-#: src/disks/ui/disks.ui:719
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Desctivar la partición de intercambio seleccionada"
 
-#: src/disks/ui/disks.ui:736
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Desbloquear la partición cifrada seleccionada"
 
-#: src/disks/ui/disks.ui:753
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Bloquear la partición cifrada seleccionada"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Crear partición en el espacio sin asignar"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Opciones adicionales de la partición"
 
-#: src/disks/ui/disks.ui:814
+#: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
 msgstr "Eliminar la partición seleccionada"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:874
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Contenido"
 
-#: src/disks/ui/disks.ui:932
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:961
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Tipo de partición"
 
@@ -3525,8 +3544,6 @@ msgid "Help"
 msgstr "Ayuda"
 
 #: src/disks/ui/shortcuts.ui:24
-#| msgctxt "shortcut window"
-#| msgid "Open the drive menu"
 msgctxt "shortcut window"
 msgid "Open the application menu"
 msgstr "Abrir el menú de la aplicación"
@@ -3542,7 +3559,6 @@ msgid "Quit"
 msgstr "Salir"
 
 #: src/disks/ui/shortcuts.ui:47
-#| msgid "Disks"
 msgctxt "shortcut window"
 msgid "Disks"
 msgstr "Discos"
@@ -3671,6 +3687,31 @@ msgstr "Extendido"
 msgid "Conveyance"
 msgstr "Transferencia"
 
+#: src/disks/ui/take-ownership-dialog.ui:4
+#| msgid "Take Ownership"
+msgid "Confirm Taking Ownership"
+msgstr "Confirmar la toma de posesión"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"Cambia el propietario del sistema de archivos a su usuario y grupo. El modo "
+"recursivo también permite cambiar el propietario de las subcarpetas y los "
+"archivos. Esto puede provocar resultados destructivos cuando el sistema de "
+"archivos contiene una estructura donde el propietario deben ser varios "
+"usuarios (ej. un sistema de copia de seguridad o un sistema de archivos al "
+"que acceden varios usuarios)."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+#| msgid "Enable Write Cache"
+msgid "Enable _recursive mode"
+msgstr "Activar modo _recursivo"
+
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Introduzca la frase de paso para desbloquear"
@@ -3762,10 +3803,9 @@ msgid "Rep_air Filesystem…"
 msgstr "Reparar sistema de _archivos…"
 
 #: src/disks/ui/volume-menu.ui:38
-#, fuzzy
 #| msgid "Take Ownership"
-msgid "_Take Ownership"
-msgstr "Tomar posesión"
+msgid "_Take Ownership…"
+msgstr "_Tomar posesión…"
 
 #: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"

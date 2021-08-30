@@ -1,15 +1,15 @@
 # Kazakh translation for gnome-disk-utility.
 # Copyright (C) 2010 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010-2020.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2010-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2020-03-31 16:26+0000\n"
-"PO-Revision-Date: 2020-06-25 12:31+0500\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-30 13:17+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
 "Language: kk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -46,6 +46,23 @@ msgid ""
 msgstr ""
 "Диск бейнелерін жасау/қалпына келтіру сұхбаты үшін негізгі сақтау орны. Бос "
 "болса, ~/Құжаттар бумасы қолданылатын болады."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr ""
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr ""
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr ""
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr ""
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -79,8 +96,8 @@ msgstr "Дисктеріңізді басқарудың ыңғайлы жолы"
 msgid "The GNOME Project"
 msgstr "GNOME жобасы"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1125
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/headerbar.ui:10
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
+#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Дисктер"
 
@@ -111,8 +128,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Тіркеу үшін диск бейнесін таңдаңыз"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:455
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:825
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "Ба_с тарту"
 
@@ -184,19 +201,19 @@ msgid "Format selected device"
 msgstr "Таңдалған құрылғыны пішімдеу"
 
 #: src/disks/gduapplication.c:175
-msgid "Parent window XID for the format dialog"
+msgid "Ignored, kept for compatibility"
 msgstr ""
 
 #: src/disks/gduapplication.c:176
 msgid "Restore disk image"
 msgstr "Диск бейнесін қалпына келтіру"
 
-#: src/disks/gduapplication.c:210
+#: src/disks/gduapplication.c:208
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 
-#: src/disks/gduapplication.c:216
-msgid "--format-device must be specified when using --xid\n"
+#: src/disks/gduapplication.c:214
+msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 
 #. Translators: Shown in the About dialog to convey version numbers.
@@ -204,7 +221,7 @@ msgstr ""
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:353
+#: src/disks/gduapplication.c:342
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -432,7 +449,7 @@ msgstr ""
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:179
+#: src/disks/ui/smart-dialog.ui:162
 msgid "Temperature"
 msgstr "Температурасы"
 
@@ -1049,7 +1066,7 @@ msgid "Updates"
 msgstr "Жаңартулар"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:303
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Бағалау"
 
@@ -1395,31 +1412,31 @@ msgstr "_Келесі"
 msgid "Error formatting volume"
 msgstr "Томды пішімдеу қатесі"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "Бөлімді жасағанда қате кетті"
 
-#: src/disks/gducreateformatdialog.c:435
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "Бөлімді жасау"
 
-#: src/disks/gducreateformatdialog.c:444
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "Томды пішімдеу"
 
-#: src/disks/gducreateformatdialog.c:447
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "Таңдауыңызша пішімі"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "Парольді орнату"
 
-#: src/disks/gducreateformatdialog.c:453
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "Деректерді растау"
 
-#: src/disks/gducreateformatdialog.c:456 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Пішімдеу"
 
@@ -1902,38 +1919,38 @@ msgstr "Диск бейнесі мақсат құрылғысынан %s шам�
 msgid "Error restoring disk image"
 msgstr "Диск бейнесін қалпына келтіру сәтсіз аяқталды"
 
-#: src/disks/gdurestorediskimagedialog.c:923
+#: src/disks/gdurestorediskimagedialog.c:930
 msgid "Error opening file for reading"
 msgstr "Файлды оқу үшін ашу қатемен аяқталды"
 
-#: src/disks/gdurestorediskimagedialog.c:938
+#: src/disks/gdurestorediskimagedialog.c:945
 msgid "Error determining size of file"
 msgstr "Файл өлшемін анықтау қатесі"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:966
+#: src/disks/gdurestorediskimagedialog.c:973
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Диск бейнесін құрылғыға көшіру"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:972
+#: src/disks/gdurestorediskimagedialog.c:979
 msgid "Restoring Disk Image"
 msgstr "Диск бейнесін қалпына келтіру"
 
-#: src/disks/gdurestorediskimagedialog.c:1028
+#: src/disks/gdurestorediskimagedialog.c:1035
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Диск бейнесін құрылғыға жазуды шынымен қалайсыз ба?"
 
-#: src/disks/gdurestorediskimagedialog.c:1029
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "All existing data will be lost"
 msgstr "Барлық бар болып тұрған ақпарат жоғалады"
 
-#: src/disks/gdurestorediskimagedialog.c:1030
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "_Restore"
 msgstr "Қал_пына келтіру"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:219
+#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
 msgid "Select a Keyfile"
 msgstr "Кілттік файлды таңдау"
 
@@ -1958,7 +1975,7 @@ msgstr ""
 msgid "Volumes Grid"
 msgstr "Томдар торы"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2054
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "Тасушы жоқ"
 
@@ -2000,37 +2017,37 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Бос орын"
 
-#: src/disks/gduwindow.c:649
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr ""
 
-#: src/disks/gduwindow.c:749 src/disks/gduwindow.c:792
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "Диск бейнесін жалғау қатесі"
 
-#: src/disks/gduwindow.c:822
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "Жалғау үшін диск бейнесін таңдаңыз"
 
-#: src/disks/gduwindow.c:826
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "Ж_алғау"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:833
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
 msgstr ""
 
-#: src/disks/gduwindow.c:834
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
 msgstr ""
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1697
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Тек оқу үшін)"
@@ -2039,7 +2056,7 @@ msgstr "%s (Тек оқу үшін)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1735
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2048,7 +2065,7 @@ msgstr "%s қалды (%s/сек)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1743
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2059,7 +2076,7 @@ msgstr "%s қалды"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1758
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s дайын, барлығы %s — %s"
@@ -2068,17 +2085,17 @@ msgstr "%s дайын, барлығы %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1883
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1963 src/disks/gduwindow.c:2342
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "Блоктық құрылғы бос"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1986
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2087,11 +2104,11 @@ msgstr "Белгісіз (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2145
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "Басқа орынға қосылған"
 
-#: src/disks/gduwindow.c:2286
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr ""
 
@@ -2101,61 +2118,61 @@ msgstr ""
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s бос (%.1f%% full)"
 
-#: src/disks/gduwindow.c:2533
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Белгісіз"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2571
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Файлдық жүйе түбірі"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2579
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Тіркелген жері %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2585
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Тіркелмеген"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2608
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Белсенді"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2614
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Белсенді емес"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Босатылған"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2635
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Бұғатталған"
 
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Кеңейтілген бөлім"
@@ -2164,150 +2181,159 @@ msgstr "Кеңейтілген бөлім"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2669
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2789
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "Бөлінбеген орын"
 
-#: src/disks/gduwindow.c:2979
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "Файлдық жүйені қалпына келтіру кезіндегі қате"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "Қалпына келтіру сәтті аяқталды"
 
-#: src/disks/gduwindow.c:3006
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "Қалпына келтіру сәтсіз аяқталды"
 
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%s файл жүйесі (%s жерінде) жөнделді."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3015
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%s файл жүйесін (%s жерінде) жөндеу мүмкін емес."
 
-#: src/disks/gduwindow.c:3068
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "Қалпына келтіруді растау"
 
-#: src/disks/gduwindow.c:3071
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
 msgstr ""
+"Файлдар жүйені жөндеу әрдайым мүмкін бола бермейді және деректердің "
+"жоғалуына әкеліп соғуы мүмкін. Жоғалған файлдарды шығарып алатын сот-"
+"медициналық сараптама құралдарын пайдалану мақсатында алдымен оны резервтік "
+"көшірмелеуді қарастырыңыз. Операция ұзақ уақытты алуы мүмкін, әсіресе, егер "
+"бөлімде көптеген деректер болса."
 
-#: src/disks/gduwindow.c:3099
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "Файлдық жүйе иелену кезіндегі қате"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "Файлдық жүйені тексеру кезіндегі қатесі"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Файлдық жүйе өзгертілмеген"
 
-#: src/disks/gduwindow.c:3126
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Файлдық жүйе зақымдалған"
 
-#: src/disks/gduwindow.c:3129
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%s файл жүйесі (%s жерінде) зақымдалмаған."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3135
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%s файл жүйесі (%s жерінде) жөндеуді талап етеді."
 
-#: src/disks/gduwindow.c:3186
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Тексеруді растау"
 
-#: src/disks/gduwindow.c:3189
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
 
-#: src/disks/gduwindow.c:3426
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 
-#: src/disks/gduwindow.c:3473
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 
-#: src/disks/gduwindow.c:3519
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "Жетекті сөндіру қатесі"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3571
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "Жетектерді сөндіруді шынымен қалайсыз ба?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3573
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 
-#: src/disks/gduwindow.c:3577 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Сөндіру"
 
-#: src/disks/gduwindow.c:3657
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "Файлдық жүйені тіркеу қатесі"
 
-#: src/disks/gduwindow.c:3743
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "Бөлімді өшіру қатесі"
 
-#: src/disks/gduwindow.c:3780
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "Бөлімді өшіруді шынымен қалайсыз ба?"
 
-#: src/disks/gduwindow.c:3781
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Бөлімдегі барлық ақпарат жоғалады"
 
-#: src/disks/gduwindow.c:3782
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "Ө_шіру"
 
-#: src/disks/gduwindow.c:3813
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "Тасушыны шығару қатесі"
 
-#: src/disks/gduwindow.c:3896
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "Свопты іске қосу қатесі"
 
-#: src/disks/gduwindow.c:3933
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "Свопты тоқтату қатесі"
 
-#: src/disks/gduwindow.c:3975
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "Автотазарту жалаушасын орнату қатесі"
 
-#: src/disks/gduwindow.c:4028 src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "Тапсырмадан бас тарту қатесі"
 
@@ -2374,66 +2400,66 @@ msgstr "Сынау"
 msgid "_Start Benchmark…"
 msgstr "Сынауды ба_стау…"
 
-#: src/disks/ui/benchmark-dialog.ui:38
+#: src/disks/ui/benchmark-dialog.ui:35
 msgid "_Abort Benchmark"
 msgstr "Сынауды ү_зу"
 
-#: src/disks/ui/benchmark-dialog.ui:101
+#: src/disks/ui/benchmark-dialog.ui:83
 msgid "Last Benchmarked"
 msgstr "Соңғы сыналған"
 
-#: src/disks/ui/benchmark-dialog.ui:118
+#: src/disks/ui/benchmark-dialog.ui:100
 msgid "Average Read Rate"
 msgstr "Орташа оқу жылдамдығы"
 
-#: src/disks/ui/benchmark-dialog.ui:135
+#: src/disks/ui/benchmark-dialog.ui:117
 msgid "Average Write Rate"
 msgstr "Орташа жазу жылдамдығы"
 
-#: src/disks/ui/benchmark-dialog.ui:152
+#: src/disks/ui/benchmark-dialog.ui:134
 msgid "Average Access Time"
 msgstr "Орташа қатынау уақыты"
 
-#: src/disks/ui/benchmark-dialog.ui:233
+#: src/disks/ui/benchmark-dialog.ui:215
 msgid "Disk or Device"
 msgstr "Диск не құрылғы"
 
-#: src/disks/ui/benchmark-dialog.ui:266
+#: src/disks/ui/benchmark-dialog.ui:248
 msgid "Sample Size"
 msgstr "Сэмпл өлшемі"
 
-#: src/disks/ui/benchmark-dialog.ui:319
+#: src/disks/ui/benchmark-dialog.ui:291
 msgid "Benchmark Settings"
 msgstr "Сынау баптаулары"
 
-#: src/disks/ui/benchmark-dialog.ui:349
+#: src/disks/ui/benchmark-dialog.ui:316
 msgid "_Start Benchmarking…"
 msgstr "Сынауды ба_стау…"
 
-#: src/disks/ui/benchmark-dialog.ui:381
+#: src/disks/ui/benchmark-dialog.ui:340
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:397
+#: src/disks/ui/benchmark-dialog.ui:356
 msgid "Transfer Rate"
 msgstr "Тасымалдау жылдамдығы"
 
-#: src/disks/ui/benchmark-dialog.ui:420
+#: src/disks/ui/benchmark-dialog.ui:374
 msgid "Number of S_amples"
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:439
+#: src/disks/ui/benchmark-dialog.ui:393
 msgid "Sample S_ize (MiB)"
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:455
+#: src/disks/ui/benchmark-dialog.ui:409
 msgid "Perform _write-benchmark"
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:459
+#: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -2445,28 +2471,28 @@ msgid ""
 "device can be in use)."
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:478
+#: src/disks/ui/benchmark-dialog.ui:432
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:495
+#: src/disks/ui/benchmark-dialog.ui:449
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:533
+#: src/disks/ui/benchmark-dialog.ui:482
 msgid "Access Time"
 msgstr "Қатынау уақыты"
 
-#: src/disks/ui/benchmark-dialog.ui:556
+#: src/disks/ui/benchmark-dialog.ui:500
 msgid "Number of Sampl_es"
 msgstr ""
 
-#: src/disks/ui/benchmark-dialog.ui:575
+#: src/disks/ui/benchmark-dialog.ui:519
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -2476,49 +2502,49 @@ msgstr ""
 msgid "Change Passphrase"
 msgstr "Кілттік фразаны өзгерту"
 
-#: src/disks/ui/change-passphrase-dialog.ui:37
-#: src/disks/ui/edit-dos-partition-dialog.ui:41
-#: src/disks/ui/edit-filesystem-dialog.ui:41
-#: src/disks/ui/edit-gpt-partition-dialog.ui:41
-#: src/disks/ui/edit-partition-dialog.ui:41
+#: src/disks/ui/change-passphrase-dialog.ui:32
+#: src/disks/ui/edit-dos-partition-dialog.ui:36
+#: src/disks/ui/edit-filesystem-dialog.ui:36
+#: src/disks/ui/edit-gpt-partition-dialog.ui:36
+#: src/disks/ui/edit-partition-dialog.ui:36
 msgid "C_hange"
 msgstr "Ө_згерту"
 
-#: src/disks/ui/change-passphrase-dialog.ui:86
+#: src/disks/ui/change-passphrase-dialog.ui:68
 msgid "Curr_ent Passphrase"
 msgstr "Ағ_ымдағы кілттік фраза"
 
-#: src/disks/ui/change-passphrase-dialog.ui:106
-#: src/disks/ui/change-passphrase-dialog.ui:107
+#: src/disks/ui/change-passphrase-dialog.ui:88
+#: src/disks/ui/change-passphrase-dialog.ui:89
 msgid "Enter current passphrase used to protect the data"
 msgstr "Деректерді қорғау үшін қолданылатын ағымдағы кілттік фразаны енгізіңіз"
 
-#: src/disks/ui/change-passphrase-dialog.ui:123
+#: src/disks/ui/change-passphrase-dialog.ui:105
 msgid "Sho_w Passphrases"
 msgstr "Кілттік фразаларды көр_сету"
 
-#: src/disks/ui/change-passphrase-dialog.ui:129
-#: src/disks/ui/change-passphrase-dialog.ui:130
+#: src/disks/ui/change-passphrase-dialog.ui:111
+#: src/disks/ui/change-passphrase-dialog.ui:112
 #: src/disks/ui/create-password-page.ui:101
 msgid "Check this box to see the passphrases entered above"
 msgstr "Жоғарыда енгізілген кілттік фразаларды көру үшін осыны белгілеңіз"
 
-#: src/disks/ui/change-passphrase-dialog.ui:164
-#: src/disks/ui/change-passphrase-dialog.ui:165
+#: src/disks/ui/change-passphrase-dialog.ui:146
+#: src/disks/ui/change-passphrase-dialog.ui:147
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Жоғарыда енгізілген кілттік фразаны растаңыз"
 
-#: src/disks/ui/change-passphrase-dialog.ui:185
-#: src/disks/ui/change-passphrase-dialog.ui:186
+#: src/disks/ui/change-passphrase-dialog.ui:167
+#: src/disks/ui/change-passphrase-dialog.ui:168
 msgid "Enter new passphrase used to protect the data"
 msgstr "Деректерді қорғау үшін қолданылатын жаңа кілттік фразаны енгізіңіз"
 
-#: src/disks/ui/change-passphrase-dialog.ui:206
+#: src/disks/ui/change-passphrase-dialog.ui:188
 msgid "C_onfirm Passphrase"
 msgstr "Кілттік фразаны р_астау"
 
-#: src/disks/ui/change-passphrase-dialog.ui:226
+#: src/disks/ui/change-passphrase-dialog.ui:208
 msgid "New _Passphrase"
 msgstr "Жаңа _кілттік фраза"
 
@@ -2543,7 +2569,7 @@ msgid "Used"
 msgstr "Қолданылуда"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:229
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "Орналасуы"
 
@@ -2552,8 +2578,8 @@ msgid "Create Disk Image"
 msgstr "Диск бейнесін жасау"
 
 #: src/disks/ui/create-disk-image-dialog.ui:29
-#: src/disks/ui/edit-crypttab-dialog.ui:140
-#: src/disks/ui/edit-gpt-partition-dialog.ui:107
+#: src/disks/ui/edit-crypttab-dialog.ui:104
+#: src/disks/ui/edit-gpt-partition-dialog.ui:91
 #: src/disks/ui/new-disk-image-dialog.ui:48
 msgid "_Name"
 msgstr "_Аты"
@@ -2572,7 +2598,7 @@ msgstr "Буманы таңдау"
 msgid "Source"
 msgstr "Қайнар көзі"
 
-#: src/disks/ui/create-disk-image-dialog.ui:153
+#: src/disks/ui/create-disk-image-dialog.ui:143
 msgid "_Start Creating…"
 msgstr "Жасауды ба_стау…"
 
@@ -2591,7 +2617,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Мысалы, \"Менің файлдарым\" немесе \"Қор көшірме деректері\"."
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:103
+#: src/disks/ui/format-disk-dialog.ui:87
 msgid "_Erase"
 msgstr "Та_зарту"
 
@@ -2604,7 +2630,7 @@ msgid "_Internal disk for use with Linux systems only (Ext4)"
 msgstr ""
 
 #: src/disks/ui/create-filesystem-page.ui:131
-#: src/disks/ui/create-other-page.ui:46
+#: src/disks/ui/create-other-page.ui:36
 msgid "_Password protect volume (LUKS)"
 msgstr ""
 
@@ -2627,82 +2653,82 @@ msgid ""
 "about your use case."
 msgstr ""
 
-#: src/disks/ui/create-partition-page.ui:79 src/disks/ui/resize-dialog.ui:95
+#: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
 msgstr "Бөлім ө_лшемі"
 
-#: src/disks/ui/create-partition-page.ui:93 src/disks/ui/resize-dialog.ui:109
+#: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
 msgid "The size of the partition to create"
 msgstr "Жасалатын бөлімнің өлшемі"
 
-#: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/create-partition-page.ui:103
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "байт"
 
-#: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/create-partition-page.ui:104
+#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
 msgid "kB"
 msgstr "кБ"
 
-#: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/create-partition-page.ui:105
+#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
 msgid "MB"
 msgstr "МБ"
 
-#: src/disks/ui/create-partition-page.ui:114
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:130
+#: src/disks/ui/create-partition-page.ui:106
+#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
 msgid "GB"
 msgstr "ГБ"
 
-#: src/disks/ui/create-partition-page.ui:115
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:131
+#: src/disks/ui/create-partition-page.ui:107
+#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
 msgid "TB"
 msgstr "ТБ"
 
-#: src/disks/ui/create-partition-page.ui:116
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:132
+#: src/disks/ui/create-partition-page.ui:108
+#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
 msgid "PB"
 msgstr "ПБ"
 
-#: src/disks/ui/create-partition-page.ui:117
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:133
+#: src/disks/ui/create-partition-page.ui:109
+#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
 msgid "KiB"
 msgstr "КиБ"
 
-#: src/disks/ui/create-partition-page.ui:118
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:134
+#: src/disks/ui/create-partition-page.ui:110
+#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
 msgid "MiB"
 msgstr "МиБ"
 
-#: src/disks/ui/create-partition-page.ui:119
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:135
+#: src/disks/ui/create-partition-page.ui:111
+#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
 msgid "GiB"
 msgstr "Гиб"
 
-#: src/disks/ui/create-partition-page.ui:120
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:136
+#: src/disks/ui/create-partition-page.ui:112
+#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
 msgid "TiB"
 msgstr "ТиБ"
 
-#: src/disks/ui/create-partition-page.ui:121
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:137
+#: src/disks/ui/create-partition-page.ui:113
+#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
 msgid "PiB"
 msgstr "ПиБ"
 
-#: src/disks/ui/create-partition-page.ui:135 src/disks/ui/resize-dialog.ui:151
+#: src/disks/ui/create-partition-page.ui:127 src/disks/ui/resize-dialog.ui:143
 msgid "Free Space _Following"
 msgstr "Бос орын кейінгі (МиБ)"
 
-#: src/disks/ui/create-partition-page.ui:148 src/disks/ui/resize-dialog.ui:168
+#: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
 msgid "The free space following the partition"
 msgstr "Бөлімнен кейінгі бос орын өлшемі"
 
-#: src/disks/ui/create-partition-page.ui:173
+#: src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Кеңейтілген бөлім"
 
-#: src/disks/ui/create-partition-page.ui:177
+#: src/disks/ui/create-partition-page.ui:169
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr ""
 
@@ -2799,7 +2825,7 @@ msgstr ""
 
 #: src/disks/ui/disk-settings-dialog.ui:498
 msgid "Apply Write Cache Settings"
-msgstr ""
+msgstr "Жазу кэшінің параметрлерін іске асыру"
 
 #: src/disks/ui/disk-settings-dialog.ui:515
 msgid ""
@@ -2813,11 +2839,11 @@ msgstr "_Баптау"
 
 #: src/disks/ui/disk-settings-dialog.ui:570
 msgid "Enable Write Cache"
-msgstr ""
+msgstr "Жазу кэшін іске қосу"
 
 #: src/disks/ui/disk-settings-dialog.ui:571
 msgid "Disable Write Cache"
-msgstr ""
+msgstr "Жазу кэшін сөндіру"
 
 #: src/disks/ui/disk-settings-dialog.ui:594
 msgid ""
@@ -2827,152 +2853,135 @@ msgstr ""
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
+msgstr "Жа_зу кэші"
+
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "Қолданба мәзірі"
+
+#: src/disks/ui/disks.ui:94
+msgid "Go back to main view"
+msgstr "Негізгі көрініске оралу"
+
+#: src/disks/ui/disks.ui:106
+msgid "Drive Options"
+msgstr "Жетек баптаулары"
+
+#: src/disks/ui/disks.ui:121
+msgid "Power off this disk"
+msgstr "Бұл дисктің қорегін сөндіру"
+
+#: src/disks/ui/disks.ui:136
+msgid "Eject this disk"
+msgstr "Бұл дискті шығару"
+
+#: src/disks/ui/disks.ui:151
+msgid "Detach this loop device"
 msgstr ""
 
-#: src/disks/ui/disks.ui:63
-msgid "Select a device"
-msgstr "Құрылғыны таңдау"
+#: src/disks/ui/disks.ui:174
+msgid "No Device Selected"
+msgstr "Құрылғы таңдалмаған"
 
-#: src/disks/ui/disks.ui:122
+#: src/disks/ui/disks.ui:175
+msgid "Select a device to manage."
+msgstr "Басқару үшін құрылғыны таңдаңыз."
+
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "Модель"
 
-#: src/disks/ui/disks.ui:155
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "Сериялық нөмірі"
 
-#: src/disks/ui/disks.ui:192
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr ""
 
-#: src/disks/ui/disks.ui:266
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "Тасушы"
 
-#: src/disks/ui/disks.ui:341 src/disks/ui/disks.ui:1022
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Тапсырма"
 
-#: src/disks/ui/disks.ui:439
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Аты"
 
-#: src/disks/ui/disks.ui:476 src/disks/ui/disks.ui:840
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Өлшемі"
 
-#: src/disks/ui/disks.ui:513
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Автотазарту"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr ""
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:557
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr ""
 
-#: src/disks/ui/disks.ui:594
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Бөлімдеу"
 
-#: src/disks/ui/disks.ui:638
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Томдар"
 
-#: src/disks/ui/disks.ui:692
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Таңдалған диск бөлімін тіркеу"
 
-#: src/disks/ui/disks.ui:693
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "Тіркеу"
-
-#: src/disks/ui/disks.ui:706
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Таңдалған бөлімді тіркеуден шығару"
 
-#: src/disks/ui/disks.ui:707
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "Тіркеуден босату"
-
-#: src/disks/ui/disks.ui:720
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Таңдалған swap бөлімін белсендіру"
 
-#: src/disks/ui/disks.ui:721
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "Свопты белсендіру"
-
-#: src/disks/ui/disks.ui:734
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Таңдалған swap бөлімін белсенді емес қылу"
 
-#: src/disks/ui/disks.ui:735
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "Свопты ажырату"
-
-#: src/disks/ui/disks.ui:748
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Таңдалған шифрленген бөлімін шифрлеуден босату"
 
-#: src/disks/ui/disks.ui:749
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "Босату"
-
-#: src/disks/ui/disks.ui:762
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Таңдалған шифрленген бөлімін блоктау"
 
-#: src/disks/ui/disks.ui:763
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "Блоктау"
-
-#: src/disks/ui/disks.ui:776
-msgid "Create partition in unallocated space"
-msgstr ""
-
 #: src/disks/ui/disks.ui:777
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "Бөлімді жасау"
+msgid "Create partition in unallocated space"
+msgstr "Бөлінбеген кеңістікте бөлімді жасау"
 
-#: src/disks/ui/disks.ui:790
-msgid "Delete selected partition"
-msgstr "Таңдалған бөлімді жою"
-
-#: src/disks/ui/disks.ui:791
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "Бөлімді жою"
-
-#: src/disks/ui/disks.ui:804
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Қосымша бөлімдеу опциялары"
 
-#: src/disks/ui/disks.ui:805
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr ""
+#: src/disks/ui/disks.ui:821
+msgid "Delete selected partition"
+msgstr "Таңдалған бөлімді жою"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:873
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Құрамасы"
 
-#: src/disks/ui/disks.ui:947
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:984
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Бөлім түрі"
 
@@ -2982,7 +2991,7 @@ msgstr "_Дискті пішімдеу…"
 
 #: src/disks/ui/drive-menu.ui:12
 msgid "_Create Disk Image…"
-msgstr "Диск бейнесін жа_сау"
+msgstr "Диск бейнесін жа_сау…"
 
 #: src/disks/ui/drive-menu.ui:16
 msgid "_Restore Disk Image…"
@@ -3012,64 +3021,64 @@ msgstr ""
 msgid "Encryption Options"
 msgstr "Шифрлеу опциялары"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:92 src/disks/ui/edit-fstab-dialog.ui:46
+#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:112
+#: src/disks/ui/edit-crypttab-dialog.ui:86
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:160
+#: src/disks/ui/edit-crypttab-dialog.ui:124
 msgid "Opt_ions"
 msgstr "Опц_иялар"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:179
+#: src/disks/ui/edit-crypttab-dialog.ui:143
 msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:196
+#: src/disks/ui/edit-crypttab-dialog.ui:160
 msgid "Options to use when unlocking the device"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:213
+#: src/disks/ui/edit-crypttab-dialog.ui:177
 msgid "Passphrase File"
 msgstr "Кілттік фраза файлы"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:243
-#: src/disks/ui/unlock-device-dialog.ui:97
+#: src/disks/ui/edit-crypttab-dialog.ui:207
+#: src/disks/ui/unlock-device-dialog.ui:87
 msgid "Sho_w passphrase"
 msgstr "Кілттік фразаны көр_сету"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:265
+#: src/disks/ui/edit-crypttab-dialog.ui:229
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:282
-#: src/disks/ui/unlock-device-dialog.ui:63
+#: src/disks/ui/edit-crypttab-dialog.ui:246
+#: src/disks/ui/unlock-device-dialog.ui:53
 msgid "_Passphrase"
 msgstr "Кілттік _фраза"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:304
+#: src/disks/ui/edit-crypttab-dialog.ui:268
 msgid "_Unlock at system startup"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:310
+#: src/disks/ui/edit-crypttab-dialog.ui:274
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:325
+#: src/disks/ui/edit-crypttab-dialog.ui:289
 msgid "Require additional authori_zation to unlock"
 msgstr ""
 
-#: src/disks/ui/edit-crypttab-dialog.ui:331
+#: src/disks/ui/edit-crypttab-dialog.ui:295
 msgid ""
 "If checked, additional authorization is required to unlock the device [x-"
 "udisks-auth]"
@@ -3081,21 +3090,21 @@ msgstr ""
 msgid "Edit Partition"
 msgstr "Бөлімді түзету"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-#: src/disks/ui/edit-gpt-partition-dialog.ui:75
-#: src/disks/ui/edit-partition-dialog.ui:75
+#: src/disks/ui/edit-dos-partition-dialog.ui:60
+#: src/disks/ui/edit-gpt-partition-dialog.ui:59
+#: src/disks/ui/edit-partition-dialog.ui:59
 msgid "_Type"
 msgstr "_Түрі"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
+#: src/disks/ui/edit-dos-partition-dialog.ui:76
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr ""
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:103
+#: src/disks/ui/edit-dos-partition-dialog.ui:87
 msgid "_Bootable"
 msgstr "_Жүктелетін"
 
-#: src/disks/ui/edit-dos-partition-dialog.ui:108
+#: src/disks/ui/edit-dos-partition-dialog.ui:92
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -3106,11 +3115,11 @@ msgstr ""
 msgid "Change Filesystem Label"
 msgstr "Файлдық жүйе белгісін өзгерту"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:72
+#: src/disks/ui/edit-filesystem-dialog.ui:56
 msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr ""
 
-#: src/disks/ui/edit-filesystem-dialog.ui:92
+#: src/disks/ui/edit-filesystem-dialog.ui:71
 msgid "_Label"
 msgstr "Бе_лгісі"
 
@@ -3118,151 +3127,151 @@ msgstr "Бе_лгісі"
 msgid "Mount Options"
 msgstr "Тіркеу опциялары"
 
-#: src/disks/ui/edit-fstab-dialog.ui:64
+#: src/disks/ui/edit-fstab-dialog.ui:54
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount "
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:91
+#: src/disks/ui/edit-fstab-dialog.ui:71
 msgid "I_dentify As"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:110
+#: src/disks/ui/edit-fstab-dialog.ui:90
 msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:111
+#: src/disks/ui/edit-fstab-dialog.ui:91
 msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:141
+#: src/disks/ui/edit-fstab-dialog.ui:121
 msgid "Mount _Point"
 msgstr "Тіркелу _нүктесі"
 
-#: src/disks/ui/edit-fstab-dialog.ui:160
+#: src/disks/ui/edit-fstab-dialog.ui:140
 msgid "Filesystem _Type"
 msgstr "Файлдық жүйе _түрі"
 
-#: src/disks/ui/edit-fstab-dialog.ui:179 src/disks/ui/edit-fstab-dialog.ui:180
+#: src/disks/ui/edit-fstab-dialog.ui:159 src/disks/ui/edit-fstab-dialog.ui:160
 msgid "The directory to mount the device in"
 msgstr "Құрылғыны тіркеу үшін бума"
 
-#: src/disks/ui/edit-fstab-dialog.ui:196 src/disks/ui/edit-fstab-dialog.ui:197
+#: src/disks/ui/edit-fstab-dialog.ui:176 src/disks/ui/edit-fstab-dialog.ui:177
 msgid "The filesystem type to use"
 msgstr "Қолданылатын файлық жүйе түрі"
 
-#: src/disks/ui/edit-fstab-dialog.ui:219
+#: src/disks/ui/edit-fstab-dialog.ui:199
 msgid "Display _Name"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:238
+#: src/disks/ui/edit-fstab-dialog.ui:218
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:255
+#: src/disks/ui/edit-fstab-dialog.ui:235
 msgid "Icon Na_me"
 msgstr "Таңбаша а_ты"
 
-#: src/disks/ui/edit-fstab-dialog.ui:274
+#: src/disks/ui/edit-fstab-dialog.ui:254
 msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:288
+#: src/disks/ui/edit-fstab-dialog.ui:268
 msgid "Sho_w in user interface"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
+#: src/disks/ui/edit-fstab-dialog.ui:273 src/disks/ui/edit-fstab-dialog.ui:274
 msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:308
+#: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Require additional authori_zation to mount"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:313 src/disks/ui/edit-fstab-dialog.ui:314
+#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
 msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:328
+#: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Mount at system _startup"
 msgstr "Жүйе іске қосылға_нда тіркеу"
 
-#: src/disks/ui/edit-fstab-dialog.ui:333
+#: src/disks/ui/edit-fstab-dialog.ui:313
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:350
+#: src/disks/ui/edit-fstab-dialog.ui:330
 msgid "S_ymbolic Icon Name"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:369 src/disks/ui/edit-fstab-dialog.ui:370
+#: src/disks/ui/edit-fstab-dialog.ui:349 src/disks/ui/edit-fstab-dialog.ui:350
 msgid ""
 "If set, the name of the symbolic icon to use in the device in the user "
 "interface [x-gvfs-symbolic-icon=]"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:396
+#: src/disks/ui/edit-fstab-dialog.ui:376
 msgid "Mount Opt_ions"
 msgstr "Тіркеу опц_иялары"
 
-#: src/disks/ui/edit-fstab-dialog.ui:415
+#: src/disks/ui/edit-fstab-dialog.ui:395
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:93
+#: src/disks/ui/edit-gpt-partition-dialog.ui:77
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:125
+#: src/disks/ui/edit-gpt-partition-dialog.ui:109
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want "
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:138
+#: src/disks/ui/edit-gpt-partition-dialog.ui:122
 msgid "_System Partition"
 msgstr "_Жүйелік бөлім"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:143
+#: src/disks/ui/edit-gpt-partition-dialog.ui:127
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:157
+#: src/disks/ui/edit-gpt-partition-dialog.ui:141
 msgid "Legacy BIOS _Bootable"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:162
+#: src/disks/ui/edit-gpt-partition-dialog.ui:146
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
+#: src/disks/ui/edit-gpt-partition-dialog.ui:163
 msgid "Flags"
 msgstr "Жалаушалар"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:195
+#: src/disks/ui/edit-gpt-partition-dialog.ui:179
 msgid "Hide from _Firmware"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:200
+#: src/disks/ui/edit-gpt-partition-dialog.ui:184
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
@@ -3272,11 +3281,11 @@ msgstr ""
 msgid "Erase Multiple Disks"
 msgstr "Бірнеше дискті тазарту"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:36
+#: src/disks/ui/erase-multiple-disks-dialog.ui:31
 msgid "_Erase…"
 msgstr "Та_зарту…"
 
-#: src/disks/ui/erase-multiple-disks-dialog.ui:68
+#: src/disks/ui/erase-multiple-disks-dialog.ui:52
 msgid "Erase _Type"
 msgstr "Тазарту _түрі"
 
@@ -3284,29 +3293,13 @@ msgstr "Тазарту _түрі"
 msgid "Format Disk"
 msgstr "Дискті пішімдеу"
 
-#: src/disks/ui/format-disk-dialog.ui:39
+#: src/disks/ui/format-disk-dialog.ui:34
 msgid "_Format…"
 msgstr "_Пішімдеу…"
 
-#: src/disks/ui/format-disk-dialog.ui:86
+#: src/disks/ui/format-disk-dialog.ui:70
 msgid "_Partitioning"
 msgstr "_Бөлімдеу"
-
-#: src/disks/ui/headerbar.ui:35
-msgid "Drive Options"
-msgstr "Жетек баптаулары"
-
-#: src/disks/ui/headerbar.ui:50
-msgid "Power off this disk"
-msgstr "Бұл дисктің қорегін сөндіру"
-
-#: src/disks/ui/headerbar.ui:65
-msgid "Eject this disk"
-msgstr "Бұл дискті шығару"
-
-#: src/disks/ui/headerbar.ui:80
-msgid "Detach this loop device"
-msgstr ""
 
 #: src/disks/ui/new-disk-image-dialog.ui:8
 msgid "New Disk Image"
@@ -3320,7 +3313,7 @@ msgstr "Бейне ө_лшемі"
 msgid "The size of the image to create"
 msgstr "Жасалатын бөлім өлшемі"
 
-#: src/disks/ui/new-disk-image-dialog.ui:187
+#: src/disks/ui/new-disk-image-dialog.ui:177
 msgid "Attach new _Image…"
 msgstr "Жаңа бе_йнені жалғау…"
 
@@ -3328,7 +3321,7 @@ msgstr "Жаңа бе_йнені жалғау…"
 msgid "Resize Volume"
 msgstr "Бөлімнің өлшемін өзгерту"
 
-#: src/disks/ui/resize-dialog.ui:53
+#: src/disks/ui/resize-dialog.ui:48
 msgid ""
 "Resizing a filesystem can lead to data loss. You are advised to backup your "
 "data before. The resize operation will take longer if a lot of data has to "
@@ -3341,11 +3334,11 @@ msgstr ""
 "ағымдағы мазмұнға сәйкес есептеледі. Жылдам және сенімді жұмыс істеу үшін "
 "файл жүйесі үшін қосымша бос орын ұстаңыз."
 
-#: src/disks/ui/resize-dialog.ui:197
+#: src/disks/ui/resize-dialog.ui:189
 msgid "_Difference"
 msgstr "А_йырмашылық"
 
-#: src/disks/ui/resize-dialog.ui:214
+#: src/disks/ui/resize-dialog.ui:206
 msgid "The difference to the previous partition size"
 msgstr ""
 
@@ -3388,70 +3381,85 @@ msgstr "Жалпы"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "Жаңа бос диск бейнесін жасау"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "Бар болып тұрған диск бейнесін жалғау"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "Көмек"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "Қолданбала мәзірін ашу"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Пернетақта жарлықтары"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Шығу"
 
-#: src/disks/ui/shortcuts.ui:54
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "Дисктер"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "Жаңа бос диск бейнесін жасау"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "Бар болып тұрған диск бейнесін жалғау"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Ағымдағы дисктен таңдауды алып тастау"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Жетек"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Дискі мәзірін ашу"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Жетекті пішімдеу"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Бейнені дискіге қалпына келтіру"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART деректері"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Жетек баптаулары"
 
-#: src/disks/ui/shortcuts.ui:95
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Бөлім"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Том мәзірін ашу"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Таңдалған томды пішімдеу"
@@ -3468,113 +3476,130 @@ msgstr "Өздік тестті бас_тау"
 msgid "Click to start a SMART self-test"
 msgstr "SMART өздік сынауын бастау үшін шертіңіз"
 
-#: src/disks/ui/smart-dialog.ui:40
+#: src/disks/ui/smart-dialog.ui:37
 msgid "_Stop Self-test"
 msgstr "Өздік тестті аяқ_тау"
 
-#: src/disks/ui/smart-dialog.ui:44
+#: src/disks/ui/smart-dialog.ui:41
 msgid "Click to stop the SMART self-test currently in progress"
 msgstr ""
 "Ағымдағы уақытта орындалып тұрған SMART өздік сынауын тоқтату үшін шертіңіз"
 
-#: src/disks/ui/smart-dialog.ui:74
+#: src/disks/ui/smart-dialog.ui:63
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Қатты дисктен SMART деректерін мәжбүрлі қайта оқу үшін шертіңіз"
 
-#: src/disks/ui/smart-dialog.ui:113
+#: src/disks/ui/smart-dialog.ui:96
 msgid "Powered On"
 msgstr "Іске қосулы"
 
-#: src/disks/ui/smart-dialog.ui:146
+#: src/disks/ui/smart-dialog.ui:129
 msgid "Updated"
 msgstr "Жаңартылған"
 
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/smart-dialog.ui:195
 msgid "Self-test Result"
 msgstr "Өздік тест нәтижелері"
 
-#: src/disks/ui/smart-dialog.ui:229
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Self-assessment"
 msgstr "Өздік бағалау"
 
-#: src/disks/ui/smart-dialog.ui:246
+#: src/disks/ui/smart-dialog.ui:229
 msgid "Overall Assessment"
 msgstr "Жалпы бағалау"
 
-#: src/disks/ui/smart-dialog.ui:317
+#: src/disks/ui/smart-dialog.ui:295
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Диск үшін SMART іске қосу/сөндіру үшін шертіңіз"
 
-#: src/disks/ui/smart-dialog.ui:339
+#: src/disks/ui/smart-dialog.ui:306
 msgid "SMART _Attributes"
 msgstr "SMART а_трибуттары"
 
-#: src/disks/ui/smart-dialog.ui:413
+#: src/disks/ui/smart-dialog.ui:364
 msgid "Short"
 msgstr "Қысқа"
 
-#: src/disks/ui/smart-dialog.ui:421
+#: src/disks/ui/smart-dialog.ui:372
 msgid "Extended"
 msgstr "Кеңейтілген"
 
-#: src/disks/ui/smart-dialog.ui:429
+#: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
+msgstr ""
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr ""
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
 msgstr ""
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Босату үшін кілттік фразаны енгізіңіз"
 
-#: src/disks/ui/unlock-device-dialog.ui:41
+#: src/disks/ui/unlock-device-dialog.ui:36
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:79
-#: src/disks/ui/unlock-device-dialog.ui:186
+#: src/disks/ui/unlock-device-dialog.ui:69
+#: src/disks/ui/unlock-device-dialog.ui:176
 msgid "If specified"
-msgstr ""
+msgstr "Егер көрсетілсе"
 
-#: src/disks/ui/unlock-device-dialog.ui:117
+#: src/disks/ui/unlock-device-dialog.ui:107
 msgid "Volume type"
 msgstr "Том түрі"
 
-#: src/disks/ui/unlock-device-dialog.ui:136
+#: src/disks/ui/unlock-device-dialog.ui:126
 msgid "_Hidden"
 msgstr "_Жасырын"
 
-#: src/disks/ui/unlock-device-dialog.ui:137
+#: src/disks/ui/unlock-device-dialog.ui:127
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:149
+#: src/disks/ui/unlock-device-dialog.ui:139
 msgid "Windows _system"
 msgstr "Windows _жүйесі"
 
-#: src/disks/ui/unlock-device-dialog.ui:150
+#: src/disks/ui/unlock-device-dialog.ui:140
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Windows шифрленген бөлімін немесе дискін шифрлеуден босату."
 
-#: src/disks/ui/unlock-device-dialog.ui:171
+#: src/disks/ui/unlock-device-dialog.ui:161
 msgid "PI_M"
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:187
+#: src/disks/ui/unlock-device-dialog.ui:177
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:204
+#: src/disks/ui/unlock-device-dialog.ui:194
 msgid "_Keyfiles"
 msgstr "_Кілттік файлдар"
 
-#: src/disks/ui/unlock-device-dialog.ui:221
+#: src/disks/ui/unlock-device-dialog.ui:211
 msgid "Select a keyfile to unlock this volume"
 msgstr "Бұл томды босату үшін кілт файлды таңдау"
 
-#: src/disks/ui/unlock-device-dialog.ui:260
+#: src/disks/ui/unlock-device-dialog.ui:240
 msgid "_Unlock"
 msgstr "Бо_сату"
 
@@ -3606,23 +3631,27 @@ msgstr "Файлдық жүйені тек_серу…"
 msgid "Rep_air Filesystem…"
 msgstr "Файлдық жүйені қ_алпына келтіру…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "_Иелену…"
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "_Тіркеу опцияларын түзету…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "Ш_ифрлеу опцияларын түзету…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "Бөлім бейнесін жа_сау…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "Бөлім бейнесін қалпына келті_ру…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "Бөлімді _сынау…"
 
@@ -3742,20 +3771,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Әсер етілетін құрылғылар"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "Файлдық жүйені тіркеуден босату қатесі"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "Құрылғыны блоктау қатесі"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 
@@ -3776,6 +3805,38 @@ msgstr "Қатты диск жақын арада сынатын сияқты."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Тексеру"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "Тіркеу"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "Тіркеуден босату"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "Свопты белсендіру"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "Свопты ажырату"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "Босату"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "Блоктау"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "Бөлімді жасау"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "Бөлімді жою"
 
 #~ msgid "drive-removable-media"
 #~ msgstr "drive-removable-media"

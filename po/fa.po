@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2021-02-08 00:13+0000\n"
-"PO-Revision-Date: 2021-03-04 00:23+0000\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-31 15:01+0430\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <translate@ifsug.org>\n"
 "Language: fa\n"
@@ -50,6 +50,22 @@ msgstr ""
 "موقعیت پیش گزیده برای محاوره‌های ایجاد/بازگردانی تصویر دیسک. در صورت خالی بودن، "
 "شاخهٔ ‪~/Documents‬ استفاده می‌شود."
 
+#: data/org.gnome.Disks.gschema.xml:13
+msgid "The number of samples the benchmark will include for the read/write test."
+msgstr "تعداد نمونه‌های محک برای آزمون‌های خواندن و نوشتن."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "تعداد می‌با (۱٬۰۴۸٫۵۷۶ بایت) برای خواندن و نوشتن هر نمونه."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "برای به یا از کار انداختن آزمون نوشتن."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "تعداد نمونه‌های انجام شده به دست محک برای آزمون زمان دسترسی."
+
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
 msgstr "دیسک‌های گنوم"
@@ -82,7 +98,7 @@ msgstr "راهی آسان برای مدیریت دیسک‌هایتان"
 msgid "The GNOME Project"
 msgstr "پروژهٔ گنوم"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "دیسک‌ها"
@@ -114,8 +130,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "برای سوار شدن، تصویر(های) دیسکی برگزینید"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "_لغو"
 
@@ -440,7 +456,7 @@ msgstr "تعداد دورها در موقعیت ناحیهٔ فرود"
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:163
+#: src/disks/ui/smart-dialog.ui:162
 msgid "Temperature"
 msgstr "دما"
 
@@ -1067,7 +1083,7 @@ msgid "Updates"
 msgstr "به‌روز رسانی‌ها"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "ارزیابی"
 
@@ -1413,31 +1429,31 @@ msgstr "_بعدی"
 msgid "Error formatting volume"
 msgstr "خطا در هنگام قالب‌بندی حجم"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "خطا در هنگام ساخت افراز"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "ایجاد افراز"
 
-#: src/disks/gducreateformatdialog.c:459
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "قالب‌بندی حجم"
 
-#: src/disks/gducreateformatdialog.c:462
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "قالب سفارشی"
 
-#: src/disks/gducreateformatdialog.c:465
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "تنظیم گذرواژه"
 
-#: src/disks/gducreateformatdialog.c:468
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "تأیید جزییات"
 
-#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_قالب‌بندی"
 
@@ -1916,34 +1932,34 @@ msgstr "تصویر دیسک %s  از افزارهٔ مقصد بزرگ‌تر ا�
 msgid "Error restoring disk image"
 msgstr "خطار در بازگردانی تصویر دیسک"
 
-#: src/disks/gdurestorediskimagedialog.c:923
+#: src/disks/gdurestorediskimagedialog.c:930
 msgid "Error opening file for reading"
 msgstr "خطا در هنگام باز کردم پرونده برای خواندن"
 
-#: src/disks/gdurestorediskimagedialog.c:938
+#: src/disks/gdurestorediskimagedialog.c:945
 msgid "Error determining size of file"
 msgstr "خطا در تشخیص اندازهٔ پرونده"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:966
+#: src/disks/gdurestorediskimagedialog.c:973
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "درحال رونوشت تصویر دیسک به افزاره"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:972
+#: src/disks/gdurestorediskimagedialog.c:979
 msgid "Restoring Disk Image"
 msgstr "در حال بازگردانی تصویر دیسک"
 
-#: src/disks/gdurestorediskimagedialog.c:1028
+#: src/disks/gdurestorediskimagedialog.c:1035
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "آیا درباره نوشتن تصویر دیسک بر روی افزاره مطمئن هستید؟"
 
-#: src/disks/gdurestorediskimagedialog.c:1029
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "All existing data will be lost"
 msgstr "تمام اطلاعات موجود حذف می‌شوند"
 
-#: src/disks/gdurestorediskimagedialog.c:1030
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "_Restore"
 msgstr "_بازآوری"
 
@@ -1972,7 +1988,7 @@ msgstr "تنظیم گزینه‌ها برای قفل‌گشایی"
 msgid "Volumes Grid"
 msgstr "شبکهٔ حجم‌ها"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "هیچ رسانه‌ای"
 
@@ -2014,30 +2030,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "فضای خالی"
 
-#: src/disks/gduwindow.c:632
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr "خطا در حذف افزارهٔ حلقه‌ای"
 
-#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "خدا هنگام پیوست تصویر دیسک"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "یک تصویر دیسک برای پیوست انتخاب کنید"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "_پیوست"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:816
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
 msgstr "برپایی افزارهٔ حلقه‌ای _فقط‌خواندنی"
 
-#: src/disks/gduwindow.c:817
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t want "
 "the underlying file to be modified"
@@ -2046,7 +2062,7 @@ msgstr ""
 "زیرین درستکاری شود مفید است"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1663
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (فقط‌خواندنی)"
@@ -2055,7 +2071,7 @@ msgstr "%s (فقط‌خواندنی)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1701
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2064,7 +2080,7 @@ msgstr "%s مانده (%s/ث)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1709
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2075,7 +2091,7 @@ msgstr "%s مانده"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1724
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s از %s — %s"
@@ -2084,17 +2100,17 @@ msgstr "%s از %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %I2.1f٪"
 
-#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "افزارهٔ بلوکی خالیست"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1952
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2103,11 +2119,11 @@ msgstr "ناشناخته (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2111
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "وصل‌شده به صندلی‌ای دیگر"
 
-#: src/disks/gduwindow.c:2256
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr "افزارهٔ حلقه‌ای خالیست"
 
@@ -2117,61 +2133,61 @@ msgstr "افزارهٔ حلقه‌ای خالیست"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2473
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s آزاد (%I.1f٪ پر)"
 
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "ناشناس"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2541
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "ریشهٔ سامانه‌پرونده"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2549
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "سوار روی %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2555
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "سوار نشده"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2578
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "فعّال"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "غیرفعّال"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2599
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "قفل‌گشایی شده"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2605
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "قفل"
 
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "افراز گسترده"
@@ -2180,45 +2196,45 @@ msgstr "افراز گسترده"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2639
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2759
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "فضای تخصیص داده نشده"
 
-#: src/disks/gduwindow.c:2960
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "خطا هنگام تعمیر سامانه‌پرونده"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "تعمیر موفّق بود"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "تعمیر شکست خورد"
 
-#: src/disks/gduwindow.c:2990
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "سامانه‌پروندهٔ %s روی %s تعمیر شد."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:2996
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "سامانه‌پروندهٔ %s روی %s نمی‌تواند تعمیر شود."
 
-#: src/disks/gduwindow.c:3049
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "تأیید تعمیر"
 
-#: src/disks/gduwindow.c:3052
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve lost "
@@ -2230,105 +2246,109 @@ msgstr ""
 "گرفتن پشتیبان را در نظر داشته باشید. ممکن است عملیات خیلی طول بکشد، مخصوصاً اگر "
 "افراز شامل داده‌های زیادی باشد."
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "خطا هنگام گرفتن مالکیت سامانه‌پرونده"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "خطا هنگام بررسی سامانه‌پرونده"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "سامانه‌پرونده سالم"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "سامانه‌پرونده آسیب‌دیده"
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "سامانه‌پروندهٔ %s روی %s آسیب ندیده است."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3116
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "سامانه‌پروندهٔ %s روی %s نیاز به تعمیر دارد."
 
-#: src/disks/gduwindow.c:3167
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "تأیید بررسی"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot of "
 "data."
 msgstr "ممکن است بررسی خیلی طول بکشد، مخصوصاً اگر افراز شامل داده‌ّای زیادی باشد."
 
-#: src/disks/gduwindow.c:3422
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "هنگام تلاش برای گذاشتن گرداننده در حالت آماده به کار، خطایی رخ داد"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "هنگام تلاش برای بیدار کردن گرداننده از حالت آماده به کار، خطایی رخ داد"
 
-#: src/disks/gduwindow.c:3515
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "خطا در خاموش کردن گرداننده"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3567
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "مطمينید می‌خواهید گرداننده‌ها را خاموش کنید؟"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3569
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be powered "
 "down and removed."
 msgstr ""
 "این عملیات سامانه را برای خاموش شدن و برداشته شدن گرداننده‌های زیر آماده می‌کند."
 
-#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_خاموش کردن"
 
-#: src/disks/gduwindow.c:3653
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "خطا در هنگام سوار کردن سامانه‌پرونده"
 
-#: src/disks/gduwindow.c:3738
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "خطا در هنگام حذف افراز"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "آیا مطمئنید که می‌خواهید این افراز را حذف کنید؟"
 
-#: src/disks/gduwindow.c:3776
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "تمام اطلاعات بر روی افراز پاک می‌شود"
 
-#: src/disks/gduwindow.c:3777
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_حذف"
 
-#: src/disks/gduwindow.c:3808
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "خطا در هنگام بیرون دادن رسانه"
 
-#: src/disks/gduwindow.c:3891
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "خطا در هنگام آغاز مبادله"
 
-#: src/disks/gduwindow.c:3928
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "خطا در هنگام متوقف کردن مبادله"
 
-#: src/disks/gduwindow.c:3970
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "خطا در تنظیم پرچم‌های پاک‌سازی خودکار"
 
-#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "خطا در لغو کار"
 
@@ -2566,7 +2586,7 @@ msgstr "هشدار: تمام اطّلاعات روی حجم ار بین خواه
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "تأیید جزییات حجم جاری پیش از ادامه."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "افزاره"
 
@@ -2579,7 +2599,7 @@ msgid "Used"
 msgstr "استفاده شده"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "موقعیت"
 
@@ -2873,174 +2893,133 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "انبارهٔ _نوشتن"
 
-#: src/disks/ui/disks.ui:93
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "فهرست برنامه"
+
+#: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
 msgstr "بازگشت به نمای اصلی"
 
-#: src/disks/ui/disks.ui:105
+#: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "گزینه‌های گرداننده"
 
-#: src/disks/ui/disks.ui:120
+#: src/disks/ui/disks.ui:121
 msgid "Power off this disk"
 msgstr "خاموش کردن این دیسک"
 
-#: src/disks/ui/disks.ui:135
+#: src/disks/ui/disks.ui:136
 msgid "Eject this disk"
 msgstr "بیرون دادن این دیسک"
 
-#: src/disks/ui/disks.ui:150
+#: src/disks/ui/disks.ui:151
 msgid "Detach this loop device"
 msgstr "جدا کردن این افزارهٔ حلقه‌ای"
 
-#: src/disks/ui/disks.ui:173
+#: src/disks/ui/disks.ui:174
 msgid "No Device Selected"
 msgstr "هیچ افزاره‌ای گزیده نشده"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:175
 msgid "Select a device to manage."
 msgstr "افزاره‌ای را برای مدیریت برگزینید."
 
-#: src/disks/ui/disks.ui:209
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "مدل"
 
-#: src/disks/ui/disks.ui:238
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "شمارهٔ سریال"
 
-#: src/disks/ui/disks.ui:267
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr "نام سراسری"
 
-#: src/disks/ui/disks.ui:325
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "رسانه"
 
-#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "کار"
 
-#: src/disks/ui/disks.ui:476
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "نام"
 
-#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "اندازه"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "پاک‌سازی خودکار"
 
-#: src/disks/ui/disks.ui:552
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "برداشتنن افزارهٔ حلقه‌ای پس از کنش پیاده شدن"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:566
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "درحال پشتیبان‌گیری از پرونده"
 
-#: src/disks/ui/disks.ui:595
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "افرازش"
 
-#: src/disks/ui/disks.ui:626
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_حجم‌ها"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "سوار کردن افراز گزیده"
 
-#: src/disks/ui/disks.ui:669
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "سوار کردن"
-
-#: src/disks/ui/disks.ui:682
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "پیاده کردن افراز گزیده"
 
-#: src/disks/ui/disks.ui:683
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "پیاده کردن"
-
-#: src/disks/ui/disks.ui:696
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "به کار انداختن مبادلهٔ گزیده"
 
-#: src/disks/ui/disks.ui:697
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "به کار انداختن مبادله"
-
-#: src/disks/ui/disks.ui:710
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "از کار انداختن مبادلهٔ گزیده"
 
-#: src/disks/ui/disks.ui:711
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "از کار انداختن مبادله"
-
-#: src/disks/ui/disks.ui:724
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "قفل‌گشایی افراز رمزنگاری‌شده"
 
-#: src/disks/ui/disks.ui:725
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "_قفل‌گشایی"
-
-#: src/disks/ui/disks.ui:738
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "قفل افراز رمزنگاری‌شده"
 
-#: src/disks/ui/disks.ui:739
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "قفل"
-
-#: src/disks/ui/disks.ui:752
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "ایجاد افراز در فضای خالی"
 
-#: src/disks/ui/disks.ui:753
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "ایجاد افراز"
-
-#: src/disks/ui/disks.ui:766
-msgid "Delete selected partition"
-msgstr "جذف افراز گزیده"
-
-#: src/disks/ui/disks.ui:767
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "حذف افراز"
-
-#: src/disks/ui/disks.ui:780
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "انتخاب‌های اضافی افراز"
 
-#: src/disks/ui/disks.ui:781
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr "فهرست"
+#: src/disks/ui/disks.ui:821
+msgid "Delete selected partition"
+msgstr "جذف افراز گزیده"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:834
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "مندرجات"
 
-#: src/disks/ui/disks.ui:892
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "شناسهٔ یکتا"
 
-#: src/disks/ui/disks.ui:921
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "نوع افراز"
 
@@ -3463,75 +3442,85 @@ msgstr "عمومی"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "ایجاد یک تصویر دیسک جدید"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "پیوست یک تصویر دیسک موجود"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr "ناگزینش دیسک کنونی"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "راهنما"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "گشودن فهرست برنامه"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "میان‌برهای صفحه‌کلید"
 
-#: src/disks/ui/shortcuts.ui:52
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "خروج"
 
-#: src/disks/ui/shortcuts.ui:61
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "دیسک‌ها"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "ایجاد یک تصویر دیسک جدید"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "پیوست یک تصویر دیسک موجود"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "ناگزینش دیسک کنونی"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "گرداننده"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "گشودن فهرست گرداننده"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "قالب‌بندی گرداننده"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "بازگردانی یک تصویر به دیسک"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "داده‌های SMART"
 
-#: src/disks/ui/shortcuts.ui:93
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "تنظیمات گرداننده"
 
-#: src/disks/ui/shortcuts.ui:102
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "افراز"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "گشودن فهرست حجم"
 
-#: src/disks/ui/shortcuts.ui:113
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "قالب‌بندی حجم گزیده"
@@ -3560,31 +3549,31 @@ msgstr "کلیک برای توقّف خودآزمایی SMART در حال اجر
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "کلیک برای اجبار به بازخوانی داده‌های SMART از دیسک سخت"
 
-#: src/disks/ui/smart-dialog.ui:97
+#: src/disks/ui/smart-dialog.ui:96
 msgid "Powered On"
 msgstr "روشن شد"
 
-#: src/disks/ui/smart-dialog.ui:130
+#: src/disks/ui/smart-dialog.ui:129
 msgid "Updated"
 msgstr "به‌روزرسانی شد"
 
-#: src/disks/ui/smart-dialog.ui:196
+#: src/disks/ui/smart-dialog.ui:195
 msgid "Self-test Result"
 msgstr "نتایج خودآزمایی"
 
-#: src/disks/ui/smart-dialog.ui:213
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Self-assessment"
 msgstr "خود ارزیابی"
 
-#: src/disks/ui/smart-dialog.ui:230
+#: src/disks/ui/smart-dialog.ui:229
 msgid "Overall Assessment"
 msgstr "ارزیابی کلّی"
 
-#: src/disks/ui/smart-dialog.ui:296
+#: src/disks/ui/smart-dialog.ui:295
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "کلیک برای تغییر وضعیت به کار انداختن SMART برای دیسک سخت"
 
-#: src/disks/ui/smart-dialog.ui:307
+#: src/disks/ui/smart-dialog.ui:306
 msgid "SMART _Attributes"
 msgstr "_مشخّصه‌های SMART"
 
@@ -3599,6 +3588,27 @@ msgstr "تعمیم‌یافته"
 #: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "انتقال"
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "تأیید گرفتن مالکیت"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive mode "
+"does also change the ownership of all subdirectories and files, this can lead to "
+"destructive results when the filesystem contains a directory structure where "
+"ownership should belong to different users (e.g., a system backup or a filesystem "
+"that is accessed by multiple users)."
+msgstr ""
+"مالکیت سامانه‌پرونده را به کاربر و گروهتان تغییر می‌دهد. حالت بازگشتی، مالکیت تمامی "
+"زیرشاخه‌ها و پرونده‌ها را نیز عوض کرده که می‌تواند هنگام داشتن ساختاری که مالکیت "
+"باید متعلّق به کاربران مختلفی باشد (مثلاً پشتیبان سامانه یا سامانه‌پرونده‌ای که به "
+"دست چندین کاربر قابل دسترسی است) منجر به نتایجی مخرّب شود."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "به کار انداختن حالت _بازگشتی"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3684,23 +3694,27 @@ msgstr "_بررسی سامانه‌پرونده…"
 msgid "Rep_air Filesystem…"
 msgstr "_تعمیر سامانه‌پرونده…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "−گرفتن مالکیت…"
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "ویرایش انتخاب‌های _سوار شدن…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "ویرایش انتخاب‌های _رمزنگاری…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "ایجاد تصویر _دیسک…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "باز_گردانی تصویر افراز…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "_محک افراز…"
 
@@ -3820,20 +3834,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "افزاره‌های تأثیرپذیر"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "خطا در هنگام پیاده کردن سامانه‌پرونده"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "خطا در قفل کردن افزاره"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr "خطا در از کار انداختن پاک‌سازی خودکار برای افزارهٔ حلقه‌ای"
 
@@ -3854,6 +3868,42 @@ msgstr "احتمالاً یک دیسک سخت به زودی از کار می‌�
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "آزمون"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "سوار کردن"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "پیاده کردن"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "به کار انداختن مبادله"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "از کار انداختن مبادله"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "_قفل‌گشایی"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "قفل"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "ایجاد افراز"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "حذف افراز"
+
+#~ msgctxt "Accessibility label for toolbutton-volume-menu"
+#~ msgid "Menu"
+#~ msgstr "فهرست"
 
 #~ msgid "Parent window XID for the format dialog"
 #~ msgstr "شناسهٔ XID پنجرهٔ والد برای محاورهٔ قالب‌بندی"
@@ -4516,9 +4566,6 @@ msgstr "آزمون"
 #~ msgid "Whether the volume should be encrypted"
 #~ msgstr "اینکه آیا باید جلد رمزنگاری شود یا خیر"
 
-#~ msgid "Take Ownership"
-#~ msgstr "گرفتن مالک"
-
 #, fuzzy
 #~ msgid "Affirmative Button Mnemonic"
 #~ msgstr "برچسب _دکمه‌های نوار ابزار:"
@@ -4617,9 +4664,6 @@ msgstr "آزمون"
 
 #~ msgid "Don't partition"
 #~ msgstr "افرازبندی نکن"
-
-#~ msgid "Apple Partition Map"
-#~ msgstr "نقشه افراز Apple"
 
 #~ msgid "The selected partitioning scheme"
 #~ msgstr "شِما افرازبندی انتخاب شده"

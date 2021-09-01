@@ -24,8 +24,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-02-08 00:13+0000\n"
-"PO-Revision-Date: 2021-03-06 11:01+0900\n"
+"POT-Creation-Date: 2021-08-13 17:43+0000\n"
+"PO-Revision-Date: 2021-08-30 18:28+0900\n"
 "Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
@@ -65,6 +65,23 @@ msgstr ""
 "디스크 이미지 만들기/복구 대화 상자 기본 위치. 이 항목을 비워두면 ~/문서 폴더"
 "를 사용합니다."
 
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr "읽기/쓰기 시험에 넣을 벤치마크 샘플 수."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "각 샘플당 읽고 쓸 MiB(1048576 바이트)수."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "쓰기 시험 동작을 켜거나 끕니다."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "접근 시간 시험용 벤치마크 샘플 수."
+
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
 msgstr "그놈 디스크"
@@ -98,7 +115,7 @@ msgstr "디스크를 관리할 쉬운 수단"
 msgid "The GNOME Project"
 msgstr "그놈 프로젝트"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "디스크"
@@ -131,8 +148,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "마운트할 디스크 이미지를 선택하십시오"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -376,7 +393,7 @@ msgstr "전원 사이클 수"
 
 #: src/disks/gduatasmartdialog.c:244
 msgid "Number of power-on events"
-msgstr "power-on 이벤트가 발생한 횟수"
+msgstr "power-on 이벤트 발생 횟수"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -443,7 +460,7 @@ msgstr "전원 끄기 및 리트랙트 횟수"
 
 #: src/disks/gduatasmartdialog.c:293
 msgid "Number of power-off or emergency retract cycles"
-msgstr "power-off 및 비상 리트랙트(retract) 사이클 수"
+msgstr "power-off 또는 비상 취소 사이클 수"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -460,7 +477,7 @@ msgstr "landing zone으로 이동한 사이클의 수"
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:163
+#: src/disks/ui/smart-dialog.ui:162
 msgid "Temperature"
 msgstr "온도"
 
@@ -564,7 +581,7 @@ msgstr "소프트 읽기 오류 비율"
 
 #: src/disks/gduatasmartdialog.c:374
 msgid "Number of off-track errors"
-msgstr "off-track 오류의 수"
+msgstr "off-track 오류 횟수"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -737,7 +754,7 @@ msgstr "드라이브 회전 관성에 들어간 크기"
 
 #: src/disks/gduatasmartdialog.c:512
 msgid "Number of power-off retract events"
-msgstr "power-off retract 이벤트의 수"
+msgstr "power-off 취소 이벤트 횟수"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1090,7 +1107,7 @@ msgid "Updates"
 msgstr "업데이트"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "평가"
 
@@ -1441,31 +1458,31 @@ msgstr "다음(_E)"
 msgid "Error formatting volume"
 msgstr "볼륨을 포맷하는 중 오류"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "파티션을 만드는 중 오류"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "파티션 만들기"
 
-#: src/disks/gducreateformatdialog.c:459
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "볼륨 포맷"
 
-#: src/disks/gducreateformatdialog.c:462
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "사용자 정의 형식"
 
-#: src/disks/gducreateformatdialog.c:465
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "암호 설정"
 
-#: src/disks/gducreateformatdialog.c:468
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "자세한 정보 확인"
 
-#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "포맷(_F)"
 
@@ -1949,34 +1966,34 @@ msgstr "디스크 이미지가 대상 장치보다 %s 큽니다"
 msgid "Error restoring disk image"
 msgstr "디스크 이미지를 복구하는 중 오류"
 
-#: src/disks/gdurestorediskimagedialog.c:923
+#: src/disks/gdurestorediskimagedialog.c:930
 msgid "Error opening file for reading"
 msgstr "읽을 파일을 여는 중 오류"
 
-#: src/disks/gdurestorediskimagedialog.c:938
+#: src/disks/gdurestorediskimagedialog.c:945
 msgid "Error determining size of file"
 msgstr "파일 크기를 결정하는 중 오류"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:966
+#: src/disks/gdurestorediskimagedialog.c:973
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "디스크 이미지를 장치에 복사"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:972
+#: src/disks/gdurestorediskimagedialog.c:979
 msgid "Restoring Disk Image"
 msgstr "디스크 이미지를 복구"
 
-#: src/disks/gdurestorediskimagedialog.c:1028
+#: src/disks/gdurestorediskimagedialog.c:1035
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "정말로 이 장치에 디스크 이미지를 기록하시겠습니까?"
 
-#: src/disks/gdurestorediskimagedialog.c:1029
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "All existing data will be lost"
 msgstr "기존의 데이터가 모두 지워집니다"
 
-#: src/disks/gdurestorediskimagedialog.c:1030
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "_Restore"
 msgstr "복구(_R)"
 
@@ -2005,7 +2022,7 @@ msgstr "잠금 해제 옵션 선택"
 msgid "Volumes Grid"
 msgstr "볼륨 그리드"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "미디어 없음"
 
@@ -2047,30 +2064,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "여유 공간"
 
-#: src/disks/gduwindow.c:632
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr "루프 장치를 삭제하는 중 오류"
 
-#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "디스크 이미지를 첨부하는 중 오류"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "첨부할 디스크 이미지를 선택하십시오"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "첨부(_A)"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:816
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
 msgstr "읽기 전용 루프 장치 설정(_R)"
 
-#: src/disks/gduwindow.c:817
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2079,7 +2096,7 @@ msgstr ""
 "사용합니다"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1663
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s(읽기 전용)"
@@ -2088,7 +2105,7 @@ msgstr "%s(읽기 전용)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1701
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2097,7 +2114,7 @@ msgstr "%s 남음(%s/초)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1709
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2108,7 +2125,7 @@ msgstr "%s 남음"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1724
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%2$s 중 %1$s – %3$s"
@@ -2117,17 +2134,17 @@ msgstr "%2$s 중 %1$s – %3$s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "블록 장치가 비었습니다"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1952
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2136,11 +2153,11 @@ msgstr "알 수 없음(%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2111
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "다른 위치에 연결했습니다"
 
-#: src/disks/gduwindow.c:2256
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr "루프 장치가 비어 있습니다"
 
@@ -2150,61 +2167,61 @@ msgstr "루프 장치가 비어 있습니다"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2473
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s 남음(%.1f%% 찼음)"
 
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "알 수 없음"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2541
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "파일 시스템 루트"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2549
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "마운트 위치 %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2555
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "마운트되지 않음"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2578
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "활성화"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "활성화되지 않음"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2599
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "잠금 풀림"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2605
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "잠금"
 
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "확장 파티션"
@@ -2213,45 +2230,45 @@ msgstr "확장 파티션"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2639
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2759
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "할당되지 않은 공간"
 
-#: src/disks/gduwindow.c:2960
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "파일 시스템을 복구 중 오류"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "복구 성공"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "복구 실패"
 
-#: src/disks/gduwindow.c:2990
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s 상의 파일 시스템  %1$s 복구되었습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:2996
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%2$s의 %1$s 파일 시스템을 복구할 수 없습니다."
 
-#: src/disks/gduwindow.c:3049
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "복구 확인"
 
-#: src/disks/gduwindow.c:3052
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2262,105 +2279,109 @@ msgstr ""
 "터 복구 용도로 포렌식 도구를 사용하려면 먼저 백업을 고려하십시오. 데이터 양"
 "에 따라 이 작업은 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "파일 시스템 소유권 취득 중 오류"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "파일 시스템 검사 중 오류"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "파일 시스템 정상"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "파일 시스템 손상"
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s의 %1$s 파일 시스템은 손상되지 않았습니다."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3116
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s의 %1$s 파일 시스템은 복구가 필요합니다."
 
-#: src/disks/gduwindow.c:3167
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "검사 확인"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "데이터 양에 따라 이 검사 과정은 오래 걸릴 수 있습니다."
 
-#: src/disks/gduwindow.c:3422
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "드라이브를 대기 모드로 놓으려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "드라이브를 대기 모드에서 복귀하려는 중 오류가 발생했습니다"
 
-#: src/disks/gduwindow.c:3515
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "장치의 전원을 끄는 중 오류"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3567
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "정말로 드라이브의 전원을 끄시겠습니까?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3569
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "이 동작은 다음 드라이브의 전원을 끄고 제거할 수 있도록 시스템을 준비합니다."
 
-#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "전원 끄기(_P)"
 
-#: src/disks/gduwindow.c:3653
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "파일 시스템을 마운트하는 중 오류"
 
-#: src/disks/gduwindow.c:3738
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "파티션을 지우는 중 오류"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "이 파티션을 지우시겠습니까?"
 
-#: src/disks/gduwindow.c:3776
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "파티선의 모든 데이터를 잃습니다"
 
-#: src/disks/gduwindow.c:3777
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "삭제(_D)"
 
-#: src/disks/gduwindow.c:3808
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "미디어를 꺼내는 중 오류"
 
-#: src/disks/gduwindow.c:3891
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "스왑을 시작하는 중 오류"
 
-#: src/disks/gduwindow.c:3928
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "스왑을 중지하는 중 오류"
 
-#: src/disks/gduwindow.c:3970
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "자동 소거 플래그를 설정하는 중 오류"
 
-#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "작업을 취소하는 중 오류"
 
@@ -2602,7 +2623,7 @@ msgstr "경고: 볼륨의 모든 데이터를 잃습니다"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "계속 하기 전에 현재 볼륨의 상세 정보가 맞는지 확인하십시오."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "장치"
 
@@ -2615,7 +2636,7 @@ msgid "Used"
 msgstr "사용됨"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "위치"
 
@@ -2913,175 +2934,134 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "쓰기 캐시(_I)"
 
-#: src/disks/ui/disks.ui:93
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "프로그램 메뉴"
+
+#: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
 msgstr "처음 보기로 돌아가기"
 
-#: src/disks/ui/disks.ui:105
+#: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "드라이브 옵션"
 
-#: src/disks/ui/disks.ui:120
+#: src/disks/ui/disks.ui:121
 msgid "Power off this disk"
 msgstr "이 디스크 전원 끄기"
 
-#: src/disks/ui/disks.ui:135
+#: src/disks/ui/disks.ui:136
 msgid "Eject this disk"
 msgstr "이 디스크 빼기"
 
-#: src/disks/ui/disks.ui:150
+#: src/disks/ui/disks.ui:151
 msgid "Detach this loop device"
 msgstr "루프 장치를 연결 끊기"
 
-#: src/disks/ui/disks.ui:173
+#: src/disks/ui/disks.ui:174
 msgid "No Device Selected"
 msgstr "선택한 장치 없음"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:175
 msgid "Select a device to manage."
 msgstr "관리할 장치를 선택하십시오."
 
-#: src/disks/ui/disks.ui:209
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "모델"
 
-#: src/disks/ui/disks.ui:238
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "시리얼 번호"
 
 # NOTE: 웃긴 말이지만 "월드 와이드 이름"으로 많이 발견된다
-#: src/disks/ui/disks.ui:267
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr "월드 와이드 이름"
 
-#: src/disks/ui/disks.ui:325
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "미디어"
 
-#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "작업"
 
-#: src/disks/ui/disks.ui:476
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "이름"
 
-#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "크기"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "자동 지우기"
 
-#: src/disks/ui/disks.ui:552
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "마운트 해제 수행 후에 루프 디바이스 연결 끊기"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:566
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "백업 파일"
 
-#: src/disks/ui/disks.ui:595
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "파티션 만들기"
 
-#: src/disks/ui/disks.ui:626
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "볼륨(_V)"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "선택한 파티션 마운트"
 
-#: src/disks/ui/disks.ui:669
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "마운트"
-
-#: src/disks/ui/disks.ui:682
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "선택한 파티션 마운트 해제"
 
-#: src/disks/ui/disks.ui:683
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "마운트 해제"
-
-#: src/disks/ui/disks.ui:696
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "선택한 스왑 파티션 활성화"
 
-#: src/disks/ui/disks.ui:697
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "스왑 활성화"
-
-#: src/disks/ui/disks.ui:710
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "선택한 스왑 파티션 비활성화"
 
-#: src/disks/ui/disks.ui:711
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "스왑 비활성화"
-
-#: src/disks/ui/disks.ui:724
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "선택한 암호화 파티션 잠금 풀기"
 
-#: src/disks/ui/disks.ui:725
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "풀기"
-
-#: src/disks/ui/disks.ui:738
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "선택한 암호화 파티션 잠그기"
 
-#: src/disks/ui/disks.ui:739
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "잠금"
-
-#: src/disks/ui/disks.ui:752
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "할당하지 않은 공간에 파티션 만들기"
 
-#: src/disks/ui/disks.ui:753
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "파티션 만들기"
-
-#: src/disks/ui/disks.ui:766
-msgid "Delete selected partition"
-msgstr "선택한 파티션 삭제"
-
-#: src/disks/ui/disks.ui:767
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "파티션 삭제"
-
-#: src/disks/ui/disks.ui:780
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "추가 파티션 옵션"
 
-#: src/disks/ui/disks.ui:781
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr "메뉴"
+#: src/disks/ui/disks.ui:821
+msgid "Delete selected partition"
+msgstr "선택한 파티션 삭제"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:834
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "내용"
 
-#: src/disks/ui/disks.ui:892
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:921
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "파티션 형식"
 
@@ -3506,78 +3486,88 @@ msgstr "일반"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "비어있는 새 디스크 이미지 만들기"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "기존 디스크 이미지 첨부"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr "현재 디스크 선택 취소"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "도움말"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "프로그램 메뉴 열기"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "키보드 바로 가기 키"
 
-#: src/disks/ui/shortcuts.ui:52
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "끝내기"
 
-#: src/disks/ui/shortcuts.ui:61
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "디스크"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "비어있는 새 디스크 이미지 만들기"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "기존 디스크 이미지 첨부"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "현재 디스크 선택 취소"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "드라이브"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "드라이브 메뉴 열기"
 
 # 커맨드 설명, 문장으로 번역
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "드라이브 포맷"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "디스크 이미지 복구"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART 데이터"
 
-#: src/disks/ui/shortcuts.ui:93
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "드라이브 설정"
 
-#: src/disks/ui/shortcuts.ui:102
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "파티션"
 
 # Note: 디스크 '볼륨' 레이블의 볼륨을 말함.
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "볼륨 메뉴 열기"
 
 # 커맨드 설명, 문장으로 번역
-#: src/disks/ui/shortcuts.ui:113
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "선택한 볼륨 포맷"
@@ -3606,31 +3596,31 @@ msgstr "현재 진행 중인 SMART 자체 검사를 중지하려면 누르십시
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "하드 디스크에서 SMART 데이터를 강제로 다시 읽으려면 누르십시오"
 
-#: src/disks/ui/smart-dialog.ui:97
+#: src/disks/ui/smart-dialog.ui:96
 msgid "Powered On"
 msgstr "전원 켜짐"
 
-#: src/disks/ui/smart-dialog.ui:130
+#: src/disks/ui/smart-dialog.ui:129
 msgid "Updated"
 msgstr "업데이트됨"
 
-#: src/disks/ui/smart-dialog.ui:196
+#: src/disks/ui/smart-dialog.ui:195
 msgid "Self-test Result"
 msgstr "자체 검사 결과"
 
-#: src/disks/ui/smart-dialog.ui:213
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Self-assessment"
 msgstr "자체 평가"
 
-#: src/disks/ui/smart-dialog.ui:230
+#: src/disks/ui/smart-dialog.ui:229
 msgid "Overall Assessment"
 msgstr "전체 평가"
 
-#: src/disks/ui/smart-dialog.ui:296
+#: src/disks/ui/smart-dialog.ui:295
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "하드디스크에 대해 SMART를 사용을 토글하려면 누르십시오"
 
-#: src/disks/ui/smart-dialog.ui:307
+#: src/disks/ui/smart-dialog.ui:306
 msgid "SMART _Attributes"
 msgstr "SMART 속성(_A)"
 
@@ -3645,6 +3635,27 @@ msgstr "확장"
 #: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "이송"
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "소유권 취득 확인"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"현재 사용자에 해당하는 사용자 및 그룹으로 파일 시스템 사용권을 바꿉니다. 재"
+"귀 모드는 하위 디렉터리와 파일의 소유권까지 바꾸는데, 다른 사용자의 소유물이"
+"어야 할 디렉터리 구조의 소유권을 바꿈으로 인해 파일 시스템을 망가뜨리는 결과"
+"를 초래할 수 있습니다(예: 시스템 백업 또는 다중 사용자 접근 파일 시스템)."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "재귀 모드 활성(_R)"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3735,23 +3746,27 @@ msgstr "파일 시스템 검사(_H)…"
 msgid "Rep_air Filesystem…"
 msgstr "파일 시스템 복구(_A)…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "소유권 취득(_T)…"
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "마운트 옵션 편집(_M)…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "암호화 옵션 편집(_Y)…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "파티션 이미지 만들기(_C)…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "파티션 이미지 복구(_R)…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "파티션 벤치마크(_B)…"
 
@@ -3871,20 +3886,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "관련 장치"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "파일 시스템을 마운트 해제하는 중 오류"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "장치를 잠그는 중 오류"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr "루프 장치 자동소거 비활성화 중 오류"
 
@@ -3905,6 +3920,42 @@ msgstr "하드 디스크가 곧 실패할 것 같습니다."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "검사"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "마운트"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "마운트 해제"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "스왑 활성화"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "스왑 비활성화"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "풀기"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "잠금"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "파티션 만들기"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "파티션 삭제"
+
+#~ msgctxt "Accessibility label for toolbutton-volume-menu"
+#~ msgid "Menu"
+#~ msgstr "메뉴"
 
 # 커맨드 설명, 문장으로 번역
 #~ msgid "Parent window XID for the format dialog"

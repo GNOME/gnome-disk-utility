@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-05-01 18:33+0000\n"
-"PO-Revision-Date: 2021-09-06 12:11+0200\n"
+"POT-Creation-Date: 2021-09-06 10:12+0000\n"
+"PO-Revision-Date: 2021-09-09 16:28+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2016-09-22 19:56+0000\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -48,6 +48,23 @@ msgid ""
 msgstr ""
 "Uobičajena lokacija za dijalog Stvaranja/Vraćanja slike diska. Ako nije "
 "zadano ~/Dokumenti mapa će se koristiti."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr "Broj uzoraka koji će testiranje uključiti u test čitanja/zapisivanja."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "Broj MiB (1048576 bajta) za čitanje/pisanje za svaki uzorak."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "Za omogućavanje ili onemogućavanje testa zapisivanja."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "Broj uzoraka koji će testiranje učiniti za test brzine pristupa."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -81,7 +98,7 @@ msgstr "Jednostavan način upravljanja vašim diskovima"
 msgid "The GNOME Project"
 msgstr "GNOME projekt"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Diskovi"
@@ -112,8 +129,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Odaberi sliku(e) za montiranje"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "_Odustani"
 
@@ -1089,7 +1106,7 @@ msgid "Updates"
 msgstr "Nadopuna"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Procjena"
 
@@ -1441,31 +1458,31 @@ msgstr "S_ljedeće"
 msgid "Error formatting volume"
 msgstr "Greška formatiranja uređaja"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "Greška stvaranja particije"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "Stvori particiju"
 
-#: src/disks/gducreateformatdialog.c:459
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "Formatiraj uređaj"
 
-#: src/disks/gducreateformatdialog.c:462
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "Prilagođeno formatiranje"
 
-#: src/disks/gducreateformatdialog.c:465
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "Postavi lozinku"
 
-#: src/disks/gducreateformatdialog.c:468
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "Potvrdi pojedinosti"
 
-#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "_Formatiraj"
 
@@ -2014,7 +2031,7 @@ msgstr "Postavi mogućnost otključavanja"
 msgid "Volumes Grid"
 msgstr "Mreža uređaja"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "Nema medija"
 
@@ -2056,30 +2073,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Slobodan prostor"
 
-#: src/disks/gduwindow.c:632
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr "Greška brisanja virtualnog uređaja"
 
-#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "Greška priključivanja slike diska"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "Odaberi sliku diska za priključivanje"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "_Priključi"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:816
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
 msgstr "Postavi _samo-za-čitanje virtualni uređaj"
 
-#: src/disks/gduwindow.c:817
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2088,7 +2105,7 @@ msgstr ""
 "ako ne želite mijenjati nepromjenjivu datoteku"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1663
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (samo-za-čitanje)"
@@ -2097,7 +2114,7 @@ msgstr "%s (samo-za-čitanje)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1701
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2106,7 +2123,7 @@ msgstr "%s preostalo (%s/sek)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1709
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2117,7 +2134,7 @@ msgstr "%s preostalo"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1724
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s od %s — %s"
@@ -2126,17 +2143,17 @@ msgstr "%s od %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "Blok uređaja je prazan"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1952
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2145,11 +2162,11 @@ msgstr "Nepoznato (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2111
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "Povezano na drugo mjesto"
 
-#: src/disks/gduwindow.c:2256
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr "Virtualni uređaj prazan"
 
@@ -2159,61 +2176,61 @@ msgstr "Virtualni uređaj prazan"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2473
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s slobodno (%.1f%% iskorišteno)"
 
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Nepoznata"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2541
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Korijenski datotečni sustav"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2549
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Montirano na %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2555
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Nije montiran"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2578
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktivno"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Nije aktivno"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2599
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Otključano"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2605
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Zaključano"
 
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Proširena particija"
@@ -2222,45 +2239,45 @@ msgstr "Proširena particija"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2639
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2759
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "Nedodjeljeni prostor"
 
-#: src/disks/gduwindow.c:2960
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "Greška popravljanja datotečnog sustava"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "Popravljanje uspješno"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "Popravljanje neuspješno"
 
-#: src/disks/gduwindow.c:2990
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečni sustav %s na %s je popravljen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:2996
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečni sustav %s na %s se ne može popraviti."
 
-#: src/disks/gduwindow.c:3049
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "Potvrdi popravljanje"
 
-#: src/disks/gduwindow.c:3052
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2272,34 +2289,38 @@ msgstr ""
 "koristiti forenzičke alate za obnovu izgubljenih datoteka. Ovisno o količini "
 "podataka na particiji ova radnja može potrajati dulje vrijeme."
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "Greška preuzimanja vlasništva datotečnog sustava"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "Greška provjere datotečnog sustava"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Datotečni sustav je netaknut"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Datotečni sustav je oštećen"
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sustav %s na %s je neoštećen."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3116
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sustav %s na %s je potrebno popraviti."
 
-#: src/disks/gduwindow.c:3167
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Potvrdi provjeru"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2307,72 +2328,72 @@ msgstr ""
 "Provjera može potrajati dulje vrijeme, osobito ako particija sadrži mnogo "
 "podataka."
 
-#: src/disks/gduwindow.c:3422
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Greška se dogodila pri pokušaju stavljanja diska u način pripravnosti"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Greška se dogodila pri pokušaju buđenja diska iz načina pripravnosti"
 
-#: src/disks/gduwindow.c:3515
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "Greška isključivanja diska"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3567
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sigurno želite isključiti disk?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3569
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Ova radnja će pripremiti sustav na disku za isključivanje i uklanjanje."
 
-#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Isključi"
 
-#: src/disks/gduwindow.c:3653
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "Greška montiranja datotečnog sustava"
 
-#: src/disks/gduwindow.c:3738
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "Greška brisanja particije"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "Sigurno želite obrisati particiju?"
 
-#: src/disks/gduwindow.c:3776
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Svi podaci na particiji će biti izgubljeni"
 
-#: src/disks/gduwindow.c:3777
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_Obriši"
 
-#: src/disks/gduwindow.c:3808
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "Greška izbacivanja medija"
 
-#: src/disks/gduwindow.c:3891
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "Greška pokretanja swapa"
 
-#: src/disks/gduwindow.c:3928
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "Greška zaustavljanja swapa"
 
-#: src/disks/gduwindow.c:3970
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "Greška postavljanja 'autoclear' oznake"
 
-#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "Greška prekidanja zadatka"
 
@@ -2615,7 +2636,7 @@ msgstr "Upozorenje: Svi podaci na uređaju će biti izgubljeni"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Potvrdi pojedinosti za trenutni uređaj prije nastavka."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Uređaj"
 
@@ -2628,7 +2649,7 @@ msgid "Used"
 msgstr "Iskorišteno"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "Lokacija"
 
@@ -2928,174 +2949,133 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Za_pisuj predmemoriju"
 
-#: src/disks/ui/disks.ui:93
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "Izbornik aplikacije"
+
+#: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
 msgstr "Idi natrag na glavni prikaz"
 
-#: src/disks/ui/disks.ui:105
+#: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "Postavke uređaja"
 
-#: src/disks/ui/disks.ui:120
+#: src/disks/ui/disks.ui:121
 msgid "Power off this disk"
 msgstr "Isključi ovaj disk"
 
-#: src/disks/ui/disks.ui:135
+#: src/disks/ui/disks.ui:136
 msgid "Eject this disk"
 msgstr "Izbaci ovaj disk"
 
-#: src/disks/ui/disks.ui:150
+#: src/disks/ui/disks.ui:151
 msgid "Detach this loop device"
 msgstr "Odspoji ovaj virtualni uređaj"
 
-#: src/disks/ui/disks.ui:173
+#: src/disks/ui/disks.ui:174
 msgid "No Device Selected"
 msgstr "Nema odabranih uređaja"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:175
 msgid "Select a device to manage."
 msgstr "Odaberite uređaj za upravljanje."
 
-#: src/disks/ui/disks.ui:209
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "Model"
 
-#: src/disks/ui/disks.ui:238
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "Serijski broj"
 
-#: src/disks/ui/disks.ui:267
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr "Svjetski naziv"
 
-#: src/disks/ui/disks.ui:325
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "Medij"
 
-#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Zadatak"
 
-#: src/disks/ui/disks.ui:476
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Naziv"
 
-#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Veličina"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Auto-brisanje"
 
-#: src/disks/ui/disks.ui:552
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Odspoji virtualni uređaj nakon radnje odmontiranja"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:566
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Sigurnosno kopiram datoteku"
 
-#: src/disks/ui/disks.ui:595
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Particioniranje"
 
-#: src/disks/ui/disks.ui:626
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Uređaji"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Montiraj odabranu particiju"
 
-#: src/disks/ui/disks.ui:669
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "Montiraj"
-
-#: src/disks/ui/disks.ui:682
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Odmontiraj odabranu particiju"
 
-#: src/disks/ui/disks.ui:683
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "Odmontiraj"
-
-#: src/disks/ui/disks.ui:696
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Aktiviraj odabranu swap particiju"
 
-#: src/disks/ui/disks.ui:697
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "Aktiviraj swap"
-
-#: src/disks/ui/disks.ui:710
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Deaktiviraj odabranu swap particiju"
 
-#: src/disks/ui/disks.ui:711
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "Deaktiviraj swap"
-
-#: src/disks/ui/disks.ui:724
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Otključaj odabranu šifriranu particiju"
 
-#: src/disks/ui/disks.ui:725
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "Otključaj"
-
-#: src/disks/ui/disks.ui:738
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Zaključaj odabranu šifriranu particiju"
 
-#: src/disks/ui/disks.ui:739
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "Zaključaj"
-
-#: src/disks/ui/disks.ui:752
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Stvori particiju u nedodjeljenome prostoru"
 
-#: src/disks/ui/disks.ui:753
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "Stvori particiju"
-
-#: src/disks/ui/disks.ui:766
-msgid "Delete selected partition"
-msgstr "Obriši odabranu particiju"
-
-#: src/disks/ui/disks.ui:767
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "Obriši particiju"
-
-#: src/disks/ui/disks.ui:780
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Dodatne mogućnosti particije"
 
-#: src/disks/ui/disks.ui:781
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr "Izbornik"
+#: src/disks/ui/disks.ui:821
+msgid "Delete selected partition"
+msgstr "Obriši odabranu particiju"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:834
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Sadržaj"
 
-#: src/disks/ui/disks.ui:892
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:921
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Vrsta particije"
 
@@ -3538,75 +3518,85 @@ msgstr "Općenito"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "Stvori novu praznu sliku diska"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "Priključi postojeću sliku diska"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr "Ukloni odabir trenutnog diska"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "Priručnik"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "Otvori izbornik aplikacija"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Prečaci tipkovnice"
 
-#: src/disks/ui/shortcuts.ui:52
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Zatvori"
 
-#: src/disks/ui/shortcuts.ui:61
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "Diskovi"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "Stvori novu praznu sliku diska"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "Priključi postojeću sliku diska"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Ukloni odabir trenutnog diska"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Uređaj"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Otvori izbornik uređaja"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Formatiraj uređaj"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Vrati sliku na disk"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "SMART podaci"
 
-#: src/disks/ui/shortcuts.ui:93
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Postavke uređaja"
 
-#: src/disks/ui/shortcuts.ui:102
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Particija"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Otvori izbornik particije"
 
-#: src/disks/ui/shortcuts.ui:113
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Formatiraj odabrani uređaj"
@@ -3674,6 +3664,28 @@ msgstr "Prošireno"
 #: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
 msgstr "Prijenos"
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "Potvrda preuzimanja vlasništva"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"Promjena vlasništva datotečnog sustava u vlasništvo vašeg korisnika i grupe. "
+"Rekurzivan način mijenja vlasništvo svih poddirektorija i datoteka, to može "
+"prouzročiti destruktivne rezultate kada datotečni sustav sadrži strukturu "
+"direktorija gdje vlasništvo pripada drugom korisniku (npr. sigurnosno "
+"kopiranje sustava ili datotečni sustav kojemu pristupa više korisnika)."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "Omogući _rekurzivan način"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3765,23 +3777,27 @@ msgstr "Provjeri _datotečni sustav…"
 msgid "Rep_air Filesystem…"
 msgstr "Popravi _datotečni sustav…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "_Pruzmi vlasništvo…"
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "Uredi _točke montiranja…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "Uredi mogućnosti _šifriranja…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "_Stvori sliku particije…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "_Vrati sliku particije…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "_Testiraj particiju…"
 
@@ -3915,20 +3931,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Obuhvaćeni uređaji"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "Greška odmontiranja datotečnog sustava"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "Greška zaključavanja uređaja"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr "Greška onemogućavanja virtualnog uređaja"
 
@@ -3949,6 +3965,42 @@ msgstr "Čvrsti disk će se najvjerojatnije uskoro pokvariti."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Istraži"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "Montiraj"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "Odmontiraj"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "Aktiviraj swap"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "Deaktiviraj swap"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "Otključaj"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "Zaključaj"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "Stvori particiju"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "Obriši particiju"
+
+#~ msgctxt "Accessibility label for toolbutton-volume-menu"
+#~ msgid "Menu"
+#~ msgstr "Izbornik"
 
 #~ msgid "Parent window XID for the format dialog"
 #~ msgstr "Sadržajni prozor XID za vrstu dijaloga"

@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-07-14 09:25+0000\n"
-"PO-Revision-Date: 2021-07-15 20:25+0300\n"
+"POT-Creation-Date: 2021-09-06 10:12+0000\n"
+"PO-Revision-Date: 2021-09-09 22:13+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -58,6 +58,23 @@ msgid ""
 msgstr ""
 "Disk görüntüsü Oluşturma/Geri Yükleme iletişim pencereleri için öntanımlı "
 "konum. Boş bırakılırsa ~/Belgeler klasörü kullanılır."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr "Kıyaslamanın okuma/yazma sınaması için içereceği örnek sayısı."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "Her örnek için yazılacak/okunacak MiB (1048576 bytes) sayısı."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "Yazım sınamasını etkinleştir veya devre dışı bırak."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr "Kıyaslamanın erişim zamanı sınaması için yapacağı örnek sayısı."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -2271,62 +2288,62 @@ msgstr ""
 "verinizi yedeklemenizi öneririz. Bu işlem veri tutarına bağlı olarak uzun "
 "zaman alabilir."
 
-#: src/disks/gduwindow.c:3092
+#: src/disks/gduwindow.c:3110
 msgid "Error while taking filesystem ownership"
 msgstr "Dosya sistemi sahipliği alınırken hata"
 
-#: src/disks/gduwindow.c:3133
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "Dosya sistemi denetlenirken hata"
 
-#: src/disks/gduwindow.c:3160
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Dosya sistemi sağlam"
 
-#: src/disks/gduwindow.c:3160
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Dosya sistemi hasarlı"
 
-#: src/disks/gduwindow.c:3163
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s üzerindeki %1$s dosya sistemi sağlamdır."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3169
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarım gerektiriyor."
 
-#: src/disks/gduwindow.c:3220
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Denetimi Onayla"
 
-#: src/disks/gduwindow.c:3223
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Bölüm çok fazla veri içeriyorsa kontrol işlemi uzun sürebilir."
 
-#: src/disks/gduwindow.c:3503
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Sürücüyü bekleme kipine alırken hata oluştu"
 
-#: src/disks/gduwindow.c:3550
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Sürücüyü bekleme kipinden uyandırırken hata oluştu"
 
-#: src/disks/gduwindow.c:3596
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "Sürücü kapatılırken hata"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3648
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "Sürücülerin gücünü kapatmak istediğinizden emin misiniz?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3650
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2334,47 +2351,47 @@ msgstr ""
 "Bu işlem aşağıdaki sürücülerin kapatılması ve kaldırılması için sistemi "
 "hazırlar."
 
-#: src/disks/gduwindow.c:3654 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "G_ücü Kapat"
 
-#: src/disks/gduwindow.c:3734
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "Dosya sistemi bağlanırken hata"
 
-#: src/disks/gduwindow.c:3819
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "Bölüm silinirken hata"
 
-#: src/disks/gduwindow.c:3856
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "Bölümü silmek istediğinizden emin misiniz?"
 
-#: src/disks/gduwindow.c:3857
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Bölümdeki tüm veri kaybolacak"
 
-#: src/disks/gduwindow.c:3858
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_Sil"
 
-#: src/disks/gduwindow.c:3889
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "Ortam çıkarmada hata"
 
-#: src/disks/gduwindow.c:3972
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "Takas bölümü başlatmada hata"
 
-#: src/disks/gduwindow.c:4009
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "Takas bölümü durdurmada hata"
 
-#: src/disks/gduwindow.c:4051
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "Otomatik temizle (autoclear) bayrağı ayarlanırken hata"
 
-#: src/disks/gduwindow.c:4104 src/disks/gduwindow.c:4168
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "İş iptal edilirken hata"
 
@@ -2617,7 +2634,7 @@ msgstr "Uyarı: bölümdeki tüm veri kaybolacak"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Devam etmeden önce geçerli birimin ayrıntılarını onaylayın."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:903
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Aygıt"
 
@@ -2978,85 +2995,85 @@ msgstr "Dünya Genelindeki Adı (WWN)"
 msgid "Media"
 msgstr "Ortam"
 
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:991
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "İş"
 
-#: src/disks/ui/disks.ui:477
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Ad"
 
-#: src/disks/ui/disks.ui:506 src/disks/ui/disks.ui:845
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Boyut"
 
-#: src/disks/ui/disks.ui:535
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Otomatik temizle"
 
-#: src/disks/ui/disks.ui:553
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Bağı kaldırma eyleminden sonra döngü aygıtını ayır"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:567
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Yedek Dosyası"
 
-#: src/disks/ui/disks.ui:596
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Bölümlendirme"
 
-#: src/disks/ui/disks.ui:627
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Birimler"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Seçilen bölümü bağla"
 
-#: src/disks/ui/disks.ui:685
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Seçilen bölümün bağını kaldır"
 
-#: src/disks/ui/disks.ui:702
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Seçilen takas bölümünü aktifleştir"
 
-#: src/disks/ui/disks.ui:719
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Seçilen takas bölümünü pasifleştir"
 
-#: src/disks/ui/disks.ui:736
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Seçilen şifreli bölümün kilidini aç"
 
-#: src/disks/ui/disks.ui:753
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Seçilen şifreli bölümü kilitle"
 
-#: src/disks/ui/disks.ui:770
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Ayrılmamış alanda yeni bölüm oluştur"
 
-#: src/disks/ui/disks.ui:787
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Ek bölümleme seçenekleri"
 
-#: src/disks/ui/disks.ui:814
+#: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
 msgstr "Seçilen bölümü sil"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:874
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "İçerik"
 
-#: src/disks/ui/disks.ui:932
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:961
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Bölüm Türü"
 
@@ -3639,6 +3656,28 @@ msgstr "Genişletilmiş"
 msgid "Conveyance"
 msgstr "Nakil"
 
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "Sahiplik Alımını Onayla"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"Dosya sisteminin sahipliğini kullanıcınız ve kümesiyle değiştirir. "
+"Özyinelemeli kip tüm alt dizin ve dosyaların sahipliğini değiştirir; bu, "
+"sahipliğin başka kullanıcılara ait olduğu (örn. sistem yedeği veya çoklu "
+"kullanıcılarca erişilen dosya sistemi) dizin yapısını içeren dosya "
+"sistemlerinde yıkıcı sonuçlara neden olabilir."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "Öz_yinelemeli kipi etkinleştir"
+
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
 msgstr "Kilit açmak için parola gir"
@@ -3729,8 +3768,8 @@ msgid "Rep_air Filesystem…"
 msgstr "Dosy_a Sistemini Onar…"
 
 #: src/disks/ui/volume-menu.ui:38
-msgid "_Take Ownership"
-msgstr "Sahipliği _Al"
+msgid "_Take Ownership…"
+msgstr "Sahipliği _Al…"
 
 #: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"

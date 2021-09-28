@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-03-21 20:32+0000\n"
-"PO-Revision-Date: 2021-03-25 14:26+0700\n"
+"POT-Creation-Date: 2021-09-20 19:09+0000\n"
+"PO-Revision-Date: 2021-09-28 14:17+0700\n"
 "Last-Translator: Trần Ngọc Quân <vnwildman@gmail.com>\n"
 "Language-Team: Vietnamese <gnome-vi-list@gnome.org>\n"
 "Language: vi\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"X-Generator: Gtranslator 3.38.0\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
 msgid "Disk Image Mounter"
@@ -50,6 +50,25 @@ msgid ""
 msgstr ""
 "Vị trí mặc định cho hộp thoại Tạo/Phục hồi ảnh đĩa. Nếu để trống thì dùng "
 "thư mục~/Documents."
+
+#: data/org.gnome.Disks.gschema.xml:13
+msgid ""
+"The number of samples the benchmark will include for the read/write test."
+msgstr "Số lượng mẫu đo điểm sẽ bao gồm cho bài kiểm tra đọc/ghi."
+
+#: data/org.gnome.Disks.gschema.xml:17
+msgid "The number of MiB (1048576 bytes) to read/write for each sample."
+msgstr "Số lượng MiB (1048576 byte) để đọc/ghi cho mỗi mẫu."
+
+#: data/org.gnome.Disks.gschema.xml:21
+msgid "To enable or disable the write test."
+msgstr "Để bật hoặc tắt kiểm tra ghi."
+
+#: data/org.gnome.Disks.gschema.xml:25
+msgid "The number of samples the benchmark will do for the access time test."
+msgstr ""
+"Số lượng mẫu mà đo điểm sẽ làm thực hiện cho cho bài kiểm tra thời gian truy "
+"cập."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 msgid "GNOME Disks"
@@ -83,7 +102,7 @@ msgstr "Cách dễ dàng để quản lý đĩa của bạn"
 msgid "The GNOME Project"
 msgstr "Dự án GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1098
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
 #: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Đĩa"
@@ -115,8 +134,8 @@ msgid "Select Disk Image(s) to Mount"
 msgstr "Chọn ảnh đĩa cần gắn"
 
 #: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:470
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:808
+#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
+#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
 msgid "_Cancel"
 msgstr "T_hôi"
 
@@ -442,7 +461,7 @@ msgstr "Số lần di chuyển vào vùng hạ đầu đọc"
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:163
+#: src/disks/ui/smart-dialog.ui:162
 msgid "Temperature"
 msgstr "Nhiệt độ"
 
@@ -653,13 +672,13 @@ msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
-"Dịch đĩa có thể là kết quả của chấn động mạnh trong kho, do bị rơi, hoặc do "
-"nhiệt độ"
+"Dịch đĩa có thể là kết quả của chấn động mạnh trong phần chứa, do bị rơi, "
+"hoặc do nhiệt độ"
 
 #: src/disks/gduatasmartdialog.c:455
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
-msgstr "Số lỗi gây ra bởi va chạm được phát hiện bởi phần tử cảm ứng"
+msgstr "Số lỗi gây ra bởi va chạm được phát hiện bởi phần tử cảm biến va chạm"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1016,12 +1035,12 @@ msgstr "Ngoại tuyến"
 #. Translators: XXX
 #: src/disks/gduatasmartdialog.c:1237
 msgid "Threshold exceeded"
-msgstr "Ngưỡng bị vượt quá"
+msgstr "Đã vượt ngưỡng"
 
 #. Translators: XXX
 #: src/disks/gduatasmartdialog.c:1242
 msgid "Threshold not exceeded"
-msgstr "Ngưỡng chưa bị vượt quá"
+msgstr "Chưa vượt ngưỡng"
 
 #: src/disks/gduatasmartdialog.c:1318
 msgid "Error refreshing SMART data"
@@ -1081,7 +1100,7 @@ msgid "Updates"
 msgstr "Cập nhật"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:354
+#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Đánh giá"
 
@@ -1432,31 +1451,31 @@ msgstr "_Kế sau"
 msgid "Error formatting volume"
 msgstr "Lỗi định dạng phân vùng"
 
-#: src/disks/gducreateformatdialog.c:288
+#: src/disks/gducreateformatdialog.c:292
 msgid "Error creating partition"
 msgstr "Gặp lỗi khi tạo phân vùng"
 
-#: src/disks/gducreateformatdialog.c:450
+#: src/disks/gducreateformatdialog.c:454
 msgid "Create Partition"
 msgstr "Tạo phân vùng"
 
-#: src/disks/gducreateformatdialog.c:459
+#: src/disks/gducreateformatdialog.c:463
 msgid "Format Volume"
 msgstr "Định dạng phân vùng"
 
-#: src/disks/gducreateformatdialog.c:462
+#: src/disks/gducreateformatdialog.c:466
 msgid "Custom Format"
 msgstr "Định dạng Tự chọn"
 
-#: src/disks/gducreateformatdialog.c:465
+#: src/disks/gducreateformatdialog.c:469
 msgid "Set Password"
 msgstr "Đặt mật khẩu"
 
-#: src/disks/gducreateformatdialog.c:468
+#: src/disks/gducreateformatdialog.c:472
 msgid "Confirm Details"
 msgstr "Xác nhận chi tiết"
 
-#: src/disks/gducreateformatdialog.c:471 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
 msgid "_Format"
 msgstr "Đị_nh dạng"
 
@@ -1565,7 +1584,7 @@ msgstr "Nhà sản xuất định nghĩa"
 #: src/disks/gdudisksettingsdialog.c:311
 msgctxt "standby-value"
 msgid "Reserved"
-msgstr "Dành riêng"
+msgstr "Chưa dùng"
 
 #: src/disks/gdudisksettingsdialog.c:332
 msgctxt "apm-level"
@@ -1748,8 +1767,8 @@ msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
 msgstr ""
-"All data on the disk will be overwritten and will likely not be recoverable "
-"by data recovery services"
+"Tất cả dữ liệu trên đĩa sẽ được ghi đè và có thể sẽ không thể phục hồi bởi "
+"các dịch vụ phục hồi dữ liệu"
 
 #: src/disks/gduformatdiskdialog.c:436
 msgid ""
@@ -1941,34 +1960,34 @@ msgstr "Ảnh đĩa là %s lớn hơn thiết bị đích"
 msgid "Error restoring disk image"
 msgstr "Gặp lỗi khi phục hồi ảnh đĩa"
 
-#: src/disks/gdurestorediskimagedialog.c:923
+#: src/disks/gdurestorediskimagedialog.c:930
 msgid "Error opening file for reading"
 msgstr "Gặp lỗi khi mở tập tin để đọc"
 
-#: src/disks/gdurestorediskimagedialog.c:938
+#: src/disks/gdurestorediskimagedialog.c:945
 msgid "Error determining size of file"
 msgstr "Gặp lỗi khi xác định kích thước tập tin"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:966
+#: src/disks/gdurestorediskimagedialog.c:973
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Chép ảnh đĩa lên thiết bị"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:972
+#: src/disks/gdurestorediskimagedialog.c:979
 msgid "Restoring Disk Image"
 msgstr "Đang phục hồi từ ảnh đĩa"
 
-#: src/disks/gdurestorediskimagedialog.c:1028
+#: src/disks/gdurestorediskimagedialog.c:1035
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Bạn có chắc muốn ghi ảnh đĩa vào thiết bị?"
 
-#: src/disks/gdurestorediskimagedialog.c:1029
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "All existing data will be lost"
 msgstr "Mọi dữ liệu hiện có sẽ bị mất"
 
-#: src/disks/gdurestorediskimagedialog.c:1030
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "_Restore"
 msgstr "_Phục hồi"
 
@@ -1997,14 +2016,14 @@ msgstr "Đặt các tùy chọn để mở khóa"
 msgid "Volumes Grid"
 msgstr "Lưới Phân vùng"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2020
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
 msgid "No Media"
 msgstr "Không có đĩa"
 
 #: src/disks/gduvolumegrid.c:1666
 msgctxt "volume-grid"
 msgid "Filesystem"
-msgstr "Hệ tập tin"
+msgstr "Hệ thống tập tin"
 
 #: src/disks/gduvolumegrid.c:1676
 msgctxt "volume-grid"
@@ -2039,30 +2058,30 @@ msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Vùng trống"
 
-#: src/disks/gduwindow.c:632
+#: src/disks/gduwindow.c:642
 msgid "Error deleting loop device"
 msgstr "Gặp lỗi khi xóa thiết bị lặp"
 
-#: src/disks/gduwindow.c:732 src/disks/gduwindow.c:775
+#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
 msgid "Error attaching disk image"
 msgstr "Gặp lỗi khi gắn ảnh đĩa"
 
-#: src/disks/gduwindow.c:805
+#: src/disks/gduwindow.c:815
 msgid "Select Disk Image to Attach"
 msgstr "Chọn ảnh đĩa cần gắn"
 
-#: src/disks/gduwindow.c:809
+#: src/disks/gduwindow.c:819
 msgid "_Attach"
 msgstr "_Gắn"
 
 #. set file types
 #. allow_compressed
 #. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:816
+#: src/disks/gduwindow.c:826
 msgid "Set up _read-only loop device"
-msgstr "Cài đặt thiết bị lặp _chỉ đọc"
+msgstr "Cài đặt thiết bị vòng lặp _chỉ đọc"
 
-#: src/disks/gduwindow.c:817
+#: src/disks/gduwindow.c:827
 msgid ""
 "If checked, the loop device will be read-only. This is useful if you don’t "
 "want the underlying file to be modified"
@@ -2071,7 +2090,7 @@ msgstr ""
 "nếu bạn muốn tập tin không bị sửa đổi khi chạy"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1663
+#: src/disks/gduwindow.c:1673
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Chỉ-đọc)"
@@ -2080,7 +2099,7 @@ msgstr "%s (Chỉ-đọc)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1701
+#: src/disks/gduwindow.c:1711
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2089,7 +2108,7 @@ msgstr "còn %s (%s/giây)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1709
+#: src/disks/gduwindow.c:1719
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2100,7 +2119,7 @@ msgstr "Còn lại %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1724
+#: src/disks/gduwindow.c:1734
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s trên %s – %s"
@@ -2109,17 +2128,17 @@ msgstr "%s trên %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1849
+#: src/disks/gduwindow.c:1859
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1929 src/disks/gduwindow.c:2312
+#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
 msgid "Block device is empty"
 msgstr "Thiết bị khối là trống rỗng"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1952
+#: src/disks/gduwindow.c:1962
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2128,11 +2147,11 @@ msgstr "Không rõ (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2111
+#: src/disks/gduwindow.c:2121
 msgid "Connected to another seat"
 msgstr "Đã kết nối đến chỗ khác"
 
-#: src/disks/gduwindow.c:2256
+#: src/disks/gduwindow.c:2266
 msgid "Loop device is empty"
 msgstr "Thiết bị vòng ngược là trống rỗng"
 
@@ -2142,61 +2161,61 @@ msgstr "Thiết bị vòng ngược là trống rỗng"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2473
+#: src/disks/gduwindow.c:2483
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s trống (đã đầy %.1f%%)"
 
-#: src/disks/gduwindow.c:2503
+#: src/disks/gduwindow.c:2513
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Không biết"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2541
+#: src/disks/gduwindow.c:2551
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Gốc của hệ thống tập tin"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2549
+#: src/disks/gduwindow.c:2559
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Gắn vào %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2555
+#: src/disks/gduwindow.c:2565
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Chưa gắn"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2578
+#: src/disks/gduwindow.c:2588
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Hoạt động"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2584
+#: src/disks/gduwindow.c:2594
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Không hoạt động"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2599
+#: src/disks/gduwindow.c:2609
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Đã mở khóa"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2605
+#: src/disks/gduwindow.c:2615
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Bị khóa"
 
-#: src/disks/gduwindow.c:2619
+#: src/disks/gduwindow.c:2629
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Phân vùng mở rộng"
@@ -2205,45 +2224,45 @@ msgstr "Phân vùng mở rộng"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2639
+#: src/disks/gduwindow.c:2649
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2759
+#: src/disks/gduwindow.c:2772
 msgid "Unallocated Space"
 msgstr "Vùng chưa cấp phát"
 
-#: src/disks/gduwindow.c:2960
+#: src/disks/gduwindow.c:2973
 msgid "Error while repairing filesystem"
 msgstr "Gặp lỗi khi sửa chữa hệ thống tập tin"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair successful"
 msgstr "Sửa chữa thành công"
 
-#: src/disks/gduwindow.c:2987
+#: src/disks/gduwindow.c:3000
 msgid "Repair failed"
 msgstr "Sửa chữa không thành công"
 
-#: src/disks/gduwindow.c:2990
+#: src/disks/gduwindow.c:3003
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Hệ thống tập tin %s trên %s đã được sửa chữa."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:2996
+#: src/disks/gduwindow.c:3009
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Hệ thống tập tin %s trên %s không sửa chữa được."
 
-#: src/disks/gduwindow.c:3049
+#: src/disks/gduwindow.c:3062
 msgid "Confirm Repair"
 msgstr "Xác nhận sửa chữa"
 
-#: src/disks/gduwindow.c:3052
+#: src/disks/gduwindow.c:3065
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2255,34 +2274,38 @@ msgstr ""
 "công cụ khôi phục đặc biệt cái mà khôi phục lại các tập tin đã mất. Thao tác "
 "này có thể mất nhiều thời gian, đặc biệt là phân vùng chứa nhiều dữ liệu."
 
-#: src/disks/gduwindow.c:3080
+#: src/disks/gduwindow.c:3110
+msgid "Error while taking filesystem ownership"
+msgstr "Gặp lỗi khi lấy chủ sở hữu hệ thống tập tin"
+
+#: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
 msgstr "Gặp lỗi khi kiểm tra hệ thống tập tin"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem intact"
 msgstr "Không động chạm đến hệ thống tập tin"
 
-#: src/disks/gduwindow.c:3107
+#: src/disks/gduwindow.c:3201
 msgid "Filesystem damaged"
 msgstr "Hệ thống tập tin bị hỏng"
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3204
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Hệ thống tập tin %s trên %s bị hỏng."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3116
+#: src/disks/gduwindow.c:3210
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Hệ thống tập tin %s trên %s cần được sửa chữa."
 
-#: src/disks/gduwindow.c:3167
+#: src/disks/gduwindow.c:3261
 msgid "Confirm Check"
 msgstr "Xác nhận kiểm tra"
 
-#: src/disks/gduwindow.c:3170
+#: src/disks/gduwindow.c:3264
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2290,25 +2313,25 @@ msgstr ""
 "Việc kiểm tra có thể mất nhiều thời gian, đặc biệt nếu phân vùng chứa nhiều "
 "dữ liệu."
 
-#: src/disks/gduwindow.c:3422
+#: src/disks/gduwindow.c:3544
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Đã có lỗi phát sinh khi đặt đĩa vào chế độ nghỉ"
 
-#: src/disks/gduwindow.c:3469
+#: src/disks/gduwindow.c:3591
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Đã có lỗi phát sinh khi thử bật đĩa từ chế độ nghỉ"
 
-#: src/disks/gduwindow.c:3515
+#: src/disks/gduwindow.c:3637
 msgid "Error powering off drive"
 msgstr "Gặp lỗi khi tắt đĩa"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3567
+#: src/disks/gduwindow.c:3689
 msgid "Are you sure you want to power off the drives?"
 msgstr "Bạn có muốn tắt đĩa không?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3569
+#: src/disks/gduwindow.c:3691
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2316,47 +2339,47 @@ msgstr ""
 "Thao tác này sẽ chuẩn bị hệ thống cho đĩa sau đây để thực hiện tắt điện và "
 "gỡ bỏ."
 
-#: src/disks/gduwindow.c:3573 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
-msgstr "_Tắt"
+msgstr "_Tắt điện"
 
-#: src/disks/gduwindow.c:3653
+#: src/disks/gduwindow.c:3775
 msgid "Error mounting filesystem"
 msgstr "Gặp lỗi khi gắn kết hệ tập tin"
 
-#: src/disks/gduwindow.c:3738
+#: src/disks/gduwindow.c:3860
 msgid "Error deleting partition"
 msgstr "Gặp lỗi khi xóa phân vùng"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3897
 msgid "Are you sure you want to delete the partition?"
 msgstr "Bạn có chắc chắn muốn xóa phân vùng?"
 
-#: src/disks/gduwindow.c:3776
+#: src/disks/gduwindow.c:3898
 msgid "All data on the partition will be lost"
 msgstr "Mọi dữ liệu trên phân vùng sẽ bị mất"
 
-#: src/disks/gduwindow.c:3777
+#: src/disks/gduwindow.c:3899
 msgid "_Delete"
 msgstr "_Xóa"
 
-#: src/disks/gduwindow.c:3808
+#: src/disks/gduwindow.c:3930
 msgid "Error ejecting media"
 msgstr "Gặp lỗi khi đẩy vật chứa ra"
 
-#: src/disks/gduwindow.c:3891
+#: src/disks/gduwindow.c:4013
 msgid "Error starting swap"
 msgstr "Gặp lỗi khi bật bộ nhớ tráo đổi"
 
-#: src/disks/gduwindow.c:3928
+#: src/disks/gduwindow.c:4050
 msgid "Error stopping swap"
 msgstr "Gặp lỗi khi dừng hoán đổi"
 
-#: src/disks/gduwindow.c:3970
+#: src/disks/gduwindow.c:4092
 msgid "Error setting autoclear flag"
 msgstr "Gặp lỗi khi đặt cờ tự xóa"
 
-#: src/disks/gduwindow.c:4023 src/disks/gduwindow.c:4087
+#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
 msgid "Error canceling job"
 msgstr "Gặp lỗi khi hủy công việc"
 
@@ -2417,7 +2440,7 @@ msgstr "_Giới thiệu Đĩa"
 
 #: src/disks/ui/benchmark-dialog.ui:7
 msgid "Benchmark"
-msgstr "Đo kiểm"
+msgstr "Đo kiểm tốc độ"
 
 #: src/disks/ui/benchmark-dialog.ui:23
 msgid "_Start Benchmark…"
@@ -2467,7 +2490,7 @@ msgid ""
 msgstr ""
 "Đo tốc độ truyền trên nhiều phần khác nhau của thiết bị cũng như đo thời "
 "gian di chuyển từ một vùng ngẫu nhiên sang một vùng khác. Vui lòng sao lưu "
-"dữ liệu quan trọng trức khi tiến hành đo đạc ghi."
+"dữ liệu quan trọng trước khi tiến hành đo tốc độ ghi."
 
 #: src/disks/ui/benchmark-dialog.ui:356
 msgid "Transfer Rate"
@@ -2496,9 +2519,10 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use)."
 msgstr ""
-"Đo kiểm tốc độ ghi của một đĩa yêu cầu truy cập độc quyền đến đĩa (ví dụ như "
-"đĩa hay các phân vùng không thể đang được gắn hay đang dùng) và dính líu đến "
-"đọc dữ liệu rồi ghi trở lại. Kết quả là nội dung của đĩa không thay đổi gì.\n"
+"Đo kiểm tốc độ ghi của một đĩa yêu cầu truy cập đặc quyền đến đĩa (ví dụ như "
+"đĩa hay các phân vùng của nó không thể đang được gắn hay đang dùng) và dính "
+"líu đến đọc dữ liệu rồi ghi trở lại. Kết quả là nội dung của đĩa không thay "
+"đổi gì.\n"
 "\n"
 "Nếu không kiểm, phần ghi của cuộc đo kiểm sẽ không được thực hiện như vậy "
 "thì không cần truy cập độc quyền (ví dụ như đĩa hay thiết bị có thể đang "
@@ -2595,7 +2619,7 @@ msgstr "Cảnh báo: mọi dữ liệu trên phân vùng sẽ bị mất"
 msgid "Confirm the details of the current volume before proceeding."
 msgstr "Xác nhận chi tiết của ổ đĩa hiện tại trước khi tiếp tục."
 
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:863
+#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
 msgstr "Thiết bị"
 
@@ -2608,7 +2632,7 @@ msgid "Used"
 msgstr "Đã dùng"
 
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:296
+#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
 msgstr "Vị trí"
 
@@ -2643,7 +2667,7 @@ msgstr "_Bắt đầu tạo…"
 
 #: src/disks/ui/create-filesystem-page.ui:19
 msgid "Volume _Name"
-msgstr "_Tên Phân vùng"
+msgstr "_Tên phân vùng"
 
 #: src/disks/ui/create-filesystem-page.ui:33
 msgid ""
@@ -2651,16 +2675,16 @@ msgid ""
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
 "Tên dùng cho hệ thống tập tin. Cái này hữu dụng khi bạn muốn tham chiếu đến "
-"đĩa thông qua liên kết mềm trong thư mục /dev/disk/by-label."
+"đĩa thông qua liên kết mềm trong thư mục /dev/disk/theo-nhãn."
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "Ví dụ như: “Tập tin của tôi” hay “Dữ liệu sao lưu”."
+msgstr "Ví dụ như: “Tập tin của Lan” hay “Dữ liệu sao lưu”."
 
 #: src/disks/ui/create-filesystem-page.ui:74
 #: src/disks/ui/format-disk-dialog.ui:87
 msgid "_Erase"
-msgstr "_Xóa"
+msgstr "Tẩ_y"
 
 #: src/disks/ui/create-filesystem-page.ui:89
 msgid "Overwrites existing data, but takes longer."
@@ -2673,7 +2697,7 @@ msgstr "Đĩa bên trong để sử dụng chỉ với các hệ thống L_inux 
 #: src/disks/ui/create-filesystem-page.ui:131
 #: src/disks/ui/create-other-page.ui:36
 msgid "_Password protect volume (LUKS)"
-msgstr "Phân vùng được bảo vệ _bằng mật khẩu (LUKS)"
+msgstr "_Phân vùng được bảo vệ bằng mật khẩu (LUKS)"
 
 #: src/disks/ui/create-filesystem-page.ui:147
 msgid "For use with _Windows (NTFS)"
@@ -2766,7 +2790,7 @@ msgstr "Vùng trống _theo sau"
 
 #: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
 msgid "The free space following the partition"
-msgstr "Vùng trống theo sau phân vùng"
+msgstr "Vùng trống nằm phía sau của phân vùng"
 
 #: src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
@@ -2890,188 +2914,147 @@ msgstr "Bật nhớ đệm khi ghi"
 
 #: src/disks/ui/disk-settings-dialog.ui:571
 msgid "Disable Write Cache"
-msgstr "Tắt đệm ghi"
+msgstr "Tắt nhớ đệm khi ghi"
 
 #: src/disks/ui/disk-settings-dialog.ui:594
 msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
 msgstr ""
-"Hiệu năng được nâng cao bằng cách ghi đệm, nhưng dữ liệu sẽ có thể mất đi "
-"nếu mất điện đột ngột"
+"Hiệu năng hoạt động được nâng cao bằng cách ghi vào bộ nhớ đệm, nhưng dữ "
+"liệu sẽ có thể mất đi nếu xảy ra mất điện đột ngột"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
 msgstr "Đệm gh_i"
 
-#: src/disks/ui/disks.ui:93
+#: src/disks/ui/disks.ui:34
+msgid "Application Menu"
+msgstr "Trình đơn ứng dụng"
+
+#: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
 msgstr "Quay lại dạng xem chính"
 
-#: src/disks/ui/disks.ui:105
+#: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "Các tùy chọn đĩa"
 
-#: src/disks/ui/disks.ui:120
+#: src/disks/ui/disks.ui:121
 msgid "Power off this disk"
 msgstr "Tắt điện đĩa này"
 
-#: src/disks/ui/disks.ui:135
+#: src/disks/ui/disks.ui:136
 msgid "Eject this disk"
 msgstr "Đẩy đĩa này ra"
 
-#: src/disks/ui/disks.ui:150
+#: src/disks/ui/disks.ui:151
 msgid "Detach this loop device"
 msgstr "Tách rời thiết bị vòng ngược này"
 
-#: src/disks/ui/disks.ui:173
+#: src/disks/ui/disks.ui:174
 msgid "No Device Selected"
 msgstr "Chưa chọn đĩa"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:175
 msgid "Select a device to manage."
 msgstr "Chọn thiết bị để quản lý."
 
-#: src/disks/ui/disks.ui:209
+#: src/disks/ui/disks.ui:210
 msgid "Model"
 msgstr "Mô hình"
 
-#: src/disks/ui/disks.ui:238
+#: src/disks/ui/disks.ui:239
 msgid "Serial Number"
 msgstr "Số sê-ri"
 
-#: src/disks/ui/disks.ui:267
+#: src/disks/ui/disks.ui:268
 msgid "World Wide Name"
 msgstr "Tên toàn cầu"
 
-#: src/disks/ui/disks.ui:325
+#: src/disks/ui/disks.ui:326
 msgid "Media"
 msgstr "Phương tiện"
 
-#: src/disks/ui/disks.ui:384 src/disks/ui/disks.ui:951
+#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
 msgstr "Công việc"
 
-#: src/disks/ui/disks.ui:476
+#: src/disks/ui/disks.ui:484
 msgid "Name"
 msgstr "Tên"
 
-#: src/disks/ui/disks.ui:505 src/disks/ui/disks.ui:805
+#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
 msgid "Size"
 msgstr "Kích cỡ"
 
-#: src/disks/ui/disks.ui:534
+#: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
 msgstr "Tự động xóa"
 
-#: src/disks/ui/disks.ui:552
+#: src/disks/ui/disks.ui:560
 msgid "Detach loop device after unmount action"
 msgstr "Tháo gỡ các thiết bị vòng lặp sau thao tác bỏ gắn kết"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:566
+#: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Tập tin đằng sau"
 
-#: src/disks/ui/disks.ui:595
+#: src/disks/ui/disks.ui:603
 msgid "Partitioning"
 msgstr "Phân vùng"
 
-#: src/disks/ui/disks.ui:626
+#: src/disks/ui/disks.ui:634
 msgid "_Volumes"
 msgstr "_Phân vùng"
 
-#: src/disks/ui/disks.ui:668
+#: src/disks/ui/disks.ui:675
 msgid "Mount selected partition"
 msgstr "Gắn kết phân vùng được chọn"
 
-#: src/disks/ui/disks.ui:669
-msgctxt "Accessibility label for toolbutton-mount"
-msgid "Mount"
-msgstr "Gắn kết"
-
-#: src/disks/ui/disks.ui:682
+#: src/disks/ui/disks.ui:692
 msgid "Unmount selected partition"
 msgstr "Tháo gắn phân vùng đã chọn"
 
-#: src/disks/ui/disks.ui:683
-msgctxt "Accessibility label for toolbutton-unmount"
-msgid "Unmount"
-msgstr "Đang bỏ gắn kết"
-
-#: src/disks/ui/disks.ui:696
+#: src/disks/ui/disks.ui:709
 msgid "Activate selected swap partition"
 msgstr "Kích hoạt phân vùng tráo đổi đã chọn"
 
-#: src/disks/ui/disks.ui:697
-msgctxt "Accessibility label for toolbutton-activate-swap"
-msgid "Activate swap"
-msgstr "Kích hoạt vùng tráo đổi"
-
-#: src/disks/ui/disks.ui:710
+#: src/disks/ui/disks.ui:726
 msgid "Deactivate selected swap partition"
 msgstr "Bỏ kích hoạt vùng tráo đổi đã chọn"
 
-#: src/disks/ui/disks.ui:711
-msgctxt "Accessibility label for toolbutton-deactivate-swap"
-msgid "Deactivate swap"
-msgstr "Bỏ kích hoạt vùng tráo đổi"
-
-#: src/disks/ui/disks.ui:724
+#: src/disks/ui/disks.ui:743
 msgid "Unlock selected encrypted partition"
 msgstr "Bỏ khóa phân vùng mã hóa đã chọn"
 
-#: src/disks/ui/disks.ui:725
-msgctxt "Accessibility label for toolbutton-unlock"
-msgid "Unlock"
-msgstr "Mở khóa"
-
-#: src/disks/ui/disks.ui:738
+#: src/disks/ui/disks.ui:760
 msgid "Lock selected encrypted partition"
 msgstr "Khóa phân vùng mã hóa đã chọn"
 
-#: src/disks/ui/disks.ui:739
-msgctxt "Accessibility label for toolbutton-lock"
-msgid "Lock"
-msgstr "Khóa"
-
-#: src/disks/ui/disks.ui:752
+#: src/disks/ui/disks.ui:777
 msgid "Create partition in unallocated space"
 msgstr "Tạo phân vùng ở chỗ trống chưa cấp phát"
 
-#: src/disks/ui/disks.ui:753
-msgctxt "Accessibility label for toolbutton-partition-create"
-msgid "Create partition"
-msgstr "Tạo phân vùng"
-
-#: src/disks/ui/disks.ui:766
-msgid "Delete selected partition"
-msgstr "Xóa phân vùng đã chọn"
-
-#: src/disks/ui/disks.ui:767
-msgctxt "Accessibility label for toolbutton-partition-delete"
-msgid "Delete partition"
-msgstr "Xóa phân vùng"
-
-#: src/disks/ui/disks.ui:780
+#: src/disks/ui/disks.ui:794
 msgid "Additional partition options"
 msgstr "Các tùy chọn phân vùng phụ thêm"
 
-#: src/disks/ui/disks.ui:781
-msgctxt "Accessibility label for toolbutton-volume-menu"
-msgid "Menu"
-msgstr "Trình đơn"
+#: src/disks/ui/disks.ui:821
+msgid "Delete selected partition"
+msgstr "Xóa phân vùng đã chọn"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:834
+#: src/disks/ui/disks.ui:881
 msgid "Contents"
 msgstr "Nội dung"
 
-#: src/disks/ui/disks.ui:892
+#: src/disks/ui/disks.ui:939
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:921
+#: src/disks/ui/disks.ui:968
 msgid "Partition Type"
 msgstr "Kiểu phân vùng"
 
@@ -3093,7 +3076,7 @@ msgstr "Đo _kiểm đĩa…"
 
 #: src/disks/ui/drive-menu.ui:26
 msgid "_SMART Data & Self-Tests…"
-msgstr "Dữ liệu _SMART & tự-kiểm-tra…"
+msgstr "Dữ liệu _SMART & Tự-kiểm-tra…"
 
 #: src/disks/ui/drive-menu.ui:30
 msgid "Drive S_ettings…"
@@ -3319,7 +3302,7 @@ msgstr "Gắn lúc _khởi động"
 
 #: src/disks/ui/edit-fstab-dialog.ui:313
 msgid "If checked, the device will be mounted at system startup [!noauto]"
-msgstr "Nếu chọn, thiết bị được gắn kết lúc khởi động [!noauto]"
+msgstr "Nếu chọn, thiết bị được gắn kết lúc hệ thống khởi động [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:330
 msgid "S_ymbolic Icon Name"
@@ -3343,7 +3326,7 @@ msgstr "Tùy chọn gắn kết được lưu trong tập tin <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:77
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Kiểu phân vùng dạng <i>GUID</i> 32-bit"
+msgstr "Kiểu phân vùng dạng 32-bit <i>GUID</i>"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:109
 msgid ""
@@ -3351,8 +3334,9 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
-"Tên phân vùng (tối đa 36 ký tự unicode). Hữu dụng nếu bạn muốn tham khảo để "
-"thiết bị bằng liên kết mềm trong thư mục <b>/dev/disk/by-partlabel</b>"
+"Tên phân vùng (tối đa 36 ký tự unicode). Hữu dụng nếu bạn muốn tham chiếu "
+"đến thiết bị bằng liên kết mềm trong thư mục <b>/dev/disk/theo-nhãn-phân-"
+"vùng</b>"
 
 #: src/disks/ui/edit-gpt-partition-dialog.ui:122
 msgid "_System Partition"
@@ -3462,15 +3446,15 @@ msgstr "Khác biệt với cỡ phân vùng trước đây"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:9
 msgid "Restore Disk Image"
-msgstr "Phục hồi ảnh đĩa"
+msgstr "Phục hồi từ ảnh đĩa"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:44
 msgid "_Image to Restore"
-msgstr "Ả_nh cần phục hồi"
+msgstr "Ả_nh để phục hồi"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:63
 msgid "Select Disk Image to Restore"
-msgstr "Chọn ảnh đĩa để phục hồi"
+msgstr "Chọn ảnh đĩa để dùng nó phục hồi"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:77
 msgid "Destination"
@@ -3482,7 +3466,7 @@ msgstr "Đí_ch"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:141
 msgid "Image to Restore"
-msgstr "Ả_nh cần phục hồi"
+msgstr "Ả_nh để phục hồi"
 
 #: src/disks/ui/restore-disk-image-dialog.ui:174
 msgid "Image Size"
@@ -3499,75 +3483,85 @@ msgstr "Chung"
 
 #: src/disks/ui/shortcuts.ui:17
 msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "Tạo ảnh đĩa trống mới"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr "Gắn một ảnh đĩa sẵn có"
-
-#: src/disks/ui/shortcuts.ui:31
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr "Bỏ chọn đĩa hiện tại"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
 msgid "Help"
 msgstr "Trợ giúp"
 
-#: src/disks/ui/shortcuts.ui:45
+#: src/disks/ui/shortcuts.ui:24
+msgctxt "shortcut window"
+msgid "Open the application menu"
+msgstr "Mở trình đơn ứng dụng"
+
+#: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Phím tắt bàn phím"
 
-#: src/disks/ui/shortcuts.ui:52
+#: src/disks/ui/shortcuts.ui:38
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Thoát"
 
-#: src/disks/ui/shortcuts.ui:61
+#: src/disks/ui/shortcuts.ui:47
+msgctxt "shortcut window"
+msgid "Disks"
+msgstr "Đĩa"
+
+#: src/disks/ui/shortcuts.ui:51
+msgctxt "shortcut window"
+msgid "Create a new empty disk image"
+msgstr "Tạo ảnh đĩa trống mới"
+
+#: src/disks/ui/shortcuts.ui:58
+msgctxt "shortcut window"
+msgid "Attach an existing disk image"
+msgstr "Gắn một ảnh đĩa sẵn có"
+
+#: src/disks/ui/shortcuts.ui:65
+msgctxt "shortcut window"
+msgid "Unselect current disk"
+msgstr "Bỏ chọn đĩa hiện tại"
+
+#: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Ổ đĩa"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:78
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Mở trình đơn ổ đĩa"
 
-#: src/disks/ui/shortcuts.ui:72
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Định dạng thiết bị"
 
-#: src/disks/ui/shortcuts.ui:79
+#: src/disks/ui/shortcuts.ui:92
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Phục hồi ảnh đĩa vào đĩa"
 
-#: src/disks/ui/shortcuts.ui:86
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Dữ liệu SMART"
 
-#: src/disks/ui/shortcuts.ui:93
+#: src/disks/ui/shortcuts.ui:106
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Cài đặt đĩa"
 
-#: src/disks/ui/shortcuts.ui:102
+#: src/disks/ui/shortcuts.ui:115
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Phân vùng"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:119
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Mở trình đơn phân vùng"
 
-#: src/disks/ui/shortcuts.ui:113
+#: src/disks/ui/shortcuts.ui:126
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Định dạng thiết bị đã chọn"
@@ -3596,31 +3590,31 @@ msgstr "Bấm để dừng tự-kiểm-tra SMART hiện đang chạy"
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Bấm để buộc đọc lại dữ liệu SMART từ đĩa cứng"
 
-#: src/disks/ui/smart-dialog.ui:97
+#: src/disks/ui/smart-dialog.ui:96
 msgid "Powered On"
 msgstr "Đã bật nguồn"
 
-#: src/disks/ui/smart-dialog.ui:130
+#: src/disks/ui/smart-dialog.ui:129
 msgid "Updated"
 msgstr "Đã cập nhật"
 
-#: src/disks/ui/smart-dialog.ui:196
+#: src/disks/ui/smart-dialog.ui:195
 msgid "Self-test Result"
 msgstr "Kết quả tự kiểm thử"
 
-#: src/disks/ui/smart-dialog.ui:213
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Self-assessment"
 msgstr "Tự đánh giá"
 
-#: src/disks/ui/smart-dialog.ui:230
+#: src/disks/ui/smart-dialog.ui:229
 msgid "Overall Assessment"
 msgstr "Đánh giá chung"
 
-#: src/disks/ui/smart-dialog.ui:296
+#: src/disks/ui/smart-dialog.ui:295
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Bấm để có bật/tắt SMART cho đĩa hay không"
 
-#: src/disks/ui/smart-dialog.ui:307
+#: src/disks/ui/smart-dialog.ui:306
 msgid "SMART _Attributes"
 msgstr "T_huộc tính SMART"
 
@@ -3634,7 +3628,29 @@ msgstr "Mở rộng"
 
 #: src/disks/ui/smart-dialog.ui:380
 msgid "Conveyance"
-msgstr "Chuyên chở"
+msgstr "Chuyển nhượng"
+
+#: src/disks/ui/take-ownership-dialog.ui:4
+msgid "Confirm Taking Ownership"
+msgstr "Xác nhận lấy quyền sở hữu"
+
+#: src/disks/ui/take-ownership-dialog.ui:5
+msgid ""
+"Changes ownership of the filesystem to your user and group. The recursive "
+"mode does also change the ownership of all subdirectories and files, this "
+"can lead to destructive results when the filesystem contains a directory "
+"structure where ownership should belong to different users (e.g., a system "
+"backup or a filesystem that is accessed by multiple users)."
+msgstr ""
+"Thay đổi quyền sở hữu hệ thống tập tin cho người dùng và nhóm của bạn. Chế "
+"độ đệ quy cũng thay đổi quyền sở hữu của tất cả các thư mục và tập tin con, "
+"việc này có thể dẫn đến kết quả phá hoại khi hệ thống tập tin chứa cấu trúc "
+"thư mục nơi quyền sở hữu phải thuộc về những người dùng khác nhau (ví dụ: "
+"sao lưu hệ thống hoặc hệ thống tệp được nhiều người dùng truy cập)."
+
+#: src/disks/ui/take-ownership-dialog.ui:13
+msgid "Enable _recursive mode"
+msgstr "Bật chế độ đệ _quy"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3726,23 +3742,27 @@ msgstr "Kiểm tra _hệ thống tập tin…"
 msgid "Rep_air Filesystem…"
 msgstr "Sử_a chữa hệ thống tập tin…"
 
-#: src/disks/ui/volume-menu.ui:40
+#: src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "_Lấy chủ sở hữu…"
+
+#: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"
 msgstr "Sửa tùy chọn _gắn kết…"
 
-#: src/disks/ui/volume-menu.ui:44
+#: src/disks/ui/volume-menu.ui:48
 msgid "Edit Encr_yption Options…"
 msgstr "Sửa tù_y chọn mã hóa…"
 
-#: src/disks/ui/volume-menu.ui:50
+#: src/disks/ui/volume-menu.ui:54
 msgid "_Create Partition Image…"
 msgstr "_Tạo ảnh phân vùng…"
 
-#: src/disks/ui/volume-menu.ui:54
+#: src/disks/ui/volume-menu.ui:58
 msgid "_Restore Partition Image…"
 msgstr "_Phục hồi ảnh phân vùng…"
 
-#: src/disks/ui/volume-menu.ui:58
+#: src/disks/ui/volume-menu.ui:62
 msgid "_Benchmark Partition…"
 msgstr "Đ_o kiểm phân vùng…"
 
@@ -3862,20 +3882,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:831
+#: src/libgdu/gduutils.c:833
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Thiết bị chịu ảnh hưởng"
 
-#: src/libgdu/gduutils.c:1399
+#: src/libgdu/gduutils.c:1419
 msgid "Error unmounting filesystem"
 msgstr "Gặp lỗi khi bỏ gắn kết hệ tập tin"
 
-#: src/libgdu/gduutils.c:1431
+#: src/libgdu/gduutils.c:1451
 msgid "Error locking device"
 msgstr "Gặp lỗi khi khóa thiết bị"
 
-#: src/libgdu/gduutils.c:1452
+#: src/libgdu/gduutils.c:1472
 msgid "Error disabling autoclear for loop device"
 msgstr "Gặp lỗi khi tắt tự xóa cho thiết bị lặp"
 
@@ -3889,13 +3909,49 @@ msgstr "Thấy có trục trặc ổ đĩa cứng"
 #: src/notify/gdusdmonitor.c:358
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
-msgstr "Đĩa cứng đã sắp hỏng."
+msgstr "Đĩa cứng gần như đã sắp hỏng."
 
 #. Translators: Text for button in SMART failure notification
 #: src/notify/gdusdmonitor.c:362
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Kiểm tra"
+
+#~ msgctxt "Accessibility label for toolbutton-mount"
+#~ msgid "Mount"
+#~ msgstr "Gắn kết"
+
+#~ msgctxt "Accessibility label for toolbutton-unmount"
+#~ msgid "Unmount"
+#~ msgstr "Đang bỏ gắn kết"
+
+#~ msgctxt "Accessibility label for toolbutton-activate-swap"
+#~ msgid "Activate swap"
+#~ msgstr "Kích hoạt vùng tráo đổi"
+
+#~ msgctxt "Accessibility label for toolbutton-deactivate-swap"
+#~ msgid "Deactivate swap"
+#~ msgstr "Bỏ kích hoạt vùng tráo đổi"
+
+#~ msgctxt "Accessibility label for toolbutton-unlock"
+#~ msgid "Unlock"
+#~ msgstr "Mở khóa"
+
+#~ msgctxt "Accessibility label for toolbutton-lock"
+#~ msgid "Lock"
+#~ msgstr "Khóa"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-create"
+#~ msgid "Create partition"
+#~ msgstr "Tạo phân vùng"
+
+#~ msgctxt "Accessibility label for toolbutton-partition-delete"
+#~ msgid "Delete partition"
+#~ msgstr "Xóa phân vùng"
+
+#~ msgctxt "Accessibility label for toolbutton-volume-menu"
+#~ msgid "Menu"
+#~ msgstr "Trình đơn"
 
 #~ msgid "drive-removable-media"
 #~ msgstr "drive-removable-media"
@@ -4383,9 +4439,6 @@ msgstr "Kiểm tra"
 
 #~ msgid "Don't partition"
 #~ msgstr "Không phân vùng"
-
-#~ msgid "Apple Partition Map"
-#~ msgstr "Bảng phân vùng Apple"
 
 #~ msgid "Partitioning Scheme"
 #~ msgstr "Sơ đồ phân vùng"

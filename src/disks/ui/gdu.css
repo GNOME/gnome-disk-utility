@@ -7,7 +7,26 @@
 }
 
 #devtab-grid-toolbar {
-	border-top-width: 1px;
+	padding: 0;
+	border: none;
+
+}
+
+#devtab-grid-toolbar separator {
+	background: none;
+	border: 1px solid @unfocused_borders;
+}
+
+#devtab-grid-toolbar * {
+	border-radius: 0;
+}
+
+#devtab-grid-toolbar *:first-child {
+	border-bottom-left-radius: 4px;
+}
+
+#devtab-grid-toolbar *:last-child {
+	border-bottom-right-radius: 4px;
 }
 
 .gnome-disk-utility-grid:selected {

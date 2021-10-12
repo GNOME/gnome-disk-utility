@@ -2960,6 +2960,14 @@ on_volume_menu_item_resize (GSimpleAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+response_cb (GtkDialog *dialog,
+             gint       response,
+             gpointer   user_data)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
 fs_repair_cb (UDisksFilesystem *filesystem,
               GAsyncResult     *res,
               GduWindow        *window)
@@ -3011,9 +3019,9 @@ fs_repair_cb (UDisksFilesystem *filesystem,
         }
 
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
-      gtk_dialog_run (GTK_DIALOG (message_dialog));
+      g_signal_connect (message_dialog, "response", G_CALLBACK (response_cb), NULL);
+      gtk_window_present (GTK_WINDOW (message_dialog));
 
-      gtk_widget_destroy (message_dialog);
       g_free (s);
     }
 
@@ -3040,6 +3048,23 @@ fs_repair_unmount_cb (GduWindow        *window,
     }
 
   g_object_unref (object);
+}
+
+static void
+on_response (GtkDialog *dialog,
+             gint       response,
+             gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+
+  if (response == GTK_RESPONSE_OK)
+    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_repair_unmount_cb,
+                              NULL, g_object_ref (object));
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
 static void
@@ -3070,11 +3095,8 @@ on_volume_menu_item_repair (GSimpleAction *action,
   ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
   gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");
 
-  if (gtk_dialog_run (GTK_DIALOG (message_dialog)) == GTK_RESPONSE_OK)
-    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_repair_unmount_cb,
-                              NULL, g_object_ref (object));
-
-  gtk_widget_destroy (message_dialog);
+  g_signal_connect (message_dialog, "response", G_CALLBACK (on_response), user_data);
+  gtk_window_present (GTK_WINDOW (message_dialog));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3161,6 +3183,14 @@ on_volume_menu_item_take_ownership (GSimpleAction *action,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
+on_message_dialog_response (GtkDialog *dialog,
+             gint       response,
+             gpointer   user_data)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
 fs_check_cb (UDisksFilesystem *filesystem,
              GAsyncResult     *res,
              GduWindow        *window)
@@ -3212,9 +3242,9 @@ fs_check_cb (UDisksFilesystem *filesystem,
         }
 
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
-      gtk_dialog_run (GTK_DIALOG (message_dialog));
+      g_signal_connect (message_dialog, "response", G_CALLBACK (on_message_dialog_response), NULL);
+      gtk_window_present (GTK_WINDOW (message_dialog));
 
-      gtk_widget_destroy (message_dialog);
       g_free (s);
     }
 }
@@ -3242,6 +3272,23 @@ fs_check_unmount_cb (GduWindow        *window,
 }
 
 static void
+on_check_message_dialog_response (GtkDialog *dialog,
+                                  gint       response,
+                                  gpointer   user_data)
+{
+  GduWindow *window = GDU_WINDOW (user_data);
+  UDisksObject *object;
+
+  object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
+
+  if (response == GTK_RESPONSE_OK)
+    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_check_unmount_cb,
+                              NULL, g_object_ref (object));
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
 on_volume_menu_item_check (GSimpleAction *action,
                            GVariant      *parameter,
                            gpointer       user_data)
@@ -3266,11 +3313,8 @@ on_volume_menu_item_check (GSimpleAction *action,
   ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
   gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");
 
-  if (gtk_dialog_run (GTK_DIALOG (message_dialog)) == GTK_RESPONSE_OK)
-    gdu_window_ensure_unused (window, object, (GAsyncReadyCallback) fs_check_unmount_cb,
-                              NULL, g_object_ref (object));
-
-  gtk_widget_destroy (message_dialog);
+  g_signal_connect (message_dialog, "response", G_CALLBACK (on_check_message_dialog_response), user_data);
+  gtk_window_present (GTK_WINDOW (message_dialog));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

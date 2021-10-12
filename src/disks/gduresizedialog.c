@@ -441,6 +441,13 @@ fs_resize_cb_offline_next_repair (UDisksFilesystem *filesystem,
     }
 }
 
+static void
+response_cb (GtkDialog *dialog,
+             gint       response)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
 static gboolean
 resize_filesystem_waiter (gpointer user_data)
 {
@@ -464,9 +471,9 @@ resize_filesystem_waiter (gpointer user_data)
                                                    _("Resizing not ready"));
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
                                                   _("Waited too long for the filesystem"));
-      gtk_dialog_run (GTK_DIALOG (dialog));
+      g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
+      gtk_window_present (GTK_WINDOW (dialog));
 
-      gtk_widget_destroy (dialog);
       resize_dialog_data_unref (data);
 
       return G_SOURCE_REMOVE;

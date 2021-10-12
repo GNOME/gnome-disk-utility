@@ -702,6 +702,13 @@ gdu_utils_is_inside_dos_extended (UDisksClient         *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+response_cb (GtkDialog *dialog,
+             gint       response)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
 void
 gdu_utils_show_error (GtkWindow   *parent_window,
                       const gchar *message,
@@ -738,8 +745,8 @@ gdu_utils_show_error (GtkWindow   *parent_window,
                                               g_quark_to_string (error->domain),
                                               error->code);
   g_error_free (fixed_up_error);
-  gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (dialog);
+  g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
+  gtk_window_present (GTK_WINDOW (dialog));
 
  no_dialog:
   ;

@@ -26,6 +26,13 @@ static GMainLoop *main_loop = NULL;
 static void show_error (const gchar *format, ...) G_GNUC_PRINTF (1, 2);
 
 static void
+response_cb (GtkDialog *dialog,
+             gint       response)
+{
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+}
+
+static void
 show_error (const gchar *format, ...)
 {
   va_list var_args;
@@ -46,8 +53,8 @@ show_error (const gchar *format, ...)
                                                    _("An error occurred"));
       gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog), "%s", s);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Disk Image Mounter"));
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
+      g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
+      gtk_window_present (GTK_WINDOW (dialog));
     }
   else
     {

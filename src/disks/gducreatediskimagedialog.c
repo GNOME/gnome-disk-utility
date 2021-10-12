@@ -448,6 +448,26 @@ on_show_error (gpointer user_data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_response (GtkDialog  *dialog,
+             gint        response,
+             gpointer    user_data)
+{
+  DialogData *data = user_data;
+  GError *error = NULL;
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+  if (response == GTK_RESPONSE_NO)
+    {
+      if (!g_file_delete (data->output_file, NULL, &error))
+        {
+          g_warning ("Error deleting file: %s (%s, %d)",
+                     error->message, g_quark_to_string (error->domain), error->code);
+          g_clear_error (&error);
+        }
+    }
+}
+
 static gboolean
 on_success (gpointer user_data)
 {
@@ -466,9 +486,7 @@ on_success (gpointer user_data)
   if (data->num_error_bytes > 0)
     {
       GtkWidget *dialog;
-      GError *error = NULL;
       gchar *s = NULL;
-      gint response;
       gdouble percentage;
 
       dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->window),
@@ -496,19 +514,10 @@ on_success (gpointer user_data)
                              GTK_RESPONSE_NO);
       gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Close"), GTK_RESPONSE_CLOSE);
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
-      response = gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
+      g_signal_connect (dialog, "response", G_CALLBACK (on_response), data);
       g_free (s);
 
-      if (response == GTK_RESPONSE_NO)
-        {
-          if (!g_file_delete (data->output_file, NULL, &error))
-            {
-              g_warning ("Error deleting file: %s (%s, %d)",
-                         error->message, g_quark_to_string (error->domain), error->code);
-              g_clear_error (&error);
-            }
-        }
+      gtk_window_present (GTK_WINDOW (dialog));
     }
 
   dialog_data_unref (data);

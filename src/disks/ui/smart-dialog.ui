@@ -20,7 +20,7 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkMenuButton" id="start-selftest-button">
-                <property name="popup">selftest-menu</property>
+                <property name="menu_model">selftest-menu</property>
                 <property name="label" translatable="yes">_Start Self-test</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -354,32 +354,20 @@
       <action-widget response="2">refresh-button</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkMenu" id="selftest-menu">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkMenuItem" id="selftest-short-menuitem">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Short</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="selftest-extended-menuitem">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Extended</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkMenuItem" id="selftest-conveyance-menuitem">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Conveyance</property>
-        <property name="use_underline">True</property>
-      </object>
-    </child>
-  </object>
+  <menu id="selftest-menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Short</attribute>
+        <attribute name="action">test.short</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Extended</attribute>
+        <attribute name="action">test.extended</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Conveyance</attribute>
+        <attribute name="action">test.conveyance</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

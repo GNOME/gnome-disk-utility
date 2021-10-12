@@ -247,15 +247,15 @@ static void update_all (GduWindow *window, gboolean is_delayed_job_update);
 static void on_volume_grid_changed (GduVolumeGrid  *grid,
                                     gpointer        user_data);
 
-static void on_volume_menu_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_partition_create_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_partition_delete_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_activate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data);
-static void on_deactivate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data);
+static void on_volume_menu_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_partition_create_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_partition_delete_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_mount_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_unmount_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_unlock_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_lock_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_activate_swap_tool_button_clicked (GtkButton *button, gpointer user_data);
+static void on_deactivate_swap_tool_button_clicked (GtkButton *button, gpointer user_data);
 
 static void on_devtab_drive_loop_detach_button_clicked (GtkButton *button, gpointer user_data);
 static void on_devtab_drive_eject_button_clicked (GtkButton *button, gpointer user_data);
@@ -3780,7 +3780,7 @@ mount_cb (UDisksFilesystem *filesystem,
 }
 
 static void
-on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_mount_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3798,7 +3798,7 @@ on_mount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_unmount_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3814,7 +3814,7 @@ on_unmount_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_volume_menu_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_volume_menu_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
 
@@ -3825,7 +3825,7 @@ on_volume_menu_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_partition_create_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_partition_create_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3885,7 +3885,7 @@ partition_delete_ensure_unused_cb (GduWindow     *window,
 }
 
 static void
-on_partition_delete_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_partition_delete_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3968,7 +3968,7 @@ on_devtab_drive_eject_button_clicked (GtkButton *button,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_unlock_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -3981,7 +3981,7 @@ on_unlock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_lock_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_lock_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -4018,7 +4018,7 @@ swapspace_start_cb (UDisksSwapspace  *swapspace,
 }
 
 static void
-on_activate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_activate_swap_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;
@@ -4055,7 +4055,7 @@ swapspace_stop_cb (UDisksSwapspace  *swapspace,
 }
 
 static void
-on_deactivate_swap_tool_button_clicked (GtkToolButton *button, gpointer user_data)
+on_deactivate_swap_tool_button_clicked (GtkButton *button, gpointer user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
   UDisksObject *object;

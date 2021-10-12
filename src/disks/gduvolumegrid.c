@@ -868,7 +868,7 @@ render_element (GduVolumeGrid *grid,
     {
       guint icon_offset = 0;
       gtk_style_context_save (context);
-      gtk_style_context_add_class (context, GTK_STYLE_CLASS_IMAGE);
+      gtk_style_context_add_class (context, "image");
       for (n = 0; n < icons_to_render->len; n++)
         {
           const gchar *name = icons_to_render->pdata[n];
@@ -912,7 +912,7 @@ render_element (GduVolumeGrid *grid,
   if (element->show_spinner)
     {
       gtk_style_context_save (context);
-      gtk_style_context_add_class (context, GTK_STYLE_CLASS_SPINNER);
+      gtk_style_context_add_class (context, "spinner");
       gtk_render_activity (context, cr,
                            ceil (element->x) + 4,
                            ceil (element->y + element->height - 16 - 4),

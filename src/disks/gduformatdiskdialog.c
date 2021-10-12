@@ -365,9 +365,75 @@ ensure_unused_cb (GduWindow     *window,
   ;
 }
 
+static void
+dialog_response_cb (GtkDialog *dialog,
+                    gint       response,
+                    gpointer   user_data)
+{
+    FormatDiskData *data = user_data;
+
+    gtk_widget_destroy (data->dialog);
+    if (response == GTK_RESPONSE_OK) {
+      const gchar *erase_type;
+      const gchar *primary_message;
+      GString *str;
+      GList *objects = NULL;
+
+      erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
+
+      primary_message = _("Are you sure you want to format the disk?");
+      if (g_strcmp0 (erase_type, "") == 0)
+        {
+          /* Translators: warning used for quick format */
+          str = g_string_new (_("All data on the disk will be lost but may still be recoverable by data recovery services"));
+          g_string_append (str, "\n\n");
+          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more thorough erase type to keep your private information from falling into the wrong hands"));
+        }
+      else
+        {
+          /* Translators: warning used when overwriting data */
+          str = g_string_new (_("All data on the disk will be overwritten and will likely not be recoverable by data recovery services"));
+        }
+
+      if (data->ata != NULL &&
+          (g_strcmp0 (erase_type, "ata-secure-erase") == 0 ||
+           g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0))
+        {
+          g_string_append (str, "\n\n");
+          g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can’t be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
+        }
+
+      objects = g_list_append (NULL, data->object);
+      if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
+                                        primary_message,
+                                        str->str,
+                                        _("_Format"),
+                                        NULL, NULL,
+                                        gdu_window_get_client (data->window), objects, TRUE))
+        {
+          g_list_free (objects);
+          g_string_free (str, TRUE);
+          goto out;
+        }
+      g_list_free (objects);
+      g_string_free (str, TRUE);
+
+      /* ensure the volume is unused (e.g. unmounted) before formatting it... */
+      gdu_window_ensure_unused (data->window,
+                                data->object,
+                                (GAsyncReadyCallback) ensure_unused_cb,
+                                NULL, /* GCancellable */
+                                data);
+      return;
+    }
+
+ out:
+    format_disk_data_free (data);
+}
+
 void
 gdu_format_disk_dialog_show (GduWindow    *window,
-                               UDisksObject *object)
+                             UDisksObject *object)
 {
   FormatDiskData *data;
   gint response;
@@ -404,63 +470,6 @@ gdu_format_disk_dialog_show (GduWindow    *window,
   gtk_widget_show_all (data->dialog);
   gtk_widget_grab_focus (data->type_combobox);
 
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-  if (response == GTK_RESPONSE_OK)
-    {
-      const gchar *erase_type;
-      const gchar *primary_message;
-      GString *str;
-      GList *objects = NULL;
-
-      erase_type = gtk_combo_box_get_active_id (GTK_COMBO_BOX (data->erase_combobox));
-
-      primary_message = _("Are you sure you want to format the disk?");
-      if (g_strcmp0 (erase_type, "") == 0)
-        {
-          /* Translators: warning used for quick format */
-          str = g_string_new (_("All data on the disk will be lost but may still be recoverable by data recovery services"));
-          g_string_append (str, "\n\n");
-          g_string_append (str, _("<b>Tip</b>: If you are planning to recycle, sell or give away your old computer or disk, you should use a more thorough erase type to keep your private information from falling into the wrong hands"));
-        }
-      else
-        {
-          /* Translators: warning used when overwriting data */
-          str = g_string_new (_("All data on the disk will be overwritten and will likely not be recoverable by data recovery services"));
-        }
-
-      if (data->ata != NULL &&
-          (g_strcmp0 (erase_type, "ata-secure-erase") == 0 ||
-           g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0))
-        {
-          g_string_append (str, "\n\n");
-          g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time to complete, can’t be canceled and may not work properly with some hardware. In the worst case, your drive may be rendered unusable or your system may crash or lock up. Before proceeding, please read the article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> and make sure you understand the risks"));
-        }
-
-      objects = g_list_append (NULL, object);
-      gtk_widget_hide (data->dialog);
-      if (!gdu_utils_show_confirmation (GTK_WINDOW (window),
-                                        primary_message,
-                                        str->str,
-                                        _("_Format"),
-                                        NULL, NULL,
-                                        gdu_window_get_client (data->window), objects, TRUE))
-        {
-          g_list_free (objects);
-          g_string_free (str, TRUE);
-          goto out;
-        }
-      g_list_free (objects);
-      g_string_free (str, TRUE);
-
-      /* ensure the volume is unused (e.g. unmounted) before formatting it... */
-      gdu_window_ensure_unused (data->window,
-                                data->object,
-                                (GAsyncReadyCallback) ensure_unused_cb,
-                                NULL, /* GCancellable */
-                                data);
-      return;
-    }
-
- out:
-  format_disk_data_free (data);
+  g_signal_connect (data->dialog, "response", dialog_response_cb, data);
+  gtk_window_present (GTK_WINDOW (data->dialog));
 }

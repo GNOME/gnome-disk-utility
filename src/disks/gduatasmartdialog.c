@@ -62,6 +62,8 @@ typedef struct
   GtkWidget *stop_selftest_button;
   GtkWidget *refresh_button;
 
+  guint timeout_id;
+  gulong notify_id;
 } DialogData;
 
 static const struct {
@@ -1471,6 +1473,44 @@ on_enabled_switch_notify_active (GObject    *object,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_dialog_response (GtkDialog *dialog,
+                    gint       response,
+                    gpointer   user_data)
+{
+  DialogData *data = user_data;
+
+  /* Keep in sync with .ui file */
+  if (response > 0) {
+    switch (response)
+      {
+      case 0:
+        /* handled by GtkMenuButton */
+        break;
+      case 1:
+        selftest_do (data, "abort");
+        return;
+      case 2:
+        refresh_do (data);
+        return;
+      default:
+        g_assert_not_reached ();
+      }
+  }
+
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+
+  if (data->timeout_id) {
+    g_source_remove (data->timeout_id);
+    data->timeout_id = 0;
+  }
+  if (data->notify_id) {
+    g_signal_handler_disconnect (data->ata, data->notify_id);
+    data->notify_id = 0;
+  }
+  dialog_data_unref (data);
+}
+
 void
 gdu_ata_smart_dialog_show (GduWindow    *window,
                            UDisksObject *object)
@@ -1479,8 +1519,6 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   guint n;
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
-  gulong notify_id;
-  guint timeout_id;
   GSimpleActionGroup *group;
   GSimpleAction *action;
 
@@ -1639,8 +1677,8 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
 
   gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 
-  notify_id = g_signal_connect (data->ata, "notify", G_CALLBACK (on_ata_notify), data);
-  timeout_id = g_timeout_add_seconds (1, on_timeout, data);
+  data->notify_id = g_signal_connect (data->ata, "notify", G_CALLBACK (on_ata_notify), data);
+  data->timeout_id = g_timeout_add_seconds (1, on_timeout, data);
 
   group = g_simple_action_group_new ();
 
@@ -1662,34 +1700,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   gtk_widget_grab_focus (data->attributes_treeview);
 
   g_signal_connect (data->enabled_switch, "notify::active", G_CALLBACK (on_enabled_switch_notify_active), data);
+  g_signal_connect (data->dialog, "response", G_CALLBACK (on_dialog_response), data);
 
-  while (TRUE)
-    {
-      gint response;
-      response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-
-      if (response < 0)
-        break;
-
-      /* Keep in sync with .ui file */
-      switch (response)
-        {
-        case 0:
-          /* handled by GtkMenuButton */
-          break;
-        case 1:
-          selftest_do (data, "abort");
-          break;
-        case 2:
-          refresh_do (data);
-          break;
-        default:
-          g_assert_not_reached ();
-        }
-    }
-
-  g_source_remove (timeout_id);
-  g_signal_handler_disconnect (data->ata, notify_id);
-
-  dialog_data_unref (data);
+  gtk_window_present (GTK_WINDOW (data->dialog));
 }

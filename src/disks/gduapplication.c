@@ -423,6 +423,8 @@ gdu_application_startup (GApplication *_app)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
   hdy_init ();
+  hdy_style_manager_set_color_scheme (hdy_style_manager_get_default (),
+                                      HDY_COLOR_SCHEME_PREFER_LIGHT);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 

@@ -74,7 +74,7 @@ gmodule_dep = dependency('gmodule-2.0')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.16.0')
 libcanberra_dep = dependency('libcanberra-gtk3', version: '>= 0.1')
 # Keep the version here synchronised with subprojects/libhandy.wrap
-libhandy_dep = dependency('libhandy-1', version: '>= 1.1.90', fallback: ['libhandy', 'libhandy_dep'])
+libhandy_dep = dependency('libhandy-1', version: '>= 1.5.0', fallback: ['libhandy', 'libhandy_dep'])
 liblzma_dep = dependency('liblzma', version: '>= 5.0.5')
 libnotify_dep = dependency('libnotify', version: '>= 0.7')
 libsecret_dep = dependency('libsecret-1', version: '>= 0.7')

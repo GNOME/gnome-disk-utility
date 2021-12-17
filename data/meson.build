@@ -11,7 +11,6 @@ desktops = [
 
 foreach desktop: desktops
   i18n.merge_file (
-    desktop,
     type: 'desktop',
     input: desktop + '.in',
     output: desktop,
@@ -38,7 +37,6 @@ install_data(
 info = 'org.gnome.DiskUtility.appdata.xml'
 
 i18n.merge_file(
-  info,
   input: info + '.in',
   output: info,
   po_dir: po_dir,

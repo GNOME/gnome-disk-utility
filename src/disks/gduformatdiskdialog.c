@@ -372,7 +372,6 @@ dialog_response_cb (GtkDialog *dialog,
 {
     FormatDiskData *data = user_data;
 
-    gtk_widget_destroy (data->dialog);
     if (response == GTK_RESPONSE_OK) {
       const gchar *erase_type;
       const gchar *primary_message;
@@ -404,6 +403,7 @@ dialog_response_cb (GtkDialog *dialog,
         }
 
       objects = g_list_append (NULL, data->object);
+      gtk_widget_hide (data->dialog);
       if (!gdu_utils_show_confirmation (GTK_WINDOW (data->window),
                                         primary_message,
                                         str->str,

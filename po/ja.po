@@ -1,5 +1,5 @@
 # Japanese translation for gnome-disk-utility.
-# Copyright (C) 2009-2017, 2019-2020 gnome-disk-utility's COPYRIGHT HOLDER
+# Copyright (C) 2009-2017, 2019-2020, 2022 gnome-disk-utility's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-disk-utility package.
 # Mitsuya Shibata <mty.shibata@gmail.com>, 2009.
 # Shushi Kurose <md81bird@hitaki.net>, 2009-2013, 2017.
@@ -14,7 +14,7 @@
 # Tsuji Kento <tuziemon@pclives.org>, 2015.
 # sujiniku <sujinikusityuu@gmail.com>, 2016.
 # Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>, 2016-2017.
-# sicklylife <translation@sicklylife.jp>, 2019-2020.
+# sicklylife <translation@sicklylife.jp>, 2019-2020, 2022.
 #
 msgid ""
 msgstr ""
@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2021-09-18 09:14+0000\n"
-"PO-Revision-Date: 2020-08-23 23:30+0900\n"
+"PO-Revision-Date: 2022-02-09 21:00+0900\n"
 "Last-Translator: sicklylife <translation@sicklylife.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -227,10 +227,8 @@ msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device は --block-device と共に使用する必要があります\n"
 
 #: src/disks/gduapplication.c:214
-#, fuzzy
-#| msgid "--format-device must be used together with --block-device\n"
 msgid "--format-device must not be used together with --restore-disk-image"
-msgstr "--format-device は --block-device と共に使用する必要があります\n"
+msgstr "--format-device は --restore-disk-image と共に使用してはいけません"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
@@ -2296,10 +2294,8 @@ msgstr ""
 "る場合は、作業に長い時間がかかるかもしれません。"
 
 #: src/disks/gduwindow.c:3110
-#, fuzzy
-#| msgid "Error while checking filesystem"
 msgid "Error while taking filesystem ownership"
-msgstr "ファイルシステムのチェック中にエラーが発生しました"
+msgstr "ファイルシステムの所有権取得中にエラーが発生しました"
 
 #: src/disks/gduwindow.c:3174
 msgid "Error while checking filesystem"
@@ -2981,11 +2977,11 @@ msgstr "書き込みキャッシュ(_I)"
 
 #: src/disks/ui/disks.ui:34
 msgid "Application Menu"
-msgstr ""
+msgstr "アプリケーションメニュー"
 
 #: src/disks/ui/disks.ui:94
 msgid "Go back to main view"
-msgstr ""
+msgstr "メインビューに戻ります"
 
 #: src/disks/ui/disks.ui:106
 msgid "Drive Options"
@@ -3004,17 +3000,12 @@ msgid "Detach this loop device"
 msgstr "このループデバイスをデタッチします"
 
 #: src/disks/ui/disks.ui:174
-#, fuzzy
-#| msgctxt "multi-disk-menu"
-#| msgid "No _Devices Selected"
 msgid "No Device Selected"
-msgstr "デバイス未選択(_D)"
+msgstr "デバイス未選択"
 
 #: src/disks/ui/disks.ui:175
-#, fuzzy
-#| msgid "Select a device"
 msgid "Select a device to manage."
-msgstr "デバイスを選択"
+msgstr "管理するデバイスを選択してください。"
 
 #: src/disks/ui/disks.ui:210
 msgid "Model"
@@ -3551,12 +3542,9 @@ msgid "Help"
 msgstr "ヘルプを表示する"
 
 #: src/disks/ui/shortcuts.ui:24
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Open the drive menu"
 msgctxt "shortcut window"
 msgid "Open the application menu"
-msgstr "ドライブメニューを開く"
+msgstr "アプリケーションメニューを開く"
 
 #: src/disks/ui/shortcuts.ui:31
 msgctxt "shortcut window"
@@ -3569,8 +3557,6 @@ msgid "Quit"
 msgstr "終了する"
 
 #: src/disks/ui/shortcuts.ui:47
-#, fuzzy
-#| msgid "Disks"
 msgctxt "shortcut window"
 msgid "Disks"
 msgstr "ディスク"
@@ -3588,7 +3574,7 @@ msgstr "既存のディスクイメージをアタッチする"
 #: src/disks/ui/shortcuts.ui:65
 msgctxt "shortcut window"
 msgid "Unselect current disk"
-msgstr ""
+msgstr "現在のディスクの選択を解除する"
 
 #: src/disks/ui/shortcuts.ui:74
 msgctxt "shortcut window"
@@ -3702,7 +3688,7 @@ msgstr "Conveyance"
 
 #: src/disks/ui/take-ownership-dialog.ui:4
 msgid "Confirm Taking Ownership"
-msgstr ""
+msgstr "所有権取得の確認"
 
 #: src/disks/ui/take-ownership-dialog.ui:5
 msgid ""
@@ -3712,12 +3698,15 @@ msgid ""
 "structure where ownership should belong to different users (e.g., a system "
 "backup or a filesystem that is accessed by multiple users)."
 msgstr ""
+"ファイルシステムの user と group を変更して所有者になります。再帰モードはす"
+"べてのサブディレクトリとファイルの所有者を変更するため、ファイルシステムに"
+"システムバックアップが含まれていたりディレクトリ構造が複数のユーザーからの"
+"アクセスを想定した所有者設定になっていたりする場合は問題を引き起こす可能性"
+"があります。"
 
 #: src/disks/ui/take-ownership-dialog.ui:13
-#, fuzzy
-#| msgid "Enable Write Cache"
 msgid "Enable _recursive mode"
-msgstr "書き込みキャッシュを有効化"
+msgstr "再帰モードを有効にする(_R)"
 
 #: src/disks/ui/unlock-device-dialog.ui:8
 msgid "Enter passphrase to unlock"
@@ -3812,7 +3801,7 @@ msgstr "ファイルシステムを修復(_A)…"
 
 #: src/disks/ui/volume-menu.ui:38
 msgid "_Take Ownership…"
-msgstr ""
+msgstr "所有権を取得(_T)…"
 
 #: src/disks/ui/volume-menu.ui:44
 msgid "Edit _Mount Options…"

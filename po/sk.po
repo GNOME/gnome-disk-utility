@@ -10,19 +10,19 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-09-18 09:14+0000\n"
-"PO-Revision-Date: 2021-10-04 14:30+0200\n"
+"POT-Creation-Date: 2021-10-18 19:18+0000\n"
+"PO-Revision-Date: 2022-02-17 19:22+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0\n"
-"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Generator: Poedit 3.0\n"
 
 # window title, program name
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
+#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
 msgid "Disk Image Mounter"
 msgstr "Nástroj na pripojenie obrazu disku"
 
@@ -76,8 +76,10 @@ msgstr ""
 
 # dektop entry name
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
-msgid "GNOME Disks"
-msgstr "Disky prostredia GNOME"
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
+#: src/disks/ui/about-dialog.ui:10 src/disks/ui/disks.ui:28
+msgid "Disks"
+msgstr "Disky"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:8
 msgid "Disk management utility for GNOME"
@@ -107,12 +109,6 @@ msgstr "Jednoduchý spôsob správy vašich diskov"
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
-# dektop entry name
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
-msgid "Disks"
-msgstr "Disky"
-
 # desktrop entry comment
 #: data/org.gnome.DiskUtility.desktop.in:4
 msgid "Manage Drives and Media"
@@ -127,38 +123,42 @@ msgstr ""
 "disk;jednotka;zväzok;pevný disk;hdd;disk;cdrom;dvd;oddiel;iso;obraz;záloha;"
 "obnovenie;skúška výkonu;raid;luks;šifrovanie;S.M.A.R.T.;smart;"
 
-#: src/disk-image-mounter/main.c:46
+#: src/disk-image-mounter/main.c:53
 msgid "An error occurred"
 msgstr "Nastala chyba"
 
 # cmd desc
-#: src/disk-image-mounter/main.c:67
+#: src/disk-image-mounter/main.c:74
 msgid "Allow writing to the image"
 msgstr "Povolí zapisovanie do obrazu"
 
 # dialog title
-#: src/disk-image-mounter/main.c:82
+#: src/disk-image-mounter/main.c:89
 msgid "Select Disk Image(s) to Mount"
 msgstr "Výber obrazu(ov) disku na pripojenie"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
+#: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
+#: src/disks/ui/benchmark-dialog.ui:287
+#: src/disks/ui/create-disk-image-dialog.ui:123
+#: src/disks/ui/format-disk-dialog.ui:24
+#: src/disks/ui/restore-disk-image-dialog.ui:184
 msgid "_Cancel"
 msgstr "_Zrušiť"
 
 # button
-#: src/disk-image-mounter/main.c:86
+#: src/disk-image-mounter/main.c:93
 msgid "_Mount"
 msgstr "_Pripojiť"
 
 #. Add a RO check button that defaults to RO
-#: src/disk-image-mounter/main.c:94
+#: src/disk-image-mounter/main.c:101
 msgid "Set up _read-only mount"
 msgstr "Nastaviť pripojenie _iba na čítanie"
 
 # tooltip_markup
-#: src/disk-image-mounter/main.c:95
+#: src/disk-image-mounter/main.c:102
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -166,27 +166,27 @@ msgstr ""
 "Ak je zaškrtnuté, pripojenie bude iba na čítanie. Toto je užitočné, ak "
 "nechcete aby sa zmenil podkladový obraz disku"
 
-#: src/disk-image-mounter/main.c:136
+#: src/disk-image-mounter/main.c:143
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Chyba pri pripájaní sa k démonovi udisks: %s (%s, %d)"
 
 # option context
-#: src/disk-image-mounter/main.c:144
+#: src/disk-image-mounter/main.c:151
 msgid "Attach and mount one or more disk image files."
 msgstr "Pričlení a následne pripojí jeden alebo viacero súborov obrazu disku."
 
-#: src/disk-image-mounter/main.c:192
+#: src/disk-image-mounter/main.c:199
 #, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "Nedá sa otvoriť „%s“ — možno zväzok nie je pripojený?"
 
-#: src/disk-image-mounter/main.c:199
+#: src/disk-image-mounter/main.c:206
 #, c-format
 msgid "Error opening “%s”: %m"
 msgstr "Chyba pri otváraní „%s“: %m"
 
-#: src/disk-image-mounter/main.c:220
+#: src/disk-image-mounter/main.c:227
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Chyba pri pričleňovaní obrazu disku: %s (%s, %d)"
@@ -242,7 +242,7 @@ msgstr "Voľba --format-device nemôže byť použitá spolu s --restore-disk-im
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:342
+#: src/disks/gduapplication.c:348
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -254,11 +254,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:151
+#: src/disks/gduatasmartdialog.c:145
 msgid "Read Error Rate"
 msgstr "Frekvencia chýb pri čítaní"
 
-#: src/disks/gduatasmartdialog.c:152
+#: src/disks/gduatasmartdialog.c:146
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -269,44 +269,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:161
+#: src/disks/gduatasmartdialog.c:155
 msgid "Throughput Performance"
 msgstr "Priepustnosť"
 
-#: src/disks/gduatasmartdialog.c:162
+#: src/disks/gduatasmartdialog.c:156
 msgid "Average efficiency of the disk"
 msgstr "Priemerná účinnosť disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:169
+#: src/disks/gduatasmartdialog.c:163
 msgid "Spinup Time"
 msgstr "Čas roztočenia"
 
-#: src/disks/gduatasmartdialog.c:170
+#: src/disks/gduatasmartdialog.c:164
 msgid "Time needed to spin up the disk"
 msgstr "Čas potrebný na roztočenie disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:177
+#: src/disks/gduatasmartdialog.c:171
 msgid "Start/Stop Count"
 msgstr "Počet zastavení/roztočení"
 
-#: src/disks/gduatasmartdialog.c:178
+#: src/disks/gduatasmartdialog.c:172
 msgid "Number of spindle start/stop cycles"
 msgstr "Počet cyklov roztočenia a zastavenia hriadeľa"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:185
+#: src/disks/gduatasmartdialog.c:179
 msgid "Reallocated Sector Count"
 msgstr "Počet sektorov so zmenenou rezerváciou"
 
-#: src/disks/gduatasmartdialog.c:186
+#: src/disks/gduatasmartdialog.c:180
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -319,110 +319,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:195
+#: src/disks/gduatasmartdialog.c:189
 msgid "Read Channel Margin"
 msgstr "Ohraničenie čítaného kanála"
 
-#: src/disks/gduatasmartdialog.c:196
+#: src/disks/gduatasmartdialog.c:190
 msgid "Margin of a channel while reading data."
 msgstr "Ohraničenie kanála počas čítania údajov."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:203
+#: src/disks/gduatasmartdialog.c:197
 msgid "Seek Error Rate"
 msgstr "Frekvencia chýb pri presúvaní"
 
-#: src/disks/gduatasmartdialog.c:204
+#: src/disks/gduatasmartdialog.c:198
 msgid "Frequency of errors while positioning"
 msgstr "Frekvencia chýb počas umiestňovania hlavičiek"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:211
+#: src/disks/gduatasmartdialog.c:205
 msgid "Seek Timer Performance"
 msgstr "Trvanie presunu"
 
-#: src/disks/gduatasmartdialog.c:212
+#: src/disks/gduatasmartdialog.c:206
 msgid "Average efficiency of operations while positioning"
 msgstr "Priemerná výkonnosť operácií pri umiestňovaní hlavičiek"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:219 src/disks/gduatasmartdialog.c:544
+#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
 msgid "Power-On Hours"
 msgstr "Doba zapnutia v hodinách"
 
-#: src/disks/gduatasmartdialog.c:220 src/disks/gduatasmartdialog.c:545
+#: src/disks/gduatasmartdialog.c:214 src/disks/gduatasmartdialog.c:539
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Počet hodín strávených v zapnutom stave"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:227
+#: src/disks/gduatasmartdialog.c:221
 msgid "Spinup Retry Count"
 msgstr "Počet opakovaných roztočení"
 
-#: src/disks/gduatasmartdialog.c:228
+#: src/disks/gduatasmartdialog.c:222
 msgid "Number of retry attempts to spin up"
 msgstr "Počet opakovaných pokusov o roztočenie"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:235
+#: src/disks/gduatasmartdialog.c:229
 msgid "Calibration Retry Count"
 msgstr "Počet opakovaných kalibrácií"
 
-#: src/disks/gduatasmartdialog.c:236
+#: src/disks/gduatasmartdialog.c:230
 msgid "Number of attempts to calibrate the device"
 msgstr "Počet pokusov o kalibráciu zariadenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:243
+#: src/disks/gduatasmartdialog.c:237
 msgid "Power Cycle Count"
 msgstr "Počet cyklov zapnutia"
 
-#: src/disks/gduatasmartdialog.c:244
+#: src/disks/gduatasmartdialog.c:238
 msgid "Number of power-on events"
 msgstr "Počet udalostí zapnutia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:251
+#: src/disks/gduatasmartdialog.c:245
 msgid "Soft read error rate"
 msgstr "Frekvencia neopravených chýb"
 
-#: src/disks/gduatasmartdialog.c:253
+#: src/disks/gduatasmartdialog.c:247
 msgid "Frequency of errors while reading from the disk"
 msgstr "Frekvencia chýb počas čítania údajov z disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:260
+#: src/disks/gduatasmartdialog.c:254
 msgid "Reported Uncorrectable Errors"
 msgstr "Počet nahlásených neopraviteľných chýb"
 
-#: src/disks/gduatasmartdialog.c:261
+#: src/disks/gduatasmartdialog.c:255
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Počet chýb, ktoré nebolo možné opraviť pomocou hardvérového ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:268
+#: src/disks/gduatasmartdialog.c:262
 msgid "High Fly Writes"
 msgstr "Vybočenia hláv pri zápisoch"
 
-#: src/disks/gduatasmartdialog.c:269
+#: src/disks/gduatasmartdialog.c:263
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
@@ -431,44 +431,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:276
+#: src/disks/gduatasmartdialog.c:270
 msgid "Airflow Temperature"
 msgstr "Teplota prúdiaceho vzduchu"
 
-#: src/disks/gduatasmartdialog.c:277
+#: src/disks/gduatasmartdialog.c:271
 msgid "Airflow temperature of the drive"
 msgstr "Teplota prúdiaceho vzduchu v disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:284 src/disks/gduatasmartdialog.c:454
+#: src/disks/gduatasmartdialog.c:278 src/disks/gduatasmartdialog.c:448
 msgid "G-sense Error Rate"
 msgstr "Frekvencia chýb z nárazov"
 
-#: src/disks/gduatasmartdialog.c:285
+#: src/disks/gduatasmartdialog.c:279
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Frekvencia chýb ako dôsledok nárazov"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:292 src/disks/gduatasmartdialog.c:511
+#: src/disks/gduatasmartdialog.c:286 src/disks/gduatasmartdialog.c:505
 msgid "Power-off Retract Count"
 msgstr "Počet vypnutí odstavením"
 
-#: src/disks/gduatasmartdialog.c:293
+#: src/disks/gduatasmartdialog.c:287
 msgid "Number of power-off or emergency retract cycles"
 msgstr "Počet cyklov vypnutia alebo núdzového odstavenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:300 src/disks/gduatasmartdialog.c:487
+#: src/disks/gduatasmartdialog.c:294 src/disks/gduatasmartdialog.c:481
 msgid "Load/Unload Cycle Count"
 msgstr "Počet cyklov zaparkovania/odparkovania hláv"
 
-#: src/disks/gduatasmartdialog.c:301
+#: src/disks/gduatasmartdialog.c:295
 msgid "Number of cycles into landing zone position"
 msgstr "Počet cyklov odstavenia do parkovacej zóny"
 
@@ -476,34 +476,34 @@ msgstr "Počet cyklov odstavenia do parkovacej zóny"
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:162
+#: src/disks/gduatasmartdialog.c:302 src/disks/gduatasmartdialog.c:521
+#: src/disks/ui/smart-dialog.ui:153
 msgid "Temperature"
 msgstr "Teplota"
 
-#: src/disks/gduatasmartdialog.c:309
+#: src/disks/gduatasmartdialog.c:303
 msgid "Current internal temperature of the drive"
 msgstr "Aktuálna vnútorná teplota disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:316
+#: src/disks/gduatasmartdialog.c:310
 msgid "Hardware ECC Recovered"
 msgstr "Chyby opravené hardvérovým ECC"
 
-#: src/disks/gduatasmartdialog.c:317
+#: src/disks/gduatasmartdialog.c:311
 msgid "Number of ECC on-the-fly errors"
 msgstr "Počet opravených chýb za behu pomocou ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:324
+#: src/disks/gduatasmartdialog.c:318
 msgid "Reallocation Count"
 msgstr "Počet zmien rezervácie"
 
-#: src/disks/gduatasmartdialog.c:325
+#: src/disks/gduatasmartdialog.c:319
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -516,11 +516,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:335
+#: src/disks/gduatasmartdialog.c:329
 msgid "Current Pending Sector Count"
 msgstr "Aktuálny počet čakajúcich sektorov"
 
-#: src/disks/gduatasmartdialog.c:336
+#: src/disks/gduatasmartdialog.c:330
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -536,11 +536,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:347
+#: src/disks/gduatasmartdialog.c:341
 msgid "Uncorrectable Sector Count"
 msgstr "Počet neopraviteľných sektorov"
 
-#: src/disks/gduatasmartdialog.c:348
+#: src/disks/gduatasmartdialog.c:342
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -553,22 +553,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:357
+#: src/disks/gduatasmartdialog.c:351
 msgid "UDMA CRC Error Rate"
 msgstr "Frekvencia CRC chýb v UDMA"
 
-#: src/disks/gduatasmartdialog.c:358
+#: src/disks/gduatasmartdialog.c:352
 msgid "Number of CRC errors during UDMA mode"
 msgstr "Počet chýb CRC v režime UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:365
+#: src/disks/gduatasmartdialog.c:359
 msgid "Write Error Rate"
 msgstr "Frekvencia chýb pri zápise"
 
-#: src/disks/gduatasmartdialog.c:366
+#: src/disks/gduatasmartdialog.c:360
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -579,22 +579,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:373
+#: src/disks/gduatasmartdialog.c:367
 msgid "Soft Read Error Rate"
 msgstr "Frekvencia neopravených chýb"
 
-#: src/disks/gduatasmartdialog.c:374
+#: src/disks/gduatasmartdialog.c:368
 msgid "Number of off-track errors"
 msgstr "Počet nesledovaných chýb"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:381
+#: src/disks/gduatasmartdialog.c:375
 msgid "Data Address Mark Errors"
 msgstr "Chyby údajových adresovacích značiek"
 
-#: src/disks/gduatasmartdialog.c:382
+#: src/disks/gduatasmartdialog.c:376
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr ""
 "Počet chýb údajových adresovacích značiek (DAM) (alebo) špecifické pre "
@@ -603,88 +603,88 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:389
+#: src/disks/gduatasmartdialog.c:383
 msgid "Run Out Cancel"
 msgstr "Zrušenie vybehnutia"
 
-#: src/disks/gduatasmartdialog.c:390
+#: src/disks/gduatasmartdialog.c:384
 msgid "Number of ECC errors"
 msgstr "Počet chýb ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:397
+#: src/disks/gduatasmartdialog.c:391
 msgid "Soft ECC correction"
 msgstr "Chyby opravené softvérovým ECC"
 
-#: src/disks/gduatasmartdialog.c:398
+#: src/disks/gduatasmartdialog.c:392
 msgid "Number of errors corrected by software ECC"
 msgstr "Počet chýb opravených softvérovým ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:405
+#: src/disks/gduatasmartdialog.c:399
 msgid "Thermal Asperity Rate"
 msgstr "Frekvencia prekročení teploty"
 
-#: src/disks/gduatasmartdialog.c:406
+#: src/disks/gduatasmartdialog.c:400
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Počet chýb spôsobených príliš veľkou teplotou"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:413
+#: src/disks/gduatasmartdialog.c:407
 msgid "Flying Height"
 msgstr "Výška nad povrchom"
 
-#: src/disks/gduatasmartdialog.c:414
+#: src/disks/gduatasmartdialog.c:408
 msgid "Height of heads above the disk surface"
 msgstr "Výška hláv nad povrchom disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:421
+#: src/disks/gduatasmartdialog.c:415
 msgid "Spin High Current"
 msgstr "Prúd potrebný na roztočenie disku"
 
-#: src/disks/gduatasmartdialog.c:422
+#: src/disks/gduatasmartdialog.c:416
 msgid "Amount of high current used to spin up the drive"
 msgstr "Množstvo napájacieho prúdu potrebného na roztočenie disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:429
+#: src/disks/gduatasmartdialog.c:423
 msgid "Spin Buzz"
 msgstr "Výkyvy točenia"
 
-#: src/disks/gduatasmartdialog.c:430
+#: src/disks/gduatasmartdialog.c:424
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Počet vyrovnaní výkyvov točenia disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:437
+#: src/disks/gduatasmartdialog.c:431
 msgid "Offline Seek Performance"
 msgstr "Výkon presunu hláv"
 
-#: src/disks/gduatasmartdialog.c:438
+#: src/disks/gduatasmartdialog.c:432
 msgid "Drive’s seek performance during offline operations"
 msgstr "Výkon presunu hláv pri nedátových operáciách"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:445
+#: src/disks/gduatasmartdialog.c:439
 msgid "Disk Shift"
 msgstr "Posun disku"
 
-#: src/disks/gduatasmartdialog.c:446
+#: src/disks/gduatasmartdialog.c:440
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -692,7 +692,7 @@ msgstr ""
 "Posun disku môže nastať silným nárazom pri skladovaní, následkom pádu alebo "
 "teploty"
 
-#: src/disks/gduatasmartdialog.c:455
+#: src/disks/gduatasmartdialog.c:449
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
@@ -702,22 +702,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:462
+#: src/disks/gduatasmartdialog.c:456
 msgid "Loaded Hours"
 msgstr "Počet hodín prevádzky"
 
-#: src/disks/gduatasmartdialog.c:463
+#: src/disks/gduatasmartdialog.c:457
 msgid "Number of hours in general operational state"
 msgstr "Počet hodín v bežnom prevádzkovom stave"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:470
+#: src/disks/gduatasmartdialog.c:464
 msgid "Load/Unload Retry Count"
 msgstr "Počet opakovaných záťaží"
 
-#: src/disks/gduatasmartdialog.c:471
+#: src/disks/gduatasmartdialog.c:465
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -728,67 +728,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:479
+#: src/disks/gduatasmartdialog.c:473
 msgid "Load Friction"
 msgstr "Záťaž trením"
 
-#: src/disks/gduatasmartdialog.c:480
+#: src/disks/gduatasmartdialog.c:474
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Záťaž disku spôsobená trením mechanických častí úložiska"
 
-#: src/disks/gduatasmartdialog.c:488
+#: src/disks/gduatasmartdialog.c:482
 msgid "Total number of load cycles"
 msgstr "Celkový počet posunov hlavičiek"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:495
+#: src/disks/gduatasmartdialog.c:489
 msgid "Load-in Time"
 msgstr "Doba prevádzky"
 
-#: src/disks/gduatasmartdialog.c:496
+#: src/disks/gduatasmartdialog.c:490
 msgid "General time for loading in a drive"
 msgstr "Celková doba záťaže disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:503
+#: src/disks/gduatasmartdialog.c:497
 msgid "Torque Amplification Count"
 msgstr "Počet zvýšení krútiaceho momentu"
 
-#: src/disks/gduatasmartdialog.c:504
+#: src/disks/gduatasmartdialog.c:498
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Počet pokusov o vyrovnanie krútiaceho momentu disku"
 
-#: src/disks/gduatasmartdialog.c:512
+#: src/disks/gduatasmartdialog.c:506
 msgid "Number of power-off retract events"
 msgstr "Počet zaparkovaní spôsobených stratou energie"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:519
+#: src/disks/gduatasmartdialog.c:513
 msgid "GMR Head Amplitude"
 msgstr "Rozkmit hláv GMR"
 
-#: src/disks/gduatasmartdialog.c:520
+#: src/disks/gduatasmartdialog.c:514
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Rozkmit hláv pri ich chvení počas behu"
 
-#: src/disks/gduatasmartdialog.c:528
+#: src/disks/gduatasmartdialog.c:522
 msgid "Temperature of the drive"
 msgstr "Teplota disku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:535
+#: src/disks/gduatasmartdialog.c:529
 msgid "Endurance Remaining"
 msgstr "Zostávajúca odolnosť"
 
-#: src/disks/gduatasmartdialog.c:536
+#: src/disks/gduatasmartdialog.c:530
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -799,22 +799,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:552
+#: src/disks/gduatasmartdialog.c:546
 msgid "Uncorrectable ECC Count"
 msgstr "Počet neopraviteľných chýb ECC"
 
-#: src/disks/gduatasmartdialog.c:553
+#: src/disks/gduatasmartdialog.c:547
 msgid "Number of uncorrectable ECC errors"
 msgstr "Počet neopraviteľných chýb ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:560
+#: src/disks/gduatasmartdialog.c:554
 msgid "Good Block Rate"
 msgstr "Počet dobrých blokov"
 
-#: src/disks/gduatasmartdialog.c:561
+#: src/disks/gduatasmartdialog.c:555
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -825,69 +825,69 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:569
+#: src/disks/gduatasmartdialog.c:563
 msgid "Head Flying Hours"
 msgstr "Počet hodín pohybu hláv"
 
-#: src/disks/gduatasmartdialog.c:570
+#: src/disks/gduatasmartdialog.c:564
 msgid "Time while head is positioning"
 msgstr "Čas strávený umiestňovaním hláv"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:577
+#: src/disks/gduatasmartdialog.c:571
 msgid "Read Error Retry Rate"
 msgstr "Frekvencia chýb opakovaného čítania"
 
-#: src/disks/gduatasmartdialog.c:578
+#: src/disks/gduatasmartdialog.c:572
 msgid "Number of errors while reading from a disk"
 msgstr "Počet chýb počas čítania z disku"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:585
+#: src/disks/gduatasmartdialog.c:579
 msgid "Total LBAs Written"
 msgstr "Celkový počet zapísaných sektorov LBA"
 
-#: src/disks/gduatasmartdialog.c:586
+#: src/disks/gduatasmartdialog.c:580
 msgid "The amount of data written during the lifetime of the disk"
 msgstr "Množstvo údajov zapísaných počas životnosti disku"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:593
+#: src/disks/gduatasmartdialog.c:587
 msgid "Total LBAs Read"
 msgstr "Celkový počet čítaných sektorov LBA"
 
-#: src/disks/gduatasmartdialog.c:594
+#: src/disks/gduatasmartdialog.c:588
 msgid "The amount of data read during the lifetime of the disk"
 msgstr "Množstvo prečítaných údajov počas životnosti disku"
 
-#: src/disks/gduatasmartdialog.c:653
+#: src/disks/gduatasmartdialog.c:647
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Pre atribút %d neexistuje popis"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:700
+#: src/disks/gduatasmartdialog.c:694
 msgid "FAILING"
 msgstr "ZLYHANIE"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:709
+#: src/disks/gduatasmartdialog.c:703
 msgid "Failed in the past"
 msgstr "Dávnejšie zlyhanie"
 
-#: src/disks/gduatasmartdialog.c:713
+#: src/disks/gduatasmartdialog.c:707
 msgid "OK"
 msgstr "OK"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:740
+#: src/disks/gduatasmartdialog.c:734
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -902,7 +902,7 @@ msgstr[2] "%d sektory"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:752 src/disks/gduatasmartdialog.c:885
+#: src/disks/gduatasmartdialog.c:746 src/disks/gduatasmartdialog.c:879
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f °C / %.0f °F"
@@ -913,99 +913,99 @@ msgstr "%.0f °C / %.0f °F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:763 src/disks/gduatasmartdialog.c:1133
+#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1127
 msgid "N/A"
 msgstr "Nedostupné"
 
-#: src/disks/gduatasmartdialog.c:783
+#: src/disks/gduatasmartdialog.c:777
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Posledná samokontrola bola úspešne dokončená"
 
-#: src/disks/gduatasmartdialog.c:787
+#: src/disks/gduatasmartdialog.c:781
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Posledná samokontrola bola zrušená"
 
-#: src/disks/gduatasmartdialog.c:791
+#: src/disks/gduatasmartdialog.c:785
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Posledná samokontrola bola prerušená"
 
-#: src/disks/gduatasmartdialog.c:795
+#: src/disks/gduatasmartdialog.c:789
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Posledná samokontrola nebola dokončená"
 
-#: src/disks/gduatasmartdialog.c:799
+#: src/disks/gduatasmartdialog.c:793
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Posledná samokontrola zlyhala"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:804
+#: src/disks/gduatasmartdialog.c:798
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Posledná samokontrola zlyhala (elektronika)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:809
+#: src/disks/gduatasmartdialog.c:803
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Posledná samokontrola zlyhala (servomotor)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:814
+#: src/disks/gduatasmartdialog.c:808
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Posledná samokontrola zlyhala (čítanie)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:819
+#: src/disks/gduatasmartdialog.c:813
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Posledná samokontrola zlyhala (obsluha)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:824
+#: src/disks/gduatasmartdialog.c:818
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Prebieha samokontrola — zostáva %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:831
+#: src/disks/gduatasmartdialog.c:825
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Neznámy výsledok (%s)"
 
-#: src/disks/gduatasmartdialog.c:856
+#: src/disks/gduatasmartdialog.c:850
 #, c-format
 msgid "%s ago"
 msgstr "Pred %s"
 
-#: src/disks/gduatasmartdialog.c:919
+#: src/disks/gduatasmartdialog.c:913
 msgid "SMART is not supported"
 msgstr "Systém SMART nie je podporovaný"
 
-#: src/disks/gduatasmartdialog.c:927
+#: src/disks/gduatasmartdialog.c:921
 msgid "SMART is not enabled"
 msgstr "Systém SMART nie je povolený"
 
-#: src/disks/gduatasmartdialog.c:937
+#: src/disks/gduatasmartdialog.c:931
 msgid "Self-test in progress"
 msgstr "Prebieha samokontrola"
 
-#: src/disks/gduatasmartdialog.c:950 src/disks/gduatasmartdialog.c:959
+#: src/disks/gduatasmartdialog.c:944 src/disks/gduatasmartdialog.c:953
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "DISK PRAVDEPODOBNE ČOSKORO ZLYHÁ"
 
-#: src/disks/gduatasmartdialog.c:982
+#: src/disks/gduatasmartdialog.c:976
 msgid "SELF-TEST FAILED"
 msgstr "SAMOKONTROLA ZLYHALA"
 
-#: src/disks/gduatasmartdialog.c:991
+#: src/disks/gduatasmartdialog.c:985
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
@@ -1013,7 +1013,7 @@ msgstr[0] "Disk je v poriadku, zlyháva %d príznakov zlyhania"
 msgstr[1] "Disk je v poriadku, zlyháva jeden príznak zlyhania"
 msgstr[2] "Disk je v poriadku, zlyhávajú %d príznaky zlyhania"
 
-#: src/disks/gduatasmartdialog.c:1002
+#: src/disks/gduatasmartdialog.c:996
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
@@ -1021,7 +1021,7 @@ msgstr[0] "Disk je v poriadku, má %d chybných sektorov"
 msgstr[1] "Disk je v poriadku, má jeden chybný sektor"
 msgstr[2] "Disk je v poriadku, má %d chybné sektory"
 
-#: src/disks/gduatasmartdialog.c:1013
+#: src/disks/gduatasmartdialog.c:1007
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -1030,7 +1030,7 @@ msgstr[1] "Disk je v poriadku, jeden príznak zlyhal v minulosti"
 msgstr[2] "Disk je v poriadku, %d príznaky zlyhali v minulosti"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1022
+#: src/disks/gduatasmartdialog.c:1016
 msgid "Disk is OK"
 msgstr "Disk je v poriadku"
 
@@ -1038,104 +1038,104 @@ msgstr "Disk je v poriadku"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1036
+#: src/disks/gduatasmartdialog.c:1030
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
 # príznak
-#: src/disks/gduatasmartdialog.c:1121
+#: src/disks/gduatasmartdialog.c:1115
 msgid "Pre-Fail"
 msgstr "Zlyhávajúci"
 
 #  príznak
-#: src/disks/gduatasmartdialog.c:1123
+#: src/disks/gduatasmartdialog.c:1117
 msgid "Old-Age"
 msgstr "Starý"
 
 #  príznak
-#: src/disks/gduatasmartdialog.c:1126
+#: src/disks/gduatasmartdialog.c:1120
 msgid "Online"
 msgstr "Pripojený"
 
 #  príznak
-#: src/disks/gduatasmartdialog.c:1128
+#: src/disks/gduatasmartdialog.c:1122
 msgid "Offline"
 msgstr "Odpojený"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1237
+#: src/disks/gduatasmartdialog.c:1231
 msgid "Threshold exceeded"
 msgstr "Prekročený prah"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1242
+#: src/disks/gduatasmartdialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "Neprekročený prah"
 
-#: src/disks/gduatasmartdialog.c:1318
+#: src/disks/gduatasmartdialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "Chyba pri obnovovaní údajov SMART"
 
-#: src/disks/gduatasmartdialog.c:1350
+#: src/disks/gduatasmartdialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "Chyba pri rušení samokontroly SMART"
 
-#: src/disks/gduatasmartdialog.c:1369
+#: src/disks/gduatasmartdialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "Chyba pri spustení samokontroly SMART"
 
-#: src/disks/gduatasmartdialog.c:1448
+#: src/disks/gduatasmartdialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Vyskytla sa chyba pri pokuse o povolenie alebo zakázanie systému SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1530
+#: src/disks/gduatasmartdialog.c:1565
 msgid "ID"
 msgstr "Identifikátor"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1542
+#: src/disks/gduatasmartdialog.c:1577
 msgid "Attribute"
 msgstr "Atribút"
 
 # GtkLabel label
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1556
+#: src/disks/gduatasmartdialog.c:1591
 msgid "Value"
 msgstr "Hodnota"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1568
+#: src/disks/gduatasmartdialog.c:1603
 msgid "Normalized"
 msgstr "Normalizovaná"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1580
+#: src/disks/gduatasmartdialog.c:1615
 msgid "Threshold"
 msgstr "Prah"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1592
+#: src/disks/gduatasmartdialog.c:1627
 msgid "Worst"
 msgstr "Najhoršia"
 
 # GtkLabel label
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1604
+#: src/disks/gduatasmartdialog.c:1639
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Typ"
 
 # GtkLabel label
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1616
+#: src/disks/gduatasmartdialog.c:1651
 msgid "Updates"
 msgstr "Aktualizácie"
 
 # GtkLabel label
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
+#: src/disks/gduatasmartdialog.c:1663 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Zhodnotenie"
 
@@ -1397,7 +1397,7 @@ msgid "Error creating disk image"
 msgstr "Chyba pri vytváraní obrazu disku"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:480
+#: src/disks/gducreatediskimagedialog.c:498
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Neobnoviteľné chyby čítania pri vytváraní obrazu disku"
 
@@ -1406,7 +1406,7 @@ msgstr "Neobnoviteľné chyby čítania pri vytváraní obrazu disku"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:489
+#: src/disks/gducreatediskimagedialog.c:507
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1418,36 +1418,36 @@ msgstr ""
 "nosič poškriabaný alebo ak je jednotka fyzicky poškodená"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:495
+#: src/disks/gducreatediskimagedialog.c:513
 msgid "_Delete Disk Image File"
 msgstr "O_dstrániť súbor s obrazom disku"
 
-#: src/disks/gducreatediskimagedialog.c:497
+#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
 msgid "_Close"
 msgstr "_Zavrieť"
 
-#: src/disks/gducreatediskimagedialog.c:722
+#: src/disks/gducreatediskimagedialog.c:731
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Chyba pri určovaní veľkosti zariadenia: "
 
-#: src/disks/gducreatediskimagedialog.c:729
+#: src/disks/gducreatediskimagedialog.c:738
 #: src/disks/gdurestorediskimagedialog.c:738
 #, c-format
 msgid "Device is size 0"
 msgstr "Zariadenie má nulovú veľkosť"
 
-#: src/disks/gducreatediskimagedialog.c:762
+#: src/disks/gducreatediskimagedialog.c:771
 msgid "Error allocating space for disk image file: "
 msgstr "Chyba pri rezervovaní miesta pre súbor s obrazom disku: "
 
-#: src/disks/gducreatediskimagedialog.c:922
+#: src/disks/gducreatediskimagedialog.c:931
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Súbor s názvom „%s“ už existuje. Chcete ho nahradiť?"
 
-#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gducreatediskimagedialog.c:934
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
@@ -1455,24 +1455,24 @@ msgid ""
 msgstr "Súbor už v „%s“ existuje. Nahradenie prepíše jeho obsah."
 
 # button
-#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gducreatediskimagedialog.c:937
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Nahradiť"
 
-#: src/disks/gducreatediskimagedialog.c:978
+#: src/disks/gducreatediskimagedialog.c:987
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Chyba pri otváraní súboru na zápis"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:994
+#: src/disks/gducreatediskimagedialog.c:1003
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Kopírujú sa údaje na obraz disku"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1000
+#: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Vytváranie obrazu disku"
 
@@ -1525,7 +1525,7 @@ msgid "Confirm Details"
 msgstr "Potvrdenie podrobností"
 
 # button
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:410
 msgid "_Format"
 msgstr "_Formátovať"
 
@@ -1810,12 +1810,12 @@ msgstr "Prázdny"
 msgid "Error formatting disk"
 msgstr "Chyba pri formátovaní disku"
 
-#: src/disks/gduformatdiskdialog.c:417
+#: src/disks/gduformatdiskdialog.c:384
 msgid "Are you sure you want to format the disk?"
 msgstr "Naozaj chcete formátovať disk?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:421
+#: src/disks/gduformatdiskdialog.c:388
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1823,7 +1823,7 @@ msgstr ""
 "Všetky údaje na disku budú stratené, ale môžu byť stále obnovené pomocou "
 "služieb na obnovu údajov"
 
-#: src/disks/gduformatdiskdialog.c:423
+#: src/disks/gduformatdiskdialog.c:390
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1834,7 +1834,7 @@ msgstr ""
 "použiť dôkladnejšie zmazanie a vyhnúť sa tak ich zneužitiu"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:428
+#: src/disks/gduformatdiskdialog.c:395
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1842,7 +1842,7 @@ msgstr ""
 "Všetky údaje na disku budú prepísané a pravdepodobne ich nebude možné "
 "obnoviť službami na obnovu údajov"
 
-#: src/disks/gduformatdiskdialog.c:436
+#: src/disks/gduformatdiskdialog.c:403
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1978,12 +1978,12 @@ msgid "_Resize"
 msgstr "_Zmeniť veľkosť"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
+#: src/disks/gduresizedialog.c:602 src/disks/gduresizedialog.c:625
 msgid "Error resizing filesystem"
 msgstr "Chyba pri zmene veľkosti súborového systému"
 
-#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:569
+#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:500
+#: src/disks/gduresizedialog.c:576
 msgid "Error resizing partition"
 msgstr "Chyba pri zmene veľkosti oddielu"
 
@@ -1991,27 +1991,27 @@ msgstr "Chyba pri zmene veľkosti oddielu"
 msgid "Error repairing filesystem after resize"
 msgstr "Chyba pri opravovaní súborového systému po zmene veľkosti"
 
-#: src/disks/gduresizedialog.c:464
+#: src/disks/gduresizedialog.c:471
 msgid "Resizing not ready"
 msgstr "Zmena veľkosti nie je pripravená"
 
-#: src/disks/gduresizedialog.c:466
+#: src/disks/gduresizedialog.c:473
 msgid "Waited too long for the filesystem"
 msgstr "Čakalo sa príliš dlho na súborový systém"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
+#: src/disks/gduresizedialog.c:533 src/disks/gduresizedialog.c:649
 msgid "Error repairing filesystem"
 msgstr "Chyba pri opravovaní súborového systému"
 
-#: src/disks/gduresizedialog.c:748
+#: src/disks/gduresizedialog.c:755
 msgid "Error mounting the filesystem"
 msgstr "Chyba pri pripájaní súborového systému"
 
-#: src/disks/gduresizedialog.c:790
+#: src/disks/gduresizedialog.c:797
 msgid "Fit to size"
 msgstr "Prispôsobiť veľkosti"
 
-#: src/disks/gduresizedialog.c:825
+#: src/disks/gduresizedialog.c:832
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Chyba pri pripájaní súborového systému kvôli výpočtu minimálnej veľkosti"
@@ -2331,34 +2331,34 @@ msgstr "%s — %s"
 msgid "Unallocated Space"
 msgstr "Nevyhradené miesto"
 
-#: src/disks/gduwindow.c:2973
+#: src/disks/gduwindow.c:2981
 msgid "Error while repairing filesystem"
 msgstr "Chyba počas opravovania súborového systému"
 
-#: src/disks/gduwindow.c:3000
+#: src/disks/gduwindow.c:3008
 msgid "Repair successful"
 msgstr "Oprava prebehla úspešne"
 
-#: src/disks/gduwindow.c:3000
+#: src/disks/gduwindow.c:3008
 msgid "Repair failed"
 msgstr "Oprave zlyhala"
 
-#: src/disks/gduwindow.c:3003
+#: src/disks/gduwindow.c:3011
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Súborový systém %s na zväzku %s bol opravený."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3017
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Súborový systém %s na zväzku %s nemohol byť opravený."
 
-#: src/disks/gduwindow.c:3062
+#: src/disks/gduwindow.c:3087
 msgid "Confirm Repair"
 msgstr "Potvrdenie opravy"
 
-#: src/disks/gduwindow.c:3065
+#: src/disks/gduwindow.c:3090
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2370,66 +2370,66 @@ msgstr ""
 "obnovu stratených súborov. Operácia môže trvať dlhšiu dobu, obzvlášť, ak "
 "oddiel obsahuje veľké množstvo údajov."
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3132
 msgid "Error while taking filesystem ownership"
 msgstr "Chyba počas prevzatia vlastníctva súborového systému"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3204
 msgid "Error while checking filesystem"
 msgstr "Chyba počas kontroly súborového systému"
 
 # PK: suborovy system
-#: src/disks/gduwindow.c:3201
+#: src/disks/gduwindow.c:3231
 msgid "Filesystem intact"
 msgstr "Súborový systém nie je poškodený"
 
-#: src/disks/gduwindow.c:3201
+#: src/disks/gduwindow.c:3231
 msgid "Filesystem damaged"
 msgstr "Súborový systém je poškodený"
 
-#: src/disks/gduwindow.c:3204
+#: src/disks/gduwindow.c:3234
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Súborový systém %s na zväzku %s nie je poškodený."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3240
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Súborový systém %s na zväzku %s vyžaduje opravu."
 
-#: src/disks/gduwindow.c:3261
+#: src/disks/gduwindow.c:3308
 msgid "Confirm Check"
 msgstr "Potvrdenie kontroly"
 
-#: src/disks/gduwindow.c:3264
+#: src/disks/gduwindow.c:3311
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
 "Kontrola môže trvať dlhšiu dobu, obzvlášť ak oddiel obsahuje množstvo údajov."
 
-#: src/disks/gduwindow.c:3544
+#: src/disks/gduwindow.c:3588
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prepnutie jednotky do pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3591
+#: src/disks/gduwindow.c:3635
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Vyskytla sa chyba pri pokuse o prebudenie jednotky z pohotovostného režimu"
 
-#: src/disks/gduwindow.c:3637
+#: src/disks/gduwindow.c:3681
 msgid "Error powering off drive"
 msgstr "Chyba pri vypínaní jednotky"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3689
+#: src/disks/gduwindow.c:3733
 msgid "Are you sure you want to power off the drives?"
 msgstr "Naozaj chcete vypnúť jednotky?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3691
+#: src/disks/gduwindow.c:3735
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2438,48 +2438,48 @@ msgstr ""
 "jednotiek."
 
 # GtkLabel label
-#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3739 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Vypnúť"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3819
 msgid "Error mounting filesystem"
 msgstr "Chyba pri pripájaní súborového systému"
 
-#: src/disks/gduwindow.c:3860
+#: src/disks/gduwindow.c:3904
 msgid "Error deleting partition"
 msgstr "Chyba pri odstraňovaní oddielu"
 
-#: src/disks/gduwindow.c:3897
+#: src/disks/gduwindow.c:3941
 msgid "Are you sure you want to delete the partition?"
 msgstr "Naozaj chcete odstrániť oddiel?"
 
-#: src/disks/gduwindow.c:3898
+#: src/disks/gduwindow.c:3942
 msgid "All data on the partition will be lost"
 msgstr "Všetky údaje na oddieli budú stratené"
 
 # button
-#: src/disks/gduwindow.c:3899
+#: src/disks/gduwindow.c:3943
 msgid "_Delete"
 msgstr "O_dstrániť"
 
-#: src/disks/gduwindow.c:3930
+#: src/disks/gduwindow.c:3974
 msgid "Error ejecting media"
 msgstr "Chyba pri vysúvaní nosiča"
 
-#: src/disks/gduwindow.c:4013
+#: src/disks/gduwindow.c:4057
 msgid "Error starting swap"
 msgstr "Chyba pri spúšťaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:4050
+#: src/disks/gduwindow.c:4094
 msgid "Error stopping swap"
 msgstr "Chyba pri zastavovaní odkladacieho priestoru"
 
-#: src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4136
 msgid "Error setting autoclear flag"
 msgstr "Chyba pri nastavovaní príznaku „autoclear“"
 
-#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
+#: src/disks/gduwindow.c:4189 src/disks/gduwindow.c:4253
 msgid "Error canceling job"
 msgstr "Chyba pri rušení úlohy"
 
@@ -2500,7 +2500,7 @@ msgstr "Vnútorná chyba"
 msgid "Need more input"
 msgstr "Na vstupe sa očakáva viac"
 
-#: src/disks/ui/about-dialog.ui:12
+#: src/disks/ui/about-dialog.ui:11
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2510,11 +2510,11 @@ msgstr ""
 "Autorské práva © 2008-2013 David Zeuthen\n"
 "Autorské práva © 2009-2017 Projekt GNOME\n"
 
-#: src/disks/ui/about-dialog.ui:16
+#: src/disks/ui/about-dialog.ui:15
 msgid "View, modify and configure disks and media"
 msgstr "Zobrazuje, upravuje a nastavuje disky a nosiče"
 
-#: src/disks/ui/about-dialog.ui:19
+#: src/disks/ui/about-dialog.ui:18
 msgid "translator-credits"
 msgstr ""
 "Peter Mráz <etkinator@gmail.com>\n"
@@ -2543,22 +2543,22 @@ msgid "_About Disks"
 msgstr "O aplikácii Disky"
 
 # GtkDialog title
-#: src/disks/ui/benchmark-dialog.ui:7
+#: src/disks/ui/benchmark-dialog.ui:6
 msgid "Benchmark"
 msgstr "Skúška výkonu"
 
 # GtkButton label
-#: src/disks/ui/benchmark-dialog.ui:23
+#: src/disks/ui/benchmark-dialog.ui:25
 msgid "_Start Benchmark…"
 msgstr "_Spustiť skúšku výkonu…"
 
 # GtkButton label
-#: src/disks/ui/benchmark-dialog.ui:35
+#: src/disks/ui/benchmark-dialog.ui:37
 msgid "_Abort Benchmark"
 msgstr "_Prerušiť skúšku výkonu"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:83
+#: src/disks/ui/benchmark-dialog.ui:85
 msgid "Last Benchmarked"
 msgstr "Naposledy skúšaný výkon"
 
@@ -2568,37 +2568,37 @@ msgid "Average Read Rate"
 msgstr "Priemerná rýchlosť čítania"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:117
+#: src/disks/ui/benchmark-dialog.ui:115
 msgid "Average Write Rate"
 msgstr "Priemerná rýchlosť zápisu"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:134
+#: src/disks/ui/benchmark-dialog.ui:130
 msgid "Average Access Time"
 msgstr "Priemerná doba prístupu"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:215
+#: src/disks/ui/benchmark-dialog.ui:201
 msgid "Disk or Device"
 msgstr "Disk alebo zariadenie"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:248
+#: src/disks/ui/benchmark-dialog.ui:230
 msgid "Sample Size"
 msgstr "Veľkosť vzorky"
 
 # GtkDialog title
-#: src/disks/ui/benchmark-dialog.ui:291
+#: src/disks/ui/benchmark-dialog.ui:268
 msgid "Benchmark Settings"
 msgstr "Nastavenia skúšky výkonu"
 
 # GtkButton label
-#: src/disks/ui/benchmark-dialog.ui:316
+#: src/disks/ui/benchmark-dialog.ui:296
 msgid "_Start Benchmarking…"
 msgstr "_Spustiť skúšku výkonu…"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:340
+#: src/disks/ui/benchmark-dialog.ui:317
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
@@ -2609,27 +2609,27 @@ msgstr ""
 "výkonu zápisu si zálohujte dôležité údaje."
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:356
+#: src/disks/ui/benchmark-dialog.ui:328
 msgid "Transfer Rate"
 msgstr "Prenosová rýchlosť"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:374
+#: src/disks/ui/benchmark-dialog.ui:346
 msgid "Number of S_amples"
 msgstr "Počet _vzoriek"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:393
+#: src/disks/ui/benchmark-dialog.ui:363
 msgid "Sample S_ize (MiB)"
 msgstr "Veľkosť _vzorky (MiB)"
 
 # GtkCheckButton label
-#: src/disks/ui/benchmark-dialog.ui:409
+#: src/disks/ui/benchmark-dialog.ui:377
 msgid "Perform _write-benchmark"
 msgstr "Vykonať s_kúšku výkonu pre zápis"
 
 # GtkCheckButton tooltip_text
-#: src/disks/ui/benchmark-dialog.ui:413
+#: src/disks/ui/benchmark-dialog.ui:381
 msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -2650,7 +2650,7 @@ msgstr ""
 "alebo zariadenie sa môže používať)."
 
 # GtkSpinButton tooltip_text
-#: src/disks/ui/benchmark-dialog.ui:432
+#: src/disks/ui/benchmark-dialog.ui:398
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
@@ -2659,7 +2659,7 @@ msgstr ""
 "viac času."
 
 # GtkSpinButton tooltip_text
-#: src/disks/ui/benchmark-dialog.ui:449
+#: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
@@ -2669,17 +2669,17 @@ msgstr ""
 "vzorky budú viesť k presnejším skúškam výkonu, čo ale zaberie viac času."
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:482
+#: src/disks/ui/benchmark-dialog.ui:442
 msgid "Access Time"
 msgstr "Prístupová doba"
 
 # GtkLabel label
-#: src/disks/ui/benchmark-dialog.ui:500
+#: src/disks/ui/benchmark-dialog.ui:460
 msgid "Number of Sampl_es"
 msgstr "Počet vzori_ek"
 
 # GtkSpinButton tooltip_text
-#: src/disks/ui/benchmark-dialog.ui:519
+#: src/disks/ui/benchmark-dialog.ui:477
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -2776,12 +2776,12 @@ msgid "Location"
 msgstr "Umiestnenie"
 
 # GtkDialog title
-#: src/disks/ui/create-disk-image-dialog.ui:8
+#: src/disks/ui/create-disk-image-dialog.ui:7
 msgid "Create Disk Image"
 msgstr "Vytvorenie obrazu disku"
 
 # GtkLabel label
-#: src/disks/ui/create-disk-image-dialog.ui:29
+#: src/disks/ui/create-disk-image-dialog.ui:31
 #: src/disks/ui/edit-crypttab-dialog.ui:104
 #: src/disks/ui/edit-gpt-partition-dialog.ui:91
 #: src/disks/ui/new-disk-image-dialog.ui:48
@@ -2795,18 +2795,18 @@ msgid "Save in _Folder"
 msgstr "Uložiť v _priečinku"
 
 # GtkFileChooserButton title
-#: src/disks/ui/create-disk-image-dialog.ui:85
+#: src/disks/ui/create-disk-image-dialog.ui:81
 #: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Výber priečinka"
 
 # GtkLabel label
-#: src/disks/ui/create-disk-image-dialog.ui:99
+#: src/disks/ui/create-disk-image-dialog.ui:93
 msgid "Source"
 msgstr "Zdroj"
 
 # GtkButton label
-#: src/disks/ui/create-disk-image-dialog.ui:143
+#: src/disks/ui/create-disk-image-dialog.ui:132
 msgid "_Start Creating…"
 msgstr "_Spustiť vytváranie…"
 
@@ -2832,7 +2832,7 @@ msgstr "Napríklad: „Angeline súbory“ alebo „Záloha“."
 
 # GtkLabel label
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:87
+#: src/disks/ui/format-disk-dialog.ui:84
 msgid "_Erase"
 msgstr "_Vymazať"
 
@@ -3685,17 +3685,17 @@ msgid "Erase _Type"
 msgstr "_Typ vymazania"
 
 # GtkDialog title
-#: src/disks/ui/format-disk-dialog.ui:7
+#: src/disks/ui/format-disk-dialog.ui:6
 msgid "Format Disk"
 msgstr "Formátovanie disku"
 
 # GtkButton label
-#: src/disks/ui/format-disk-dialog.ui:34
+#: src/disks/ui/format-disk-dialog.ui:33
 msgid "_Format…"
 msgstr "_Formátovať…"
 
 # GtkLabel label
-#: src/disks/ui/format-disk-dialog.ui:70
+#: src/disks/ui/format-disk-dialog.ui:67
 msgid "_Partitioning"
 msgstr "_Typ rozdelenia"
 
@@ -3747,42 +3747,42 @@ msgid "The difference to the previous partition size"
 msgstr "Rozdiel oproti predošlej veľkosti oddielu"
 
 # GtkDialog title
-#: src/disks/ui/restore-disk-image-dialog.ui:9
+#: src/disks/ui/restore-disk-image-dialog.ui:8
 msgid "Restore Disk Image"
 msgstr "Obnovenie obrazu disku"
 
 # GtkLabel label
-#: src/disks/ui/restore-disk-image-dialog.ui:44
+#: src/disks/ui/restore-disk-image-dialog.ui:38
 msgid "_Image to Restore"
 msgstr "_Obraz na obnovenie"
 
 # GtkFileChooserButton title
-#: src/disks/ui/restore-disk-image-dialog.ui:63
+#: src/disks/ui/restore-disk-image-dialog.ui:55
 msgid "Select Disk Image to Restore"
 msgstr "Výber obrazu disku na obnovenie"
 
 # GtkLabel label
-#: src/disks/ui/restore-disk-image-dialog.ui:77
+#: src/disks/ui/restore-disk-image-dialog.ui:67
 msgid "Destination"
 msgstr "Cieľ"
 
 # GtkLabel label
-#: src/disks/ui/restore-disk-image-dialog.ui:110
+#: src/disks/ui/restore-disk-image-dialog.ui:96
 msgid "_Destination"
 msgstr "_Cieľ"
 
 # GtkLabel label
-#: src/disks/ui/restore-disk-image-dialog.ui:141
+#: src/disks/ui/restore-disk-image-dialog.ui:123
 msgid "Image to Restore"
 msgstr "Obraz na obnovenie"
 
 # GtkLabel label
-#: src/disks/ui/restore-disk-image-dialog.ui:174
+#: src/disks/ui/restore-disk-image-dialog.ui:152
 msgid "Image Size"
 msgstr "Veľkosť obrazu"
 
 # GtkButton label
-#: src/disks/ui/restore-disk-image-dialog.ui:230
+#: src/disks/ui/restore-disk-image-dialog.ui:193
 msgid "_Start Restoring…"
 msgstr "_Spustiť obnovu…"
 
@@ -3884,28 +3884,36 @@ msgid "Format the selected volume"
 msgstr "Naformátovanie vybraného zväzku"
 
 # GtkDialog title
-#: src/disks/ui/smart-dialog.ui:7
+#: src/disks/ui/smart-dialog.ui:6
 msgid "SMART Data & Self-Tests"
 msgstr "Údaje SMART a samokontroly"
 
 # GtkButton label
-#: src/disks/ui/smart-dialog.ui:24
+#: src/disks/ui/smart-dialog.ui:25
 msgid "_Start Self-test"
 msgstr "Spustiť _samokontrolu"
 
-#: src/disks/ui/smart-dialog.ui:28
+#: src/disks/ui/smart-dialog.ui:29
 msgid "Click to start a SMART self-test"
 msgstr "Kliknutím spustíte samokontrolu systému SMART"
 
 # GtkButton label
-#: src/disks/ui/smart-dialog.ui:37
+#: src/disks/ui/smart-dialog.ui:38
 msgid "_Stop Self-test"
 msgstr "_Zastaviť samokontrolu"
 
 # tooltip
-#: src/disks/ui/smart-dialog.ui:41
+#: src/disks/ui/smart-dialog.ui:42
 msgid "Click to stop the SMART self-test currently in progress"
 msgstr "Kliknutím zastavíte práve prebiehajúcu samokontrolu systému SMART"
+
+#: src/disks/ui/smart-dialog.ui:51
+msgid "Close"
+msgstr "Zavrieť"
+
+#: src/disks/ui/smart-dialog.ui:59
+msgid "Refresh"
+msgstr "Obnoviť"
 
 # tooltip
 #: src/disks/ui/smart-dialog.ui:63
@@ -3913,54 +3921,54 @@ msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Kliknutím vynútite znovunačítanie údajov systému SMART z pevného disku"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:96
+#: src/disks/ui/smart-dialog.ui:95
 msgid "Powered On"
 msgstr "V prevádzke"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:129
+#: src/disks/ui/smart-dialog.ui:124
 msgid "Updated"
 msgstr "Aktualizované"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:195
+#: src/disks/ui/smart-dialog.ui:182
 msgid "Self-test Result"
 msgstr "Výsledky samokontroly"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/smart-dialog.ui:197
 msgid "Self-assessment"
 msgstr "Samozhodnotenie"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:229
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Overall Assessment"
 msgstr "Celkové zhodnotenie"
 
 # tooltip
-#: src/disks/ui/smart-dialog.ui:295
+#: src/disks/ui/smart-dialog.ui:270
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Kliknutím povolíte alebo zakážete systém SMART pevného disku"
 
 # GtkLabel label
-#: src/disks/ui/smart-dialog.ui:306
+#: src/disks/ui/smart-dialog.ui:281
 msgid "SMART _Attributes"
 msgstr "_Atribúty SMART"
 
 # GtkMenuItem label
-#: src/disks/ui/smart-dialog.ui:364
-msgid "Short"
-msgstr "Krátky"
+#: src/disks/ui/smart-dialog.ui:334
+msgid "_Short"
+msgstr "_Krátky"
 
 # GtkMenuItem label
-#: src/disks/ui/smart-dialog.ui:372
-msgid "Extended"
-msgstr "Rozšírený"
+#: src/disks/ui/smart-dialog.ui:338
+msgid "_Extended"
+msgstr "_Rozšírený"
 
 # GtkMenuItem label
-#: src/disks/ui/smart-dialog.ui:380
-msgid "Conveyance"
-msgstr "Po preprave"
+#: src/disks/ui/smart-dialog.ui:342
+msgid "_Conveyance"
+msgstr "Po _preprave"
 
 # dialog title
 #: src/disks/ui/take-ownership-dialog.ui:4
@@ -4246,20 +4254,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:833
+#: src/libgdu/gduutils.c:840
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ovplyvnené zariadenia"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1426
 msgid "Error unmounting filesystem"
 msgstr "Chyba pri odpájaní súborového systému"
 
-#: src/libgdu/gduutils.c:1451
+#: src/libgdu/gduutils.c:1458
 msgid "Error locking device"
 msgstr "Chyba pri zamykaní zariadenia"
 
-#: src/libgdu/gduutils.c:1472
+#: src/libgdu/gduutils.c:1479
 msgid "Error disabling autoclear for loop device"
 msgstr "Chyba pri zakázaní príznaku autoclear pre zariadenie slučky"
 
@@ -4280,6 +4288,10 @@ msgstr "Pevný disk pravdepodobne čoskoro zlyhá."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Preskúmať"
+
+# dektop entry name
+#~ msgid "GNOME Disks"
+#~ msgstr "Disky prostredia GNOME"
 
 # button
 #~ msgctxt "Accessibility label for toolbutton-mount"

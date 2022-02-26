@@ -1,16 +1,16 @@
 # Polish translation for gnome-disk-utility.
-# Copyright © 2009-2021 the gnome-disk-utility authors.
+# Copyright © 2009-2022 the gnome-disk-utility authors.
 # This file is distributed under the same license as the gnome-disk-utility package.
-# Piotr Drąg <piotrdrag@gmail.com>, 2009-2021.
-# Aviary.pl <community-poland@mozilla.org>, 2009-2021.
+# Piotr Drąg <piotrdrag@gmail.com>, 2009-2022.
+# Aviary.pl <community-poland@mozilla.org>, 2009-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-08-13 17:43+0000\n"
-"PO-Revision-Date: 2021-09-13 17:55+0200\n"
+"POT-Creation-Date: 2021-10-18 19:18+0000\n"
+"PO-Revision-Date: 2022-02-26 15:30+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:48
+#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
 msgid "Disk Image Mounter"
 msgstr "Montowanie obrazu dysku"
 
@@ -69,8 +69,10 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Liczba próbek używanych podczas testu wydajności czasu dostępu."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
-msgid "GNOME Disks"
-msgstr "Dyski GNOME"
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
+#: src/disks/ui/about-dialog.ui:10 src/disks/ui/disks.ui:28
+msgid "Disks"
+msgstr "Dyski"
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:8
 msgid "Disk management utility for GNOME"
@@ -101,11 +103,6 @@ msgstr "Łatwy sposób na zarządzanie dyskami"
 msgid "The GNOME Project"
 msgstr "Projekt GNOME"
 
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
-#: src/disks/ui/about-dialog.ui:11 src/disks/ui/disks.ui:28
-msgid "Disks"
-msgstr "Dyski"
-
 #: data/org.gnome.DiskUtility.desktop.in:4
 msgid "Manage Drives and Media"
 msgstr "Zarządzanie dyskami i nośnikami"
@@ -120,34 +117,38 @@ msgstr ""
 "partycja;patrycja;iso;obraz;kopia;zapasowa;przywrócenie;przywróć;benchmark;"
 "test;wydajności;wydajność;raid;luks;szyfrowanie;zaszyfruj;S.M.A.R.T.;smart;"
 
-#: src/disk-image-mounter/main.c:46
+#: src/disk-image-mounter/main.c:53
 msgid "An error occurred"
 msgstr "Wystąpił błąd"
 
-#: src/disk-image-mounter/main.c:67
+#: src/disk-image-mounter/main.c:74
 msgid "Allow writing to the image"
 msgstr "Zezwolenie na zapisywanie do obrazu"
 
-#: src/disk-image-mounter/main.c:82
+#: src/disk-image-mounter/main.c:89
 msgid "Select Disk Image(s) to Mount"
 msgstr "Wybór obrazów dysków do zamontowania"
 
-#: src/disk-image-mounter/main.c:85 src/disks/gducreatediskimagedialog.c:927
+#: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
 #: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
+#: src/disks/ui/benchmark-dialog.ui:287
+#: src/disks/ui/create-disk-image-dialog.ui:123
+#: src/disks/ui/format-disk-dialog.ui:24
+#: src/disks/ui/restore-disk-image-dialog.ui:184
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: src/disk-image-mounter/main.c:86
+#: src/disk-image-mounter/main.c:93
 msgid "_Mount"
 msgstr "Za_montuj"
 
 #. Add a RO check button that defaults to RO
-#: src/disk-image-mounter/main.c:94
+#: src/disk-image-mounter/main.c:101
 msgid "Set up _read-only mount"
 msgstr "Punktu montowania tylko do _odczytu"
 
-#: src/disk-image-mounter/main.c:95
+#: src/disk-image-mounter/main.c:102
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -155,26 +156,26 @@ msgstr ""
 "Jeśli jest zaznaczone, to punkt montowania będzie tylko do odczytu. Jest to "
 "przydatne, jeśli podstawowy obraz dysku ma nie być modyfikowany"
 
-#: src/disk-image-mounter/main.c:136
+#: src/disk-image-mounter/main.c:143
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Błąd podczas łączenia z usługą udisks: %s (%s, %d)"
 
-#: src/disk-image-mounter/main.c:144
+#: src/disk-image-mounter/main.c:151
 msgid "Attach and mount one or more disk image files."
 msgstr "Podłącza lub montuje jeden lub więcej plików obrazów dysków."
 
-#: src/disk-image-mounter/main.c:192
+#: src/disk-image-mounter/main.c:199
 #, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "Nie można otworzyć „%s”. Wolumin nie jest zamontowany?"
 
-#: src/disk-image-mounter/main.c:199
+#: src/disk-image-mounter/main.c:206
 #, c-format
 msgid "Error opening “%s”: %m"
 msgstr "Błąd podczas otwierania „%s”: %m"
 
-#: src/disk-image-mounter/main.c:220
+#: src/disk-image-mounter/main.c:227
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Błąd podczas podłączania obrazu dysku: %s (%s, %d)"
@@ -229,7 +230,7 @@ msgstr ""
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:342
+#: src/disks/gduapplication.c:348
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -241,11 +242,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:151
+#: src/disks/gduatasmartdialog.c:145
 msgid "Read Error Rate"
 msgstr "Wskaźnik błędów odczytu"
 
-#: src/disks/gduatasmartdialog.c:152
+#: src/disks/gduatasmartdialog.c:146
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -257,44 +258,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:161
+#: src/disks/gduatasmartdialog.c:155
 msgid "Throughput Performance"
 msgstr "Ogólna wydajność dysku"
 
-#: src/disks/gduatasmartdialog.c:162
+#: src/disks/gduatasmartdialog.c:156
 msgid "Average efficiency of the disk"
 msgstr "Średnia wydajność dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:169
+#: src/disks/gduatasmartdialog.c:163
 msgid "Spinup Time"
 msgstr "Czas wybudzania"
 
-#: src/disks/gduatasmartdialog.c:170
+#: src/disks/gduatasmartdialog.c:164
 msgid "Time needed to spin up the disk"
 msgstr "Czas wymagany do wybudzenia dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:177
+#: src/disks/gduatasmartdialog.c:171
 msgid "Start/Stop Count"
 msgstr "Liczba uruchomień/zatrzymań"
 
-#: src/disks/gduatasmartdialog.c:178
+#: src/disks/gduatasmartdialog.c:172
 msgid "Number of spindle start/stop cycles"
 msgstr "Liczba cykli uruchomienia/zatrzymania talerzy"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:185
+#: src/disks/gduatasmartdialog.c:179
 msgid "Reallocated Sector Count"
 msgstr "Liczba ponownie przydzielonych sektorów"
 
-#: src/disks/gduatasmartdialog.c:186
+#: src/disks/gduatasmartdialog.c:180
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -307,110 +308,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:195
+#: src/disks/gduatasmartdialog.c:189
 msgid "Read Channel Margin"
 msgstr "Rezerwa kanału odczytu"
 
-#: src/disks/gduatasmartdialog.c:196
+#: src/disks/gduatasmartdialog.c:190
 msgid "Margin of a channel while reading data."
 msgstr "Rezerwa kanału podczas odczytywania danych."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:203
+#: src/disks/gduatasmartdialog.c:197
 msgid "Seek Error Rate"
 msgstr "Wskaźnik błędów wyszukiwania"
 
-#: src/disks/gduatasmartdialog.c:204
+#: src/disks/gduatasmartdialog.c:198
 msgid "Frequency of errors while positioning"
 msgstr "Częstotliwość błędów podczas pozycjonowania"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:211
+#: src/disks/gduatasmartdialog.c:205
 msgid "Seek Timer Performance"
 msgstr "Wydajność zegara wyszukiwania"
 
-#: src/disks/gduatasmartdialog.c:212
+#: src/disks/gduatasmartdialog.c:206
 msgid "Average efficiency of operations while positioning"
 msgstr "Średnia wydajność działań podczas pozycjonowania"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:219 src/disks/gduatasmartdialog.c:544
+#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
 msgid "Power-On Hours"
 msgstr "Godziny włączone"
 
-#: src/disks/gduatasmartdialog.c:220 src/disks/gduatasmartdialog.c:545
+#: src/disks/gduatasmartdialog.c:214 src/disks/gduatasmartdialog.c:539
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Liczba godzin w trybie włączonym"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:227
+#: src/disks/gduatasmartdialog.c:221
 msgid "Spinup Retry Count"
 msgstr "Liczba ponowień wybudzania"
 
-#: src/disks/gduatasmartdialog.c:228
+#: src/disks/gduatasmartdialog.c:222
 msgid "Number of retry attempts to spin up"
 msgstr "Liczba prób ponowienia wybudzenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:235
+#: src/disks/gduatasmartdialog.c:229
 msgid "Calibration Retry Count"
 msgstr "Liczba prób kalibracji"
 
-#: src/disks/gduatasmartdialog.c:236
+#: src/disks/gduatasmartdialog.c:230
 msgid "Number of attempts to calibrate the device"
 msgstr "Liczba prób skalibrowania urządzenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:243
+#: src/disks/gduatasmartdialog.c:237
 msgid "Power Cycle Count"
 msgstr "Liczba cyklów zasilania"
 
-#: src/disks/gduatasmartdialog.c:244
+#: src/disks/gduatasmartdialog.c:238
 msgid "Number of power-on events"
 msgstr "Liczba zdarzeń podczas włączenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:251
+#: src/disks/gduatasmartdialog.c:245
 msgid "Soft read error rate"
 msgstr "Wskaźnik programowych błędów odczytu"
 
-#: src/disks/gduatasmartdialog.c:253
+#: src/disks/gduatasmartdialog.c:247
 msgid "Frequency of errors while reading from the disk"
 msgstr "Częstotliwość błędów podczas odczytywania z dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:260
+#: src/disks/gduatasmartdialog.c:254
 msgid "Reported Uncorrectable Errors"
 msgstr "Zgłoszone błędy niemożliwe do naprawienia"
 
-#: src/disks/gduatasmartdialog.c:261
+#: src/disks/gduatasmartdialog.c:255
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Liczba błędów, których nie można naprawić za pomocą sprzętowego ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:268
+#: src/disks/gduatasmartdialog.c:262
 msgid "High Fly Writes"
 msgstr "Zapisy poza zakresem pracy"
 
-#: src/disks/gduatasmartdialog.c:269
+#: src/disks/gduatasmartdialog.c:263
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
@@ -419,33 +420,33 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:276
+#: src/disks/gduatasmartdialog.c:270
 msgid "Airflow Temperature"
 msgstr "Temperatura powietrza"
 
-#: src/disks/gduatasmartdialog.c:277
+#: src/disks/gduatasmartdialog.c:271
 msgid "Airflow temperature of the drive"
 msgstr "Temperatura przepływu powietrza w dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:284 src/disks/gduatasmartdialog.c:454
+#: src/disks/gduatasmartdialog.c:278 src/disks/gduatasmartdialog.c:448
 msgid "G-sense Error Rate"
 msgstr "Wskaźnik błędów podczas uderzeń"
 
-#: src/disks/gduatasmartdialog.c:285
+#: src/disks/gduatasmartdialog.c:279
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Częstotliwość pomyłek w wyniku zwiększonego obciążenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:292 src/disks/gduatasmartdialog.c:511
+#: src/disks/gduatasmartdialog.c:286 src/disks/gduatasmartdialog.c:505
 msgid "Power-off Retract Count"
 msgstr "Liczba wycofań podczas wyłączania zasilania"
 
-#: src/disks/gduatasmartdialog.c:293
+#: src/disks/gduatasmartdialog.c:287
 msgid "Number of power-off or emergency retract cycles"
 msgstr ""
 "Liczba cykli wycofania podczas wyłączenia zasilania lub w trybie awaryjnym"
@@ -453,45 +454,45 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:300 src/disks/gduatasmartdialog.c:487
+#: src/disks/gduatasmartdialog.c:294 src/disks/gduatasmartdialog.c:481
 msgid "Load/Unload Cycle Count"
 msgstr "Liczba cykli wczytania/usunięcia"
 
-#: src/disks/gduatasmartdialog.c:301
+#: src/disks/gduatasmartdialog.c:295
 msgid "Number of cycles into landing zone position"
 msgstr "Liczba cykli w pozycji spoczynkowej"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:308 src/disks/gduatasmartdialog.c:527
-#: src/disks/ui/smart-dialog.ui:162
+#: src/disks/gduatasmartdialog.c:302 src/disks/gduatasmartdialog.c:521
+#: src/disks/ui/smart-dialog.ui:153
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: src/disks/gduatasmartdialog.c:309
+#: src/disks/gduatasmartdialog.c:303
 msgid "Current internal temperature of the drive"
 msgstr "Obecna temperatura wewnętrzna dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:316
+#: src/disks/gduatasmartdialog.c:310
 msgid "Hardware ECC Recovered"
 msgstr "Przywrócono sprzętowe ECC"
 
-#: src/disks/gduatasmartdialog.c:317
+#: src/disks/gduatasmartdialog.c:311
 msgid "Number of ECC on-the-fly errors"
 msgstr "Liczba błędów ECC w trakcie działania"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:324
+#: src/disks/gduatasmartdialog.c:318
 msgid "Reallocation Count"
 msgstr "Liczba ponownych przydzieleń"
 
-#: src/disks/gduatasmartdialog.c:325
+#: src/disks/gduatasmartdialog.c:319
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -504,11 +505,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:335
+#: src/disks/gduatasmartdialog.c:329
 msgid "Current Pending Sector Count"
 msgstr "Liczba obecnie oczekujących sektorów"
 
-#: src/disks/gduatasmartdialog.c:336
+#: src/disks/gduatasmartdialog.c:330
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -524,11 +525,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:347
+#: src/disks/gduatasmartdialog.c:341
 msgid "Uncorrectable Sector Count"
 msgstr "Liczba sektorów niemożliwych do naprawy"
 
-#: src/disks/gduatasmartdialog.c:348
+#: src/disks/gduatasmartdialog.c:342
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -541,22 +542,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:357
+#: src/disks/gduatasmartdialog.c:351
 msgid "UDMA CRC Error Rate"
 msgstr "Wskaźnik błędów CRC UDMA"
 
-#: src/disks/gduatasmartdialog.c:358
+#: src/disks/gduatasmartdialog.c:352
 msgid "Number of CRC errors during UDMA mode"
 msgstr "Liczba błędów CRC podczas działania w trybie UDMA"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:365
+#: src/disks/gduatasmartdialog.c:359
 msgid "Write Error Rate"
 msgstr "Wskaźnik błędów zapisu"
 
-#: src/disks/gduatasmartdialog.c:366
+#: src/disks/gduatasmartdialog.c:360
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -567,22 +568,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:373
+#: src/disks/gduatasmartdialog.c:367
 msgid "Soft Read Error Rate"
 msgstr "Wskaźnik programowych błędów odczytu"
 
-#: src/disks/gduatasmartdialog.c:374
+#: src/disks/gduatasmartdialog.c:368
 msgid "Number of off-track errors"
 msgstr "Liczba błędów poza ścieżką"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:381
+#: src/disks/gduatasmartdialog.c:375
 msgid "Data Address Mark Errors"
 msgstr "Błędy znaczników adresów danych"
 
-#: src/disks/gduatasmartdialog.c:382
+#: src/disks/gduatasmartdialog.c:376
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr ""
 "Liczba błędów znaczników adresów danych (DAM) lub specyficznych dla "
@@ -591,88 +592,88 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:389
+#: src/disks/gduatasmartdialog.c:383
 msgid "Run Out Cancel"
 msgstr "Anulowanie wycofania"
 
-#: src/disks/gduatasmartdialog.c:390
+#: src/disks/gduatasmartdialog.c:384
 msgid "Number of ECC errors"
 msgstr "Liczba błędów ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:397
+#: src/disks/gduatasmartdialog.c:391
 msgid "Soft ECC correction"
 msgstr "Programowa naprawa ECC"
 
-#: src/disks/gduatasmartdialog.c:398
+#: src/disks/gduatasmartdialog.c:392
 msgid "Number of errors corrected by software ECC"
 msgstr "Liczba błędów naprawionych przez programowe ECC"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:405
+#: src/disks/gduatasmartdialog.c:399
 msgid "Thermal Asperity Rate"
 msgstr "Wskaźnik błędów termicznych"
 
-#: src/disks/gduatasmartdialog.c:406
+#: src/disks/gduatasmartdialog.c:400
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Wskaźnik błędów termicznych"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:413
+#: src/disks/gduatasmartdialog.c:407
 msgid "Flying Height"
 msgstr "Wysokość głowicy"
 
-#: src/disks/gduatasmartdialog.c:414
+#: src/disks/gduatasmartdialog.c:408
 msgid "Height of heads above the disk surface"
 msgstr "Wysokość głowicy nad powierzchnią dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:421
+#: src/disks/gduatasmartdialog.c:415
 msgid "Spin High Current"
 msgstr "Wartość prądu do rozpędzenia"
 
-#: src/disks/gduatasmartdialog.c:422
+#: src/disks/gduatasmartdialog.c:416
 msgid "Amount of high current used to spin up the drive"
 msgstr "Najwyższa wartość prądu potrzebna do rozpędzenia talerzy dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:429
+#: src/disks/gduatasmartdialog.c:423
 msgid "Spin Buzz"
 msgstr "Próby wybudzenia"
 
-#: src/disks/gduatasmartdialog.c:430
+#: src/disks/gduatasmartdialog.c:424
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Liczba procedur wybudzania dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:437
+#: src/disks/gduatasmartdialog.c:431
 msgid "Offline Seek Performance"
 msgstr "Wydajność wyszukiwania w trybie offline"
 
-#: src/disks/gduatasmartdialog.c:438
+#: src/disks/gduatasmartdialog.c:432
 msgid "Drive’s seek performance during offline operations"
 msgstr "Wydajność wyszukiwania na dysku podczas działań w trybie offline"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:445
+#: src/disks/gduatasmartdialog.c:439
 msgid "Disk Shift"
 msgstr "Przełączenie dysku"
 
-#: src/disks/gduatasmartdialog.c:446
+#: src/disks/gduatasmartdialog.c:440
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -680,7 +681,7 @@ msgstr ""
 "Przełączenie dysku jest możliwe w wyniku silnego wstrząsu podczas obciążenia "
 "dysku, jego awarii (lub) temperatury"
 
-#: src/disks/gduatasmartdialog.c:455
+#: src/disks/gduatasmartdialog.c:449
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
@@ -690,22 +691,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:462
+#: src/disks/gduatasmartdialog.c:456
 msgid "Loaded Hours"
 msgstr "Liczba godzin pod obciążeniem"
 
-#: src/disks/gduatasmartdialog.c:463
+#: src/disks/gduatasmartdialog.c:457
 msgid "Number of hours in general operational state"
 msgstr "Liczba godzin w ogólnym stanie działania"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:470
+#: src/disks/gduatasmartdialog.c:464
 msgid "Load/Unload Retry Count"
 msgstr "Liczba prób wczytania/usunięcia"
 
-#: src/disks/gduatasmartdialog.c:471
+#: src/disks/gduatasmartdialog.c:465
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -716,67 +717,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:479
+#: src/disks/gduatasmartdialog.c:473
 msgid "Load Friction"
 msgstr "Tarcie obciążenia"
 
-#: src/disks/gduatasmartdialog.c:480
+#: src/disks/gduatasmartdialog.c:474
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Obciążenie dysku spowodowane przez tarcie mechanicznych części dysku"
 
-#: src/disks/gduatasmartdialog.c:488
+#: src/disks/gduatasmartdialog.c:482
 msgid "Total number of load cycles"
 msgstr "Całkowita liczba cykli obciążenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:495
+#: src/disks/gduatasmartdialog.c:489
 msgid "Load-in Time"
 msgstr "Czas pod obciążeniem"
 
-#: src/disks/gduatasmartdialog.c:496
+#: src/disks/gduatasmartdialog.c:490
 msgid "General time for loading in a drive"
 msgstr "Ogólny czas obciążenia na dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:503
+#: src/disks/gduatasmartdialog.c:497
 msgid "Torque Amplification Count"
 msgstr "Liczba wzmocnień momentu obrotowego"
 
-#: src/disks/gduatasmartdialog.c:504
+#: src/disks/gduatasmartdialog.c:498
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Ilościowe wysiłki momentu obrotowego dysku"
 
-#: src/disks/gduatasmartdialog.c:512
+#: src/disks/gduatasmartdialog.c:506
 msgid "Number of power-off retract events"
 msgstr "Liczba zdarzeń wycofania podczas wyłączenia"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:519
+#: src/disks/gduatasmartdialog.c:513
 msgid "GMR Head Amplitude"
 msgstr "Amplituda głowicy GMR"
 
-#: src/disks/gduatasmartdialog.c:520
+#: src/disks/gduatasmartdialog.c:514
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Amplituda drgania głowic (głowica GMR) w trybie uruchomionym"
 
-#: src/disks/gduatasmartdialog.c:528
+#: src/disks/gduatasmartdialog.c:522
 msgid "Temperature of the drive"
 msgstr "Temperatura dysku"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:535
+#: src/disks/gduatasmartdialog.c:529
 msgid "Endurance Remaining"
 msgstr "Pozostała wytrzymałość"
 
-#: src/disks/gduatasmartdialog.c:536
+#: src/disks/gduatasmartdialog.c:530
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -787,22 +788,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:552
+#: src/disks/gduatasmartdialog.c:546
 msgid "Uncorrectable ECC Count"
 msgstr "Liczba ECC niemożliwych do naprawy"
 
-#: src/disks/gduatasmartdialog.c:553
+#: src/disks/gduatasmartdialog.c:547
 msgid "Number of uncorrectable ECC errors"
 msgstr "Liczba błędów ECC niemożliwych do naprawy"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:560
+#: src/disks/gduatasmartdialog.c:554
 msgid "Good Block Rate"
 msgstr "Wskaźnik dobrych bloków"
 
-#: src/disks/gduatasmartdialog.c:561
+#: src/disks/gduatasmartdialog.c:555
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -813,69 +814,69 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:569
+#: src/disks/gduatasmartdialog.c:563
 msgid "Head Flying Hours"
 msgstr "Godziny pracy głowicy poza zakresem"
 
-#: src/disks/gduatasmartdialog.c:570
+#: src/disks/gduatasmartdialog.c:564
 msgid "Time while head is positioning"
 msgstr "Czas, kiedy głowica pozycjonuje"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:577
+#: src/disks/gduatasmartdialog.c:571
 msgid "Read Error Retry Rate"
 msgstr "Wskaźnik ponawiania błędów odczytu"
 
-#: src/disks/gduatasmartdialog.c:578
+#: src/disks/gduatasmartdialog.c:572
 msgid "Number of errors while reading from a disk"
 msgstr "Liczba błędów podczas odczytywania z dysku"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:585
+#: src/disks/gduatasmartdialog.c:579
 msgid "Total LBAs Written"
 msgstr "Całkowita liczba zapisanych LBA"
 
-#: src/disks/gduatasmartdialog.c:586
+#: src/disks/gduatasmartdialog.c:580
 msgid "The amount of data written during the lifetime of the disk"
 msgstr "Ilość danych zapisanych podczas okresu korzystania z dysku"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:593
+#: src/disks/gduatasmartdialog.c:587
 msgid "Total LBAs Read"
 msgstr "Całkowita liczba odczytanych LBA"
 
-#: src/disks/gduatasmartdialog.c:594
+#: src/disks/gduatasmartdialog.c:588
 msgid "The amount of data read during the lifetime of the disk"
 msgstr "Ilość danych odczytanych podczas okresu korzystania z dysku"
 
-#: src/disks/gduatasmartdialog.c:653
+#: src/disks/gduatasmartdialog.c:647
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Brak opisu atrybutu %d"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:700
+#: src/disks/gduatasmartdialog.c:694
 msgid "FAILING"
 msgstr "NIEPOWODZENIE"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:709
+#: src/disks/gduatasmartdialog.c:703
 msgid "Failed in the past"
 msgstr "Problemy w przeszłości"
 
-#: src/disks/gduatasmartdialog.c:713
+#: src/disks/gduatasmartdialog.c:707
 msgid "OK"
 msgstr "OK"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:740
+#: src/disks/gduatasmartdialog.c:734
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -890,7 +891,7 @@ msgstr[2] "%d sektorów"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:752 src/disks/gduatasmartdialog.c:885
+#: src/disks/gduatasmartdialog.c:746 src/disks/gduatasmartdialog.c:879
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f °C/%.0f °F"
@@ -901,99 +902,99 @@ msgstr "%.0f °C/%.0f °F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:763 src/disks/gduatasmartdialog.c:1133
+#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1127
 msgid "N/A"
 msgstr "Nie dotyczy"
 
-#: src/disks/gduatasmartdialog.c:783
+#: src/disks/gduatasmartdialog.c:777
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Pomyślnie ukończono ostatni test"
 
-#: src/disks/gduatasmartdialog.c:787
+#: src/disks/gduatasmartdialog.c:781
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Anulowano ostatni test"
 
-#: src/disks/gduatasmartdialog.c:791
+#: src/disks/gduatasmartdialog.c:785
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Przerwano ostatni test"
 
-#: src/disks/gduatasmartdialog.c:795
+#: src/disks/gduatasmartdialog.c:789
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Nie ukończono ostatniego testu"
 
-#: src/disks/gduatasmartdialog.c:799
+#: src/disks/gduatasmartdialog.c:793
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Ostatni test się nie powiódł"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:804
+#: src/disks/gduatasmartdialog.c:798
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Ostatni test się nie powiódł (układ elektryczny)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:809
+#: src/disks/gduatasmartdialog.c:803
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Ostatni test się nie powiódł (układ serwomechaniczny)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:814
+#: src/disks/gduatasmartdialog.c:808
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Ostatni test się nie powiódł (układ odczytu)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:819
+#: src/disks/gduatasmartdialog.c:813
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Ostatni test się nie powiódł (podejrzenie uszkodzenia)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:824
+#: src/disks/gduatasmartdialog.c:818
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Trwa test — pozostało: %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:831
+#: src/disks/gduatasmartdialog.c:825
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Nieznane (%s)"
 
-#: src/disks/gduatasmartdialog.c:856
+#: src/disks/gduatasmartdialog.c:850
 #, c-format
 msgid "%s ago"
 msgstr "%s temu"
 
-#: src/disks/gduatasmartdialog.c:919
+#: src/disks/gduatasmartdialog.c:913
 msgid "SMART is not supported"
 msgstr "SMART nie jest obsługiwane"
 
-#: src/disks/gduatasmartdialog.c:927
+#: src/disks/gduatasmartdialog.c:921
 msgid "SMART is not enabled"
 msgstr "SMART nie jest włączone"
 
-#: src/disks/gduatasmartdialog.c:937
+#: src/disks/gduatasmartdialog.c:931
 msgid "Self-test in progress"
 msgstr "Trwa test"
 
-#: src/disks/gduatasmartdialog.c:950 src/disks/gduatasmartdialog.c:959
+#: src/disks/gduatasmartdialog.c:944 src/disks/gduatasmartdialog.c:953
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "DYSK NIEDŁUGO ULEGNIE AWARII"
 
-#: src/disks/gduatasmartdialog.c:982
+#: src/disks/gduatasmartdialog.c:976
 msgid "SELF-TEST FAILED"
 msgstr "TEST SIĘ NIE POWIÓDŁ"
 
-#: src/disks/gduatasmartdialog.c:991
+#: src/disks/gduatasmartdialog.c:985
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
@@ -1001,7 +1002,7 @@ msgstr[0] "Dysk jest OK, jeden atrybut uległ awarii"
 msgstr[1] "Dysk jest OK, %d atrybuty uległy awarii"
 msgstr[2] "Dysk jest OK, %d atrybutów uległo awarii"
 
-#: src/disks/gduatasmartdialog.c:1002
+#: src/disks/gduatasmartdialog.c:996
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
@@ -1009,7 +1010,7 @@ msgstr[0] "Dysk jest OK, ale ma jeden błędny sektor"
 msgstr[1] "Dysk jest OK, ale ma %d błędne sektory"
 msgstr[2] "Dysk jest OK, ale ma %d błędnych sektorów"
 
-#: src/disks/gduatasmartdialog.c:1013
+#: src/disks/gduatasmartdialog.c:1007
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -1018,7 +1019,7 @@ msgstr[1] "Dysk jest OK, %d atrybuty uległy awarii w przeszłości"
 msgstr[2] "Dysk jest OK, %d atrybutów uległo awarii w przeszłości"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1022
+#: src/disks/gduatasmartdialog.c:1016
 msgid "Disk is OK"
 msgstr "Dysk jest OK"
 
@@ -1026,96 +1027,96 @@ msgstr "Dysk jest OK"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1036
+#: src/disks/gduatasmartdialog.c:1030
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1121
+#: src/disks/gduatasmartdialog.c:1115
 msgid "Pre-Fail"
 msgstr "Pre-Fail"
 
-#: src/disks/gduatasmartdialog.c:1123
+#: src/disks/gduatasmartdialog.c:1117
 msgid "Old-Age"
 msgstr "Old-Age"
 
-#: src/disks/gduatasmartdialog.c:1126
+#: src/disks/gduatasmartdialog.c:1120
 msgid "Online"
 msgstr "Online"
 
-#: src/disks/gduatasmartdialog.c:1128
+#: src/disks/gduatasmartdialog.c:1122
 msgid "Offline"
 msgstr "Offline"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1237
+#: src/disks/gduatasmartdialog.c:1231
 msgid "Threshold exceeded"
 msgstr "Przekroczono próg"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1242
+#: src/disks/gduatasmartdialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "Nie przekroczono progu"
 
-#: src/disks/gduatasmartdialog.c:1318
+#: src/disks/gduatasmartdialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "Błąd podczas odświeżania danych SMART"
 
-#: src/disks/gduatasmartdialog.c:1350
+#: src/disks/gduatasmartdialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "Błąd podczas przerywania testu SMART"
 
-#: src/disks/gduatasmartdialog.c:1369
+#: src/disks/gduatasmartdialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "Błąd podczas rozpoczynania testu SMART"
 
-#: src/disks/gduatasmartdialog.c:1448
+#: src/disks/gduatasmartdialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Wystąpił błąd podczas próby przełączenia włączenia SMART"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1530
+#: src/disks/gduatasmartdialog.c:1565
 msgid "ID"
 msgstr "Identyfikator"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1542
+#: src/disks/gduatasmartdialog.c:1577
 msgid "Attribute"
 msgstr "Atrybut"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1556
+#: src/disks/gduatasmartdialog.c:1591
 msgid "Value"
 msgstr "Wartość"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1568
+#: src/disks/gduatasmartdialog.c:1603
 msgid "Normalized"
 msgstr "Uśredniona"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1580
+#: src/disks/gduatasmartdialog.c:1615
 msgid "Threshold"
 msgstr "Próg"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1592
+#: src/disks/gduatasmartdialog.c:1627
 msgid "Worst"
 msgstr "Najniższa"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1604
+#: src/disks/gduatasmartdialog.c:1639
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Typ"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1616
+#: src/disks/gduatasmartdialog.c:1651
 msgid "Updates"
 msgstr "Aktualizacje"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1628 src/disks/ui/disks.ui:355
+#: src/disks/gduatasmartdialog.c:1663 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Ocena"
 
@@ -1369,7 +1370,7 @@ msgid "Error creating disk image"
 msgstr "Błąd podczas tworzenia obrazu dysku"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:480
+#: src/disks/gducreatediskimagedialog.c:498
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Nieodwracalne błędy odczytu podczas tworzenia obrazu dysku"
 
@@ -1378,7 +1379,7 @@ msgstr "Nieodwracalne błędy odczytu podczas tworzenia obrazu dysku"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:489
+#: src/disks/gducreatediskimagedialog.c:507
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1390,60 +1391,60 @@ msgstr ""
 "jest porysowany lub napęd uległ fizycznym uszkodzeniom"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:495
+#: src/disks/gducreatediskimagedialog.c:513
 msgid "_Delete Disk Image File"
 msgstr "_Usuń plik obrazu dysku"
 
-#: src/disks/gducreatediskimagedialog.c:497
+#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
 msgid "_Close"
 msgstr "Za_mknij"
 
-#: src/disks/gducreatediskimagedialog.c:722
+#: src/disks/gducreatediskimagedialog.c:731
 #: src/disks/gdurestorediskimagedialog.c:731
 msgid "Error determining size of device: "
 msgstr "Błąd podczas ustalania rozmiaru urządzenia: "
 
-#: src/disks/gducreatediskimagedialog.c:729
+#: src/disks/gducreatediskimagedialog.c:738
 #: src/disks/gdurestorediskimagedialog.c:738
 #, c-format
 msgid "Device is size 0"
 msgstr "Urządzenie ma zerowy rozmiar"
 
-#: src/disks/gducreatediskimagedialog.c:762
+#: src/disks/gducreatediskimagedialog.c:771
 msgid "Error allocating space for disk image file: "
 msgstr "Błąd podczas przydzielania miejsca dla pliku obrazu dysku: "
 
-#: src/disks/gducreatediskimagedialog.c:922
+#: src/disks/gducreatediskimagedialog.c:931
 #: src/disks/gdunewdiskimagedialog.c:324
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Plik o nazwie „%s” już istnieje. Zastąpić go?"
 
-#: src/disks/gducreatediskimagedialog.c:925
+#: src/disks/gducreatediskimagedialog.c:934
 #: src/disks/gdunewdiskimagedialog.c:327
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr "Plik już istnieje w „%s”. Zastąpienie go nadpisze jego zawartość."
 
-#: src/disks/gducreatediskimagedialog.c:928
+#: src/disks/gducreatediskimagedialog.c:937
 #: src/disks/gdunewdiskimagedialog.c:330
 msgid "_Replace"
 msgstr "_Zastąp"
 
-#: src/disks/gducreatediskimagedialog.c:978
+#: src/disks/gducreatediskimagedialog.c:987
 #: src/disks/gdunewdiskimagedialog.c:247
 msgid "Error opening file for writing"
 msgstr "Błąd podczas otwierania pliku do zapisania"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:994
+#: src/disks/gducreatediskimagedialog.c:1003
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Kopiowanie urządzenia na obraz dysku"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1000
+#: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Tworzenie obrazu dysku"
 
@@ -1491,7 +1492,7 @@ msgstr "Ustawienie hasła"
 msgid "Confirm Details"
 msgstr "Potwierdzenie informacji"
 
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:444
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:410
 msgid "_Format"
 msgstr "_Sformatuj"
 
@@ -1757,12 +1758,12 @@ msgstr "Puste"
 msgid "Error formatting disk"
 msgstr "Błąd podczas formatowania dysku"
 
-#: src/disks/gduformatdiskdialog.c:417
+#: src/disks/gduformatdiskdialog.c:384
 msgid "Are you sure you want to format the disk?"
 msgstr "Na pewno sformatować dysk?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:421
+#: src/disks/gduformatdiskdialog.c:388
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1770,7 +1771,7 @@ msgstr ""
 "Wszystkie dane na dysku zostaną utracone, ale wciąż mogą zostać przywrócone "
 "przez serwis przywracania danych"
 
-#: src/disks/gduformatdiskdialog.c:423
+#: src/disks/gduformatdiskdialog.c:390
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1781,7 +1782,7 @@ msgstr ""
 "zawartości, aby uniknąć przejęcia danych przez niewłaściwe osoby"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:428
+#: src/disks/gduformatdiskdialog.c:395
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1789,7 +1790,7 @@ msgstr ""
 "Wszystkie dane na dysku zostaną nadpisane i prawdopodobnie nie będą mogły "
 "zostać przywrócone przez serwis przywracania danych"
 
-#: src/disks/gduformatdiskdialog.c:436
+#: src/disks/gduformatdiskdialog.c:403
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1917,12 +1918,12 @@ msgid "_Resize"
 msgstr "_Zmień rozmiar"
 
 #: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:595 src/disks/gduresizedialog.c:618
+#: src/disks/gduresizedialog.c:602 src/disks/gduresizedialog.c:625
 msgid "Error resizing filesystem"
 msgstr "Błąd podczas zmieniania rozmiaru systemu plików"
 
-#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:493
-#: src/disks/gduresizedialog.c:569
+#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:500
+#: src/disks/gduresizedialog.c:576
 msgid "Error resizing partition"
 msgstr "Błąd podczas zmieniania rozmiaru partycji"
 
@@ -1930,27 +1931,27 @@ msgstr "Błąd podczas zmieniania rozmiaru partycji"
 msgid "Error repairing filesystem after resize"
 msgstr "Błąd podczas naprawiania systemu plików po zmianie rozmiaru"
 
-#: src/disks/gduresizedialog.c:464
+#: src/disks/gduresizedialog.c:471
 msgid "Resizing not ready"
 msgstr "Zmiana rozmiaru nie jest gotowa"
 
-#: src/disks/gduresizedialog.c:466
+#: src/disks/gduresizedialog.c:473
 msgid "Waited too long for the filesystem"
 msgstr "Za długo oczekiwano na system plików"
 
-#: src/disks/gduresizedialog.c:526 src/disks/gduresizedialog.c:642
+#: src/disks/gduresizedialog.c:533 src/disks/gduresizedialog.c:649
 msgid "Error repairing filesystem"
 msgstr "Błąd podczas naprawiania systemu plików"
 
-#: src/disks/gduresizedialog.c:748
+#: src/disks/gduresizedialog.c:755
 msgid "Error mounting the filesystem"
 msgstr "Błąd podczas montowania systemu plików"
 
-#: src/disks/gduresizedialog.c:790
+#: src/disks/gduresizedialog.c:797
 msgid "Fit to size"
 msgstr "Dopasuj do rozmiaru"
 
-#: src/disks/gduresizedialog.c:825
+#: src/disks/gduresizedialog.c:832
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Błąd podczas montowania systemu plików do obliczenia minimalnego rozmiaru"
@@ -2260,34 +2261,34 @@ msgstr "%s — %s"
 msgid "Unallocated Space"
 msgstr "Nieprzydzielone miejsce"
 
-#: src/disks/gduwindow.c:2973
+#: src/disks/gduwindow.c:2981
 msgid "Error while repairing filesystem"
 msgstr "Błąd podczas naprawiania systemu plików"
 
-#: src/disks/gduwindow.c:3000
+#: src/disks/gduwindow.c:3008
 msgid "Repair successful"
 msgstr "Pomyślnie naprawiono"
 
-#: src/disks/gduwindow.c:3000
+#: src/disks/gduwindow.c:3008
 msgid "Repair failed"
 msgstr "Naprawa się nie powiodła"
 
-#: src/disks/gduwindow.c:3003
+#: src/disks/gduwindow.c:3011
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Naprawiono system plików %s na %s."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3009
+#: src/disks/gduwindow.c:3017
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Nie można naprawić systemu plików %s na %s."
 
-#: src/disks/gduwindow.c:3062
+#: src/disks/gduwindow.c:3087
 msgid "Confirm Repair"
 msgstr "Potwierdzenie naprawy"
 
-#: src/disks/gduwindow.c:3065
+#: src/disks/gduwindow.c:3090
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2299,38 +2300,38 @@ msgstr ""
 "specjalistycznych narzędzi odzyskiwania. To działanie może zająć dużo czasu, "
 "zwłaszcza jeśli partycja zawiera dużo danych."
 
-#: src/disks/gduwindow.c:3110
+#: src/disks/gduwindow.c:3132
 msgid "Error while taking filesystem ownership"
 msgstr "Błąd podczas zmiany właściciela systemu plików"
 
-#: src/disks/gduwindow.c:3174
+#: src/disks/gduwindow.c:3204
 msgid "Error while checking filesystem"
 msgstr "Błąd podczas sprawdzania systemu plików"
 
-#: src/disks/gduwindow.c:3201
+#: src/disks/gduwindow.c:3231
 msgid "Filesystem intact"
 msgstr "System plików jest nienaruszony"
 
-#: src/disks/gduwindow.c:3201
+#: src/disks/gduwindow.c:3231
 msgid "Filesystem damaged"
 msgstr "System plików jest uszkodzony"
 
-#: src/disks/gduwindow.c:3204
+#: src/disks/gduwindow.c:3234
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "System plików %s na %s nie jest uszkodzony."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3210
+#: src/disks/gduwindow.c:3240
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "System plików %s na %s wymaga naprawy."
 
-#: src/disks/gduwindow.c:3261
+#: src/disks/gduwindow.c:3308
 msgid "Confirm Check"
 msgstr "Potwierdzenie sprawdzania"
 
-#: src/disks/gduwindow.c:3264
+#: src/disks/gduwindow.c:3311
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2338,25 +2339,25 @@ msgstr ""
 "Sprawdzanie może zająć dużo czasu, zwłaszcza jeśli partycja zawiera dużo "
 "danych."
 
-#: src/disks/gduwindow.c:3544
+#: src/disks/gduwindow.c:3588
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Wystąpił błąd podczas próby przejścia dysku w stan spoczynku"
 
-#: src/disks/gduwindow.c:3591
+#: src/disks/gduwindow.c:3635
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Wystąpił błąd podczas próby przebudzenia dysku ze stanu spoczynku"
 
-#: src/disks/gduwindow.c:3637
+#: src/disks/gduwindow.c:3681
 msgid "Error powering off drive"
 msgstr "Błąd podczas wyłączania urządzenia"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3689
+#: src/disks/gduwindow.c:3733
 msgid "Are you sure you want to power off the drives?"
 msgstr "Na pewno wyłączyć dyski?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3691
+#: src/disks/gduwindow.c:3735
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2364,47 +2365,47 @@ msgstr ""
 "To działanie przygotuje komputer na wyłączenie i usunięcie następujących "
 "dysków."
 
-#: src/disks/gduwindow.c:3695 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3739 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Wyłącz"
 
-#: src/disks/gduwindow.c:3775
+#: src/disks/gduwindow.c:3819
 msgid "Error mounting filesystem"
 msgstr "Błąd podczas montowania systemu plików"
 
-#: src/disks/gduwindow.c:3860
+#: src/disks/gduwindow.c:3904
 msgid "Error deleting partition"
 msgstr "Błąd podczas usuwania partycji"
 
-#: src/disks/gduwindow.c:3897
+#: src/disks/gduwindow.c:3941
 msgid "Are you sure you want to delete the partition?"
 msgstr "Na pewno usunąć partycję?"
 
-#: src/disks/gduwindow.c:3898
+#: src/disks/gduwindow.c:3942
 msgid "All data on the partition will be lost"
 msgstr "Wszystkie dane na partycji zostaną utracone"
 
-#: src/disks/gduwindow.c:3899
+#: src/disks/gduwindow.c:3943
 msgid "_Delete"
 msgstr "_Usuń"
 
-#: src/disks/gduwindow.c:3930
+#: src/disks/gduwindow.c:3974
 msgid "Error ejecting media"
 msgstr "Błąd podczas wysuwania nośnika"
 
-#: src/disks/gduwindow.c:4013
+#: src/disks/gduwindow.c:4057
 msgid "Error starting swap"
 msgstr "Błąd podczas uruchamiania obszaru wymiany"
 
-#: src/disks/gduwindow.c:4050
+#: src/disks/gduwindow.c:4094
 msgid "Error stopping swap"
 msgstr "Błąd podczas zatrzymywania obszaru wymiany"
 
-#: src/disks/gduwindow.c:4092
+#: src/disks/gduwindow.c:4136
 msgid "Error setting autoclear flag"
 msgstr "Błąd podczas ustawiania flagi automatycznego czyszczenia"
 
-#: src/disks/gduwindow.c:4145 src/disks/gduwindow.c:4209
+#: src/disks/gduwindow.c:4189 src/disks/gduwindow.c:4253
 msgid "Error canceling job"
 msgstr "Błąd podczas anulowania zadania"
 
@@ -2425,7 +2426,7 @@ msgstr "Wewnętrzny błąd"
 msgid "Need more input"
 msgstr "Wymagane jest więcej wejścia"
 
-#: src/disks/ui/about-dialog.ui:12
+#: src/disks/ui/about-dialog.ui:11
 msgid ""
 "Copyright © 2008-2013 Red Hat, Inc.\n"
 "Copyright © 2008-2013 David Zeuthen\n"
@@ -2435,15 +2436,15 @@ msgstr ""
 "Copyright © 2008-2013 David Zeuthen\n"
 "Copyright © 2009-2017 Projekt GNOME\n"
 
-#: src/disks/ui/about-dialog.ui:16
+#: src/disks/ui/about-dialog.ui:15
 msgid "View, modify and configure disks and media"
 msgstr "Wyświetlanie, modyfikowanie i konfigurowanie dysków oraz nośników"
 
-#: src/disks/ui/about-dialog.ui:19
+#: src/disks/ui/about-dialog.ui:18
 msgid "translator-credits"
 msgstr ""
-"Piotr Drąg <piotrdrag@gmail.com>, 2009-2021\n"
-"Aviary.pl <community-poland@mozilla.org>, 2009-2021"
+"Piotr Drąg <piotrdrag@gmail.com>, 2009-2022\n"
+"Aviary.pl <community-poland@mozilla.org>, 2009-2022"
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
@@ -2465,19 +2466,19 @@ msgstr "Pomo_c"
 msgid "_About Disks"
 msgstr "_O programie"
 
-#: src/disks/ui/benchmark-dialog.ui:7
+#: src/disks/ui/benchmark-dialog.ui:6
 msgid "Benchmark"
 msgstr "Test wydajności"
 
-#: src/disks/ui/benchmark-dialog.ui:23
+#: src/disks/ui/benchmark-dialog.ui:25
 msgid "_Start Benchmark…"
 msgstr "_Rozpocznij test wydajności…"
 
-#: src/disks/ui/benchmark-dialog.ui:35
+#: src/disks/ui/benchmark-dialog.ui:37
 msgid "_Abort Benchmark"
 msgstr "_Przerwij test wydajności"
 
-#: src/disks/ui/benchmark-dialog.ui:83
+#: src/disks/ui/benchmark-dialog.ui:85
 msgid "Last Benchmarked"
 msgstr "Ostatni test wydajności"
 
@@ -2485,31 +2486,31 @@ msgstr "Ostatni test wydajności"
 msgid "Average Read Rate"
 msgstr "Średnia prędkość odczytu"
 
-#: src/disks/ui/benchmark-dialog.ui:117
+#: src/disks/ui/benchmark-dialog.ui:115
 msgid "Average Write Rate"
 msgstr "Średnia prędkość zapisu"
 
-#: src/disks/ui/benchmark-dialog.ui:134
+#: src/disks/ui/benchmark-dialog.ui:130
 msgid "Average Access Time"
 msgstr "Średnia prędkość dostępu"
 
-#: src/disks/ui/benchmark-dialog.ui:215
+#: src/disks/ui/benchmark-dialog.ui:201
 msgid "Disk or Device"
 msgstr "Dysk lub urządzenie"
 
-#: src/disks/ui/benchmark-dialog.ui:248
+#: src/disks/ui/benchmark-dialog.ui:230
 msgid "Sample Size"
 msgstr "Rozmiar próbki"
 
-#: src/disks/ui/benchmark-dialog.ui:291
+#: src/disks/ui/benchmark-dialog.ui:268
 msgid "Benchmark Settings"
 msgstr "Ustawienia testu wydajności"
 
-#: src/disks/ui/benchmark-dialog.ui:316
+#: src/disks/ui/benchmark-dialog.ui:296
 msgid "_Start Benchmarking…"
 msgstr "_Rozpocznij testowanie wydajności…"
 
-#: src/disks/ui/benchmark-dialog.ui:340
+#: src/disks/ui/benchmark-dialog.ui:317
 msgid ""
 "Benchmarking involves measuring the transfer rate on various area of the "
 "device as well as measuring how long it takes to seek from one random area "
@@ -2520,23 +2521,23 @@ msgstr ""
 "obszaru do innego. Proszę utworzyć kopię zapasową ważnych danych przed "
 "użyciem testu zapisu."
 
-#: src/disks/ui/benchmark-dialog.ui:356
+#: src/disks/ui/benchmark-dialog.ui:328
 msgid "Transfer Rate"
 msgstr "Prędkość przesyłania"
 
-#: src/disks/ui/benchmark-dialog.ui:374
+#: src/disks/ui/benchmark-dialog.ui:346
 msgid "Number of S_amples"
 msgstr "_Liczba próbek"
 
-#: src/disks/ui/benchmark-dialog.ui:393
+#: src/disks/ui/benchmark-dialog.ui:363
 msgid "Sample S_ize (MiB)"
 msgstr "R_ozmiar próbki (MiB)"
 
-#: src/disks/ui/benchmark-dialog.ui:409
+#: src/disks/ui/benchmark-dialog.ui:377
 msgid "Perform _write-benchmark"
 msgstr "Wykonanie testu _zapisu"
 
-#: src/disks/ui/benchmark-dialog.ui:413
+#: src/disks/ui/benchmark-dialog.ui:381
 msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk "
 "(e.g. the disk or its partitions cannot be mounted or in use) and involves "
@@ -2556,7 +2557,7 @@ msgstr ""
 "zostanie wykonana, ale za to nie jest wymagany wyłączny dostęp do urządzenia "
 "(tzn. dysk lub urządzenie może być używane)."
 
-#: src/disks/ui/benchmark-dialog.ui:432
+#: src/disks/ui/benchmark-dialog.ui:398
 msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
@@ -2564,7 +2565,7 @@ msgstr ""
 "Liczba próbek. Większa liczba zapewnia płynniejsze wykresy, ale test zajmie "
 "więcej czasu."
 
-#: src/disks/ui/benchmark-dialog.ui:449
+#: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
 "The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
@@ -2574,15 +2575,15 @@ msgstr ""
 "rozmiary próbek zapewniają dokładniejszy test wydajności, ale za cenę czasu "
 "jego trwania."
 
-#: src/disks/ui/benchmark-dialog.ui:482
+#: src/disks/ui/benchmark-dialog.ui:442
 msgid "Access Time"
 msgstr "Czas dostępu"
 
-#: src/disks/ui/benchmark-dialog.ui:500
+#: src/disks/ui/benchmark-dialog.ui:460
 msgid "Number of Sampl_es"
 msgstr "Li_czba próbek"
 
-#: src/disks/ui/benchmark-dialog.ui:519
+#: src/disks/ui/benchmark-dialog.ui:477
 msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
@@ -2668,11 +2669,11 @@ msgstr "Używane"
 msgid "Location"
 msgstr "Położenie"
 
-#: src/disks/ui/create-disk-image-dialog.ui:8
+#: src/disks/ui/create-disk-image-dialog.ui:7
 msgid "Create Disk Image"
 msgstr "Utworzenie obrazu dysku"
 
-#: src/disks/ui/create-disk-image-dialog.ui:29
+#: src/disks/ui/create-disk-image-dialog.ui:31
 #: src/disks/ui/edit-crypttab-dialog.ui:104
 #: src/disks/ui/edit-gpt-partition-dialog.ui:91
 #: src/disks/ui/new-disk-image-dialog.ui:48
@@ -2684,16 +2685,16 @@ msgstr "_Nazwa"
 msgid "Save in _Folder"
 msgstr "Zapis w _katalogu"
 
-#: src/disks/ui/create-disk-image-dialog.ui:85
+#: src/disks/ui/create-disk-image-dialog.ui:81
 #: src/disks/ui/new-disk-image-dialog.ui:123
 msgid "Select a Folder"
 msgstr "Wybór katalogu"
 
-#: src/disks/ui/create-disk-image-dialog.ui:99
+#: src/disks/ui/create-disk-image-dialog.ui:93
 msgid "Source"
 msgstr "Źródło"
 
-#: src/disks/ui/create-disk-image-dialog.ui:143
+#: src/disks/ui/create-disk-image-dialog.ui:132
 msgid "_Start Creating…"
 msgstr "_Rozpocznij tworzenie…"
 
@@ -2714,7 +2715,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Na przykład: „Pliki Alicji” lub „Kopia zapasowa”."
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:87
+#: src/disks/ui/format-disk-dialog.ui:84
 msgid "_Erase"
 msgstr "_Usunięcie zawartości"
 
@@ -3448,15 +3449,15 @@ msgstr "_Usuń zawartość…"
 msgid "Erase _Type"
 msgstr "_Typ usuwania zawartości"
 
-#: src/disks/ui/format-disk-dialog.ui:7
+#: src/disks/ui/format-disk-dialog.ui:6
 msgid "Format Disk"
 msgstr "Formatowanie dysku"
 
-#: src/disks/ui/format-disk-dialog.ui:34
+#: src/disks/ui/format-disk-dialog.ui:33
 msgid "_Format…"
 msgstr "_Sformatuj…"
 
-#: src/disks/ui/format-disk-dialog.ui:70
+#: src/disks/ui/format-disk-dialog.ui:67
 msgid "_Partitioning"
 msgstr "_Partycjonowanie"
 
@@ -3501,35 +3502,35 @@ msgstr "_Różnica"
 msgid "The difference to the previous partition size"
 msgstr "Różnica od poprzedniego rozmiaru partycji"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:9
+#: src/disks/ui/restore-disk-image-dialog.ui:8
 msgid "Restore Disk Image"
 msgstr "Przywrócenie obrazu dysku"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:44
+#: src/disks/ui/restore-disk-image-dialog.ui:38
 msgid "_Image to Restore"
 msgstr "_Obraz do przywrócenia"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:63
+#: src/disks/ui/restore-disk-image-dialog.ui:55
 msgid "Select Disk Image to Restore"
 msgstr "Wybór obrazu dysku do przywrócenia"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:77
+#: src/disks/ui/restore-disk-image-dialog.ui:67
 msgid "Destination"
 msgstr "Cel"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:110
+#: src/disks/ui/restore-disk-image-dialog.ui:96
 msgid "_Destination"
 msgstr "_Cel"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:141
+#: src/disks/ui/restore-disk-image-dialog.ui:123
 msgid "Image to Restore"
 msgstr "Obraz do przywrócenia"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:174
+#: src/disks/ui/restore-disk-image-dialog.ui:152
 msgid "Image Size"
 msgstr "Rozmiar obrazu"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:230
+#: src/disks/ui/restore-disk-image-dialog.ui:193
 msgid "_Start Restoring…"
 msgstr "_Rozpocznij przywracanie…"
 
@@ -3623,69 +3624,77 @@ msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Sformatowanie wybranego woluminu"
 
-#: src/disks/ui/smart-dialog.ui:7
+#: src/disks/ui/smart-dialog.ui:6
 msgid "SMART Data & Self-Tests"
 msgstr "Dane i testy SMART"
 
-#: src/disks/ui/smart-dialog.ui:24
+#: src/disks/ui/smart-dialog.ui:25
 msgid "_Start Self-test"
 msgstr "_Rozpocznij test"
 
-#: src/disks/ui/smart-dialog.ui:28
+#: src/disks/ui/smart-dialog.ui:29
 msgid "Click to start a SMART self-test"
 msgstr "Kliknięcie rozpocznie test SMART"
 
-#: src/disks/ui/smart-dialog.ui:37
+#: src/disks/ui/smart-dialog.ui:38
 msgid "_Stop Self-test"
 msgstr "_Zatrzymaj test"
 
-#: src/disks/ui/smart-dialog.ui:41
+#: src/disks/ui/smart-dialog.ui:42
 msgid "Click to stop the SMART self-test currently in progress"
 msgstr "Kliknięcie zatrzymuje obecnie wykonywany test SMART"
+
+#: src/disks/ui/smart-dialog.ui:51
+msgid "Close"
+msgstr "Zamknij"
+
+#: src/disks/ui/smart-dialog.ui:59
+msgid "Refresh"
+msgstr "Odśwież"
 
 #: src/disks/ui/smart-dialog.ui:63
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr "Kliknięcie wymusza ponowne odczytanie danych SMART z dysku twardego"
 
-#: src/disks/ui/smart-dialog.ui:96
+#: src/disks/ui/smart-dialog.ui:95
 msgid "Powered On"
 msgstr "Czas działania"
 
-#: src/disks/ui/smart-dialog.ui:129
+#: src/disks/ui/smart-dialog.ui:124
 msgid "Updated"
 msgstr "Zaktualizowano"
 
-#: src/disks/ui/smart-dialog.ui:195
+#: src/disks/ui/smart-dialog.ui:182
 msgid "Self-test Result"
 msgstr "Wyniki testu"
 
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/smart-dialog.ui:197
 msgid "Self-assessment"
 msgstr "Ocena własna"
 
-#: src/disks/ui/smart-dialog.ui:229
+#: src/disks/ui/smart-dialog.ui:212
 msgid "Overall Assessment"
 msgstr "Ogólna ocena"
 
-#: src/disks/ui/smart-dialog.ui:295
+#: src/disks/ui/smart-dialog.ui:270
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Kliknięcie przełącza włączenie SMART dla dysku twardego"
 
-#: src/disks/ui/smart-dialog.ui:306
+#: src/disks/ui/smart-dialog.ui:281
 msgid "SMART _Attributes"
 msgstr "_Atrybuty SMART"
 
-#: src/disks/ui/smart-dialog.ui:364
-msgid "Short"
-msgstr "Krótki"
+#: src/disks/ui/smart-dialog.ui:334
+msgid "_Short"
+msgstr "_Krótki"
 
-#: src/disks/ui/smart-dialog.ui:372
-msgid "Extended"
-msgstr "Rozszerzony"
+#: src/disks/ui/smart-dialog.ui:338
+msgid "_Extended"
+msgstr "_Rozszerzony"
 
-#: src/disks/ui/smart-dialog.ui:380
-msgid "Conveyance"
-msgstr "Transportowy"
+#: src/disks/ui/smart-dialog.ui:342
+msgid "_Conveyance"
+msgstr "_Transportowy"
 
 #: src/disks/ui/take-ownership-dialog.ui:4
 msgid "Confirm Taking Ownership"
@@ -3952,20 +3961,20 @@ msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:833
+#: src/libgdu/gduutils.c:840
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Dotyczy urządzeń"
 
-#: src/libgdu/gduutils.c:1419
+#: src/libgdu/gduutils.c:1426
 msgid "Error unmounting filesystem"
 msgstr "Błąd podczas odmontowywania systemu plików"
 
-#: src/libgdu/gduutils.c:1451
+#: src/libgdu/gduutils.c:1458
 msgid "Error locking device"
 msgstr "Błąd podczas blokowania urządzenia"
 
-#: src/libgdu/gduutils.c:1472
+#: src/libgdu/gduutils.c:1479
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Błąd podczas wyłączania automatycznego czyszczenia urządzenia zwrotnego"

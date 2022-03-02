@@ -31,7 +31,7 @@ configure_file(
 
 install_data(
   'org.gnome.Disks.gschema.xml',
-  install_dir: gio_schemasdir,
+  install_dir: join_paths(gdu_datadir, 'glib-2.0', 'schemas')
 )
 
 info = 'org.gnome.DiskUtility.appdata.xml'

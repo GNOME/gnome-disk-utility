@@ -3,7 +3,7 @@ project(
   version: '42.0',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
-  meson_version: '>= 0.50.0',
+  meson_version: '>= 0.59.0',
 )
 
 gdu_name = meson.project_name()
@@ -83,12 +83,6 @@ udisk_dep = dependency('udisks2', version: '>= 2.7.6')
 
 m_dep = cc.find_library('m')
 
-gio_schemasdir = dependency('gio-2.0').get_pkgconfig_variable(
-  'schemasdir',
-  define_variable: ['datadir', gdu_prefix / gdu_datadir],
-  default: gdu_prefix / gdu_datadir / 'glib-2.0/schemas',
-)
-
 # *** Check for logind ***
 logind = get_option('logind')
 enable_logind = (logind != 'none')
@@ -121,10 +115,10 @@ configure_file(
   configuration: config_h,
 )
 
-meson.add_install_script(
-  'meson_post_install.py',
-  gdu_datadir,
-  gio_schemasdir,
+gnome.post_install(
+  gtk_update_icon_cache: true,
+  glib_compile_schemas: true,
+  update_desktop_database: true,
 )
 
 output = '\n        gnome-disk-utility ' + gdu_version + '\n'

@@ -193,20 +193,22 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
   if (drive != NULL && udisks_drive_get_removable (drive))
     {
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
-      if (gdu_utils_is_flash (drive) ||
+      if (gdu_utils_can_format (client, "vfat", FALSE, NULL) &&
+          (gdu_utils_is_flash (drive) ||
           udisks_drive_get_size (drive) < 20UL * 1000UL*1000UL*1000UL ||
-          !gdu_utils_can_format (client, "ntfs", FALSE, NULL)
+          !gdu_utils_can_format (client, "ntfs", FALSE, NULL))
           )
         {
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton), TRUE);
         }
-      else
+      else if (gdu_utils_can_format (client, "ntfs", FALSE, NULL))
         {
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->windows_radiobutton), TRUE);
         }
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_can_format (client, "ntfs", FALSE, NULL));
+  gtk_widget_set_sensitive (GTK_WIDGET (priv->all_radiobutton), gdu_utils_can_format (client, "vfat", FALSE, NULL));
 
   return page;
 }

@@ -1,0 +1,86 @@
+#!/bin/bash
+set -euo pipefail
+
+DRY="${DRY:-0}"
+KEYNAME="${KEYNAME:-id_gnome}"
+USERNAME="${USERNAME:-kailueke}"
+KEY="${HOME}/.ssh/${KEYNAME}"
+
+ARG="${1-}"
+if [ "${ARG}" = "" ] || [ "${ARG}" = "-h" ] || [ "${ARG}" = "--help" ]; then
+  echo "Usage: [USERNAME=mygnomeuser] [KEYNAME=id_rsa] [DRY=1] $0 VERSION"
+  echo "Pulls the current branch, generates the NEWS entries, bumps meson version,"
+  echo "then tags and pushes the commit and uploads the tar ball"
+  exit 1
+fi
+
+git pull
+
+if ! echo "${ARG}" | grep "\." -q; then
+  echo "No minor version given"
+  exit 1
+fi
+MAJOR=$(echo "${ARG}" | cut -d . -f 1)
+MINOR=$(echo "${ARG}" | cut -d . -f 2)
+if [ "${MAJOR}" = "" ] || [ "${MINOR}" = "" ]; then
+  echo "Major '${MAJOR}' or minor '${MINOR}' version empty"
+  exit 1
+fi
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [ "${BRANCH}" != "master" ] && [ "${BRANCH}" != "gnome-${MAJOR}" ]; then
+  echo "Branch ${BRANCH} does not match the expected 'master' or 'gnome-${MAJOR}' branch"
+  exit 1
+fi
+
+REMOTE=$(git remote -v | grep "ssh://git@gitlab.gnome.org" | grep -m 1 push | cut -f 1)
+LAST_TAG=$(git describe --tags --abbrev=0)
+
+{
+  DATE=$(LC_ALL=C date '+%B %d, %Y')
+  HEADER="${ARG} - ${DATE}"
+  echo "${HEADER}"
+  echo "${HEADER}" | tr '[:print:]' '='
+  echo
+  git shortlog "${LAST_TAG}..HEAD" -- ':!po/*.po' | sed 's/ ([0-9]*):$/:/' | sed 's/^ [ ]*/ \* /'
+  echo "Updated translations:"
+  {
+    echo -n ' * '
+    git log "${LAST_TAG}..HEAD" --pretty=format:%an --name-only  -- po/*.po | sed -e :a -e '$!N;s|\npo/\(.*\)\.po| \(\1\)|;ta' | sort -u | sed '$!N;s/^\n//' | python3 -c 'print(", ".join(open("/dev/stdin").read().strip().split("\n")))'
+  } | fold -s -w 75 | sed -e '2,$s/^/   /' | sed -e 's/[[:space:]]*$//'
+  echo
+} | {
+  if [ "${DRY}" = "0" ]; then
+    cat - NEWS | sponge NEWS
+  else
+    cat
+  fi
+}
+
+if [ "${DRY}" = "0" ]; then
+  SEDARG="-i"
+  PASS="cat"
+else
+  SEDARG=""
+  PASS="grep -m 1 version"
+fi
+sed ${SEDARG} -e "3,\$s/^  version: '${LAST_TAG}',\$/  version: '${ARG}',/" meson.build | ${PASS}
+
+if [ "${DRY}" = "0" ]; then
+  git add NEWS meson.build
+  git commit -m "Prepare ${ARG}"
+  git tag -a -m "GNOME Disks ${ARG}" "${ARG}"
+  rm -r builddir
+  meson builddir
+  ninja -C builddir dist
+  git push "${REMOTE}"
+  git push "${REMOTE}" "${ARG}"
+  scp -i "${KEY}" "${PWD}/builddir/meson-dist/gnome-disk-utility-${ARG}.tar.xz"  "${USERNAME}@master.gnome.org:"
+  ssh -i "${KEY}"  "${USERNAME}@master.gnome.org" ftpadmin install "gnome-disk-utility-${ARG}.tar.xz"
+  echo "Success"
+else
+  echo "GNOME Disks ${ARG} (dry run)"
+fi
+if [ "${MINOR}" = "0" ]; then
+  echo "If this is a stable release, create the branch:"
+  echo "git branch gnome-${MAJOR} && git checkout gnome-${MAJOR} && git push ${REMOTE} && echo Success"
+fi

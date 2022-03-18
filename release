@@ -3,12 +3,12 @@ set -euo pipefail
 
 DRY="${DRY:-0}"
 KEYNAME="${KEYNAME:-id_gnome}"
-USERNAME="${USERNAME:-kailueke}"
+GNOMEUSERNAME="${GNOMEUSERNAME:-kailueke}"
 KEY="${HOME}/.ssh/${KEYNAME}"
 
 ARG="${1-}"
 if [ "${ARG}" = "" ] || [ "${ARG}" = "-h" ] || [ "${ARG}" = "--help" ]; then
-  echo "Usage: [USERNAME=mygnomeuser] [KEYNAME=id_rsa] [DRY=1] $0 VERSION"
+  echo "Usage: [GNOMEUSERNAME=mygnomeuser] [KEYNAME=id_rsa] [DRY=1] $0 VERSION"
   echo "Pulls the current branch, generates the NEWS entries, bumps meson version,"
   echo "then tags and pushes the commit and uploads the tar ball"
   exit 1
@@ -74,8 +74,8 @@ if [ "${DRY}" = "0" ]; then
   ninja -C builddir dist
   git push "${REMOTE}"
   git push "${REMOTE}" "${ARG}"
-  scp -i "${KEY}" "${PWD}/builddir/meson-dist/gnome-disk-utility-${ARG}.tar.xz"  "${USERNAME}@master.gnome.org:"
-  ssh -i "${KEY}"  "${USERNAME}@master.gnome.org" ftpadmin install "gnome-disk-utility-${ARG}.tar.xz"
+  scp -i "${KEY}" "${PWD}/builddir/meson-dist/gnome-disk-utility-${ARG}.tar.xz"  "${GNOMEUSERNAME}@master.gnome.org:"
+  ssh -i "${KEY}" "${GNOMEUSERNAME}@master.gnome.org" ftpadmin install "gnome-disk-utility-${ARG}.tar.xz"
   echo "Success"
 else
   echo "GNOME Disks ${ARG} (dry run)"

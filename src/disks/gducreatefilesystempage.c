@@ -177,6 +177,7 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
 {
   GduCreateFilesystemPage *page;
   GduCreateFilesystemPagePrivate *priv;
+  gchar *missing_util = NULL;
 
   page = g_object_new (GDU_TYPE_CREATE_FILESYSTEM_PAGE, NULL);
   priv = gdu_create_filesystem_page_get_instance_private (page);
@@ -207,8 +208,30 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
         }
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_can_format (client, "ntfs", FALSE, NULL));
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->all_radiobutton), gdu_utils_can_format (client, "vfat", FALSE, NULL));
+
+  if (!gdu_utils_can_format (client, "ntfs", FALSE, &missing_util))
+    {
+      gchar *s;
+
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), FALSE);
+      s = g_strdup_printf (_("The utility %s is missing."), missing_util);
+      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->windows_radiobutton), s);
+
+      g_free (s);
+    }
+  g_free (missing_util);
+
+  if (!gdu_utils_can_format (client, "vfat", FALSE, &missing_util))
+    {
+      gchar *s;
+
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->all_radiobutton), FALSE);
+      s = g_strdup_printf (_("The utility %s is missing."), missing_util);
+      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->all_radiobutton), s);
+
+      g_free (s);
+    }
+  g_free (missing_util);
 
   return page;
 }

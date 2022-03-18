@@ -34,6 +34,10 @@ fi
 
 REMOTE=$(git remote -v | grep "ssh://git@gitlab.gnome.org" | grep -m 1 push | cut -f 1)
 LAST_TAG=$(git describe --tags --abbrev=0)
+if [ "${LAST_TAG}" = "${ARG}" ]; then
+  echo "Last tag is ${ARG}"
+  exit 1
+fi
 
 {
   DATE=$(LC_ALL=C date '+%B %d, %Y')
@@ -41,13 +45,15 @@ LAST_TAG=$(git describe --tags --abbrev=0)
   echo "${HEADER}"
   echo "${HEADER}" | tr '[:print:]' '='
   echo
-  git shortlog "${LAST_TAG}..HEAD" -- ':!po/*.po' | sed 's/ ([0-9]*):$/:/' | sed 's/^ [ ]*/ \* /'
-  echo "Updated translations:"
-  {
-    echo -n ' * '
-    git log "${LAST_TAG}..HEAD" --pretty=format:%an --name-only  -- po/*.po | sed -e :a -e '$!N;s|\npo/\(.*\)\.po| \(\1\)|;ta' | sort -u | sed '$!N;s/^\n//' | python3 -c 'print(", ".join(open("/dev/stdin").read().strip().split("\n")))'
-  } | fold -s -w 75 | sed -e '2,$s/^/   /' | sed -e 's/[[:space:]]*$//'
-  echo
+  git shortlog "${LAST_TAG}..HEAD" -- ':!po/*.po' ':!release' | sed 's/ ([0-9]*):$/:/' | sed 's/^ [ ]*/ \* /'
+  if [ "$(git log "${LAST_TAG}..HEAD"   -- po/*.po)" != "" ]; then
+    echo "Updated translations:"
+    {
+      echo -n ' * '
+      git log "${LAST_TAG}..HEAD" --pretty=format:%an --name-only  -- po/*.po | sed -e :a -e '$!N;s|\npo/\(.*\)\.po| \(\1\)|;ta' | sort -u | sed '$!N;s/^\n//' | python3 -c 'print(", ".join(open("/dev/stdin").read().strip().split("\n")))'
+    } | fold -s -w 75 | sed -e '2,$s/^/   /' | sed -e 's/[[:space:]]*$//'
+    echo
+  fi
 } | {
   if [ "${DRY}" = "0" ]; then
     cat - NEWS | sponge NEWS

@@ -195,7 +195,7 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
       /* default FAT for flash and disks/media smaller than 20G (assumed to be flash cards) */
       if (gdu_utils_is_flash (drive) ||
           udisks_drive_get_size (drive) < 20UL * 1000UL*1000UL*1000UL ||
-          !gdu_utils_is_ntfs_available (client)
+          !gdu_utils_can_format (client, "ntfs", FALSE, NULL)
           )
         {
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton), TRUE);
@@ -206,7 +206,7 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
         }
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_is_ntfs_available (client));
+  gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), gdu_utils_can_format (client, "ntfs", FALSE, NULL));
 
   return page;
 }

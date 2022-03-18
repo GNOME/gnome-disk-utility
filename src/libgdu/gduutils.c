@@ -882,32 +882,6 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-gboolean
-gdu_utils_is_ntfs_available (UDisksClient *client)
-{
-  static gsize once = 0;
-  static gboolean available = FALSE;
-
-  if (g_once_init_enter (&once))
-    {
-      GVariant *out_available;
-      gchar *missing_util;
-
-      if (udisks_manager_call_can_format_sync (udisks_client_get_manager (client),
-                                               "ntfs", &out_available, NULL, NULL))
-        {
-          g_variant_get (out_available, "(bs)", &available, &missing_util);
-          g_variant_unref (out_available);
-          g_free (missing_util);
-        }
-
-      g_once_init_leave (&once, (gsize) 1);
-    }
-  return available;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
 
 typedef struct
 {
@@ -1012,6 +986,51 @@ gdu_utils_can_repair (UDisksClient *client,
         }
     }
   G_UNLOCK (can_repair_lock);
+
+  result = g_hash_table_lookup (cache, fstype);
+  if (missing_util_out != NULL)
+    *missing_util_out = result ? g_strdup (result->missing_util) : NULL;
+
+  return result ? result->available : FALSE;
+}
+
+G_LOCK_DEFINE (can_format_lock);
+
+gboolean
+gdu_utils_can_format (UDisksClient *client,
+                      const gchar  *fstype,
+                      gboolean      flush,
+                      gchar       **missing_util_out)
+{
+  static GHashTable *cache = NULL;
+  const gchar *const *supported_fs;
+  UtilCacheEntry *result;
+
+  G_LOCK (can_format_lock);
+  if (flush)
+    g_clear_pointer (&cache, g_hash_table_destroy);
+
+  if (cache == NULL)
+  {
+    cache = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, (GDestroyNotify) util_cache_entry_free);
+    supported_fs = udisks_manager_get_supported_filesystems (udisks_client_get_manager (client));
+    for (gsize i = 0; supported_fs[i] != NULL; i++)
+    {
+      GVariant *out_available;
+
+      if (udisks_manager_call_can_format_sync (udisks_client_get_manager (client),
+                                               supported_fs[i], &out_available, NULL, NULL))
+      {
+        UtilCacheEntry *entry;
+
+        entry = g_new0 (UtilCacheEntry, 1);
+        g_variant_get (out_available, "(bs)", &entry->available, &entry->missing_util);
+        g_variant_unref (out_available);
+        g_hash_table_insert (cache, g_strdup (supported_fs[i]), entry);
+      }
+    }
+  }
+  G_UNLOCK (can_format_lock);
 
   result = g_hash_table_lookup (cache, fstype);
   if (missing_util_out != NULL)

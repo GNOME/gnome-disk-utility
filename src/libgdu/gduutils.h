@@ -76,8 +76,6 @@ gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
                                              GList        *objects,
                                              gboolean     destructive_action);
 
-gboolean gdu_utils_is_ntfs_available (UDisksClient *client);
-
 
 /* Defined by libblockdev/UDisks */
 typedef enum {
@@ -94,6 +92,11 @@ gboolean gdu_utils_can_resize (UDisksClient *client,
                                gchar       **missing_util_out);
 
 gboolean gdu_utils_can_repair (UDisksClient *client,
+                               const gchar  *fstype,
+                               gboolean      flush,
+                               gchar       **missing_util_out);
+
+gboolean gdu_utils_can_format (UDisksClient *client,
                                const gchar  *fstype,
                                gboolean      flush,
                                gchar       **missing_util_out);

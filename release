@@ -14,8 +14,6 @@ if [ "${ARG}" = "" ] || [ "${ARG}" = "-h" ] || [ "${ARG}" = "--help" ]; then
   exit 1
 fi
 
-git pull
-
 if ! echo "${ARG}" | grep "\." -q; then
   echo "No minor version given"
   exit 1
@@ -33,6 +31,9 @@ if [ "${BRANCH}" != "master" ] && [ "${BRANCH}" != "gnome-${MAJOR}" ]; then
 fi
 
 REMOTE=$(git remote -v | grep "ssh://git@gitlab.gnome.org" | grep -m 1 push | cut -f 1)
+
+git pull "${REMOTE}" "${BRANCH}"
+
 LAST_TAG=$(git describe --tags --abbrev=0)
 if [ "${LAST_TAG}" = "${ARG}" ]; then
   echo "Last tag is ${ARG}"

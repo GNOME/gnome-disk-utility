@@ -1079,12 +1079,10 @@ gdu_utils_can_check (UDisksClient *client,
                                                   supported_fs[i], &out_available, NULL, NULL))
             {
               UtilCacheEntry *entry;
-              guint64 m = 0;
 
               entry = g_new0 (UtilCacheEntry, 1);
               g_variant_get (out_available, "(bs)", &entry->available, &entry->missing_util);
               g_variant_unref (out_available);
-              entry->mode = (ResizeFlags) m;
               g_hash_table_insert (cache, g_strdup (supported_fs[i]), entry);
             }
         }

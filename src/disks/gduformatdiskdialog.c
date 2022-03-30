@@ -436,7 +436,6 @@ gdu_format_disk_dialog_show (GduWindow    *window,
                              UDisksObject *object)
 {
   FormatDiskData *data;
-  gint response;
 
   data = g_new0 (FormatDiskData, 1);
   data->window = g_object_ref (window);
@@ -470,6 +469,6 @@ gdu_format_disk_dialog_show (GduWindow    *window,
   gtk_widget_show_all (data->dialog);
   gtk_widget_grab_focus (data->type_combobox);
 
-  g_signal_connect (data->dialog, "response", dialog_response_cb, data);
+  g_signal_connect (data->dialog, "response", G_CALLBACK (dialog_response_cb), data);
   gtk_window_present (GTK_WINDOW (data->dialog));
 }

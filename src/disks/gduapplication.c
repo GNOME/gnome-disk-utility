@@ -354,7 +354,7 @@ about_activated (GSimpleAction *action,
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
   gtk_widget_show_all (dialog);
-  g_signal_connect (dialog, "response", on_about_dialog_response, NULL);
+  g_signal_connect (dialog, "response", G_CALLBACK (on_about_dialog_response), NULL);
   gtk_window_present (GTK_WINDOW (dialog));
 }
 

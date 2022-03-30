@@ -1684,15 +1684,15 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
 
   action = g_simple_action_new ("short", NULL);
   g_signal_connect (action, "activate", G_CALLBACK (on_selftest_short), data);
-  g_simple_action_group_insert (group, G_ACTION (action));
+  g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
 
   action = g_simple_action_new ("extended", NULL);
   g_signal_connect (action, "activate", G_CALLBACK (on_selftest_extended), data);
-  g_simple_action_group_insert (group, G_ACTION (action));
+  g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
 
   action = g_simple_action_new ("conveyance", NULL);
   g_signal_connect (action, "activate", G_CALLBACK (on_selftest_conveyance), data);
-  g_simple_action_group_insert (group, G_ACTION (action));
+  g_action_map_add_action (G_ACTION_MAP (group), G_ACTION (action));
 
   gtk_widget_insert_action_group (GTK_WIDGET (data->dialog), "test", G_ACTION_GROUP (group));
 

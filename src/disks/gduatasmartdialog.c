@@ -601,7 +601,7 @@ attribute_get_details (const gchar  *name,
                        const gchar **out_desc)
 {
   SmartDetails *details;
-  static volatile gsize have_hash = 0;
+  static gsize have_hash = 0;
   static GHashTable *smart_details_map = NULL;
   gboolean ret;
 

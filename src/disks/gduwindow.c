@@ -1136,6 +1136,7 @@ gdu_window_constructed (GObject *object)
       gtk_widget_hide (GTK_WIDGET (l->data));
       gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
     }
+  g_list_free (children);
 
   context = gtk_widget_get_style_context (window->device_tree_scrolledwindow);
   gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);

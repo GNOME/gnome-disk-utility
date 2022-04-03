@@ -504,6 +504,7 @@ gdu_application_new_widget (GduApplication  *application,
     {
       g_object_unref (builder);
     }
+  g_free (path);
   return ret;
 }
 

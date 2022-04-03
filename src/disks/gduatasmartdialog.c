@@ -1028,6 +1028,7 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata,
            * The second %s is the temperature of the drive.
            */
           s1 = g_strdup_printf (_("%s (%s)"), ret, s);
+          g_free (s);
           g_free (ret);
           ret = s1;
         }

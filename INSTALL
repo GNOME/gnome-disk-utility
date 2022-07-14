@@ -45,7 +45,7 @@ replacing the system daemon:
 
 Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
   # (skip these two steps if you already installed the nightly GNOME runtime)
-  flatpak --user remote-add --if-not-exists gnome-nightly https://sdk.gnome.org/gnome-nightly.flatpakrepo
+  flatpak --user remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
   flatpak --user install gnome-nightly org.gnome.Platform//master org.gnome.Sdk//master
   # build GNOME Disks and all dependencies
   flatpak-builder app flatpak/org.gnome.DiskUtility.json
@@ -84,7 +84,7 @@ Build a Flatpak app with your local source code changes:
   flatpak-builder --finish-only --repo=repo app flatpak/org.gnome.DiskUtility.json
   # Now you can already run it the same way as above (flatpak-builder --run app …, and restart UDisks through bwrap)
   # or you can continue to do the following step to create a Flatpak bundle.
-  flatpak build-bundle repo org.gnome.DiskUtility.flatpak --runtime-repo=https://sdk.gnome.org/gnome-nightly.flatpakrepo org.gnome.DiskUtility
+  flatpak build-bundle repo org.gnome.DiskUtility.flatpak --runtime-repo=https://nightly.gnome.org/gnome-nightly.flatpakrepo org.gnome.DiskUtility
   # Install the resulting org.gnome.DiskUtility.flatpak file:
   flatpak --user install org.gnome.DiskUtility.flatpak
   # Finally, run the app:

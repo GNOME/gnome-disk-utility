@@ -18,6 +18,7 @@
         "--socket=system-bus",
         "--socket=wayland",
         "--socket=fallback-x11",
+        "--talk-name=org.freedesktop.Notifications",
         "--env=G_ENABLE_DIAGNOSTIC=1"
     ],
     "build-options" : {
@@ -339,6 +340,23 @@
                     "type" : "git",
                     "url" : "https://github.com/storaged-project/udisks.git",
                     "tag": "udisks-2.9.4"
+                }
+            ]
+        },
+        {
+            "name" : "libnotify",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dtests=false",
+                "-Dintrospection=disabled",
+                "-Dman=false",
+                "-Dgtk_doc=false",
+                "-Ddocbook_docs=disabled"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/libnotify.git"
                 }
             ]
         },

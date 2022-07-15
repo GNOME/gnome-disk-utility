@@ -6,14 +6,8 @@ and https://wiki.gnome.org/Apps/Disks
    - Also wanted: "Blank Disc…" dialog
    - Part of this involves deciding on library / command-line tools to use
 
- - Partition resizing
-   - for the udisks part, see https://bugs.freedesktop.org/show_bug.cgi?id=51783
-
  - Btrfs support
    - https://bugzilla.gnome.org/show_bug.cgi?id=608204
-
- - Filesystem Checking
-   - https://bugzilla.gnome.org/show_bug.cgi?id=676555
 
  - badblocks(8) functionality
    - Menu item: "Test Disk…" dialog
@@ -54,30 +48,6 @@ and https://wiki.gnome.org/Apps/Disks
                                | Value       | Normalized   | Worst | Threshold
      Reallocated Sector Count  | ↑ 2 sectors | ↓ 99         | 99    | 50
    - See also https://plus.google.com/110773474140772402317/posts/T4pqft6pP9c
-
- - Improve "Format Disk…" dialog so partitions can be created
-   - Size is adjusted through a slider
-   - Need designer input
-   - Might be hard to do with current GTK+
-
-   +--------------------------------------------------------------------------+
-   |                              Format disk                                 |
-   +--------------------------------------------------------------------------+
-   |         Erase  [Don't overwrite data (Quick)                        |V]  |
-   |  Partitioning  [Compatible with all systems and devices (MBR / DOS) |V]  |
-   |        Layout  [Two Partitions                                      |V]  |
-   |                                                                          |
-   |  /-------------------------------------------------+------------------\  |
-   |  |                                                 |                  |  |
-   |  |                                                 |                  |  |
-   |  |                   1600MB                        |      400MB       |  |
-   |  |                 [Stuff____]                     |   [sekrit____]   |  |
-   |  |                   [NTFS|V]                      |  [ Encrypted|V]  |  |
-   |  |                                                 |                  |  |
-   |  \-------------------------------------------------+------------------/  |
-   |                                                                          |
-   |                                                       [Cancel] [Format…] |
-   +--------------------------------------------------------------------------+
 
  - Encryption Recovery Key
    - When setting up an encrypted device, it should be possible to create

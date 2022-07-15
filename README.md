@@ -19,3 +19,11 @@ Attach and mount disk images
 
 gnome-disk-utility notification plugin for GNOME Settings Daemon
 Disk health failure notification (SMART status)
+
+## Development
+
+For building and running the local build, read the `INSTALL` file, in
+particular the Flatpak instructions which help you to run a
+development version of UDisks as well.
+
+The release is done with the `./release` script.

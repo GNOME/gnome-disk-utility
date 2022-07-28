@@ -1,17 +1,10 @@
-# Copyright (C) 2022 The Abkhazian language development fund named after Bagrat Shinkuba
-# This file is distributed under the same license as the gnome-disk-utility package.
-# Нанба Наала <naala-nanba@rambler.ru>, 2022.
-#
-
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2022-07-16 19:36+0000\n"
-"PO-Revision-Date: 2022-07-22 16:00+0000\n"
 "Last-Translator: Нанба Наала <naala-nanba@rambler.ru>\n"
-"Language-Team: Abkhazian <LL@li.org>\n"
+"Language-Team: Abkhazian <ab@li.org>\n"
 "Language: ab\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,7 +78,7 @@ msgstr ""
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:45
 msgid "The GNOME Project"
-msgstr ""
+msgstr "The GNOME Project"
 
 #: data/org.gnome.DiskUtility.desktop.in:4
 msgid "Manage Drives and Media"
@@ -201,7 +194,13 @@ msgstr ""
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 
+#. Translators: Shown in the About dialog to convey version numbers.
+#. *              The first %s is the version of Disks (for example "3.6").
+#. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
+#. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
+#.
 #: src/disks/gduapplication.c:348
+#, c-format
 msgid ""
 "gnome-disk-utility %s\n"
 "UDisks %s (built against %d.%d.%d)"
@@ -402,7 +401,10 @@ msgstr ""
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:286+src/disks/gduatasmartdialog.c:505
+#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
+#: src/disks/gduatasmartdialog.c:286 src/disks/gduatasmartdialog.c:505
 msgid "Power-off Retract Count"
 msgstr "Амашәыртә ҿыхрақәа"
 
@@ -599,6 +601,9 @@ msgstr ""
 msgid "Number of buzz routines to spin up the drive"
 msgstr ""
 
+#. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
+#. * or the next string for a longer explanation.
+#.
 #: src/disks/gduatasmartdialog.c:431
 msgid "Offline Seek Performance"
 msgstr "Автономла аҭыԥыркра"
@@ -803,7 +808,7 @@ msgstr ""
 
 #: src/disks/gduatasmartdialog.c:707
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
@@ -814,7 +819,15 @@ msgid_plural "%d sectors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/disks/gduatasmartdialog.c:746+src/disks/gduatasmartdialog.c:879
+#. Translators: Used in the treeview for the pretty/interpreted value of an attribute
+#. * for a temperature-based unit - first %f is the temperature in degrees Celcius, second %f
+#. * is the temperature in degrees Fahrenheit
+#. Translators: Used to format a temperature.
+#. * The first %f is the temperature in degrees Celcius and
+#. * the second %f is the temperature in degrees Fahrenheit.
+#.
+#: src/disks/gduatasmartdialog.c:746 src/disks/gduatasmartdialog.c:879
+#, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
 
@@ -942,7 +955,12 @@ msgstr[1] ""
 msgid "Disk is OK"
 msgstr ""
 
+#. Translators: Used to convey the status and temperature in one line.
+#. * The first %s is the status of the drive.
+#. * The second %s is the temperature of the drive.
+#.
 #: src/disks/gduatasmartdialog.c:1030
+#, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
@@ -960,7 +978,7 @@ msgstr ""
 
 #: src/disks/gduatasmartdialog.c:1123
 msgid "Offline"
-msgstr ""
+msgstr "Автономла"
 
 #. Translators: XXX
 #: src/disks/gduatasmartdialog.c:1232
@@ -988,10 +1006,12 @@ msgstr ""
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr ""
 
+#. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
 #: src/disks/gduatasmartdialog.c:1566
 msgid "ID"
 msgstr "ID"
 
+#. Translators: This string is used as the column title in the treeview for the attribute name and description
 #: src/disks/gduatasmartdialog.c:1578
 msgid "Attribute"
 msgstr "Аҟазшьарбага"
@@ -1226,9 +1246,12 @@ msgstr ""
 #: src/disks/gducreateconfirmpage.c:110
 #, c-format
 msgid "%s — %s"
-msgstr ""
+msgstr "%s — %s"
 
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#.
 #: src/disks/gducreateconfirmpage.c:128
+#, c-format
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
 
@@ -1559,6 +1582,7 @@ msgstr ""
 msgid "Save Power"
 msgstr ""
 
+#. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
 #: src/disks/gdudisksettingsdialog.c:428
 msgid "← Spindown"
 msgstr "← Аикәшарақәа рырмаҷра"
@@ -2034,7 +2058,12 @@ msgstr ""
 msgid "%s of %s — %s"
 msgstr ""
 
+#. Translators: Used in job progress bar.
+#. *              The %s is the job description (e.g. "Erasing Device").
+#. *              The %f is the completion percentage (between 0.0 and 100.0).
+#.
 #: src/disks/gduwindow.c:1860
+#, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
@@ -2514,7 +2543,7 @@ msgstr ""
 #. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
 #: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
 msgid "Location"
-msgstr ""
+msgstr "Аҭыӡҭыԥ"
 
 #: src/disks/ui/create-disk-image-dialog.ui:7
 msgid "Create Disk Image"
@@ -2604,7 +2633,8 @@ msgstr ""
 msgid "The size of the partition to create"
 msgstr ""
 
-#: src/disks/ui/create-partition-page.ui:103+src/disks/ui/new-disk-image-dialog.ui:140+src/disks/ui/resize-dialog.ui:119
+#: src/disks/ui/create-partition-page.ui:103
+#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "баит"
 
@@ -3759,27 +3789,3 @@ msgstr ""
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr ""
-
-#: src/disks/gducreateconfirmpage.c:110
-msgctxt "src/disks/gducreateconfirmpage.c:110"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#: src/disks/gduwindow.c:2589
-msgid "Active"
-msgstr "Иактиву"
-
-#: src/disks/gduwindow.c:2650
-msgctxt "src/disks/gduwindow.c:2650"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#: src/libgdu/gduutils.c:589
-msgctxt "src/libgdu/gduutils.c:589"
-msgid "%s"
-msgstr "%s"
-
-#: src/libgdu/gduutils.c:595
-msgctxt "src/libgdu/gduutils.c:595"
-msgid "%s"
-msgstr "%s"

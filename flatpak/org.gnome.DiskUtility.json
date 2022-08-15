@@ -215,6 +215,59 @@
             ]
         },
         {
+            "name" : "libnvme",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/linux-nvme/libnvme.git"
+                }
+            ]
+        },
+        {
+            "name" : "pam",
+            "config-opts" : [
+                "--includedir=/app/include/security",
+                "--disable-doc"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://github.com/linux-pam/linux-pam/releases/download/v1.4.0/Linux-PAM-1.4.0.tar.xz",
+                    "sha256" : "cd6d928c51e64139be3bdb38692c68183a509b83d4f2c221024ccd4bcddfd034"
+                }
+            ]
+        },
+        {
+            "name" : "libcap-ng",
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://people.redhat.com/sgrubb/libcap-ng/libcap-ng-0.8.3.tar.gz",
+                    "sha256" : "bed6f6848e22bb2f83b5f764b2aef0ed393054e803a8e3a8711cb2a39e6b492d"
+                }
+            ]
+        },
+        {
+            "name" : "fdisk",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dauto_features=disabled",
+                "-Dbuild-libfdisk=enabled",
+                "-Dbuild-fdisks=enabled",
+                "-Dbuild-libuuid=enabled",
+                "-Dbuild-libblkid=enabled",
+                "-Duse-tty-group=false",
+                "-Dlibutil=enabled"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/util-linux/util-linux.git"
+                }
+            ]
+        },
+        {
             "name" : "blockdev",
             "config-opts" : [
                 "--disable-tests",
@@ -234,20 +287,6 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/storaged-project/libblockdev.git"
-                }
-            ]
-        },
-        {
-            "name" : "pam",
-            "config-opts" : [
-                "--includedir=/app/include/security",
-                "--disable-doc"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://github.com/linux-pam/linux-pam/releases/download/v1.4.0/Linux-PAM-1.4.0.tar.xz",
-                    "sha256" : "cd6d928c51e64139be3bdb38692c68183a509b83d4f2c221024ccd4bcddfd034"
                 }
             ]
         },

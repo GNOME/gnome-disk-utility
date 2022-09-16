@@ -82,7 +82,7 @@ if [ "${DRY}" = "0" ]; then
   git push "${REMOTE}"
   git push "${REMOTE}" "${ARG}"
   scp -i "${KEY}" "${PWD}/builddir/meson-dist/gnome-disk-utility-${ARG}.tar.xz"  "${GNOMEUSERNAME}@master.gnome.org:"
-  ssh -i "${KEY}" "${GNOMEUSERNAME}@master.gnome.org" ftpadmin install "gnome-disk-utility-${ARG}.tar.xz"
+  ssh -t -i "${KEY}" "${GNOMEUSERNAME}@master.gnome.org" ftpadmin install "gnome-disk-utility-${ARG}.tar.xz"
   echo "Success"
 else
   echo "GNOME Disks ${ARG} (dry run)"

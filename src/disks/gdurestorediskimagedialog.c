@@ -606,6 +606,7 @@ update_job (DialogData *data,
 static void
 play_complete_sound (DialogData *data)
 {
+#if 0  /* fixme */
   const gchar *sound_message;
 
   /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
@@ -614,6 +615,7 @@ play_complete_sound (DialogData *data)
                           CA_PROP_EVENT_ID, "complete",
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
+#endif
 
   if (data->inhibit_cookie > 0)
     {

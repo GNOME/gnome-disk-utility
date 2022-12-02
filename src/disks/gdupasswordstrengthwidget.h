@@ -15,11 +15,9 @@
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_PASSWORD_STRENGTH_WIDGET         gdu_password_strength_widget_get_type()
-#define GDU_PASSWORD_STRENGTH_WIDGET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_PASSWORD_STRENGTH_WIDGET, GduPasswordStrengthWidget))
-#define GDU_IS_PASSWORD_STRENGTH_WIDGET(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_PASSWORD_STRENGTH_WIDGET))
+#define GDU_TYPE_PASSWORD_STRENGTH_WIDGET (gdu_password_strength_widget_get_type ())
+G_DECLARE_FINAL_TYPE (GduPasswordStrengthWidget, gdu_password_strength_widget, GDU, PASSWORD_STRENGTH_WIDGET, GtkBox)
 
-GType        gdu_password_strength_widget_get_type       (void) G_GNUC_CONST;
 GtkWidget*   gdu_password_strength_widget_new            (void);
 void         gdu_password_strength_widget_set_password   (GduPasswordStrengthWidget *widget,
                                                           const gchar               *password);

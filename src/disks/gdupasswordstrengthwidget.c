@@ -19,8 +19,6 @@
 
 #include "gdupasswordstrengthwidget.h"
 
-typedef struct _GduPasswordStrengthWidgetClass GduPasswordStrengthWidgetClass;
-
 struct _GduPasswordStrengthWidget
 {
   GtkBox parent;
@@ -29,11 +27,6 @@ struct _GduPasswordStrengthWidget
   GtkWidget *notebook;
 
   gchar *password;
-};
-
-struct _GduPasswordStrengthWidgetClass
-{
-  GtkBoxClass parent_class;
 };
 
 enum

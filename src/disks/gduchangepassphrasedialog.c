@@ -12,6 +12,7 @@
 
 #include <glib/gi18n.h>
 
+#include "gtk3-to-4.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gduchangepassphrasedialog.h"
@@ -47,9 +48,9 @@ dialog_passhphrase_changed_cb (GduChangePassphraseDialog *self)
 
   g_assert (GDU_IS_CHANGE_PASSPHRASE_DIALOG (self));
 
-  existing_passphrase = gtk_entry_get_text (self->existing_passphrase_entry);
-  new_passphrase = gtk_entry_get_text (self->new_passphrase_entry);
-  confirm_passphrase = gtk_entry_get_text (self->confirm_passphrase_entry);
+  existing_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->existing_passphrase_entry));
+  new_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry));
+  confirm_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->confirm_passphrase_entry));
 
   gtk_entry_set_icon_from_icon_name (self->confirm_passphrase_entry,
                                      GTK_ENTRY_ICON_SECONDARY,
@@ -106,7 +107,7 @@ update_configuration_item_cb (GObject      *source_object,
     gdu_utils_show_error (GTK_WINDOW (self->window), _("Error updating /etc/crypttab"), error);
 
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 static void
@@ -135,7 +136,7 @@ change_passphrase_cb (GObject      *source_object,
           if (g_strcmp0 (key, "passphrase-contents") == 0)
             {
               g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                     g_variant_new_bytestring (gtk_entry_get_text (self->new_passphrase_entry)));
+                                     g_variant_new_bytestring (gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry))));
             }
           else
             {
@@ -156,7 +157,7 @@ change_passphrase_cb (GObject      *source_object,
   else
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_destroy (GTK_WINDOW (self));
     }
 }
 
@@ -275,7 +276,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
                             _("Error retrieving configuration data"),
                             error);
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_destroy (GTK_WINDOW (self));
       return;
     }
 
@@ -289,7 +290,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
             {
               self->crypttab_details = g_variant_ref (details);
 
-              gtk_entry_set_text (self->existing_passphrase_entry, passphrase_contents);
+              gtk_editable_set_text (GTK_EDITABLE (self->existing_passphrase_entry), passphrase_contents);
               /* Don't focus on the "Existing passphrase" entry */
               gtk_editable_select_region (GTK_EDITABLE (self->existing_passphrase_entry), 0, 0);
               gtk_widget_grab_focus (GTK_WIDGET (self->new_passphrase_entry));
@@ -302,7 +303,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
 
   gdu_utils_show_error (GTK_WINDOW (self->window), _("/etc/crypttab configuration data is malformed"), NULL);
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 void
@@ -333,7 +334,7 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
                                              "the passphrase referenced by the <i>/etc/crypttab</i> file"),
                                            NULL);
       gtk_widget_show (infobar);
-      gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
+      /* gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0); */
 
       udisks_block_call_get_secret_configuration (self->udisks_block,
                                                   g_variant_new ("a{sv}", NULL), /* options */

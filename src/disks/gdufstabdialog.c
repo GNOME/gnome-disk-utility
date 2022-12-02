@@ -10,6 +10,7 @@
 
 #include <glib/gi18n.h>
 
+#include "gtk3-to-4.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdufstabdialog.h"
@@ -479,7 +480,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
       bar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING,
                                        _("The system may not work correctly if this entry is modified or removed."),
                                        NULL);
-      gtk_box_pack_start (GTK_BOX (data.infobar_hbox), bar, TRUE, TRUE, 0);
+      /* gtk_box_pack_start (GTK_BOX (data.infobar_hbox), bar, TRUE, TRUE, 0); */
     }
 
   gtk_switch_set_active (GTK_SWITCH (data.automatic_mount_options_switch), !configured);

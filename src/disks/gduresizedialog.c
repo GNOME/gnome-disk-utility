@@ -89,7 +89,7 @@ resize_dialog_data_unref (ResizeDialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_destroy (GTK_WINDOW (data->dialog));
         }
 
       g_clear_object (&data->builder);
@@ -202,7 +202,7 @@ set_unit_num (ResizeDialogData *data,
                              "}\n",
                              (gint) (min_size_units / max_size_units * gtk_widget_get_allocated_width (data->size_stack)));
       data->css_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
-      gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (data->css_provider), css, -1, NULL);
+      gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (data->css_provider), css, -1);
       gtk_style_context_add_provider (context, data->css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
       g_free (css);
@@ -248,7 +248,8 @@ resize_dialog_populate (ResizeDialogData *data)
   gtk_dialog_add_button (GTK_DIALOG (data->dialog), "gtk-cancel", GTK_RESPONSE_CANCEL);
   data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog), _("_Resize"), GTK_RESPONSE_APPLY);
   gtk_style_context_add_class (gtk_widget_get_style_context (data->apply), "destructive-action");
-  gtk_widget_grab_default (data->apply);
+  gtk_window_set_default_widget (GTK_WINDOW (data->dialog), data->apply);
+  /* gtk_widget_grab_default (data->apply); */
 
   data->size_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-spinbutton"));
   data->size_difference_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-difference-spinbutton"));
@@ -445,7 +446,7 @@ static void
 response_cb (GtkDialog *dialog,
              gint       response)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_destroy (GTK_WINDOW (dialog));
 }
 
 static gboolean
@@ -905,7 +906,7 @@ gdu_resize_dialog_show (GduWindow    *window,
     {
       gtk_spinner_stop (GTK_SPINNER (data->spinner));
       gtk_stack_set_visible_child (GTK_STACK (data->size_stack), data->resize_number_grid);
-      gtk_widget_set_no_show_all (data->explanation_label, TRUE);
+      /* gtk_widget_set_no_show_all (data->explanation_label, TRUE); */
       gtk_widget_hide (data->explanation_label);
     }
   else
@@ -936,7 +937,7 @@ gdu_resize_dialog_show (GduWindow    *window,
                                data,
                                NULL);
 
-  gtk_widget_show_all (data->dialog);
+  gtk_widget_show (data->dialog);
   set_unit_num (data, data->cur_unit_num);
 
   if (data->filesystem != NULL)
@@ -953,54 +954,54 @@ gdu_resize_dialog_show (GduWindow    *window,
                                     resize_dialog_data_ref (data));
     }
 
-  if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
-    {
-      gtk_widget_hide (data->dialog);
-      g_clear_pointer (&data->dialog, gtk_widget_destroy);
+  /* if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY) */
+  /*   { */
+  /*     gtk_widget_hide (data->dialog); */
+  /*     g_clear_pointer (&data->dialog, gtk_widget_destroy); */
 
-      if (data->filesystem != NULL)
-        {
-          gboolean offline_shrink;
+  /*     if (data->filesystem != NULL) */
+  /*       { */
+  /*         gboolean offline_shrink; */
 
-          mount_points = udisks_filesystem_get_mount_points (data->filesystem);
-          /* prevent the case of mounting when directly unmount would follow */
-          offline_shrink = !(data->support & ONLINE_SHRINK) && is_shrinking (data);
+  /*         mount_points = udisks_filesystem_get_mount_points (data->filesystem); */
+  /*         /\* prevent the case of mounting when directly unmount would follow *\/ */
+  /*         offline_shrink = !(data->support & ONLINE_SHRINK) && is_shrinking (data); */
 
-          if (g_strv_length ((gchar **) mount_points) == 0 && !offline_shrink)
-            {
-              /* FS was unmounted by the user while the dialog stayed open */
-              udisks_filesystem_call_mount (data->filesystem,
-                                            g_variant_new ("a{sv}", NULL), NULL,
-                                            (GAsyncReadyCallback) mount_cb, data);
-            }
-          else
-            {
-              resize (data);
-            }
-        }
-      else
-        {
-          /* no filesystem present, just resize partition */
-          udisks_partition_call_resize (data->partition, get_size (data),
-                                        g_variant_new ("a{sv}", NULL), NULL,
-                                        (GAsyncReadyCallback) part_resize_cb, data);
-        }
-    }
-  else
-    {
-      /* close dialog now, does not need to be closed anymore through the mount error handler */
-      if (data->running_id)
-        {
-          g_source_remove (data->running_id);
-          data->running_id = 0;
-        }
+  /*         if (g_strv_length ((gchar **) mount_points) == 0 && !offline_shrink) */
+  /*           { */
+  /*             /\* FS was unmounted by the user while the dialog stayed open *\/ */
+  /*             udisks_filesystem_call_mount (data->filesystem, */
+  /*                                           g_variant_new ("a{sv}", NULL), NULL, */
+  /*                                           (GAsyncReadyCallback) mount_cb, data); */
+  /*           } */
+  /*         else */
+  /*           { */
+  /*             resize (data); */
+  /*           } */
+  /*       } */
+  /*     else */
+  /*       { */
+  /*         /\* no filesystem present, just resize partition *\/ */
+  /*         udisks_partition_call_resize (data->partition, get_size (data), */
+  /*                                       g_variant_new ("a{sv}", NULL), NULL, */
+  /*                                       (GAsyncReadyCallback) part_resize_cb, data); */
+  /*       } */
+  /*   } */
+  /* else */
+  /*   { */
+  /*     /\* close dialog now, does not need to be closed anymore through the mount error handler *\/ */
+  /*     if (data->running_id) */
+  /*       { */
+  /*         g_source_remove (data->running_id); */
+  /*         data->running_id = 0; */
+  /*       } */
 
-      gtk_widget_hide (data->dialog);
-      g_clear_pointer (&data->dialog, gtk_widget_destroy);
-      if (data->mount_cancellable)
-        g_cancellable_cancel (data->mount_cancellable);
+  /*     gtk_widget_hide (data->dialog); */
+  /*     g_clear_pointer (&data->dialog, gtk_widget_destroy); */
+  /*     if (data->mount_cancellable) */
+  /*       g_cancellable_cancel (data->mount_cancellable); */
 
-      resize_dialog_data_unref (data);
-    }
+  /*     resize_dialog_data_unref (data); */
+  /*   } */
 }
 

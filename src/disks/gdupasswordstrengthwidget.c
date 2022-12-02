@@ -10,8 +10,8 @@
 #include <glib/gi18n.h>
 
 #include <math.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
+/* #include <gdk/gdkkeysyms.h> */
+/* #include <gdk/gdkx.h> */
 #include <stdlib.h>
 
 #include <pwquality.h>
@@ -163,12 +163,12 @@ gdu_password_strength_widget_constructed (GObject *object)
   gtk_box_set_spacing (GTK_BOX (widget), 6);
 
   widget->level_bar = gtk_level_bar_new ();
-  gtk_box_pack_start (GTK_BOX (widget), widget->level_bar, TRUE, TRUE, 0);
+  gtk_box_prepend (GTK_BOX (widget), widget->level_bar);
 
   widget->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (widget->notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (widget->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (widget), widget->notebook, FALSE, TRUE, 0);
+  gtk_box_prepend (GTK_BOX (widget), widget->notebook);
 
   for (n = 0; n < G_N_ELEMENTS (hint_labels); n++)
     {
@@ -183,7 +183,7 @@ gdu_password_strength_widget_constructed (GObject *object)
       gtk_notebook_append_page (GTK_NOTEBOOK (widget->notebook), label, NULL);
     }
 
-  gtk_widget_show_all (GTK_WIDGET (widget));
+  /* gtk_widget_show_all (GTK_WIDGET (widget)); */
 
   update (widget);
 

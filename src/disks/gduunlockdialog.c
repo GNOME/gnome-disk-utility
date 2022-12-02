@@ -45,7 +45,7 @@ struct _GduUnlockDialog
   GtkEntry             *pim_entry;
 
   GtkBox               *keyfile_file_chooser_box;
-  GtkFileChooserButton *keyfile_file_chooser_button;
+  /* GtkFileChooserButton *keyfile_file_chooser_button; */
 
   GtkButton            *cancel_button;
   GtkButton            *unlock_button;
@@ -83,9 +83,9 @@ luks_find_passphrase_cb (GObject      *source,
       infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
                                            _("The encryption passphrase was retrieved from the keyring"),
                                            NULL);
-      gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
-      gtk_widget_show (GTK_WIDGET (self->infobar_box));
-      gtk_entry_set_text (self->passphrase_entry, passphrase);
+      /* gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0); */
+      /* gtk_widget_show (GTK_WIDGET (self->infobar_box)); */
+      /* gtk_entry_set_text (self->passphrase_entry, passphrase); */
     }
 
   gtk_window_present (GTK_WINDOW (self));
@@ -112,7 +112,7 @@ unlock_cb (UDisksEncrypted *encrypted,
       gdu_utils_show_error (window, _("Error unlocking device"), error);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 static void
@@ -135,7 +135,7 @@ do_unlock (GduUnlockDialog *self)
   if (self->keyfiles)
     g_variant_builder_add (&options_builder, "{sv}", "keyfiles", g_variant_ref (self->keyfiles));
 
-  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  passphrase = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
   udisks_encrypted_call_unlock (self->udisks_encrypted,
                                 passphrase,
                                 g_variant_builder_end (&options_builder),
@@ -169,14 +169,14 @@ unlock_dialog_response_cb (GduUnlockDialog *self,
 
           for (guint i = 0; i < n_items; i++)
             {
-              g_autoptr(GtkFileChooserButton) button = NULL;
-              g_autofree char *filename = NULL;
+              /* g_autoptr(GtkFileChooserButton) button = NULL; */
+              /* g_autofree char *filename = NULL; */
 
-              button = g_list_model_get_item (G_LIST_MODEL (self->key_files_store), i);
-              filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (button));
+              /* button = g_list_model_get_item (G_LIST_MODEL (self->key_files_store), i); */
+              /* filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (button)); */
 
-              if (filename)
-                g_variant_builder_add (builder, "s", filename);
+              /* if (filename) */
+              /*   g_variant_builder_add (builder, "s", filename); */
             }
 
           if (n_items)
@@ -187,7 +187,7 @@ unlock_dialog_response_cb (GduUnlockDialog *self,
   else
     {
       /* otherwise, we are done */
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_destroy (GTK_WINDOW (self));
     }
 }
 
@@ -202,13 +202,13 @@ unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)
   g_assert (GDU_IS_UNLOCK_DIALOG (self));
 
   context = gtk_widget_get_style_context (GTK_WIDGET (self->pim_entry));
-  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  passphrase = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
   can_unlock = passphrase && *passphrase;
 
   n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
   can_unlock = can_unlock || n_items > 0;
 
-  pim_str = gtk_entry_get_text (self->pim_entry);
+  pim_str = gtk_editable_get_text (GTK_EDITABLE (self->pim_entry));
   if (gtk_widget_is_visible (GTK_WIDGET (self->pim_entry)) &&
       pim_str && *pim_str)
     {
@@ -242,22 +242,22 @@ unlock_dialog_keyfile_set_cb (GduUnlockDialog *self,
   GtkWidget *new_button;
 
   g_assert (GDU_IS_UNLOCK_DIALOG (self));
-  g_assert (GTK_IS_FILE_CHOOSER_BUTTON (button));
+  /* g_assert (GTK_IS_FILE_CHOOSER_BUTTON (button)); */
 
   /* Don't call this function again for this instance */
   g_signal_handlers_disconnect_by_func (button, unlock_dialog_keyfile_set_cb, self);
 
   g_list_store_append (self->key_files_store, button);
 
-  new_button = gtk_file_chooser_button_new (_("Select a Keyfile"), GTK_FILE_CHOOSER_ACTION_OPEN);
-  gtk_widget_show (new_button);
-  gtk_container_add (GTK_CONTAINER (self->keyfile_file_chooser_box), new_button);
-  g_signal_connect_object (new_button, "file-set",
-                           G_CALLBACK (unlock_dialog_keyfile_set_cb),
-                           self, G_CONNECT_SWAPPED);
-  g_signal_connect_object (new_button, "file-set",
-                           G_CALLBACK (unlock_dialog_update_unlock_button_cb),
-                           self, G_CONNECT_SWAPPED);
+  /* new_button = gtk_file_chooser_button_new (_("Select a Keyfile"), GTK_FILE_CHOOSER_ACTION_OPEN); */
+  /* gtk_widget_show (new_button); */
+  /* gtk_container_add (GTK_CONTAINER (self->keyfile_file_chooser_box), new_button); */
+  /* g_signal_connect_object (new_button, "file-set", */
+  /*                          G_CALLBACK (unlock_dialog_keyfile_set_cb), */
+  /*                          self, G_CONNECT_SWAPPED); */
+  /* g_signal_connect_object (new_button, "file-set", */
+  /*                          G_CALLBACK (unlock_dialog_update_unlock_button_cb), */
+  /*                          self, G_CONNECT_SWAPPED); */
 }
 
 static void
@@ -293,7 +293,7 @@ gdu_unlock_dialog_class_init (GduUnlockDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, pim_entry);
 
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_file_chooser_box);
-  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_file_chooser_button);
+  /* gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_file_chooser_button); */
 
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, cancel_button);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, unlock_button);
@@ -308,7 +308,7 @@ gdu_unlock_dialog_init (GduUnlockDialog *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
 
-  self->key_files_store = g_list_store_new (GTK_TYPE_FILE_CHOOSER_BUTTON);
+  /* self->key_files_store = g_list_store_new (GTK_TYPE_FILE_CHOOSER_BUTTON); */
 }
 
 static GduUnlockDialog *
@@ -336,7 +336,7 @@ gdu_unlock_dialog_set_disk (GduUnlockDialog *self,
   if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0)
     {
       gtk_window_set_title (GTK_WINDOW (self), _("Set options to unlock"));
-      gtk_widget_show (GTK_WIDGET (self->keyfile_file_chooser_button));
+      /* gtk_widget_show (GTK_WIDGET (self->keyfile_file_chooser_button)); */
 
       if (g_str_equal (type, "crypto_unknown"))
         gtk_widget_show (GTK_WIDGET (self->unknown_crypto_label));

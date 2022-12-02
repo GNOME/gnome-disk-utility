@@ -70,7 +70,7 @@ create_format_data_free (CreateFormatData *data)
   if (data->dialog != NULL)
     {
       gtk_widget_hide (GTK_WIDGET (data->dialog));
-      gtk_widget_destroy (GTK_WIDGET (data->dialog));
+      gtk_window_destroy (GTK_WINDOW (data->dialog));
     }
   if (data->builder != NULL)
     g_object_unref (data->builder);
@@ -106,7 +106,7 @@ update_dialog (GtkWidget *widget, GParamSpec *child_property, CreateFormatData *
 
   g_value_init (&title, G_TYPE_STRING);
   child = gtk_stack_get_child_by_name (data->stack, data->current);
-  gtk_container_child_get_property (GTK_CONTAINER (data->stack), child, "title", &title);
+  /* gtk_container_child_get_property (GTK_CONTAINER (data->stack), child, "title", &title); */
 
   gtk_window_set_title (GTK_WINDOW (data->dialog), g_value_get_string (&title));
   data->prev = NULL;
@@ -472,7 +472,7 @@ gdu_create_format_show (UDisksClient *client,
 
   data->back = GTK_BUTTON (gtk_dialog_add_button (data->dialog, _("_Cancel"), GTK_RESPONSE_CANCEL));
   data->forward = GTK_BUTTON (gtk_dialog_add_button (data->dialog, _("_Format"), GTK_RESPONSE_APPLY));
-  gtk_widget_grab_default (GTK_WIDGET (data->forward));
+  /* gtk_widget_grab_default (GTK_WIDGET (data->forward)); */
 
   g_signal_connect (data->dialog, "close", G_CALLBACK (cancel_cb), data);
   g_signal_connect (data->dialog, "response", G_CALLBACK (finish_cb), data);

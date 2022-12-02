@@ -33,9 +33,9 @@ struct _GduCreateOtherPagePrivate
 {
   GtkBox *other_fs_box;
   GtkCheckButton *other_encrypt_checkbutton;
-  GtkRadioButton *group_radio_button;
+  GtkCheckButton *group_radio_button;
   /* The first item from the radio button that's sensitive */
-  GtkRadioButton *first_sensitive_button;
+  GtkCheckButton *first_sensitive_button;
 
   UDisksClient *client;
   const char   *selected_fs_type;
@@ -95,7 +95,7 @@ can_format_cb (UDisksManager *manager,
   if (available && !priv->first_sensitive_button)
     {
       gtk_toggle_button_set_active (toggle_button, TRUE);
-      priv->first_sensitive_button = GTK_RADIO_BUTTON (toggle_button);
+      /* priv->first_sensitive_button = GTK_RADIO_BUTTON (toggle_button); */
     }
 }
 
@@ -190,15 +190,15 @@ gdu_create_other_page_new (UDisksClient *client)
 
       id = other_fs[i][0];
 
-      radio = gtk_radio_button_new_with_label_from_widget (priv->group_radio_button, other_fs[i][1]);
-      g_object_set_data (G_OBJECT (radio), "index", GINT_TO_POINTER (i));
-      g_object_set_data (G_OBJECT (radio), "parent", page);
-      gtk_widget_show (radio);
+      /* radio = gtk_radio_button_new_with_label_from_widget (priv->group_radio_button, other_fs[i][1]); */
+      /* g_object_set_data (G_OBJECT (radio), "index", GINT_TO_POINTER (i)); */
+      /* g_object_set_data (G_OBJECT (radio), "parent", page); */
+      /* gtk_widget_show (radio); */
 
-      gtk_box_pack_start (GTK_BOX (priv->other_fs_box), radio, TRUE, TRUE, 0);
-      g_signal_connect_object (radio, "toggled",
-                               G_CALLBACK (on_other_fs_selected),
-                               page, G_CONNECT_SWAPPED);
+      /* gtk_box_pack_start (GTK_BOX (priv->other_fs_box), radio, TRUE, TRUE, 0); */
+      /* g_signal_connect_object (radio, "toggled", */
+      /*                          G_CALLBACK (on_other_fs_selected), */
+      /*                          page, G_CONNECT_SWAPPED); */
 
       udisks_manager_call_can_format (udisks_client_get_manager (priv->client), id,
                                       NULL, (GAsyncReadyCallback)can_format_cb, radio);

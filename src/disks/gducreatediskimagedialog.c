@@ -20,7 +20,7 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
-#include <canberra-gtk.h>
+/* #include <canberra-gtk.h> */
 
 #include "gduapplication.h"
 #include "gduwindow.h"

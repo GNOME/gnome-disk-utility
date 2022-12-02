@@ -130,7 +130,7 @@ dialog_data_unref (DialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_destroy (GTK_WINDOW (data->dialog));
           data->dialog = NULL;
         }
 
@@ -409,20 +409,21 @@ on_drawing_area_draw (GtkWidget      *widget,
       gh -= needed;
     }
 
-  context = gtk_widget_get_style_context (widget);
-  gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
-  gtk_style_context_get (context,
-                         GTK_STATE_FLAG_NORMAL,
-                         GTK_STYLE_PROPERTY_FONT,
-                         &font_desc,
-                         NULL);
-  size = pango_font_description_get_size (font_desc);
-  if (pango_font_description_get_size_is_absolute (font_desc))
-    size *= PANGO_SCALE;
-  pango_font_description_set_size (font_desc, PANGO_SCALE_X_SMALL * size);
-  layout = pango_cairo_create_layout (cr);
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
+  /* todo */
+  /* context = gtk_widget_get_style_context (widget); */
+  /* gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg); */
+  /* gtk_style_context_get (context, */
+  /*                        GTK_STATE_FLAG_NORMAL, */
+  /*                        GTK_STYLE_PROPERTY_FONT, */
+  /*                        &font_desc, */
+  /*                        NULL); */
+  /* size = pango_font_description_get_size (font_desc); */
+  /* if (pango_font_description_get_size_is_absolute (font_desc)) */
+  /*   size *= PANGO_SCALE; */
+  /* pango_font_description_set_size (font_desc, PANGO_SCALE_X_SMALL * size); */
+  /* layout = pango_cairo_create_layout (cr); */
+  /* pango_layout_set_font_description (layout, font_desc); */
+  /* pango_font_description_free (font_desc); */
 
   /* draw x markers ("%d%%") + vertical grid */
   for (n = 0; n <= 10; n++)
@@ -785,7 +786,7 @@ static void
 update_dialog (DialogData *data)
 {
   GError *error = NULL;
-  GdkWindow *window = NULL;
+  /* GdkWindow *window = NULL; */
   gdouble read_avg = 0.0;
   gdouble write_avg = 0.0;
   gdouble access_time_avg = 0.0;
@@ -896,9 +897,11 @@ update_dialog (DialogData *data)
   g_free (s);
 
 
-  window = gtk_widget_get_window (data->graph_drawing_area);
-  if (window != NULL)
-    gdk_window_invalidate_rect (window, NULL, TRUE);
+  /* fixme */
+  /* window = gtk_widget_get_window (data->graph_drawing_area); */
+  /* if (window != NULL) */
+  /*   gdk_window_invalidate_rect (window, NULL, TRUE); */
+  gtk_widget_queue_draw (data->graph_drawing_area);
 
   g_clear_object (&drive);
   g_clear_object (&info);

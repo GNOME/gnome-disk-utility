@@ -10,8 +10,8 @@
 #include <glib/gi18n.h>
 
 #include <math.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
+/* #include <gdk/gdkkeysyms.h> */
+/* #include <gdk/gdkx.h> */
 #include <stdlib.h>
 
 #include "gduvolumegrid.h"
@@ -234,234 +234,234 @@ gdu_volume_grid_set_property (GObject      *object,
 static void
 gdu_volume_grid_set_accessible_name_for_grid_element (GduVolumeGrid *grid, GridElement *element)
 {
-  AtkObject *accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
-  const char *accessible_name;
+  /* AtkObject *accessible = gtk_widget_get_accessible (GTK_WIDGET (grid)); */
+  /* const char *accessible_name; */
 
-  accessible_name = element->text ? element->text :
-                                    gdu_volume_grid_get_no_media_string (grid);
+  /* accessible_name = element->text ? element->text : */
+  /*                                   gdu_volume_grid_get_no_media_string (grid); */
 
-  atk_object_set_name (accessible, accessible_name);
+  /* atk_object_set_name (accessible, accessible_name); */
 }
 
 static void
 gdu_volume_grid_constructed (GObject *object)
 {
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (object);
-  AtkObject *accessible;
+  /* GduVolumeGrid *grid = GDU_VOLUME_GRID (object); */
+  /* AtkObject *accessible; */
 
-  g_signal_connect (grid->client,
-                    "changed",
-                    G_CALLBACK (on_client_changed),
-                    grid);
+  /* g_signal_connect (grid->client, */
+  /*                   "changed", */
+  /*                   G_CALLBACK (on_client_changed), */
+  /*                   grid); */
 
-  recompute_grid (grid);
+  /* recompute_grid (grid); */
 
-  accessible = gtk_widget_get_accessible (GTK_WIDGET (grid));
-  atk_object_set_role (accessible, ATK_ROLE_PANEL);
-  atk_object_set_name (accessible, _("Volumes Grid"));
+  /* accessible = gtk_widget_get_accessible (GTK_WIDGET (grid)); */
+  /* atk_object_set_role (accessible, ATK_ROLE_PANEL); */
+  /* atk_object_set_name (accessible, _("Volumes Grid")); */
 
-  /* select the first element */
-  if (grid->elements != NULL)
-    {
-      GridElement *element = grid->elements->data;
-      grid->selected = element;
-      grid->focused = element;
-    }
+  /* /\* select the first element *\/ */
+  /* if (grid->elements != NULL) */
+  /*   { */
+  /*     GridElement *element = grid->elements->data; */
+  /*     grid->selected = element; */
+  /*     grid->focused = element; */
+  /*   } */
 
   if (G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed != NULL)
     G_OBJECT_CLASS (gdu_volume_grid_parent_class)->constructed (object);
 }
 
-static gboolean
-gdu_volume_grid_key_press_event (GtkWidget      *widget,
-                                 GdkEventKey    *event)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
-  gboolean handled;
-  GridElement *target;
+/* static gboolean */
+/* gdu_volume_grid_key_press_event (GtkWidget      *widget, */
+/*                                  GdkEventKey    *event) */
+/* { */
+/*   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget); */
+/*   gboolean handled; */
+/*   GridElement *target; */
 
-  handled = FALSE;
+/*   handled = FALSE; */
 
-  if (event->type != GDK_KEY_PRESS)
-    goto out;
+/*   if (event->type != GDK_KEY_PRESS) */
+/*     goto out; */
 
-  switch (event->keyval) {
-  case GDK_KEY_Left:
-  case GDK_KEY_Right:
-  case GDK_KEY_Up:
-  case GDK_KEY_Down:
-    target = NULL;
+/*   switch (event->keyval) { */
+/*   case GDK_KEY_Left: */
+/*   case GDK_KEY_Right: */
+/*   case GDK_KEY_Up: */
+/*   case GDK_KEY_Down: */
+/*     target = NULL; */
 
-    if (grid->focused == NULL)
-      {
-        g_warning ("TODO: handle nothing being selected/focused");
-      }
-    else
-      {
-        GridElement *element;
+/*     if (grid->focused == NULL) */
+/*       { */
+/*         g_warning ("TODO: handle nothing being selected/focused"); */
+/*       } */
+/*     else */
+/*       { */
+/*         GridElement *element; */
 
-        element = grid->focused;
-        if (element != NULL)
-          {
-            if (event->keyval == GDK_KEY_Left)
-              {
-                if (element->prev != NULL)
-                  {
-                    target = element->prev;
-                  }
-                else
-                  {
-                    if (element->parent && element->parent->prev != NULL)
-                      target = element->parent->prev;
-                  }
-              }
-            else if (event->keyval == GDK_KEY_Right)
-              {
-                if (element->next != NULL)
-                  {
-                    target = element->next;
-                  }
-                else
-                  {
-                    if (element->parent && element->parent->next != NULL)
-                      target = element->parent->next;
-                  }
-              }
-            else if (event->keyval == GDK_KEY_Up)
-              {
-                if (element->parent != NULL)
-                  {
-                    target = element->parent;
-                  }
-              }
-            else if (event->keyval == GDK_KEY_Down)
-              {
-                if (element->embedded_elements != NULL)
-                  {
-                    target = (GridElement *) element->embedded_elements->data;
-                  }
-              }
-          }
-      }
+/*         element = grid->focused; */
+/*         if (element != NULL) */
+/*           { */
+/*             if (event->keyval == GDK_KEY_Left) */
+/*               { */
+/*                 if (element->prev != NULL) */
+/*                   { */
+/*                     target = element->prev; */
+/*                   } */
+/*                 else */
+/*                   { */
+/*                     if (element->parent && element->parent->prev != NULL) */
+/*                       target = element->parent->prev; */
+/*                   } */
+/*               } */
+/*             else if (event->keyval == GDK_KEY_Right) */
+/*               { */
+/*                 if (element->next != NULL) */
+/*                   { */
+/*                     target = element->next; */
+/*                   } */
+/*                 else */
+/*                   { */
+/*                     if (element->parent && element->parent->next != NULL) */
+/*                       target = element->parent->next; */
+/*                   } */
+/*               } */
+/*             else if (event->keyval == GDK_KEY_Up) */
+/*               { */
+/*                 if (element->parent != NULL) */
+/*                   { */
+/*                     target = element->parent; */
+/*                   } */
+/*               } */
+/*             else if (event->keyval == GDK_KEY_Down) */
+/*               { */
+/*                 if (element->embedded_elements != NULL) */
+/*                   { */
+/*                     target = (GridElement *) element->embedded_elements->data; */
+/*                   } */
+/*               } */
+/*           } */
+/*       } */
 
-    if (target != NULL)
-      {
-        if ((event->state & GDK_CONTROL_MASK) != 0)
-          {
-            grid->focused = target;
-          }
-        else
-          {
-            grid->selected = target;
-            grid->focused = target;
-            g_signal_emit (grid,
-                           signals[CHANGED_SIGNAL],
-                           0);
+/*     if (target != NULL) */
+/*       { */
+/*         if ((event->state & GDK_CONTROL_MASK) != 0) */
+/*           { */
+/*             grid->focused = target; */
+/*           } */
+/*         else */
+/*           { */
+/*             grid->selected = target; */
+/*             grid->focused = target; */
+/*             g_signal_emit (grid, */
+/*                            signals[CHANGED_SIGNAL], */
+/*                            0); */
 
-            gdu_volume_grid_set_accessible_name_for_grid_element (grid, target);
-          }
-        gtk_widget_queue_draw (GTK_WIDGET (grid));
-      }
-    handled = TRUE;
-    break;
+/*             gdu_volume_grid_set_accessible_name_for_grid_element (grid, target); */
+/*           } */
+/*         gtk_widget_queue_draw (GTK_WIDGET (grid)); */
+/*       } */
+/*     handled = TRUE; */
+/*     break; */
 
-  case GDK_KEY_Return:
-  case GDK_KEY_space:
-    if (grid->focused != grid->selected &&
-        grid->focused != NULL)
-      {
-        grid->selected = grid->focused;
-        g_signal_emit (grid,
-                       signals[CHANGED_SIGNAL],
-                       0);
-        gtk_widget_queue_draw (GTK_WIDGET (grid));
-      }
-    handled = TRUE;
-    break;
+/*   case GDK_KEY_Return: */
+/*   case GDK_KEY_space: */
+/*     if (grid->focused != grid->selected && */
+/*         grid->focused != NULL) */
+/*       { */
+/*         grid->selected = grid->focused; */
+/*         g_signal_emit (grid, */
+/*                        signals[CHANGED_SIGNAL], */
+/*                        0); */
+/*         gtk_widget_queue_draw (GTK_WIDGET (grid)); */
+/*       } */
+/*     handled = TRUE; */
+/*     break; */
 
-  default:
-    break;
-  }
+/*   default: */
+/*     break; */
+/*   } */
 
- out:
-  return handled;
-}
+/*  out: */
+/*   return handled; */
+/* } */
 
-static gboolean
-gdu_volume_grid_button_press_event (GtkWidget      *widget,
-                                    GdkEventButton *event)
-{
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
-  gboolean handled;
+/* static gboolean */
+/* gdu_volume_grid_button_press_event (GtkWidget      *widget, */
+/*                                     GdkEventButton *event) */
+/* { */
+/*   GduVolumeGrid *grid = GDU_VOLUME_GRID (widget); */
+/*   gboolean handled; */
 
-  handled = FALSE;
+/*   handled = FALSE; */
 
-  if (event->type != GDK_BUTTON_PRESS)
-    goto out;
+/*   if (event->type != GDK_BUTTON_PRESS) */
+/*     goto out; */
 
-  if (event->button == 1)
-    {
-      GridElement *element;
+/*   if (event->button == 1) */
+/*     { */
+/*       GridElement *element; */
 
-      element = find_element_for_position (grid, event->x, event->y);
-      if (element != NULL)
-        {
-          grid->selected = element;
-          grid->focused = element;
-          g_signal_emit (grid,
-                         signals[CHANGED_SIGNAL],
-                         0);
-          gtk_widget_grab_focus (GTK_WIDGET (grid));
-          gtk_widget_queue_draw (GTK_WIDGET (grid));
+/*       element = find_element_for_position (grid, event->x, event->y); */
+/*       if (element != NULL) */
+/*         { */
+/*           grid->selected = element; */
+/*           grid->focused = element; */
+/*           g_signal_emit (grid, */
+/*                          signals[CHANGED_SIGNAL], */
+/*                          0); */
+/*           gtk_widget_grab_focus (GTK_WIDGET (grid)); */
+/*           gtk_widget_queue_draw (GTK_WIDGET (grid)); */
 
-          gdu_volume_grid_set_accessible_name_for_grid_element (grid, element);
-        }
-      handled = TRUE;
-    }
+/*           gdu_volume_grid_set_accessible_name_for_grid_element (grid, element); */
+/*         } */
+/*       handled = TRUE; */
+/*     } */
 
- out:
-  return handled;
-}
+/*  out: */
+/*   return handled; */
+/* } */
 
 static void
 gdu_volume_grid_realize (GtkWidget *widget)
 {
-  GduVolumeGrid *grid = GDU_VOLUME_GRID (widget);
-  GdkWindow *window;
-  GdkWindowAttr attributes;
-  gint attributes_mask;
-  GtkAllocation allocation;
+  /* GduVolumeGrid *grid = GDU_VOLUME_GRID (widget); */
+  /* GdkWindow *window; */
+  /* GdkWindowAttr attributes; */
+  /* gint attributes_mask; */
+  /* GtkAllocation allocation; */
 
-  gtk_widget_set_realized (widget, TRUE);
-  gtk_widget_get_allocation (widget, &allocation);
+  /* gtk_widget_set_realized (widget, TRUE); */
+  /* gtk_widget_get_allocation (widget, &allocation); */
 
-  attributes.x = allocation.x;
-  attributes.y = allocation.y;
-  attributes.width = allocation.width;
-  attributes.height = allocation.height;
-  attributes.wclass = GDK_INPUT_OUTPUT;
-  attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.event_mask = gtk_widget_get_events (widget) |
-    GDK_KEY_PRESS_MASK |
-    GDK_EXPOSURE_MASK |
-    GDK_BUTTON_PRESS_MASK |
-    GDK_BUTTON_RELEASE_MASK |
-    GDK_ENTER_NOTIFY_MASK |
-    GDK_LEAVE_NOTIFY_MASK |
-    GDK_POINTER_MOTION_MASK;
-  attributes.visual = gtk_widget_get_visual (widget);
+  /* attributes.x = allocation.x; */
+  /* attributes.y = allocation.y; */
+  /* attributes.width = allocation.width; */
+  /* attributes.height = allocation.height; */
+  /* attributes.wclass = GDK_INPUT_OUTPUT; */
+  /* attributes.window_type = GDK_WINDOW_CHILD; */
+  /* attributes.event_mask = gtk_widget_get_events (widget) | */
+  /*   GDK_KEY_PRESS_MASK | */
+  /*   GDK_EXPOSURE_MASK | */
+  /*   GDK_BUTTON_PRESS_MASK | */
+  /*   GDK_BUTTON_RELEASE_MASK | */
+  /*   GDK_ENTER_NOTIFY_MASK | */
+  /*   GDK_LEAVE_NOTIFY_MASK | */
+  /*   GDK_POINTER_MOTION_MASK; */
+  /* attributes.visual = gtk_widget_get_visual (widget); */
 
-  attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL;
+  /* attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL; */
 
-  window = gtk_widget_get_parent_window (widget);
-  gtk_widget_set_window (widget, window);
-  g_object_ref (window);
+  /* window = gtk_widget_get_parent_window (widget); */
+  /* gtk_widget_set_window (widget, window); */
+  /* g_object_ref (window); */
 
-  window = gdk_window_new (gtk_widget_get_parent_window (widget),
-                           &attributes,
-                           attributes_mask);
-  gtk_widget_set_window (widget, window);
-  gdk_window_set_user_data (window, grid);
+  /* window = gdk_window_new (gtk_widget_get_parent_window (widget), */
+  /*                          &attributes, */
+  /*                          attributes_mask); */
+  /* gtk_widget_set_window (widget, window); */
+  /* gdk_window_set_user_data (window, grid); */
 }
 
 static guint
@@ -530,11 +530,11 @@ gdu_volume_grid_class_init (GduVolumeGridClass *klass)
 
   gtkwidget_class = GTK_WIDGET_CLASS (klass);
   gtkwidget_class->realize              = gdu_volume_grid_realize;
-  gtkwidget_class->key_press_event      = gdu_volume_grid_key_press_event;
-  gtkwidget_class->button_press_event   = gdu_volume_grid_button_press_event;
-  gtkwidget_class->get_preferred_width  = gdu_volume_grid_get_preferred_width;
-  gtkwidget_class->get_preferred_height = gdu_volume_grid_get_preferred_height;
-  gtkwidget_class->draw                 = gdu_volume_grid_draw;
+  /* gtkwidget_class->key_press_event      = gdu_volume_grid_key_press_event; */
+  /* gtkwidget_class->button_press_event   = gdu_volume_grid_button_press_event; */
+  /* gtkwidget_class->get_preferred_width  = gdu_volume_grid_get_preferred_width; */
+  /* gtkwidget_class->get_preferred_height = gdu_volume_grid_get_preferred_height; */
+  /* gtkwidget_class->draw                 = gdu_volume_grid_draw; */
 
   g_object_class_install_property (gobject_class,
                                    PROP_APPLICATION,
@@ -583,7 +583,7 @@ static void
 gdu_volume_grid_init (GduVolumeGrid *grid)
 {
   gtk_widget_set_can_focus (GTK_WIDGET (grid), TRUE);
-  gtk_widget_set_app_paintable (GTK_WIDGET (grid), TRUE);
+  /* gtk_widget_set_app_paintable (GTK_WIDGET (grid), TRUE); */
 }
 
 GtkWidget *
@@ -779,7 +779,7 @@ render_element (GduVolumeGrid *grid,
   gdouble x, y, w, h;
   GtkStyleContext *context;
   GtkStateFlags state;
-  GtkJunctionSides sides;
+  /* GtkJunctionSides sides; */
   GtkBorder border;
   const gchar *text;
 
@@ -808,27 +808,27 @@ render_element (GduVolumeGrid *grid,
   /* frames */
   gtk_style_context_save (context);
   gtk_style_context_add_class (context, "gnome-disk-utility-grid");
-  gtk_style_context_get_border (context, state, &border);
-  sides = GTK_JUNCTION_NONE;
-  if (!(element->edge_flags & GRID_EDGE_TOP))
-    {
-      sides |= GTK_JUNCTION_TOP;
-    }
-  if (!(element->edge_flags & GRID_EDGE_BOTTOM))
-    {
-      sides |= GTK_JUNCTION_BOTTOM;
-      h += border.bottom;
-    }
-  if (!(element->edge_flags & GRID_EDGE_LEFT))
-    {
-      sides |= GTK_JUNCTION_LEFT;
-    }
-  if (!(element->edge_flags & GRID_EDGE_RIGHT))
-    {
-      sides |= GTK_JUNCTION_RIGHT;
-      w += border.right;
-    }
-  gtk_style_context_set_junction_sides (context, sides);
+  /* gtk_style_context_get_border (context, state, &border); */
+  /* sides = GTK_JUNCTION_NONE; */
+  /* if (!(element->edge_flags & GRID_EDGE_TOP)) */
+  /*   { */
+  /*     sides |= GTK_JUNCTION_TOP; */
+  /*   } */
+  /* if (!(element->edge_flags & GRID_EDGE_BOTTOM)) */
+  /*   { */
+  /*     sides |= GTK_JUNCTION_BOTTOM; */
+  /*     h += border.bottom; */
+  /*   } */
+  /* if (!(element->edge_flags & GRID_EDGE_LEFT)) */
+  /*   { */
+  /*     sides |= GTK_JUNCTION_LEFT; */
+  /*   } */
+  /* if (!(element->edge_flags & GRID_EDGE_RIGHT)) */
+  /*   { */
+  /*     sides |= GTK_JUNCTION_RIGHT; */
+  /*     w += border.right; */
+  /*   } */
+  /* gtk_style_context_set_junction_sides (context, sides); */
   gtk_render_background (context, cr, x, y, w, h);
   gtk_render_frame (context, cr, x, y, w, h);
   if (is_focused && is_grid_focused)
@@ -868,41 +868,41 @@ render_element (GduVolumeGrid *grid,
       guint icon_offset = 0;
       gtk_style_context_save (context);
       gtk_style_context_add_class (context, "image");
-      for (n = 0; n < icons_to_render->len; n++)
-        {
-          const gchar *name = icons_to_render->pdata[n];
-          GtkIconInfo *info;
-          info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), name, 12, 0);
-          if (info == NULL)
-            {
-              g_warning ("Error lookup up icon %s", name);
-            }
-          else
-            {
-              GdkPixbuf *pixbuf;
-              GError *error = NULL;
-              pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, &error);
-              if (pixbuf == NULL)
-                {
-                  g_warning ("Error loading icon %s: %s (%s, %d)",
-                             name, error->message, g_quark_to_string (error->domain), error->code);
-                  g_error_free (error);
-                }
-              else
-                {
-                  guint icon_width;
-                  guint icon_height;
-                  icon_width = gdk_pixbuf_get_width (pixbuf);
-                  icon_height = gdk_pixbuf_get_height (pixbuf);
-                  gtk_render_icon (context, cr, pixbuf,
-                                   ceil (element->x + element->width - icon_width - icon_offset - 4),
-                                   ceil (element->y + element->height - icon_height - 4));
-                  icon_offset += icon_width + 2; /* padding */
-                  g_object_unref (pixbuf);
-                }
-              g_object_unref (info);
-            }
-        }
+      /* for (n = 0; n < icons_to_render->len; n++) */
+      /*   { */
+      /*     const gchar *name = icons_to_render->pdata[n]; */
+      /*     GtkIconInfo *info; */
+      /*     info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), name, 12, 0); */
+      /*     if (info == NULL) */
+      /*       { */
+      /*         g_warning ("Error lookup up icon %s", name); */
+      /*       } */
+      /*     else */
+      /*       { */
+      /*         GdkPixbuf *pixbuf; */
+      /*         GError *error = NULL; */
+      /*         pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, &error); */
+      /*         if (pixbuf == NULL) */
+      /*           { */
+      /*             g_warning ("Error loading icon %s: %s (%s, %d)", */
+      /*                        name, error->message, g_quark_to_string (error->domain), error->code); */
+      /*             g_error_free (error); */
+      /*           } */
+      /*         else */
+      /*           { */
+      /*             guint icon_width; */
+      /*             guint icon_height; */
+      /*             icon_width = gdk_pixbuf_get_width (pixbuf); */
+      /*             icon_height = gdk_pixbuf_get_height (pixbuf); */
+      /*             gtk_render_icon (context, cr, pixbuf, */
+      /*                              ceil (element->x + element->width - icon_width - icon_offset - 4), */
+      /*                              ceil (element->y + element->height - icon_height - 4)); */
+      /*             icon_offset += icon_width + 2; /\* padding *\/ */
+      /*             g_object_unref (pixbuf); */
+      /*           } */
+      /*         g_object_unref (info); */
+      /*       } */
+      /*   } */
       gtk_style_context_restore (context);
     }
   g_ptr_array_free (icons_to_render, TRUE);

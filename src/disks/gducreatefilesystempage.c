@@ -23,11 +23,11 @@ struct _GduCreateFilesystemPagePrivate
 {
   GtkEntry *name_entry;
   GtkSwitch *erase_switch;
-  GtkRadioButton *internal_radiobutton;
+  GtkCheckButton *internal_radiobutton;
   GtkCheckButton *internal_encrypt_checkbutton;
-  GtkRadioButton *windows_radiobutton;
-  GtkRadioButton *all_radiobutton;
-  GtkRadioButton *other_radiobutton;
+  GtkCheckButton *windows_radiobutton;
+  GtkCheckButton *all_radiobutton;
+  GtkCheckButton *other_radiobutton;
 };
 
 enum
@@ -93,7 +93,7 @@ gdu_create_filesystem_page_get_name (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_entry_get_text (priv->name_entry);
+  return gtk_editable_get_text (GTK_EDITABLE (priv->name_entry));
 }
 
 gboolean
@@ -103,7 +103,7 @@ gdu_create_filesystem_page_is_other (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->other_radiobutton));
+  return gtk_check_button_get_active (priv->other_radiobutton);
 }
 
 const gchar *
@@ -113,11 +113,11 @@ gdu_create_filesystem_page_get_fs (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_radiobutton)))
+  if (gtk_check_button_get_active (priv->internal_radiobutton))
     return "ext4";
-  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->windows_radiobutton)))
+  else if (gtk_check_button_get_active (priv->windows_radiobutton))
     return "ntfs";
-  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton)))
+  else if (gtk_check_button_get_active (priv->all_radiobutton))
     return "vfat";
   else
     return NULL;
@@ -130,8 +130,8 @@ gdu_create_filesystem_page_is_encrypted (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_radiobutton)) &&
-         gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_encrypt_checkbutton));
+  return gtk_check_button_get_active (priv->internal_radiobutton) &&
+         gtk_check_button_get_active (priv->internal_encrypt_checkbutton);
 }
 
 const gchar *
@@ -200,11 +200,11 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
           !gdu_utils_can_format (client, "ntfs", FALSE, NULL))
           )
         {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton), TRUE);
+          gtk_check_button_set_active (priv->all_radiobutton, TRUE);
         }
       else if (gdu_utils_can_format (client, "ntfs", FALSE, NULL))
         {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->windows_radiobutton), TRUE);
+          gtk_check_button_set_active (priv->windows_radiobutton, TRUE);
         }
     }
 

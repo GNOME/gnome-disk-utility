@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 #include "gduapplication.h"
+#include "gtk3-to-4.h"
 #include "gducreateformatdialog.h"
 #include "gdurestorediskimagedialog.h"
 #include "gdunewdiskimagedialog.h"
@@ -317,7 +318,7 @@ shortcuts_activated (GSimpleAction *action,
                                                    NULL));
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
-  gtk_widget_show_all (dialog);
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -352,7 +353,7 @@ about_activated (GSimpleAction *action,
   g_free (s);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
-  gtk_widget_show_all (dialog);
+  gtk_widget_show (dialog);
   g_signal_connect (dialog, "response", G_CALLBACK (on_about_dialog_response), NULL);
   gtk_window_present (GTK_WINDOW (dialog));
 }
@@ -374,10 +375,10 @@ help_activated (GSimpleAction *action,
                 gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_show_uri_on_window (GTK_WINDOW (app->window),
-                          "help:gnome-help/disk",
-                          GDK_CURRENT_TIME,
-                          NULL); /* GError */
+
+  gtk_show_uri (GTK_WINDOW (app->window),
+                "help:gnome-help/disk",
+                GDK_CURRENT_TIME);
 }
 
 static GActionEntry app_entries[] =
@@ -421,9 +422,9 @@ gdu_application_startup (GApplication *_app)
   if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
-  hdy_init ();
-  hdy_style_manager_set_color_scheme (hdy_style_manager_get_default (),
-                                      HDY_COLOR_SCHEME_PREFER_LIGHT);
+  adw_init ();
+  adw_style_manager_set_color_scheme (adw_style_manager_get_default (),
+                                      ADW_COLOR_SCHEME_PREFER_LIGHT);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 

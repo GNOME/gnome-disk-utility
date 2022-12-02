@@ -318,11 +318,11 @@ gdu_create_partition_page_new (UDisksClient *client, UDisksPartitionTable *table
   priv->dos_error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,
                                                        _("Cannot create a new partition. There are already four primary partitions."),
                                                        NULL);
-  gtk_box_pack_start (GTK_BOX (priv->infobar_vbox), priv->dos_error_infobar, TRUE, TRUE, 0);
+  /* gtk_box_pack_start (GTK_BOX (priv->infobar_vbox), priv->dos_error_infobar, TRUE, TRUE, 0); */
   priv->dos_warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_WARNING,
                                                          _("This is the last primary partition that can be created."),
                                                          NULL);
-  gtk_box_pack_start (GTK_BOX (priv->infobar_vbox), priv->dos_warning_infobar, TRUE, TRUE, 0);
+  /* gtk_box_pack_start (GTK_BOX (priv->infobar_vbox), priv->dos_warning_infobar, TRUE, TRUE, 0); */
   g_signal_connect (priv->size_adjustment, "notify::value", G_CALLBACK (create_partition_property_changed), page);
   g_signal_connect (priv->size_unit_combobox, "changed", G_CALLBACK (on_size_unit_combobox_changed), page);
 

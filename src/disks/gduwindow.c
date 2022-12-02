@@ -18,6 +18,7 @@
 #include <glib/gi18n.h>
 #include <gio/gunixfdlist.h>
 
+#include "gtk3-to-4.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gdudevicetreemodel.h"
@@ -42,7 +43,7 @@
 
 struct _GduWindow
 {
-  HdyApplicationWindow parent_instance;
+  AdwApplicationWindow parent_instance;
 
   GduApplication *application;
   UDisksClient *client;
@@ -172,7 +173,7 @@ static const struct {
 
 typedef struct
 {
-  HdyApplicationWindowClass parent_class;
+  AdwApplicationWindowClass parent_class;
 } GduWindowClass;
 
 enum
@@ -351,7 +352,7 @@ static gboolean on_activate_link (GtkLabel    *label,
                                   const gchar *uri,
                                   gpointer     user_data);
 
-G_DEFINE_TYPE (GduWindow, gdu_window, HDY_TYPE_APPLICATION_WINDOW);
+G_DEFINE_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW);
 
 static const GActionEntry actions[] = {
 	{ "go-back", on_go_back },
@@ -407,9 +408,9 @@ gdu_window_finalize (GObject *object)
 {
   GduWindow *window = GDU_WINDOW (object);
 
-  gtk_window_remove_mnemonic (GTK_WINDOW (window),
-                              'd',
-                              window->device_tree_treeview);
+  /* gtk_window_remove_mnemonic (GTK_WINDOW (window), */
+  /*                             'd', */
+  /*                             window->device_tree_treeview); */
 
   g_signal_handlers_disconnect_by_func (window->client,
                                         G_CALLBACK (on_client_changed),
@@ -615,8 +616,8 @@ on_tree_selection_changed (GtkTreeSelection *tree_selection,
                           -1);
       select_object (window, object);
       g_object_unref (object);
-      hdy_leaflet_navigate (HDY_LEAFLET (window->main_leaflet),
-                            HDY_NAVIGATION_DIRECTION_FORWARD);
+      adw_leaflet_navigate (ADW_LEAFLET (window->main_leaflet),
+                            ADW_NAVIGATION_DIRECTION_FORWARD);
     }
   else
     {
@@ -825,21 +826,21 @@ gdu_window_show_attach_disk_image (GduWindow *window)
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only loop device"));
   gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the loop device will be read-only. This is useful if you don’t want the underlying file to be modified"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), TRUE);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
+  /* gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton); */
 
   //gtk_widget_show_all (dialog);
   if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
     goto out;
 
-  filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+  /* filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog)); */
   gtk_widget_hide (dialog);
 
   if (!gdu_window_attach_disk_image_helper (window, filename, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton))))
     goto out;
 
   /* now that we know the user picked a folder, update file chooser settings */
-  folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog));
-  gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
+  /* folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog)); */
+  /* gdu_utils_file_chooser_for_disk_images_set_default_folder (folder); */
 
  out:
   gtk_widget_destroy (dialog);
@@ -856,21 +857,20 @@ init_css (GduWindow *window)
 {
   GtkCssProvider *provider;
   GFile *file;
-  GError *error;
+  /* GError *error; */
 
   provider = gtk_css_provider_new ();
   file = g_file_new_for_uri ("resource:///org/gnome/Disks/ui/gdu.css");
-  error = NULL;
-  if (!gtk_css_provider_load_from_file (provider, file, &error))
-    {
-      g_warning ("Can’t parse custom CSS: %s\n", error->message);
-      g_error_free (error);
-      goto out;
-    }
+  /* error = NULL; */
+  gtk_css_provider_load_from_file (provider, file);
 
-  gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)),
-                                             GTK_STYLE_PROVIDER (provider),
-                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  gtk_style_context_add_provider_for_display (gtk_widget_get_display (GTK_WIDGET (window)),
+                                              GTK_STYLE_PROVIDER (provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+  /* gtk_style_context_add_provider_for_screen (gtk_widget_get_screen (GTK_WIDGET (window)), */
+  /*                                            GTK_STYLE_PROVIDER (provider), */
+  /*                                            GTK_STYLE_PROVIDER_PRIORITY_APPLICATION); */
 
   g_object_unref (file);
   g_object_unref (provider);
@@ -1020,13 +1020,13 @@ create_header (GduWindow *window)
 
   gtk_builder_add_from_resource (window->builder, "/org/gnome/Disks/ui/drive-menu.ui", error0);
   model = G_MENU_MODEL (gtk_builder_get_object (window->builder, "drive-menu"));
-  window->drive_menu = gtk_popover_new_from_model (window->devtab_drive_menu_button, model);
-  gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_drive_menu_button), window->drive_menu);
+  /* window->drive_menu = gtk_popover_new_from_model (window->devtab_drive_menu_button, model); */
+  /* gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_drive_menu_button), window->drive_menu); */
 
   gtk_builder_add_from_resource (window->builder, "/org/gnome/Disks/ui/app-menu.ui", error1);
   model = G_MENU_MODEL (gtk_builder_get_object (window->builder, "app-menu"));
-  window->app_menu = gtk_popover_new_from_model (window->devtab_app_menu_button, model);
-  gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_app_menu_button), window->app_menu);
+  /* window->app_menu = gtk_popover_new_from_model (window->devtab_app_menu_button, model); */
+  /* gtk_menu_button_set_popover (GTK_MENU_BUTTON (window->devtab_app_menu_button), window->app_menu); */
 }
 
 static void
@@ -1047,8 +1047,8 @@ gdu_window_update_decoration_layout (GObject     *object,
       gchar *layout_headerbar;
 
       layout_headerbar = g_strdup_printf ("%c%s", ':', tokens[1]);
-      hdy_header_bar_set_decoration_layout (HDY_HEADER_BAR (window->right_header), layout_headerbar);
-      hdy_header_bar_set_decoration_layout (HDY_HEADER_BAR (window->left_header), tokens[0]);
+      adw_header_bar_set_decoration_layout (ADW_HEADER_BAR (window->right_header), layout_headerbar);
+      adw_header_bar_set_decoration_layout (ADW_HEADER_BAR (window->left_header), tokens[0]);
 
       g_free (layout_headerbar);
       g_strfreev (tokens);
@@ -1094,8 +1094,8 @@ gdu_window_constructed (GObject *object)
   window->delay_job_update_id = 0;
 
   g_object_ref (window->main_box);
-  gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (window->main_box)), window->main_box);
-  gtk_container_add (GTK_CONTAINER (window), window->main_box);
+  /* gtk_container_remove (GTK_CONTAINER (gtk_widget_get_parent (window->main_box)), window->main_box); */
+  /* gtk_container_add (GTK_CONTAINER (window), window->main_box); */
   g_object_unref (window->main_box);
 
   /* build the headerbar */
@@ -1106,7 +1106,7 @@ gdu_window_constructed (GObject *object)
 
   gtk_window_set_title (GTK_WINDOW (window), _("Disks"));
   gtk_window_set_default_size (GTK_WINDOW (window), 900, 600);
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
+  /* gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER); */
 
   /* build the decorations */
   gdu_window_update_decoration_layout (NULL, NULL, window);
@@ -1117,28 +1117,28 @@ gdu_window_constructed (GObject *object)
                     window);
 
   /* set up mnemonic */
-  gtk_window_add_mnemonic (GTK_WINDOW (window),
-                           'd',
-                           window->device_tree_treeview);
+  /* gtk_window_add_mnemonic (GTK_WINDOW (window), */
+  /*                          'd', */
+  /*                          window->device_tree_treeview); */
 
   /* hide all children in the devtab list, otherwise the dialog is going to be huge by default */
-  children = gtk_container_get_children (GTK_CONTAINER (window->devtab_drive_table));
-  for (l = children; l != NULL; l = l->next)
-    {
-      gtk_widget_hide (GTK_WIDGET (l->data));
-      gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
-    }
-  g_list_free (children);
-  children = gtk_container_get_children (GTK_CONTAINER (window->devtab_table));
-  for (l = children; l != NULL; l = l->next)
-    {
-      gtk_widget_hide (GTK_WIDGET (l->data));
-      gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE);
-    }
-  g_list_free (children);
+  /* children = gtk_container_get_children (GTK_CONTAINER (window->devtab_drive_table)); */
+  /* for (l = children; l != NULL; l = l->next) */
+  /*   { */
+  /*     gtk_widget_hide (GTK_WIDGET (l->data)); */
+  /*     gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE); */
+  /*   } */
+  /* g_list_free (children); */
+  /* children = gtk_container_get_children (GTK_CONTAINER (window->devtab_table)); */
+  /* for (l = children; l != NULL; l = l->next) */
+  /*   { */
+  /*     gtk_widget_hide (GTK_WIDGET (l->data)); */
+  /*     /\* gtk_widget_set_no_show_all (GTK_WIDGET (l->data), TRUE); *\/ */
+  /*   } */
+  /* g_list_free (children); */
 
   context = gtk_widget_get_style_context (window->device_tree_scrolledwindow);
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
+  /* gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP); */
 
   window->model = gdu_device_tree_model_new (window->application,
                                              GDU_DEVICE_TREE_MODEL_FLAGS_UPDATE_POWER_STATE |
@@ -1179,7 +1179,7 @@ gdu_window_constructed (GObject *object)
 
   renderer = gtk_cell_renderer_pixbuf_new ();
   g_object_set (G_OBJECT (renderer),
-                "stock-size", GTK_ICON_SIZE_DND,
+                "stock-size", GTK_ICON_SIZE_NORMAL,
                 NULL);
   gtk_tree_view_column_pack_start (column, renderer, FALSE);
   gtk_tree_view_column_set_attributes (column,
@@ -1209,7 +1209,7 @@ gdu_window_constructed (GObject *object)
   renderer = gtk_cell_renderer_pixbuf_new ();
   g_object_set (G_OBJECT (renderer),
                 "xalign", 1.0,
-                "stock-size", GTK_ICON_SIZE_MENU,
+                /* "stock-size", GTK_ICON_SIZE_MENU, */
                 "icon-name", "gnome-disks-state-standby-symbolic",
                 NULL);
   gtk_tree_view_column_pack_end (column, renderer, FALSE);
@@ -1238,9 +1238,9 @@ gdu_window_constructed (GObject *object)
 
   window->volume_grid = gdu_volume_grid_new (window->application);
   gtk_widget_show (window->volume_grid);
-  gtk_box_pack_start (GTK_BOX (window->devtab_grid_hbox),
-                      window->volume_grid,
-                      TRUE, TRUE, 0);
+  /* gtk_box_pack_start (GTK_BOX (window->devtab_grid_hbox), */
+  /*                     window->volume_grid, */
+  /*                     TRUE, TRUE, 0); */
   gtk_label_set_mnemonic_widget (GTK_LABEL (window->devtab_volumes_label),
                                  window->volume_grid);
   g_signal_connect (window->volume_grid,
@@ -1250,13 +1250,13 @@ gdu_window_constructed (GObject *object)
 
   context = gtk_widget_get_style_context (window->devtab_grid_toolbar);
   gtk_widget_set_name (window->devtab_grid_toolbar, "devtab-grid-toolbar");
-  gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP);
+  /* gtk_style_context_set_junction_sides (context, GTK_JUNCTION_TOP); */
 
   builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/volume-menu.ui");
   model = G_MENU_MODEL (gtk_builder_get_object (GTK_BUILDER (builder), "volume-menu"));
-  window->volume_menu = gtk_popover_new_from_model (window->toolbutton_volume_menu, model);
-  gtk_popover_set_position (GTK_POPOVER (window->volume_menu), GTK_POS_BOTTOM);
-  g_object_unref (builder);
+  /* window->volume_menu = gtk_popover_new_from_model (window->toolbutton_volume_menu, model); */
+  /* gtk_popover_set_position (GTK_POPOVER (window->volume_menu), GTK_POS_BOTTOM); */
+  /* g_object_unref (builder); */
 
   /* toolbar buttons */
   g_signal_connect (window->toolbutton_volume_menu,
@@ -2048,8 +2048,8 @@ update_device_page_for_drive (GduWindow      *window,
       g_free (s);
     }
 
-  hdy_header_bar_set_title (HDY_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
-  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (window->right_header), str->str);
+  /* adw_header_bar_set_title (ADW_HEADER_BAR (window->right_header), udisks_object_info_get_description (info)); */
+  /* adw_header_bar_set_subtitle (ADW_HEADER_BAR (window->right_header), str->str); */
 
   g_string_free (str, TRUE);
 
@@ -2268,8 +2268,8 @@ update_device_page_for_loop (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  hdy_header_bar_set_title (HDY_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
-  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (window->right_header), device_desc);
+  /* adw_header_bar_set_title (ADW_HEADER_BAR (window->right_header), udisks_object_info_get_description (info)); */
+  /* adw_header_bar_set_subtitle (ADW_HEADER_BAR (window->right_header), device_desc); */
 
   gtk_widget_show (window->devtab_drive_menu_button);
 
@@ -2324,8 +2324,8 @@ update_device_page_for_fake_block (GduWindow      *window,
   info = udisks_client_get_object_info (window->client, object);
   device_desc = get_device_file_for_display (block);
 
-  hdy_header_bar_set_title (HDY_HEADER_BAR (window->right_header), udisks_object_info_get_description (info));
-  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (window->right_header), device_desc);
+  /* adw_header_bar_set_title (ADW_HEADER_BAR (window->right_header), udisks_object_info_get_description (info)); */
+  /* adw_header_bar_set_subtitle (ADW_HEADER_BAR (window->right_header), device_desc); */
 
   gtk_widget_show (window->devtab_drive_menu_button);
 
@@ -2844,8 +2844,8 @@ maybe_hide (GtkWidget *widget,
 static void
 update_empty_page (GduWindow *window)
 {
-  hdy_header_bar_set_title (HDY_HEADER_BAR (window->right_header), NULL);
-  hdy_header_bar_set_subtitle (HDY_HEADER_BAR (window->right_header), NULL);
+  /* adw_header_bar_set_title (ADW_HEADER_BAR (window->right_header), NULL); */
+  /* adw_header_bar_set_subtitle (ADW_HEADER_BAR (window->right_header), NULL); */
   gtk_widget_hide (window->devtab_drive_menu_button);
   /* Disable hidden menus */
   g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "open-drive-menu")), FALSE);
@@ -2869,8 +2869,8 @@ update_device_page (GduWindow      *window,
    * (TODO: this is wrong as hiding a widget only to show it again, is
    * a cause for bad focus problems in GTK+)
    */
-  gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), maybe_hide, window);
-  gtk_container_foreach (GTK_CONTAINER (window->devtab_table), maybe_hide, window);
+  /* gtk_container_foreach (GTK_CONTAINER (window->devtab_drive_table), maybe_hide, window); */
+  /* gtk_container_foreach (GTK_CONTAINER (window->devtab_table), maybe_hide, window); */
 
   /* Disable all Drive-specific menu items - will be turned on again in update_device_page_for_drive() */
   g_simple_action_set_enabled (G_SIMPLE_ACTION (g_action_map_lookup_action (G_ACTION_MAP (window), "view-smart")), FALSE);
@@ -3380,9 +3380,9 @@ on_go_back (GSimpleAction *action,
 {
   GduWindow *window = GDU_WINDOW (user_data);
 
-  if (hdy_leaflet_get_adjacent_child (HDY_LEAFLET (window->main_leaflet), HDY_NAVIGATION_DIRECTION_BACK) != NULL)
+  if (adw_leaflet_get_adjacent_child (ADW_LEAFLET (window->main_leaflet), ADW_NAVIGATION_DIRECTION_BACK) != NULL)
     {
-      hdy_leaflet_navigate (HDY_LEAFLET (window->main_leaflet), HDY_NAVIGATION_DIRECTION_BACK);
+      adw_leaflet_navigate (ADW_LEAFLET (window->main_leaflet), ADW_NAVIGATION_DIRECTION_BACK);
     }
 }
 
@@ -4295,11 +4295,11 @@ on_job_cancel_button_clicked (GtkButton    *button,
 static void
 on_leaflet_visible_child_notify (GduWindow *window)
 {
-  HdyLeaflet *leaflet = HDY_LEAFLET (window->main_leaflet);
-  const gchar *child_name = hdy_leaflet_get_visible_child_name (leaflet);
+  AdwLeaflet *leaflet = ADW_LEAFLET (window->main_leaflet);
+  const gchar *child_name = adw_leaflet_get_visible_child_name (leaflet);
   GtkTreeSelection *selection;
 
-  if (hdy_leaflet_get_child_transition_running (leaflet) ||
+  if (adw_leaflet_get_child_transition_running (leaflet) ||
       !g_str_equal (child_name, "sidebar"))
     {
       return;

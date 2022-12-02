@@ -44,7 +44,7 @@ struct _GduNewDiskImageDialog
   GtkSpinButton        *size_spin_button;
   GtkComboBoxText      *size_unit_combobox;
   GtkEntry             *name_entry;
-  GtkFileChooserButton *choose_folder_button;
+  /* GtkFileChooserButton *choose_folder_button; */
 
   GtkButton            *cancel_button;
   GtkButton            *create_image_button;
@@ -67,8 +67,8 @@ create_new_disk (GduNewDiskImageDialog *self)
   GtkWindow *window;
   guint64 size;
 
-  filename = gtk_entry_get_text (self->name_entry);
-  folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button));
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
+  /* folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button)); */
 
   out_file = g_file_get_child (folder, filename);
   out_filename = g_file_get_path (out_file);
@@ -111,7 +111,7 @@ create_new_disk (GduNewDiskImageDialog *self)
   gdu_window_attach_disk_image_helper (GDU_WINDOW (window), out_filename, FALSE);
 
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_destroy (GTK_WINDOW (self));
 }
 
 static void
@@ -123,7 +123,7 @@ new_disk_image_confirm_response_cb (GduNewDiskImageDialog *self,
   g_assert (GTK_IS_DIALOG (dialog));
 
   gtk_widget_hide (dialog);
-  gtk_widget_destroy (dialog);
+  gtk_window_destroy (GTK_WINDOW (dialog));
 
   if (response_id == GTK_RESPONSE_ACCEPT)
     create_new_disk (self);
@@ -138,8 +138,8 @@ confirm_and_create_new_disk (GduNewDiskImageDialog *self)
   const char *filename;
   GtkWidget *dialog;
 
-  filename = gtk_entry_get_text (self->name_entry);
-  folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button));
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
+  /* folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button)); */
   file = g_file_get_child (folder, filename);
   if (!g_file_query_exists (file, NULL))
     {
@@ -193,7 +193,7 @@ new_disk_image_set_default_name (GduNewDiskImageDialog *self)
    *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
    */
   filename = g_strdup_printf (_("Unnamed (%s).img"), now_string);
-  gtk_entry_set_text (self->name_entry, filename);
+  gtk_editable_set_text (GTK_EDITABLE (self->name_entry), filename);
 }
 
 static void
@@ -209,7 +209,7 @@ new_disk_image_dialog_response_cb (GduNewDiskImageDialog *self,
   else
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_destroy (GTK_WINDOW (self));
     }
 }
 
@@ -219,7 +219,7 @@ new_disk_image_details_changed_cb (GduNewDiskImageDialog *self)
   const char *filename;
   gboolean can_proceed = FALSE;
 
-  filename = gtk_entry_get_text (self->name_entry);
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
 
   if (filename && *filename &&
       gtk_adjustment_get_value (self->size_adjustment) > 0)
@@ -267,7 +267,7 @@ gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_spin_button);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_combobox);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, name_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, choose_folder_button);
+  /* gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, choose_folder_button); */
 
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, cancel_button);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, create_image_button);
@@ -286,9 +286,9 @@ gdu_new_disk_image_dialog_init (GduNewDiskImageDialog *self)
   gtk_combo_box_set_active (GTK_COMBO_BOX (self->size_unit_combobox), GByte);
   new_disk_image_set_default_name (self);
 
-  gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (self->choose_folder_button),
-                                                    FALSE,   /* set file types */
-                                                    FALSE);  /* allow_compressed */
+  /* gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (self->choose_folder_button), */
+  /*                                                   FALSE,   /\* set file types *\/ */
+  /*                                                   FALSE);  /\* allow_compressed *\/ */
 }
 
 static GduNewDiskImageDialog *

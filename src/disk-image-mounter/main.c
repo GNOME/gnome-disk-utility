@@ -28,7 +28,7 @@ static void
 response_cb (GtkDialog *dialog,
              gint       response)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_destroy (GTK_WINDOW (dialog));
 }
 
 static void
@@ -94,24 +94,26 @@ do_filechooser (void)
   gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (dialog),
                                                     TRUE,   /* set_file_types */
                                                     FALSE); /* allow_compressed */
-  gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE);
+  /* fixme */
+  /* gtk_file_chooser_set_local_only (GTK_FILE_CHOOSER (dialog), FALSE); */
 
   /* Add a RO check button that defaults to RO */
   ro_checkbutton = gtk_check_button_new_with_mnemonic (_("Set up _read-only mount"));
   gtk_widget_set_tooltip_markup (ro_checkbutton, _("If checked, the mount will be read-only. This is useful if you don’t want the underlying disk image to be modified"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ro_checkbutton), !opt_writable);
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
+  /* todo */
+  /* gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton); */
 
   //gtk_widget_show_all (dialog);
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
-    goto out;
+  /* if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT) */
+  /*   goto out; */
 
-  ret = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (dialog));
-  opt_writable = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton));
+  /* ret = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (dialog)); */
+  /* opt_writable = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton)); */
 
  out:
-  gtk_widget_destroy (dialog);
+  gtk_window_destroy (GTK_WINDOW (dialog));
   return ret;
 }
 
@@ -132,7 +134,7 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
-  have_gtk = gtk_init_check (&argc, &argv);
+  have_gtk = gtk_init_check ();
 
   main_loop = g_main_loop_new (NULL, FALSE);
 

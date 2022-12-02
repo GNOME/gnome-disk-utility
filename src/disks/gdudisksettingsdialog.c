@@ -130,7 +130,7 @@ dialog_data_unref (DialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_destroy (GTK_WINDOW (data->dialog));
           data->dialog = NULL;
         }
 
@@ -603,23 +603,23 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
 
   while (TRUE)
     {
-      gint response;
-      response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-      /* Keep in sync with .ui file */
-      switch (response)
-        {
-        case GTK_RESPONSE_OK: /* OK */
-          udisks_drive_call_set_configuration (data->drive,
-                                               compute_configuration (data),  /* consumes floating */
-                                               g_variant_new ("a{sv}", NULL), /* options */
-                                               NULL, /* cancellable */
-                                               on_set_configuration_cb,
-                                               dialog_data_ref (data));
-          break;
+      /* gint response; */
+      /* response = gtk_dialog_run (GTK_DIALOG (data->dialog)); */
+      /* /\* Keep in sync with .ui file *\/ */
+      /* switch (response) */
+      /*   { */
+      /*   case GTK_RESPONSE_OK: /\* OK *\/ */
+      /*     udisks_drive_call_set_configuration (data->drive, */
+      /*                                          compute_configuration (data),  /\* consumes floating *\/ */
+      /*                                          g_variant_new ("a{sv}", NULL), /\* options *\/ */
+      /*                                          NULL, /\* cancellable *\/ */
+      /*                                          on_set_configuration_cb, */
+      /*                                          dialog_data_ref (data)); */
+      /*     break; */
 
-        default:
-          goto out;
-        }
+      /*   default: */
+      /*     goto out; */
+      /*   } */
     }
  out:
   dialog_data_close (data);
@@ -631,7 +631,7 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
 static void
 hide_forever (GtkWidget *widget)
 {
-  gtk_widget_set_no_show_all (widget, TRUE);
+  /* gtk_widget_set_no_show_all (widget, TRUE); */
   gtk_widget_set_visible (widget, FALSE);
 }
 

@@ -11,6 +11,7 @@
 #include <math.h>
 #include <sys/statvfs.h>
 
+#include "gtk3-to-4.h"
 #include "gduutils.h"
 
 /* For __GNUC_PREREQ usage below */
@@ -87,7 +88,7 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
   gchar *folder;
   GSettings *settings;
 
-  gtk_file_chooser_set_local_only (file_chooser, FALSE);
+  /* gtk_file_chooser_set_local_only (file_chooser, FALSE); */
 
   /* Get folder from GSettings, and default to the "Documents" folder if not set */
   settings = g_settings_new ("org.gnome.Disks");
@@ -98,7 +99,7 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
       folder = g_strdup_printf ("file://%s", g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS));
     }
   g_object_set_data_full (G_OBJECT (file_chooser), "x-gdu-orig-folder", g_strdup (folder), g_free);
-  gtk_file_chooser_set_current_folder_uri (file_chooser, folder);
+  /* gtk_file_chooser_set_current_folder_uri (file_chooser, folder); */
 
   if (set_file_types)
     {
@@ -158,8 +159,8 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
-                      hbox, TRUE, TRUE, 0);
+  /* gtk_box_pack_start (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))), */
+  /*                     hbox, TRUE, TRUE, 0); */
 
   switch (message_type)
     {
@@ -181,15 +182,15 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
       stock_id = "dialog-error";
       break;
     }
-  image = gtk_image_new_from_icon_name (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+  /* image = gtk_image_new_from_icon_name (stock_id, GTK_ICON_SIZE_BUTTON); */
+  /* gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0); */
 
   label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  /* gtk_label_set_line_wrap (GTK_LABEL (label), TRUE); */
   gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
   gtk_label_set_markup (GTK_LABEL (label), markup);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  /* gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0); */
 
   if (out_label != NULL)
     *out_label = label;
@@ -299,7 +300,8 @@ add_option (GtkWidget       *options_entry,
                        strlen (text) > 0 ? "," : "",
                        prefix,
                        add_to_front ? text : option);
-  gtk_entry_set_text (GTK_ENTRY (options_entry), s);
+  gtk_editable_set_text (GTK_EDITABLE (options_entry), s);
+  /* gtk_entry_set_text (GTK_ENTRY (options_entry), s); */
   g_free (s);
 }
 
@@ -330,7 +332,8 @@ remove_option (GtkWidget       *options_entry,
         g_string_append_c (str, ',');
       g_string_append (str, options[n]);
     }
-  gtk_entry_set_text (GTK_ENTRY (options_entry), str->str);
+  gtk_editable_set_text (GTK_EDITABLE (options_entry), str->str);
+  /* gtk_entry_set_text (GTK_ENTRY (options_entry), str->str); */
   g_string_free (str, TRUE);
 }
 
@@ -396,7 +399,7 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
       else
         {
           gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
-          gtk_entry_set_text (GTK_ENTRY (entry), opts_unescaped);
+          gtk_editable_set_text (GTK_EDITABLE (entry), opts_unescaped);
           g_free (opts_unescaped);
         }
     }
@@ -766,13 +769,15 @@ get_widget_for_object (UDisksClient *client,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info), GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info));
+  gtk_box_append (GTK_BOX (hbox), image);
+  /* gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0); */
 
   label = gtk_label_new (udisks_object_info_get_one_liner (info));
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_append (GTK_BOX (hbox), label);
+  /* gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0); */
 
   g_object_unref (info);
 
@@ -808,9 +813,9 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
   if (checkbox_mnemonic != NULL)
     {
       check_button = gtk_check_button_new_with_mnemonic (checkbox_mnemonic);
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          check_button,
-                          FALSE, FALSE, 0);
+      /* gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))), */
+      /*                     check_button, */
+      /*                     FALSE, FALSE, 0); */
       if (inout_checkbox_value != NULL)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), *inout_checkbox_value);
     }
@@ -824,13 +829,13 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       PangoAttrList *attrs;
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+      /* gtk_container_set_border_width (GTK_CONTAINER (vbox), 6); */
       for (l = objects; l != NULL; l = l->next)
         {
           UDisksObject *object = UDISKS_OBJECT (l->data);
-          gtk_box_pack_start (GTK_BOX (vbox),
-                              get_widget_for_object (client, object),
-                              FALSE, FALSE, 0);
+          /* gtk_box_pack_start (GTK_BOX (vbox), */
+          /*                     get_widget_for_object (client, object), */
+          /*                     FALSE, FALSE, 0); */
         }
 
       label = gtk_label_new (NULL);
@@ -842,18 +847,18 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       gtk_label_set_attributes (GTK_LABEL (label), attrs);
       pango_attr_list_unref (attrs);
 
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      scrolled_window = gtk_scrolled_window_new ();
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-      gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
-      gtk_container_add (GTK_CONTAINER (scrolled_window), vbox);
+      /* gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT); */
+      /* gtk_container_add (GTK_CONTAINER (scrolled_window), vbox); */
       gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
 
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          label,
-                          FALSE, FALSE, 0);
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          scrolled_window,
-                          FALSE, FALSE, 0);
+      /* gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))), */
+      /*                     label, */
+      /*                     FALSE, FALSE, 0); */
+      /* gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))), */
+      /*                     scrolled_window, */
+      /*                     FALSE, FALSE, 0); */
     }
 
   affirmative_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
@@ -867,7 +872,7 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
   }
 
   gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL));
-  gtk_widget_show_all (dialog);
+  /* gtk_widget_show_all (dialog); */
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 

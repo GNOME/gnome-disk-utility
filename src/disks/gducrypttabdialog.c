@@ -15,6 +15,7 @@
 
 #include <glib/gi18n.h>
 
+#include "gtk3-to-4.h"
 #include "gduapplication.h"
 #include "gduwindow.h"
 #include "gducrypttabdialog.h"
@@ -346,7 +347,7 @@ gdu_crypttab_dialog_init (GduCrypttabDialog *self)
                                                        "file will be changed. To change the on-disk passphrase, use "
                                                        "<i>Change Passphrase…</i>"),
                                                      NULL);
-  gtk_box_pack_start (self->infobar_box, self->warning_infobar, TRUE, TRUE, 0);
+  /* gtk_box_pack_start (self->infobar_box, self->warning_infobar, TRUE, TRUE, 0); */
 }
 
 static void

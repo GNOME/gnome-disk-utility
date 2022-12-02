@@ -16,7 +16,7 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
-#include <canberra-gtk.h>
+/* #include <canberra-gtk.h> */
 
 #include "gduapplication.h"
 #include "gduwindow.h"
@@ -160,7 +160,7 @@ dialog_data_hide (DialogData *data)
       dialog = data->dialog;
       data->dialog = NULL;
       gtk_widget_hide (dialog);
-      gtk_widget_destroy (dialog);
+      gtk_window_destroy (GTK_WINDOW (dialog));
       data->dialog = NULL;
     }
 }
@@ -359,17 +359,17 @@ restore_disk_image_update (DialogData *data)
   ;
 }
 
-static void
-on_file_set (GtkFileChooserButton   *button,
-             gpointer                user_data)
-{
-  DialogData *data = user_data;
-  if (data->dialog == NULL)
-    goto out;
-  restore_disk_image_update (data);
- out:
-  ;
-}
+/* static void */
+/* on_file_set (GtkFileChooserButton   *button, */
+/*              gpointer                user_data) */
+/* { */
+/*   DialogData *data = user_data; */
+/*   if (data->dialog == NULL) */
+/*     goto out; */
+/*   restore_disk_image_update (data); */
+/*  out: */
+/*   ; */
+/* } */
 
 static void
 on_notify (GObject    *object,
@@ -483,9 +483,9 @@ populate_destination_combobox (DialogData *data)
   g_object_unref (model);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
-  g_object_set (G_OBJECT (renderer),
-                "stock-size", GTK_ICON_SIZE_MENU,
-                NULL);
+  /* g_object_set (G_OBJECT (renderer), */
+  /*               "stock-size", GTK_ICON_SIZE_MENU, */
+  /*               NULL); */
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combobox), renderer, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combobox), renderer,
                                   "gicon", GDU_DEVICE_TREE_MODEL_COLUMN_ICON,
@@ -1044,8 +1044,8 @@ on_dialog_response (GtkDialog     *dialog,
         }
 
       /* now that we know the user picked a folder, update file chooser settings */
-      folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (data->selectable_image_fcbutton));
-      gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
+      /* folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (data->selectable_image_fcbutton)); */
+      /* gdu_utils_file_chooser_for_disk_images_set_default_folder (folder); */
 
       /* ensure the device is unused (e.g. unmounted) before copying data to it... */
       gdu_window_ensure_unused (data->window,
@@ -1092,16 +1092,16 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
       gpointer *p = (gpointer *) ((char *) data + widget_mapping[n].offset);
       *p = gtk_builder_get_object (data->builder, widget_mapping[n].name);
     }
-  g_signal_connect (data->selectable_image_fcbutton, "file-set", G_CALLBACK (on_file_set), data);
+  /* g_signal_connect (data->selectable_image_fcbutton, "file-set", G_CALLBACK (on_file_set), data); */
 
   data->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO, "", &data->warning_label);
-  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->warning_infobar, TRUE, TRUE, 0);
-  gtk_widget_set_no_show_all (data->warning_infobar, TRUE);
+  /* gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->warning_infobar, TRUE, TRUE, 0); */
+  /* gtk_widget_set_no_show_all (data->warning_infobar, TRUE); */
   g_object_ref (data->warning_infobar);
 
   data->error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR, "", &data->error_label);
-  gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->error_infobar, TRUE, TRUE, 0);
-  gtk_widget_set_no_show_all (data->error_infobar, TRUE);
+  /* gtk_box_pack_start (GTK_BOX (data->infobar_vbox), data->error_infobar, TRUE, TRUE, 0); */
+  /* gtk_widget_set_no_show_all (data->error_infobar, TRUE); */
   g_object_ref (data->error_infobar);
 
   restore_disk_image_populate (data);

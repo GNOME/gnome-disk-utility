@@ -74,26 +74,6 @@ gdu_password_strength_widget_get_property (GObject    *object,
     }
 }
 
-static void
-gdu_password_strength_widget_set_property (GObject      *object,
-                                           guint         property_id,
-                                           const GValue *value,
-                                           GParamSpec   *pspec)
-{
-  GduPasswordStrengthWidget *widget = GDU_PASSWORD_STRENGTH_WIDGET (object);
-
-  switch (property_id)
-    {
-    case PROP_PASSWORD:
-      widget->password = g_value_dup_string (value);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
 /* ---------------------------------------------------------------------------------------------------- */
 
 static pwquality_settings_t *
@@ -226,7 +206,6 @@ gdu_password_strength_widget_class_init (GduPasswordStrengthWidgetClass *klass)
 
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->get_property = gdu_password_strength_widget_get_property;
-  gobject_class->set_property = gdu_password_strength_widget_set_property;
   gobject_class->finalize     = gdu_password_strength_widget_finalize;
   gobject_class->constructed  = gdu_password_strength_widget_constructed;
 

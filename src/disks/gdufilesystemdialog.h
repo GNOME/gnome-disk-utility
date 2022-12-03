@@ -15,6 +15,10 @@
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_FILESYSTEM_DIALOG (gdu_filesystem_dialog_get_type ())
+
+G_DECLARE_FINAL_TYPE (GduFilesystemDialog, gdu_filesystem_dialog, GDU, FILESYSTEM_DIALOG, GtkDialog)
+
 void   gdu_filesystem_dialog_show (GduWindow    *window,
                                    UDisksObject *object);
 

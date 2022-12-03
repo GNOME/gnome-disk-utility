@@ -26,7 +26,6 @@ typedef struct
   guint64 value;
 } Sample;
 
-typedef struct _GduEstimatorClass GduEstimatorClass;
 struct _GduEstimator
 {
   GObject parent;
@@ -38,11 +37,6 @@ struct _GduEstimator
 
   Sample samples[MAX_SAMPLES];
   guint num_samples;
-};
-
-struct _GduEstimatorClass
-{
-  GObjectClass parent_class;
 };
 
 enum

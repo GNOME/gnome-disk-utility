@@ -15,11 +15,9 @@
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_ESTIMATOR   gdu_estimator_get_type()
-#define GDU_ESTIMATOR(o)     (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_ESTIMATOR, GduEstimator))
-#define GDU_IS_ESTIMATOR(o)  (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_ESTIMATOR))
+#define GDU_TYPE_ESTIMATOR (gdu_estimator_get_type ())
+G_DECLARE_FINAL_TYPE (GduEstimator, gdu_estimator, GDU, ESTIMATOR, GObject)
 
-GType          gdu_estimator_get_type            (void) G_GNUC_CONST;
 GduEstimator  *gdu_estimator_new                 (guint64         target_bytes);
 void           gdu_estimator_add_sample          (GduEstimator    *estimator,
                                                   guint64          completed_bytes);

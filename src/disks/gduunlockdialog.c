@@ -1,10 +1,13 @@
 /* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*-
  *
  * Copyright (C) 2008-2013 Red Hat, Inc.
+ * Copyright (C) 2022 Purism SPC
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <zeuthen@gmail.com>
+ * Author(s):
+ *   David Zeuthen <zeuthen@gmail.com>
+ *   Mohammed Sadiq <sadiq@sadiqpk.org>
  */
 
 #include "config.h"
@@ -30,336 +33,339 @@ static const SecretSchema luks_passphrase_schema =
   }
 };
 
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef struct
+struct _GduUnlockDialog
 {
-  UDisksObject *object;
-  UDisksBlock *block;
-  UDisksEncrypted *encrypted;
-  gchar* type;
+  GtkDialog             parent_instance;
 
-  GduWindow *window;
-  GtkBuilder *builder;
+  GtkBox               *infobar_box;
+  GtkLabel             *unknown_crypto_label;
+  GtkEntry             *passphrase_entry;
 
-  GtkWidget *dialog;
-  GtkWidget *unlock_button;
-  GtkWidget *infobar_vbox;
-  GtkWidget *passphrase_entry;
-  GtkWidget *show_passphrase_check_button;
-  GtkWidget *tcrypt_hidden_check_button;
-  GtkWidget *tcrypt_system_check_button;
-  GtkWidget *pim_entry;
+  GtkCheckButton       *tcrypt_hidden_check_button;
+  GtkCheckButton       *tcrypt_system_check_button;
+  GtkEntry             *pim_entry;
 
-  GList *tcrypt_keyfile_button_list;
+  GtkBox               *keyfile_file_chooser_box;
+  GtkFileChooserButton *keyfile_file_chooser_button;
 
-  gchar *passphrase;
-  GVariant *keyfiles;
-  guint num_keyfiles;
-  guint pim;
-  gboolean hidden_volume;
-  gboolean system_volume;
-} DialogData;
+  GtkButton            *cancel_button;
+  GtkButton            *unlock_button;
 
-static void
-dialog_data_free (DialogData *data)
-{
-  if (data->dialog != NULL)
-    {
-      gtk_widget_hide (data->dialog);
-      gtk_widget_destroy (data->dialog);
-    }
-  if (data->object != NULL)
-    g_object_unref (data->object);
-  if (data->window != NULL)
-    g_object_unref (data->window);
-  if (data->builder != NULL)
-    g_object_unref (data->builder);
+  UDisksObject         *udisks_object;
+  UDisksBlock          *udisks_block;
+  UDisksEncrypted      *udisks_encrypted;
 
-  if (g_strcmp0 (data->type, "crypto_TCRYPT") == 0 || g_strcmp0 (data->type, "crypto_unknown") == 0)
-    // The elements are already freed by the builder / parent widget
-    g_list_free (data->tcrypt_keyfile_button_list);
+  GListStore           *key_files_store;
+  GVariant             *keyfiles;
+  gulong               pim;
+};
 
-  g_free (data->type);
-  g_free (data->passphrase);
-  g_free (data);
-}
-
-static void
-update_unlock_button_sensitivity (GObject *object,
-                                  gpointer user_data)
-{
-  DialogData *data = user_data;
-  gboolean password_entered = gtk_entry_get_text_length (GTK_ENTRY (data->passphrase_entry)) > 0;
-  gboolean keyfile_chosen = (data->tcrypt_keyfile_button_list != NULL &&
-                             g_list_length (data->tcrypt_keyfile_button_list) > 1);
-
-  gtk_widget_set_sensitive (data->unlock_button, password_entered || keyfile_chosen);
-}
-
-static void
-on_tcrypt_keyfile_set (GObject     *object,
-                       gpointer     user_data)
-{
-  DialogData *data = user_data;
-  GtkWidget *button;
-  GtkWidget *sibling;
-  GtkGrid *grid;
-  GList *list;
-
-  grid = GTK_GRID (gtk_builder_get_object (data->builder, "unlock-device-grid"));
-
-  button = gtk_file_chooser_button_new (_("Select a Keyfile"), GTK_FILE_CHOOSER_ACTION_OPEN);
-
-  sibling = NULL;
-  for (list = data->tcrypt_keyfile_button_list; list != NULL; list = list->next)
-    sibling = (GTK_WIDGET (list->data));
-
-  gtk_grid_attach_next_to (grid, button, sibling, GTK_POS_BOTTOM, 1, 1);
-  gtk_widget_show (button);
-
-  data->tcrypt_keyfile_button_list = g_list_append (data->tcrypt_keyfile_button_list, button);
-  g_signal_connect (button, "file-set", G_CALLBACK (on_tcrypt_keyfile_set), data);
-
-  // Don't call this function again for this instance
-  g_signal_handlers_disconnect_by_func (object, on_tcrypt_keyfile_set, user_data);
-
-  update_unlock_button_sensitivity (object, user_data);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-unlock_cb (UDisksEncrypted *encrypted,
-           GAsyncResult    *res,
-           gpointer         user_data)
-{
-  DialogData *data = user_data;
-  GError *error;
-
-  error = NULL;
-  if (!udisks_encrypted_call_unlock_finish (encrypted,
-                                            NULL, /* out_cleartext_device */
-                                            res,
-                                            &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
-                            _("Error unlocking device"),
-                            error);
-      g_error_free (error);
-    }
-  dialog_data_free (data);
-}
-
-static void
-do_unlock (DialogData *data)
-{
-  GVariantBuilder options_builder;
-  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  if (data->hidden_volume)
-    g_variant_builder_add (&options_builder, "{sv}", "hidden", g_variant_new_boolean (TRUE));
-  if (data->system_volume)
-    g_variant_builder_add (&options_builder, "{sv}", "system", g_variant_new_boolean (TRUE));
-  if (data->pim != 0)
-    g_variant_builder_add (&options_builder, "{sv}", "pim", g_variant_new_uint32 (data->pim));
-  if (data->num_keyfiles != 0)
-    g_variant_builder_add (&options_builder, "{sv}", "keyfiles", data->keyfiles);
-
-  udisks_encrypted_call_unlock (data->encrypted,
-                                data->passphrase,
-                                g_variant_builder_end (&options_builder),
-                                NULL, /* cancellable */
-                                (GAsyncReadyCallback) unlock_cb,
-                                data);
-}
-
-static void
-show_dialog (DialogData *data)
-{
-  gint response;
-  gchar *err;
-  GError *error;
-  GVariantBuilder *keyfiles_builder;
-  GList *list;
-  const char* filename;
-  const char* text_pim;
-  guint64 tmp_pim;
-
-  gtk_widget_show_all (data->dialog);
-  gtk_widget_grab_focus (data->passphrase_entry);
-
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-  if (response == GTK_RESPONSE_OK)
-    {
-      gtk_widget_hide (data->dialog);
-      data->passphrase = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->passphrase_entry)));
-
-      if (g_strcmp0 (data->type, "crypto_TCRYPT") == 0 || g_strcmp0 (data->type, "crypto_unknown") == 0)
-        {
-          data->hidden_volume = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->tcrypt_hidden_check_button));
-          data->system_volume = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->tcrypt_system_check_button));
-
-          // Add keyfiles
-          data->num_keyfiles = 0;
-          keyfiles_builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
-          for (list = data->tcrypt_keyfile_button_list; list != NULL; list = list->next)
-            {
-              filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (list->data));
-              if (filename == NULL)
-                continue;
-              g_variant_builder_add (keyfiles_builder, "s", filename);
-              data->num_keyfiles += 1;
-            }
-          data->keyfiles = g_variant_new ("as", keyfiles_builder);
-          g_variant_builder_unref (keyfiles_builder);
-
-          text_pim = gtk_entry_get_text (GTK_ENTRY (data->pim_entry));
-          if (text_pim && strlen (text_pim) > 0)
-            {
-              errno = 0;
-              tmp_pim = strtoul ( text_pim, &err, 10);
-              if (*err || errno || tmp_pim <= 0 || tmp_pim > G_MAXUINT32)
-                {
-                  error = g_error_new (G_IO_ERROR, G_IO_ERROR_INVALID_DATA,
-                                      _("Invalid PIM"));
-                  gdu_utils_show_error (GTK_WINDOW(data->window),
-                                       _("Error unlocking device"),
-                                       error);
-                  g_error_free (error);
-                  dialog_data_free (data);
-                  return;
-                }
-              data->pim = tmp_pim;
-            }
-        }
-      do_unlock (data);
-    }
-  else
-    {
-      /* otherwise, we are done */
-      dialog_data_free (data);
-    }
-}
+G_DEFINE_TYPE (GduUnlockDialog, gdu_unlock_dialog, GTK_TYPE_DIALOG)
 
 static void
 luks_find_passphrase_cb (GObject      *source,
                          GAsyncResult *result,
                          gpointer      user_data)
 {
-  DialogData *data = user_data;
-  gchar *passphrase = NULL;
+  g_autoptr(GduUnlockDialog) self = user_data;
+  g_autofree char *passphrase = NULL;
+
+  g_assert (GDU_IS_UNLOCK_DIALOG (self));
 
   /* Don't fail if a keyring error occured... but if we do find a
    * passphrase then put it into the entry field and show a
    * cluebar
    */
   passphrase = secret_password_lookup_finish (result, NULL);
-  if (passphrase != NULL)
+  if (passphrase)
     {
       GtkWidget *infobar;
+
       infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
                                            _("The encryption passphrase was retrieved from the keyring"),
                                            NULL);
-      gtk_box_pack_start (GTK_BOX (data->infobar_vbox), infobar, TRUE, TRUE, 0);
-      gtk_entry_set_text (GTK_ENTRY (data->passphrase_entry), passphrase);
+      gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
+      gtk_widget_show (GTK_WIDGET (self->infobar_box));
+      gtk_entry_set_text (self->passphrase_entry, passphrase);
+    }
+
+  gtk_window_present (GTK_WINDOW (self));
+}
+
+static void
+unlock_cb (UDisksEncrypted *encrypted,
+           GAsyncResult    *result,
+           gpointer         user_data)
+{
+  g_autoptr(GduUnlockDialog) self = user_data;
+  g_autoptr(GError) error = NULL;
+
+  g_assert (GDU_IS_UNLOCK_DIALOG (self));
+
+  if (!udisks_encrypted_call_unlock_finish (encrypted,
+                                            NULL, /* out_cleartext_device */
+                                            result,
+                                            &error))
+    {
+      GtkWindow *window;
+
+      window = gtk_window_get_transient_for (GTK_WINDOW (self));
+      gdu_utils_show_error (window, _("Error unlocking device"), error);
+    }
+
+  gtk_widget_destroy (GTK_WIDGET (self));
+}
+
+static void
+do_unlock (GduUnlockDialog *self)
+{
+  GVariantBuilder options_builder;
+  const char *passphrase;
+  gboolean is_hidden, is_system;
+
+  is_hidden = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->tcrypt_hidden_check_button));
+  is_system = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->tcrypt_system_check_button));
+
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (is_hidden)
+    g_variant_builder_add (&options_builder, "{sv}", "hidden", g_variant_new_boolean (TRUE));
+  if (is_system)
+    g_variant_builder_add (&options_builder, "{sv}", "system", g_variant_new_boolean (TRUE));
+  if (self->pim)
+    g_variant_builder_add (&options_builder, "{sv}", "pim", g_variant_new_uint32 (self->pim));
+  if (self->keyfiles)
+    g_variant_builder_add (&options_builder, "{sv}", "keyfiles", g_variant_ref (self->keyfiles));
+
+  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  udisks_encrypted_call_unlock (self->udisks_encrypted,
+                                passphrase,
+                                g_variant_builder_end (&options_builder),
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) unlock_cb,
+                                g_object_ref (self));
+}
+
+static void
+unlock_dialog_response_cb (GduUnlockDialog *self,
+                           int              response_id)
+{
+  g_assert (GDU_IS_UNLOCK_DIALOG (self));
+
+  gtk_widget_hide (GTK_WIDGET (self));
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      const char *type;
+
+      type = udisks_block_get_id_type (self->udisks_block);
+
+      if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0)
+        {
+          g_autoptr(GVariantBuilder) builder = NULL;
+          guint n_items;
+
+          n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
+          if (n_items)
+            builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+
+          for (guint i = 0; i < n_items; i++)
+            {
+              g_autoptr(GtkFileChooserButton) button = NULL;
+              g_autofree char *filename = NULL;
+
+              button = g_list_model_get_item (G_LIST_MODEL (self->key_files_store), i);
+              filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (button));
+
+              if (filename)
+                g_variant_builder_add (builder, "s", filename);
+            }
+
+          if (n_items)
+            self->keyfiles = g_variant_new ("as", builder);
+        }
+      do_unlock (self);
     }
   else
     {
-      gtk_widget_hide (data->infobar_vbox);
-      gtk_widget_set_no_show_all (data->infobar_vbox, TRUE);
+      /* otherwise, we are done */
+      gtk_widget_destroy (GTK_WIDGET (self));
     }
-  show_dialog (data);
-  g_free (passphrase);
+}
+
+static void
+unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)
+{
+  GtkStyleContext *context;
+  const char *passphrase, *pim_str;
+  guint n_items;
+  gboolean can_unlock;
+
+  g_assert (GDU_IS_UNLOCK_DIALOG (self));
+
+  context = gtk_widget_get_style_context (GTK_WIDGET (self->pim_entry));
+  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  can_unlock = passphrase && *passphrase;
+
+  n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
+  can_unlock = can_unlock || n_items > 0;
+
+  pim_str = gtk_entry_get_text (self->pim_entry);
+  if (gtk_widget_is_visible (GTK_WIDGET (self->pim_entry)) &&
+      pim_str && *pim_str)
+    {
+      char *end;
+
+      errno = 0;
+      self->pim = strtoul (pim_str, &end, 10);
+      if (*end || errno || self->pim == 0 || self->pim > G_MAXUINT32)
+        {
+          gtk_style_context_add_class (context, "error");
+          self->pim = 0;
+          can_unlock = FALSE;
+        }
+      else
+        {
+          gtk_style_context_remove_class (context, "error");
+        }
+    }
+  else
+    {
+      gtk_style_context_remove_class (context, "error");
+    }
+
+  gtk_widget_set_sensitive (GTK_WIDGET (self->unlock_button), can_unlock);
+}
+
+static void
+unlock_dialog_keyfile_set_cb (GduUnlockDialog *self,
+                              GtkWidget       *button)
+{
+  GtkWidget *new_button;
+
+  g_assert (GDU_IS_UNLOCK_DIALOG (self));
+  g_assert (GTK_IS_FILE_CHOOSER_BUTTON (button));
+
+  /* Don't call this function again for this instance */
+  g_signal_handlers_disconnect_by_func (button, unlock_dialog_keyfile_set_cb, self);
+
+  g_list_store_append (self->key_files_store, button);
+
+  new_button = gtk_file_chooser_button_new (_("Select a Keyfile"), GTK_FILE_CHOOSER_ACTION_OPEN);
+  gtk_widget_show (new_button);
+  gtk_container_add (GTK_CONTAINER (self->keyfile_file_chooser_box), new_button);
+  g_signal_connect_object (new_button, "file-set",
+                           G_CALLBACK (unlock_dialog_keyfile_set_cb),
+                           self, G_CONNECT_SWAPPED);
+  g_signal_connect_object (new_button, "file-set",
+                           G_CALLBACK (unlock_dialog_update_unlock_button_cb),
+                           self, G_CONNECT_SWAPPED);
+}
+
+static void
+gdu_unlock_dialog_finalize (GObject *object)
+{
+  GduUnlockDialog *self = (GduUnlockDialog *)object;
+
+  g_clear_object (&self->udisks_object);
+  g_clear_object (&self->udisks_block);
+  g_clear_object (&self->udisks_encrypted);
+  g_clear_object (&self->key_files_store);
+
+  G_OBJECT_CLASS (gdu_unlock_dialog_parent_class)->finalize (object);
+}
+
+static void
+gdu_unlock_dialog_class_init (GduUnlockDialogClass *klass)
+{
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->finalize = gdu_unlock_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/Disks/ui/"
+                                               "unlock-device-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, unknown_crypto_label);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, passphrase_entry);
+
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, tcrypt_hidden_check_button);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, tcrypt_system_check_button);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, pim_entry);
+
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_file_chooser_box);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_file_chooser_button);
+
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, cancel_button);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, unlock_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, unlock_dialog_response_cb);
+  gtk_widget_class_bind_template_callback (widget_class, unlock_dialog_update_unlock_button_cb);
+  gtk_widget_class_bind_template_callback (widget_class, unlock_dialog_keyfile_set_cb);
+}
+
+static void
+gdu_unlock_dialog_init (GduUnlockDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+
+  self->key_files_store = g_list_store_new (GTK_TYPE_FILE_CHOOSER_BUTTON);
+}
+
+static GduUnlockDialog *
+gdu_unlock_dialog_new (void)
+{
+  return g_object_new (GDU_TYPE_UNLOCK_DIALOG, NULL);
+}
+
+static void
+gdu_unlock_dialog_set_disk (GduUnlockDialog *self,
+                            UDisksObject    *object)
+{
+  const char *type;
+  gboolean password_in_crypttab;
+
+  g_return_if_fail (GDU_IS_UNLOCK_DIALOG (self));
+  g_return_if_fail (UDISKS_IS_OBJECT (object));
+
+  self->udisks_object = g_object_ref (object);
+  self->udisks_block = udisks_object_get_block (object);
+  self->udisks_encrypted = udisks_object_get_encrypted (object);
+
+  type = udisks_block_get_id_type (self->udisks_block);
+
+  if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0)
+    {
+      gtk_window_set_title (GTK_WINDOW (self), _("Set options to unlock"));
+      gtk_widget_show (GTK_WIDGET (self->keyfile_file_chooser_button));
+
+      if (g_str_equal (type, "crypto_unknown"))
+        gtk_widget_show (GTK_WIDGET (self->unknown_crypto_label));
+    }
+
+  if (gdu_utils_has_configuration (self->udisks_block, "crypttab", &password_in_crypttab) &&
+      password_in_crypttab)
+    {
+      do_unlock (self);
+    }
+  else
+    {
+      secret_password_lookup (&luks_passphrase_schema,
+                              NULL, /* GCancellable */
+                              luks_find_passphrase_cb,
+                              g_object_ref (self),
+                              "gvfs-luks-uuid", udisks_block_get_id_uuid (self->udisks_block),
+                              NULL); /* sentinel */
+    }
 }
 
 void
 gdu_unlock_dialog_show (GduWindow    *window,
                         UDisksObject *object)
 {
-  gboolean has_passphrase_in_crypttab = FALSE;
-  DialogData *data;
+  GduUnlockDialog *self;
 
-  data = g_new0 (DialogData, 1);
-  data->object = g_object_ref (object);
-  data->block = udisks_object_peek_block (object);
-  data->encrypted = udisks_object_peek_encrypted (object);
-  data->window = g_object_ref (window);
-  data->type = udisks_block_dup_id_type (data->block);
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
-                                                         "unlock-device-dialog.ui",
-                                                         "unlock-device-dialog",
-                                                         &data->builder));
-  data->unlock_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-unlock-button"));
-  data->infobar_vbox = GTK_WIDGET (gtk_builder_get_object (data->builder, "infobar-vbox"));
-  data->passphrase_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-passphrase-entry"));
-  data->show_passphrase_check_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-show-passphrase-check-button"));
-
-  // Add TCRYPT options if the device is (possibly) a TCRYPT volume
-  if (g_strcmp0 (data->type, "crypto_TCRYPT") == 0 || g_strcmp0 (data->type, "crypto_unknown") == 0)
-    {
-      GtkWidget *volume_type_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-volume-type-label"));
-      GtkWidget *keyfiles_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-keyfiles-label"));
-      GtkWidget *pim_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-pim-label"));
-      GtkWidget *button = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-tcrypt-keyfile-chooser-button"));
-
-      gtk_window_set_title (GTK_WINDOW (data->dialog), _("Set options to unlock"));
-
-      data->tcrypt_hidden_check_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-tcrypt-hidden-check-button"));
-      data->tcrypt_system_check_button = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-tcrypt-system-check-button"));
-      data->pim_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "unlock-device-pim-entry"));
-      data->tcrypt_keyfile_button_list = NULL;
-      data->tcrypt_keyfile_button_list = g_list_append (data->tcrypt_keyfile_button_list, button);
-
-      gtk_widget_set_visible (volume_type_label, TRUE);
-      gtk_widget_set_visible (pim_label, TRUE);
-      gtk_widget_set_visible (keyfiles_label, TRUE);
-      gtk_widget_set_visible (button, TRUE);
-      gtk_widget_set_visible (data->tcrypt_hidden_check_button, TRUE);
-      gtk_widget_set_visible (data->tcrypt_system_check_button, TRUE);
-      gtk_widget_set_visible (data->pim_entry, TRUE);
-
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->tcrypt_hidden_check_button), FALSE);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->tcrypt_system_check_button), FALSE);
-      gtk_entry_set_text (GTK_ENTRY (data->pim_entry), "");
-
-      g_signal_connect (button, "file-set", G_CALLBACK (on_tcrypt_keyfile_set), data);
-
-      if (g_strcmp0 (data->type, "crypto_unknown") == 0)
-        {
-          GtkWidget *unknown_crypto_label;
-          unknown_crypto_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "unknown-crypto-label"));
-          gtk_widget_set_visible (unknown_crypto_label, TRUE);
-          gtk_widget_set_no_show_all (unknown_crypto_label, FALSE);
-        }
-    }
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (data->window));
-  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->show_passphrase_check_button), FALSE);
-  gtk_entry_set_text (GTK_ENTRY (data->passphrase_entry), "");
-  g_signal_connect (data->passphrase_entry, "changed", G_CALLBACK (update_unlock_button_sensitivity), data);
-
-  g_object_bind_property (data->show_passphrase_check_button,
-                          "active",
-                          data->passphrase_entry,
-                          "visibility",
-                          G_BINDING_SYNC_CREATE);
-
-  if (gdu_utils_has_configuration (data->block, "crypttab", &has_passphrase_in_crypttab) &&
-      has_passphrase_in_crypttab)
-    {
-      data->passphrase = g_strdup ("");
-      do_unlock (data);
-    }
-  else
-    {
-      /* see if there's a passphrase in the keyring */
-      secret_password_lookup (&luks_passphrase_schema,
-                              NULL, /* GCancellable */
-                              luks_find_passphrase_cb,
-                              data,
-                              "gvfs-luks-uuid", udisks_block_get_id_uuid (data->block),
-                              NULL); /* sentinel */
-    }
+  self = gdu_unlock_dialog_new ();
+  gdu_unlock_dialog_set_disk (self, object);
+  gtk_window_set_transient_for (GTK_WINDOW (self), GTK_WINDOW (window));
 }

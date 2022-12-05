@@ -7,17 +7,17 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_UNLOCK_DIALOG_H_H__
-#define __GDU_UNLOCK_DIALOG_H_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_UNLOCK_DIALOG (gdu_unlock_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduUnlockDialog, gdu_unlock_dialog, GDU, UNLOCK_DIALOG, GtkDialog)
+
 void   gdu_unlock_dialog_show (GduWindow    *window,
                                UDisksObject *object);
 
 G_END_DECLS
-
-#endif /* __GDU_UNLOCK_DIALOG_H__ */

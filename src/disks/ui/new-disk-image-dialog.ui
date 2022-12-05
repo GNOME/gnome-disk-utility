@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkDialog" id="new-disk-image-dialog">
+  <template class="GduNewDiskImageDialog" parent="GtkDialog">
     <property name="width_request">550</property>
-    <property name="can_focus">False</property>
     <property name="border_width">12</property>
     <property name="title" translatable="yes">New Disk Image</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
+    <signal name="response" handler="new_disk_image_dialog_response_cb" />
+
     <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox1">
-        <property name="can_focus">False</property>
+      <object class="GtkBox">
         <property name="orientation">vertical</property>
         <property name="spacing">12</property>
         <child>
-          <object class="GtkGrid" id="grid1">
+          <object class="GtkGrid">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
             <property name="hexpand">True</property>
             <property name="row_spacing">12</property>
             <property name="column_spacing">12</property>
             <child>
-              <object class="GtkLabel" id="label3">
+              <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="label" translatable="yes">Image _Size</property>
                 <property name="use_underline">True</property>
-                <property name="mnemonic_widget">size-spinbutton</property>
+                <property name="mnemonic_widget">size_spin_button</property>
                 <style>
-                  <class name="dim-label"/>
+                  <class name="dim-label" />
                 </style>
               </object>
               <packing>
@@ -41,15 +39,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="name-label">
+              <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="label" translatable="yes">_Name</property>
                 <property name="use_underline">True</property>
-                <property name="mnemonic_widget">name-entry</property>
+                <property name="mnemonic_widget">name_entry</property>
                 <style>
-                  <class name="dim-label"/>
+                  <class name="dim-label" />
                 </style>
               </object>
               <packing>
@@ -60,15 +57,14 @@
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="folder-label">
+              <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
                 <property name="xalign">1</property>
                 <property name="label" translatable="yes">Save in _Folder</property>
                 <property name="use_underline">True</property>
-                <property name="mnemonic_widget">folder-fcbutton</property>
+                <property name="mnemonic_widget">choose_folder_button</property>
                 <style>
-                  <class name="dim-label"/>
+                  <class name="dim-label" />
                 </style>
               </object>
               <packing>
@@ -79,16 +75,13 @@
               </packing>
             </child>
             <child>
-              <object class="GtkSpinButton" id="size-spinbutton">
+              <object class="GtkSpinButton" id="size_spin_button">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">The size of the image to create</property>
-                <property name="invisible_char">●</property>
                 <property name="activates_default">True</property>
-                <property name="invisible_char_set">True</property>
-                <property name="adjustment">size-adjustment</property>
-                <property name="digits">0</property>
+                <property name="adjustment">size_adjustment</property>
+                <property name="digits">3</property>
+                <signal name="value-changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -98,13 +91,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="name-entry">
+              <object class="GtkEntry" id="name_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hexpand">True</property>
-                <property name="invisible_char">●</property>
                 <property name="activates_default">True</property>
-                <property name="invisible_char_set">True</property>
+                <signal name="changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -114,7 +106,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkFileChooserButton" id="folder-fcbutton">
+              <object class="GtkFileChooserButton" id="choose_folder_button">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
@@ -130,12 +122,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="size-unit-combobox">
+              <object class="GtkComboBoxText" id="size_unit_combobox">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="active">2</property>
-                <property name="entry_text_column">0</property>
-                <property name="id_column">1</property>
+                <signal name="changed" handler="new_disk_image_size_unit_changed_cb" swapped="yes" />
                 <items>
                   <item translatable="yes">bytes</item>
                   <item translatable="yes">kB</item>
@@ -159,41 +148,46 @@
             </child>
           </object>
         </child>
+
+          <!-- Cancel, Create buttons -->
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="can_focus">False</property>
+          <object class="GtkButtonBox">
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="cancel-button">
-                <property name="label">gtk-cancel</property>
+              <object class="GtkButton" id="cancel_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="label" translatable="yes">_Cancel</property>
+                <property name="use_underline">True</property>
               </object>
             </child>
             <child>
-              <object class="GtkButton" id="create-image-button">
-                <property name="label" translatable="yes">Attach new _Image…</property>
+              <object class="GtkButton" id="create_image_button">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_underline">True</property>
+                <property name="label" translatable="yes">Attach new _Image…</property>
               </object>
             </child>
           </object>
         </child>
+
       </object>
     </child>
+
     <action-widgets>
-      <action-widget response="-6">cancel-button</action-widget>
-      <action-widget response="-5">create-image-button</action-widget>
+      <action-widget response="cancel">cancel_button</action-widget>
+      <action-widget response="ok" default="true">create_image_button</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkAdjustment" id="size-adjustment">
-    <property name="upper">100</property>
+  </template>
+
+  <object class="GtkAdjustment" id="size_adjustment">
+    <property name="upper">10000000000000</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="page_increment">100</property>
   </object>
+
 </interface>

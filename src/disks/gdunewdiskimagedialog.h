@@ -7,16 +7,16 @@
  * Author: Kai Lüke <kailueke@riseup.net>
  */
 
-#ifndef __GDU_NEW_DISK_IMAGE_DIALOG_H__
-#define __GDU_NEW_DISK_IMAGE_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_NEW_DISK_IMAGE_DIALOG (gdu_new_disk_image_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, GDU, NEW_DISK_IMAGE_DIALOG, GtkDialog)
+
 void     gdu_new_disk_image_dialog_show (GduWindow *window);
 
 G_END_DECLS
-
-#endif /* __GDU_NEW_DISK_IMAGE_DIALOG_H__ */

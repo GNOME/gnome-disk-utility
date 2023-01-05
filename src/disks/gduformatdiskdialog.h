@@ -7,17 +7,17 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_FORMAT_DISK_DIALOG_H__
-#define __GDU_FORMAT_DISK_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_FORMAT_DISK_DIALOG (gdu_format_disk_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, GDU, FORMAT_DISK_DIALOG, GtkDialog)
+
 void     gdu_format_disk_dialog_show (GduWindow    *window,
                                       UDisksObject *object);
 
 G_END_DECLS
-
-#endif /* __GDU_FORMAT_DISK_DIALOG_H__ */

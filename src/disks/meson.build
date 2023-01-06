@@ -50,8 +50,6 @@ resource_data = files(
   'ui/disk-settings-dialog.ui',
   'ui/disks.ui',
   'ui/edit-crypttab-dialog.ui',
-  'ui/edit-dos-partition-dialog.ui',
-  'ui/edit-gpt-partition-dialog.ui',
   'ui/edit-filesystem-dialog.ui',
   'ui/edit-fstab-dialog.ui',
   'ui/edit-partition-dialog.ui',

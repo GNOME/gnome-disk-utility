@@ -1,13 +1,18 @@
 /* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*-
  *
  * Copyright (C) 2008-2013 Red Hat, Inc.
+ * Copyright (C) 2023 Purism SPC
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <zeuthen@gmail.com>
+ * Author(s):
+ *   David Zeuthen <zeuthen@gmail.com>
+ *   Mohammed Sadiq <sadiq@sadiqpk.org>
  */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <inttypes.h>
 #include <glib/gi18n.h>
@@ -27,46 +32,31 @@ enum
   MODEL_N_COLUMNS
 };
 
-typedef struct
+struct _GduPartitionDialog
 {
-  GduWindow *window;
-  UDisksObject *object;
-  UDisksPartition *partition;
-  UDisksPartitionTable *partition_table;
-  gchar *partition_table_type;
+  GtkDialog             parent_instance;
 
-  GtkBuilder *builder;
-  GtkWidget *dialog;
-  GtkWidget *type_combobox;
-  GtkWidget *name_entry;
-  GtkWidget *system_checkbutton;
-  GtkWidget *hide_from_firmware_checkbutton;
-  GtkWidget *bootable_checkbutton;
+  GtkComboBox          *type_combobox;
+  GtkEntry             *name_entry;
 
-} EditPartitionData;
+  GtkCheckButton       *bootable_check_button;
+  GtkCheckButton       *system_check_button;
+  GtkCheckButton       *hide_from_firmware_check_button;
+
+  GduWindow            *window;
+  UDisksObject         *udisks_object;
+  UDisksPartition      *udisks_partition;
+  UDisksPartitionTable *udisks_partition_table;
+  char                 *partition_table_type;
+};
+
+
+G_DEFINE_TYPE (GduPartitionDialog, gdu_partition_dialog, GTK_TYPE_DIALOG)
 
 static void
-edit_partition_data_free (EditPartitionData *data)
-{
-  g_object_unref (data->window);
-  g_object_unref (data->object);
-  g_object_unref (data->partition);
-  g_object_unref (data->partition_table);
-  g_free (data->partition_table_type);
-  if (data->dialog != NULL)
-    {
-      gtk_widget_hide (data->dialog);
-      gtk_widget_destroy (data->dialog);
-    }
-  if (data->builder != NULL)
-    g_object_unref (data->builder);
-  g_free (data);
-}
-
-static void
-edit_partition_get (EditPartitionData   *data,
-                    gchar              **out_type,
-                    gchar              **out_name,
+edit_partition_get (GduPartitionDialog  *self,
+                    char               **out_type,
+                    char               **out_name,
                     guint64             *out_flags)
 {
   gchar *type = NULL;
@@ -74,28 +64,28 @@ edit_partition_get (EditPartitionData   *data,
   guint64 flags = 0;
   GtkTreeIter iter;
 
-  if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (data->type_combobox), &iter))
+  if (gtk_combo_box_get_active_iter (self->type_combobox, &iter))
     {
-      gtk_tree_model_get (GTK_TREE_MODEL (gtk_combo_box_get_model (GTK_COMBO_BOX (data->type_combobox))),
+      gtk_tree_model_get (GTK_TREE_MODEL (gtk_combo_box_get_model (self->type_combobox)),
                           &iter,
                           MODEL_COLUMN_TYPE, &type,
                           -1);
     }
 
-  if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
+  if (g_strcmp0 (self->partition_table_type, "gpt") == 0)
     {
-      name = g_strdup (gtk_entry_get_text (GTK_ENTRY (data->name_entry)));
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->system_checkbutton)))
+      name = g_strdup (gtk_entry_get_text (self->name_entry));
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->system_check_button)))
         flags |= (1UL<<0);
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->hide_from_firmware_checkbutton)))
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->hide_from_firmware_check_button)))
         flags |= (1UL<<1);
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton)))
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->bootable_check_button)))
         flags |= (1UL<<2);
     }
-  else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
+  else if (g_strcmp0 (self->partition_table_type, "dos") == 0)
     {
       name = g_strdup ("");
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton)))
+      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->bootable_check_button)))
         flags |= (1UL<<7);
     }
   else
@@ -109,60 +99,174 @@ edit_partition_get (EditPartitionData   *data,
 }
 
 static void
-edit_partition_update (EditPartitionData *data)
+partition_dialog_response_cb (GduPartitionDialog *self,
+                              int                 response_id)
 {
-  gboolean differs = FALSE;
-  gchar *type;
-  gchar *name;
+  g_autofree char *type = NULL;
+  g_autofree char *name = NULL;
+  g_autoptr(GError) error = NULL;
   guint64 flags;
 
-  edit_partition_get (data, &type, &name, &flags);
+  g_assert (GDU_IS_PARTITION_DIALOG (self));
 
-  if (g_strcmp0 (udisks_partition_get_type_ (data->partition), type) != 0)
-    differs = TRUE;
-  if (g_strcmp0 (udisks_partition_get_name (data->partition), name) != 0)
-    differs = TRUE;
-  if (udisks_partition_get_flags (data->partition) != flags)
-    differs = TRUE;
+  if (response_id == GTK_RESPONSE_CANCEL ||
+      response_id == GTK_RESPONSE_CLOSE ||
+      response_id == GTK_RESPONSE_DELETE_EVENT)
+    goto end;
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, differs);
+  edit_partition_get (self, &type, &name, &flags);
 
-  g_free (type);
-  g_free (name);
+  if (g_strcmp0 (udisks_partition_get_type_ (self->udisks_partition), type) != 0)
+    {
+      if (!udisks_partition_call_set_type_sync (self->udisks_partition,
+                                                type,
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* GCancellable */
+                                                &error))
+        {
+          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition type"), error);
+          goto end;
+        }
+    }
+  if (g_strcmp0 (udisks_partition_get_name (self->udisks_partition), name) != 0)
+    {
+      if (!udisks_partition_call_set_name_sync (self->udisks_partition,
+                                                name,
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* GCancellable */
+                                                &error))
+        {
+          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition name"), error);
+          goto end;
+        }
+    }
+  if (udisks_partition_get_flags (self->udisks_partition) != flags)
+    {
+      if (!udisks_partition_call_set_flags_sync (self->udisks_partition,
+                                                 flags,
+                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                 NULL, /* GCancellable */
+                                                 &error))
+        {
+          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition flags"), error);
+          goto end;
+        }
+    }
+
+ end:
+  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_destroy (GTK_WIDGET (self));
 }
 
 static void
-edit_partition_property_changed (GObject     *object,
-                                 GParamSpec  *pspec,
-                                 gpointer     user_data)
+partition_dialog_property_changed_cb (GduPartitionDialog *self)
 {
-  EditPartitionData *data = user_data;
-  edit_partition_update (data);
+  g_autofree char *type = NULL;
+  g_autofree char *name = NULL;
+  gboolean differs = FALSE;
+  guint64 flags;
+
+  g_assert (GDU_IS_PARTITION_DIALOG (self));
+
+  edit_partition_get (self, &type, &name, &flags);
+
+  if (g_strcmp0 (udisks_partition_get_type_ (self->udisks_partition), type) != 0)
+    differs = TRUE;
+  if (g_strcmp0 (udisks_partition_get_name (self->udisks_partition), name) != 0)
+    differs = TRUE;
+  if (udisks_partition_get_flags (self->udisks_partition) != flags)
+    differs = TRUE;
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (self), GTK_RESPONSE_OK, differs);
 }
 
 static void
-edit_partition_populate (EditPartitionData *data)
+gdu_partition_dialog_finalize (GObject *object)
 {
+  GduPartitionDialog *self = (GduPartitionDialog *)object;
+
+  g_clear_object (&self->udisks_object);
+  g_clear_object (&self->udisks_partition);
+  g_clear_object (&self->udisks_partition_table);
+  g_clear_pointer (&self->partition_table_type, g_free);
+
+  G_OBJECT_CLASS (gdu_partition_dialog_parent_class)->finalize (object);
+}
+
+static void
+gdu_partition_dialog_class_init (GduPartitionDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize = gdu_partition_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/Disks/ui/"
+                                               "edit-partition-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, type_combobox);
+  gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, name_entry);
+
+  gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, bootable_check_button);
+  gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, system_check_button);
+  gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, hide_from_firmware_check_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, partition_dialog_response_cb);
+  gtk_widget_class_bind_template_callback (widget_class, partition_dialog_property_changed_cb);
+}
+
+static void
+gdu_partition_dialog_init (GduPartitionDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+}
+
+
+static void
+edit_partition_update (GduPartitionDialog *self)
+{
+  g_autofree char *type = NULL;
+  g_autofree char *name = NULL;
+  gboolean differs = FALSE;
+  guint64 flags;
+
+  edit_partition_get (self, &type, &name, &flags);
+
+  if (g_strcmp0 (udisks_partition_get_type_ (self->udisks_partition), type) != 0)
+    differs = TRUE;
+  if (g_strcmp0 (udisks_partition_get_name (self->udisks_partition), name) != 0)
+    differs = TRUE;
+  if (udisks_partition_get_flags (self->udisks_partition) != flags)
+    differs = TRUE;
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (self), GTK_RESPONSE_OK, differs);
+}
+
+static void
+edit_partition_populate (GduPartitionDialog *self)
+{
+  g_autoptr(GtkListStore) model = NULL;
   const gchar *cur_type;
   GList *l;
   guint n;
   GtkTreeIter *active_iter = NULL;
-  GtkListStore *model;
   GList *infos;
   const gchar *cur_table_subtype;
   UDisksClient *client;
   GtkCellRenderer *renderer;
 
-  client = gdu_window_get_client (data->window);
+  g_assert (GDU_IS_PARTITION_DIALOG (self));
 
+  client = gdu_window_get_client (self->window);
   model = gtk_list_store_new (MODEL_N_COLUMNS,
                               G_TYPE_BOOLEAN,
                               G_TYPE_STRING,
                               G_TYPE_STRING);
 
-  cur_type = udisks_partition_get_type_ (data->partition);
+  cur_type = udisks_partition_get_type_ (self->udisks_partition);
   infos = udisks_client_get_partition_type_infos (client,
-                                                  data->partition_table_type,
+                                                  self->partition_table_type,
                                                   NULL);
   /* assume that table subtypes are in order */
   cur_table_subtype = NULL;
@@ -197,16 +301,10 @@ edit_partition_populate (EditPartitionData *data)
           cur_table_subtype = info->table_subtype;
         }
 
-#if UDISKS_CHECK_VERSION(2, 1, 1)
       type_for_display = udisks_client_get_partition_type_and_subtype_for_display (client,
-                                                                                   data->partition_table_type,
+                                                                                   self->partition_table_type,
                                                                                    info->table_subtype,
                                                                                    info->type);
-#else
-      type_for_display = udisks_client_get_partition_type_for_display (client,
-                                                                       data->partition_table_type,
-                                                                       info->type);
-#endif
       escaped_type_for_display = g_markup_escape_text (type_for_display, -1);
       s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
                            escaped_type_for_display,
@@ -226,165 +324,85 @@ edit_partition_populate (EditPartitionData *data)
 
       g_free (s);
     }
-  gtk_combo_box_set_model (GTK_COMBO_BOX (data->type_combobox), GTK_TREE_MODEL (model));
+  gtk_combo_box_set_model (self->type_combobox, GTK_TREE_MODEL (model));
   if (active_iter != NULL)
     {
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (data->type_combobox), active_iter);
+      gtk_combo_box_set_active_iter (self->type_combobox, active_iter);
       gtk_tree_iter_free (active_iter);
     }
 
   renderer = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (data->type_combobox), renderer, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (data->type_combobox), renderer,
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (self->type_combobox), renderer, FALSE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (self->type_combobox), renderer,
                                   "sensitive", MODEL_COLUMN_SELECTABLE,
                                   "markup", MODEL_COLUMN_NAME_MARKUP,
                                   NULL);
 
-  if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
+  if (g_strcmp0 (self->partition_table_type, "gpt") == 0)
     {
       guint64 flags;
-      gtk_entry_set_text (GTK_ENTRY (data->name_entry), udisks_partition_get_name (data->partition));
-      flags = udisks_partition_get_flags (data->partition);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->system_checkbutton),           (flags & (1UL<< 0)) != 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->hide_from_firmware_checkbutton), (flags & (1UL<< 1)) != 0);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton),         (flags & (1UL<< 2)) != 0);
+
+      gtk_entry_set_text (self->name_entry, udisks_partition_get_name (self->udisks_partition));
+      flags = udisks_partition_get_flags (self->udisks_partition);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->system_check_button),           (flags & (1UL<< 0)) != 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->hide_from_firmware_check_button), (flags & (1UL<< 1)) != 0);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->bootable_check_button),         (flags & (1UL<< 2)) != 0);
     }
-  else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
+  else if (g_strcmp0 (self->partition_table_type, "dos") == 0)
     {
       guint64 flags;
-      flags = udisks_partition_get_flags (data->partition);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (data->bootable_checkbutton),         (flags & (1UL<< 7)) != 0);
+
+      flags = udisks_partition_get_flags (self->udisks_partition);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->bootable_check_button),         (flags & (1UL<< 7)) != 0);
     }
 
   g_list_foreach (infos, (GFunc) udisks_partition_type_info_free, NULL);
   g_list_free (infos);
-  g_object_unref (model);
 }
 
 void
 gdu_partition_dialog_show (GduWindow    *window,
                            UDisksObject *object)
 {
-  EditPartitionData *data;
-  gint response;
+  GduPartitionDialog *self;
 
-  data = g_new0 (EditPartitionData, 1);
-  data->window = g_object_ref (window);
-  data->object = g_object_ref (object);
-  data->partition = udisks_object_get_partition (object);
-  g_assert (data->partition != NULL);
-  data->partition_table = udisks_client_get_partition_table (gdu_window_get_client (window), data->partition);
-  g_assert (data->partition_table != NULL);
-  data->partition_table_type = udisks_partition_table_dup_type_ (data->partition_table);
+  self = g_object_new (GDU_TYPE_PARTITION_DIALOG,
+                       "transient-for", window,
+                       NULL);
 
-  if (g_strcmp0 (data->partition_table_type, "gpt") == 0)
+  self->window = window;
+  self->udisks_object = g_object_ref (object);
+  self->udisks_partition = udisks_object_get_partition (object);
+  self->udisks_partition_table = udisks_client_get_partition_table (gdu_window_get_client (window),
+                                                                    self->udisks_partition);
+  self->partition_table_type = udisks_partition_table_dup_type_ (self->udisks_partition_table);
+
+  if (g_strcmp0 (self->partition_table_type, "gpt") == 0)
     {
-      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
-                                                             "edit-gpt-partition-dialog.ui",
-                                                             "edit-gpt-partition-dialog",
-                                                             &data->builder));
-      data->name_entry = GTK_WIDGET (gtk_builder_get_object (data->builder, "name-entry"));
-      data->system_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "system-checkbutton"));
-      data->hide_from_firmware_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder,
-                                                                                 "hide-from-firmware-checkbutton"));
-      data->bootable_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "bootable-checkbutton"));
-
-      g_signal_connect (data->name_entry,
-                        "notify::text", G_CALLBACK (edit_partition_property_changed), data);
-      g_signal_connect (data->system_checkbutton,
-                        "notify::active", G_CALLBACK (edit_partition_property_changed), data);
-      g_signal_connect (data->hide_from_firmware_checkbutton,
-                        "notify::active", G_CALLBACK (edit_partition_property_changed), data);
-      g_signal_connect (data->bootable_checkbutton,
-                        "notify::active", G_CALLBACK (edit_partition_property_changed), data);
+      gtk_widget_show (GTK_WIDGET (self->name_entry));
+      gtk_widget_show (GTK_WIDGET (self->system_check_button));
+      gtk_widget_show (GTK_WIDGET (self->hide_from_firmware_check_button));
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (self->type_combobox),
+                                     _("The partition type represented as a 32-bit <i>GUID</i>"));
+      gtk_button_set_label (GTK_BUTTON (self->bootable_check_button), _("Legacy BIOS _Bootable"));
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (self->bootable_check_button),
+                                     _("This is equivalent to Master Boot Record <i>bootable</i> "
+                                       "flag. It is normally only used for GPT partitions on MBR systems"));
     }
-  else if (g_strcmp0 (data->partition_table_type, "dos") == 0)
+  else if (g_strcmp0 (self->partition_table_type, "dos") == 0)
     {
-      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
-                                                             "edit-dos-partition-dialog.ui",
-                                                             "edit-dos-partition-dialog",
-                                                             &data->builder));
-      data->bootable_checkbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "bootable-checkbutton"));
-      g_signal_connect (data->bootable_checkbutton,
-                        "notify::active", G_CALLBACK (edit_partition_property_changed), data);
-    }
-  else
-    {
-      data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
-                                                             "edit-partition-dialog.ui",
-                                                             "edit-partition-dialog",
-                                                             &data->builder));
-    }
-  data->type_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "type-combobox"));
-  g_signal_connect (data->type_combobox,
-                    "notify::active", G_CALLBACK (edit_partition_property_changed), data);
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK);
-
-  edit_partition_populate (data);
-  edit_partition_update (data);
-
-  gtk_widget_show_all (data->dialog);
-  gtk_widget_grab_focus (data->type_combobox);
-
-  /* TODO: do this async */
-  response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-  if (response == GTK_RESPONSE_OK)
-    {
-      gchar *type;
-      gchar *name;
-      guint64 flags;
-      GError *error;
-
-      edit_partition_get (data, &type, &name, &flags);
-
-      if (g_strcmp0 (udisks_partition_get_type_ (data->partition), type) != 0)
-        {
-          error = NULL;
-          if (!udisks_partition_call_set_type_sync (data->partition,
-                                                    type,
-                                                    g_variant_new ("a{sv}", NULL), /* options */
-                                                    NULL, /* GCancellable */
-                                                    &error))
-            {
-              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition type"), error);
-              g_error_free (error);
-              goto set_out;
-            }
-        }
-      if (g_strcmp0 (udisks_partition_get_name (data->partition), name) != 0)
-        {
-          error = NULL;
-          if (!udisks_partition_call_set_name_sync (data->partition,
-                                                    name,
-                                                    g_variant_new ("a{sv}", NULL), /* options */
-                                                    NULL, /* GCancellable */
-                                                    &error))
-            {
-              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition name"), error);
-              g_error_free (error);
-              goto set_out;
-            }
-        }
-      if (udisks_partition_get_flags (data->partition) != flags)
-        {
-          error = NULL;
-          if (!udisks_partition_call_set_flags_sync (data->partition,
-                                                     flags,
-                                                     g_variant_new ("a{sv}", NULL), /* options */
-                                                     NULL, /* GCancellable */
-                                                     &error))
-            {
-              gdu_utils_show_error (GTK_WINDOW (window), _("Error setting partition flags"), error);
-              g_error_free (error);
-              goto set_out;
-            }
-        }
-    set_out:
-      g_free (type);
-      g_free (name);
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (self->type_combobox),
+                                     _("The partition type as a 8-bit unsigned integer"));
+      gtk_button_set_label (GTK_BUTTON (self->bootable_check_button), _("_Bootable"));
+      gtk_widget_set_tooltip_markup (GTK_WIDGET (self->bootable_check_button),
+                                     _("A flag used by the Platform bootloader to determine where the OS "
+                                       "should be loaded from. Sometimes the partition with this flag set "
+                                       "is referred to as the <i>active</i> partition"));
     }
 
-  edit_partition_data_free (data);
+  edit_partition_populate (self);
+  edit_partition_update (self);
+
+  gtk_widget_grab_focus (GTK_WIDGET (self->type_combobox));
+  gtk_window_present (GTK_WINDOW (self));
 }

@@ -6,14 +6,14 @@
 # Dirgita <dirgitadevina@yahoo.co.id>, 2010, 2012.
 # Andika Triwidada <andika@gmail.com>, 2012-2015, 2017.
 # Sendy Aditya Suryana <sendzation@gmail.dot.com>, 2015.
-# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021.
+# Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2021-10-18 19:18+0000\n"
-"PO-Revision-Date: 2021-12-23 10:30+0700\n"
+"POT-Creation-Date: 2023-01-28 12:53+0000\n"
+"PO-Revision-Date: 2023-01-30 11:34+0700\n"
 "Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
 msgid "Disk Image Mounter"
@@ -94,11 +94,7 @@ msgstr ""
 "Dengan Diska, Anda bisa melihat data SMART, mengelola perangkat, menguji "
 "fisik diska, dan stik USB."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:22
-msgid "An easy way to manage your disks"
-msgstr "Suatu cara mudah untuk mengelola disk Anda"
-
-#: data/org.gnome.DiskUtility.appdata.xml.in:34
+#: data/org.gnome.DiskUtility.appdata.xml.in:45
 msgid "The GNOME Project"
 msgstr "Projek GNOME"
 
@@ -129,11 +125,17 @@ msgstr "Pilih Citra Diska untuk Dikaitkan"
 
 #: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
+#: src/disks/gdunewdiskimagedialog.c:171 src/disks/gduwindow.c:818
 #: src/disks/ui/benchmark-dialog.ui:287
+#: src/disks/ui/change-passphrase-dialog.ui:169
 #: src/disks/ui/create-disk-image-dialog.ui:123
-#: src/disks/ui/format-disk-dialog.ui:24
+#: src/disks/ui/edit-crypttab-dialog.ui:236
+#: src/disks/ui/edit-filesystem-dialog.ui:67
+#: src/disks/ui/edit-partition-dialog.ui:142
+#: src/disks/ui/format-disk-dialog.ui:90
+#: src/disks/ui/new-disk-image-dialog.ui:161
 #: src/disks/ui/restore-disk-image-dialog.ui:184
+#: src/disks/ui/unlock-device-dialog.ui:218
 msgid "_Cancel"
 msgstr "_Batal"
 
@@ -896,7 +898,7 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1127
+#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1128
 msgid "N/A"
 msgstr "T/A"
 
@@ -1020,91 +1022,91 @@ msgstr "Diska dalam keadaan baik"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1115
+#: src/disks/gduatasmartdialog.c:1116
 msgid "Pre-Fail"
 msgstr "Pra-Gagal"
 
-#: src/disks/gduatasmartdialog.c:1117
+#: src/disks/gduatasmartdialog.c:1118
 msgid "Old-Age"
 msgstr "Tua"
 
-#: src/disks/gduatasmartdialog.c:1120
+#: src/disks/gduatasmartdialog.c:1121
 msgid "Online"
 msgstr "Daring"
 
-#: src/disks/gduatasmartdialog.c:1122
+#: src/disks/gduatasmartdialog.c:1123
 msgid "Offline"
 msgstr "Luring"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1231
+#: src/disks/gduatasmartdialog.c:1232
 msgid "Threshold exceeded"
 msgstr "Ambang batas telah dilampaui"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1236
+#: src/disks/gduatasmartdialog.c:1237
 msgid "Threshold not exceeded"
 msgstr "Ambang batas tidak dilampaui"
 
-#: src/disks/gduatasmartdialog.c:1312
+#: src/disks/gduatasmartdialog.c:1313
 msgid "Error refreshing SMART data"
 msgstr "Galat ketika menyegarkan data SMART"
 
-#: src/disks/gduatasmartdialog.c:1344
+#: src/disks/gduatasmartdialog.c:1345
 msgid "Error aborting SMART self-test"
 msgstr "Galat ketika membatalkan uji-sendiri SMART"
 
-#: src/disks/gduatasmartdialog.c:1363
+#: src/disks/gduatasmartdialog.c:1364
 msgid "Error starting SMART self-test"
 msgstr "Galat ketika memulai uji-sendiri SMART"
 
-#: src/disks/gduatasmartdialog.c:1445
+#: src/disks/gduatasmartdialog.c:1446
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Terjadi galat ketika mencoba menjungkitkan apakah SMART difungsikan"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1565
+#: src/disks/gduatasmartdialog.c:1566
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1577
+#: src/disks/gduatasmartdialog.c:1578
 msgid "Attribute"
 msgstr "Atribut"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1591
+#: src/disks/gduatasmartdialog.c:1592
 msgid "Value"
 msgstr "Nilai"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1603
+#: src/disks/gduatasmartdialog.c:1604
 msgid "Normalized"
 msgstr "Dinormalkan"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1615
+#: src/disks/gduatasmartdialog.c:1616
 msgid "Threshold"
 msgstr "Ambang batas"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1627
+#: src/disks/gduatasmartdialog.c:1628
 msgid "Worst"
 msgstr "Terburuk"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1639
+#: src/disks/gduatasmartdialog.c:1640
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Jenis"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1651
+#: src/disks/gduatasmartdialog.c:1652
 msgid "Updates"
 msgstr "Pemutakhiran"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1663 src/disks/ui/disks.ui:355
+#: src/disks/gduatasmartdialog.c:1664 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Asesmen"
 
@@ -1259,41 +1261,37 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Galat membaca %lld bita dari lokasi %lld"
 
-#: src/disks/gduchangepassphrasedialog.c:120
+#: src/disks/gduchangepassphrasedialog.c:78
 msgid "The passphrases do not match"
 msgstr "Ketik frasa sandi tidak cocok"
 
-#: src/disks/gduchangepassphrasedialog.c:129
+#: src/disks/gduchangepassphrasedialog.c:87
 msgid "The passphrase matches the existing passphrase"
 msgstr "Frasa sandi cocok dengan frasa sandi yang ada"
 
-#: src/disks/gduchangepassphrasedialog.c:189
+#: src/disks/gduchangepassphrasedialog.c:107
 msgid "Error updating /etc/crypttab"
 msgstr "Galat memutakhirkan /etc/crypttab"
 
-#: src/disks/gduchangepassphrasedialog.c:208
+#: src/disks/gduchangepassphrasedialog.c:122
 msgid "Error changing passphrase"
 msgstr "Galat ketika mengubah pasfrasa"
 
-#: src/disks/gduchangepassphrasedialog.c:295 src/disks/gducrypttabdialog.c:408
+#: src/disks/gduchangepassphrasedialog.c:276 src/disks/gducrypttabdialog.c:410
 msgid "Error retrieving configuration data"
 msgstr "Gagal mendapatkan data konfigurasi"
 
-#: src/disks/gduchangepassphrasedialog.c:321
+#: src/disks/gduchangepassphrasedialog.c:304
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "Data konfigurasi /etc/crypttab salah"
 
-#: src/disks/gduchangepassphrasedialog.c:354
+#: src/disks/gduchangepassphrasedialog.c:333
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
 "Mengubah frasa sandi untuk perangkat ini, juga mengubah frasa sandi yang "
 "direferensikan oleh berkas <i>/etc/crypttab</i>"
-
-#: src/disks/gduchangepassphrasedialog.c:373
-msgid "The strength of the passphrase"
-msgstr "Kekuatan pasfrasa"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
@@ -1401,13 +1399,13 @@ msgid "Error allocating space for disk image file: "
 msgstr "Galat ketika mengalokasikan ruang bagi berkas citra diska: "
 
 #: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:324
+#: src/disks/gdunewdiskimagedialog.c:166
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Berkas dengan nama \"%s\" sudah ada. Apakah Anda ingin menimpanya?"
 
 #: src/disks/gducreatediskimagedialog.c:934
-#: src/disks/gdunewdiskimagedialog.c:327
+#: src/disks/gdunewdiskimagedialog.c:169
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1415,12 +1413,12 @@ msgstr ""
 "Berkas sudah ada di dalam \"%s\". Menimpanya akan mengganti semua isinya."
 
 #: src/disks/gducreatediskimagedialog.c:937
-#: src/disks/gdunewdiskimagedialog.c:330
+#: src/disks/gdunewdiskimagedialog.c:172
 msgid "_Replace"
 msgstr "_Timpa"
 
 #: src/disks/gducreatediskimagedialog.c:987
-#: src/disks/gdunewdiskimagedialog.c:247
+#: src/disks/gdunewdiskimagedialog.c:84
 msgid "Error opening file for writing"
 msgstr "Galat membuka berkas untuk ditulis"
 
@@ -1434,6 +1432,12 @@ msgstr "Menyalin perangkat ke citra diska"
 #: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Membuat Citra Diska"
+
+#: src/disks/gducreatefilesystempage.c:217
+#: src/disks/gducreatefilesystempage.c:229 src/disks/gducreateotherpage.c:90
+#, c-format
+msgid "The utility %s is missing."
+msgstr "Utilitas %s hilang."
 
 #: src/disks/gducreateformatdialog.c:175
 msgid "_Previous"
@@ -1479,44 +1483,39 @@ msgstr "Atur Kata Sandi"
 msgid "Confirm Details"
 msgstr "Konfirmasi Detail"
 
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:410
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:147
 msgid "_Format"
 msgstr "_Format"
 
-#: src/disks/gducreateotherpage.c:115
+#: src/disks/gducreateotherpage.c:16
 msgid "XFS — Linux Filesystem"
 msgstr "XFS — Sistem Berkas Linux"
 
-#: src/disks/gducreateotherpage.c:117
+#: src/disks/gducreateotherpage.c:17
 msgid "Linux Swap Partition"
 msgstr "Partisi Swap Linux"
 
-#: src/disks/gducreateotherpage.c:119
+#: src/disks/gducreateotherpage.c:18
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr "Btrfs — Sistem Berkas Linux salin-saat-tulis, untuk snapshot"
 
-#: src/disks/gducreateotherpage.c:121
+#: src/disks/gducreateotherpage.c:19
 msgid "F2FS — Flash Storage Linux Filesystem"
 msgstr "F2FS — Sistem Berkas Linux Penyimpanan Flash"
 
-#: src/disks/gducreateotherpage.c:123
+#: src/disks/gducreateotherpage.c:20
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
 "exFAT — Sistem Berkas Windows Penyimpanan Flash, digunakan pada kartu SDXC"
 
-#: src/disks/gducreateotherpage.c:125
+#: src/disks/gducreateotherpage.c:21
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgstr ""
 "UDF — Universal Disk Format, untuk perangkat lepasan pada banyak sistem"
 
-#: src/disks/gducreateotherpage.c:127
+#: src/disks/gducreateotherpage.c:22
 msgid "No Filesystem"
 msgstr "Tidak Ada Sistem Berkas"
-
-#: src/disks/gducreateotherpage.c:203
-#, c-format
-msgid "The utility %s is missing."
-msgstr "Utilitas %s hilang."
 
 #: src/disks/gducreatepartitionpage.c:320
 msgid ""
@@ -1531,31 +1530,31 @@ msgstr "Ini adalah partisi utama terakhir yang bisa dibuat."
 msgid "The passwords do not match"
 msgstr "Kata sandi tidak cocok"
 
-#: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
-msgid "Will be created"
-msgstr "Akan dibuat"
-
-#: src/disks/gducrypttabdialog.c:110 src/disks/gducrypttabdialog.c:135
-msgid "None"
-msgstr "Nihil"
-
-#: src/disks/gducrypttabdialog.c:137
-msgid "Will be deleted"
-msgstr "Akan dihapus"
-
-#: src/disks/gducrypttabdialog.c:263
+#: src/disks/gducrypttabdialog.c:86
 msgid "Error removing /etc/crypttab entry"
 msgstr "Galat menghapus entri /etc/crypttab"
 
-#: src/disks/gducrypttabdialog.c:347
+#: src/disks/gducrypttabdialog.c:164
 msgid "Error adding /etc/crypttab entry"
 msgstr "Galat menambahkan entri /etc/crypttab"
 
-#: src/disks/gducrypttabdialog.c:370
+#: src/disks/gducrypttabdialog.c:185
 msgid "Error updating /etc/crypttab entry"
 msgstr "Galat memutakhirkan entri /etc/crypttab"
 
-#: src/disks/gducrypttabdialog.c:493
+#: src/disks/gducrypttabdialog.c:242 src/disks/gducrypttabdialog.c:257
+msgid "Will be created"
+msgstr "Akan dibuat"
+
+#: src/disks/gducrypttabdialog.c:244 src/disks/gducrypttabdialog.c:264
+msgid "None"
+msgstr "Nihil"
+
+#: src/disks/gducrypttabdialog.c:266
+msgid "Will be deleted"
+msgstr "Akan dihapus"
+
+#: src/disks/gducrypttabdialog.c:346
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
@@ -1667,90 +1666,24 @@ msgstr "Hening (Lambat)"
 msgid "Loud (Fast)"
 msgstr "Berisik (Cepat)"
 
-#: src/disks/gdufilesystemdialog.c:86
-msgid "The label matches the existing label"
-msgstr "Label sesuai dengan label yang ada"
-
-#: src/disks/gdufilesystemdialog.c:108
+#: src/disks/gdufilesystemdialog.c:59
 msgid "Error setting label"
 msgstr "Galat ketika mengeset label"
 
-#. Translators: Used to convey that something takes at least
-#. * some specificed duration but may take longer. The %s is a
-#. * time duration e.g. "8 hours and 28 minutes"
-#.
-#: src/disks/gduformatdiskdialog.c:104
-#, c-format
-msgid "At least %s"
-msgstr "Tersisa %s"
+#: src/disks/gdufilesystemdialog.c:154
+msgid "The label matches the existing label"
+msgstr "Label sesuai dengan label yang ada"
 
-#. Translators: Used to convey that something takes
-#. * approximately some specificed duration. The %s is a time
-#. * duration e.g. "2 hours and 2 minutes"
-#.
-#: src/disks/gduformatdiskdialog.c:115
-#, c-format
-msgid "Approximately %s"
-msgstr "Kira-kira %s"
-
-#: src/disks/gduformatdiskdialog.c:150
-msgid "Don’t overwrite existing data"
-msgstr "Jangan timpa data yang ada"
-
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Quick"
-msgstr "Cepat"
-
-#: src/disks/gduformatdiskdialog.c:161
-msgid "Overwrite existing data with zeroes"
-msgstr "Timpa data yang ada dengan nol"
-
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Slow"
-msgstr "Lambat"
-
-#: src/disks/gduformatdiskdialog.c:194
-msgid "ATA Secure Erase"
-msgstr "Hapus Aman ATA"
-
-#: src/disks/gduformatdiskdialog.c:209
-msgid "ATA Enhanced Secure Erase"
-msgstr "Hapus Aman Ditingkatkan ATA"
-
-#: src/disks/gduformatdiskdialog.c:253
-msgid "Compatible with all systems and devices"
-msgstr "Cocok dengan semua sistem dan perangkat"
-
-#: src/disks/gduformatdiskdialog.c:254
-msgid "MBR / DOS"
-msgstr "MBR / DOS"
-
-#: src/disks/gduformatdiskdialog.c:264
-msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr "Cocok dengan sistem dan hard disk modern > 2TB"
-
-#: src/disks/gduformatdiskdialog.c:265
-msgid "GPT"
-msgstr "GPT"
-
-#: src/disks/gduformatdiskdialog.c:282
-msgid "No partitioning"
-msgstr "Tak ada pemartisian"
-
-#: src/disks/gduformatdiskdialog.c:283
-msgid "Empty"
-msgstr "Kosong"
-
-#: src/disks/gduformatdiskdialog.c:327
+#: src/disks/gduformatdiskdialog.c:52
 msgid "Error formatting disk"
 msgstr "Galat ketika memformat diska"
 
-#: src/disks/gduformatdiskdialog.c:384
+#: src/disks/gduformatdiskdialog.c:110
 msgid "Are you sure you want to format the disk?"
 msgstr "Format diska?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:388
+#: src/disks/gduformatdiskdialog.c:115
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1758,7 +1691,7 @@ msgstr ""
 "Semua data pada disk akan hilang tapi mungkin masih dapat dipulihkan oleh "
 "layanan pemulihan data"
 
-#: src/disks/gduformatdiskdialog.c:390
+#: src/disks/gduformatdiskdialog.c:118
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1770,7 +1703,7 @@ msgstr ""
 "yang salah"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:395
+#: src/disks/gduformatdiskdialog.c:125
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1778,7 +1711,7 @@ msgstr ""
 "Semua data pada disk akan ditimpa dan mungkin tak akan dapat dipulihkan oleh "
 "layanan pemulihan data"
 
-#: src/disks/gduformatdiskdialog.c:403
+#: src/disks/gduformatdiskdialog.c:134
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1794,6 +1727,72 @@ msgstr ""
 "harap baca artikel tentang <a href='https://ata.wiki.kernel.org/index.php/"
 "ATA_Secure_Erase'>Hapus Aman ATA</a> dan pastikan bahwa Anda memahami "
 "risikonya"
+
+#. Translators: Used to convey that something takes at least
+#. * some specificed duration but may take longer. The %s is a
+#. * time duration e.g. "8 hours and 28 minutes"
+#.
+#: src/disks/gduformatdiskdialog.c:238
+#, c-format
+msgid "At least %s"
+msgstr "Tersisa %s"
+
+#. Translators: Used to convey that something takes
+#. * approximately some specificed duration. The %s is a time
+#. * duration e.g. "2 hours and 2 minutes"
+#.
+#: src/disks/gduformatdiskdialog.c:248
+#, c-format
+msgid "Approximately %s"
+msgstr "Kira-kira %s"
+
+#: src/disks/gduformatdiskdialog.c:282
+msgid "Don’t overwrite existing data"
+msgstr "Jangan timpa data yang ada"
+
+#: src/disks/gduformatdiskdialog.c:283
+msgid "Quick"
+msgstr "Cepat"
+
+#: src/disks/gduformatdiskdialog.c:293
+msgid "Overwrite existing data with zeroes"
+msgstr "Timpa data yang ada dengan nol"
+
+#: src/disks/gduformatdiskdialog.c:294
+msgid "Slow"
+msgstr "Lambat"
+
+#: src/disks/gduformatdiskdialog.c:326
+msgid "ATA Secure Erase"
+msgstr "Hapus Aman ATA"
+
+#: src/disks/gduformatdiskdialog.c:341
+msgid "ATA Enhanced Secure Erase"
+msgstr "Hapus Aman Ditingkatkan ATA"
+
+#: src/disks/gduformatdiskdialog.c:384
+msgid "Compatible with all systems and devices"
+msgstr "Cocok dengan semua sistem dan perangkat"
+
+#: src/disks/gduformatdiskdialog.c:385
+msgid "MBR / DOS"
+msgstr "MBR / DOS"
+
+#: src/disks/gduformatdiskdialog.c:395
+msgid "Compatible with modern systems and hard disks > 2TB"
+msgstr "Cocok dengan sistem dan hard disk modern > 2TB"
+
+#: src/disks/gduformatdiskdialog.c:396
+msgid "GPT"
+msgstr "GPT"
+
+#: src/disks/gduformatdiskdialog.c:413
+msgid "No partitioning"
+msgstr "Tak ada pemartisian"
+
+#: src/disks/gduformatdiskdialog.c:414
+msgid "Empty"
+msgstr "Kosong"
 
 #: src/disks/gdufstabdialog.c:155
 #, c-format
@@ -1850,46 +1849,80 @@ msgstr "Galat menambahkan entri baru /etc/fstab"
 msgid "Error updating /etc/fstab entry"
 msgstr "Galat memutakhirkan entri /etc/fstab"
 
+#: src/disks/gdunewdiskimagedialog.c:99
+msgid "Error writing file"
+msgstr "Galat menulis berkas"
+
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:192
+#: src/disks/gdunewdiskimagedialog.c:196
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "(%s).img tanpa nama"
 
-#: src/disks/gdunewdiskimagedialog.c:267
-msgid "Error writing file"
-msgstr "Galat menulis berkas"
-
-#: src/disks/gdupartitiondialog.c:351
+#: src/disks/gdupartitiondialog.c:127
 msgid "Error setting partition type"
 msgstr "Galat ketika mengeset jenis partisi"
 
-#: src/disks/gdupartitiondialog.c:365
+#: src/disks/gdupartitiondialog.c:139
 msgid "Error setting partition name"
 msgstr "Galat ketika mengeset nama partisi"
 
-#: src/disks/gdupartitiondialog.c:379
+#: src/disks/gdupartitiondialog.c:151
 msgid "Error setting partition flags"
 msgstr "Galat ketika mengeset bendera partisi"
 
-#: src/disks/gdupasswordstrengthwidget.c:126
+#: src/disks/gdupartitiondialog.c:386
+msgid "The partition type represented as a 32-bit <i>GUID</i>"
+msgstr "Tipe partisi yang direpresentasikan sebagai <i>GUID</i> 32-bit"
+
+#: src/disks/gdupartitiondialog.c:387
+msgid "Legacy BIOS _Bootable"
+msgstr "Dapat di-boot _BIOS Legacy"
+
+#: src/disks/gdupartitiondialog.c:389 src/disks/ui/edit-partition-dialog.ui:94
+msgid ""
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
+msgstr ""
+"Ini ekuivalen dengan flag <i>bootable</i> Master Boot Record. Biasanya ini "
+"hanya dipakai bagi partisi GPT pada sistem MBR"
+
+#: src/disks/gdupartitiondialog.c:395
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr "Tipe partisi sebagai bilangan bulat tak bertanda 8-bit"
+
+#: src/disks/gdupartitiondialog.c:396
+msgid "_Bootable"
+msgstr "Dapat di-_Boot"
+
+#: src/disks/gdupartitiondialog.c:398
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the <i>active</i> partition"
+msgstr ""
+"Flag yang dipakai oleh bootloader platform untuk menentukan OS mesti dimuat "
+"dari mana. Kadang partisi dengan flag ini dikenal sebagai partisi <i>aktif</"
+"i>"
+
+#: src/disks/gdupasswordstrengthwidget.c:99
 msgctxt "Password strength"
 msgid "Weak"
 msgstr "Lemah"
 
-#: src/disks/gdupasswordstrengthwidget.c:127
+#: src/disks/gdupasswordstrengthwidget.c:100
 msgctxt "Password strength"
 msgid "Fair"
 msgstr "Sedang"
 
-#: src/disks/gdupasswordstrengthwidget.c:128
+#: src/disks/gdupasswordstrengthwidget.c:101
 msgctxt "Password strength"
 msgid "Good"
 msgstr "Bagus"
 
-#: src/disks/gdupasswordstrengthwidget.c:129
+#: src/disks/gdupasswordstrengthwidget.c:102
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Kuat"
@@ -2005,24 +2038,19 @@ msgstr "Semua data akan hilang"
 msgid "_Restore"
 msgstr "_Kembalikan"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
-msgid "Select a Keyfile"
-msgstr "Pilih Berkas Kunci"
-
-#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
-msgid "Error unlocking device"
-msgstr "Galat ketika membuka kunci perangkat"
-
-#: src/disks/gduunlockdialog.c:224
-#, c-format
-msgid "Invalid PIM"
-msgstr "PIM tidak valid"
-
-#: src/disks/gduunlockdialog.c:261
+#: src/disks/gduunlockdialog.c:85
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Frasa sandi enkripsi diambil dari ring kunci"
 
-#: src/disks/gduunlockdialog.c:305
+#: src/disks/gduunlockdialog.c:113
+msgid "Error unlocking device"
+msgstr "Galat ketika membuka kunci perangkat"
+
+#: src/disks/gduunlockdialog.c:253 src/disks/ui/unlock-device-dialog.ui:193
+msgid "Select a Keyfile"
+msgstr "Pilih Berkas Kunci"
+
+#: src/disks/gduunlockdialog.c:339
 msgid "Set options to unlock"
 msgstr "Atur opsi untuk membuka kunci"
 
@@ -2030,7 +2058,7 @@ msgstr "Atur opsi untuk membuka kunci"
 msgid "Volumes Grid"
 msgstr "Kisi Volume"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
 msgid "No Media"
 msgstr "Tidak Ada Media"
 
@@ -2104,7 +2132,7 @@ msgstr ""
 "ingin berkas yang mendasari diubah"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1673
+#: src/disks/gduwindow.c:1674
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Hanya Baca)"
@@ -2113,7 +2141,7 @@ msgstr "%s (Hanya Baca)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1711
+#: src/disks/gduwindow.c:1712
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2122,7 +2150,7 @@ msgstr "%s tersisa (%s/det)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1719
+#: src/disks/gduwindow.c:1720
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2133,7 +2161,7 @@ msgstr "%s tersisa"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1734
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s dari %s — %s"
@@ -2142,17 +2170,17 @@ msgstr "%s dari %s — %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1859
+#: src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
+#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
 msgid "Block device is empty"
 msgstr "Perangkat blok kosong"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1962
+#: src/disks/gduwindow.c:1963
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2161,11 +2189,11 @@ msgstr "Tak Dikenal (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2121
+#: src/disks/gduwindow.c:2122
 msgid "Connected to another seat"
 msgstr "Tersambung ke seat lain"
 
-#: src/disks/gduwindow.c:2266
+#: src/disks/gduwindow.c:2267
 msgid "Loop device is empty"
 msgstr "Perangkat loop kosong"
 
@@ -2175,61 +2203,61 @@ msgstr "Perangkat loop kosong"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2483
+#: src/disks/gduwindow.c:2484
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s bebas (%.1f%% penuh)"
 
-#: src/disks/gduwindow.c:2513
+#: src/disks/gduwindow.c:2514
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Tak Dikenal"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2551
+#: src/disks/gduwindow.c:2552
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Root Sistem Berkas"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2559
+#: src/disks/gduwindow.c:2560
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Dikaitkan pada %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2565
+#: src/disks/gduwindow.c:2566
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Tak Dikait"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2588
+#: src/disks/gduwindow.c:2589
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Aktif"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2594
+#: src/disks/gduwindow.c:2595
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Tak Aktif"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2609
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Tak terkunci"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2615
+#: src/disks/gduwindow.c:2616
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Terkunci"
 
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2630
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Partisi Diekstensi"
@@ -2238,45 +2266,45 @@ msgstr "Partisi Diekstensi"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2650
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2772
+#: src/disks/gduwindow.c:2773
 msgid "Unallocated Space"
 msgstr "Ruang yang Belum Dialokasikan"
 
-#: src/disks/gduwindow.c:2981
+#: src/disks/gduwindow.c:2982
 msgid "Error while repairing filesystem"
 msgstr "Galat ketika memperbaiki sistem berkas"
 
-#: src/disks/gduwindow.c:3008
+#: src/disks/gduwindow.c:3009
 msgid "Repair successful"
 msgstr "Perbaikan sukses"
 
-#: src/disks/gduwindow.c:3008
+#: src/disks/gduwindow.c:3009
 msgid "Repair failed"
 msgstr "Perbaikan gagal"
 
-#: src/disks/gduwindow.c:3011
+#: src/disks/gduwindow.c:3012
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Sistem berkas %s pada %s telah sukses diperbaiki."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3017
+#: src/disks/gduwindow.c:3018
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Sistem berkas %s pada %s tidak dapat diperbaiki."
 
-#: src/disks/gduwindow.c:3087
+#: src/disks/gduwindow.c:3088
 msgid "Confirm Repair"
 msgstr "Konfirmasi Perbaikan"
 
-#: src/disks/gduwindow.c:3090
+#: src/disks/gduwindow.c:3091
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2289,38 +2317,38 @@ msgstr ""
 "berkas yang hilang. Operasi mungkin memakan waktu lama, terutama jika "
 "partisi berisi banyak data."
 
-#: src/disks/gduwindow.c:3132
+#: src/disks/gduwindow.c:3133
 msgid "Error while taking filesystem ownership"
 msgstr "Galat saat mengambil kepemilikan sistem berkas"
 
-#: src/disks/gduwindow.c:3204
+#: src/disks/gduwindow.c:3205
 msgid "Error while checking filesystem"
 msgstr "Galat ketika memeriksa sistem berkas"
 
-#: src/disks/gduwindow.c:3231
+#: src/disks/gduwindow.c:3232
 msgid "Filesystem intact"
 msgstr "Sistem berkas utuh"
 
-#: src/disks/gduwindow.c:3231
+#: src/disks/gduwindow.c:3232
 msgid "Filesystem damaged"
 msgstr "Sistem berkas rusak"
 
-#: src/disks/gduwindow.c:3234
+#: src/disks/gduwindow.c:3235
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Sistem berkas %s pada %s tidak rusak."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3240
+#: src/disks/gduwindow.c:3241
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Sistem berkas %s pada %s perlu perbaikan."
 
-#: src/disks/gduwindow.c:3308
+#: src/disks/gduwindow.c:3309
 msgid "Confirm Check"
 msgstr "Konfirmasi Periksa"
 
-#: src/disks/gduwindow.c:3311
+#: src/disks/gduwindow.c:3312
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -2328,25 +2356,25 @@ msgstr ""
 "Pemeriksaan mungkin memakan waktu lama, terutama jika partisi tersebut "
 "berisi banyak data."
 
-#: src/disks/gduwindow.c:3588
+#: src/disks/gduwindow.c:3589
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Terjadi galat ketika mencoba menata kandar ke mode siaga"
 
-#: src/disks/gduwindow.c:3635
+#: src/disks/gduwindow.c:3636
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Terjadi galat ketika mencoba membangunkan kandar dari mode siaga"
 
-#: src/disks/gduwindow.c:3681
+#: src/disks/gduwindow.c:3682
 msgid "Error powering off drive"
 msgstr "Galat ketika mematikan daya perangkat"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3733
+#: src/disks/gduwindow.c:3734
 msgid "Are you sure you want to power off the drives?"
 msgstr "Apakah Anda yakin ingin mematikan daya kandar?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3735
+#: src/disks/gduwindow.c:3736
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -2354,47 +2382,47 @@ msgstr ""
 "Operasi ini akan menyiapkan sistem bagi kandar-kandar berikut untuk "
 "dimatikan dayanya dan dicabut."
 
-#: src/disks/gduwindow.c:3739 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3740 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Matikan"
 
-#: src/disks/gduwindow.c:3819
+#: src/disks/gduwindow.c:3820
 msgid "Error mounting filesystem"
 msgstr "Galat ketika mengaitkan sistem berkas"
 
-#: src/disks/gduwindow.c:3904
+#: src/disks/gduwindow.c:3905
 msgid "Error deleting partition"
 msgstr "Galat ketika menghapus partisi"
 
-#: src/disks/gduwindow.c:3941
+#: src/disks/gduwindow.c:3942
 msgid "Are you sure you want to delete the partition?"
 msgstr "Hapus partisi?"
 
-#: src/disks/gduwindow.c:3942
+#: src/disks/gduwindow.c:3943
 msgid "All data on the partition will be lost"
 msgstr "Semua data pada partisi akan hilang"
 
-#: src/disks/gduwindow.c:3943
+#: src/disks/gduwindow.c:3944
 msgid "_Delete"
 msgstr "_Hapus"
 
-#: src/disks/gduwindow.c:3974
+#: src/disks/gduwindow.c:3975
 msgid "Error ejecting media"
 msgstr "Galat ketika mengeluarkan media"
 
-#: src/disks/gduwindow.c:4057
+#: src/disks/gduwindow.c:4058
 msgid "Error starting swap"
 msgstr "Galat ketika menjalankan swap"
 
-#: src/disks/gduwindow.c:4094
+#: src/disks/gduwindow.c:4095
 msgid "Error stopping swap"
 msgstr "Galat ketika menghentikan swap"
 
-#: src/disks/gduwindow.c:4136
+#: src/disks/gduwindow.c:4137
 msgid "Error setting autoclear flag"
 msgstr "Galat saat menata flag otobersih"
 
-#: src/disks/gduwindow.c:4189 src/disks/gduwindow.c:4253
+#: src/disks/gduwindow.c:4190 src/disks/gduwindow.c:4254
 msgid "Error canceling job"
 msgstr "Galat ketika membatalkan tugas"
 
@@ -2435,7 +2463,7 @@ msgstr ""
 "Dirgita <dirgitadevina@yahoo.co.id>, 2010, 2012.\n"
 "Andika Triwidada <andika@gmail.com>, 2012, 2013, 2014, 2015.\n"
 "Sendy Aditya Suryana <sendzation@gmail.com>, 2015.\n"
-"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021."
+"Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021, 2023."
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
@@ -2582,55 +2610,57 @@ msgstr ""
 "Banyaknya cuplikan. Lebih banyak menghasilkan gambaran yang lebih akurat "
 "atas pola waktu akses tapi memerlukan lebih banyak waktu."
 
-#: src/disks/ui/change-passphrase-dialog.ui:7
+#: src/disks/ui/change-passphrase-dialog.ui:6
 msgid "Change Passphrase"
 msgstr "Ubah Frasa Sandi"
 
-#: src/disks/ui/change-passphrase-dialog.ui:32
-#: src/disks/ui/edit-dos-partition-dialog.ui:36
-#: src/disks/ui/edit-filesystem-dialog.ui:36
-#: src/disks/ui/edit-gpt-partition-dialog.ui:36
-#: src/disks/ui/edit-partition-dialog.ui:36
-msgid "C_hange"
-msgstr "_Ubah"
-
-#: src/disks/ui/change-passphrase-dialog.ui:68
+#: src/disks/ui/change-passphrase-dialog.ui:34
 msgid "Curr_ent Passphrase"
 msgstr "Pasfrasa S_ekarang"
 
-#: src/disks/ui/change-passphrase-dialog.ui:88
-#: src/disks/ui/change-passphrase-dialog.ui:89
+#: src/disks/ui/change-passphrase-dialog.ui:51
+#: src/disks/ui/change-passphrase-dialog.ui:52
 msgid "Enter current passphrase used to protect the data"
 msgstr "Ketik pasfrasa saat ini untuk melindungi data"
 
-#: src/disks/ui/change-passphrase-dialog.ui:105
-msgid "Sho_w Passphrases"
-msgstr "_Tampilkan Pasfrasa"
+#: src/disks/ui/change-passphrase-dialog.ui:67
+msgid "New _Passphrase"
+msgstr "_Pasfrasa Baru"
 
-#: src/disks/ui/change-passphrase-dialog.ui:111
-#: src/disks/ui/change-passphrase-dialog.ui:112
-#: src/disks/ui/create-password-page.ui:101
-msgid "Check this box to see the passphrases entered above"
-msgstr "Ceklis kotak ini untuk melihat pasfrasa yang diketikkan di atas"
+#: src/disks/ui/change-passphrase-dialog.ui:84
+#: src/disks/ui/change-passphrase-dialog.ui:85
+msgid "Enter new passphrase used to protect the data"
+msgstr "Ketik pasfrasa yang baru untuk melindungi data"
 
-#: src/disks/ui/change-passphrase-dialog.ui:146
-#: src/disks/ui/change-passphrase-dialog.ui:147
+#: src/disks/ui/change-passphrase-dialog.ui:101
+msgid "C_onfirm Passphrase"
+msgstr "K_onfirmasi Pasfrasa"
+
+#: src/disks/ui/change-passphrase-dialog.ui:118
+#: src/disks/ui/change-passphrase-dialog.ui:119
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Konfirmasi pasfrasa yang diketikkan di atas"
 
-#: src/disks/ui/change-passphrase-dialog.ui:167
-#: src/disks/ui/change-passphrase-dialog.ui:168
-msgid "Enter new passphrase used to protect the data"
-msgstr "Ketik pasfrasa yang baru untuk melindungi data"
+#: src/disks/ui/change-passphrase-dialog.ui:134
+msgid "The strength of the passphrase"
+msgstr "Kekuatan pasfrasa"
 
-#: src/disks/ui/change-passphrase-dialog.ui:188
-msgid "C_onfirm Passphrase"
-msgstr "K_onfirmasi Pasfrasa"
+#: src/disks/ui/change-passphrase-dialog.ui:144
+msgid "Sho_w Passphrases"
+msgstr "_Tampilkan Pasfrasa"
 
-#: src/disks/ui/change-passphrase-dialog.ui:208
-msgid "New _Passphrase"
-msgstr "_Pasfrasa Baru"
+#: src/disks/ui/change-passphrase-dialog.ui:148
+#: src/disks/ui/change-passphrase-dialog.ui:149
+#: src/disks/ui/create-password-page.ui:101
+msgid "Check this box to see the passphrases entered above"
+msgstr "Ceklis kotak ini untuk melihat pasfrasa yang diketikkan di atas"
+
+#: src/disks/ui/change-passphrase-dialog.ui:175
+#: src/disks/ui/edit-filesystem-dialog.ui:78
+#: src/disks/ui/edit-partition-dialog.ui:150
+msgid "C_hange"
+msgstr "_Ubah"
 
 #: src/disks/ui/create-confirm-page.ui:17
 msgid "Warning: all data on the volume will be lost"
@@ -2662,19 +2692,19 @@ msgid "Create Disk Image"
 msgstr "Buat Citra Diska"
 
 #: src/disks/ui/create-disk-image-dialog.ui:31
-#: src/disks/ui/edit-crypttab-dialog.ui:104
-#: src/disks/ui/edit-gpt-partition-dialog.ui:91
-#: src/disks/ui/new-disk-image-dialog.ui:48
+#: src/disks/ui/edit-crypttab-dialog.ui:128
+#: src/disks/ui/edit-partition-dialog.ui:52
+#: src/disks/ui/new-disk-image-dialog.ui:45
 msgid "_Name"
 msgstr "_Nama"
 
 #: src/disks/ui/create-disk-image-dialog.ui:48
-#: src/disks/ui/new-disk-image-dialog.ui:67
+#: src/disks/ui/new-disk-image-dialog.ui:63
 msgid "Save in _Folder"
 msgstr "Simpan pada _Folder"
 
 #: src/disks/ui/create-disk-image-dialog.ui:81
-#: src/disks/ui/new-disk-image-dialog.ui:123
+#: src/disks/ui/new-disk-image-dialog.ui:115
 msgid "Select a Folder"
 msgstr "Pilih Folder"
 
@@ -2703,7 +2733,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "Sebagai contoh: \"Berkas Angela\" atau \"Data Cadangan\"."
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:84
+#: src/disks/ui/format-disk-dialog.ui:58
 msgid "_Erase"
 msgstr "_Hapus"
 
@@ -2751,57 +2781,57 @@ msgid "The size of the partition to create"
 msgstr "Ukuran partisi yang akan dibuat"
 
 #: src/disks/ui/create-partition-page.ui:103
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
+#: src/disks/ui/new-disk-image-dialog.ui:129 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "bita"
 
 #: src/disks/ui/create-partition-page.ui:104
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
+#: src/disks/ui/new-disk-image-dialog.ui:130 src/disks/ui/resize-dialog.ui:120
 msgid "kB"
 msgstr "kB"
 
 #: src/disks/ui/create-partition-page.ui:105
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
+#: src/disks/ui/new-disk-image-dialog.ui:131 src/disks/ui/resize-dialog.ui:121
 msgid "MB"
 msgstr "MB"
 
 #: src/disks/ui/create-partition-page.ui:106
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
+#: src/disks/ui/new-disk-image-dialog.ui:132 src/disks/ui/resize-dialog.ui:122
 msgid "GB"
 msgstr "GB"
 
 #: src/disks/ui/create-partition-page.ui:107
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
+#: src/disks/ui/new-disk-image-dialog.ui:133 src/disks/ui/resize-dialog.ui:123
 msgid "TB"
 msgstr "TB"
 
 #: src/disks/ui/create-partition-page.ui:108
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
+#: src/disks/ui/new-disk-image-dialog.ui:134 src/disks/ui/resize-dialog.ui:124
 msgid "PB"
 msgstr "PB"
 
 #: src/disks/ui/create-partition-page.ui:109
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
+#: src/disks/ui/new-disk-image-dialog.ui:135 src/disks/ui/resize-dialog.ui:125
 msgid "KiB"
 msgstr "KiB"
 
 #: src/disks/ui/create-partition-page.ui:110
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
+#: src/disks/ui/new-disk-image-dialog.ui:136 src/disks/ui/resize-dialog.ui:126
 msgid "MiB"
 msgstr "MiB"
 
 #: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/new-disk-image-dialog.ui:137 src/disks/ui/resize-dialog.ui:127
 msgid "GiB"
 msgstr "GiB"
 
 #: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/new-disk-image-dialog.ui:138 src/disks/ui/resize-dialog.ui:128
 msgid "TiB"
 msgstr "TiB"
 
 #: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/new-disk-image-dialog.ui:139 src/disks/ui/resize-dialog.ui:129
 msgid "PiB"
 msgstr "PiB"
 
@@ -3117,15 +3147,15 @@ msgstr "S_iaga Sekarang"
 msgid "_Wake-Up from Standby"
 msgstr "Ban_gun dari Siaga"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:11
+#: src/disks/ui/edit-crypttab-dialog.ui:9
 msgid "Encryption Options"
 msgstr "Opsi Enkripsi"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
+#: src/disks/ui/edit-crypttab-dialog.ui:36 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
 msgstr "Sesi P_engguna Bawaan"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:86
+#: src/disks/ui/edit-crypttab-dialog.ui:48
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3135,9 +3165,34 @@ msgstr ""
 "sandi bagi perangkat. Opsi berkaitan dengan entri dalam berkas <b>/etc/"
 "crypttab</b>"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:124
+#: src/disks/ui/edit-crypttab-dialog.ui:68
 msgid "Opt_ions"
 msgstr "Ops_i"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:88
+msgid "_Unlock at system startup"
+msgstr "B_uka kunci saat awal mula sistem"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:89
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
+msgstr ""
+"Bila dicontreng, perangkat akan tak terkunci saat awal mula sistem [!noauto]"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:98
+msgid "Require additional authori_zation to unlock"
+msgstr "Perlu _otorisasi tambahan untuk buka kunci"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:99
+msgid ""
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
+msgstr ""
+"Bila dicontreng, otorisasi tambahan diperlukan untuk membuka kunci perangkat "
+"[x-udisks-auth]"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:114
+msgid "Options to use when unlocking the device"
+msgstr "Opsi yang dipakai saat membuka kunci perangkat"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:143
 msgid ""
@@ -3147,20 +3202,12 @@ msgstr ""
 "Nama untuk dipakai bagi perangkat yang tak terkunci — perangkat disiapkan "
 "sebagai nama yang diawali dengan <b>/dev/mapper</b>/"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:160
-msgid "Options to use when unlocking the device"
-msgstr "Opsi yang dipakai saat membuka kunci perangkat"
+#: src/disks/ui/edit-crypttab-dialog.ui:157
+#: src/disks/ui/unlock-device-dialog.ui:46
+msgid "_Passphrase"
+msgstr "_Frasa sandi"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:177
-msgid "Passphrase File"
-msgstr "Berkas Frasa Sandi"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:207
-#: src/disks/ui/unlock-device-dialog.ui:87
-msgid "Sho_w passphrase"
-msgstr "_Tampilkan frasa sandi"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:229
+#: src/disks/ui/edit-crypttab-dialog.ui:172
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
@@ -3168,72 +3215,29 @@ msgstr ""
 "Frasa sandi perangkat atau kosong untuk meminta dari pengguna ketika "
 "menyiapkan perangkat"
 
+#: src/disks/ui/edit-crypttab-dialog.ui:186
+#: src/disks/ui/unlock-device-dialog.ui:78
+msgid "Sho_w passphrase"
+msgstr "_Tampilkan frasa sandi"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:200
+msgid "Passphrase File"
+msgstr "Berkas Frasa Sandi"
+
 #: src/disks/ui/edit-crypttab-dialog.ui:246
-#: src/disks/ui/unlock-device-dialog.ui:53
-msgid "_Passphrase"
-msgstr "_Frasa sandi"
+msgid "_OK"
+msgstr "_Oke"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:268
-msgid "_Unlock at system startup"
-msgstr "B_uka kunci saat awal mula sistem"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:274
-msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr ""
-"Bila dicontreng, perangkat akan tak terkunci saat awal mula sistem [!noauto]"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:289
-msgid "Require additional authori_zation to unlock"
-msgstr "Perlu _otorisasi tambahan untuk buka kunci"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:295
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-"Bila dicontreng, otorisasi tambahan diperlukan untuk membuka kunci perangkat "
-"[x-udisks-auth]"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:7
-#: src/disks/ui/edit-gpt-partition-dialog.ui:8
-#: src/disks/ui/edit-partition-dialog.ui:7
-msgid "Edit Partition"
-msgstr "Sunting Partisi"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:60
-#: src/disks/ui/edit-gpt-partition-dialog.ui:59
-#: src/disks/ui/edit-partition-dialog.ui:59
-msgid "_Type"
-msgstr "_Jenis"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Tipe partisi sebagai bilangan bulat tak bertanda 8-bit"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:87
-msgid "_Bootable"
-msgstr "Dapat di-_Boot"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"Flag yang dipakai oleh bootloader platform untuk menentukan OS mesti dimuat "
-"dari mana. Kadang partisi dengan flag ini dikenal sebagai partisi <i>aktif</"
-"i>"
-
-#: src/disks/ui/edit-filesystem-dialog.ui:7
+#: src/disks/ui/edit-filesystem-dialog.ui:5
 msgid "Change Filesystem Label"
 msgstr "Ubah Label Sistem Berkas"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:56
+#: src/disks/ui/edit-filesystem-dialog.ui:27
 msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr ""
 "Sistem berkas ini akan secara otomatis dilepas sebelum perubahan apapun."
 
-#: src/disks/ui/edit-filesystem-dialog.ui:71
+#: src/disks/ui/edit-filesystem-dialog.ui:41
 msgid "_Label"
 msgstr "_Label"
 
@@ -3362,11 +3366,15 @@ msgstr "Ops_i Pengaitan"
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr "Opsi pengaitan disimpan pada berkas <b>/etc/fstab</b>"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:77
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Tipe partisi yang direpresentasikan sebagai <i>GUID</i> 32-bit"
+#: src/disks/ui/edit-partition-dialog.ui:6
+msgid "Edit Partition"
+msgstr "Sunting Partisi"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:109
+#: src/disks/ui/edit-partition-dialog.ui:27
+msgid "_Type"
+msgstr "_Jenis"
+
+#: src/disks/ui/edit-partition-dialog.ui:66
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want "
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
@@ -3376,11 +3384,15 @@ msgstr ""
 "ingin mengacu ke perangkat melalui symlink dalam direktori <b>/dev/disk/by-"
 "partlabel</b>"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:122
+#: src/disks/ui/edit-partition-dialog.ui:80
+msgid "Flags"
+msgstr "Flag"
+
+#: src/disks/ui/edit-partition-dialog.ui:106
 msgid "_System Partition"
 msgstr "Partisi _Sistem"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:127
+#: src/disks/ui/edit-partition-dialog.ui:108
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
@@ -3390,27 +3402,11 @@ msgstr ""
 "Platform berfungsi. Perlu penanganan khusus agar tak menghapus atau menimpa "
 "isinya"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:141
-msgid "Legacy BIOS _Bootable"
-msgstr "Dapat di-boot _BIOS Legacy"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:146
-msgid ""
-"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-"normally only used for GPT partitions on MBR systems"
-msgstr ""
-"Ini ekuivalen dengan flag <i>bootable</i> Master Boot Record. Biasanya ini "
-"hanya dipakai bagi partisi GPT pada sistem MBR"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:163
-msgid "Flags"
-msgstr "Flag"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
+#: src/disks/ui/edit-partition-dialog.ui:120
 msgid "Hide from _Firmware"
 msgstr "Sembunyikan dari _Firmware"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:184
+#: src/disks/ui/edit-partition-dialog.ui:121
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
@@ -3430,31 +3426,31 @@ msgstr "_Hapus…"
 msgid "Erase _Type"
 msgstr "_Tipe Penghapusan"
 
-#: src/disks/ui/format-disk-dialog.ui:6
+#: src/disks/ui/format-disk-dialog.ui:5
 msgid "Format Disk"
 msgstr "Format Diska"
 
-#: src/disks/ui/format-disk-dialog.ui:33
-msgid "_Format…"
-msgstr "_Format…"
-
-#: src/disks/ui/format-disk-dialog.ui:67
+#: src/disks/ui/format-disk-dialog.ui:42
 msgid "_Partitioning"
 msgstr "_Pemartisian"
 
-#: src/disks/ui/new-disk-image-dialog.ui:8
+#: src/disks/ui/format-disk-dialog.ui:97
+msgid "_Format…"
+msgstr "_Format…"
+
+#: src/disks/ui/new-disk-image-dialog.ui:7
 msgid "New Disk Image"
 msgstr "Citra Diska Baru"
 
-#: src/disks/ui/new-disk-image-dialog.ui:29
+#: src/disks/ui/new-disk-image-dialog.ui:27
 msgid "Image _Size"
 msgstr "Ukuran _Citra"
 
-#: src/disks/ui/new-disk-image-dialog.ui:86
+#: src/disks/ui/new-disk-image-dialog.ui:80
 msgid "The size of the image to create"
 msgstr "Ukuran citra yang akan dibuat"
 
-#: src/disks/ui/new-disk-image-dialog.ui:177
+#: src/disks/ui/new-disk-image-dialog.ui:172
 msgid "Attach new _Image…"
 msgstr "Cantolkan _Citra baru…"
 
@@ -3515,92 +3511,92 @@ msgstr "Ukuran Citra"
 msgid "_Start Restoring…"
 msgstr "Mulai _Pengembalian…"
 
-#: src/disks/ui/shortcuts.ui:13
+#: src/disks/ui/shortcuts.ui:12
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Umum"
 
-#: src/disks/ui/shortcuts.ui:17
+#: src/disks/ui/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Help"
 msgstr "Bantuan"
 
-#: src/disks/ui/shortcuts.ui:24
+#: src/disks/ui/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Open the application menu"
 msgstr "Buka menu aplikasi"
 
-#: src/disks/ui/shortcuts.ui:31
+#: src/disks/ui/shortcuts.ui:27
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Pintasan papan tik"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:33
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Keluar"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:41
 msgctxt "shortcut window"
 msgid "Disks"
 msgstr "Diska"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:44
 msgctxt "shortcut window"
 msgid "Create a new empty disk image"
 msgstr "Buat citra diska kosong baru"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:50
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
 msgstr "Kaitkan citra diska yang ada"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Unselect current disk"
 msgstr "Batal pilih diska saat ini"
 
-#: src/disks/ui/shortcuts.ui:74
+#: src/disks/ui/shortcuts.ui:64
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Kandar"
 
-#: src/disks/ui/shortcuts.ui:78
+#: src/disks/ui/shortcuts.ui:67
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Buka menu kandar"
 
-#: src/disks/ui/shortcuts.ui:85
+#: src/disks/ui/shortcuts.ui:73
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Format kandar"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Pulihkan citra diska"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "Data SMART"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:91
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Pengaturan kandar"
 
-#: src/disks/ui/shortcuts.ui:115
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Partisi"
 
-#: src/disks/ui/shortcuts.ui:119
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Buka menu volume"
 
-#: src/disks/ui/shortcuts.ui:126
+#: src/disks/ui/shortcuts.ui:108
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Format volume yang dipilih"
@@ -3708,28 +3704,28 @@ msgstr ""
 msgid "Enable _recursive mode"
 msgstr "Aktifkan mode _rekursif"
 
-#: src/disks/ui/unlock-device-dialog.ui:8
+#: src/disks/ui/unlock-device-dialog.ui:6
 msgid "Enter passphrase to unlock"
 msgstr "Ketik frasa sandi untuk membuka kunci"
 
-#: src/disks/ui/unlock-device-dialog.ui:36
+#: src/disks/ui/unlock-device-dialog.ui:31
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr "Volume ini mungkin berupa volume VeraCrypt karena berisi data acak."
 
-#: src/disks/ui/unlock-device-dialog.ui:69
-#: src/disks/ui/unlock-device-dialog.ui:176
+#: src/disks/ui/unlock-device-dialog.ui:62
+#: src/disks/ui/unlock-device-dialog.ui:160
 msgid "If specified"
 msgstr "Jika ditentukan"
 
-#: src/disks/ui/unlock-device-dialog.ui:107
+#: src/disks/ui/unlock-device-dialog.ui:95
 msgid "Volume type"
 msgstr "Jenis volume"
 
-#: src/disks/ui/unlock-device-dialog.ui:126
+#: src/disks/ui/unlock-device-dialog.ui:116
 msgid "_Hidden"
 msgstr "Tersem_bunyi"
 
-#: src/disks/ui/unlock-device-dialog.ui:127
+#: src/disks/ui/unlock-device-dialog.ui:117
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
@@ -3737,19 +3733,19 @@ msgstr ""
 "Alih-alih membuka kunci volume ini, coba buka volume sekunder yang "
 "tersembunyi di dalam."
 
-#: src/disks/ui/unlock-device-dialog.ui:139
+#: src/disks/ui/unlock-device-dialog.ui:127
 msgid "Windows _system"
 msgstr "_Sistem Windows"
 
-#: src/disks/ui/unlock-device-dialog.ui:140
+#: src/disks/ui/unlock-device-dialog.ui:128
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Buka kunci partisi atau kandar sistem Windows yang dienkripsi."
 
-#: src/disks/ui/unlock-device-dialog.ui:161
+#: src/disks/ui/unlock-device-dialog.ui:144
 msgid "PI_M"
 msgstr "PI_M"
 
-#: src/disks/ui/unlock-device-dialog.ui:177
+#: src/disks/ui/unlock-device-dialog.ui:161
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
@@ -3757,15 +3753,15 @@ msgstr ""
 "Jika diatur, nilai numerik VeraCrypt PIM (Personal Iterations Multiplier) "
 "akan digunakan untuk volume ini."
 
-#: src/disks/ui/unlock-device-dialog.ui:194
+#: src/disks/ui/unlock-device-dialog.ui:174
 msgid "_Keyfiles"
 msgstr "Berkas _kunci"
 
-#: src/disks/ui/unlock-device-dialog.ui:211
+#: src/disks/ui/unlock-device-dialog.ui:195
 msgid "Select a keyfile to unlock this volume"
 msgstr "Pilih berkas kunci untuk membuka kunci volume ini"
 
-#: src/disks/ui/unlock-device-dialog.ui:240
+#: src/disks/ui/unlock-device-dialog.ui:226
 msgid "_Unlock"
 msgstr "B_uka Kunci"
 
@@ -3942,15 +3938,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Perangkat Yang Terpengaruh"
 
-#: src/libgdu/gduutils.c:1426
+#: src/libgdu/gduutils.c:1443
 msgid "Error unmounting filesystem"
 msgstr "Galat ketika melepas kaitan sistem berkas"
 
-#: src/libgdu/gduutils.c:1458
+#: src/libgdu/gduutils.c:1475
 msgid "Error locking device"
 msgstr "Galat ketika mengunci perangkat"
 
-#: src/libgdu/gduutils.c:1479
+#: src/libgdu/gduutils.c:1496
 msgid "Error disabling autoclear for loop device"
 msgstr "Galat menonaktifkan otobersih untuk perangkat loop"
 
@@ -3971,6 +3967,12 @@ msgstr "Suatu hard disk mungkin segera gagal."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Periksa"
+
+#~ msgid "An easy way to manage your disks"
+#~ msgstr "Suatu cara mudah untuk mengelola disk Anda"
+
+#~ msgid "Invalid PIM"
+#~ msgstr "PIM tidak valid"
 
 #~ msgid "GNOME Disks"
 #~ msgstr "GNOME Diska"

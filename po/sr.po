@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disc-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2022-03-04 09:34+0000\n"
-"PO-Revision-Date: 2022-03-11 17:31+0100\n"
+"POT-Creation-Date: 2023-02-12 18:41+0000\n"
+"PO-Revision-Date: 2023-02-18 07:22+0100\n"
 "Last-Translator: Марко М. Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: српски <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
 msgid "Disk Image Mounter"
@@ -128,11 +128,17 @@ msgstr "Изаберите одраз(е) диска за качење"
 
 #: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
+#: src/disks/gdunewdiskimagedialog.c:171 src/disks/gduwindow.c:818
 #: src/disks/ui/benchmark-dialog.ui:287
+#: src/disks/ui/change-passphrase-dialog.ui:169
 #: src/disks/ui/create-disk-image-dialog.ui:123
-#: src/disks/ui/format-disk-dialog.ui:24
+#: src/disks/ui/edit-crypttab-dialog.ui:236
+#: src/disks/ui/edit-filesystem-dialog.ui:67
+#: src/disks/ui/edit-partition-dialog.ui:142
+#: src/disks/ui/format-disk-dialog.ui:90
+#: src/disks/ui/new-disk-image-dialog.ui:161
 #: src/disks/ui/restore-disk-image-dialog.ui:184
+#: src/disks/ui/unlock-device-dialog.ui:218
 msgid "_Cancel"
 msgstr "_Откажи"
 
@@ -892,7 +898,7 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1127
+#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1128
 msgid "N/A"
 msgstr "Недоступно"
 
@@ -1025,91 +1031,91 @@ msgstr "Диск је у реду"
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1115
+#: src/disks/gduatasmartdialog.c:1116
 msgid "Pre-Fail"
 msgstr "пред кваром"
 
-#: src/disks/gduatasmartdialog.c:1117
+#: src/disks/gduatasmartdialog.c:1118
 msgid "Old-Age"
 msgstr "остарио"
 
-#: src/disks/gduatasmartdialog.c:1120
+#: src/disks/gduatasmartdialog.c:1121
 msgid "Online"
 msgstr "на вези"
 
-#: src/disks/gduatasmartdialog.c:1122
+#: src/disks/gduatasmartdialog.c:1123
 msgid "Offline"
 msgstr "ван везе"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1231
+#: src/disks/gduatasmartdialog.c:1232
 msgid "Threshold exceeded"
 msgstr "Праг је премашен"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1236
+#: src/disks/gduatasmartdialog.c:1237
 msgid "Threshold not exceeded"
 msgstr "Праг није премашен"
 
-#: src/disks/gduatasmartdialog.c:1312
+#: src/disks/gduatasmartdialog.c:1313
 msgid "Error refreshing SMART data"
 msgstr "Грешка освежавања СМАРТ података"
 
-#: src/disks/gduatasmartdialog.c:1344
+#: src/disks/gduatasmartdialog.c:1345
 msgid "Error aborting SMART self-test"
 msgstr "Грешка прекидања СМАРТ теста"
 
-#: src/disks/gduatasmartdialog.c:1363
+#: src/disks/gduatasmartdialog.c:1364
 msgid "Error starting SMART self-test"
 msgstr "Грешка покретања СМАРТ теста"
 
-#: src/disks/gduatasmartdialog.c:1445
+#: src/disks/gduatasmartdialog.c:1446
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Дошло је до грешке када сам покушао да изменим да ли је укључен СМАРТ"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1565
+#: src/disks/gduatasmartdialog.c:1566
 msgid "ID"
 msgstr "ИБ"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1577
+#: src/disks/gduatasmartdialog.c:1578
 msgid "Attribute"
 msgstr "Особина"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1591
+#: src/disks/gduatasmartdialog.c:1592
 msgid "Value"
 msgstr "Вредност"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1603
+#: src/disks/gduatasmartdialog.c:1604
 msgid "Normalized"
 msgstr "Нормализован"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1615
+#: src/disks/gduatasmartdialog.c:1616
 msgid "Threshold"
 msgstr "Осетљивост"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1627
+#: src/disks/gduatasmartdialog.c:1628
 msgid "Worst"
 msgstr "Најгоре"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1639
+#: src/disks/gduatasmartdialog.c:1640
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Врста"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1651
+#: src/disks/gduatasmartdialog.c:1652
 msgid "Updates"
 msgstr "Ажурирања"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1663 src/disks/ui/disks.ui:355
+#: src/disks/gduatasmartdialog.c:1664 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Процена"
 
@@ -1267,41 +1273,37 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Грешка читања %lld бајта из помераја %lld"
 
-#: src/disks/gduchangepassphrasedialog.c:120
+#: src/disks/gduchangepassphrasedialog.c:78
 msgid "The passphrases do not match"
 msgstr "Лозинке се не подударају"
 
-#: src/disks/gduchangepassphrasedialog.c:129
+#: src/disks/gduchangepassphrasedialog.c:87
 msgid "The passphrase matches the existing passphrase"
 msgstr "Лозинка се поклапа са постојећом лозинком"
 
-#: src/disks/gduchangepassphrasedialog.c:189
+#: src/disks/gduchangepassphrasedialog.c:107
 msgid "Error updating /etc/crypttab"
 msgstr "Грешка приликом ажурирања „/etc/crypttab“"
 
-#: src/disks/gduchangepassphrasedialog.c:208
+#: src/disks/gduchangepassphrasedialog.c:122
 msgid "Error changing passphrase"
 msgstr "Грешка приликом измене фразе"
 
-#: src/disks/gduchangepassphrasedialog.c:295 src/disks/gducrypttabdialog.c:408
+#: src/disks/gduchangepassphrasedialog.c:276 src/disks/gducrypttabdialog.c:410
 msgid "Error retrieving configuration data"
 msgstr "Грешка приликом довлачења података подешавања"
 
-#: src/disks/gduchangepassphrasedialog.c:321
+#: src/disks/gduchangepassphrasedialog.c:304
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "Подаци подешавања „/etc/crypttab“ су лоши"
 
-#: src/disks/gduchangepassphrasedialog.c:354
+#: src/disks/gduchangepassphrasedialog.c:333
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
 "Измена фразе за откључавање, за овај уређај ће такође ажурирати фразу на "
 "коју указује датотека <i>/etc/crypttab</i>"
-
-#: src/disks/gduchangepassphrasedialog.c:373
-msgid "The strength of the passphrase"
-msgstr "Јачина фразе"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
@@ -1409,13 +1411,13 @@ msgid "Error allocating space for disk image file: "
 msgstr "Грешка додељивања простора за датотеку одраза диска: "
 
 #: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:324
+#: src/disks/gdunewdiskimagedialog.c:166
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Датотека под називом „%s“ већ постоји.  Да ли желите да је замените?"
 
 #: src/disks/gducreatediskimagedialog.c:934
-#: src/disks/gdunewdiskimagedialog.c:327
+#: src/disks/gdunewdiskimagedialog.c:169
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
@@ -1423,12 +1425,12 @@ msgstr ""
 "Датотека већ постоји у „%s“.  Уколико је замените преписаћете њен садржај."
 
 #: src/disks/gducreatediskimagedialog.c:937
-#: src/disks/gdunewdiskimagedialog.c:330
+#: src/disks/gdunewdiskimagedialog.c:172
 msgid "_Replace"
 msgstr "_Замени"
 
 #: src/disks/gducreatediskimagedialog.c:987
-#: src/disks/gdunewdiskimagedialog.c:247
+#: src/disks/gdunewdiskimagedialog.c:84
 msgid "Error opening file for writing"
 msgstr "Грешка приликом отварања датотеке за писање"
 
@@ -1442,6 +1444,12 @@ msgstr "Умножавам податке на одраз диска"
 #: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Стварам одраз диска"
+
+#: src/disks/gducreatefilesystempage.c:217
+#: src/disks/gducreatefilesystempage.c:229 src/disks/gducreateotherpage.c:90
+#, c-format
+msgid "The utility %s is missing."
+msgstr "Алатка %s недостаје."
 
 #: src/disks/gducreateformatdialog.c:175
 msgid "_Previous"
@@ -1487,46 +1495,41 @@ msgstr "Подеси лозинку"
 msgid "Confirm Details"
 msgstr "Потврди детаље"
 
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:410
+#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:147
 msgid "_Format"
 msgstr "_Форматирај"
 
-#: src/disks/gducreateotherpage.c:115
+#: src/disks/gducreateotherpage.c:16
 msgid "XFS — Linux Filesystem"
 msgstr "XFS — Линуксов систем датотека"
 
-#: src/disks/gducreateotherpage.c:117
+#: src/disks/gducreateotherpage.c:17
 msgid "Linux Swap Partition"
 msgstr "Линукс разменска партиција"
 
-#: src/disks/gducreateotherpage.c:119
+#: src/disks/gducreateotherpage.c:18
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
 "Бтрфс — Линуксов систем датотека који копира при писању, за снимке стања"
 
-#: src/disks/gducreateotherpage.c:121
+#: src/disks/gducreateotherpage.c:19
 msgid "F2FS — Flash Storage Linux Filesystem"
 msgstr "F2FS — Линуксов систем датотека за флеш меморију"
 
-#: src/disks/gducreateotherpage.c:123
+#: src/disks/gducreateotherpage.c:20
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
 "exFAT — Виндоузов систем датотека за флеш меморију, користи се за SDXC "
 "картице"
 
-#: src/disks/gducreateotherpage.c:125
+#: src/disks/gducreateotherpage.c:21
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgstr ""
 "UDF — Унверзални формат диска, за преносиве уређаје на многим системима"
 
-#: src/disks/gducreateotherpage.c:127
+#: src/disks/gducreateotherpage.c:22
 msgid "No Filesystem"
 msgstr "Без система датотека"
-
-#: src/disks/gducreateotherpage.c:203
-#, c-format
-msgid "The utility %s is missing."
-msgstr "Алатка %s недостаје."
 
 #: src/disks/gducreatepartitionpage.c:320
 msgid ""
@@ -1542,31 +1545,31 @@ msgstr "Ово је последња примарна партиција кој�
 msgid "The passwords do not match"
 msgstr "Лозинке се не подударају"
 
-#: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
-msgid "Will be created"
-msgstr "Биће направљена"
-
-#: src/disks/gducrypttabdialog.c:110 src/disks/gducrypttabdialog.c:135
-msgid "None"
-msgstr "Ништа"
-
-#: src/disks/gducrypttabdialog.c:137
-msgid "Will be deleted"
-msgstr "Биће обрисана"
-
-#: src/disks/gducrypttabdialog.c:263
+#: src/disks/gducrypttabdialog.c:86
 msgid "Error removing /etc/crypttab entry"
 msgstr "Грешка приликом уклањања „/etc/crypttab“ уноса"
 
-#: src/disks/gducrypttabdialog.c:347
+#: src/disks/gducrypttabdialog.c:164
 msgid "Error adding /etc/crypttab entry"
 msgstr "Грешка приликом додавања „/etc/crypttab“ уноса"
 
-#: src/disks/gducrypttabdialog.c:370
+#: src/disks/gducrypttabdialog.c:185
 msgid "Error updating /etc/crypttab entry"
 msgstr "Грешка приликом ажурирања „/etc/crypttab“ уноса"
 
-#: src/disks/gducrypttabdialog.c:493
+#: src/disks/gducrypttabdialog.c:242 src/disks/gducrypttabdialog.c:257
+msgid "Will be created"
+msgstr "Биће направљена"
+
+#: src/disks/gducrypttabdialog.c:244 src/disks/gducrypttabdialog.c:264
+msgid "None"
+msgstr "Ништа"
+
+#: src/disks/gducrypttabdialog.c:266
+msgid "Will be deleted"
+msgstr "Биће обрисана"
+
+#: src/disks/gducrypttabdialog.c:346
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
@@ -1679,90 +1682,24 @@ msgstr "Тихо (спорије)"
 msgid "Loud (Fast)"
 msgstr "Ниже (брже)"
 
-#: src/disks/gdufilesystemdialog.c:86
-msgid "The label matches the existing label"
-msgstr "Натпис одговара постојећем натпису"
-
-#: src/disks/gdufilesystemdialog.c:108
+#: src/disks/gdufilesystemdialog.c:59
 msgid "Error setting label"
 msgstr "Грешка подешавања натписа"
 
-#. Translators: Used to convey that something takes at least
-#. * some specificed duration but may take longer. The %s is a
-#. * time duration e.g. "8 hours and 28 minutes"
-#.
-#: src/disks/gduformatdiskdialog.c:104
-#, c-format
-msgid "At least %s"
-msgstr "Најмање %s"
+#: src/disks/gdufilesystemdialog.c:154
+msgid "The label matches the existing label"
+msgstr "Натпис одговара постојећем натпису"
 
-#. Translators: Used to convey that something takes
-#. * approximately some specificed duration. The %s is a time
-#. * duration e.g. "2 hours and 2 minutes"
-#.
-#: src/disks/gduformatdiskdialog.c:115
-#, c-format
-msgid "Approximately %s"
-msgstr "Приближно %s"
-
-#: src/disks/gduformatdiskdialog.c:150
-msgid "Don’t overwrite existing data"
-msgstr "Не преписује постојеће податке"
-
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Quick"
-msgstr "Брзо"
-
-#: src/disks/gduformatdiskdialog.c:161
-msgid "Overwrite existing data with zeroes"
-msgstr "Преписује постојеће податке нулама"
-
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Slow"
-msgstr "Споро"
-
-#: src/disks/gduformatdiskdialog.c:194
-msgid "ATA Secure Erase"
-msgstr "Безбедно АТА брисање"
-
-#: src/disks/gduformatdiskdialog.c:209
-msgid "ATA Enhanced Secure Erase"
-msgstr "Побољшано безбедно АТА брисање"
-
-#: src/disks/gduformatdiskdialog.c:253
-msgid "Compatible with all systems and devices"
-msgstr "Подржан на свим системима и уређајима"
-
-#: src/disks/gduformatdiskdialog.c:254
-msgid "MBR / DOS"
-msgstr "МБР / ДОС"
-
-#: src/disks/gduformatdiskdialog.c:264
-msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr "Подржан на савременим системима и чврстим дисковима > 2TB"
-
-#: src/disks/gduformatdiskdialog.c:265
-msgid "GPT"
-msgstr "ГПТ"
-
-#: src/disks/gduformatdiskdialog.c:282
-msgid "No partitioning"
-msgstr "Без поделе диска"
-
-#: src/disks/gduformatdiskdialog.c:283
-msgid "Empty"
-msgstr "Празна"
-
-#: src/disks/gduformatdiskdialog.c:327
+#: src/disks/gduformatdiskdialog.c:52
 msgid "Error formatting disk"
 msgstr "Грешка форматирања диска"
 
-#: src/disks/gduformatdiskdialog.c:383
+#: src/disks/gduformatdiskdialog.c:110
 msgid "Are you sure you want to format the disk?"
 msgstr "Да ли сигурно желите да форматирате диск?"
 
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:387
+#: src/disks/gduformatdiskdialog.c:115
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1770,7 +1707,7 @@ msgstr ""
 "Сви подаци на диску ће бити изгубљени али би још увек могли бити повраћени "
 "услугама опорављања података"
 
-#: src/disks/gduformatdiskdialog.c:389
+#: src/disks/gduformatdiskdialog.c:118
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
@@ -1781,7 +1718,7 @@ msgstr ""
 "подаци не би дошли у погрешне руке"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:394
+#: src/disks/gduformatdiskdialog.c:125
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1789,7 +1726,7 @@ msgstr ""
 "Сви подаци на диску ће бити преписани и највероватније њихов повраћај неће "
 "бити могућ услугама опорављања података"
 
-#: src/disks/gduformatdiskdialog.c:402
+#: src/disks/gduformatdiskdialog.c:134
 msgid ""
 "<b>WARNING</b>: The Secure Erase command may take a very long time to "
 "complete, can’t be canceled and may not work properly with some hardware. In "
@@ -1804,6 +1741,72 @@ msgstr ""
 "се уруши или да се закључа. Пре него што наставите, прочитајте чланак о <a "
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>Безбедном АТА "
 "брисању</a> и будите сигурни да сте разумели ризик"
+
+#. Translators: Used to convey that something takes at least
+#. * some specificed duration but may take longer. The %s is a
+#. * time duration e.g. "8 hours and 28 minutes"
+#.
+#: src/disks/gduformatdiskdialog.c:238
+#, c-format
+msgid "At least %s"
+msgstr "Најмање %s"
+
+#. Translators: Used to convey that something takes
+#. * approximately some specificed duration. The %s is a time
+#. * duration e.g. "2 hours and 2 minutes"
+#.
+#: src/disks/gduformatdiskdialog.c:248
+#, c-format
+msgid "Approximately %s"
+msgstr "Приближно %s"
+
+#: src/disks/gduformatdiskdialog.c:282
+msgid "Don’t overwrite existing data"
+msgstr "Не преписује постојеће податке"
+
+#: src/disks/gduformatdiskdialog.c:283
+msgid "Quick"
+msgstr "Брзо"
+
+#: src/disks/gduformatdiskdialog.c:293
+msgid "Overwrite existing data with zeroes"
+msgstr "Преписује постојеће податке нулама"
+
+#: src/disks/gduformatdiskdialog.c:294
+msgid "Slow"
+msgstr "Споро"
+
+#: src/disks/gduformatdiskdialog.c:326
+msgid "ATA Secure Erase"
+msgstr "Безбедно АТА брисање"
+
+#: src/disks/gduformatdiskdialog.c:341
+msgid "ATA Enhanced Secure Erase"
+msgstr "Побољшано безбедно АТА брисање"
+
+#: src/disks/gduformatdiskdialog.c:384
+msgid "Compatible with all systems and devices"
+msgstr "Подржан на свим системима и уређајима"
+
+#: src/disks/gduformatdiskdialog.c:385
+msgid "MBR / DOS"
+msgstr "МБР / ДОС"
+
+#: src/disks/gduformatdiskdialog.c:395
+msgid "Compatible with modern systems and hard disks > 2TB"
+msgstr "Подржан на савременим системима и чврстим дисковима > 2TB"
+
+#: src/disks/gduformatdiskdialog.c:396
+msgid "GPT"
+msgstr "ГПТ"
+
+#: src/disks/gduformatdiskdialog.c:413
+msgid "No partitioning"
+msgstr "Без поделе диска"
+
+#: src/disks/gduformatdiskdialog.c:414
+msgid "Empty"
+msgstr "Празна"
 
 #: src/disks/gdufstabdialog.c:155
 #, c-format
@@ -1855,46 +1858,80 @@ msgstr "Грешка приликом додавања новог „/etc/fstab�
 msgid "Error updating /etc/fstab entry"
 msgstr "Грешка приликом ажурирања „/etc/fstab“ уноса"
 
+#: src/disks/gdunewdiskimagedialog.c:99
+msgid "Error writing file"
+msgstr "Грешка писања датотеке"
+
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:192
+#: src/disks/gdunewdiskimagedialog.c:196
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "Неименована (%s).img"
 
-#: src/disks/gdunewdiskimagedialog.c:267
-msgid "Error writing file"
-msgstr "Грешка писања датотеке"
-
-#: src/disks/gdupartitiondialog.c:351
+#: src/disks/gdupartitiondialog.c:127
 msgid "Error setting partition type"
 msgstr "Грешка приликом подешавања врсте партиције"
 
-#: src/disks/gdupartitiondialog.c:365
+#: src/disks/gdupartitiondialog.c:139
 msgid "Error setting partition name"
 msgstr "Грешка приликом подешавања назива партиције"
 
-#: src/disks/gdupartitiondialog.c:379
+#: src/disks/gdupartitiondialog.c:151
 msgid "Error setting partition flags"
 msgstr "Грешка приликом постављања заставица партиције"
 
-#: src/disks/gdupasswordstrengthwidget.c:126
+#: src/disks/gdupartitiondialog.c:386
+msgid "The partition type represented as a 32-bit <i>GUID</i>"
+msgstr "Врста партиције претстављена као 32-битни <i>ГУИБ</i>"
+
+#: src/disks/gdupartitiondialog.c:387
+msgid "Legacy BIOS _Bootable"
+msgstr "_Покретачки старог БИОС-а"
+
+#: src/disks/gdupartitiondialog.c:389 src/disks/ui/edit-partition-dialog.ui:94
+msgid ""
+"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
+"normally only used for GPT partitions on MBR systems"
+msgstr ""
+"Ово одговара заставици <i>покретања</i> на главном запису покретања. Обично "
+"се користи само за ГПТ партиције на МБР системима"
+
+#: src/disks/gdupartitiondialog.c:395
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr "Врста партиције као 8-битни непотписани цео број"
+
+#: src/disks/gdupartitiondialog.c:396
+msgid "_Bootable"
+msgstr "_Подизна"
+
+#: src/disks/gdupartitiondialog.c:398
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the <i>active</i> partition"
+msgstr ""
+"Опција коју користи покретач система платформе да одреди одакле треба да "
+"буде учитан ОС. Понекад партиција са подешеном овом опцијом се сматра "
+"<i>активном</i> партицијом"
+
+#: src/disks/gdupasswordstrengthwidget.c:99
 msgctxt "Password strength"
 msgid "Weak"
 msgstr "Слаба"
 
-#: src/disks/gdupasswordstrengthwidget.c:127
+#: src/disks/gdupasswordstrengthwidget.c:100
 msgctxt "Password strength"
 msgid "Fair"
 msgstr "Солидна"
 
-#: src/disks/gdupasswordstrengthwidget.c:128
+#: src/disks/gdupasswordstrengthwidget.c:101
 msgctxt "Password strength"
 msgid "Good"
 msgstr "Добра"
 
-#: src/disks/gdupasswordstrengthwidget.c:129
+#: src/disks/gdupasswordstrengthwidget.c:102
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Јака"
@@ -2010,24 +2047,19 @@ msgstr "Сви постојећи подаци ће бити изгубљени"
 msgid "_Restore"
 msgstr "_Поврати"
 
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
-msgid "Select a Keyfile"
-msgstr "Изабери кључ-датотеку"
-
-#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
-msgid "Error unlocking device"
-msgstr "Грешка при откључавању уређаја"
-
-#: src/disks/gduunlockdialog.c:224
-#, c-format
-msgid "Invalid PIM"
-msgstr "Неисправан ЛИЧ (PIM)"
-
-#: src/disks/gduunlockdialog.c:261
+#: src/disks/gduunlockdialog.c:85
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Фраза шифровања је довучена из привеска кључева"
 
-#: src/disks/gduunlockdialog.c:305
+#: src/disks/gduunlockdialog.c:113
+msgid "Error unlocking device"
+msgstr "Грешка при откључавању уређаја"
+
+#: src/disks/gduunlockdialog.c:253 src/disks/ui/unlock-device-dialog.ui:193
+msgid "Select a Keyfile"
+msgstr "Изабери кључ-датотеку"
+
+#: src/disks/gduunlockdialog.c:339
 msgid "Set options to unlock"
 msgstr "Постави опције откључавања"
 
@@ -2035,7 +2067,7 @@ msgstr "Постави опције откључавања"
 msgid "Volumes Grid"
 msgstr "Мрежа волумена"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2030
+#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
 msgid "No Media"
 msgstr "Нема диска"
 
@@ -2109,7 +2141,7 @@ msgstr ""
 "не желите да основна датотека буде измењена"
 
 #. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1673
+#: src/disks/gduwindow.c:1674
 #, c-format
 msgid "%s (Read-Only)"
 msgstr "%s (Само за читање)"
@@ -2118,7 +2150,7 @@ msgstr "%s (Само за читање)"
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
 #.
-#: src/disks/gduwindow.c:1711
+#: src/disks/gduwindow.c:1712
 #, c-format
 msgctxt "job-remaining-with-rate"
 msgid "%s remaining (%s/sec)"
@@ -2127,7 +2159,7 @@ msgstr "Преостало време: %s (%s/sec)"
 #. Translators: Used for job progress.
 #. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
 #.
-#: src/disks/gduwindow.c:1719
+#: src/disks/gduwindow.c:1720
 #, c-format
 msgctxt "job-remaining"
 msgid "%s remaining"
@@ -2138,7 +2170,7 @@ msgstr "Преостало време: %s"
 #. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
 #. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
 #.
-#: src/disks/gduwindow.c:1734
+#: src/disks/gduwindow.c:1735
 #, c-format
 msgid "%s of %s — %s"
 msgstr "%s од %s – %s"
@@ -2147,17 +2179,17 @@ msgstr "%s од %s – %s"
 #. *              The %s is the job description (e.g. "Erasing Device").
 #. *              The %f is the completion percentage (between 0.0 and 100.0).
 #.
-#: src/disks/gduwindow.c:1859
+#: src/disks/gduwindow.c:1860
 #, c-format
 msgid "%s: %2.1f%%"
 msgstr "%s: %2.1f%%"
 
-#: src/disks/gduwindow.c:1939 src/disks/gduwindow.c:2322
+#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
 msgid "Block device is empty"
 msgstr "Блок уређај је празан"
 
 #. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1962
+#: src/disks/gduwindow.c:1963
 #, c-format
 msgctxt "partitioning"
 msgid "Unknown (%s)"
@@ -2166,11 +2198,11 @@ msgstr "Непознато (%s)"
 #. Translators: Shown in "Location" when drive is connected to another seat than where
 #. * our application is running.
 #.
-#: src/disks/gduwindow.c:2121
+#: src/disks/gduwindow.c:2122
 msgid "Connected to another seat"
 msgstr "Повезан на други смештај"
 
-#: src/disks/gduwindow.c:2266
+#: src/disks/gduwindow.c:2267
 msgid "Loop device is empty"
 msgstr "Уређај понављања је празан"
 
@@ -2180,61 +2212,61 @@ msgstr "Уређај понављања је празан"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gduwindow.c:2483
+#: src/disks/gduwindow.c:2484
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s је слободно (%.1f%% од укупног)"
 
-#: src/disks/gduwindow.c:2513
+#: src/disks/gduwindow.c:2514
 msgctxt "partition type"
 msgid "Unknown"
 msgstr "Непознато"
 
 #. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
 #.
-#: src/disks/gduwindow.c:2551
+#: src/disks/gduwindow.c:2552
 msgctxt "volume-content-fs"
 msgid "Filesystem Root"
 msgstr "Корен система датотека"
 
 #. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2559
+#: src/disks/gduwindow.c:2560
 #, c-format
 msgctxt "volume-content-fs"
 msgid "Mounted at %s"
 msgstr "Прикачен на %s"
 
 #. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2565
+#: src/disks/gduwindow.c:2566
 msgctxt "volume-content-fs"
 msgid "Not Mounted"
 msgstr "Није прикачен"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2588
+#: src/disks/gduwindow.c:2589
 msgctxt "volume-content-swap"
 msgid "Active"
 msgstr "Радна"
 
 #. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2594
+#: src/disks/gduwindow.c:2595
 msgctxt "volume-content-swap"
 msgid "Not Active"
 msgstr "Није радна"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2609
+#: src/disks/gduwindow.c:2610
 msgctxt "volume-content-crypto"
 msgid "Unlocked"
 msgstr "Откључан"
 
 #. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2615
+#: src/disks/gduwindow.c:2616
 msgctxt "volume-content-crypto"
 msgid "Locked"
 msgstr "Закључан"
 
-#: src/disks/gduwindow.c:2629
+#: src/disks/gduwindow.c:2630
 msgctxt "volume-contents-msdos-ext"
 msgid "Extended Partition"
 msgstr "Проширена партиција"
@@ -2243,45 +2275,45 @@ msgstr "Проширена партиција"
 #. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
 #. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
 #.
-#: src/disks/gduwindow.c:2649
+#: src/disks/gduwindow.c:2650
 #, c-format
 msgctxt "volume-contents-combiner"
 msgid "%s — %s"
 msgstr "%s — %s"
 
 #. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2772
+#: src/disks/gduwindow.c:2773
 msgid "Unallocated Space"
 msgstr "Нераспоређен простор"
 
-#: src/disks/gduwindow.c:2981
+#: src/disks/gduwindow.c:2982
 msgid "Error while repairing filesystem"
 msgstr "Грешка приликом поправке система датотека"
 
-#: src/disks/gduwindow.c:3008
+#: src/disks/gduwindow.c:3009
 msgid "Repair successful"
 msgstr "Поправка је успела"
 
-#: src/disks/gduwindow.c:3008
+#: src/disks/gduwindow.c:3009
 msgid "Repair failed"
 msgstr "Поправка није успела"
 
-#: src/disks/gduwindow.c:3011
+#: src/disks/gduwindow.c:3012
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Систем датотека „%s“ на „%s“ је поправљен."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3017
+#: src/disks/gduwindow.c:3018
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Систем датотека „%s“ на „%s“ не може бити поправљен."
 
-#: src/disks/gduwindow.c:3087
+#: src/disks/gduwindow.c:3088
 msgid "Confirm Repair"
 msgstr "Потврди поправку"
 
-#: src/disks/gduwindow.c:3090
+#: src/disks/gduwindow.c:3091
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -2293,112 +2325,112 @@ msgstr ""
 "за опоравак који могу да поврате изгубљене датотеке. Ова радња може "
 "потрајати, нарочито уколико партиција садржи доста података."
 
-#: src/disks/gduwindow.c:3132
+#: src/disks/gduwindow.c:3133
 msgid "Error while taking filesystem ownership"
 msgstr "Грешка приликом преузимања власништва над системом датотека"
 
-#: src/disks/gduwindow.c:3204
+#: src/disks/gduwindow.c:3205
 msgid "Error while checking filesystem"
 msgstr "Грешка приликом провере система датотека"
 
-#: src/disks/gduwindow.c:3231
+#: src/disks/gduwindow.c:3232
 msgid "Filesystem intact"
 msgstr "Система датотека је читав"
 
-#: src/disks/gduwindow.c:3231
+#: src/disks/gduwindow.c:3232
 msgid "Filesystem damaged"
 msgstr "Систем датотека је оштећен"
 
-#: src/disks/gduwindow.c:3234
+#: src/disks/gduwindow.c:3235
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Систем датотека „%s“ на „%s“ је неоштећен."
 
 #. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3240
+#: src/disks/gduwindow.c:3241
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Систем датотека „%s“ на „%s“ треба да се поправи."
 
-#: src/disks/gduwindow.c:3308
+#: src/disks/gduwindow.c:3309
 msgid "Confirm Check"
 msgstr "Потврди проверу"
 
-#: src/disks/gduwindow.c:3311
+#: src/disks/gduwindow.c:3312
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
 "Провера може потрајати, нарочито уколико партиција садржи доста података."
 
-#: src/disks/gduwindow.c:3588
+#: src/disks/gduwindow.c:3589
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr ""
 "Дошло је до грешке када сам покушао да поставим уређај у режим приправности"
 
-#: src/disks/gduwindow.c:3635
+#: src/disks/gduwindow.c:3636
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Дошло је до грешке када сам покушао да пробудим уређај из режима приправности"
 
-#: src/disks/gduwindow.c:3681
+#: src/disks/gduwindow.c:3682
 msgid "Error powering off drive"
 msgstr "Грешка искључивања уређаја"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3733
+#: src/disks/gduwindow.c:3734
 msgid "Are you sure you want to power off the drives?"
 msgstr "Да ли сте сигурни да желите да искључите уређаје?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3735
+#: src/disks/gduwindow.c:3736
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "Ова радња ће припремити систем за искључивање и уклањање следећих уређаја."
 
-#: src/disks/gduwindow.c:3739 src/disks/ui/drive-menu.ui:44
+#: src/disks/gduwindow.c:3740 src/disks/ui/drive-menu.ui:44
 msgid "_Power Off"
 msgstr "_Искључи"
 
-#: src/disks/gduwindow.c:3819
+#: src/disks/gduwindow.c:3820
 msgid "Error mounting filesystem"
 msgstr "Грешка приликом монтирања система датотека"
 
-#: src/disks/gduwindow.c:3904
+#: src/disks/gduwindow.c:3905
 msgid "Error deleting partition"
 msgstr "Грешка приликом брисања партиције"
 
-#: src/disks/gduwindow.c:3941
+#: src/disks/gduwindow.c:3942
 msgid "Are you sure you want to delete the partition?"
 msgstr "Да ли сигурно желите да обришете партицију?"
 
-#: src/disks/gduwindow.c:3942
+#: src/disks/gduwindow.c:3943
 msgid "All data on the partition will be lost"
 msgstr "Сви подаци на партицији ће бити изгубљени"
 
-#: src/disks/gduwindow.c:3943
+#: src/disks/gduwindow.c:3944
 msgid "_Delete"
 msgstr "_Обриши"
 
-#: src/disks/gduwindow.c:3974
+#: src/disks/gduwindow.c:3975
 msgid "Error ejecting media"
 msgstr "Грешка приликом избацивања медијума"
 
-#: src/disks/gduwindow.c:4057
+#: src/disks/gduwindow.c:4058
 msgid "Error starting swap"
 msgstr "Грешка приликом покретања разменске меморије"
 
-#: src/disks/gduwindow.c:4094
+#: src/disks/gduwindow.c:4095
 msgid "Error stopping swap"
 msgstr "Грешка приликом заустављања разменске меморије"
 
-#: src/disks/gduwindow.c:4136
+#: src/disks/gduwindow.c:4137
 msgid "Error setting autoclear flag"
 msgstr "Грешка приликом постављања заставице за самочишћење"
 
-#: src/disks/gduwindow.c:4189 src/disks/gduwindow.c:4253
+#: src/disks/gduwindow.c:4190 src/disks/gduwindow.c:4254
 msgid "Error canceling job"
 msgstr "Грешка отказивања посла"
 
@@ -2585,55 +2617,57 @@ msgstr ""
 "Број узорака. Већи број даје тачнију слику шаблона времена приступа али "
 "одузима више времена."
 
-#: src/disks/ui/change-passphrase-dialog.ui:7
+#: src/disks/ui/change-passphrase-dialog.ui:6
 msgid "Change Passphrase"
 msgstr "Промените фразу"
 
-#: src/disks/ui/change-passphrase-dialog.ui:32
-#: src/disks/ui/edit-dos-partition-dialog.ui:36
-#: src/disks/ui/edit-filesystem-dialog.ui:36
-#: src/disks/ui/edit-gpt-partition-dialog.ui:36
-#: src/disks/ui/edit-partition-dialog.ui:36
-msgid "C_hange"
-msgstr "_Измени"
-
-#: src/disks/ui/change-passphrase-dialog.ui:68
+#: src/disks/ui/change-passphrase-dialog.ui:34
 msgid "Curr_ent Passphrase"
 msgstr "_Тренутна фраза"
 
-#: src/disks/ui/change-passphrase-dialog.ui:88
-#: src/disks/ui/change-passphrase-dialog.ui:89
+#: src/disks/ui/change-passphrase-dialog.ui:51
+#: src/disks/ui/change-passphrase-dialog.ui:52
 msgid "Enter current passphrase used to protect the data"
 msgstr "Унесите тренутну фразу коришћену за заштиту податка"
 
-#: src/disks/ui/change-passphrase-dialog.ui:105
-msgid "Sho_w Passphrases"
-msgstr "_Прикажи фразе"
+#: src/disks/ui/change-passphrase-dialog.ui:67
+msgid "New _Passphrase"
+msgstr "_Нова фраза"
 
-#: src/disks/ui/change-passphrase-dialog.ui:111
-#: src/disks/ui/change-passphrase-dialog.ui:112
-#: src/disks/ui/create-password-page.ui:101
-msgid "Check this box to see the passphrases entered above"
-msgstr "Штиклирајте ово поље да видите горе унешене фразе"
+#: src/disks/ui/change-passphrase-dialog.ui:84
+#: src/disks/ui/change-passphrase-dialog.ui:85
+msgid "Enter new passphrase used to protect the data"
+msgstr "Унесите нову фразу која ће се користити за заштиту податка"
 
-#: src/disks/ui/change-passphrase-dialog.ui:146
-#: src/disks/ui/change-passphrase-dialog.ui:147
+#: src/disks/ui/change-passphrase-dialog.ui:101
+msgid "C_onfirm Passphrase"
+msgstr "По_тврди фразу"
+
+#: src/disks/ui/change-passphrase-dialog.ui:118
+#: src/disks/ui/change-passphrase-dialog.ui:119
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
 msgstr "Потврдите горе унешену фразу"
 
-#: src/disks/ui/change-passphrase-dialog.ui:167
-#: src/disks/ui/change-passphrase-dialog.ui:168
-msgid "Enter new passphrase used to protect the data"
-msgstr "Унесите нову фразу која ће се користити за заштиту податка"
+#: src/disks/ui/change-passphrase-dialog.ui:134
+msgid "The strength of the passphrase"
+msgstr "Јачина фразе"
 
-#: src/disks/ui/change-passphrase-dialog.ui:188
-msgid "C_onfirm Passphrase"
-msgstr "По_тврди фразу"
+#: src/disks/ui/change-passphrase-dialog.ui:144
+msgid "Sho_w Passphrases"
+msgstr "_Прикажи фразе"
 
-#: src/disks/ui/change-passphrase-dialog.ui:208
-msgid "New _Passphrase"
-msgstr "_Нова фраза"
+#: src/disks/ui/change-passphrase-dialog.ui:148
+#: src/disks/ui/change-passphrase-dialog.ui:149
+#: src/disks/ui/create-password-page.ui:101
+msgid "Check this box to see the passphrases entered above"
+msgstr "Штиклирајте ово поље да видите горе унешене фразе"
+
+#: src/disks/ui/change-passphrase-dialog.ui:175
+#: src/disks/ui/edit-filesystem-dialog.ui:78
+#: src/disks/ui/edit-partition-dialog.ui:150
+msgid "C_hange"
+msgstr "_Измени"
 
 #: src/disks/ui/create-confirm-page.ui:17
 msgid "Warning: all data on the volume will be lost"
@@ -2665,19 +2699,19 @@ msgid "Create Disk Image"
 msgstr "Направи одраз диска"
 
 #: src/disks/ui/create-disk-image-dialog.ui:31
-#: src/disks/ui/edit-crypttab-dialog.ui:104
-#: src/disks/ui/edit-gpt-partition-dialog.ui:91
-#: src/disks/ui/new-disk-image-dialog.ui:48
+#: src/disks/ui/edit-crypttab-dialog.ui:128
+#: src/disks/ui/edit-partition-dialog.ui:52
+#: src/disks/ui/new-disk-image-dialog.ui:45
 msgid "_Name"
 msgstr "_Назив"
 
 #: src/disks/ui/create-disk-image-dialog.ui:48
-#: src/disks/ui/new-disk-image-dialog.ui:67
+#: src/disks/ui/new-disk-image-dialog.ui:63
 msgid "Save in _Folder"
 msgstr "Сачувај у _фасциклу"
 
 #: src/disks/ui/create-disk-image-dialog.ui:81
-#: src/disks/ui/new-disk-image-dialog.ui:123
+#: src/disks/ui/new-disk-image-dialog.ui:115
 msgid "Select a Folder"
 msgstr "Изаберите фасциклу"
 
@@ -2706,7 +2740,7 @@ msgid "For example: “Angela’s Files” or “Backup”."
 msgstr "На пример „Анђелине датотеке“ или „Резерве“"
 
 #: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:84
+#: src/disks/ui/format-disk-dialog.ui:58
 msgid "_Erase"
 msgstr "_Обриши"
 
@@ -2754,57 +2788,57 @@ msgid "The size of the partition to create"
 msgstr "Величина партиције која ће бити направљена"
 
 #: src/disks/ui/create-partition-page.ui:103
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
+#: src/disks/ui/new-disk-image-dialog.ui:129 src/disks/ui/resize-dialog.ui:119
 msgid "bytes"
 msgstr "бајта"
 
 #: src/disks/ui/create-partition-page.ui:104
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
+#: src/disks/ui/new-disk-image-dialog.ui:130 src/disks/ui/resize-dialog.ui:120
 msgid "kB"
 msgstr "kB"
 
 #: src/disks/ui/create-partition-page.ui:105
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
+#: src/disks/ui/new-disk-image-dialog.ui:131 src/disks/ui/resize-dialog.ui:121
 msgid "MB"
 msgstr "MB"
 
 #: src/disks/ui/create-partition-page.ui:106
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
+#: src/disks/ui/new-disk-image-dialog.ui:132 src/disks/ui/resize-dialog.ui:122
 msgid "GB"
 msgstr "GB"
 
 #: src/disks/ui/create-partition-page.ui:107
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
+#: src/disks/ui/new-disk-image-dialog.ui:133 src/disks/ui/resize-dialog.ui:123
 msgid "TB"
 msgstr "TB"
 
 #: src/disks/ui/create-partition-page.ui:108
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
+#: src/disks/ui/new-disk-image-dialog.ui:134 src/disks/ui/resize-dialog.ui:124
 msgid "PB"
 msgstr "PB"
 
 #: src/disks/ui/create-partition-page.ui:109
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
+#: src/disks/ui/new-disk-image-dialog.ui:135 src/disks/ui/resize-dialog.ui:125
 msgid "KiB"
 msgstr "KiB"
 
 #: src/disks/ui/create-partition-page.ui:110
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
+#: src/disks/ui/new-disk-image-dialog.ui:136 src/disks/ui/resize-dialog.ui:126
 msgid "MiB"
 msgstr "MiB"
 
 #: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
+#: src/disks/ui/new-disk-image-dialog.ui:137 src/disks/ui/resize-dialog.ui:127
 msgid "GiB"
 msgstr "GiB"
 
 #: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
+#: src/disks/ui/new-disk-image-dialog.ui:138 src/disks/ui/resize-dialog.ui:128
 msgid "TiB"
 msgstr "TiB"
 
 #: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
+#: src/disks/ui/new-disk-image-dialog.ui:139 src/disks/ui/resize-dialog.ui:129
 msgid "PiB"
 msgstr "PiB"
 
@@ -3118,15 +3152,15 @@ msgstr "У с_тање приправности"
 msgid "_Wake-Up from Standby"
 msgstr "Изађи и_з приправности"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:11
+#: src/disks/ui/edit-crypttab-dialog.ui:9
 msgid "Encryption Options"
 msgstr "Опције шифровања"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
+#: src/disks/ui/edit-crypttab-dialog.ui:36 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
 msgstr "Основности корисничке _сесије"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:86
+#: src/disks/ui/edit-crypttab-dialog.ui:48
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage encryption options and "
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
@@ -3136,9 +3170,34 @@ msgstr ""
 "шифровања и фразама за уређај. Опције одговарају уносу у датотеци „<b>/etc/"
 "crypttab</b>“"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:124
+#: src/disks/ui/edit-crypttab-dialog.ui:68
 msgid "Opt_ions"
 msgstr "_Опције"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:88
+msgid "_Unlock at system startup"
+msgstr "_Откључај при покретању система"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:89
+msgid "If checked, the device will be unlocked at system startup [!noauto]"
+msgstr ""
+"Ако се штиклира, уређај ће бити откључан при покретању система [!noauto]"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:98
+msgid "Require additional authori_zation to unlock"
+msgstr "Захтевај _додатно овлашћење за откључавање"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:99
+msgid ""
+"If checked, additional authorization is required to unlock the device [x-"
+"udisks-auth]"
+msgstr ""
+"Ако је изабрано, додатно овлашћење је потребно за откључавање уређаја [x-"
+"udisks-auth]"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:114
+msgid "Options to use when unlocking the device"
+msgstr "Опције које се користе при откључавању уређаја"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:143
 msgid ""
@@ -3148,20 +3207,12 @@ msgstr ""
 "Назив који ће бити коришћен за откључани уређај — уређај је подешен са <b>/"
 "dev/mapper</b>/ испред назива"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:160
-msgid "Options to use when unlocking the device"
-msgstr "Опције које се користе при откључавању уређаја"
+#: src/disks/ui/edit-crypttab-dialog.ui:157
+#: src/disks/ui/unlock-device-dialog.ui:46
+msgid "_Passphrase"
+msgstr "_Фраза за откључавање"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:177
-msgid "Passphrase File"
-msgstr "Датотека са фразом"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:207
-#: src/disks/ui/unlock-device-dialog.ui:87
-msgid "Sho_w passphrase"
-msgstr "_Прикажи фразу"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:229
+#: src/disks/ui/edit-crypttab-dialog.ui:172
 msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
@@ -3169,71 +3220,28 @@ msgstr ""
 "Фразу за откључавање уређаја или празно поље да бисте затражили од корисника "
 "постављње приликом првог качења уређаја"
 
+#: src/disks/ui/edit-crypttab-dialog.ui:186
+#: src/disks/ui/unlock-device-dialog.ui:78
+msgid "Sho_w passphrase"
+msgstr "_Прикажи фразу"
+
+#: src/disks/ui/edit-crypttab-dialog.ui:200
+msgid "Passphrase File"
+msgstr "Датотека са фразом"
+
 #: src/disks/ui/edit-crypttab-dialog.ui:246
-#: src/disks/ui/unlock-device-dialog.ui:53
-msgid "_Passphrase"
-msgstr "_Фраза за откључавање"
+msgid "_OK"
+msgstr "У _реду"
 
-#: src/disks/ui/edit-crypttab-dialog.ui:268
-msgid "_Unlock at system startup"
-msgstr "_Откључај при покретању система"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:274
-msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr ""
-"Ако се штиклира, уређај ће бити откључан при покретању система [!noauto]"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:289
-msgid "Require additional authori_zation to unlock"
-msgstr "Захтевај _додатно овлашћење за откључавање"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:295
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-"Ако је изабрано, додатно овлашћење је потребно за откључавање уређаја [x-"
-"udisks-auth]"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:7
-#: src/disks/ui/edit-gpt-partition-dialog.ui:8
-#: src/disks/ui/edit-partition-dialog.ui:7
-msgid "Edit Partition"
-msgstr "Уредите партицију"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:60
-#: src/disks/ui/edit-gpt-partition-dialog.ui:59
-#: src/disks/ui/edit-partition-dialog.ui:59
-msgid "_Type"
-msgstr "_Врста"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Врста партиције као 8-битни непотписани цео број"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:87
-msgid "_Bootable"
-msgstr "_Подизна"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"Опција коју користи покретач система платформе да одреди одакле треба да "
-"буде учитан ОС. Понекад партиција са подешеном овом опцијом се сматра "
-"<i>активном</i> партицијом"
-
-#: src/disks/ui/edit-filesystem-dialog.ui:7
+#: src/disks/ui/edit-filesystem-dialog.ui:5
 msgid "Change Filesystem Label"
 msgstr "Измените натпис система датотека"
 
-#: src/disks/ui/edit-filesystem-dialog.ui:56
+#: src/disks/ui/edit-filesystem-dialog.ui:27
 msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr "Овај систем датотека биће аутоматски откачен пре било којих измена."
 
-#: src/disks/ui/edit-filesystem-dialog.ui:71
+#: src/disks/ui/edit-filesystem-dialog.ui:41
 msgid "_Label"
 msgstr "_Натпис"
 
@@ -3363,11 +3371,15 @@ msgstr "_Опције монтирања"
 msgid "The mount options stored in the <b>/etc/fstab</b> file"
 msgstr "Опције монтирања сачуване у датотеци <b>/etc/fstab</b>"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:77
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Врста партиције претстављена као 32-битни <i>ГУИБ</i>"
+#: src/disks/ui/edit-partition-dialog.ui:6
+msgid "Edit Partition"
+msgstr "Уредите партицију"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:109
+#: src/disks/ui/edit-partition-dialog.ui:27
+msgid "_Type"
+msgstr "_Врста"
+
+#: src/disks/ui/edit-partition-dialog.ui:66
 msgid ""
 "The partition name (up to 36 unicode characters). This is useful if you want "
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
@@ -3377,11 +3389,15 @@ msgstr ""
 "обележите уређај путем симболичке везе у директоријуму <b>/dev/disk/by-"
 "partlabel</b>"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:122
+#: src/disks/ui/edit-partition-dialog.ui:80
+msgid "Flags"
+msgstr "Заставице"
+
+#: src/disks/ui/edit-partition-dialog.ui:106
 msgid "_System Partition"
 msgstr "_Системска партиција"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:127
+#: src/disks/ui/edit-partition-dialog.ui:108
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
@@ -3391,27 +3407,11 @@ msgstr ""
 "деловање. Посебно треба водити рачуна о томе да се не обрише или препише "
 "садржај"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:141
-msgid "Legacy BIOS _Bootable"
-msgstr "_Покретачки старог БИОС-а"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:146
-msgid ""
-"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-"normally only used for GPT partitions on MBR systems"
-msgstr ""
-"Ово одговара заставици <i>покретања</i> на главном запису покретања. Обично "
-"се користи само за ГПТ партиције на МБР системима"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:163
-msgid "Flags"
-msgstr "Заставице"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
+#: src/disks/ui/edit-partition-dialog.ui:120
 msgid "Hide from _Firmware"
 msgstr "Сакриј од _уграђеног програма"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:184
+#: src/disks/ui/edit-partition-dialog.ui:121
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
@@ -3431,31 +3431,31 @@ msgstr "_Обриши…"
 msgid "Erase _Type"
 msgstr "Обриши _врсту"
 
-#: src/disks/ui/format-disk-dialog.ui:6
+#: src/disks/ui/format-disk-dialog.ui:5
 msgid "Format Disk"
 msgstr "Форматирајте диск"
 
-#: src/disks/ui/format-disk-dialog.ui:33
-msgid "_Format…"
-msgstr "_Форматирај…"
-
-#: src/disks/ui/format-disk-dialog.ui:67
+#: src/disks/ui/format-disk-dialog.ui:42
 msgid "_Partitioning"
 msgstr "_Подела диска"
 
-#: src/disks/ui/new-disk-image-dialog.ui:8
+#: src/disks/ui/format-disk-dialog.ui:97
+msgid "_Format…"
+msgstr "_Форматирај…"
+
+#: src/disks/ui/new-disk-image-dialog.ui:7
 msgid "New Disk Image"
 msgstr "Нови одраз диска"
 
-#: src/disks/ui/new-disk-image-dialog.ui:29
+#: src/disks/ui/new-disk-image-dialog.ui:27
 msgid "Image _Size"
 msgstr "Величина _одраза"
 
-#: src/disks/ui/new-disk-image-dialog.ui:86
+#: src/disks/ui/new-disk-image-dialog.ui:80
 msgid "The size of the image to create"
 msgstr "Величина одраза који ће бити направљен"
 
-#: src/disks/ui/new-disk-image-dialog.ui:177
+#: src/disks/ui/new-disk-image-dialog.ui:172
 msgid "Attach new _Image…"
 msgstr "Прикачи нови _одраз…"
 
@@ -3516,92 +3516,92 @@ msgstr "Величина одраза"
 msgid "_Start Restoring…"
 msgstr "_Започни повраћај…"
 
-#: src/disks/ui/shortcuts.ui:13
+#: src/disks/ui/shortcuts.ui:12
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Опште"
 
-#: src/disks/ui/shortcuts.ui:17
+#: src/disks/ui/shortcuts.ui:15
 msgctxt "shortcut window"
 msgid "Help"
 msgstr "Помоћ"
 
-#: src/disks/ui/shortcuts.ui:24
+#: src/disks/ui/shortcuts.ui:21
 msgctxt "shortcut window"
 msgid "Open the application menu"
 msgstr "Отвара мени програма"
 
-#: src/disks/ui/shortcuts.ui:31
+#: src/disks/ui/shortcuts.ui:27
 msgctxt "shortcut window"
 msgid "Keyboard shortcuts"
 msgstr "Пречице на тастатури"
 
-#: src/disks/ui/shortcuts.ui:38
+#: src/disks/ui/shortcuts.ui:33
 msgctxt "shortcut window"
 msgid "Quit"
 msgstr "Излазак"
 
-#: src/disks/ui/shortcuts.ui:47
+#: src/disks/ui/shortcuts.ui:41
 msgctxt "shortcut window"
 msgid "Disks"
 msgstr "Дискови"
 
-#: src/disks/ui/shortcuts.ui:51
+#: src/disks/ui/shortcuts.ui:44
 msgctxt "shortcut window"
 msgid "Create a new empty disk image"
 msgstr "Стварање новог празног одраза диска"
 
-#: src/disks/ui/shortcuts.ui:58
+#: src/disks/ui/shortcuts.ui:50
 msgctxt "shortcut window"
 msgid "Attach an existing disk image"
 msgstr "Качење постојећег одраза диска"
 
-#: src/disks/ui/shortcuts.ui:65
+#: src/disks/ui/shortcuts.ui:56
 msgctxt "shortcut window"
 msgid "Unselect current disk"
 msgstr "Укини избор тренутног диска"
 
-#: src/disks/ui/shortcuts.ui:74
+#: src/disks/ui/shortcuts.ui:64
 msgctxt "shortcut window"
 msgid "Drive"
 msgstr "Уређај"
 
-#: src/disks/ui/shortcuts.ui:78
+#: src/disks/ui/shortcuts.ui:67
 msgctxt "shortcut window"
 msgid "Open the drive menu"
 msgstr "Отвара изборник уређаја"
 
-#: src/disks/ui/shortcuts.ui:85
+#: src/disks/ui/shortcuts.ui:73
 msgctxt "shortcut window"
 msgid "Format the drive"
 msgstr "Форматирање уређаја"
 
-#: src/disks/ui/shortcuts.ui:92
+#: src/disks/ui/shortcuts.ui:79
 msgctxt "shortcut window"
 msgid "Restore an image to the disk"
 msgstr "Поврати одраз диска на диск"
 
-#: src/disks/ui/shortcuts.ui:99
+#: src/disks/ui/shortcuts.ui:85
 msgctxt "shortcut window"
 msgid "SMART data"
 msgstr "СМАРТ подаци"
 
-#: src/disks/ui/shortcuts.ui:106
+#: src/disks/ui/shortcuts.ui:91
 msgctxt "shortcut window"
 msgid "Drive settings"
 msgstr "Подешавања уређаја"
 
-#: src/disks/ui/shortcuts.ui:115
+#: src/disks/ui/shortcuts.ui:99
 msgctxt "shortcut window"
 msgid "Partition"
 msgstr "Партиционисање"
 
-#: src/disks/ui/shortcuts.ui:119
+#: src/disks/ui/shortcuts.ui:102
 msgctxt "shortcut window"
 msgid "Open the volume menu"
 msgstr "Отвара изборник волумена"
 
-#: src/disks/ui/shortcuts.ui:126
+#: src/disks/ui/shortcuts.ui:108
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Форматирање изабраног волумена"
@@ -3700,28 +3700,28 @@ msgstr ""
 msgid "Enable _recursive mode"
 msgstr "Омогући _рекурзивни режим"
 
-#: src/disks/ui/unlock-device-dialog.ui:8
+#: src/disks/ui/unlock-device-dialog.ui:6
 msgid "Enter passphrase to unlock"
 msgstr "Унесите фразу да откључате"
 
-#: src/disks/ui/unlock-device-dialog.ui:36
+#: src/disks/ui/unlock-device-dialog.ui:31
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr "Овај волумен је можда Веракрипт волумен јер садржи насумичне податке."
 
-#: src/disks/ui/unlock-device-dialog.ui:69
-#: src/disks/ui/unlock-device-dialog.ui:176
+#: src/disks/ui/unlock-device-dialog.ui:62
+#: src/disks/ui/unlock-device-dialog.ui:160
 msgid "If specified"
 msgstr "Ако је наведено"
 
-#: src/disks/ui/unlock-device-dialog.ui:107
+#: src/disks/ui/unlock-device-dialog.ui:95
 msgid "Volume type"
 msgstr "Врста волумена"
 
-#: src/disks/ui/unlock-device-dialog.ui:126
+#: src/disks/ui/unlock-device-dialog.ui:116
 msgid "_Hidden"
 msgstr "Скри_вен"
 
-#: src/disks/ui/unlock-device-dialog.ui:127
+#: src/disks/ui/unlock-device-dialog.ui:117
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
@@ -3729,19 +3729,19 @@ msgstr ""
 "Уместо откључавања овог волумена, покушај откључавање секундарног скривеног "
 "волумена унутар."
 
-#: src/disks/ui/unlock-device-dialog.ui:139
+#: src/disks/ui/unlock-device-dialog.ui:127
 msgid "Windows _system"
 msgstr "Виндоус _систем"
 
-#: src/disks/ui/unlock-device-dialog.ui:140
+#: src/disks/ui/unlock-device-dialog.ui:128
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Откључајте шифровану Виндоус системску партицију или уређај."
 
-#: src/disks/ui/unlock-device-dialog.ui:161
+#: src/disks/ui/unlock-device-dialog.ui:144
 msgid "PI_M"
 msgstr "_ЛИЧ (PIM)"
 
-#: src/disks/ui/unlock-device-dialog.ui:177
+#: src/disks/ui/unlock-device-dialog.ui:161
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
@@ -3749,15 +3749,15 @@ msgstr ""
 "Ако је подешено, Веракриптов ЛИЧ (лични итерацијски чинилац, енгл. \"PIM\"), "
 "бројевна вредност која се користи за овај волумен."
 
-#: src/disks/ui/unlock-device-dialog.ui:194
+#: src/disks/ui/unlock-device-dialog.ui:174
 msgid "_Keyfiles"
 msgstr "_Кључ-датотеке"
 
-#: src/disks/ui/unlock-device-dialog.ui:211
+#: src/disks/ui/unlock-device-dialog.ui:195
 msgid "Select a keyfile to unlock this volume"
 msgstr "Изабери кључ-датотеку за откључавање овог волумена"
 
-#: src/disks/ui/unlock-device-dialog.ui:240
+#: src/disks/ui/unlock-device-dialog.ui:226
 msgid "_Unlock"
 msgstr "_Откључај"
 
@@ -3955,15 +3955,15 @@ msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Обухваћени уређаји"
 
-#: src/libgdu/gduutils.c:1426
+#: src/libgdu/gduutils.c:1443
 msgid "Error unmounting filesystem"
 msgstr "Грешка приликом демонтирања система датотека"
 
-#: src/libgdu/gduutils.c:1458
+#: src/libgdu/gduutils.c:1475
 msgid "Error locking device"
 msgstr "Грешка при закључавању уређаја"
 
-#: src/libgdu/gduutils.c:1479
+#: src/libgdu/gduutils.c:1496
 msgid "Error disabling autoclear for loop device"
 msgstr "Грешка искључивања ауточишћења за уређај понављања"
 
@@ -3984,6 +3984,10 @@ msgstr "Чврсти диск ће се ускоро покварити."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Испитај"
+
+#, c-format
+#~ msgid "Invalid PIM"
+#~ msgstr "Неисправан ЛИЧ (PIM)"
 
 #~ msgid "GNOME Disks"
 #~ msgstr "Дискови"

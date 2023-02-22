@@ -1,5 +1,4 @@
-/* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*-
- *
+/*
  * Copyright (C) 2008-2013 Red Hat, Inc.
  * Copyright (C) 2023 Purism SPC
  *

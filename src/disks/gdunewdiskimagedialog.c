@@ -1,5 +1,4 @@
-/* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*-
- *
+/*
  * Copyright (C) 2017 Kai Lüke
  * Copyright (C) 2022 Purism SPC
  *

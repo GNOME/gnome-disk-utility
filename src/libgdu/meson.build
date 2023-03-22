@@ -1,6 +1,6 @@
 enum_headers = files('libgduenums.h')
 
-sources = files('gduutils.c')
+sources = files('gduutils.c', 'gtk3-to-4.c')
 
 enum = 'libgduenumtypes'
 
@@ -16,6 +16,7 @@ private_deps = [m_dep]
 deps = [
   gtk_dep,
   udisk_dep,
+  libadwaita_dep,
 ]
 
 if enable_logind

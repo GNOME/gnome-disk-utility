@@ -1,13 +1,19 @@
 /*
  * Copyright (C) 2008-2013 Red Hat, Inc.
  * Copyright (C) 2017 Kai Lüke
+ * Copyright (C) 2023 Mohammed Sadiq
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <zeuthen@gmail.com>, Kai Lüke <kailueke@riseup.net>
+ * Author(s):
+ *   David Zeuthen <zeuthen@gmail.com>
+ *   Kai Lüke <kailueke@riseup.net>
+ *   Mohammed Sadiq <sadiq@sadiqpk.org>
  */
 
-#include "config.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
 
 #include <glib/gi18n.h>
 
@@ -27,204 +33,181 @@
 #define PASSWORD_PAGE "password"
 #define CONFIRM_PAGE "confirm"
 
-typedef struct
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#include "gducreateformatdialog.h"
+
+struct _GduCreateFormatDialog
 {
-  GtkWindow *parent_window;
-  UDisksObject *object;
-  UDisksBlock *block;
-  UDisksDrive *drive;
-  UDisksPartitionTable *table;
-  UDisksClient *client;
+  GtkDialog                parent_instance;
 
-  GtkBuilder *builder;
-  GtkDialog *dialog;
-  GtkStack *stack;
-  GtkButton *back;
-  GtkButton *forward;
-  const gchar *current; /* page names */
-  const gchar *prev;
-  const gchar *next;
-  gboolean add_partition; /* mode: format vs add partition and format */
-  guint64 add_partition_offset;
-  guint64 add_partition_maxsize;
+  GduWindow               *parent_window;
+  GtkStack                *pages_stack;
+  GduCreatePartitionPage  *partition_page;
+  GduCreateFilesystemPage *filesystem_page;
+  GduCreateOtherPage      *other_page;
+  GduCreatePasswordPage   *password_page;
+  GduCreateConfirmPage    *confirm_page;
 
-  GduCreatePartitionPage *partition_page;    /* create partition page */
-  GduCreateFilesystemPage *filesystem_page;  /* main format page */
-  GduCreateOtherPage *other_page;            /* custom filesystem page */
-  GduCreatePasswordPage *password_page;      /* set password page */
-  GduCreateConfirmPage *confirm_page;        /* confirm format page */
+  GtkButton               *back_button;
+  GtkButton               *forward_button;
 
-  GCallback finished_cb;
-  gpointer  cb_data;
-} CreateFormatData;
+  UDisksClient            *udisks_client;
+  UDisksObject            *udisks_object;
+  UDisksBlock             *udisks_block;
+  UDisksDrive             *udisks_drive;
+  UDisksPartitionTable    *udisks_table;
 
-static void
-create_format_data_free (CreateFormatData *data)
-{
-  if (data->finished_cb)
-    ((GDestroyNotify) data->finished_cb) (data->cb_data);
-  g_clear_object (&data->parent_window);
-  g_object_unref (data->object);
-  g_object_unref (data->block);
-  g_clear_object (&data->drive);
-  if (data->dialog != NULL)
-    {
-      gtk_widget_hide (GTK_WIDGET (data->dialog));
-      gtk_widget_destroy (GTK_WIDGET (data->dialog));
-    }
-  if (data->builder != NULL)
-    g_object_unref (data->builder);
-  g_free (data);
-}
+  const char              *current; /* page names */
+  const char              *prev;
+  const char              *next;
+
+  gboolean                 add_partition; /* mode: format vs add partition and format */
+  guint64                  add_partition_offset;
+  guint64                  add_partition_maxsize;
+};
+
+
+G_DEFINE_TYPE (GduCreateFormatDialog, gdu_create_format_dialog, GTK_TYPE_DIALOG)
 
 static const gchar *
-get_filesystem (CreateFormatData *data)
+get_filesystem (GduCreateFormatDialog *self)
 {
-  if (data->add_partition && gdu_create_partition_page_is_extended (data->partition_page))
+  if (self->add_partition && gdu_create_partition_page_is_extended (self->partition_page))
     return "dos_extended";
-  else if (gdu_create_filesystem_page_get_fs (data->filesystem_page) != NULL)
-    return gdu_create_filesystem_page_get_fs (data->filesystem_page);
+  else if (gdu_create_filesystem_page_get_fs (self->filesystem_page) != NULL)
+    return gdu_create_filesystem_page_get_fs (self->filesystem_page);
   else
-    return gdu_create_other_page_get_fs (data->other_page);
+    return gdu_create_other_page_get_fs (self->other_page);
 }
 
 static gboolean
-get_encrypt (CreateFormatData *data)
+get_encrypt (GduCreateFormatDialog *self)
 {
-  return gdu_create_filesystem_page_is_encrypted (data->filesystem_page) ||
-         (gdu_create_filesystem_page_is_other (data->filesystem_page) &&
-          gdu_create_other_page_is_encrypted (data->other_page));
+  return gdu_create_filesystem_page_is_encrypted (self->filesystem_page) ||
+         (gdu_create_filesystem_page_is_other (self->filesystem_page) &&
+          gdu_create_other_page_is_encrypted (self->other_page));
 }
 
 static void
-update_dialog (GtkWidget *widget, GParamSpec *child_property, CreateFormatData *data)
+update_dialog (GtkWidget *widget, GParamSpec *child_property, GduCreateFormatDialog *self)
 {
-  GValue title = G_VALUE_INIT;
   gboolean complete = FALSE;
   GtkWidget *child;
   gpointer page = NULL;
+  g_autofree char *title = NULL;
 
-  g_value_init (&title, G_TYPE_STRING);
-  child = gtk_stack_get_child_by_name (data->stack, data->current);
-  gtk_container_child_get_property (GTK_CONTAINER (data->stack), child, "title", &title);
+  child = gtk_stack_get_child_by_name (self->pages_stack, self->current);
+  gtk_container_child_get (GTK_CONTAINER (self->pages_stack), child, "title", &title, NULL);
 
-  gtk_window_set_title (GTK_WINDOW (data->dialog), g_value_get_string (&title));
-  data->prev = NULL;
-  data->next = CONFIRM_PAGE;
+  gtk_window_set_title (GTK_WINDOW (self), title);
+  self->prev = NULL;
+  self->next = CONFIRM_PAGE;
 
-  if (data->add_partition)
-    data->next = NULL;
+  if (self->add_partition)
+    self->next = NULL;
 
-  if (g_strcmp0 (data->current, PARTITION_PAGE) == 0)
+  if (g_strcmp0 (self->current, PARTITION_PAGE) == 0)
     {
-      page = data->partition_page;
-      data->next = FORMAT_PAGE;
-      if (gdu_create_partition_page_is_extended (data->partition_page))
-        data->next = NULL;
+      page = self->partition_page;
+      self->next = FORMAT_PAGE;
+      if (gdu_create_partition_page_is_extended (self->partition_page))
+        self->next = NULL;
     }
-  else if (g_strcmp0 (data->current, FORMAT_PAGE) == 0)
+  else if (g_strcmp0 (self->current, FORMAT_PAGE) == 0)
     {
-      page = data->filesystem_page;
-      if (data->add_partition)
-        data->prev = PARTITION_PAGE;
+      page = self->filesystem_page;
+      if (self->add_partition)
+        self->prev = PARTITION_PAGE;
 
-      if (gdu_create_filesystem_page_is_other (data->filesystem_page))
-        data->next = OTHER_PAGE;
+      if (gdu_create_filesystem_page_is_other (self->filesystem_page))
+        self->next = OTHER_PAGE;
 
-      if (gdu_create_filesystem_page_is_encrypted (data->filesystem_page))
-        data->next = PASSWORD_PAGE;
+      if (gdu_create_filesystem_page_is_encrypted (self->filesystem_page))
+        self->next = PASSWORD_PAGE;
     }
-  else if (g_strcmp0 (data->current, OTHER_PAGE) == 0)
+  else if (g_strcmp0 (self->current, OTHER_PAGE) == 0)
     {
-      page = data->other_page;
-      data->prev = FORMAT_PAGE;
+      page = self->other_page;
+      self->prev = FORMAT_PAGE;
 
-      if (gdu_create_other_page_is_encrypted (data->other_page))
-        data->next = PASSWORD_PAGE;
+      if (gdu_create_other_page_is_encrypted (self->other_page))
+        self->next = PASSWORD_PAGE;
     }
-  else if (g_strcmp0 (data->current, PASSWORD_PAGE) == 0)
+  else if (g_strcmp0 (self->current, PASSWORD_PAGE) == 0)
     {
-      page = data->password_page;
-      if (gdu_create_filesystem_page_is_encrypted (data->filesystem_page))
-        data->prev = FORMAT_PAGE;
-      else if (gdu_create_filesystem_page_is_other (data->filesystem_page) &&
-               gdu_create_other_page_is_encrypted (data->other_page))
-        data->prev = OTHER_PAGE;
+      page = self->password_page;
+      if (gdu_create_filesystem_page_is_encrypted (self->filesystem_page))
+        self->prev = FORMAT_PAGE;
+      else if (gdu_create_filesystem_page_is_other (self->filesystem_page) &&
+               gdu_create_other_page_is_encrypted (self->other_page))
+        self->prev = OTHER_PAGE;
     }
-  else if (g_strcmp0 (data->current, CONFIRM_PAGE) == 0)
+  else if (g_strcmp0 (self->current, CONFIRM_PAGE) == 0)
     {
-      page = data->confirm_page;
-      data->next = NULL;
+      page = self->confirm_page;
+      self->next = NULL;
 
-      if (gdu_create_filesystem_page_is_encrypted (data->filesystem_page) ||
-          (gdu_create_filesystem_page_is_other (data->filesystem_page) &&
-           gdu_create_other_page_is_encrypted (data->other_page)))
-        data->prev = PASSWORD_PAGE;
-      else if (gdu_create_filesystem_page_is_other (data->filesystem_page))
-        data->prev = OTHER_PAGE;
+      if (gdu_create_filesystem_page_is_encrypted (self->filesystem_page) ||
+          (gdu_create_filesystem_page_is_other (self->filesystem_page) &&
+           gdu_create_other_page_is_encrypted (self->other_page)))
+        self->prev = PASSWORD_PAGE;
+      else if (gdu_create_filesystem_page_is_other (self->filesystem_page))
+        self->prev = OTHER_PAGE;
       else
-        data->prev = FORMAT_PAGE;
+        self->prev = FORMAT_PAGE;
 
-      gdu_create_confirm_page_fill_confirmation (data->confirm_page);
+      gdu_create_confirm_page_fill_confirmation (self->confirm_page);
     }
 
-  if (data->prev == NULL)
-    gtk_button_set_label (data->back, _("_Cancel"));
+  if (self->prev == NULL)
+    gtk_button_set_label (self->back_button, _("_Cancel"));
   else
-    gtk_button_set_label (data->back, _("_Previous"));
+    gtk_button_set_label (self->back_button, _("_Previous"));
 
-  if (data->next == NULL)
+  if (self->next == NULL)
     {
-      if (data->add_partition)
+      if (self->add_partition)
         {
-          gtk_button_set_label (data->forward, _("Cre_ate"));
-          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (data->forward)),
+          gtk_button_set_label (self->forward_button, _("Cre_ate"));
+          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self->forward_button)),
                                        "suggested-action");
         }
       else
         {
-          gtk_button_set_label (data->forward, _("Form_at"));
-          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (data->forward)),
+          gtk_button_set_label (self->forward_button, _("Form_at"));
+          gtk_style_context_add_class (gtk_widget_get_style_context (GTK_WIDGET (self->forward_button)),
                                        "destructive-action");
         }
     }
   else
     {
-      gtk_button_set_label (data->forward, _("N_ext"));
-      gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (data->forward)),
+      gtk_button_set_label (self->forward_button, _("N_ext"));
+      gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (self->forward_button)),
                                       "suggested-action");
-      gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (data->forward)),
+      gtk_style_context_remove_class (gtk_widget_get_style_context (GTK_WIDGET (self->forward_button)),
                                       "destructive-action");
     }
 
   g_object_get (page, "complete", &complete, NULL);
-  gtk_widget_set_sensitive (GTK_WIDGET (data->forward), complete);
-  gtk_stack_set_visible_child (data->stack, child);
-}
-
-static void
-cancel_cb (GtkDialog *dialog, CreateFormatData *data)
-{
-  create_format_data_free (data);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->forward_button), complete);
+  gtk_stack_set_visible_child (self->pages_stack, child);
 }
 
 static void
 format_cb (GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-  CreateFormatData *data = user_data;
-  GError *error;
+  GduCreateFormatDialog *self = user_data;
+  g_autoptr(GError) error = NULL;
 
-  error = NULL;
   if (!udisks_block_call_format_finish (UDISKS_BLOCK (source_object), res, &error))
-    {
-      gdu_utils_show_error (GTK_WINDOW (data->parent_window), _("Error formatting volume"), error);
-      g_error_free (error);
-    }
-  create_format_data_free (data);
+    gdu_utils_show_error (GTK_WINDOW (self->parent_window), _("Error formatting volume"), error);
 }
 
 static void
-ensure_unused_cb (UDisksClient *client, GAsyncResult *res, CreateFormatData *data)
+ensure_unused_cb (UDisksClient *client, GAsyncResult *res, GduCreateFormatDialog *self)
 {
   GVariantBuilder options_builder;
   const gchar *fs_type;
@@ -232,27 +215,26 @@ ensure_unused_cb (UDisksClient *client, GAsyncResult *res, CreateFormatData *dat
 
   if (!gdu_utils_ensure_unused_finish (client, res, NULL))
     {
-      create_format_data_free (data);
       return;
     }
 
-  fs_type = get_filesystem (data);
-  erase_type = gdu_create_filesystem_page_get_erase (data->filesystem_page);
+  fs_type = get_filesystem (self);
+  erase_type = gdu_create_filesystem_page_get_erase (self->filesystem_page);
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (g_strcmp0 (fs_type, "empty") != 0)
     g_variant_builder_add (&options_builder, "{sv}", "label",
-                           g_variant_new_string (gdu_create_filesystem_page_get_name (data->filesystem_page)));
+                           g_variant_new_string (gdu_create_filesystem_page_get_name (self->filesystem_page)));
 
   if (g_strcmp0 (fs_type, "vfat") != 0 && g_strcmp0 (fs_type, "ntfs") != 0 && g_strcmp0 (fs_type, "exfat") != 0)
     {
       g_variant_builder_add (&options_builder, "{sv}", "take-ownership", g_variant_new_boolean (TRUE));
     }
 
-  if (get_encrypt (data))
+  if (get_encrypt (self))
     {
       g_variant_builder_add (&options_builder, "{sv}", "encrypt.passphrase",
-                             g_variant_new_string (gdu_create_password_page_get_password (data->password_page)));
+                             g_variant_new_string (gdu_create_password_page_get_password (self->password_page)));
 
       g_variant_builder_add (&options_builder, "{sv}", "encrypt.type", g_variant_new_string ("luks2"));
     }
@@ -262,67 +244,66 @@ ensure_unused_cb (UDisksClient *client, GAsyncResult *res, CreateFormatData *dat
 
   g_variant_builder_add (&options_builder, "{sv}", "update-partition-type", g_variant_new_boolean (TRUE));
 
-  udisks_block_call_format (data->block,
+  udisks_block_call_format (self->udisks_block,
                             fs_type,
                             g_variant_builder_end (&options_builder),
                             NULL, /* GCancellable */
                             format_cb,
-                            data);
+                            self);
 }
 
 void
-finish_cb (GtkDialog *assistant, gint response_id, CreateFormatData *data);
+finish_cb (GduCreateFormatDialog *self, gint response_id);
 
 static void
 create_partition_cb (GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-  CreateFormatData *data = user_data;
-  GError *error;
+  GduCreateFormatDialog *self = user_data;
+  g_autoptr(GError) error = NULL;
   gchar *created_partition_object_path = NULL;
   UDisksObject *partition_object = NULL;
   UDisksBlock *partition_block;
 
-  error = NULL;
   if (!udisks_partition_table_call_create_partition_finish (UDISKS_PARTITION_TABLE (source_object),
                                                             &created_partition_object_path,
                                                             res,
                                                             &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->parent_window), _("Error creating partition"), error);
-      g_error_free (error);
-      create_format_data_free (data);
+      gdu_utils_show_error (GTK_WINDOW (self->parent_window), _("Error creating partition"), error);
       return;
     }
 
-  udisks_client_settle (data->client);
+  udisks_client_settle (self->udisks_client);
 
-  partition_object = udisks_client_get_object (data->client, created_partition_object_path);
+  partition_object = udisks_client_get_object (self->udisks_client, created_partition_object_path);
   g_free (created_partition_object_path);
-  gdu_window_select_object (GDU_WINDOW (data->parent_window), partition_object);
+  gdu_window_select_object (GDU_WINDOW (self->parent_window), partition_object);
 
   partition_block = udisks_object_get_block (partition_object);
   if (partition_block == NULL)
     {
       g_warning ("Created partition has no block interface");
-      create_format_data_free (data);
+      gtk_widget_hide (GTK_WIDGET (self));
+      gtk_widget_destroy (GTK_WIDGET (self));
       g_clear_object (&partition_object);
       return;
     }
 
   /* Create a filesystem now on partition if not an extended partition */
-  if (g_strcmp0 (get_filesystem (data), "dos_extended") != 0)
+  if (g_strcmp0 (get_filesystem (self), "dos_extended") != 0)
     {
-      data->add_partition = FALSE;
-      g_object_unref (data->block);
-      data->block = partition_block;
-      g_object_unref (data->object);
-      data->object = partition_object;
-      finish_cb (data->dialog, GTK_RESPONSE_APPLY, data);
+      self->add_partition = FALSE;
+      g_object_unref (self->udisks_block);
+      self->udisks_block = partition_block;
+      g_object_unref (self->udisks_object);
+      self->udisks_object = partition_object;
+      finish_cb (self, GTK_RESPONSE_APPLY);
     }
 }
 
 void
-finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the assistant is done */
+finish_cb (GduCreateFormatDialog *self,
+           int                    response_id) /* the assistant is done */
 {
   guint64 size;
   const gchar *partition_type = "";
@@ -331,36 +312,39 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
   if (response_id != GTK_RESPONSE_APPLY)
     {
       /* step back or cancel */
-      if (data->prev != NULL)
+      if (self->prev != NULL)
         {
-          data->current = data->prev;
-          update_dialog (NULL, NULL, data);
+          self->current = self->prev;
+          update_dialog (NULL, NULL, self);
         }
       else
-        cancel_cb (dialog, data);
+        {
+          gtk_widget_hide (GTK_WIDGET (self));
+          gtk_widget_destroy (GTK_WIDGET (self));
+        }
       return;
     }
 
   /* step to next page */
-  if (data->next != NULL)
+  if (self->next != NULL)
     {
-      data->current = data->next;
-      update_dialog (NULL, NULL, data);
+      self->current = self->next;
+      update_dialog (NULL, NULL, self);
       return;
     }
 
-  if (data->add_partition)
+  if (self->add_partition)
     {
       g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
-      if (g_strcmp0 (get_filesystem (data), "dos_extended") == 0)
+      if (g_strcmp0 (get_filesystem (self), "dos_extended") == 0)
         {
           partition_type = "0x05";
           g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("extended"));
         }
-      else if (g_strcmp0 (udisks_partition_table_get_type_ (data->table), "dos") == 0)
+      else if (g_strcmp0 (udisks_partition_table_get_type_ (self->udisks_table), "dos") == 0)
         {
-          if (gdu_utils_is_inside_dos_extended (data->client, data->table, data->add_partition_offset))
+          if (gdu_utils_is_inside_dos_extended (self->udisks_client, self->udisks_table, self->add_partition_offset))
             {
               g_variant_builder_add (&options_builder, "{sv}", "partition-type", g_variant_new_string ("logical"));
             }
@@ -370,7 +354,7 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
             }
         }
 
-      size = gdu_create_partition_page_get_size (data->partition_page);
+      size = gdu_create_partition_page_get_size (self->partition_page);
       /* Normal alignments of a few MB are expected to happen and normally it works well
        * to pass a slightly larger size.
        * Yet sometimes there are huge amounts of alignment enforced by libblockdev/libparted
@@ -385,30 +369,65 @@ finish_cb (GtkDialog *dialog, gint response_id, CreateFormatData *data) /* the a
        * easier and more accurate to create a partition with a maximal size first and then
        * shrink it to the user's desired size if needed.
        */
-      if (size == data->add_partition_maxsize)
+      if (size == self->add_partition_maxsize)
         size = 0;
-      udisks_partition_table_call_create_partition (data->table,
-                                                    data->add_partition_offset,
+      udisks_partition_table_call_create_partition (self->udisks_table,
+                                                    self->add_partition_offset,
                                                     size,
                                                     partition_type, /* use default type */
                                                     "", /* use blank partition name */
                                                     g_variant_builder_end (&options_builder),
                                                     NULL, /* GCancellable */
                                                     create_partition_cb,
-                                                    data);
+                                                    self);
     }
   else
     {
       /* ensure the volume is unused (e.g. unmounted) before formatting it... */
-      gdu_utils_ensure_unused (data->client,
-                               GTK_WINDOW (data->parent_window),
-                               data->object,
+      gdu_utils_ensure_unused (self->udisks_client,
+                               GTK_WINDOW (self->parent_window),
+                               self->udisks_object,
                                (GAsyncReadyCallback) ensure_unused_cb,
                                NULL, /* GCancellable */
-                               data);
+                               self);
     }
 
-  gtk_widget_hide (GTK_WIDGET (data->dialog));
+  gtk_widget_hide (GTK_WIDGET (self));
+}
+
+static void
+gdu_create_format_dialog_finalize (GObject *object)
+{
+  GduCreateFormatDialog *self = (GduCreateFormatDialog *)object;
+
+  g_clear_object (&self->udisks_object);
+  g_clear_object (&self->udisks_block);
+  g_clear_object (&self->udisks_drive);
+
+  G_OBJECT_CLASS (gdu_create_format_dialog_parent_class)->finalize (object);
+}
+
+static void
+gdu_create_format_dialog_class_init (GduCreateFormatDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize = gdu_create_format_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/Disks/ui/"
+                                               "create-format.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, pages_stack);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, back_button);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, forward_button);
+}
+
+static void
+gdu_create_format_dialog_init (GduCreateFormatDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 void
@@ -417,76 +436,56 @@ gdu_create_format_show (UDisksClient *client,
                         UDisksObject *object,
                         gboolean      add_partition, /* format vs add partition and format */
                         guint64       add_partition_offset,
-                        guint64       add_partition_maxsize,
-                        GCallback     finished_cb,
-                        gpointer      cb_data)
+                        guint64       add_partition_maxsize)
 {
-  GduApplication *app;
-  CreateFormatData *data;
+  GduCreateFormatDialog *self;
 
-  app = GDU_APPLICATION (g_application_get_default ());
-  data = g_new0 (CreateFormatData, 1);
-  data->finished_cb = finished_cb;
-  data->cb_data = cb_data;
-  data->client = client;
-  data->parent_window = (parent_window != NULL) ? g_object_ref (parent_window) : NULL;
-  data->object = g_object_ref (object);
-  data->block = udisks_object_get_block (object);
-  g_assert (data->block != NULL);
-  data->drive = udisks_client_get_drive_for_block (client, data->block);
-  data->table = udisks_object_get_partition_table (object);
+  g_return_if_fail (UDISKS_IS_CLIENT (client));
+  g_return_if_fail (GTK_IS_WINDOW (parent_window));
+  g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-  data->dialog = GTK_DIALOG (gdu_application_new_widget (app,
-                                                         "create-format.ui",
-                                                         "create-format",
-                                                         &data->builder));
-  data->stack = GTK_STACK (gtk_builder_get_object (data->builder, "pages-stack"));
+  self = g_object_new (GDU_TYPE_CREATE_FORMAT_DIALOG,
+                       "transient-for", parent_window,
+                       "use-header-bar", 1,
+                       NULL);
 
-  data->add_partition = add_partition;
-  data->add_partition_offset = add_partition_offset;
-  data->add_partition_maxsize = add_partition_maxsize;
+  self->parent_window = (GduWindow *)parent_window;
+  self->udisks_client = client;
+  self->udisks_object = g_object_ref (object);
+  self->udisks_block = udisks_object_get_block (object);
+  self->udisks_drive = udisks_client_get_drive_for_block (client, self->udisks_block);
+  self->udisks_table = udisks_object_get_partition_table (object);
+  g_assert (self->udisks_block != NULL);
 
-  if (data->add_partition)
-    {
-      data->partition_page = gdu_create_partition_page_new (data->client, data->table,
-                                                            add_partition_maxsize, add_partition_offset);
-      gtk_stack_add_titled (data->stack, GTK_WIDGET (data->partition_page), PARTITION_PAGE, _("Create Partition"));
-      g_signal_connect (data->partition_page, "notify::complete", G_CALLBACK (update_dialog), data);
-    }
-  else
-    {
-      data->partition_page = NULL;
-    }
-
-  data->filesystem_page = gdu_create_filesystem_page_new (data->client, data->drive);
-  gtk_stack_add_titled (data->stack, GTK_WIDGET (data->filesystem_page), FORMAT_PAGE, _("Format Volume"));
-  g_signal_connect (data->filesystem_page, "notify::complete", G_CALLBACK (update_dialog), data);
-  data->other_page = gdu_create_other_page_new (data->client);
-  gtk_stack_add_titled (data->stack, GTK_WIDGET (data->other_page), OTHER_PAGE, _("Custom Format"));
-  g_signal_connect (data->other_page, "notify::complete", G_CALLBACK (update_dialog), data);
-  data->password_page = gdu_create_password_page_new ();
-  gtk_stack_add_titled (data->stack, GTK_WIDGET (data->password_page), PASSWORD_PAGE, _("Set Password"));
-  g_signal_connect (data->password_page, "notify::complete", G_CALLBACK (update_dialog), data);
-  data->confirm_page = gdu_create_confirm_page_new (data->client, data->object, data->block);
-  gtk_stack_add_titled (data->stack, GTK_WIDGET (data->confirm_page), CONFIRM_PAGE, _("Confirm Details"));
-
-  data->back = GTK_BUTTON (gtk_dialog_add_button (data->dialog, _("_Cancel"), GTK_RESPONSE_CANCEL));
-  data->forward = GTK_BUTTON (gtk_dialog_add_button (data->dialog, _("_Format"), GTK_RESPONSE_APPLY));
-  gtk_widget_grab_default (GTK_WIDGET (data->forward));
-
-  g_signal_connect (data->dialog, "close", G_CALLBACK (cancel_cb), data);
-  g_signal_connect (data->dialog, "response", G_CALLBACK (finish_cb), data);
+  self->add_partition = add_partition;
+  self->add_partition_offset = add_partition_offset;
+  self->add_partition_maxsize = add_partition_maxsize;
 
   if (add_partition)
-    data->current = PARTITION_PAGE;
-  else
-    data->current = FORMAT_PAGE;
-
-  if (parent_window != NULL)
     {
-      gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
+      self->partition_page = gdu_create_partition_page_new (client, self->udisks_table,
+                                                            add_partition_maxsize, add_partition_offset);
+      gtk_stack_add_titled (self->pages_stack, GTK_WIDGET (self->partition_page), PARTITION_PAGE, _("Create Partition"));
+      g_signal_connect (self->partition_page, "notify::complete", G_CALLBACK (update_dialog), self);
     }
 
-  update_dialog (NULL, NULL, data);
-  gtk_widget_show (GTK_WIDGET (data->dialog));
+  self->filesystem_page = gdu_create_filesystem_page_new (client, self->udisks_drive);
+  gtk_stack_add_titled (self->pages_stack, GTK_WIDGET (self->filesystem_page), FORMAT_PAGE, _("Format Volume"));
+  g_signal_connect (self->filesystem_page, "notify::complete", G_CALLBACK (update_dialog), self);
+  self->other_page = gdu_create_other_page_new (client);
+  gtk_stack_add_titled (self->pages_stack, GTK_WIDGET (self->other_page), OTHER_PAGE, _("Custom Format"));
+  g_signal_connect (self->other_page, "notify::complete", G_CALLBACK (update_dialog), self);
+  self->password_page = gdu_create_password_page_new ();
+  gtk_stack_add_titled (self->pages_stack, GTK_WIDGET (self->password_page), PASSWORD_PAGE, _("Set Password"));
+  g_signal_connect (self->password_page, "notify::complete", G_CALLBACK (update_dialog), self);
+  self->confirm_page = gdu_create_confirm_page_new (client, self->udisks_object, self->udisks_block);
+  gtk_stack_add_titled (self->pages_stack, GTK_WIDGET (self->confirm_page), CONFIRM_PAGE, _("Confirm Details"));
+
+  if (add_partition)
+    self->current = PARTITION_PAGE;
+  else
+    self->current = FORMAT_PAGE;
+
+  update_dialog (NULL, NULL, self);
+  gtk_window_present (GTK_WINDOW (self));
 }

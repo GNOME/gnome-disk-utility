@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "gdu-manager.h"
 #include "gduapplication.h"
 #include "gducreateformatdialog.h"
 #include "gdurestorediskimagedialog.h"
@@ -26,6 +27,7 @@ struct _GduApplication
 {
   GtkApplication parent_instance;
 
+  GduManager *disk_manager;
   UDisksClient *client;
   GduWindow *window;
 
@@ -109,21 +111,12 @@ gdu_application_should_exit (GduApplication *app)
 static void
 gdu_application_ensure_client (GduApplication *app)
 {
-  GError *error;
+  g_autoptr(GError) error = NULL;
 
-  if (app->client != NULL)
-    goto out;
-
-  error = NULL;
-  app->client = udisks_client_new_sync (NULL, /* GCancellable* */
-                                        &error);
-  if (app->client == NULL)
-    {
-      g_error ("Error getting udisks client: %s", error->message);
-      g_error_free (error);
-    }
- out:
-  ;
+  app->disk_manager = gdu_manager_get_default (&error);
+  app->client = gdu_manager_get_client (app->disk_manager);
+  if (error)
+    g_error ("Error getting udisks client: %s", error->message);
 }
 
 static UDisksObject *
@@ -277,10 +270,8 @@ gdu_application_activate (GApplication *_app)
 
   gdu_application_ensure_client (app);
 
-  app->window = gdu_window_new (app, app->client);
-  gtk_application_add_window (GTK_APPLICATION (app),
-                              GTK_WINDOW (app->window));
-  gtk_widget_show (GTK_WIDGET (app->window));
+  app->window = gdu_window_new (_app, app->disk_manager);
+  gtk_window_present (GTK_WINDOW (app->window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -291,7 +282,8 @@ new_disk_image_activated (GSimpleAction *action,
                           gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  gdu_new_disk_image_dialog_show (app->window);
+
+  gdu_window_show_new_disk_image (app->window);
 }
 
 static void

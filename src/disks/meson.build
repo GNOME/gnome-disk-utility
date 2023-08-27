@@ -4,6 +4,7 @@ enum_headers = files('gduenums.h')
 
 sources = files(
   'gdu-item.c',
+  'gdu-drive.c',
   'gduapplication.c',
   'gduatasmartdialog.c',
   'gdubenchmarkdialog.c',

@@ -6,6 +6,7 @@ sources = files(
   'gdu-item.c',
   'gdu-block.c',
   'gdu-drive.c',
+  'gdu-manager.c',
   'gduapplication.c',
   'gduatasmartdialog.c',
   'gdubenchmarkdialog.c',

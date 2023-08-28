@@ -1,60 +1,31 @@
-/*
+/* gdu-window.c
+ *
  * Copyright (C) 2008-2013 Red Hat, Inc.
+ * Copyright 2023 Mohammed Sadiq <sadiq@sadiqpk.org>
  *
  * Licensed under GPL version 2 or later.
  *
- * Author: David Zeuthen <zeuthen@gmail.com>
+ * Author(s):
+ *   David Zeuthen <zeuthen@gmail.com>
+ *   Mohammed Sadiq <sadiq@sadiqpk.org>
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-#ifndef __GDU_WINDOW_H__
-#define __GDU_WINDOW_H__
+#pragma once
 
-#include <gtk/gtk.h>
-#include "handy.h"
-#include "gdutypes.h"
+#include <handy.h>
+
+#include "gdu-manager.h"
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_WINDOW         (gdu_window_get_type ())
-#define GDU_WINDOW(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), GDU_TYPE_WINDOW, GduWindow))
-#define GDU_IS_WINDOW(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), GDU_TYPE_WINDOW))
+#define GDU_TYPE_WINDOW (gdu_window_get_type ())
+G_DECLARE_FINAL_TYPE (GduWindow, gdu_window, GDU, WINDOW, HdyApplicationWindow)
 
-GType           gdu_window_get_type        (void) G_GNUC_CONST;
-GduWindow      *gdu_window_new             (GduApplication *application,
-                                            UDisksClient   *client);
-GduApplication *gdu_window_get_application (GduWindow      *window);
-UDisksClient   *gdu_window_get_client      (GduWindow      *window);
-
-gboolean        gdu_window_select_object     (GduWindow    *window,
-                                              UDisksObject *object);
-
-
-void            gdu_window_show_attach_disk_image (GduWindow *window);
-
-void            gdu_window_ensure_unused (GduWindow            *window,
-                                          UDisksObject         *object,
-                                          GAsyncReadyCallback   callback,
-                                          GCancellable         *cancellable,
-                                          gpointer              user_data);
-
-gboolean        gdu_window_ensure_unused_finish (GduWindow     *window,
-                                                 GAsyncResult  *res,
-                                                 GError       **error);
-
-void            gdu_window_ensure_unused_list (GduWindow            *window,
-                                               GList                *objects,
-                                               GAsyncReadyCallback   callback,
-                                               GCancellable         *cancellable,
-                                               gpointer              user_data);
-
-gboolean        gdu_window_ensure_unused_list_finish (GduWindow     *window,
-                                                      GAsyncResult  *res,
-                                                      GError       **error);
-
-gboolean        gdu_window_attach_disk_image_helper (GduWindow *window,
-                                                     gchar     *filename,
-                                                     gboolean   readonly);
+GduWindow   *gdu_window_new                        (GApplication    *application,
+                                                    GduManager      *manager);
+void          gdu_window_show_attach_disk_image    (GduWindow      *self);
+void          gdu_window_show_new_disk_image       (GduWindow      *self);
 
 G_END_DECLS
-
-#endif /* __GDU_WINDOW_H__ */

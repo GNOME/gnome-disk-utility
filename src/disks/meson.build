@@ -7,6 +7,7 @@ sources = files(
   'gdu-block.c',
   'gdu-drive.c',
   'gdu-manager.c',
+  'gdu-drive-row.c',
   'gduapplication.c',
   'gduatasmartdialog.c',
   'gdubenchmarkdialog.c',

@@ -3,6 +3,7 @@ name = 'GNOME-Disks'
 enum_headers = files('gduenums.h')
 
 sources = files(
+  'gdu-item.c',
   'gduapplication.c',
   'gduatasmartdialog.c',
   'gdubenchmarkdialog.c',

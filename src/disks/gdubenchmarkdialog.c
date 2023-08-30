@@ -244,8 +244,8 @@ on_drawing_area_draw (GtkWidget      *widget,
   gdouble read_transfer_rate_max = 0.0;
   gdouble write_transfer_rate_max = 0.0;
   gdouble access_time_max = 0.0;
-  gdouble prev_x;
-  gdouble prev_y;
+  gdouble prev_x = 0.0;
+  gdouble prev_y = 0.0;
   GtkStyleContext *context;
   PangoFontDescription *font_desc;
   gint size;

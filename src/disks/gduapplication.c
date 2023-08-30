@@ -397,9 +397,9 @@ gdu_application_startup (GApplication *_app)
   const gchar **it;
   const gchar *action_accels[] = {
     "win.go-back",               "Escape", NULL,
-    "win.open-drive-menu",       "F10", NULL,
-    "win.open-volume-menu",      "<Shift>F10", NULL,
-    "win.open-app-menu",         "F9", NULL,
+    "win.open-drive-menu",       "F9", NULL,
+    "win.open-volume-menu",      "<Shift>F9", NULL,
+    "win.open-app-menu",         "F10", NULL,
 
     "win.format-disk",           "<Primary>D", NULL,
     "win.restore-disk-image",    "<Primary>R", NULL,

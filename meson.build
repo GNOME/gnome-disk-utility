@@ -1,5 +1,6 @@
 project(
-  'gnome-disk-utility', 'c',
+  'gnome-disk-utility',
+  ['c', 'rust'],
   version: '47.alpha',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
@@ -16,6 +17,13 @@ gdu_libexecdir = get_option('libexecdir')
 gdu_localedir = get_option('localedir')
 gdu_mandir = get_option('mandir')
 gdu_sysconfdir = get_option('sysconfdir')
+
+datadir = gdu_prefix / gdu_datadir
+localedir = gdu_prefix / gdu_localedir
+pkgdatadir = datadir / meson.project_name()
+iconsdir = datadir / 'icons'
+podir = meson.project_source_root() / 'po'
+gettext_package = meson.project_name()
 
 gnome = import('gnome')
 i18n = import('i18n')
@@ -34,36 +42,38 @@ config_h.set_quoted('GETTEXT_PACKAGE', gdu_name)
 compiler_flags = []
 
 if get_option('buildtype').contains('debug')
-  compiler_flags += cc.get_supported_arguments([
-    '-fno-strict-aliasing',
-    '-Wcast-align',
-    '-Wdeclaration-after-statement',
-    '-Wformat=2',
-    '-Winit-self',
-    '-Winline',
-    '-Wmissing-declarations',
-    '-Wmissing-format-attribute',
-    '-Wmissing-include-dirs',
-    '-Wmissing-noreturn',
-    '-Wmissing-prototypes',
-    '-Wnested-externs',
-    '-Wno-error=missing-field-initializers',
-    '-Wno-error=unused-parameter',
-    '-Wno-missing-field-initializers',
-    '-Wno-unused-parameter',
-    '-Wold-style-definition',
-    '-Wpacked',
-    '-Wredundant-decls',
-    '-Wshadow',
-    '-Wsign-compare',
-    '-Wstrict-aliasing',
-    '-Wstrict-prototypes',
-    '-Wswitch-default',
-    '-Wswitch-enum',
-    '-Wundef',
-    '-Wunused-but-set-variable',
-    '-Wwrite-strings',
-  ])
+  compiler_flags += cc.get_supported_arguments(
+    [
+      '-fno-strict-aliasing',
+      '-Wcast-align',
+      '-Wdeclaration-after-statement',
+      '-Wformat=2',
+      '-Winit-self',
+      '-Winline',
+      '-Wmissing-declarations',
+      '-Wmissing-format-attribute',
+      '-Wmissing-include-dirs',
+      '-Wmissing-noreturn',
+      '-Wmissing-prototypes',
+      '-Wnested-externs',
+      '-Wno-error=missing-field-initializers',
+      '-Wno-error=unused-parameter',
+      '-Wno-missing-field-initializers',
+      '-Wno-unused-parameter',
+      '-Wold-style-definition',
+      '-Wpacked',
+      '-Wredundant-decls',
+      '-Wshadow',
+      '-Wsign-compare',
+      '-Wstrict-aliasing',
+      '-Wstrict-prototypes',
+      '-Wswitch-default',
+      '-Wswitch-enum',
+      '-Wundef',
+      '-Wunused-but-set-variable',
+      '-Wwrite-strings',
+    ],
+  )
 endif
 
 add_project_arguments(compiler_flags, language: 'c')
@@ -87,12 +97,44 @@ enable_logind = (logind != 'none')
 if enable_logind
   logind_dep = dependency(logind, version: '>= 209')
 endif
-config_h.set('HAVE_LOGIND', enable_logind,
-             description: 'Define to 1 if logind API is available')
+config_h.set(
+  'HAVE_LOGIND',
+  enable_logind,
+  description: 'Define to 1 if logind API is available',
+)
 
-subdir('src/libgdu')
-subdir('src/disks')
-subdir('src/disk-image-mounter')
+# configure rust
+cargo = find_program('cargo', required: true)
+
+iv_prefix = get_option('prefix')
+iv_bindir = iv_prefix / get_option('bindir')
+iv_localedir = iv_prefix / get_option('localedir')
+iv_datadir = iv_prefix / get_option('datadir')
+iv_pkgdatadir = iv_datadir / meson.project_name()
+
+profile = ''
+
+if get_option('profile') != 'release'
+  profile = 'Devel'
+endif
+
+cargo_sources = files(
+  'Cargo.lock',
+  'Cargo.toml',
+)
+
+conf_rs = configuration_data()
+conf_rs.set_quoted('PROFILE', profile)
+conf_rs.set_quoted('VERSION', gdu_version)
+conf_rs.set_quoted('LOCALEDIR', localedir)
+conf_rs.set_quoted('PKGDATADIR', iv_pkgdatadir)
+conf_rs.set_quoted('GETTEXT_PACKAGE', gettext_package)
+
+# Pre-commit hook for rust formatting
+if get_option('profile') == 'development'
+  message('Setting up git pre-commit hook..')
+  run_command('cp', '-f', 'hooks/pre-commit.hook', '.git/hooks/pre-commit', check: false)
+endif
 
 # *** gnome-settings-daemon plug-in ***
 enable_gsd_plugin = get_option('gsd_plugin')
@@ -113,10 +155,24 @@ configure_file(
   configuration: config_h,
 )
 
+subdir('src/libgdu')
+subdir('src/disks')
+subdir('src/disk-image-mounter')
+
 gnome.post_install(
   gtk_update_icon_cache: true,
   glib_compile_schemas: true,
   update_desktop_database: true,
+)
+
+meson.add_dist_script(
+  'build-aux/meson/dist-vendor.sh',
+  join_paths(
+    meson.project_build_root(),
+    'meson-dist',
+    meson.project_name() + '-' + meson.project_version(),
+  ),
+  meson.project_source_root(),
 )
 
 output = '\n        gnome-disk-utility ' + gdu_version + '\n'

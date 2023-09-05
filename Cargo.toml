@@ -1,0 +1,16 @@
+[package]
+name = "gnome-disk-utilities"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+license = "GPL-2.0-or-later"
+
+[profile.release]
+lto = true
+codegen-units = 1
+
+[[bin]]
+name = 'gnome-disk-image-mounter'
+path = "src/disk-image-mounter/main.rs"
+
+[dependencies]

@@ -44,14 +44,6 @@ struct _GduWindow
 G_DEFINE_TYPE (GduWindow, gdu_window, HDY_TYPE_APPLICATION_WINDOW)
 
 static void
-window_back_clicked_cb (GduWindow *self)
-{
-  g_assert (GDU_IS_WINDOW (self));
-
-  gtk_list_box_unselect_all (self->drives_listbox);
-}
-
-static void
 drive_list_row_selection_changed_cb (GduWindow *self)
 {
   GduDriveRow *row;
@@ -142,7 +134,6 @@ gdu_window_class_init (GduWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduWindow, loop_file_chooser);
   gtk_widget_class_bind_template_child (widget_class, GduWindow, readonly_check_button);
 
-  gtk_widget_class_bind_template_callback (widget_class, window_back_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, drive_list_row_selection_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, loop_file_chooser_response_cb);
 }

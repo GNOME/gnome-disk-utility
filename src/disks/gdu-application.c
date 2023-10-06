@@ -26,22 +26,17 @@
 
 struct _GduApplication
 {
-  GtkApplication parent_instance;
+  AdwApplication  parent_instance;
 
-  GduManager *disk_manager;
-  UDisksClient *client;
-  GduWindow *window;
+  GduManager     *disk_manager;
+  UDisksClient   *client;
+  GduWindow      *window;
 
   /* Maps from UDisksObject* -> GList<GduLocalJob*> */
-  GHashTable *local_jobs;
+  GHashTable     *local_jobs;
 };
 
-typedef struct
-{
-  GtkApplicationClass parent_class;
-} GduApplicationClass;
-
-G_DEFINE_TYPE (GduApplication, gdu_application, GTK_TYPE_APPLICATION);
+G_DEFINE_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
 
 static void gdu_application_set_options (GduApplication *app);
 
@@ -78,34 +73,14 @@ gdu_application_finalize (GObject *object)
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
 
-
-gboolean
-gdu_application_should_exit (GduApplication *app)
+void
+application_quit_response_cb (AdwMessageDialog* self,
+                               gchar* response,
+                               gpointer user_data)
 {
-  GtkWidget *dialog;
-  gint response;
-
-  if (app->local_jobs != NULL && g_hash_table_size (app->local_jobs) != 0)
-    {
-      dialog = gtk_message_dialog_new (GTK_WINDOW (app->window),
-                                       GTK_DIALOG_DESTROY_WITH_PARENT,
-                                       GTK_MESSAGE_WARNING,
-                                       GTK_BUTTONS_OK_CANCEL,
-                                       _("Stop running jobs?"));
-      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                _("Closing now stops the running jobs and leads to a corrupt result."));
-
-      response = gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_window_hide (GTK_WINDOW (dialog));
-
-      if (response != GTK_RESPONSE_OK)
-        return FALSE;
-
-    }
-
-  return TRUE;
+  GduApplication *app = GDU_APPLICATION (user_data);
+  gtk_window_close (GTK_WINDOW (app->window));
 }
-
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -363,14 +338,45 @@ about_activated (GSimpleAction *action,
 }
 
 static void
-quit_activated (GSimpleAction *action,
-                GVariant      *parameter,
-                gpointer       user_data)
+gdu_application_quit (GSimpleAction *action,
+                      GVariant      *parameter,
+                      gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
+  GtkWidget *dialog;
 
-  if (gdu_application_should_exit (app))
-    gtk_window_hide (GTK_WINDOW (app->window));
+  if (app->local_jobs != NULL && g_hash_table_size (app->local_jobs) != 0)
+    {
+      dialog = adw_message_dialog_new (GTK_WINDOW (app->window),
+                                       _("Stop running jobs?"),
+                                       _("Closing now stops the running jobs and leads to a corrupt result."));
+
+      adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                        "cancel", _("Cancel"),
+                                        "exit", _("Ok"),
+                                        NULL);
+
+      adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                                  "exit",
+                                                  ADW_RESPONSE_DESTRUCTIVE);
+
+      adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
+                                              "cancel");
+
+      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                            "cancel");
+      
+      g_signal_connect_swapped (dialog,
+                                "response",
+                                G_CALLBACK (application_quit_response_cb),
+                                app);
+
+      gtk_window_present (GTK_WINDOW (dialog));
+    }
+  else
+    {
+      gtk_window_close (GTK_WINDOW (app->window));
+    }
 }
 
 static void
@@ -378,11 +384,13 @@ help_activated (GSimpleAction *action,
                 GVariant      *parameter,
                 gpointer       user_data)
 {
-  GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_show_uri_on_window (GTK_WINDOW (app->window),
-                          "help:gnome-help/disk",
-                          GDK_CURRENT_TIME,
-                          NULL); /* GError */
+  GtkWindow *window;
+  GtkApplication *application = user_data;
+  GtkUriLauncher *launcher;
+
+  window = gtk_application_get_active_window (application);
+  launcher = gtk_uri_launcher_new ("help:gnome-help/disk");
+  gtk_uri_launcher_launch (launcher, window, NULL, NULL, NULL);
 }
 
 static GActionEntry app_entries[] =
@@ -392,7 +400,7 @@ static GActionEntry app_entries[] =
   { "shortcuts", shortcuts_activated, NULL, NULL, NULL },
   { "help", help_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
-  { "quit", quit_activated, NULL, NULL, NULL }
+  { "quit", gdu_application_quit, NULL, NULL, NULL }
 };
 
 static void
@@ -426,10 +434,6 @@ gdu_application_startup (GApplication *_app)
   if (G_APPLICATION_CLASS (gdu_application_parent_class)->startup != NULL)
     G_APPLICATION_CLASS (gdu_application_parent_class)->startup (_app);
 
-  hdy_init ();
-  hdy_style_manager_set_color_scheme (hdy_style_manager_get_default (),
-                                      HDY_COLOR_SCHEME_PREFER_LIGHT);
-
   g_action_map_add_action_entries (G_ACTION_MAP (app), app_entries, G_N_ELEMENTS (app_entries), app);
 
   for (it = action_accels; it[0] != NULL; it += g_strv_length ((gchar **)it) + 1)
@@ -454,14 +458,14 @@ gdu_application_class_init (GduApplicationClass *klass)
   application_class->startup      = gdu_application_startup;
 }
 
-GApplication *
+GtkApplication *
 gdu_application_new (void)
 {
-  return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
-                                      "application-id", "org.gnome.DiskUtility",
-                                      "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
-                                      "resource-base-path", "/org/gnome/DiskUtility",
-                                      NULL));
+  return g_object_new (GDU_TYPE_APPLICATION,
+                       "application-id", "org.gnome.DiskUtility",
+                       "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
+                       "resource-base-path", "/org/gnome/DiskUtility",
+                       NULL);
 }
 
 UDisksClient *

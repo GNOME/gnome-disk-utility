@@ -1,193 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <template class="GduNewDiskImageDialog" parent="GtkDialog">
-    <property name="width_request">550</property>
-    <property name="border_width">12</property>
-    <property name="title" translatable="yes">New Disk Image</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="type_hint">dialog</property>
-    <signal name="response" handler="new_disk_image_dialog_response_cb" />
+  <template class="GduNewDiskImageDialog" parent="AdwWindow">
+    <property name="default-width">440</property>
+    <property name="default-height">258</property>
+    <property name="width-request">400</property>
+    <property name="modal">true</property>
+    <property name="title">Create Disk Image</property>
+    <property name="content">
+      <object class="AdwToolbarView">
 
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-        <child>
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="hexpand">True</property>
-            <property name="row_spacing">12</property>
-            <property name="column_spacing">12</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Image _Size</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">size_spin_button</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Name</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">name_entry</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Save in _Folder</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">choose_folder_button</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSpinButton" id="size_spin_button">
-                <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">The size of the image to create</property>
-                <property name="activates_default">True</property>
-                <property name="adjustment">size_adjustment</property>
-                <property name="digits">3</property>
-                <signal name="value-changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="name_entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="hexpand">True</property>
-                <property name="activates_default">True</property>
-                <signal name="changed" handler="new_disk_image_details_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-                <property name="width">2</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkFileChooserButton" id="choose_folder_button">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="action">select-folder</property>
-                <property name="local_only">False</property>
-                <property name="title" translatable="yes">Select a Folder</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-                <property name="width">2</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkComboBoxText" id="size_unit_combobox">
-                <property name="visible">True</property>
-                <signal name="changed" handler="new_disk_image_size_unit_changed_cb" swapped="yes" />
-                <items>
-                  <item translatable="yes">bytes</item>
-                  <item translatable="yes">kB</item>
-                  <item translatable="yes">MB</item>
-                  <item translatable="yes">GB</item>
-                  <item translatable="yes">TB</item>
-                  <item translatable="yes">PB</item>
-                  <item translatable="yes">KiB</item>
-                  <item translatable="yes">MiB</item>
-                  <item translatable="yes">GiB</item>
-                  <item translatable="yes">TiB</item>
-                  <item translatable="yes">PiB</item>
-                </items>
-              </object>
-              <packing>
-                <property name="left_attach">2</property>
-                <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-
-          <!-- Cancel, Create buttons -->
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="use_underline">True</property>
+        <!-- Headerbar -->
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">false</property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="true">Cancel</property>
+                <property name="action-name">window.close</property>
               </object>
             </child>
-            <child>
+            <child type="end">
               <object class="GtkButton" id="create_image_button">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-                <property name="label" translatable="yes">Attach new _Image…</property>
+                <property name="label" translatable="true">Create</property>
+                <signal name="clicked" handler="on_create_image_button_clicked_cb" swapped="True"
+                  object="GduNewDiskImageDialog" />
+                <style>
+                  <class name="suggested-action" />
+                </style>
               </object>
             </child>
           </object>
         </child>
 
+        <!-- Body -->
+        <property name="content">
+          <object class="AdwClamp">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="margin-top">24</property>
+                <property name="margin-bottom">24</property>
+                <property name="margin-start">24</property>
+                <property name="margin-end">24</property>
+                <child>
+                  <object class="AdwEntryRow" id="name_entry">
+                    <property name="title" translatable="true">Name</property>
+                    <signal name="changed" handler="new_disk_image_details_changed_cb"
+                      swapped="True" object="GduNewDiskImageDialog" />
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwActionRow" id="location_entry">
+                    <property name="title" translatable="true">Location</property>
+                    <child type="suffix">
+                      <object class="GtkButton">
+                        <style>
+                          <class name="flat" />
+                        </style>
+                        <property name="valign">GTK_ALIGN_CENTER</property>
+                        <property name="icon-name">folder-open-symbolic</property>
+                        <signal name="clicked" handler="on_choose_folder_button_clicked_cb"
+                          swapped="True" object="GduNewDiskImageDialog" />
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinRow" id="size_entry">
+                    <property name="title" translatable="true">Size</property>
+                    <signal name="output" handler="set_size_entry_unit_cb" />
+                    <signal name="changed" handler="new_disk_image_details_changed_cb"
+                      swapped="True" object="GduNewDiskImageDialog" />
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="upper">10000000000000</property>
+                        <property name="step-increment">0.1</property>
+                        <property name="page-increment">10</property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
-    </child>
-
-    <action-widgets>
-      <action-widget response="cancel">cancel_button</action-widget>
-      <action-widget response="ok" default="true">create_image_button</action-widget>
-    </action-widgets>
+    </property>
   </template>
-
-  <object class="GtkAdjustment" id="size_adjustment">
-    <property name="upper">10000000000000</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">100</property>
-  </object>
-
 </interface>

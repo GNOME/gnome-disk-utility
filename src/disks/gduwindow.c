@@ -3532,7 +3532,7 @@ on_drive_menu_item_format_disk (GSimpleAction *action,
 
   object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_format_disk_dialog_show (window, object);
+  gdu_format_disk_dialog_show (GTK_WINDOW (window), object, window->client);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

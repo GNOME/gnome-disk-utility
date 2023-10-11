@@ -29,7 +29,8 @@ struct _GduFormatDiskDialog
   GtkComboBox       *type_combobox;
   GtkComboBox       *erase_combobox;
 
-  GduWindow         *window;
+  GtkWindow         *parent_window;
+  UDisksClient      *udisks_client;
   UDisksObject      *udisks_object;
   UDisksBlock       *udisks_block;
   UDisksDrive       *udisks_drive;
@@ -48,22 +49,22 @@ format_cb (GObject      *source_object,
   g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_format_finish (self->udisks_block, res, &error))
-    gdu_utils_show_error (GTK_WINDOW (self->window), _("Error formatting disk"), error);
+    gdu_utils_show_error (self->parent_window, _("Error formatting disk"), error);
 
   gtk_widget_hide (GTK_WIDGET (self));
   gtk_widget_destroy (GTK_WIDGET (self));
 }
 
 static void
-ensure_unused_cb (GduWindow     *window,
-                  GAsyncResult  *res,
-                  gpointer       user_data)
+ensure_unused_cb (GtkWindow    *parent_window,
+                  GAsyncResult *res,
+                  gpointer      user_data)
 {
   GduFormatDiskDialog *self = user_data;
   const char *partition_table_type, *erase_type;
   GVariantBuilder options_builder;
 
-  if (!gdu_window_ensure_unused_finish (window, res, NULL))
+  if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL))
     {
       gtk_widget_hide (GTK_WIDGET (self));
       gtk_widget_destroy (GTK_WIDGET (self));
@@ -140,12 +141,12 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
 
   objects = g_list_append (NULL, self->udisks_object);
   gtk_widget_hide (GTK_WIDGET (self));
-  if (!gdu_utils_show_confirmation (GTK_WINDOW (self->window),
+  if (!gdu_utils_show_confirmation (self->parent_window,
                                     primary_message,
                                     str->str,
                                     _("_Format"),
                                     NULL, NULL,
-                                    gdu_window_get_client (self->window), objects, TRUE))
+                                    self->udisks_client, objects, TRUE))
     {
       gtk_widget_hide (GTK_WIDGET (self));
       gtk_widget_destroy (GTK_WIDGET (self));
@@ -154,11 +155,12 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
     }
 
   /* ensure the volume is unused (e.g. unmounted) before formatting it... */
-  gdu_window_ensure_unused (self->window,
-                            self->udisks_object,
-                            (GAsyncReadyCallback) ensure_unused_cb,
-                            NULL, /* GCancellable */
-                            self);
+  gdu_utils_ensure_unused(self->udisks_client,
+                          self->parent_window,
+                          self->udisks_object,
+                          (GAsyncReadyCallback) ensure_unused_cb,
+                          NULL, /* GCancellable */
+                          self);
 }
 
 static void
@@ -440,19 +442,21 @@ format_disk_populate (GduFormatDiskDialog *self)
 }
 
 void
-gdu_format_disk_dialog_show (GduWindow    *window,
-                             UDisksObject *object)
+gdu_format_disk_dialog_show (GtkWindow    *parent,
+                             UDisksObject *object,
+                             UDisksClient *client)
 {
   GduFormatDiskDialog *self;
 
   self = g_object_new (GDU_TYPE_FORMAT_DISK_DIALOG,
-                       "transient-for", window,
+                       "transient-for", parent,
                        NULL);
 
-  self->window = window;
+  g_set_weak_pointer (&self->parent_window, parent);
+  self->udisks_client = client;
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
-  self->udisks_drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), self->udisks_block);
+  self->udisks_drive = udisks_client_get_drive_for_block (client, self->udisks_block);
 
   if (self->udisks_drive)
     {

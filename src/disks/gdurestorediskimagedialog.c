@@ -33,8 +33,9 @@ typedef struct
 {
   volatile gint ref_count;
 
-  GduWindow *window;
+  GtkWindow *window;
   UDisksObject *object;
+  UDisksClient *client;
   gchar *disk_image_filename;
   gboolean switch_to_object;
 
@@ -133,7 +134,7 @@ dialog_data_terminate_job (DialogData *data)
 {
   if (data->local_job != NULL)
     {
-      gdu_application_destroy_local_job (gdu_window_get_application (data->window), data->local_job);
+      gdu_application_destroy_local_job ((gpointer)g_application_get_default (), data->local_job);
       data->local_job = NULL;
     }
 }
@@ -143,7 +144,7 @@ dialog_data_uninhibit (DialogData *data)
 {
   if (data->inhibit_cookie > 0)
     {
-      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+      gtk_application_uninhibit ((gpointer)g_application_get_default (),
                                  data->inhibit_cookie);
       data->inhibit_cookie = 0;
     }
@@ -278,7 +279,7 @@ restore_disk_image_update (DialogData *data)
             }
           else
             {
-              s = udisks_client_get_size_for_display (gdu_window_get_client (data->window), uncompressed_size, FALSE, TRUE);
+              s = udisks_client_get_size_for_display (data->client, uncompressed_size, FALSE, TRUE);
               /* Translators: Shown for a compressed disk image in the "Size" field.
                *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
                */
@@ -289,7 +290,7 @@ restore_disk_image_update (DialogData *data)
         }
       else
         {
-          image_size_str = udisks_client_get_size_for_display (gdu_window_get_client (data->window), size, FALSE, TRUE);
+          image_size_str = udisks_client_get_size_for_display (data->client, size, FALSE, TRUE);
         }
 
       if (data->block_size > 0)
@@ -305,7 +306,7 @@ restore_disk_image_update (DialogData *data)
               /* Only complain if slack is bigger than 1MB */
               if (data->block_size - size > 1000L*1000L)
                 {
-                  s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
+                  s = udisks_client_get_size_for_display (data->client,
                                                           data->block_size - size, FALSE, FALSE);
                   restore_warning = g_strdup_printf (_("The disk image is %s smaller than the target device"), s);
                   g_free (s);
@@ -314,7 +315,7 @@ restore_disk_image_update (DialogData *data)
             }
           else if (size > data->block_size)
             {
-              s = udisks_client_get_size_for_display (gdu_window_get_client (data->window),
+              s = udisks_client_get_size_for_display (data->client,
                                                       size - data->block_size, FALSE, FALSE);
               restore_error = g_strdup_printf (_("The disk image is %s bigger than the target device"), s);
               g_free (s);
@@ -429,7 +430,7 @@ set_destination_object (DialogData *data,
           data->object = g_object_ref (object);
           data->block = udisks_object_get_block (data->object);
           g_assert (data->block != NULL);
-          data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), data->block);
+          data->drive = udisks_client_get_drive_for_block (data->client, data->block);
           /* TODO: use a method call for this so it works on e.g. floppy drives where e.g. we don't know the size */
           data->block_size = udisks_block_get_size (data->block);
         }
@@ -471,7 +472,7 @@ populate_destination_combobox (DialogData *data)
   GtkCellRenderer *renderer;
 
   combobox = GTK_COMBO_BOX (data->selectable_destination_combobox);
-  model = gdu_device_tree_model_new (gdu_window_get_application (data->window),
+  model = gdu_device_tree_model_new ((gpointer)g_application_get_default (),
                                      GDU_DEVICE_TREE_MODEL_FLAGS_FLAT |
                                      GDU_DEVICE_TREE_MODEL_FLAGS_ONE_LINE_NAME |
                                      GDU_DEVICE_TREE_MODEL_FLAGS_INCLUDE_DEVICE_NAME |
@@ -537,7 +538,7 @@ restore_disk_image_populate (DialogData *data)
   if (data->object != NULL)
     {
       UDisksObjectInfo *info;
-      info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
+      info = udisks_client_get_object_info (data->client, data->object);
       gtk_label_set_text (GTK_LABEL (data->destination_label), udisks_object_info_get_one_liner (info));
       g_clear_object (&info);
 
@@ -617,7 +618,7 @@ play_complete_sound (DialogData *data)
 
   if (data->inhibit_cookie > 0)
     {
-      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+      gtk_application_uninhibit ((gpointer)g_application_get_default (),
                                  data->inhibit_cookie);
       data->inhibit_cookie = 0;
     }
@@ -645,7 +646,7 @@ on_show_error (gpointer user_data)
   dialog_data_uninhibit (data);
 
   g_assert (data->copy_error != NULL);
-  gdu_utils_show_error (GTK_WINDOW (data->window),
+  gdu_utils_show_error (data->window,
                         _("Error restoring disk image"),
                         data->copy_error);
   g_clear_error (&data->copy_error);
@@ -964,14 +965,14 @@ start_copying (DialogData *data)
     }
   g_object_unref (info);
 
-  data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+  data->inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
                                                   GTK_WINDOW (data->dialog),
                                                   GTK_APPLICATION_INHIBIT_SUSPEND |
                                                   GTK_APPLICATION_INHIBIT_LOGOUT,
                                                   /* Translators: Reason why suspend/logout is being inhibited */
                                                   C_("restore-inhibit-message", "Copying disk image to device"));
 
-  data->local_job = gdu_application_create_local_job (gdu_window_get_application (data->window),
+  data->local_job = gdu_application_create_local_job ((gpointer)g_application_get_default (),
                                                       data->object);
   udisks_job_set_operation (UDISKS_JOB (data->local_job), "x-gdu-restore-disk-image");
   /* Translators: this is the description of the job */
@@ -984,8 +985,8 @@ start_copying (DialogData *data)
 
   dialog_data_hide (data);
 
-  if (data->switch_to_object)
-    gdu_window_select_object (data->window, data->object);
+  if (data->switch_to_object && GDU_IS_WINDOW (data->window))
+    gdu_window_select_object (GDU_WINDOW (data->window), data->object);
 
   g_thread_new ("copy-disk-image-thread",
                 copy_thread_func,
@@ -1003,7 +1004,7 @@ ensure_unused_cb (GduWindow     *window,
                   gpointer       user_data)
 {
   DialogData *data = user_data;
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
+  if (gdu_utils_ensure_unused_finish (data->client, res, NULL))
     {
       start_copying (data);
     }
@@ -1035,7 +1036,7 @@ on_dialog_response (GtkDialog     *dialog,
                                         _("All existing data will be lost"),
                                         _("_Restore"),
                                         NULL, NULL,
-                                        gdu_window_get_client (data->window), objects, TRUE))
+                                        data->client, objects, TRUE))
         {
           dialog_data_complete_and_unref (data);
           goto out;
@@ -1046,11 +1047,12 @@ on_dialog_response (GtkDialog     *dialog,
       gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
       /* ensure the device is unused (e.g. unmounted) before copying data to it... */
-      gdu_window_ensure_unused (data->window,
-                                data->object,
-                                (GAsyncReadyCallback) ensure_unused_cb,
-                                NULL, /* GCancellable */
-                                data);
+      gdu_utils_ensure_unused(data->client,
+                              data->window,
+                              data->object,
+                              (GAsyncReadyCallback) ensure_unused_cb,
+                              NULL, /* GCancellable */
+                              data);
       break;
 
     default: /* explicit fallthrough */
@@ -1064,8 +1066,9 @@ on_dialog_response (GtkDialog     *dialog,
 }
 
 void
-gdu_restore_disk_image_dialog_show (GduWindow    *window,
+gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
                                     UDisksObject *object,
+                                    UDisksClient *client,
                                     const gchar  *disk_image_filename)
 {
   guint n;
@@ -1074,14 +1077,15 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
   data = g_new0 (DialogData, 1);
   data->ref_count = 1;
   g_mutex_init (&data->copy_lock);
-  data->window = g_object_ref (window);
+  data->window = g_object_ref (parent_window);
+  data->client = client;
   set_destination_object (data, object);
   if (object == NULL)
     data->switch_to_object = TRUE;
   data->disk_image_filename = g_strdup (disk_image_filename);
   data->cancellable = g_cancellable_new ();
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (data->window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "restore-disk-image-dialog.ui",
                                                          "restore-disk-image-dialog",
                                                          &data->builder));
@@ -1116,7 +1120,7 @@ gdu_restore_disk_image_dialog_show (GduWindow    *window,
                                                        G_CALLBACK (on_dialog_response),
                                                        data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
   gtk_window_present (GTK_WINDOW (data->dialog));
 
   /* The Destination combo-box is only shown if @object is NULL. */

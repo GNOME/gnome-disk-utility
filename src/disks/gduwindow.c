@@ -3457,7 +3457,7 @@ on_drive_menu_item_restore_disk_image (GSimpleAction *action,
 
   object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (window, object, NULL);
+  gdu_restore_disk_image_dialog_show (GTK_WINDOW (window), object, window->client, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -3502,7 +3502,7 @@ on_volume_menu_item_restore_volume_image (GSimpleAction *action,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (window, object, NULL);
+  gdu_restore_disk_image_dialog_show (GTK_WINDOW (window), object, window->client, NULL);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

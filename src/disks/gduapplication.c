@@ -258,7 +258,7 @@ gdu_application_command_line (GApplication            *_app,
 
   if (opt_restore_disk_image != NULL)
     {
-      gdu_restore_disk_image_dialog_show (app->window, NULL, opt_restore_disk_image);
+      gdu_restore_disk_image_dialog_show (GTK_WINDOW (app->window), NULL, app->client, opt_restore_disk_image);
     }
 
   ret = 0;

@@ -14,8 +14,9 @@
 
 G_BEGIN_DECLS
 
-void     gdu_restore_disk_image_dialog_show (GduWindow    *window,
+void     gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
                                              UDisksObject *object,
+                                             UDisksClient *client,
                                              const gchar  *disk_image_filename);
 
 G_END_DECLS

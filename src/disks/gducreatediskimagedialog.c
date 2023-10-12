@@ -23,7 +23,6 @@
 #include <canberra-gtk.h>
 
 #include "gduapplication.h"
-#include "gduwindow.h"
 #include "gducreatediskimagedialog.h"
 #include "gduvolumegrid.h"
 #include "gduestimator.h"
@@ -48,10 +47,11 @@ typedef struct
 {
   volatile gint ref_count;
 
-  GduWindow *window;
+  GtkWindow *window;
   UDisksObject *object;
   UDisksBlock *block;
   UDisksDrive *drive;
+  UDisksClient *client;
 
   GtkBuilder *builder;
   GtkWidget *dialog;
@@ -120,7 +120,7 @@ dialog_data_terminate_job (DialogData *data)
 {
   if (data->local_job != NULL)
     {
-      gdu_application_destroy_local_job (gdu_window_get_application (data->window), data->local_job);
+      gdu_application_destroy_local_job ((gpointer)g_application_get_default (), data->local_job);
       data->local_job = NULL;
     }
 }
@@ -130,7 +130,7 @@ dialog_data_uninhibit (DialogData *data)
 {
   if (data->inhibit_cookie > 0)
     {
-      gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+      gtk_application_uninhibit (GTK_APPLICATION ((gpointer)g_application_get_default ()),
                                  data->inhibit_cookie);
       data->inhibit_cookie = 0;
     }
@@ -287,7 +287,7 @@ create_disk_image_populate (DialogData *data)
                                                     FALSE);  /* allow_compressed */
 
   /* Source label */
-  info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
+  info = udisks_client_get_object_info (data->client, data->object);
   gtk_label_set_text (GTK_LABEL (data->source_label), udisks_object_info_get_one_liner (info));
   g_clear_object (&info);
 }
@@ -995,14 +995,14 @@ start_copying (DialogData *data)
   /* now that we know the user picked a folder, update file chooser settings */
   gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
-  data->inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+  data->inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
                                                   GTK_WINDOW (data->dialog),
                                                   GTK_APPLICATION_INHIBIT_SUSPEND |
                                                   GTK_APPLICATION_INHIBIT_LOGOUT,
                                                   /* Translators: Reason why suspend/logout is being inhibited */
                                                   C_("create-inhibit-message", "Copying device to disk image"));
 
-  data->local_job = gdu_application_create_local_job (gdu_window_get_application (data->window),
+  data->local_job = gdu_application_create_local_job ((gpointer)g_application_get_default (),
                                                       data->object);
   udisks_job_set_operation (UDISKS_JOB (data->local_job), "x-gdu-create-disk-image");
   /* Translators: this is the description of the job */
@@ -1030,7 +1030,7 @@ ensure_unused_cb (GduWindow     *window,
                   gpointer       user_data)
 {
   DialogData *data = user_data;
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
+  if (gdu_utils_ensure_unused_finish (data->client, res, NULL))
     {
       start_copying (data);
     }
@@ -1064,11 +1064,12 @@ on_dialog_response (GtkDialog     *dialog,
           else
             {
               /* ensure the device is unused (e.g. unmounted) before copying data from it... */
-              gdu_window_ensure_unused (data->window,
-                                        data->object,
-                                        (GAsyncReadyCallback) ensure_unused_cb,
-                                        NULL, /* GCancellable */
-                                        data);
+              gdu_utils_ensure_unused (data->client,
+                                       data->window,
+                                       data->object,
+                                       (GAsyncReadyCallback) ensure_unused_cb,
+                                       NULL, /* GCancellable */
+                                       data);
             }
         }
       break;
@@ -1085,8 +1086,9 @@ on_dialog_response (GtkDialog     *dialog,
 }
 
 void
-gdu_create_disk_image_dialog_show (GduWindow    *window,
-                                   UDisksObject *object)
+gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
+                                   UDisksObject *object,
+                                   UDisksClient *client)
 {
   DialogData *data;
   guint n;
@@ -1094,14 +1096,15 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
   data = g_new0 (DialogData, 1);
   data->ref_count = 1;
   g_mutex_init (&data->copy_lock);
-  data->window = g_object_ref (window);
+  data->window = g_object_ref (parent_window);
+  data->client = client;
   data->object = g_object_ref (object);
   data->block = udisks_object_get_block (object);
   g_assert (data->block != NULL);
-  data->drive = udisks_client_get_drive_for_block (gdu_window_get_client (window), data->block);
+  data->drive = udisks_client_get_drive_for_block (client, data->block);
   data->cancellable = g_cancellable_new ();
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "create-disk-image-dialog.ui",
                                                          "create-disk-image-dialog",
                                                          &data->builder));
@@ -1122,7 +1125,7 @@ gdu_create_disk_image_dialog_show (GduWindow    *window,
                                                        G_CALLBACK (on_dialog_response),
                                                        data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
   gtk_window_present (GTK_WINDOW (data->dialog));
 
   /* Only select the precomputed filename, not the .img / .iso extension */

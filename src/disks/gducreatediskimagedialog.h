@@ -14,8 +14,9 @@
 
 G_BEGIN_DECLS
 
-void     gdu_create_disk_image_dialog_show (GduWindow    *window,
-                                            UDisksObject *object);
+void     gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
+                                            UDisksObject *object,
+                                            UDisksClient *client);
 
 G_END_DECLS
 

@@ -16,7 +16,6 @@
 #include "gduutils.h"
 #include "gdu-block.h"
 #include "gduapplication.h"
-#include "gduwindow.h"
 #include "gdufilesystemdialog.h"
 #include "gduvolumegrid.h"
 
@@ -27,7 +26,7 @@ struct _GduFilesystemDialog
   GtkLabel          *warning_label;
   GtkEntry          *filesystem_label_entry;
 
-  GduWindow         *window;
+  GtkWindow         *parent_window;
   GduBlock *drive_block;
 };
 
@@ -45,7 +44,7 @@ change_filesystem_label_cb (GObject      *object,
 
   if (!gdu_block_set_fs_label_finish (self->drive_block, result, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (self->window),
+      gdu_utils_show_error (self->parent_window,
                             _("Error setting label"),
                             error);
     }
@@ -167,17 +166,18 @@ gdu_filesystem_dialog_set_drive (GduFilesystemDialog *self,
 }
 
 void
-gdu_filesystem_dialog_show (GduWindow    *window,
-                            UDisksObject *object)
+gdu_filesystem_dialog_show (GtkWindow    *parent_window,
+                            UDisksObject *object,
+                            UDisksClient *client)
 {
   GduFilesystemDialog *self;
 
   self = gdu_filesystem_dialog_new ();
-  self->drive_block = gdu_block_new (gdu_window_get_client (window), object, NULL, NULL);
+  self->drive_block = gdu_block_new (client, object, NULL);
   gdu_filesystem_dialog_set_drive (self, self->drive_block);
-  self->window = window;
+  self->parent_window = parent_window;
 
-  gtk_window_set_transient_for (GTK_WINDOW (self), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (self), parent_window);
   gtk_dialog_set_default_response (GTK_DIALOG (self), GTK_RESPONSE_OK);
   gtk_window_present (GTK_WINDOW (self));
 }

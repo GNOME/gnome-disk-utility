@@ -18,8 +18,9 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GduFilesystemDialog, gdu_filesystem_dialog, GDU, FILESYSTEM_DIALOG, GtkDialog)
 
-void   gdu_filesystem_dialog_show (GduWindow    *window,
-                                   UDisksObject *object);
+void   gdu_filesystem_dialog_show (GtkWindow    *parent_window,
+                                   UDisksObject *object,
+                                   UDisksClient *client);
 
 G_END_DECLS
 

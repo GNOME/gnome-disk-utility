@@ -28,7 +28,7 @@ typedef struct
 
   GCancellable *cancellable;
 
-  GduWindow *window;
+  GtkWindow  *window;
   GtkBuilder *builder;
 
   GtkWidget *dialog;
@@ -379,7 +379,7 @@ on_set_configuration_cb (GObject      *source_object,
                                                    res,
                                                    &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error setting configuration"),
                             error);
       g_clear_error (&error);
@@ -403,8 +403,9 @@ typedef struct
 } Mark;
 
 void
-gdu_disk_settings_dialog_show (GduWindow    *window,
-                               UDisksObject *object)
+gdu_disk_settings_dialog_show (GtkWindow    *window,
+                               UDisksObject *object,
+                               UDisksClient *client)
 {
   DialogData *data;
   guint n;
@@ -443,7 +444,7 @@ gdu_disk_settings_dialog_show (GduWindow    *window,
   data->window = g_object_ref (window);
   data->orig_drive_configuration = udisks_drive_dup_configuration (data->drive);
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "disk-settings-dialog.ui",
                                                          "dialog1",
                                                          &data->builder));

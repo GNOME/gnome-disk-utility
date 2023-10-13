@@ -14,8 +14,9 @@
 
 G_BEGIN_DECLS
 
-void   gdu_disk_settings_dialog_show (GduWindow    *window,
-                                      UDisksObject *object);
+void   gdu_disk_settings_dialog_show (GtkWindow    *window,
+                                      UDisksObject *object,
+                                      UDisksClient *client);
 
 gboolean gdu_disk_settings_dialog_should_show (UDisksObject *object);
 

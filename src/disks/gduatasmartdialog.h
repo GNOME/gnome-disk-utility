@@ -14,8 +14,9 @@
 
 G_BEGIN_DECLS
 
-void   gdu_ata_smart_dialog_show (GduWindow    *window,
-                                  UDisksObject *object);
+void   gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
+                                  UDisksObject *object,
+                                  UDisksClient *client);
 
 gchar *gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata,
                                                gboolean       *out_smart_is_supported,

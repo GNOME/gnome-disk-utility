@@ -3556,7 +3556,7 @@ on_drive_menu_item_view_smart (GSimpleAction *action,
                                gpointer       user_data)
 {
   GduWindow *window = GDU_WINDOW (user_data);
-  gdu_ata_smart_dialog_show (window, window->current_object);
+  gdu_ata_smart_dialog_show (GTK_WINDOW (window), window->current_object, window->client);
 }
 
 static void

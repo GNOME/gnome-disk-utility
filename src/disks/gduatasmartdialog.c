@@ -34,10 +34,11 @@ typedef struct
 {
   volatile guint ref_count;
 
+  UDisksClient *client;
   UDisksObject *object;
   UDisksDriveAta *ata;
 
-  GduWindow *window;
+  GtkWindow *window;
   GtkBuilder *builder;
 
   GtkListStore *attributes_list;
@@ -1441,12 +1442,12 @@ smart_set_enabled_cb (GObject      *source_object,
                                                        res,
                                                        &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("An error occurred when trying to toggle whether SMART is enabled"),
                             error);
       g_clear_error (&error);
     }
-  udisks_client_settle (gdu_window_get_client (data->window));
+  udisks_client_settle (data->client);
   update_dialog (data);
   dialog_data_unref (data);
 }
@@ -1512,8 +1513,9 @@ on_dialog_response (GtkDialog *dialog,
 }
 
 void
-gdu_ata_smart_dialog_show (GduWindow    *window,
-                           UDisksObject *object)
+gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
+                           UDisksObject *object,
+                           UDisksClient *client)
 {
   DialogData *data;
   guint n;
@@ -1526,9 +1528,10 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
   data->ref_count = 1;
   data->object = g_object_ref (object);
   data->ata = udisks_object_peek_drive_ata (data->object);
-  data->window = g_object_ref (window);
+  data->window = g_object_ref (parent_window);
+  data->client = client;
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "smart-dialog.ui",
                                                          "dialog1",
                                                          &data->builder));
@@ -1675,7 +1678,7 @@ gdu_ata_smart_dialog_show (GduWindow    *window,
                     G_CALLBACK (on_tree_selection_changed),
                     data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
 
   data->notify_id = g_signal_connect (data->ata, "notify", G_CALLBACK (on_ata_notify), data);
   data->timeout_id = g_timeout_add_seconds (1, on_timeout, data);

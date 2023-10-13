@@ -48,7 +48,8 @@ typedef struct
 
   GCancellable *cancellable;
 
-  GduWindow *window;
+  GtkWindow *window;
+  UDisksClient *client;
   GtkBuilder *builder;
 
   GtkWidget *dialog;
@@ -824,8 +825,8 @@ update_dialog (DialogData *data)
   update_updated_label (data);
 
   /* disk / device label */
-  drive = udisks_client_get_drive_for_block (gdu_window_get_client (data->window), data->block);
-  info = udisks_client_get_object_info (gdu_window_get_client (data->window), data->object);
+  drive = udisks_client_get_drive_for_block (data->client, data->block);
+  info = udisks_client_get_object_info (data->client, data->object);
   gtk_label_set_text (GTK_LABEL (data->device_label), udisks_object_info_get_one_liner (info));
   g_free (s);
 
@@ -1171,7 +1172,7 @@ benchmark_thread (gpointer user_data)
 
   //g_print ("bm thread start\n");
 
-  inhibit_cookie = gtk_application_inhibit (GTK_APPLICATION (gdu_window_get_application (data->window)),
+  inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
                                             GTK_WINDOW (data->dialog),
                                             GTK_APPLICATION_INHIBIT_SUSPEND |
                                             GTK_APPLICATION_INHIBIT_LOGOUT,
@@ -1448,7 +1449,7 @@ benchmark_thread (gpointer user_data)
   data->bm_state = BM_STATE_NONE;
 
   if (inhibit_cookie > 0)
-    gtk_application_uninhibit (GTK_APPLICATION (gdu_window_get_application (data->window)), inhibit_cookie);
+    gtk_application_uninhibit ((gpointer)g_application_get_default (), inhibit_cookie);
 
   if (error != NULL)
     {
@@ -1500,7 +1501,7 @@ ensure_unused_cb (GduWindow     *window,
                   gpointer       user_data)
 {
   DialogData *data = user_data;
-  if (gdu_window_ensure_unused_finish (window, res, NULL))
+  if (gdu_utils_ensure_unused_finish (data->client, res, NULL))
     {
       start_benchmark2 (data);
     }
@@ -1523,7 +1524,7 @@ start_benchmark (DialogData *data)
   g_assert (data->bm_thread == NULL);
   g_assert_cmpint (data->bm_state, ==, BM_STATE_NONE);
 
-  dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (data->window),
+  dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                    "benchmark-dialog.ui",
                                                    "dialog2",
                                                    &builder));
@@ -1556,7 +1557,7 @@ start_benchmark (DialogData *data)
     }
 
   /* If the device is currently in use, uncheck the "perform write-test" check-button */
-  if (gdu_utils_is_in_use (gdu_window_get_client (data->window), data->object))
+  if (gdu_utils_is_in_use (data->client, data->object))
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
     }
@@ -1587,11 +1588,12 @@ start_benchmark (DialogData *data)
   if (data->bm_do_write)
     {
       /* ensure the device is unused (e.g. unmounted) before formatting it... */
-      gdu_window_ensure_unused (data->window,
-                                data->object,
-                                (GAsyncReadyCallback) ensure_unused_cb,
-                                NULL, /* GCancellable */
-                                dialog_data_ref (data));
+      gdu_utils_ensure_unused (data->client,
+                               data->window,
+                               data->object,
+                               (GAsyncReadyCallback) ensure_unused_cb,
+                               NULL, /* GCancellable */
+                               dialog_data_ref (data));
     }
   else
     {
@@ -1608,8 +1610,9 @@ start_benchmark (DialogData *data)
 /* ---------------------------------------------------------------------------------------------------- */
 
 void
-gdu_benchmark_dialog_show (GduWindow    *window,
-                           UDisksObject *object)
+gdu_benchmark_dialog_show (GtkWindow    *window,
+                           UDisksObject *object,
+                           UDisksClient *client)
 {
   DialogData *data;
   guint n;
@@ -1620,6 +1623,7 @@ gdu_benchmark_dialog_show (GduWindow    *window,
   data->ref_count = 1;
   data->object = g_object_ref (object);
   data->block = udisks_object_peek_block (data->object);
+  data->client = client;
   data->window = g_object_ref (window);
   data->bm_cancellable = g_cancellable_new ();
 
@@ -1633,7 +1637,7 @@ gdu_benchmark_dialog_show (GduWindow    *window,
                                               FALSE, /* clear */
                                               sizeof (BMSample));
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "benchmark-dialog.ui",
                                                          "dialog1",
                                                          &data->builder));

@@ -14,8 +14,9 @@
 
 G_BEGIN_DECLS
 
-void   gdu_benchmark_dialog_show (GduWindow    *window,
-                                  UDisksObject *object);
+void   gdu_benchmark_dialog_show (GtkWindow    *window,
+                                  UDisksObject *object,
+                                  UDisksClient *client);
 
 G_END_DECLS
 

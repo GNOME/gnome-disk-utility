@@ -38,7 +38,7 @@ struct _GduCrypttabDialog
 
   GtkWidget            *warning_infobar;
 
-  GduWindow            *window;
+  GtkWindow            *window;
   UDisksObject         *udisks_object;
   UDisksBlock          *udisks_block;
   UDisksDrive          *udisks_drive;
@@ -81,7 +81,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
               return;
             }
           gtk_widget_hide (GTK_WIDGET (self));
-          gdu_utils_show_error (GTK_WINDOW (self->window),
+          gdu_utils_show_error (self->window,
                                 _("Error removing /etc/crypttab entry"),
                                 error);
           goto end;
@@ -159,7 +159,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
                   return;
                 }
               gtk_widget_hide (GTK_WIDGET (self));
-              gdu_utils_show_error (GTK_WINDOW (self->window),
+              gdu_utils_show_error (self->window,
                                     _("Error adding /etc/crypttab entry"),
                                     error);
               goto end;
@@ -405,7 +405,7 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
 
   if (!udisks_block_call_get_secret_configuration_finish (block, &config, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (self->window),
+      gdu_utils_show_error (self->window,
                             _("Error retrieving configuration data"),
                             error);
       gtk_widget_hide (GTK_WIDGET (self));
@@ -432,8 +432,9 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
 }
 
 void
-gdu_crypttab_dialog_show (GduWindow    *window,
-                          UDisksObject *object)
+gdu_crypttab_dialog_show (GtkWindow    *parent_window,
+                          UDisksObject *object,
+                          UDisksClient *client)
 {
   GduCrypttabDialog *self;
   g_autoptr(UDisksObject) drive = NULL;
@@ -444,17 +445,17 @@ gdu_crypttab_dialog_show (GduWindow    *window,
   gboolean has_conf = FALSE;
   gboolean get_passphrase_contents = FALSE;
 
-  g_return_if_fail (GDU_IS_WINDOW (window));
+  g_return_if_fail (GTK_IS_WINDOW (parent_window));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
   self = g_object_new (GDU_TYPE_CRYPTTAB_DIALOG,
-                       "transient-for", window,
+                       "transient-for", parent_window,
                        NULL);
-  self->window = window;
+  self->window = parent_window;
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
 
-  drive = (UDisksObject *)g_dbus_object_manager_get_object (udisks_client_get_object_manager (gdu_window_get_client (window)),
+  drive = (UDisksObject *)g_dbus_object_manager_get_object (udisks_client_get_object_manager (client),
                                                             udisks_block_get_drive (self->udisks_block));
   if (drive)
     self->udisks_drive = udisks_object_peek_drive (drive);

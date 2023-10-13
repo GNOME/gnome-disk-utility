@@ -2953,7 +2953,7 @@ on_volume_menu_item_resize (GSimpleAction *action,
 
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   g_assert (object != NULL);
-  gdu_resize_dialog_show (window, object);
+  gdu_resize_dialog_show (GTK_WINDOW (window), object, window->client);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

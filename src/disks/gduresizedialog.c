@@ -24,7 +24,7 @@ typedef struct
 {
   volatile guint ref_count;
 
-  GduWindow *window;
+  GtkWindow *window;
   UDisksClient *client;
   UDisksObject *object;
   UDisksBlock *block;
@@ -240,7 +240,7 @@ static void
 resize_dialog_populate (ResizeDialogData *data)
 {
 
-  data->dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (data->window),
+  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "resize-dialog.ui",
                                                          "resize-dialog",
                                                          &data->builder));
@@ -268,7 +268,7 @@ resize_dialog_populate (ResizeDialogData *data)
   data->size_scale = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-scale"));;
   data->size_stack = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-stack"));
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (data->window));
+  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), data->window);
   gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_APPLY);
   set_unit_num (data, gdu_utils_get_default_unit (data->max_size));
 }
@@ -348,7 +348,7 @@ fs_resize_cb (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing filesystem"),
                             error);
       g_error_free (error);
@@ -366,7 +366,7 @@ part_resize_cb (UDisksPartition  *partition,
 
   if (!udisks_partition_call_resize_finish (partition, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing partition"),
                             error);
       g_error_free (error);
@@ -385,7 +385,7 @@ fs_repair_cb_next_part_resize (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error repairing filesystem after resize"),
                             error);
       g_error_free (error);
@@ -409,7 +409,7 @@ fs_repair_cb (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error repairing filesystem after resize"),
                             error);
       g_error_free (error);
@@ -427,7 +427,7 @@ fs_resize_cb_offline_next_repair (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing filesystem"),
                             error);
       g_error_free (error);
@@ -496,7 +496,7 @@ part_resize_cb_online_next_fs_resize (UDisksPartition  *partition,
 
   if (!udisks_partition_call_resize_finish (partition, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing partition"),
                             error);
       g_error_free (error);
@@ -511,7 +511,7 @@ part_resize_cb_online_next_fs_resize (UDisksPartition  *partition,
        * interface to show up (only if it was there before). This depends on inclusion
        * of https://github.com/storaged-project/libblockdev/pull/264
        */
-      udisks_client_settle (gdu_window_get_client (data->window));
+      udisks_client_settle (data->client);
       if (resize_filesystem_waiter (data) == G_SOURCE_CONTINUE)
         {
           g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, data);
@@ -529,7 +529,7 @@ fs_repair_cb_offline_next_grow (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error repairing filesystem"),
                             error);
       g_error_free (error);
@@ -572,7 +572,7 @@ part_resize_cb_offline_next_fs_unmount (UDisksPartition  *partition,
 
   if (!udisks_partition_call_resize_finish (partition, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing partition"),
                             error);
       g_error_free (error);
@@ -581,7 +581,7 @@ part_resize_cb_offline_next_fs_unmount (UDisksPartition  *partition,
   else
     {
       gdu_utils_ensure_unused (data->client,
-                               GTK_WINDOW (data->window),
+                               data->window,
                                data->object,
                                ensure_unused_cb_offline_next_repair,
                                NULL,
@@ -598,7 +598,7 @@ fs_resize_cb_online_next_part_resize (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing filesystem"),
                             error);
       g_error_free (error);
@@ -621,7 +621,7 @@ fs_resize_cb_offline_next_fs_repair (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error resizing filesystem"),
                             error);
       g_error_free (error);
@@ -645,7 +645,7 @@ fs_repair_cb_offline_next_shrink (UDisksFilesystem *filesystem,
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error repairing filesystem"),
                             error);
       g_error_free (error);
@@ -714,7 +714,7 @@ resize (ResizeDialogData *data)
       if (shrinking)
         {
           gdu_utils_ensure_unused (data->client,
-                                   GTK_WINDOW (data->window),
+                                   data->window,
                                    data->object,
                                    unmount_cb,
                                    NULL,
@@ -751,7 +751,7 @@ mount_cb (UDisksFilesystem *filesystem,
                                             res,
                                             &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (data->window),
+      gdu_utils_show_error (data->window,
                             _("Error mounting the filesystem"),
                             error);
 
@@ -828,7 +828,7 @@ resize_get_usage_mount_cb (UDisksFilesystem *filesystem,
 
           g_clear_object (&data->mount_cancellable);
           gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
-          gdu_utils_show_error (GTK_WINDOW (data->window),
+          gdu_utils_show_error (data->window,
                                 _("Error mounting filesystem to calculate minimum size"),
                                 error);
         }
@@ -840,8 +840,9 @@ resize_get_usage_mount_cb (UDisksFilesystem *filesystem,
 }
 
 void
-gdu_resize_dialog_show (GduWindow    *window,
-                        UDisksObject *object)
+gdu_resize_dialog_show (GtkWindow    *parent_window,
+                        UDisksObject *object,
+                        UDisksClient *client)
 {
   const gchar *const *mount_points;
   ResizeDialogData *data;
@@ -849,9 +850,9 @@ gdu_resize_dialog_show (GduWindow    *window,
   data = g_new0 (ResizeDialogData, 1);
   data->ref_count = 1;
   data->cur_unit_num = -1;
-  data->window = g_object_ref (window);
+  data->window = g_object_ref (parent_window);
   data->support = 0;
-  data->client = gdu_window_get_client (window);
+  data->client = client;
   data->object = g_object_ref (object);
   data->block = udisks_object_get_block (object);
   g_assert (data->block != NULL);

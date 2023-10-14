@@ -42,8 +42,9 @@ struct _GduPartitionDialog
   GtkCheckButton       *system_check_button;
   GtkCheckButton       *hide_from_firmware_check_button;
 
-  GduWindow            *window;
+  GtkWindow            *window;
   UDisksObject         *udisks_object;
+  UDisksClient         *client;
   UDisksPartition      *udisks_partition;
   UDisksPartitionTable *udisks_partition_table;
   char                 *partition_table_type;
@@ -123,7 +124,7 @@ partition_dialog_response_cb (GduPartitionDialog *self,
                                                 NULL, /* GCancellable */
                                                 &error))
         {
-          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition type"), error);
+          gdu_utils_show_error (self->window, _("Error setting partition type"), error);
           goto end;
         }
     }
@@ -135,7 +136,7 @@ partition_dialog_response_cb (GduPartitionDialog *self,
                                                 NULL, /* GCancellable */
                                                 &error))
         {
-          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition name"), error);
+          gdu_utils_show_error (self->window, _("Error setting partition name"), error);
           goto end;
         }
     }
@@ -147,7 +148,7 @@ partition_dialog_response_cb (GduPartitionDialog *self,
                                                  NULL, /* GCancellable */
                                                  &error))
         {
-          gdu_utils_show_error (GTK_WINDOW (self->window), _("Error setting partition flags"), error);
+          gdu_utils_show_error (self->window, _("Error setting partition flags"), error);
           goto end;
         }
     }
@@ -257,7 +258,7 @@ edit_partition_populate (GduPartitionDialog *self)
 
   g_assert (GDU_IS_PARTITION_DIALOG (self));
 
-  client = gdu_window_get_client (self->window);
+  client = self->client;
   model = gtk_list_store_new (MODEL_N_COLUMNS,
                               G_TYPE_BOOLEAN,
                               G_TYPE_STRING,
@@ -360,19 +361,21 @@ edit_partition_populate (GduPartitionDialog *self)
 }
 
 void
-gdu_partition_dialog_show (GduWindow    *window,
-                           UDisksObject *object)
+gdu_partition_dialog_show (GtkWindow    *parent_window,
+                           UDisksObject *object,
+                           UDisksClient *client)
 {
   GduPartitionDialog *self;
 
   self = g_object_new (GDU_TYPE_PARTITION_DIALOG,
-                       "transient-for", window,
+                       "transient-for", parent_window,
                        NULL);
 
-  self->window = window;
+  self->window = parent_window;
+  self->client = client;
   self->udisks_object = g_object_ref (object);
   self->udisks_partition = udisks_object_get_partition (object);
-  self->udisks_partition_table = udisks_client_get_partition_table (gdu_window_get_client (window),
+  self->udisks_partition_table = udisks_client_get_partition_table (client,
                                                                     self->udisks_partition);
   self->partition_table_type = udisks_partition_table_dup_type_ (self->udisks_partition_table);
 

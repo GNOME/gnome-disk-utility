@@ -16,7 +16,8 @@ G_BEGIN_DECLS
 #define GDU_TYPE_PARTITION_DIALOG (gdu_partition_dialog_get_type ())
 G_DECLARE_FINAL_TYPE (GduPartitionDialog, gdu_partition_dialog, GDU, PARTITION_DIALOG, GtkDialog)
 
-void     gdu_partition_dialog_show (GduWindow    *window,
-                                    UDisksObject *object);
+void     gdu_partition_dialog_show (GtkWindow    *parent_window,
+                                    UDisksObject *object,
+                                    UDisksClient *client);
 
 G_END_DECLS

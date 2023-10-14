@@ -3547,7 +3547,7 @@ on_volume_menu_item_configure_fstab (GSimpleAction *action,
   object = gdu_volume_grid_get_selected_device (GDU_VOLUME_GRID (window->volume_grid));
   if (object == NULL)
     object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid));
-  gdu_fstab_dialog_show (window, object);
+  gdu_fstab_dialog_show (GTK_WINDOW (window), object, window->client);
 }
 
 static void

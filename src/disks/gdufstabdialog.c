@@ -352,8 +352,9 @@ check_if_system_mount (const gchar *dir)
 }
 
 void
-gdu_fstab_dialog_show (GduWindow    *window,
-                       UDisksObject *object)
+gdu_fstab_dialog_show (GtkWindow    *parent_window,
+                       UDisksObject *object,
+                       UDisksClient *client)
 {
   GtkBuilder *builder;
   UDisksBlock *block;
@@ -378,7 +379,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
   g_assert (block != NULL);
 
   drive = NULL;
-  drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (gdu_window_get_client (window)),
+  drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (client),
                                                                     udisks_block_get_drive (block));
   if (drive_object != NULL)
     {
@@ -386,10 +387,10 @@ gdu_fstab_dialog_show (GduWindow    *window,
       g_object_unref (drive_object);
     }
 
-  dialog = GTK_WIDGET (gdu_application_new_widget (gdu_window_get_application (window),
+  dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                    "edit-fstab-dialog.ui",
                                                    "device-fstab-dialog", &builder));
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), parent_window);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   memset (&data, '\0', sizeof (FstabDialogData));
@@ -537,7 +538,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
                   goto again;
                 }
               gtk_widget_hide (dialog);
-              gdu_utils_show_error (GTK_WINDOW (window),
+              gdu_utils_show_error (parent_window,
                                     _("Error removing old /etc/fstab entry"),
                                     error);
               g_error_free (error);
@@ -593,7 +594,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
                       goto again;
                     }
                   gtk_widget_hide (dialog);
-                  gdu_utils_show_error (GTK_WINDOW (window),
+                  gdu_utils_show_error (parent_window,
                                         _("Error adding new /etc/fstab entry"),
                                         error);
                   g_error_free (error);
@@ -617,7 +618,7 @@ gdu_fstab_dialog_show (GduWindow    *window,
                       goto again;
                     }
                   gtk_widget_hide (dialog);
-                  gdu_utils_show_error (GTK_WINDOW (window),
+                  gdu_utils_show_error (parent_window,
                                         _("Error updating /etc/fstab entry"),
                                         error);
                   g_error_free (error);

@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2023-10-29 10:37+0000\n"
-"PO-Revision-Date: 2023-10-29 13:47+0100\n"
+"POT-Creation-Date: 2023-10-29 12:48+0000\n"
+"PO-Revision-Date: 2023-10-31 08:07+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -369,7 +369,7 @@ msgstr "ჩართვის მოვლენების რიცხვი"
 #.
 #: src/disks/gduatasmartdialog.c:244
 msgid "Soft read error rate"
-msgstr ""
+msgstr "რბილი წაკითხვის შეცდომების სიხშირე"
 
 #: src/disks/gduatasmartdialog.c:246
 msgid "Frequency of errors while reading from the disk"
@@ -751,7 +751,7 @@ msgstr "შეუკეთებადი ECC რაოდენობა"
 
 #: src/disks/gduatasmartdialog.c:546
 msgid "Number of uncorrectable ECC errors"
-msgstr ""
+msgstr "გამოუსწორებელი ECC შეცდომების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -771,11 +771,11 @@ msgstr ""
 #.
 #: src/disks/gduatasmartdialog.c:562
 msgid "Head Flying Hours"
-msgstr ""
+msgstr "დრო, როცა თავაკი აწეული იყო, საათებაში"
 
 #: src/disks/gduatasmartdialog.c:563
 msgid "Time while head is positioning"
-msgstr ""
+msgstr "დრო, სანამ თავაკის პოზიცირება ხდებოდა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -797,7 +797,7 @@ msgstr "ჩაწერილი LBA ჯამში"
 
 #: src/disks/gduatasmartdialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
-msgstr ""
+msgstr "დისკის ცხოვრებისას ჩაწერილი მონაცემების რაოდენობა"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
@@ -808,7 +808,7 @@ msgstr "წაკითხული LBA ჯამში"
 
 #: src/disks/gduatasmartdialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
-msgstr ""
+msgstr "დისკის ცხოვრებისას წაკითხული მონაცემების რაოდენობა"
 
 #: src/disks/gduatasmartdialog.c:646
 #, c-format
@@ -1228,7 +1228,7 @@ msgstr "საკვანძო სიტყვა არსებულს ე
 
 #: src/disks/gduchangepassphrasedialog.c:106
 msgid "Error updating /etc/crypttab"
-msgstr ""
+msgstr "შეცდომა /etc/crypttab-ის განახლებისას"
 
 #: src/disks/gduchangepassphrasedialog.c:121
 msgid "Error changing passphrase"
@@ -1311,7 +1311,7 @@ msgstr "დისკის ასლის შექმნის შეცდო
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
 #: src/disks/gducreatediskimagedialog.c:497
 msgid "Unrecoverable read errors while creating disk image"
-msgstr ""
+msgstr "გამოუსწრებელი წაკითხვის შეცდომები დისკის ასლის ფაილის შექმნისას"
 
 #. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -1454,7 +1454,7 @@ msgstr ""
 
 #: src/disks/gducreateotherpage.c:19
 msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr ""
+msgstr "F2FS — Flash Storage Linux Filesystem"
 
 #: src/disks/gducreateotherpage.c:20
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
@@ -2211,13 +2211,13 @@ msgstr "შეკეთების შეცდომა"
 #: src/disks/gduwindow.c:3011
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
-msgstr ""
+msgstr "ფაილური სისტემა %s %s-ზე გასწორდა."
 
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3017
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
-msgstr ""
+msgstr "ფაილური სისტემის %s, რომელიც %s-ზე დევს, გასწორება შეუძლებელია."
 
 #: src/disks/gduwindow.c:3087
 msgid "Confirm Repair"
@@ -2515,6 +2515,8 @@ msgstr "ახალი _საკვანძო ფრაზა"
 #: src/disks/ui/change-passphrase-dialog.ui:85
 msgid "Enter new passphrase used to protect the data"
 msgstr ""
+"შეიყვანეთ ახალი საკვანძო ფრაზა, რომელიც თქვენი მონაცემების დასაცავად "
+"გამოიყენება"
 
 #: src/disks/ui/change-passphrase-dialog.ui:101
 msgid "C_onfirm Passphrase"
@@ -2548,7 +2550,7 @@ msgstr "_შეცვლა"
 
 #: src/disks/ui/create-confirm-page.ui:17
 msgid "Warning: all data on the volume will be lost"
-msgstr ""
+msgstr "გაფრთხილება: ტომზე ყველა ინფორმაცია წაიშლება"
 
 #: src/disks/ui/create-confirm-page.ui:33
 msgid "Confirm the details of the current volume before proceeding."
@@ -2612,7 +2614,7 @@ msgstr ""
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
-msgstr ""
+msgstr "მაგ: 'ანჟელას ფაილები' ან 'მარქაფი'."
 
 #: src/disks/ui/create-filesystem-page.ui:74
 #: src/disks/ui/format-disk-dialog.ui:58
@@ -2621,7 +2623,7 @@ msgstr "_წაშლა"
 
 #: src/disks/ui/create-filesystem-page.ui:89
 msgid "Overwrites existing data, but takes longer."
-msgstr ""
+msgstr "თავზე გადააწერს არსებულ მონაცემებს, მაგრამ მეტი დრო უნდა."
 
 #: src/disks/ui/create-filesystem-page.ui:115
 msgid "_Internal disk for use with Linux systems only (Ext4)"
@@ -2657,7 +2659,7 @@ msgstr "დანაყოფის _ზომა"
 
 #: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
 msgid "The size of the partition to create"
-msgstr ""
+msgstr "შესაქმნელი დანაყოფის ზომა"
 
 #: src/disks/ui/create-partition-page.ui:103
 #: src/disks/ui/new-disk-image-dialog.ui:129 src/disks/ui/resize-dialog.ui:119
@@ -2728,7 +2730,7 @@ msgstr "გაფართოებული დანაყოფი"
 
 #: src/disks/ui/create-partition-page.ui:169
 msgid "Extended Partitions can contain Logical Partitions"
-msgstr ""
+msgstr "გაფართოებული დანაყოფები, შეიძლება, ლოგიკურ დანაყოფებს შეიცავდნენ"
 
 #: src/disks/ui/create-password-page.ui:18
 msgid ""
@@ -2746,11 +2748,11 @@ msgstr "_დადასტურება"
 
 #: src/disks/ui/create-password-page.ui:63
 msgid "Enter passphrase used to protect the data"
-msgstr ""
+msgstr "შეიყვანეთ საკვანძო ფრაზა, რომელიც მონაცემების დასაშიფრად გამოიყენება"
 
 #: src/disks/ui/create-password-page.ui:95
 msgid "Sh_ow Password"
-msgstr ""
+msgstr "_პაროლის ჩვენება"
 
 #: src/disks/ui/create-password-page.ui:134
 msgid "Mix uppercase and lowercase and try to use a number or two."
@@ -2762,7 +2764,7 @@ msgstr "დისკის პარამეტრები"
 
 #: src/disks/ui/disk-settings-dialog.ui:54
 msgid "Apply Standby Timeout Settings"
-msgstr ""
+msgstr "უქმეობის ვადის პარამეტრების გადატარება"
 
 #: src/disks/ui/disk-settings-dialog.ui:71
 msgid ""
@@ -2780,7 +2782,7 @@ msgstr "_უქმე"
 
 #: src/disks/ui/disk-settings-dialog.ui:182
 msgid "Apply Advanced Power Management Settings"
-msgstr ""
+msgstr "დამატებითი კვების მართვის პარამეტრების გადატარება"
 
 #: src/disks/ui/disk-settings-dialog.ui:199
 msgid "Turn on to configure APM at startup and when the disk is connected"
@@ -2923,7 +2925,7 @@ msgstr ""
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: src/disks/ui/disks.ui:574
 msgid "Backing File"
-msgstr ""
+msgstr "ფაილი უკანაბოლო"
 
 #: src/disks/ui/disks.ui:603
 msgid "Partitioning"
@@ -2967,7 +2969,7 @@ msgstr "დანაყოფის დამატებით პარამ�
 
 #: src/disks/ui/disks.ui:821
 msgid "Delete selected partition"
-msgstr ""
+msgstr "მონიშნული დანაყოფის წაშლა"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
 #: src/disks/ui/disks.ui:881
@@ -2996,23 +2998,23 @@ msgstr "დისკის ასლის _აღდგენა…"
 
 #: src/disks/ui/drive-menu.ui:22
 msgid "_Benchmark Disk…"
-msgstr ""
+msgstr "დ_ისკის წარმადობის ტესტირება…"
 
 #: src/disks/ui/drive-menu.ui:26
 msgid "_SMART Data & Self-Tests…"
-msgstr ""
+msgstr "_SMART მონაცემები & თვითტესტები…"
 
 #: src/disks/ui/drive-menu.ui:30
 msgid "Drive S_ettings…"
-msgstr ""
+msgstr "_დისკის პარამეტრები…"
 
 #: src/disks/ui/drive-menu.ui:36
 msgid "S_tandby Now"
-msgstr ""
+msgstr "_ახლა დაძინება"
 
 #: src/disks/ui/drive-menu.ui:40
 msgid "_Wake-Up from Standby"
-msgstr ""
+msgstr "ძილიდან _გაღვიძება"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:9
 msgid "Encryption Options"
@@ -3020,7 +3022,7 @@ msgstr "დაშიფვრის მორგება"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:36 src/disks/ui/edit-fstab-dialog.ui:41
 msgid "Us_er Session Defaults"
-msgstr ""
+msgstr "_მომხმარებლის სესიის ნაგულისხმევი პარამეტრები"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:48
 msgid ""
@@ -3035,7 +3037,7 @@ msgstr "_მორგება"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:88
 msgid "_Unlock at system startup"
-msgstr ""
+msgstr "_განბლოკვა სისტემის გაშვებისას"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:89
 msgid "If checked, the device will be unlocked at system startup [!noauto]"
@@ -3207,7 +3209,7 @@ msgstr ""
 
 #: src/disks/ui/edit-partition-dialog.ui:6
 msgid "Edit Partition"
-msgstr ""
+msgstr "დანაყოფის ჩასწორება"
 
 #: src/disks/ui/edit-partition-dialog.ui:27
 msgid "_Type"
@@ -3567,7 +3569,7 @@ msgstr "_გასაღების ფაილები"
 
 #: src/disks/ui/unlock-device-dialog.ui:195
 msgid "Select a keyfile to unlock this volume"
-msgstr ""
+msgstr "აირჩიეთ ამ ტომის განბლოკვისთვის საჭირო გასაღების ფაილი"
 
 #: src/disks/ui/unlock-device-dialog.ui:226
 msgid "_Unlock"

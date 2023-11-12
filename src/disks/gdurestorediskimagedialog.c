@@ -985,8 +985,9 @@ start_copying (DialogData *data)
 
   dialog_data_hide (data);
 
-  if (data->switch_to_object && GDU_IS_WINDOW (data->window))
-    gdu_window_select_object (GDU_WINDOW (data->window), data->object);
+  /* gtk4 todo: after using GtkSelectionModel or so */
+  /* if (data->switch_to_object && GDU_IS_WINDOW (data->window)) */
+  /*   gdu_window_select_object (GDU_WINDOW (data->window), data->object); */
 
   g_thread_new ("copy-disk-image-thread",
                 copy_thread_func,

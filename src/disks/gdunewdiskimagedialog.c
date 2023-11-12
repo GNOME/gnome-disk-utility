@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2008-2013 Red Hat, Inc.
  * Copyright (C) 2017 Kai Lüke
  * Copyright (C) 2022 Purism SPC
  *
@@ -55,6 +56,98 @@ struct _GduNewDiskImageDialog
 
 G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, GTK_TYPE_DIALOG)
 
+static gpointer
+image_dialog_get_client (void)
+{
+  GduManager *manager;
+
+  manager = gdu_manager_get_default (NULL);
+  return gdu_manager_get_client (manager);
+}
+
+/* adapted from https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/3eccf2b5fec7200cb16c46dd5d047c083ac318f7/src/disks/gduwindow.c#L729 */
+static void
+loop_setup_cb (UDisksManager  *manager,
+               GAsyncResult   *res,
+               gpointer        user_data)
+{
+  g_autoptr(GTask) task = user_data;
+  g_autofree char *out_loop_device_object_path = NULL;
+  GduNewDiskImageDialog *self;
+  g_autoptr(GError) error = NULL;
+  char *filename;
+
+  self = g_task_get_source_object (task);
+  filename = g_task_get_task_data (task);
+
+  if (!udisks_manager_call_loop_setup_finish (manager, &out_loop_device_object_path, NULL, res, &error))
+    {
+      GtkWindow *window;
+
+      window = gtk_window_get_transient_for (GTK_WINDOW (self));
+      gdu_utils_show_error (window,
+                            _("Error attaching disk image"),
+                            error);
+    }
+  else
+    {
+      g_autofree char *uri = NULL;
+      UDisksClient *client;
+
+      /* This is to make it appear in the file chooser's "Recently Used" list */
+      uri = g_strdup_printf ("file://%s", filename);
+      gtk_recent_manager_add_item (gtk_recent_manager_get_default (), uri);
+
+      client = image_dialog_get_client ();
+      udisks_client_settle (client);
+    }
+}
+
+static gboolean
+dialog_attach_disk_image_helper (GduNewDiskImageDialog *self,
+                                 char                  *filename,
+                                 gboolean               readonly)
+{
+  g_autoptr(GTask) task = NULL;
+  GVariantBuilder options_builder;
+  GUnixFDList *fd_list;
+  gint fd = -1;
+
+  task = g_task_new (self, NULL, NULL, NULL);
+  g_task_set_task_data (task, g_strdup (filename), g_free);
+
+  fd = open (filename, O_RDWR);
+  if (fd == -1)
+    fd = open (filename, O_RDONLY);
+  if (fd == -1)
+    {
+      g_autoptr(GError) error = NULL;
+      GtkWindow *window;
+
+      window = gtk_window_get_transient_for (GTK_WINDOW (self));
+      error = g_error_new (G_IO_ERROR,
+                           g_io_error_from_errno (errno),
+                           "%s", strerror (errno));
+      gdu_utils_show_error (window,
+                            _("Error attaching disk image"),
+                            error);
+      return FALSE;
+    }
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+  if (readonly)
+    g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
+  fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
+  udisks_manager_call_loop_setup (udisks_client_get_manager (image_dialog_get_client ()),
+                                  g_variant_new_handle (0),
+                                  g_variant_builder_end (&options_builder),
+                                  fd_list,
+                                  NULL,                       /* GCancellable */
+                                  (GAsyncReadyCallback) loop_setup_cb,
+                                  g_steal_pointer (&task));
+  g_object_unref (fd_list);
+  return TRUE;
+}
+
 static void
 create_new_disk (GduNewDiskImageDialog *self)
 {
@@ -64,7 +157,6 @@ create_new_disk (GduNewDiskImageDialog *self)
   g_autoptr(GError) error = NULL;
   g_autofree char *out_filename = NULL;
   const char *filename;
-  GtkWindow *window;
   guint64 size;
 
   filename = gtk_entry_get_text (self->name_entry);
@@ -105,10 +197,8 @@ create_new_disk (GduNewDiskImageDialog *self)
                  error->message, g_quark_to_string (error->domain), error->code);
     }
 
-  window = gtk_window_get_transient_for (GTK_WINDOW (self));
-
   /* load loop device */
-  gdu_window_attach_disk_image_helper (GDU_WINDOW (window), out_filename, FALSE);
+  dialog_attach_disk_image_helper (self, out_filename, FALSE);
 
   gtk_widget_hide (GTK_WIDGET (self));
   gtk_widget_destroy (GTK_WIDGET (self));

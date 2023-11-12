@@ -277,7 +277,8 @@ create_partition_cb (GObject *source_object, GAsyncResult *res, gpointer user_da
 
   partition_object = udisks_client_get_object (self->udisks_client, created_partition_object_path);
   g_free (created_partition_object_path);
-  gdu_window_select_object (GDU_WINDOW (self->parent_window), partition_object);
+  /* gtk4 todo: to be done with GtkSelectionModel */
+  /* gdu_window_select_object (GDU_WINDOW (self->parent_window), partition_object); */
 
   partition_block = udisks_object_get_block (partition_object);
   if (partition_block == NULL)

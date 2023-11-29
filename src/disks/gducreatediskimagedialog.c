@@ -465,6 +465,7 @@ on_response (GtkDialog  *dialog,
           g_clear_error (&error);
         }
     }
+  dialog_data_unref (data);
 }
 
 static gboolean
@@ -513,7 +514,7 @@ on_success (gpointer user_data)
                              GTK_RESPONSE_NO);
       gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Close"), GTK_RESPONSE_CLOSE);
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
-      g_signal_connect (dialog, "response", G_CALLBACK (on_response), data);
+      g_signal_connect (dialog, "response", G_CALLBACK (on_response), dialog_data_ref (data));
       g_free (s);
 
       gtk_window_present (GTK_WINDOW (dialog));

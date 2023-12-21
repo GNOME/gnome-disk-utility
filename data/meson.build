@@ -36,10 +36,20 @@ install_data(
 
 info = 'org.gnome.DiskUtility.appdata.xml'
 
-i18n.merge_file(
+appdata_file = i18n.merge_file(
   input: info + '.in',
   output: info,
   po_dir: po_dir,
   install: true,
   install_dir: gdu_datadir / 'metainfo',
 )
+
+# Validate Appdata
+appstreamcli = find_program('appstreamcli', required: false)
+if (appstreamcli.found())
+  test('validate-appdata',
+    appstreamcli,
+    args: ['validate', '--no-net', '--explain', appdata_file],
+    workdir: meson.current_build_dir()
+  )
+endif

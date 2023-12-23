@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduBlockRow" parent="HdyExpanderRow">
-    <property name="visible">1</property>
+  <template class="GduBlockRow" parent="AdwExpanderRow">
 
     <child type="prefix">
       <object class="GtkBox" id="button">
-        <property name="visible">1</property>
 
         <child>
           <object class="GtkImage" id="partition_image">
-            <property name="visible">1</property>
           </object>
         </child>
 
@@ -23,9 +20,8 @@
       </object>
     </child>
 
-    <child type="action">
+    <child type="suffix">
       <object class="GtkBox">
-        <property name="visible">1</property>
         <property name="spacing">12</property>
 
         <child>
@@ -38,16 +34,12 @@
 
         <child>
           <object class="GtkMenuButton" id="menu_botton">
-            <property name="visible">1</property>
             <property name="valign">center</property>
-            <property name="popover">block_menu_popover</property>
-
-            <child>
-              <object class="GtkImage">
-                <property name="visible">1</property>
-                <property name="icon-name">view-more-symbolic</property>
-              </object>
-            </child>
+            <property name="menu-model">block_menu</property>
+            <property name="icon_name">view-more-symbolic</property>
+            <style>
+              <class name="flat"></class>
+            </style>
           </object>
         </child>
 
@@ -55,300 +47,171 @@
     </child>
 
     <child>
-      <object class="GtkGrid">
-        <property name="visible">1</property>
-        <property name="margin">18</property>
-        <property name="column-spacing">12</property>
-
-        <!-- Size Model -->
+      <object class="AdwPreferencesRow">
         <child>
-          <object class="GtkLabel">
-            <property name="visible">1</property>
-            <property name="halign">end</property>
-            <property name="label" translatable="yes">Size</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
+          <object class="GtkGrid">
+            <property name="margin-start">24</property>
+            <property name="margin-end">24</property>
+            <property name="margin-top">12</property>
+            <property name="margin-bottom">12</property>
+            <property name="row-spacing">6</property>
+            <property name="column-spacing">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="true">Size</property>
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="size_label">
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="true">Device ID</property>
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">1</property>
+                </layout>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="device_id_label">
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="true">UUID</property>
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">2</property>
+                </layout>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="uuid_label">
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="true">Partition Type</property>
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">3</property>
+                </layout>
+                <style>
+                  <class name="dim-label" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="partition_type_label">
+                <property name="xalign">0</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">3</property>
+                </layout>
+              </object>
+            </child>
           </object>
-          <packing>
-            <property name="top-attach">0</property>
-            <property name="left-attach">0</property>
-          </packing>
         </child>
-        <child>
-          <object class="GtkLabel" id="size_label">
-            <property name="visible">1</property>
-            <property name="halign">start</property>
-            <property name="selectable">1</property>
-          </object>
-          <packing>
-            <property name="top-attach">0</property>
-            <property name="left-attach">1</property>
-          </packing>
-        </child>
-
-        <!-- Device ID -->
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">1</property>
-            <property name="halign">end</property>
-            <property name="label" translatable="yes">Device ID</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-          </object>
-          <packing>
-            <property name="top-attach">1</property>
-            <property name="left-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="device_id_label">
-            <property name="visible">1</property>
-            <property name="halign">start</property>
-            <property name="selectable">1</property>
-          </object>
-          <packing>
-            <property name="top-attach">1</property>
-            <property name="left-attach">1</property>
-          </packing>
-        </child>
-
-        <!-- UUID -->
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">1</property>
-            <property name="halign">end</property>
-            <property name="label" translatable="yes">UUID</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-          </object>
-          <packing>
-            <property name="top-attach">2</property>
-            <property name="left-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="uuid_label">
-            <property name="visible">1</property>
-            <property name="halign">start</property>
-            <property name="selectable">1</property>
-          </object>
-          <packing>
-            <property name="top-attach">2</property>
-            <property name="left-attach">1</property>
-          </packing>
-        </child>
-
-        <!-- Partition Type -->
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">1</property>
-            <property name="halign">end</property>
-            <property name="label" translatable="yes">Partition Type</property>
-            <style>
-              <class name="dim-label"/>
-            </style>
-          </object>
-          <packing>
-            <property name="top-attach">3</property>
-            <property name="left-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="partition_type_label">
-            <property name="visible">1</property>
-            <property name="halign">start</property>
-            <property name="selectable">1</property>
-          </object>
-          <packing>
-            <property name="top-attach">3</property>
-            <property name="left-attach">1</property>
-          </packing>
-        </child>
-
       </object>
     </child>
 
   </template>
 
-  <object class="GtkPopover" id="block_menu_popover">
-    <child>
-      <object class="GtkBox">
-        <property name="visible">1</property>
-        <property name="margin">12</property>
-        <property name="orientation">vertical</property>
-
-        <child>
-          <object class="GtkModelButton" id="format_partition_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Format _Partition…</property>
-            <signal name="clicked" handler="format_partition_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">1</property>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="edit_partition_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">_Edit Partition…</property>
-            <signal name="clicked" handler="edit_partition_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="edit_filesystem_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Edit _Filesystem…</property>
-            <signal name="clicked" handler="edit_filesystem_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="change_passphrase_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Change Pa_ssphrase…</property>
-            <signal name="clicked" handler="change_passphrase_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">1</property>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="resize_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Resi_ze…</property>
-            <signal name="clicked" handler="resize_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="check_fs_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">C_heck Filesystem…</property>
-            <signal name="clicked" handler="check_fs_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="repair_fs_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Rep_air Filesystem…</property>
-            <signal name="clicked" handler="repair_fs_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="take_ownership_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">_Take Ownership…</property>
-            <signal name="clicked" handler="take_ownership_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">1</property>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="configure_fstab_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Edit _Mount Options…</property>
-            <signal name="clicked" handler="configure_fstab_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="configure_crypttab_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">Edit Encr_yption Options…</property>
-            <signal name="clicked" handler="configure_crypttab_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkSeparator">
-            <property name="visible">1</property>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="create_partition_image_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">_Create Partition Image…</property>
-            <signal name="clicked" handler="create_partition_image_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="restore_partition_image_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">_Restore Partition Image…</property>
-            <signal name="clicked" handler="restore_partition_image_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkModelButton" id="benchmark_partition_button">
-            <property name="visible">1</property>
-            <property name="hexpand">1</property>
-            <property name="xalign">0.0</property>
-            <property name="use-underline">1</property>
-            <property name="label" translatable="yes">_Benchmark Partition…</property>
-            <signal name="clicked" handler="benchmark_partition_clicked_cb" swapped="yes"/>
-          </object>
-        </child>
-
-      </object>
-    </child>
-  </object>  <!-- ./GtkPopover block_menu_popover -->
-
+  <menu id="block_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Resize</attribute>
+        <attribute name="action">row.resize</attribute>
+      </item>
+      <submenu>
+        <attribute name="label" translatable="true">Edit</attribute>
+        <item>
+          <attribute name="label" translatable="true">Partition</attribute>
+          <attribute name="action">row.edit_partition</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="true">Filesystem</attribute>
+          <attribute name="action">row.edit_filesystem</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="true">Change Passphrase</attribute>
+          <attribute name="action">row.change_passphrase</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="true">Mount Options</attribute>
+          <attribute name="action">row.configure_fstab</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="true">Encryption Options</attribute>
+          <attribute name="action">row.configure_crypttab</attribute>
+        </item>
+        <item>
+          <attribute name="label" translatable="true">Take Ownership</attribute>
+          <attribute name="action">row.take_ownership</attribute>
+        </item>
+      </submenu>
+      <item>
+        <attribute name="label" translatable="true">Format Partition</attribute>
+        <attribute name="action">row.format_partition</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Check Filesystem</attribute>
+        <attribute name="action">row.check_fs</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Repair Filesystem</attribute>
+        <attribute name="action">row.repair_fs</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Benchmark Partition</attribute>
+        <attribute name="action">row.benchmark_partition</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="true">Create Partition Image</attribute>
+        <attribute name="action">row.create_partition_image</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="true">Restore Partition Image</attribute>
+        <attribute name="action">row.restore_partition_image</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

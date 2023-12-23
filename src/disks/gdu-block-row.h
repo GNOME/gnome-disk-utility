@@ -10,14 +10,14 @@
 
 #pragma once
 
-#include <handy.h>
+#include <adwaita.h>
 
 #include "gdu-block.h"
 
 G_BEGIN_DECLS
 
 #define GDU_TYPE_BLOCK_ROW (gdu_block_row_get_type ())
-G_DECLARE_FINAL_TYPE (GduBlockRow, gdu_block_row, GDU, BLOCK_ROW, HdyExpanderRow)
+G_DECLARE_FINAL_TYPE (GduBlockRow, gdu_block_row, GDU, BLOCK_ROW, AdwExpanderRow)
 
 GduBlockRow *gdu_block_row_new       (GduBlock    *block);
 GduBlock    *gdu_block_row_get_item  (GduBlockRow *self);

@@ -42,7 +42,7 @@
 
 struct _GduBlockRow
 {
-  HdyExpanderRow  parent_instance;
+  AdwExpanderRow  parent_instance;
 
   GtkImage       *partition_image;
   GtkLabel       *partition_depth_label;
@@ -53,30 +53,12 @@ struct _GduBlockRow
   GtkLabel       *uuid_label;
   GtkLabel       *partition_type_label;
 
-  GtkButton      *format_partition_button;
-
-  GtkButton      *edit_partition_button;
-  GtkButton      *edit_filesystem_button;
-  GtkButton      *change_passphrase_button;
-
-  GtkButton      *resize_button;
-  GtkButton      *check_fs_button;
-  GtkButton      *repair_fs_button;
-  GtkButton      *take_ownership_button;
-
-  GtkButton      *configure_fstab_button;
-  GtkButton      *configure_crypttab_button;
-
-  GtkButton      *create_partition_image_button;
-  GtkButton      *restore_partition_image_button;
-  GtkButton      *benchmark_partition_button;
-
   UDisksClient   *client;
   GduBlock       *block;
 };
 
 
-G_DEFINE_TYPE (GduBlockRow, gdu_block_row, HDY_TYPE_EXPANDER_ROW)
+G_DEFINE_TYPE (GduBlockRow, gdu_block_row, ADW_TYPE_EXPANDER_ROW)
 
 static gpointer
 block_row_get_window (GduBlockRow *self)
@@ -112,7 +94,7 @@ update_block_row (GduBlockRow *self)
   size_str = gdu_block_get_size_str (self->block);
   features = gdu_item_get_features (GDU_ITEM (self->block));
 
-  hdy_preferences_row_set_title (HDY_PREFERENCES_ROW (self), description);
+  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self), description);
   gtk_label_set_label (self->partition_type_label, partition);
   gtk_label_set_label (self->uuid_label, uuid);
   gtk_label_set_label (self->device_id_label, device_id);
@@ -173,35 +155,33 @@ update_block_row (GduBlockRow *self)
       /*                                            mount_points[0], mount_points[0]); */
       /*   } */
 
-      hdy_expander_row_set_subtitle (HDY_EXPANDER_ROW (self), mount_points[0]);
+      adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), mount_points[0]);
     }
 
-#define ENABLE(_widget, _feature) gtk_widget_set_sensitive (GTK_WIDGET (_widget), features & _feature)
+  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
+  ENABLE ("row.change_passphrase", GDU_FEATURE_CHANGE_PASSPHRASE);
+  ENABLE ("row.resize", GDU_FEATURE_RESIZE_PARTITION);
+  ENABLE ("row.edit_partition", GDU_FEATURE_EDIT_PARTITION);
+  ENABLE ("row.edit_filesystem", GDU_FEATURE_EDIT_LABEL);
+  ENABLE ("row.take_ownership", GDU_FEATURE_TAKE_OWNERSHIP);
+  ENABLE ("row.format_partition", GDU_FEATURE_FORMAT);
+  ENABLE ("row.configure_fstab", GDU_FEATURE_CONFIGURE_FSTAB);
+  ENABLE ("row.configure_crypttab", GDU_FEATURE_CONFIGURE_CRYPTTAB);
+  ENABLE ("row.check_fs", GDU_FEATURE_CHECK_FILESYSTEM);
+  ENABLE ("row.repair_fs", GDU_FEATURE_REPAIR_FILESYSTEM);
+  ENABLE ("row.benchmark_partition", GDU_FEATURE_BENCHMARK);
+  ENABLE ("row.create_partition_image", GDU_FEATURE_CREATE_IMAGE);
+  ENABLE ("row.restore_partition_image", GDU_FEATURE_RESTORE_IMAGE);
 
-  ENABLE (self->format_partition_button, GDU_FEATURE_FORMAT);
-
-  ENABLE (self->edit_partition_button, GDU_FEATURE_EDIT_PARTITION);
-  ENABLE (self->edit_filesystem_button, GDU_FEATURE_EDIT_LABEL);
-  ENABLE (self->change_passphrase_button, GDU_FEATURE_CHANGE_PASSPHRASE);
-
-  ENABLE (self->resize_button, GDU_FEATURE_RESIZE_PARTITION);
-  ENABLE (self->check_fs_button, GDU_FEATURE_CHECK_FILESYSTEM);
-  ENABLE (self->repair_fs_button, GDU_FEATURE_REPAIR_FILESYSTEM);
-  ENABLE (self->take_ownership_button, GDU_FEATURE_TAKE_OWNERSHIP);
-
-  ENABLE (self->configure_fstab_button, GDU_FEATURE_CONFIGURE_FSTAB);
-  ENABLE (self->configure_crypttab_button, GDU_FEATURE_CONFIGURE_CRYPTTAB);
-
-  ENABLE (self->create_partition_image_button, GDU_FEATURE_CREATE_IMAGE);
-  ENABLE (self->restore_partition_image_button, GDU_FEATURE_RESTORE_IMAGE);
-  ENABLE (self->benchmark_partition_button, GDU_FEATURE_BENCHMARK);
-
-#undef ENABLE
+  #undef ENABLE
 }
 
 static void
-format_partition_clicked_cb (GduBlockRow *self)
+format_partition_clicked_cb (GtkWidget  *widget,
+                             const char *action_name,
+                             GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
@@ -214,8 +194,11 @@ format_partition_clicked_cb (GduBlockRow *self)
 }
 
 static void
-edit_partition_clicked_cb (GduBlockRow *self)
+edit_partition_clicked_cb (GtkWidget  *widget,
+                           const char *action_name,
+                           GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -226,8 +209,11 @@ edit_partition_clicked_cb (GduBlockRow *self)
 }
 
 static void
-edit_filesystem_clicked_cb (GduBlockRow *self)
+edit_filesystem_clicked_cb (GtkWidget  *widget,
+                            const char *action_name,
+                            GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -238,8 +224,11 @@ edit_filesystem_clicked_cb (GduBlockRow *self)
 }
 
 static void
-change_passphrase_clicked_cb (GduBlockRow *self)
+change_passphrase_clicked_cb (GtkWidget  *widget,
+                              const char *action_name,
+                              GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -247,8 +236,11 @@ change_passphrase_clicked_cb (GduBlockRow *self)
 }
 
 static void
-resize_clicked_cb (GduBlockRow *self)
+resize_clicked_cb (GtkWidget  *widget,
+                   const char *action_name,
+                   GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -256,14 +248,6 @@ resize_clicked_cb (GduBlockRow *self)
   gdu_resize_dialog_show (block_row_get_window (self),
                           object,
                           block_row_get_client ());
-}
-
-static void
-on_message_dialog_response (GtkDialog *dialog,
-                            int        response,
-                            gpointer   user_data)
-{
-  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -290,11 +274,10 @@ fs_check_cb (GObject      *obj,
     }
   else
     {
-      GtkWidget *message_dialog;
+      GtkWidget *dialog;
       UDisksObjectInfo *info;
       UDisksBlock *block;
       const char *name;
-      char *s;
 
       object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
       block = udisks_object_peek_block (object);
@@ -306,29 +289,23 @@ fs_check_cb (GObject      *obj,
       if (name == NULL || *name == '\0')
         name = udisks_block_get_id_type (block);
 
-      message_dialog = gtk_message_dialog_new_with_markup  (block_row_get_window (self),
-                                                            GTK_DIALOG_MODAL,
-                                                            GTK_MESSAGE_INFO,
-                                                            GTK_BUTTONS_CLOSE,
-                                                            "<big><b>%s</b></big>",
-                                                            consistent ? _("Filesystem intact") : _("Filesystem damaged"));
-      if (consistent)
-        {
-          s = g_strdup_printf (_("Filesystem %s on %s is undamaged."),
-                               name, udisks_object_info_get_name (info));
-        }
-      else
-        {
-          /* show as result and not error message, because it's not a malfunction of GDU */
-          s = g_strdup_printf (_("Filesystem %s on %s needs repairing."),
-                               name, udisks_object_info_get_name (info));
-        }
+      dialog = adw_message_dialog_new (block_row_get_window (self),
+                                       consistent ? _("Filesystem intact") : _("Filesystem damaged"),
+                                      NULL);
 
-      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
-      g_signal_connect (message_dialog, "response", G_CALLBACK (on_message_dialog_response), NULL);
-      gtk_window_present (GTK_WINDOW (message_dialog));
+      adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
+                                             consistent ? _("Filesystem %s on %s is undamaged.")
+                                              : _("Filesystem %s on %s needs repairing."),
+                                              name, udisks_object_info_get_name (info));
+      
+      adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
+                                       "close",
+                                       _("Close"));
 
-      g_free (s);
+      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                             "close");
+      
+      gtk_window_present (GTK_WINDOW (dialog));
     }
 }
 
@@ -357,56 +334,61 @@ fs_check_unmount_cb (GObject      *obj,
 }
 
 static void
-on_check_message_dialog_response (GtkDialog *dialog,
-                                  gint       response,
-                                  gpointer   user_data)
+on_check_message_dialog_response (GduBlockRow      *self,
+                                  gchar            *response,
+                                  AdwMessageDialog *dialog)
 {
-  GduBlockRow *self = user_data;
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  if (response == GTK_RESPONSE_OK)
-    gdu_utils_ensure_unused (block_row_get_client (),
-                             block_row_get_window (self),
-                             object,
-                             fs_check_unmount_cb,
-                             NULL,
-                             self);
-
   gtk_window_close (GTK_WINDOW (dialog));
+  if (g_strcmp0 (response, "cancel") == 0)
+    return;
+
+  gdu_utils_ensure_unused (block_row_get_client (),
+                           block_row_get_window (self),
+                           object,
+                           fs_check_unmount_cb,
+                           NULL,
+                           self);
 }
 
 static void
-check_fs_cb (GduBlockRow *self)
+check_fs_cb (GtkWidget  *widget,
+             const char *action_name,
+             GVariant   *parameter)
 {
-  GtkWidget *message_dialog, *ok_button;
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  GtkWidget *dialog;
 
-  message_dialog = gtk_message_dialog_new_with_markup  (block_row_get_window (self),
-                                                        GTK_DIALOG_MODAL,
-                                                        GTK_MESSAGE_WARNING,
-                                                        GTK_BUTTONS_OK_CANCEL,
-                                                        "<big><b>%s</b></big>",
-                                                        _("Confirm Check"));
+  dialog = adw_message_dialog_new (block_row_get_window (self),
+                                           _("Confirm Check"),
+                                          _("The check may take a long time, especially if the partition contains a lot of data."));
 
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s",
-                                              _("The check may take a long time, especially if the partition contains a lot of data."));
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                    "cancel",  _("_Cancel"),
+                                    "confirm", _("_Ok"),
+                                    NULL);
 
-  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
-  gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");
+  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                              "confirm", 
+                                              ADW_RESPONSE_SUGGESTED);
+  
+  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
+                                           "confirm");
 
-  g_signal_connect (message_dialog, "response", G_CALLBACK (on_check_message_dialog_response), self);
-  gtk_window_present (GTK_WINDOW (message_dialog));
-}
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                         "cancel");
 
-static void
-response_cb (GtkDialog *dialog,
-             gint       response,
-             gpointer   user_data)
-{
-  gtk_window_close (GTK_WINDOW (dialog));
+  g_signal_connect_swapped (dialog,
+                            "response",
+                            G_CALLBACK (on_check_message_dialog_response),
+                            self);
+  
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
@@ -430,15 +412,13 @@ fs_repair_cb (GObject      *obj,
       gdu_utils_show_error (block_row_get_window (self),
                             _("Error while repairing filesystem"),
                             error);
-      g_error_free (error);
     }
   else
     {
-      GtkWidget *message_dialog;
+      GtkWidget *dialog;
       UDisksObjectInfo *info;
       UDisksBlock *block;
       const char *name;
-      char *s;
 
       object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
       block = udisks_object_peek_block (object);
@@ -449,31 +429,24 @@ fs_repair_cb (GObject      *obj,
       if (name == NULL || *name == '\0')
         name = udisks_block_get_id_type (block);
 
-      message_dialog = gtk_message_dialog_new_with_markup  (block_row_get_window (self),
-                                                            GTK_DIALOG_MODAL,
-                                                            GTK_MESSAGE_INFO,
-                                                            GTK_BUTTONS_CLOSE,
-                                                            "<big><b>%s</b></big>",
-                                                            success ? _("Repair successful") : _("Repair failed"));
-      if (success)
-        {
-          s = g_strdup_printf (_("Filesystem %s on %s has been repaired."),
-                               name, udisks_object_info_get_name (info));
-        }
-      else
-        {
-          /* show as result and not error message, because it's not a malfunction of GDU */
-          s = g_strdup_printf (_("Filesystem %s on %s could not be repaired."),
-                               name, udisks_object_info_get_name (info));
-        }
+      dialog = adw_message_dialog_new (block_row_get_window (self),
+                                       success ? _("Repair successful") : _("Repair failed"),
+                                       NULL);
 
-      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s", s);
-      g_signal_connect (message_dialog, "response", G_CALLBACK (response_cb), NULL);
-      gtk_window_present (GTK_WINDOW (message_dialog));
+      adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
+                                            success ? _("Filesystem %s on %s has been repaired.") 
+                                            : _("Filesystem %s on %s could not be repaired."),
+                                            name, udisks_object_info_get_name (info));
+      
+      adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
+                                       "close",
+                                       _("Close"));
 
-      g_free (s);
+      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                             "close");
+      
+      gtk_window_present (GTK_WINDOW (dialog));
     }
-
 }
 
 static void
@@ -502,54 +475,65 @@ fs_repair_unmount_cb (GObject      *obj,
 }
 
 static void
-on_response (GtkDialog *dialog,
-             gint       response,
-             gpointer   user_data)
+on_repair_message_dialog_response (GduBlockRow      *self,
+                                   gchar            *response,
+                                   AdwMessageDialog *dialog)
 {
-  GduBlockRow *self = user_data;
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
 
-  if (response == GTK_RESPONSE_OK)
-    gdu_utils_ensure_unused (block_row_get_client (),
-                             block_row_get_window (self),
-                             object,
-                             fs_repair_unmount_cb,
-                             NULL,
-                             self);
+  if (g_strcmp0 (response, "cancel") == 0)
+    return;
 
-  gtk_window_close (GTK_WINDOW (dialog));
+  gdu_utils_ensure_unused (block_row_get_client (),
+                           block_row_get_window (self),
+                           object,
+                           fs_repair_unmount_cb,
+                           NULL,
+                           self);
 }
 
 static void
-repair_fs_cb (GduBlockRow *self)
+repair_fs_cb (GtkWidget  *widget,
+              const char *action_name,
+              GVariant   *parameter)
 {
-  GtkWidget *message_dialog, *ok_button;
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  GtkWidget *dialog;
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  message_dialog = gtk_message_dialog_new_with_markup (block_row_get_window(self),
-                                                       GTK_DIALOG_MODAL,
-                                                       GTK_MESSAGE_WARNING,
-                                                       GTK_BUTTONS_OK_CANCEL,
-                                                       "<big><b>%s</b></big>",
-                                                       _("Confirm Repair"));
+  dialog = adw_message_dialog_new (block_row_get_window (self),
+                                   _("Confirm Repair"),
+                                   _("A filesystem repair is not always possible and can cause data loss. "
+                                     "Consider backing it up first in order to use forensic recovery tools "
+                                     "that retrieve lost files. "
+                                     "The operation may take a long time, especially if the partition contains a lot of data."));
 
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (message_dialog), "%s",
-                                              _("A filesystem repair is not always possible and can cause data loss. "
-                                                "Consider backing it up first in order to use forensic recovery tools "
-                                                "that retrieve lost files. "
-                                                "The operation may take a long time, especially if the partition contains a lot of data."));
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                    "cancel",  _("_Cancel"),
+                                    "confirm", _("_Ok"),
+                                    NULL);
 
-  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (message_dialog), GTK_RESPONSE_OK);
-  gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");
+  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                              "confirm", 
+                                              ADW_RESPONSE_DESTRUCTIVE);
 
-  g_signal_connect (message_dialog, "response", G_CALLBACK (on_response), self);
-  gtk_window_present (GTK_WINDOW (message_dialog));
+  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
+                                            "cancel");
+
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                          "cancel");
+
+  g_signal_connect_swapped (dialog,
+                            "response",
+                            G_CALLBACK (on_repair_message_dialog_response),
+                            self);
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
@@ -557,7 +541,7 @@ fs_take_ownership_cb (GObject      *object,
                       GAsyncResult *result,
                       gpointer      user_data)
 {
-  GduBlockRow *self = user_data;
+  GduBlockRow *self = GDU_BLOCK_ROW (user_data);
   g_autoptr(GError) error = NULL;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
@@ -573,68 +557,124 @@ fs_take_ownership_cb (GObject      *object,
 }
 
 static void
-on_recursive_checkbutton (GtkToggleButton *togglebutton,
+on_recursive_checkbutton (GtkCheckButton  *togglebutton,
                           gpointer         user_data)
 {
-  GtkWidget *ok_button = GTK_WIDGET (user_data);
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (user_data);
+  gboolean active;
 
-  if (gtk_toggle_button_get_active (togglebutton))
-    {
-      gtk_style_context_remove_class (gtk_widget_get_style_context (ok_button), "suggested-action");
-      gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "destructive-action");
-    }
-  else
-    {
-      gtk_style_context_remove_class (gtk_widget_get_style_context (ok_button), "destructive-action");
-      gtk_style_context_add_class (gtk_widget_get_style_context (ok_button), "suggested-action");
-    }
+  active = gtk_check_button_get_active (togglebutton);
+  
+  adw_message_dialog_set_response_appearance (dialog,
+                                              "confirm", 
+                                              active ?
+                                              ADW_RESPONSE_DESTRUCTIVE :
+                                              ADW_RESPONSE_SUGGESTED);
+  adw_message_dialog_set_default_response (dialog,
+                                           active ?
+                                           "cancel" :
+                                           "confirm");
 }
 
-static void
-take_ownership_cb (GduBlockRow *self)
+typedef struct
 {
-  GtkWindow *window;
-  GtkBuilder *builder;
-  GVariantBuilder options_builder;
-  GtkWidget *dialog;
-  GtkWidget *recursive_checkbutton;
-  GtkWidget *ok_button;
+  GduBlockRow    *self;
+  GtkCheckButton *recursive_checkbutton;
+} TakeOwnershipDialogData;
+
+static void
+on_take_ownership_dialog_response_cb (GObject       *source_object,
+                                      GAsyncResult  *response,
+                                      gpointer       user_data)
+{
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+  TakeOwnershipDialogData *data = user_data;
+  GduBlockRow *self;
+  GtkCheckButton *recursive_checkbutton;
   UDisksObject *object;
   UDisksFilesystem *filesystem;
+  GVariantBuilder options_builder;
 
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
+
+  self = data->self;
+  recursive_checkbutton = data->recursive_checkbutton;
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
   filesystem = udisks_object_peek_filesystem (object);
-  window = block_row_get_window (self);
+  
+  g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
-  builder = gtk_builder_new_from_resource ("/org/gnome/Disks/ui/take-ownership-dialog.ui");
-  dialog = GTK_WIDGET (gtk_builder_get_object (builder, "take-ownership-dialog"));
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), window);
+  if (gtk_check_button_get_active (recursive_checkbutton))
+    g_variant_builder_add (&options_builder, "{sv}", "recursive", g_variant_new_boolean (TRUE));
 
-  ok_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  recursive_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "recursive-checkbutton"));
-  g_signal_connect (recursive_checkbutton, "toggled", G_CALLBACK (on_recursive_checkbutton), ok_button);
-
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
-    {
-      g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-
-      if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (recursive_checkbutton)))
-        g_variant_builder_add (&options_builder, "{sv}", "recursive", g_variant_new_boolean (TRUE));
-
-      udisks_filesystem_call_take_ownership (filesystem,
-                                             g_variant_builder_end (&options_builder),
-                                             NULL,
-                                             fs_take_ownership_cb,
-                                             window);
-    }
-
-  gtk_window_close (GTK_WINDOW (dialog));
+  udisks_filesystem_call_take_ownership (filesystem,
+                                        g_variant_builder_end (&options_builder),
+                                        NULL,
+                                        fs_take_ownership_cb,
+                                        self);
 }
 
 static void
-configure_fstab_clicked_cb (GduBlockRow *self)
+take_ownership_cb (GtkWidget  *widget,
+                   const char *action_name,
+                   GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  GtkWidget *dialog;
+  TakeOwnershipDialogData *data;
+  GtkWidget *recursive_checkbutton;
+  
+  dialog = adw_message_dialog_new (block_row_get_window (self),
+                                   _("Confirm Taking Ownership"),
+                                   _("Changes ownership of the filesystem to your user and group."
+                                     "The recursive mode does also change the ownership of all "
+                                     "subdirectories and files, this can lead to destructive "
+                                     "results when the filesystem contains a directory structure "
+                                     "where ownership should belong to different users (e.g., a "
+                                     "system backup or a filesystem that is accessed by multiple users)."));
+
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                    "cancel",  _("_Cancel"),
+                                    "confirm", _("_Ok"),
+                                    NULL);
+
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                         "cancel");
+
+  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                              "confirm", 
+                                              ADW_RESPONSE_SUGGESTED);
+
+  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
+                                           "confirm");
+
+  recursive_checkbutton = gtk_check_button_new_with_label (_("Enable _recursive mode"));
+  gtk_check_button_set_use_underline (GTK_CHECK_BUTTON (recursive_checkbutton), TRUE);
+  g_signal_connect (recursive_checkbutton,
+                    "toggled",
+                    G_CALLBACK (on_recursive_checkbutton),
+                    dialog);
+
+  adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), recursive_checkbutton);
+
+  data = g_new0 (TakeOwnershipDialogData, 1);
+  data->self = self;
+  data->recursive_checkbutton = GTK_CHECK_BUTTON (recursive_checkbutton);
+
+  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
+                             NULL,
+                             on_take_ownership_dialog_response_cb,
+                             data);
+}
+
+static void
+configure_fstab_clicked_cb (GtkWidget  *widget,
+                            const char *action_name,
+                            GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -647,8 +687,11 @@ configure_fstab_clicked_cb (GduBlockRow *self)
 }
 
 static void
-configure_crypttab_clicked_cb (GduBlockRow *self)
+configure_crypttab_clicked_cb (GtkWidget  *widget,
+                               const char *action_name,
+                               GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -661,8 +704,11 @@ configure_crypttab_clicked_cb (GduBlockRow *self)
 }
 
 static void
-create_partition_image_clicked_cb (GduBlockRow *self)
+create_partition_image_clicked_cb (GtkWidget  *widget,
+                                   const char *action_name,
+                                   GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -673,8 +719,11 @@ create_partition_image_clicked_cb (GduBlockRow *self)
 }
 
 static void
-restore_partition_image_clicked_cb (GduBlockRow *self)
+restore_partition_image_clicked_cb (GtkWidget  *widget,
+                                    const char *action_name,
+                                    GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -686,8 +735,11 @@ restore_partition_image_clicked_cb (GduBlockRow *self)
 }
 
 static void
-benchmark_partition_clicked_cb (GduBlockRow *self)
+benchmark_partition_clicked_cb (GtkWidget  *widget,
+                                const char *action_name,
+                                GVariant   *parameter)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -728,41 +780,21 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, uuid_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_label);
 
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, format_partition_button);
+  gtk_widget_class_install_action (widget_class, "row.change_passphrase", NULL, change_passphrase_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.resize", NULL, resize_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.edit_partition", NULL, edit_partition_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.edit_filesystem", NULL, edit_filesystem_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.take_ownership", NULL, take_ownership_cb);
+  gtk_widget_class_install_action (widget_class, "row.format_partition", NULL, format_partition_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.configure_fstab", NULL, configure_fstab_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.configure_crypttab", NULL, configure_crypttab_clicked_cb);
 
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, edit_partition_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, edit_filesystem_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, change_passphrase_button);
-
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, resize_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, check_fs_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, repair_fs_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, take_ownership_button);
-
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, configure_fstab_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, configure_crypttab_button);
-
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, create_partition_image_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, restore_partition_image_button);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, benchmark_partition_button);
-
-  gtk_widget_class_bind_template_callback (widget_class, format_partition_clicked_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, edit_partition_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, edit_filesystem_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, change_passphrase_clicked_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, resize_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, check_fs_cb);
-  gtk_widget_class_bind_template_callback (widget_class, repair_fs_cb);
-  gtk_widget_class_bind_template_callback (widget_class, take_ownership_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, configure_fstab_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, configure_crypttab_clicked_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, create_partition_image_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, restore_partition_image_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, benchmark_partition_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.check_fs", NULL, check_fs_cb);
+  gtk_widget_class_install_action (widget_class, "row.repair_fs", NULL, repair_fs_cb);
+  gtk_widget_class_install_action (widget_class, "row.benchmark_partition", NULL, benchmark_partition_clicked_cb);
+  
+  gtk_widget_class_install_action (widget_class, "row.create_partition_image", NULL, create_partition_image_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.restore_partition_image", NULL, restore_partition_image_clicked_cb);
 }
 
 static void

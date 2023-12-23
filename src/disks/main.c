@@ -17,8 +17,7 @@
 int
 main (int argc, char *argv[])
 {
-  GApplication *app;
-  gint status;
+  g_autoptr(GtkApplication) app = NULL;
 
   gdu_log_init ();
 
@@ -30,8 +29,6 @@ main (int argc, char *argv[])
   adw_init ();
 
   app = gdu_application_new ();
-  status = g_application_run (G_APPLICATION (app), argc, argv);
-  g_object_unref (app);
 
-  return status;
+  return g_application_run (G_APPLICATION (app), argc, argv);
 }

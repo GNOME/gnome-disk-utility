@@ -285,7 +285,7 @@ create_partition_cb (GObject *source_object, GAsyncResult *res, gpointer user_da
     {
       g_warning ("Created partition has no block interface");
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
       g_clear_object (&partition_object);
       return;
     }
@@ -321,7 +321,7 @@ finish_cb (GduCreateFormatDialog *self,
       else
         {
           gtk_widget_hide (GTK_WIDGET (self));
-          gtk_widget_destroy (GTK_WIDGET (self));
+          gtk_window_close (GTK_WINDOW (self));
         }
       return;
     }

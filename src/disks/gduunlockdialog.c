@@ -112,7 +112,7 @@ unlock_cb (UDisksEncrypted *encrypted,
       gdu_utils_show_error (window, _("Error unlocking device"), error);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -187,7 +187,7 @@ unlock_dialog_response_cb (GduUnlockDialog *self,
   else
     {
       /* otherwise, we are done */
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 

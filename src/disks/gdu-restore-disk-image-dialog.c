@@ -161,7 +161,7 @@ dialog_data_hide (DialogData *data)
       dialog = data->dialog;
       data->dialog = NULL;
       gtk_widget_hide (dialog);
-      gtk_widget_destroy (dialog);
+      gtk_window_close (GTK_WINDOW (dialog));
       data->dialog = NULL;
     }
 }

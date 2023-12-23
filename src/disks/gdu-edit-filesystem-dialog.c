@@ -59,7 +59,7 @@ filesystem_dialog_response_cb (GduFilesystemDialog *self,
   if (response_id != GTK_RESPONSE_OK)
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
       return;
     }
 

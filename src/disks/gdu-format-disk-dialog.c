@@ -52,7 +52,7 @@ format_cb (GObject      *source_object,
     gdu_utils_show_error (self->parent_window, _("Error formatting disk"), error);
 
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -67,7 +67,7 @@ ensure_unused_cb (GtkWindow    *parent_window,
   if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL))
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
 
       return;
     }
@@ -102,7 +102,7 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
       response_id == GTK_RESPONSE_DELETE_EVENT)
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
       return;
     }
 
@@ -149,7 +149,7 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
                                     self->udisks_client, objects, TRUE))
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
 
       return;
     }

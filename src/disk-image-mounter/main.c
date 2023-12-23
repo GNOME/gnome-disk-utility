@@ -28,7 +28,7 @@ static void
 response_cb (GtkDialog *dialog,
              gint       response)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -111,7 +111,7 @@ do_filechooser (void)
   opt_writable = ! gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ro_checkbutton));
 
  out:
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
   return ret;
 }
 

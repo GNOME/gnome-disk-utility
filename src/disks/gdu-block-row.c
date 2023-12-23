@@ -263,7 +263,7 @@ on_message_dialog_response (GtkDialog *dialog,
                             int        response,
                             gpointer   user_data)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -376,7 +376,7 @@ on_check_message_dialog_response (GtkDialog *dialog,
                              NULL,
                              self);
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -406,7 +406,7 @@ response_cb (GtkDialog *dialog,
              gint       response,
              gpointer   user_data)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -520,7 +520,7 @@ on_response (GtkDialog *dialog,
                              NULL,
                              self);
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -629,7 +629,7 @@ take_ownership_cb (GduBlockRow *self)
                                              window);
     }
 
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void

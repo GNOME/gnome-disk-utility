@@ -200,8 +200,7 @@ create_new_disk (GduNewDiskImageDialog *self)
   /* load loop device */
   dialog_attach_disk_image_helper (self, out_filename, FALSE);
 
-  gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -212,8 +211,7 @@ new_disk_image_confirm_response_cb (GduNewDiskImageDialog *self,
   g_assert (GDU_IS_NEW_DISK_IMAGE_DIALOG (self));
   g_assert (GTK_IS_DIALOG (dialog));
 
-  gtk_widget_hide (dialog);
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
 
   if (response_id == GTK_RESPONSE_ACCEPT)
     create_new_disk (self);
@@ -298,8 +296,7 @@ new_disk_image_dialog_response_cb (GduNewDiskImageDialog *self,
     }
   else
     {
-      gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 

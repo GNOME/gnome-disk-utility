@@ -147,7 +147,7 @@ dialog_data_hide (DialogData *data)
       dialog = data->dialog;
       data->dialog = NULL;
       gtk_widget_hide (dialog);
-      gtk_widget_destroy (dialog);
+      gtk_window_close (GTK_WINDOW (dialog));
       data->dialog = NULL;
     }
 }
@@ -455,7 +455,7 @@ on_response (GtkDialog  *dialog,
   DialogData *data = user_data;
   GError *error = NULL;
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
   if (response == GTK_RESPONSE_NO)
     {
       if (!g_file_delete (data->output_file, NULL, &error))
@@ -941,7 +941,7 @@ check_overwrite (DialogData *data)
   if (response != GTK_RESPONSE_ACCEPT)
     ret = FALSE;
 
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
 
  out:
   g_clear_object (&folder_info);

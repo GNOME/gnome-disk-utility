@@ -194,7 +194,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
 
  end:
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -409,7 +409,7 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
                             _("Error retrieving configuration data"),
                             error);
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
       return;
     }
 

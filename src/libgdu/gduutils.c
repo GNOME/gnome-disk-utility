@@ -705,7 +705,7 @@ static void
 response_cb (GtkDialog *dialog,
              gint       response)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 void
@@ -874,7 +874,7 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
   if (inout_checkbox_value != NULL && check_button != NULL)
     *inout_checkbox_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
 
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
 
   return response == GTK_RESPONSE_OK;
 }

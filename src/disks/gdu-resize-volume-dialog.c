@@ -89,7 +89,7 @@ resize_dialog_data_unref (ResizeDialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_close (GTK_WINDOW (data->dialog));
         }
 
       g_clear_object (&data->builder);
@@ -445,7 +445,7 @@ static void
 response_cb (GtkDialog *dialog,
              gint       response)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static gboolean
@@ -957,7 +957,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
   if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
     {
       gtk_widget_hide (data->dialog);
-      g_clear_pointer (&data->dialog, gtk_widget_destroy);
+      g_clear_pointer (&data->dialog, gtk_window_close);
 
       if (data->filesystem != NULL)
         {
@@ -997,7 +997,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
         }
 
       gtk_widget_hide (data->dialog);
-      g_clear_pointer (&data->dialog, gtk_widget_destroy);
+      g_clear_pointer (&data->dialog, gtk_window_close);
       if (data->mount_cancellable)
         g_cancellable_cancel (data->mount_cancellable);
 

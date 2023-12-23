@@ -131,7 +131,7 @@ dialog_data_unref (DialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_close (GTK_WINDOW (data->dialog));
           data->dialog = NULL;
         }
 
@@ -1601,7 +1601,7 @@ start_benchmark (DialogData *data)
     }
 
  out:
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
   g_clear_object (&builder);
   g_clear_object (&settings);
   update_dialog (data);

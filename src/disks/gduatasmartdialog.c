@@ -106,7 +106,7 @@ dialog_data_unref (DialogData *data)
       if (data->dialog != NULL)
         {
           gtk_widget_hide (data->dialog);
-          gtk_widget_destroy (data->dialog);
+          gtk_window_close (GTK_WINDOW (data->dialog));
         }
       if (data->object != NULL)
         g_object_unref (data->object);
@@ -1499,7 +1499,7 @@ on_dialog_response (GtkDialog *dialog,
       }
   }
 
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 
   if (data->timeout_id) {
     g_source_remove (data->timeout_id);

@@ -96,7 +96,7 @@ gdu_application_should_exit (GduApplication *app)
                                                 _("Closing now stops the running jobs and leads to a corrupt result."));
 
       response = gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (dialog);
+      gtk_window_hide (GTK_WINDOW (dialog));
 
       if (response != GTK_RESPONSE_OK)
         return FALSE;
@@ -330,7 +330,7 @@ shortcuts_activated (GSimpleAction *action,
 static void
 on_about_dialog_response (GtkDialog *dialog)
 {
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_window_close (GTK_WINDOW (dialog));
 }
 
 static void
@@ -372,7 +372,7 @@ quit_activated (GSimpleAction *action,
   GduApplication *app = GDU_APPLICATION (user_data);
 
   if (gdu_application_should_exit (app))
-    gtk_widget_destroy (GTK_WIDGET (app->window));
+    gtk_window_hide (GTK_WINDOW (app->window));
 }
 
 static void

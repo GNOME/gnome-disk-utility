@@ -640,6 +640,6 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
   g_free (fsname);
 
   gtk_widget_hide (dialog);
-  gtk_widget_destroy (dialog);
+  gtk_window_close (GTK_WINDOW (dialog));
   g_object_unref (builder);
 }

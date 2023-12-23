@@ -155,7 +155,7 @@ partition_dialog_response_cb (GduPartitionDialog *self,
 
  end:
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void

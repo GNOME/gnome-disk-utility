@@ -106,7 +106,7 @@ update_configuration_item_cb (GObject      *source_object,
     gdu_utils_show_error (GTK_WINDOW (self->window), _("Error updating /etc/crypttab"), error);
 
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -156,7 +156,7 @@ change_passphrase_cb (GObject      *source_object,
   else
     {
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 
@@ -180,7 +180,7 @@ change_passphrase_dialog_response_cb (GduChangePassphraseDialog *self,
     }
   else
     {
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
     }
 
 }
@@ -275,7 +275,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
                             _("Error retrieving configuration data"),
                             error);
       gtk_widget_hide (GTK_WIDGET (self));
-      gtk_widget_destroy (GTK_WIDGET (self));
+      gtk_window_close (GTK_WINDOW (self));
       return;
     }
 
@@ -302,7 +302,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
 
   gdu_utils_show_error (GTK_WINDOW (self->window), _("/etc/crypttab configuration data is malformed"), NULL);
   gtk_widget_hide (GTK_WIDGET (self));
-  gtk_widget_destroy (GTK_WIDGET (self));
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 void

@@ -194,9 +194,9 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   if (out_label != NULL)
     *out_label = label;
 
-  gtk_widget_show (hbox);
-  gtk_widget_show (image);
-  gtk_widget_show (label);
+  gtk_widget_set_visible (hbox, TRUE);
+  gtk_widget_set_visible (image, TRUE);
+  gtk_widget_set_visible (label, TRUE);
 
   return info_bar;
 }

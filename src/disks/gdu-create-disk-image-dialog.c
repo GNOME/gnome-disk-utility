@@ -146,7 +146,7 @@ dialog_data_hide (DialogData *data)
         g_signal_handler_disconnect (data->dialog, data->response_signal_handler_id);
       dialog = data->dialog;
       data->dialog = NULL;
-      gtk_widget_hide (dialog);
+      gtk_widget_set_visible (dialog, FALSE);
       gtk_window_close (GTK_WINDOW (dialog));
       data->dialog = NULL;
     }

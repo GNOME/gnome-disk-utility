@@ -84,7 +84,7 @@ luks_find_passphrase_cb (GObject      *source,
                                            _("The encryption passphrase was retrieved from the keyring"),
                                            NULL);
       gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
-      gtk_widget_show (GTK_WIDGET (self->infobar_box));
+      gtk_widget_set_visible (GTK_WIDGET (self->infobar_box), TRUE);
       gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase);
     }
 
@@ -150,7 +150,7 @@ unlock_dialog_response_cb (GduUnlockDialog *self,
 {
   g_assert (GDU_IS_UNLOCK_DIALOG (self));
 
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -250,7 +250,7 @@ unlock_dialog_keyfile_set_cb (GduUnlockDialog *self,
   g_list_store_append (self->key_files_store, button);
 
   new_button = gtk_file_chooser_button_new (_("Select a Keyfile"), GTK_FILE_CHOOSER_ACTION_OPEN);
-  gtk_widget_show (new_button);
+  gtk_widget_set_visible (new_button, TRUE);
   gtk_container_add (GTK_CONTAINER (self->keyfile_file_chooser_box), new_button);
   g_signal_connect_object (new_button, "file-set",
                            G_CALLBACK (unlock_dialog_keyfile_set_cb),
@@ -336,10 +336,10 @@ gdu_unlock_dialog_set_disk (GduUnlockDialog *self,
   if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0)
     {
       gtk_window_set_title (GTK_WINDOW (self), _("Set options to unlock"));
-      gtk_widget_show (GTK_WIDGET (self->keyfile_file_chooser_button));
+      gtk_widget_set_visible (GTK_WIDGET (self->keyfile_file_chooser_button), TRUE);
 
       if (g_str_equal (type, "crypto_unknown"))
-        gtk_widget_show (GTK_WIDGET (self->unknown_crypto_label));
+        gtk_widget_set_visible (GTK_WIDGET (self->unknown_crypto_label), TRUE);
     }
 
   if (gdu_utils_has_configuration (self->udisks_block, "crypttab", &password_in_crypttab) &&

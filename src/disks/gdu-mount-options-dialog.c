@@ -537,7 +537,7 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
                   g_error_free (error);
                   goto again;
                 }
-              gtk_widget_hide (dialog);
+              gtk_widget_set_visible (dialog, FALSE);
               gdu_utils_show_error (parent_window,
                                     _("Error removing old /etc/fstab entry"),
                                     error);
@@ -593,7 +593,7 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
                       g_error_free (error);
                       goto again;
                     }
-                  gtk_widget_hide (dialog);
+                  gtk_widget_set_visible (dialog, FALSE);
                   gdu_utils_show_error (parent_window,
                                         _("Error adding new /etc/fstab entry"),
                                         error);
@@ -617,7 +617,7 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
                       g_error_free (error);
                       goto again;
                     }
-                  gtk_widget_hide (dialog);
+                  gtk_widget_set_visible (dialog, FALSE);
                   gdu_utils_show_error (parent_window,
                                         _("Error updating /etc/fstab entry"),
                                         error);
@@ -639,7 +639,7 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
     g_variant_unref (data.orig_fstab_entry);
   g_free (fsname);
 
-  gtk_widget_hide (dialog);
+  gtk_widget_set_visible (dialog, FALSE);
   gtk_window_close (GTK_WINDOW (dialog));
   g_object_unref (builder);
 }

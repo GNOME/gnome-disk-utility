@@ -160,7 +160,7 @@ dialog_data_hide (DialogData *data)
         g_signal_handler_disconnect (data->dialog, data->response_signal_handler_id);
       dialog = data->dialog;
       data->dialog = NULL;
-      gtk_widget_hide (dialog);
+      gtk_widget_set_visible (dialog, FALSE);
       gtk_window_close (GTK_WINDOW (dialog));
       data->dialog = NULL;
     }
@@ -331,20 +331,20 @@ restore_disk_image_update (DialogData *data)
   if (restore_warning != NULL)
     {
       gtk_label_set_text (GTK_LABEL (data->warning_label), restore_warning);
-      gtk_widget_show (data->warning_infobar);
+      gtk_widget_set_visible (data->warning_infobar, TRUE);
     }
   else
     {
-      gtk_widget_hide (data->warning_infobar);
+      gtk_widget_set_visible (data->warning_infobar, FALSE);
     }
   if (restore_error != NULL)
     {
       gtk_label_set_text (GTK_LABEL (data->error_label), restore_error);
-      gtk_widget_show (data->error_infobar);
+      gtk_widget_set_visible (data->error_infobar, TRUE);
     }
   else
     {
-      gtk_widget_hide (data->error_infobar);
+      gtk_widget_set_visible (data->error_infobar, FALSE);
     }
 
   gtk_label_set_text (GTK_LABEL (data->image_size_label), image_size_str != NULL ? image_size_str : "—");
@@ -525,13 +525,13 @@ restore_disk_image_populate (DialogData *data)
       gtk_label_set_text (GTK_LABEL (data->image_label), s);
       g_free (s);
 
-      gtk_widget_hide (data->selectable_image_label);
-      gtk_widget_hide (data->selectable_image_fcbutton);
+      gtk_widget_set_visible (data->selectable_image_label, FALSE);
+      gtk_widget_set_visible (data->selectable_image_fcbutton, FALSE);
     }
   else
     {
-      gtk_widget_hide (data->image_key_label);
-      gtk_widget_hide (data->image_label);
+      gtk_widget_set_visible (data->image_key_label, FALSE);
+      gtk_widget_set_visible (data->image_label, FALSE);
     }
 
   /* Destination: Show label if device is known, otherwise show a combobox */
@@ -542,13 +542,13 @@ restore_disk_image_populate (DialogData *data)
       gtk_label_set_text (GTK_LABEL (data->destination_label), udisks_object_info_get_one_liner (info));
       g_clear_object (&info);
 
-      gtk_widget_hide (data->selectable_destination_label);
-      gtk_widget_hide (data->selectable_destination_combobox);
+      gtk_widget_set_visible (data->selectable_destination_label, FALSE);
+      gtk_widget_set_visible (data->selectable_destination_combobox, FALSE);
     }
   else
     {
-      gtk_widget_hide (data->destination_key_label);
-      gtk_widget_hide (data->destination_label);
+      gtk_widget_set_visible (data->destination_key_label, FALSE);
+      gtk_widget_set_visible (data->destination_label, FALSE);
 
       populate_destination_combobox (data);
     }

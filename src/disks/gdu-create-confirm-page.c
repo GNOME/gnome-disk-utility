@@ -120,8 +120,8 @@ gdu_create_confirm_page_fill_confirmation (GduCreateConfirmPage *page)
   size = udisks_block_get_size (priv->block);
   if (unused_space > 0)
     {
-      gtk_widget_show (GTK_WIDGET (priv->used_label));
-      gtk_widget_show (GTK_WIDGET (priv->used_amount_label));
+      gtk_widget_set_visible (GTK_WIDGET (priv->used_label), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (priv->used_amount_label), TRUE);
       s1 = udisks_client_get_size_for_display (priv->client, size - unused_space, FALSE, FALSE);
       /* Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
        */
@@ -132,8 +132,8 @@ gdu_create_confirm_page_fill_confirmation (GduCreateConfirmPage *page)
     }
   else
     {
-      gtk_widget_hide (GTK_WIDGET (priv->used_label));
-      gtk_widget_hide (GTK_WIDGET (priv->used_amount_label));
+      gtk_widget_set_visible (GTK_WIDGET (priv->used_label), FALSE);
+      gtk_widget_set_visible (GTK_WIDGET (priv->used_amount_label), FALSE);
     }
   gtk_label_set_text (priv->location_path_label, udisks_block_get_preferred_device (priv->block));
 

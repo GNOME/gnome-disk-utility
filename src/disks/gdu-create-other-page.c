@@ -193,7 +193,7 @@ gdu_create_other_page_new (UDisksClient *client)
       radio = gtk_radio_button_new_with_label_from_widget (priv->group_radio_button, other_fs[i][1]);
       g_object_set_data (G_OBJECT (radio), "index", GINT_TO_POINTER (i));
       g_object_set_data (G_OBJECT (radio), "parent", page);
-      gtk_widget_show (radio);
+      gtk_widget_set_visible (radio, TRUE);
 
       gtk_box_pack_start (GTK_BOX (priv->other_fs_box), radio, TRUE, TRUE, 0);
       g_signal_connect_object (radio, "toggled",

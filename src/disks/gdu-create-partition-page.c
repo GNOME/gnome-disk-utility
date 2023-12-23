@@ -312,7 +312,7 @@ gdu_create_partition_page_new (UDisksClient *client, UDisksPartitionTable *table
       gdu_utils_have_dos_extended (priv->client, priv->table))
     {
       /* hide if already present or GPT */
-      gtk_widget_hide (GTK_WIDGET (priv->part_dos_extended_checkbutton));
+      gtk_widget_set_visible (GTK_WIDGET (priv->part_dos_extended_checkbutton), FALSE);
     }
 
   priv->dos_error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR,

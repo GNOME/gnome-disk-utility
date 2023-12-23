@@ -105,7 +105,7 @@ update_configuration_item_cb (GObject      *source_object,
   if (!udisks_block_call_update_configuration_item_finish (self->udisks_block, res, &error))
     gdu_utils_show_error (GTK_WINDOW (self->window), _("Error updating /etc/crypttab"), error);
 
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -155,7 +155,7 @@ change_passphrase_cb (GObject      *source_object,
     }
   else
     {
-      gtk_widget_hide (GTK_WIDGET (self));
+      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
       gtk_window_close (GTK_WINDOW (self));
     }
 }
@@ -166,7 +166,7 @@ change_passphrase_dialog_response_cb (GduChangePassphraseDialog *self,
 {
   g_assert (GDU_IS_CHANGE_PASSPHRASE_DIALOG (self));
 
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -274,7 +274,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
       gdu_utils_show_error (GTK_WINDOW (self->window),
                             _("Error retrieving configuration data"),
                             error);
-      gtk_widget_hide (GTK_WIDGET (self));
+      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
       gtk_window_close (GTK_WINDOW (self));
       return;
     }
@@ -301,7 +301,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
     }
 
   gdu_utils_show_error (GTK_WINDOW (self->window), _("/etc/crypttab configuration data is malformed"), NULL);
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -332,7 +332,7 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
                                            _("Changing the passphrase for this device, will also update "
                                              "the passphrase referenced by the <i>/etc/crypttab</i> file"),
                                            NULL);
-      gtk_widget_show (infobar);
+      gtk_widget_set_visible (infobar, TRUE);
       gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
 
       udisks_block_call_get_secret_configuration (self->udisks_block,

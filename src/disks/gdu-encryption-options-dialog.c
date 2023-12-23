@@ -80,7 +80,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
               gtk_window_present (GTK_WINDOW (self));
               return;
             }
-          gtk_widget_hide (GTK_WIDGET (self));
+          gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
           gdu_utils_show_error (self->window,
                                 _("Error removing /etc/crypttab entry"),
                                 error);
@@ -158,7 +158,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
                   gtk_window_present (GTK_WINDOW (self));
                   return;
                 }
-              gtk_widget_hide (GTK_WIDGET (self));
+              gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
               gdu_utils_show_error (self->window,
                                     _("Error adding /etc/crypttab entry"),
                                     error);
@@ -179,7 +179,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
                   gtk_window_present (GTK_WINDOW (self));
                   return;
                 }
-              gtk_widget_hide (GTK_WIDGET (self));
+              gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
               gdu_utils_show_error (GTK_WINDOW (self),
                                     _("Error updating /etc/crypttab entry"),
                                     error);
@@ -193,7 +193,7 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
     }
 
  end:
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -247,7 +247,7 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
       if (g_str_has_prefix (passphrase_path, "/dev"))
         {
           /* if using a random source (for e.g. setting up swap), don't offer to edit the passphrase */
-          gtk_widget_hide (GTK_WIDGET (self->passphrase_entry));
+          gtk_widget_set_visible (GTK_WIDGET (self->passphrase_entry), FALSE);
           s = g_strdup (passphrase_path);
         }
       else if (new_passphrase_contents && *new_passphrase_contents)
@@ -408,7 +408,7 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
       gdu_utils_show_error (self->window,
                             _("Error retrieving configuration data"),
                             error);
-      gtk_widget_hide (GTK_WIDGET (self));
+      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
       gtk_window_close (GTK_WINDOW (self));
       return;
     }
@@ -425,7 +425,7 @@ crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
         }
     }
 
-  gtk_widget_show (self->warning_infobar);
+  gtk_widget_set_visible (self->warning_infobar, TRUE);
 
   crypttab_dialog_update (self);
   gtk_window_present (GTK_WINDOW (self));

@@ -130,7 +130,7 @@ dialog_data_unref (DialogData *data)
     {
       if (data->dialog != NULL)
         {
-          gtk_widget_hide (data->dialog);
+          gtk_widget_set_visible (data->dialog, FALSE);
           gtk_window_close (GTK_WINDOW (data->dialog));
           data->dialog = NULL;
         }
@@ -835,13 +835,13 @@ update_dialog (DialogData *data)
   if (data->bm_in_progress)
     {
 
-      gtk_widget_hide (data->start_benchmark_button);
-      gtk_widget_show (data->stop_benchmark_button);
+      gtk_widget_set_visible (data->start_benchmark_button, FALSE);
+      gtk_widget_set_visible (data->stop_benchmark_button, TRUE);
     }
   else
     {
-      gtk_widget_show (data->start_benchmark_button);
-      gtk_widget_hide (data->stop_benchmark_button);
+      gtk_widget_set_visible (data->start_benchmark_button, TRUE);
+      gtk_widget_set_visible (data->stop_benchmark_button, FALSE);
     }
 
   get_max_min_avg (data->bm_read_samples,
@@ -1565,7 +1565,7 @@ start_benchmark (DialogData *data)
   /* and scene... */
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 
-  gtk_widget_hide (dialog);
+  gtk_widget_set_visible (dialog, FALSE);
 
   if (response != GTK_RESPONSE_OK)
     goto out;

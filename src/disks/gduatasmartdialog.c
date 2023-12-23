@@ -105,7 +105,7 @@ dialog_data_unref (DialogData *data)
     {
       if (data->dialog != NULL)
         {
-          gtk_widget_hide (data->dialog);
+          gtk_widget_set_visible (data->dialog, FALSE);
           gtk_window_close (GTK_WINDOW (data->dialog));
         }
       if (data->object != NULL)

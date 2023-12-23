@@ -154,7 +154,7 @@ partition_dialog_response_cb (GduPartitionDialog *self,
     }
 
  end:
-  gtk_widget_hide (GTK_WIDGET (self));
+  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -381,9 +381,9 @@ gdu_partition_dialog_show (GtkWindow    *parent_window,
 
   if (g_strcmp0 (self->partition_table_type, "gpt") == 0)
     {
-      gtk_widget_show (GTK_WIDGET (self->name_entry));
-      gtk_widget_show (GTK_WIDGET (self->system_check_button));
-      gtk_widget_show (GTK_WIDGET (self->hide_from_firmware_check_button));
+      gtk_widget_set_visible (GTK_WIDGET (self->name_entry), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (self->system_check_button), TRUE);
+      gtk_widget_set_visible (GTK_WIDGET (self->hide_from_firmware_check_button), TRUE);
       gtk_widget_set_tooltip_markup (GTK_WIDGET (self->type_combobox),
                                      _("The partition type represented as a 32-bit <i>GUID</i>"));
       gtk_button_set_label (GTK_BUTTON (self->bootable_check_button), _("Legacy BIOS _Bootable"));

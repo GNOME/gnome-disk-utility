@@ -88,7 +88,7 @@ resize_dialog_data_unref (ResizeDialogData *data)
       g_clear_object (&data->partition);
       if (data->dialog != NULL)
         {
-          gtk_widget_hide (data->dialog);
+          gtk_widget_set_visible (data->dialog, FALSE);
           gtk_window_close (GTK_WINDOW (data->dialog));
         }
 
@@ -907,7 +907,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
       gtk_spinner_stop (GTK_SPINNER (data->spinner));
       gtk_stack_set_visible_child (GTK_STACK (data->size_stack), data->resize_number_grid);
       gtk_widget_set_no_show_all (data->explanation_label, TRUE);
-      gtk_widget_hide (data->explanation_label);
+      gtk_widget_set_visible (data->explanation_label, FALSE);
     }
   else
     {
@@ -956,7 +956,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
 
   if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
     {
-      gtk_widget_hide (data->dialog);
+      gtk_widget_set_visible (data->dialog, FALSE);
       g_clear_pointer (&data->dialog, gtk_window_close);
 
       if (data->filesystem != NULL)
@@ -996,7 +996,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
           data->running_id = 0;
         }
 
-      gtk_widget_hide (data->dialog);
+      gtk_widget_set_visible (data->dialog, FALSE);
       g_clear_pointer (&data->dialog, gtk_window_close);
       if (data->mount_cancellable)
         g_cancellable_cancel (data->mount_cancellable);

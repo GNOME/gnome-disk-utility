@@ -11,7 +11,7 @@
 
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdkx.h>
+#include <gdk/x11/gdkx.h>
 #include <stdlib.h>
 
 #include <pwquality.h>

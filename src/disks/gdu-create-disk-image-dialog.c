@@ -20,8 +20,6 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
-#include <canberra-gtk.h>
-
 #include "gdu-application.h"
 #include "gdu-create-disk-image-dialog.h"
 #include "gduestimator.h"
@@ -303,10 +301,12 @@ play_read_error_sound (DialogData *data)
    * CA_PROP_EVENT_DESCRIPTION
    */
   sound_message = _("Disk image read error");
+  /* gtk4 todo : Find a replacement for this
   ca_gtk_play_for_widget (GTK_WIDGET (data->window), 0,
                           CA_PROP_EVENT_ID, "dialog-warning",
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
+  */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -406,10 +406,12 @@ play_complete_sound (DialogData *data)
 
   /* Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION */
   sound_message = _("Disk image copying complete");
+  /* gtk4 todo : Find a replacement for this
   ca_gtk_play_for_widget (GTK_WIDGET (data->window), 0,
                           CA_PROP_EVENT_ID, "complete",
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
+  */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -181,7 +181,7 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
       stock_id = "dialog-error";
       break;
     }
-  image = gtk_image_new_from_icon_name (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (stock_id);
   gtk_box_append (GTK_BOX (hbox), image);
 
   label = gtk_label_new (NULL);
@@ -766,7 +766,7 @@ get_widget_for_object (UDisksClient *client,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
-  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info), GTK_ICON_SIZE_SMALL_TOOLBAR);
+  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info));
   gtk_box_append (GTK_BOX (hbox), image);
 
   label = gtk_label_new (udisks_object_info_get_one_liner (info));
@@ -840,9 +840,9 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       gtk_label_set_attributes (GTK_LABEL (label), attrs);
       pango_attr_list_unref (attrs);
 
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      scrolled_window = gtk_scrolled_window_new ();
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-      gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
+      gtk_scrolled_window_set_has_frame (GTK_SCROLLED_WINDOW (scrolled_window), TRUE);
       gtk_container_add (GTK_CONTAINER (scrolled_window), vbox);
       gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
 

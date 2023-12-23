@@ -158,8 +158,8 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
   gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
-                      hbox, TRUE, TRUE, 0);
+  gtk_box_append (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
+                  hbox);
 
   switch (message_type)
     {
@@ -182,14 +182,14 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
       break;
     }
   image = gtk_image_new_from_icon_name (stock_id, GTK_ICON_SIZE_BUTTON);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, TRUE, 0);
+  gtk_box_append (GTK_BOX (hbox), image);
 
   label = gtk_label_new (NULL);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
   gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
   gtk_label_set_markup (GTK_LABEL (label), markup);
-  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  gtk_box_append (GTK_BOX (hbox), label);
 
   if (out_label != NULL)
     *out_label = label;
@@ -767,12 +767,12 @@ get_widget_for_object (UDisksClient *client,
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
   image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info), GTK_ICON_SIZE_SMALL_TOOLBAR);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_box_append (GTK_BOX (hbox), image);
 
   label = gtk_label_new (udisks_object_info_get_one_liner (info));
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_append (GTK_BOX (hbox), label);
 
   g_object_unref (info);
 
@@ -808,9 +808,8 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
   if (checkbox_mnemonic != NULL)
     {
       check_button = gtk_check_button_new_with_mnemonic (checkbox_mnemonic);
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          check_button,
-                          FALSE, FALSE, 0);
+      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                      check_button);
       if (inout_checkbox_value != NULL)
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), *inout_checkbox_value);
     }
@@ -828,9 +827,8 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       for (l = objects; l != NULL; l = l->next)
         {
           UDisksObject *object = UDISKS_OBJECT (l->data);
-          gtk_box_pack_start (GTK_BOX (vbox),
-                              get_widget_for_object (client, object),
-                              FALSE, FALSE, 0);
+          gtk_box_append (GTK_BOX (vbox),
+                          get_widget_for_object (client, object));
         }
 
       label = gtk_label_new (NULL);
@@ -848,12 +846,10 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       gtk_container_add (GTK_CONTAINER (scrolled_window), vbox);
       gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
 
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          label,
-                          FALSE, FALSE, 0);
-      gtk_box_pack_start (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                          scrolled_window,
-                          FALSE, FALSE, 0);
+      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                      label);
+      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
+                      scrolled_window);
     }
 
   affirmative_button = gtk_dialog_add_button (GTK_DIALOG (dialog),

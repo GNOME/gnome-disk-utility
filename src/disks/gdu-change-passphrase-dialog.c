@@ -333,7 +333,7 @@ gdu_change_passphrase_dialog_show (GduWindow    *window,
                                              "the passphrase referenced by the <i>/etc/crypttab</i> file"),
                                            NULL);
       gtk_widget_set_visible (infobar, TRUE);
-      gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
+      gtk_box_append (self->infobar_box, infobar);
 
       udisks_block_call_get_secret_configuration (self->udisks_block,
                                                   g_variant_new ("a{sv}", NULL), /* options */

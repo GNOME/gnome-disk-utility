@@ -195,7 +195,7 @@ gdu_create_other_page_new (UDisksClient *client)
       g_object_set_data (G_OBJECT (radio), "parent", page);
       gtk_widget_set_visible (radio, TRUE);
 
-      gtk_box_pack_start (GTK_BOX (priv->other_fs_box), radio, TRUE, TRUE, 0);
+      gtk_box_append (GTK_BOX (priv->other_fs_box), radio);
       g_signal_connect_object (radio, "toggled",
                                G_CALLBACK (on_other_fs_selected),
                                page, G_CONNECT_SWAPPED);

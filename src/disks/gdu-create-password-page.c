@@ -145,7 +145,7 @@ gdu_create_password_page_new (void)
   g_object_bind_property (priv->show_password_checkbutton, "active", priv->password_entry, "visibility", G_BINDING_SYNC_CREATE);
   g_object_bind_property (priv->show_password_checkbutton, "active", priv->confirm_password_entry, "visibility", G_BINDING_SYNC_CREATE);
   priv->password_strengh_widget = gdu_password_strength_widget_new ();
-  gtk_box_pack_start (priv->password_strength_box, priv->password_strengh_widget, TRUE, TRUE, 0);
+  gtk_box_append (priv->password_strength_box, priv->password_strengh_widget);
 
   return page;
 }

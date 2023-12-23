@@ -163,12 +163,12 @@ gdu_password_strength_widget_constructed (GObject *object)
   gtk_box_set_spacing (GTK_BOX (widget), 6);
 
   widget->level_bar = gtk_level_bar_new ();
-  gtk_box_pack_start (GTK_BOX (widget), widget->level_bar, TRUE, TRUE, 0);
+  gtk_box_append (GTK_BOX (widget), widget->level_bar);
 
   widget->notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (widget->notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (widget->notebook), FALSE);
-  gtk_box_pack_start (GTK_BOX (widget), widget->notebook, FALSE, TRUE, 0);
+  gtk_box_append (GTK_BOX (widget), widget->notebook);
 
   for (n = 0; n < G_N_ELEMENTS (hint_labels); n++)
     {

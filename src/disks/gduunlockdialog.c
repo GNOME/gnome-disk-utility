@@ -83,7 +83,7 @@ luks_find_passphrase_cb (GObject      *source,
       infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
                                            _("The encryption passphrase was retrieved from the keyring"),
                                            NULL);
-      gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
+      gtk_box_append (self->infobar_box, infobar);
       gtk_widget_set_visible (GTK_WIDGET (self->infobar_box), TRUE);
       gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase);
     }

@@ -14,14 +14,14 @@
 
 #pragma once
 
-#include <handy.h>
+#include <adwaita.h>
 
 #include "gdu-manager.h"
 
 G_BEGIN_DECLS
 
 #define GDU_TYPE_WINDOW (gdu_window_get_type ())
-G_DECLARE_FINAL_TYPE (GduWindow, gdu_window, GDU, WINDOW, HdyApplicationWindow)
+G_DECLARE_FINAL_TYPE (GduWindow, gdu_window, GDU, WINDOW, AdwApplicationWindow)
 
 GduWindow   *gdu_window_new                        (GApplication    *application,
                                                     GduManager      *manager);

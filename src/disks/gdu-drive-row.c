@@ -18,14 +18,14 @@
 
 struct _GduDriveRow
 {
-  HdyActionRow  parent_instance;
+  AdwActionRow  parent_instance;
 
   GtkImage     *drive_image;
   GduDrive     *drive;
 };
 
 
-G_DEFINE_TYPE (GduDriveRow, gdu_drive_row, HDY_TYPE_ACTION_ROW)
+G_DEFINE_TYPE (GduDriveRow, gdu_drive_row, ADW_TYPE_ACTION_ROW)
 
 static void
 update_drive_row (GduDriveRow *self)
@@ -39,9 +39,9 @@ update_drive_row (GduDriveRow *self)
   name = gdu_drive_get_name (self->drive);
   icon = gdu_item_get_icon (GDU_ITEM (self->drive));
 
-  hdy_preferences_row_set_title (HDY_PREFERENCES_ROW (self), description);
-  hdy_action_row_set_subtitle (HDY_ACTION_ROW (self), name);
-  gtk_image_set_from_gicon (self->drive_image, icon, GTK_ICON_SIZE_DIALOG);
+  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self), description);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self), name);
+  gtk_image_set_from_gicon (self->drive_image, icon);
 }
 
 static void

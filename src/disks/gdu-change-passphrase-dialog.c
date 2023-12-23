@@ -47,9 +47,9 @@ dialog_passhphrase_changed_cb (GduChangePassphraseDialog *self)
 
   g_assert (GDU_IS_CHANGE_PASSPHRASE_DIALOG (self));
 
-  existing_passphrase = gtk_entry_get_text (self->existing_passphrase_entry);
-  new_passphrase = gtk_entry_get_text (self->new_passphrase_entry);
-  confirm_passphrase = gtk_entry_get_text (self->confirm_passphrase_entry);
+  existing_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->existing_passphrase_entry));
+  new_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry));
+  confirm_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->confirm_passphrase_entry));
 
   gtk_entry_set_icon_from_icon_name (self->confirm_passphrase_entry,
                                      GTK_ENTRY_ICON_SECONDARY,
@@ -135,7 +135,7 @@ change_passphrase_cb (GObject      *source_object,
           if (g_strcmp0 (key, "passphrase-contents") == 0)
             {
               g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                     g_variant_new_bytestring (gtk_entry_get_text (self->new_passphrase_entry)));
+                                     g_variant_new_bytestring (gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry))));
             }
           else
             {
@@ -171,8 +171,8 @@ change_passphrase_dialog_response_cb (GduChangePassphraseDialog *self,
   if (response_id == GTK_RESPONSE_OK)
     {
       udisks_encrypted_call_change_passphrase (self->udisks_encrypted,
-                                               gtk_entry_get_text (self->existing_passphrase_entry),
-                                               gtk_entry_get_text (self->new_passphrase_entry),
+                                               gtk_editable_get_text (GTK_EDITABLE (self->existing_passphrase_entry)),
+                                               gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry)),
                                                g_variant_new ("a{sv}", NULL), /* options */
                                                NULL, /* GCancellable */
                                                change_passphrase_cb,
@@ -289,7 +289,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
             {
               self->crypttab_details = g_variant_ref (details);
 
-              gtk_entry_set_text (self->existing_passphrase_entry, passphrase_contents);
+              gtk_editable_set_text (GTK_EDITABLE (self->existing_passphrase_entry), passphrase_contents);
               /* Don't focus on the "Existing passphrase" entry */
               gtk_editable_select_region (GTK_EDITABLE (self->existing_passphrase_entry), 0, 0);
               gtk_widget_grab_focus (GTK_WIDGET (self->new_passphrase_entry));

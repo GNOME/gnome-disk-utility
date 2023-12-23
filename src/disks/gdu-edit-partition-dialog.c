@@ -74,7 +74,7 @@ edit_partition_get (GduPartitionDialog  *self,
 
   if (g_strcmp0 (self->partition_table_type, "gpt") == 0)
     {
-      name = g_strdup (gtk_entry_get_text (self->name_entry));
+      name = g_strdup (gtk_editable_get_text (GTK_EDITABLE (self->name_entry)));
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->system_check_button)))
         flags |= (1UL<<0);
       if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->hide_from_firmware_check_button)))
@@ -342,7 +342,7 @@ edit_partition_populate (GduPartitionDialog *self)
     {
       guint64 flags;
 
-      gtk_entry_set_text (self->name_entry, udisks_partition_get_name (self->udisks_partition));
+      gtk_editable_set_text (GTK_EDITABLE (self->name_entry), udisks_partition_get_name (self->udisks_partition));
       flags = udisks_partition_get_flags (self->udisks_partition);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->system_check_button),           (flags & (1UL<< 0)) != 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (self->hide_from_firmware_check_button), (flags & (1UL<< 1)) != 0);

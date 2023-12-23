@@ -211,7 +211,7 @@ create_disk_image_update (DialogData *data)
 {
   gboolean can_proceed = FALSE;
 
-  if (strlen (gtk_entry_get_text (GTK_ENTRY (data->name_entry))) > 0)
+  if (strlen (gtk_editable_get_text (GTK_EDITABLE (data->name_entry))) > 0)
     can_proceed = TRUE;
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, can_proceed);
@@ -275,7 +275,7 @@ create_disk_image_populate (DialogData *data)
                                            now_string);
     }
 
-  gtk_entry_set_text (GTK_ENTRY (data->name_entry), proposed_filename);
+  gtk_editable_set_text (GTK_EDITABLE (data->name_entry), proposed_filename);
   g_free (proposed_filename);
   g_free (device_name);
   g_date_time_unref (now);
@@ -910,7 +910,7 @@ check_overwrite (DialogData *data)
   GtkWidget *dialog;
   gint response;
 
-  name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
+  name = gtk_editable_get_text (GTK_EDITABLE (data->name_entry));
   folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->folder_fcbutton));
   file = g_file_get_child (folder, name);
   if (!g_file_query_exists (file, NULL))
@@ -971,7 +971,7 @@ start_copying (DialogData *data)
   GFile *folder;
   GError *error;
 
-  name = gtk_entry_get_text (GTK_ENTRY (data->name_entry));
+  name = gtk_editable_get_text (GTK_EDITABLE (data->name_entry));
   folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (data->folder_fcbutton));
 
   error = NULL;
@@ -1130,5 +1130,5 @@ gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
 
   /* Only select the precomputed filename, not the .img / .iso extension */
   gtk_editable_select_region (GTK_EDITABLE (data->name_entry), 0,
-                              strlen (gtk_entry_get_text (GTK_ENTRY (data->name_entry))) - 4);
+                              strlen (gtk_editable_get_text (GTK_EDITABLE (data->name_entry))) - 4);
 }

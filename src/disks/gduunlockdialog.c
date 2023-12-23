@@ -85,7 +85,7 @@ luks_find_passphrase_cb (GObject      *source,
                                            NULL);
       gtk_box_pack_start (self->infobar_box, infobar, TRUE, TRUE, 0);
       gtk_widget_show (GTK_WIDGET (self->infobar_box));
-      gtk_entry_set_text (self->passphrase_entry, passphrase);
+      gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase);
     }
 
   gtk_window_present (GTK_WINDOW (self));
@@ -135,7 +135,7 @@ do_unlock (GduUnlockDialog *self)
   if (self->keyfiles)
     g_variant_builder_add (&options_builder, "{sv}", "keyfiles", g_variant_ref (self->keyfiles));
 
-  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  passphrase = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
   udisks_encrypted_call_unlock (self->udisks_encrypted,
                                 passphrase,
                                 g_variant_builder_end (&options_builder),
@@ -202,13 +202,13 @@ unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)
   g_assert (GDU_IS_UNLOCK_DIALOG (self));
 
   context = gtk_widget_get_style_context (GTK_WIDGET (self->pim_entry));
-  passphrase = gtk_entry_get_text (self->passphrase_entry);
+  passphrase = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
   can_unlock = passphrase && *passphrase;
 
   n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
   can_unlock = can_unlock || n_items > 0;
 
-  pim_str = gtk_entry_get_text (self->pim_entry);
+  pim_str = gtk_editable_get_text (GTK_EDITABLE (self->pim_entry));
   if (gtk_widget_is_visible (GTK_WIDGET (self->pim_entry)) &&
       pim_str && *pim_str)
     {

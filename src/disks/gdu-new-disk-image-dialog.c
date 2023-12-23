@@ -159,7 +159,7 @@ create_new_disk (GduNewDiskImageDialog *self)
   const char *filename;
   guint64 size;
 
-  filename = gtk_entry_get_text (self->name_entry);
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button));
 
   out_file = g_file_get_child (folder, filename);
@@ -228,7 +228,7 @@ confirm_and_create_new_disk (GduNewDiskImageDialog *self)
   const char *filename;
   GtkWidget *dialog;
 
-  filename = gtk_entry_get_text (self->name_entry);
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   folder = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (self->choose_folder_button));
   file = g_file_get_child (folder, filename);
   if (!g_file_query_exists (file, NULL))
@@ -283,7 +283,7 @@ new_disk_image_set_default_name (GduNewDiskImageDialog *self)
    *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
    */
   filename = g_strdup_printf (_("Unnamed (%s).img"), now_string);
-  gtk_entry_set_text (self->name_entry, filename);
+  gtk_editable_set_text (GTK_EDITABLE (self->name_entry), filename);
 }
 
 static void
@@ -309,7 +309,7 @@ new_disk_image_details_changed_cb (GduNewDiskImageDialog *self)
   const char *filename;
   gboolean can_proceed = FALSE;
 
-  filename = gtk_entry_get_text (self->name_entry);
+  filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
 
   if (filename && *filename &&
       gtk_adjustment_get_value (self->size_adjustment) > 0)

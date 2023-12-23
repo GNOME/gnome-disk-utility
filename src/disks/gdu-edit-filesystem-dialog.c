@@ -63,7 +63,7 @@ filesystem_dialog_response_cb (GduFilesystemDialog *self,
       return;
     }
 
-  label = gtk_entry_get_text (self->filesystem_label_entry);
+  label = gtk_editable_get_text (GTK_EDITABLE (self->filesystem_label_entry));
 
   gdu_block_set_fs_label_async (self->drive_block,
                                           label,
@@ -86,7 +86,7 @@ filesystem_label_entry_changed_cb (GduFilesystemDialog *self,
                                    GTK_ENTRY_ICON_SECONDARY,
                                    NULL);
 
-  if (g_strcmp0 (gtk_entry_get_text (entry),
+  if (g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (entry)),
                  gdu_block_get_fs_label (self->drive_block)) != 0)
     {
       sensitive = TRUE;
@@ -156,7 +156,7 @@ gdu_filesystem_dialog_set_drive (GduFilesystemDialog *self,
   fs_type = gdu_block_get_fs_type (drive_partition);
   label = gdu_block_get_fs_label (drive_partition);
 
-  gtk_entry_set_text (GTK_ENTRY (self->filesystem_label_entry), label);
+  gtk_editable_set_text (GTK_EDITABLE (self->filesystem_label_entry), label);
   gtk_editable_select_region (GTK_EDITABLE (self->filesystem_label_entry), 0, -1);
   gtk_entry_set_max_length (self->filesystem_label_entry,
                             gdu_utils_get_max_label_length (fs_type));

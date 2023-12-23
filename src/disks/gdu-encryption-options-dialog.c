@@ -96,9 +96,9 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
       GVariantBuilder builder;
       char *s;
 
-      new_name = gtk_entry_get_text (self->name_entry);
-      new_options = gtk_entry_get_text (self->options_entry);
-      new_passphrase_contents = gtk_entry_get_text (self->passphrase_entry);
+      new_name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
+      new_options = gtk_editable_get_text (GTK_EDITABLE (self->options_entry));
+      new_passphrase_contents = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
 
       if (self->crypttab_config)
         {
@@ -230,9 +230,9 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
       passphrase_path = "";
     }
 
-  new_name = gtk_entry_get_text (self->name_entry);
-  new_options = gtk_entry_get_text (self->options_entry);
-  new_passphrase_contents = gtk_entry_get_text (self->passphrase_entry);
+  new_name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
+  new_options = gtk_editable_get_text (GTK_EDITABLE (self->options_entry));
+  new_passphrase_contents = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
   use_modified = !gtk_switch_get_active (self->use_defaults_switch);
 
   if (!has_conf)
@@ -378,13 +378,13 @@ crypttab_dialog_update (GduCrypttabDialog *self)
     }
 
   self->is_self_change = TRUE;
-  gtk_entry_set_text (self->name_entry, name);
-  gtk_entry_set_text (self->options_entry, options);
+  gtk_editable_set_text (GTK_EDITABLE (self->name_entry), name);
+  gtk_editable_set_text (GTK_EDITABLE (self->options_entry), options);
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "noauto", NULL,
                                    GTK_WIDGET (self->auto_unlock_check_button), TRUE, FALSE);
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "x-udisks-auth", NULL,
                                    GTK_WIDGET (self->require_auth_to_unlock_check_button), FALSE, FALSE);
-  gtk_entry_set_text (self->passphrase_entry, passphrase_contents);
+  gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase_contents);
   gtk_switch_set_active (self->use_defaults_switch, !has_config);
   self->is_self_change = FALSE;
 

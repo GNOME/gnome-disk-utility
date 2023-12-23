@@ -75,9 +75,9 @@ update (FstabDialogData *data,
     }
 
   ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->device_combobox));
-  ui_dir = gtk_entry_get_text (GTK_ENTRY (data->directory_entry));
-  ui_type = gtk_entry_get_text (GTK_ENTRY (data->type_entry));
-  ui_opts = gtk_entry_get_text (GTK_ENTRY (data->options_entry));
+  ui_dir = gtk_editable_get_text (GTK_EDITABLE (data->directory_entry));
+  ui_type = gtk_editable_get_text (GTK_EDITABLE (data->type_entry));
+  ui_opts = gtk_editable_get_text (GTK_EDITABLE (data->options_entry));
   ui_configured = !gtk_switch_get_active (GTK_SWITCH (data->automatic_mount_options_switch));
 
   g_object_freeze_notify (G_OBJECT (data->options_entry));
@@ -204,7 +204,7 @@ fstab_on_device_combobox_changed (GtkComboBox *combobox,
         s = "/disk";
       proposed_mount_point = g_strdup_printf ("/mnt/%s", s + 1);
 
-      gtk_entry_set_text (GTK_ENTRY (data->directory_entry), proposed_mount_point);
+      gtk_editable_set_text (GTK_EDITABLE (data->directory_entry), proposed_mount_point);
       g_free (proposed_mount_point);
       g_free (fsname);
   }
@@ -467,9 +467,9 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
       gtk_widget_set_sensitive (data.symbolic_icon_entry, FALSE);
     }
 
-  gtk_entry_set_text (GTK_ENTRY (data.directory_entry), dir);
-  gtk_entry_set_text (GTK_ENTRY (data.type_entry), type);
-  gtk_entry_set_text (GTK_ENTRY (data.options_entry), opts);
+  gtk_editable_set_text (GTK_EDITABLE (data.directory_entry), dir);
+  gtk_editable_set_text (GTK_EDITABLE (data.type_entry), type);
+  gtk_editable_set_text (GTK_EDITABLE (data.options_entry), opts);
   if (!configured)
     fstab_on_device_combobox_changed (GTK_COMBO_BOX (data.device_combobox), &data);
 
@@ -556,9 +556,9 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
           GVariantBuilder variant_builder;
 
           ui_fsname = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data.device_combobox));
-          ui_dir = gtk_entry_get_text (GTK_ENTRY (data.directory_entry));
-          ui_type = gtk_entry_get_text (GTK_ENTRY (data.type_entry));
-          ui_opts = gtk_entry_get_text (GTK_ENTRY (data.options_entry));
+          ui_dir = gtk_editable_get_text (GTK_EDITABLE (data.directory_entry));
+          ui_type = gtk_editable_get_text (GTK_EDITABLE (data.type_entry));
+          ui_opts = gtk_editable_get_text (GTK_EDITABLE (data.options_entry));
           freq = 0;
           passno = 0;
           if (data.orig_fstab_entry != NULL)

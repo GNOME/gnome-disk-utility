@@ -96,7 +96,7 @@ gdu_create_password_page_get_password (GduCreatePasswordPage *page)
 
   priv = gdu_create_password_page_get_instance_private (page);
 
-  return gtk_entry_get_text (priv->password_entry);
+  return gtk_editable_get_text (GTK_EDITABLE (priv->password_entry));
 }
 
 static void
@@ -113,8 +113,8 @@ on_password_changed (GObject *object, GParamSpec *pspec, gpointer user_data)
 
   if (gtk_entry_get_text_length (priv->password_entry) > 0)
     {
-      if (g_strcmp0 (gtk_entry_get_text (priv->password_entry),
-                     gtk_entry_get_text (priv->confirm_password_entry)) == 0)
+      if (g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (priv->password_entry)),
+                     gtk_editable_get_text (GTK_EDITABLE (priv->confirm_password_entry))) == 0)
         {
           can_proceed = TRUE;
         }
@@ -126,7 +126,7 @@ on_password_changed (GObject *object, GParamSpec *pspec, gpointer user_data)
     }
 
   gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (priv->password_strengh_widget),
-                                             gtk_entry_get_text (priv->password_entry));
+                                             gtk_editable_get_text (GTK_EDITABLE (priv->password_entry)));
 
   priv->complete = can_proceed;
   g_object_notify (G_OBJECT (page), "complete");

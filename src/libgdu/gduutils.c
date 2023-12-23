@@ -258,7 +258,7 @@ has_option (GtkWidget       *options_entry,
   gboolean ret = FALSE;
   gchar **options;
 
-  options = g_strsplit (gtk_entry_get_text (GTK_ENTRY (options_entry)), ",", 0);
+  options = g_strsplit (gtk_editable_get_text (GTK_EDITABLE (options_entry)), ",", 0);
   for (n = 0; options != NULL && options[n] != NULL; n++)
     {
       if (check_prefix)
@@ -293,13 +293,13 @@ add_option (GtkWidget       *options_entry,
 {
   gchar *s;
   const gchar *text;
-  text = gtk_entry_get_text (GTK_ENTRY (options_entry));
+  text = gtk_editable_get_text (GTK_EDITABLE (options_entry));
   s = g_strdup_printf ("%s%s%s%s",
                        add_to_front ? option : text,
                        strlen (text) > 0 ? "," : "",
                        prefix,
                        add_to_front ? text : option);
-  gtk_entry_set_text (GTK_ENTRY (options_entry), s);
+  gtk_editable_set_text (GTK_EDITABLE (options_entry), s);
   g_free (s);
 }
 
@@ -313,7 +313,7 @@ remove_option (GtkWidget       *options_entry,
   gchar **options;
 
   str = g_string_new (NULL);
-  options = g_strsplit (gtk_entry_get_text (GTK_ENTRY (options_entry)), ",", 0);
+  options = g_strsplit (gtk_editable_get_text (GTK_EDITABLE (options_entry)), ",", 0);
   for (n = 0; options != NULL && options[n] != NULL; n++)
     {
       if (check_prefix)
@@ -330,7 +330,7 @@ remove_option (GtkWidget       *options_entry,
         g_string_append_c (str, ',');
       g_string_append (str, options[n]);
     }
-  gtk_entry_set_text (GTK_ENTRY (options_entry), str->str);
+  gtk_editable_set_text (GTK_EDITABLE (options_entry), str->str);
   g_string_free (str, TRUE);
 }
 
@@ -376,7 +376,7 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
   has_option (options_entry, option, TRUE, &opts);
   if (opts == NULL)
     opts = g_strdup ("");
-  ui = gtk_entry_get_text (GTK_ENTRY (entry));
+  ui = gtk_editable_get_text (GTK_EDITABLE (entry));
   ui_escaped = g_uri_escape_string (ui, NULL, TRUE);
   // g_print ("opts=`%s', ui=`%s', widget=%p, entry=%p\n", opts, ui, widget, entry);
   if (g_strcmp0 (opts, ui_escaped) != 0)
@@ -396,7 +396,7 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
       else
         {
           gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
-          gtk_entry_set_text (GTK_ENTRY (entry), opts_unescaped);
+          gtk_editable_set_text (GTK_EDITABLE (entry), opts_unescaped);
           g_free (opts_unescaped);
         }
     }

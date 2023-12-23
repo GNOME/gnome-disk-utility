@@ -93,7 +93,7 @@ gdu_create_filesystem_page_get_name (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_entry_get_text (priv->name_entry);
+  return gtk_editable_get_text (GTK_EDITABLE (priv->name_entry));
 }
 
 gboolean

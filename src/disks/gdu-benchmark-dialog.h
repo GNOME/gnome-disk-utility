@@ -6,18 +6,18 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_BENCHMARK_DIALOG_H__
-#define __GDU_BENCHMARK_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_BENCHMARK_DIALOG (gdu_benchmark_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, GDU, BENCHMARK_DIALOG, AdwWindow)
+
 void   gdu_benchmark_dialog_show (GtkWindow    *window,
                                   UDisksObject *object,
                                   UDisksClient *client);
 
 G_END_DECLS
-
-#endif /* __GDU_BENCHMARK_DIALOG_H__ */

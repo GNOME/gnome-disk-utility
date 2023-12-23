@@ -9,18 +9,10 @@
 #include "config.h"
 
 #include <glib/gi18n.h>
-#include <gio/gunixfdlist.h>
-#include <gio/gunixinputstream.h>
-#include <gio/gunixoutputstream.h>
 
-#include <glib-unix.h>
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
-#include <math.h>
-
-#include "gdu-application.h"
-#include "gdu-window.h"
 #include "gdu-benchmark-dialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -39,126 +31,69 @@ typedef enum {
   BM_STATE_ACCESS_TIME,
 } BMState;
 
-typedef struct
+struct _GduBenchmarkDialog
 {
-  volatile gint ref_count;
+  AdwWindow      parent_instance;
 
-  UDisksObject *object;
-  UDisksBlock *block;
+  GCancellable  *cancellable;
 
-  GCancellable *cancellable;
+  GtkWidget     *window_title;
 
-  GtkWindow *window;
-  UDisksClient *client;
-  GtkBuilder *builder;
+  GtkWidget     *pages_stack;
 
-  GtkWidget *dialog;
+  /* Configuration Page */
+  GtkWidget     *sample_row;
+  GtkWidget     *sample_size_row;
+  GtkWidget     *access_samples_row;
+  GtkWidget     *write_bench_switch;
 
-  GtkWidget *graph_drawing_area;
-
-  GtkWidget *device_label;
-  GtkWidget *updated_label;
-  GtkWidget *sample_size_label;
-  GtkWidget *read_rate_label;
-  GtkWidget *write_rate_label;
-  GtkWidget *access_time_label;
-
-  GtkWidget *start_benchmark_button;
-  GtkWidget *stop_benchmark_button;
-
-  gboolean closed;
+  /* Results Page */
+  GtkWidget     *drawing_area;
+  GtkWidget     *sample_size_label;
+  GtkWidget     *read_rate_label;
+  GtkWidget     *write_rate_label;
+  GtkWidget     *access_time_label;
 
   /* ---- */
 
   /* retrieved from preferences dialog */
-  gint bm_num_samples;
-  gint bm_sample_size_mib;
-  gboolean bm_do_write;
-  gint bm_num_access_samples;
+  gint           bm_num_samples;
+  gint           bm_sample_size_mib;
+  gboolean       bm_do_write;
+  gint           bm_num_access_samples;
 
   /* must hold bm_lock when reading/writing these */
-  GThread *bm_thread;
-  GCancellable *bm_cancellable;
-  gboolean bm_in_progress;
-  BMState bm_state;
-  GError *bm_error; /* set by benchmark thread on termination */
-  gboolean bm_update_timeout_pending;
+  GCancellable  *bm_cancellable;
+  gboolean       bm_in_progress;
+  BMState        bm_state;
+  GError        *bm_error; /* set by benchmark thread on termination */
+  gboolean       bm_update_timeout_pending;
 
-  gint64 bm_time_benchmarked_usec; /* 0 if never benchmarked, otherwise micro-seconds since Epoch */
-  guint64 bm_size;
-  guint64 bm_sample_size;
-  GArray *bm_read_samples;
-  GArray *bm_write_samples;
-  GArray *bm_access_time_samples;
+  gint64         bm_time_benchmarked_usec; /* 0 if never benchmarked, otherwise micro-seconds since Epoch */
+  guint64        bm_size;
+  guint64        bm_sample_size;
+  GArray        *read_samples;
+  GArray        *write_samples;
+  GArray        *atime_samples;
 
-} DialogData;
+  UDisksClient  *client;
+  UDisksObject  *object;
+  UDisksBlock   *block;
+};
+
+G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_WINDOW)
 
 G_LOCK_DEFINE (bm_lock);
 
-static const struct {
-  goffset offset;
-  const gchar *name;
-} widget_mapping[] = {
-  {G_STRUCT_OFFSET (DialogData, graph_drawing_area), "graph-drawing-area"},
-  {G_STRUCT_OFFSET (DialogData, device_label), "device-label"},
-  {G_STRUCT_OFFSET (DialogData, updated_label), "updated-label"},
-  {G_STRUCT_OFFSET (DialogData, sample_size_label), "sample-size-label"},
-  {G_STRUCT_OFFSET (DialogData, read_rate_label), "read-rate-label"},
-  {G_STRUCT_OFFSET (DialogData, write_rate_label), "write-rate-label"},
-  {G_STRUCT_OFFSET (DialogData, access_time_label), "access-time-label"},
-  {0, NULL}
-};
-
-static void update_dialog (DialogData *data);
-
-static gboolean maybe_load_data (DialogData  *data,
-                                 GError     **error);
+static void update_dialog (GduBenchmarkDialog *self);
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static DialogData *
-dialog_data_ref (DialogData *data)
+static gpointer
+gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 {
-  g_atomic_int_inc (&data->ref_count);
-  return data;
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
 }
-
-static void
-dialog_data_unref (DialogData *data)
-{
-  if (g_atomic_int_dec_and_test (&data->ref_count))
-    {
-      if (data->dialog != NULL)
-        {
-          gtk_widget_set_visible (data->dialog, FALSE);
-          gtk_window_close (GTK_WINDOW (data->dialog));
-          data->dialog = NULL;
-        }
-
-      g_clear_object (&data->object);
-      g_clear_object (&data->window);
-      g_clear_object (&data->builder);
-
-      g_array_unref (data->bm_read_samples);
-      g_array_unref (data->bm_write_samples);
-      g_array_unref (data->bm_access_time_samples);
-      g_clear_object (&data->bm_cancellable);
-      g_clear_error (&data->bm_error);
-
-      g_free (data);
-    }
-}
-
-static void
-dialog_data_close (DialogData *data)
-{
-  g_cancellable_cancel (data->bm_cancellable);
-  data->closed = TRUE;
-  gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
-  dialog_data_unref (data);
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static void
 get_max_min_avg (GArray  *array,
@@ -221,432 +156,7 @@ static gboolean
 on_drawing_area_draw (GtkWidget      *widget,
                       cairo_t        *cr,
                       gpointer        user_data)
-{
-  DialogData *data = user_data;
-  GtkAllocation allocation;
-  gdouble width, height;
-  gdouble gx, gy, gw, gh;
-  guint n;
-  gdouble w, h;
-  gdouble x, y;
-  gdouble x_marker_height;
-  gchar *s;
-  gdouble max_speed;
-  gdouble max_visible_speed;
-  gdouble speed_res;
-  gdouble max_time;
-  gdouble time_res;
-  gdouble max_visible_time;
-  gchar **y_left_markers;
-  gchar **y_right_markers;
-  guint num_y_markers;
-  GPtrArray *p;
-  GPtrArray *p2;
-  gdouble read_transfer_rate_max = 0.0;
-  gdouble write_transfer_rate_max = 0.0;
-  gdouble access_time_max = 0.0;
-  gdouble prev_x = 0.0;
-  gdouble prev_y = 0.0;
-  GtkStyleContext *context;
-  PangoFontDescription *font_desc;
-  gint size;
-  GdkRGBA fg;
-  PangoLayout *layout;
-
-  G_LOCK (bm_lock);
-
-  //g_print ("drawing: %d %d %d\n",
-  //         data->bm_read_samples->len,
-  //         data->bm_write_samples->len,
-  //         data->bm_access_time_samples->len);
-
-  get_max_min_avg (data->bm_read_samples,
-                   &read_transfer_rate_max,
-                   NULL,
-                   NULL);
-  get_max_min_avg (data->bm_write_samples,
-                   &write_transfer_rate_max,
-                   NULL,
-                   NULL);
-  get_max_min_avg (data->bm_access_time_samples,
-                   &access_time_max,
-                   NULL,
-                   NULL);
-
-  max_speed = MAX (read_transfer_rate_max, write_transfer_rate_max);
-  max_time = access_time_max;
-
-  if (max_speed == 0)
-    max_speed = 100 * 1000 * 1000;
-
-  if (max_time == 0)
-    max_time = 50 / 1000.0;
-
-  //speed_res = (floor (((gdouble) max_speed) / (100 * 1000 * 1000)) + 1) * 1000 * 1000;
-  //speed_res *= 10.0;
-
-  speed_res = max_speed / 10.0;
-  /* round up to nearest multiple of 10 MB/s */
-  max_visible_speed = ceil (max_speed / (10*1000*1000)) * 10*1000*1000;
-  speed_res = max_visible_speed / 10.0;
-  num_y_markers = 10;
-
-  time_res = max_time / num_y_markers;
-  if (time_res < 0.0001)
-    {
-      time_res = 0.0001;
-    }
-  else if (time_res < 0.0005)
-    {
-      time_res = 0.0005;
-    }
-  else if (time_res < 0.001)
-    {
-      time_res = 0.001;
-    }
-  else if (time_res < 0.0025)
-    {
-      time_res = 0.0025;
-    }
-  else if (time_res < 0.005)
-    {
-      time_res = 0.005;
-    }
-  else
-    {
-      time_res = ceil (((gdouble) time_res) / 0.005) * 0.005;
-    }
-  max_visible_time = time_res * num_y_markers;
-
-  //g_print ("max_visible_speed=%f, max_speed=%f, speed_res=%f\n", max_visible_speed, max_speed, speed_res);
-  //g_print ("max_visible_time=%f, max_time=%f, time_res=%f\n", max_visible_time, max_time, time_res);
-
-  p = g_ptr_array_new ();
-  p2 = g_ptr_array_new ();
-  for (n = 0; n <= num_y_markers; n++)
-    {
-      gdouble val;
-
-      val = n * speed_res;
-      /* Translators: This is used in the benchmark graph - %d is megabytes per second */
-      s = g_strdup_printf (C_("benchmark-graph", "%d MB/s"), (gint) (val / (1000 * 1000)));
-      g_ptr_array_add (p, s);
-
-      val = n * time_res;
-      /* Translators: This is used in the benchmark graph - %g is number of milliseconds */
-      s = g_strdup_printf (C_("benchmark-graph", "%3g ms"), val * 1000.0);
-      g_ptr_array_add (p2, s);
-    }
-  g_ptr_array_add (p, NULL);
-  g_ptr_array_add (p2, NULL);
-  y_left_markers = (gchar **) g_ptr_array_free (p, FALSE);
-  y_right_markers = (gchar **) g_ptr_array_free (p2, FALSE);
-
-  gtk_widget_get_allocation (widget, &allocation);
-  width = allocation.width;
-  height = allocation.height;
-
-  cairo_set_line_width (cr, 1.0);
-
-#if 0
-  cairo_set_source_rgb (cr, 0.25, 0.25, 0.25);
-  cairo_rectangle (cr, 0, 0, width, height);
-  cairo_set_line_width (cr, 0.0);
-  cairo_fill (cr);
-#endif
-
-  gx = 0;
-  gy = 0;
-  gw = width;
-  gh = height;
-
-  /* make horizontal and vertical room for x markers ("%d%%") */
-  w = ceil (measure_width (cr, "0%") / 2.0);
-  gx +=  w;
-  gw -=  w;
-  w = ceil (measure_width (cr, "100%") / 2.0);
-  x_marker_height = ceil (measure_height (cr, "100%")) + 10;
-  gw -= w;
-  gh -= x_marker_height;
-
-  /* make horizontal room for left y markers ("%d MB/s") */
-  for (n = 0; n <= num_y_markers; n++)
-    {
-      w = ceil (measure_width (cr, y_left_markers[n])) + 2 * 3;
-      if (w > gx)
-        {
-          gdouble needed = w - gx;
-          gx += needed;
-          gw -= needed;
-        }
-    }
-
-  /* make vertical room for top-left y marker */
-  h = ceil (measure_height (cr, y_left_markers[num_y_markers]) / 2.0);
-  if (h > gy)
-    {
-      gdouble needed = h - gy;
-      gy += needed;
-      gh -= needed;
-    }
-
-  /* make horizontal room for right y markers ("%d ms") */
-  for (n = 0; n <= num_y_markers; n++)
-    {
-      w = ceil (measure_width (cr, y_right_markers[n])) + 2 * 3;
-      if (w > width - (gx + gw))
-        {
-          gdouble needed = w - (width - (gx + gw));
-          gw -= needed;
-        }
-    }
-
-  /* make vertical room for top-right y marker */
-  h = ceil (measure_height (cr, y_right_markers[num_y_markers]) / 2.0);
-  if (h > gy)
-    {
-      gdouble needed = h - gy;
-      gy += needed;
-      gh -= needed;
-    }
-
-  context = gtk_widget_get_style_context (widget);
-  gtk_style_context_get_color (context, GTK_STATE_FLAG_NORMAL, &fg);
-  gtk_style_context_get (context,
-                         GTK_STATE_FLAG_NORMAL,
-                         GTK_STYLE_PROPERTY_FONT,
-                         &font_desc,
-                         NULL);
-  size = pango_font_description_get_size (font_desc);
-  if (pango_font_description_get_size_is_absolute (font_desc))
-    size *= PANGO_SCALE;
-  pango_font_description_set_size (font_desc, PANGO_SCALE_X_SMALL * size);
-  layout = pango_cairo_create_layout (cr);
-  pango_layout_set_font_description (layout, font_desc);
-  pango_font_description_free (font_desc);
-
-  /* draw x markers ("%d%%") + vertical grid */
-  for (n = 0; n <= 10; n++)
-    {
-      PangoRectangle extents;
-
-      x = gx + ceil (n * gw / 10.0);
-      y = gy + gh + x_marker_height/2.0;
-
-      s = g_strdup_printf ("%u%%", n * 10);
-
-      pango_layout_set_text (layout, s, -1);
-      pango_layout_get_extents (layout, NULL, &extents);
-      cairo_move_to (cr,
-                     x - extents.width/PANGO_SCALE/2,
-                     y - extents.height/PANGO_SCALE/2);
-      gdk_cairo_set_source_rgba (cr, &fg);
-      pango_cairo_show_layout (cr, layout);
-
-      g_free (s);
-    }
-
-  /* draw left y markers ("%d MB/s") */
-  for (n = 0; n <= num_y_markers; n++)
-    {
-      PangoRectangle extents;
-
-      x = gx/2.0;
-      y = gy + gh - gh * n / num_y_markers;
-
-      s = y_left_markers[n];
-      pango_layout_set_text (layout, s, -1);
-      pango_layout_get_extents (layout, NULL, &extents);
-      cairo_move_to (cr,
-                     x - extents.width/PANGO_SCALE/2,
-                     y - extents.height/PANGO_SCALE/2);
-      gdk_cairo_set_source_rgba (cr, &fg);
-      pango_cairo_show_layout (cr, layout);
-    }
-
-  /* draw right y markers ("%d ms") */
-  for (n = 0; n <= num_y_markers; n++)
-    {
-      PangoRectangle extents;
-
-      x = gx + gw + (width - (gx + gw))/2.0;
-      y = gy + gh - gh * n / num_y_markers;
-
-      s = y_right_markers[n];
-      pango_layout_set_text (layout, s, -1);
-      pango_layout_get_extents (layout, NULL, &extents);
-      cairo_move_to (cr,
-                     x - extents.width/PANGO_SCALE/2,
-                     y - extents.height/PANGO_SCALE/2);
-      gdk_cairo_set_source_rgba (cr, &fg);
-      pango_cairo_show_layout (cr, layout);
-    }
-
-  g_object_unref (layout);
-
-  /* fill graph area */
-  cairo_set_source_rgb (cr, 1, 1, 1);
-  cairo_rectangle (cr, gx + 0.5, gy + 0.5, gw, gh);
-  cairo_fill_preserve (cr);
-  /* grid - first a rect */
-  cairo_set_source_rgba (cr, 0, 0, 0, 0.25);
-  cairo_set_line_width (cr, 1.0);
-  /* rect - also clip to rect for all future drawing operations */
-  cairo_stroke_preserve (cr);
-  cairo_clip (cr);
-  /* vertical lines */
-  for (n = 1; n < 10; n++)
-    {
-      x = gx + ceil (n * gw / 10.0);
-      cairo_move_to (cr, x + 0.5, gy + 0.5);
-      cairo_line_to (cr, x + 0.5, gy + gh + 0.5);
-      cairo_stroke (cr);
-    }
-  /* horizontal lines */
-  for (n = 1; n < num_y_markers; n++)
-    {
-      y = gy + ceil (n * gh / num_y_markers);
-      cairo_move_to (cr, gx + 0.5, y + 0.5);
-      cairo_line_to (cr, gx + gw + 0.5, y + 0.5);
-      cairo_stroke (cr);
-    }
-
-  /* draw read graph */
-  cairo_set_source_rgb (cr, 0.5, 0.5, 1.0);
-  cairo_set_line_width (cr, 1.5);
-  for (n = 0; n < data->bm_read_samples->len; n++)
-    {
-      BMSample *sample = &g_array_index (data->bm_read_samples, BMSample, n);
-
-      x = gx + gw * sample->offset / data->bm_size;
-      y = gy + gh - gh * sample->value / max_visible_speed;
-
-      if (n == 0)
-        cairo_move_to (cr, x, y);
-      else
-        cairo_line_to (cr, x, y);
-    }
-  cairo_stroke (cr);
-
-  /* draw write graph */
-  cairo_set_source_rgb (cr, 1.0, 0.5, 0.5);
-  cairo_set_line_width (cr, 1.5);
-  for (n = 0; n < data->bm_write_samples->len; n++)
-    {
-      BMSample *sample = &g_array_index (data->bm_write_samples, BMSample, n);
-      x = gx + gw * sample->offset / data->bm_size;
-      y = gy + gh - gh * sample->value / max_visible_speed;
-
-      if (n == 0)
-        cairo_move_to (cr, x, y);
-      else
-        cairo_line_to (cr, x, y);
-    }
-  cairo_stroke (cr);
-
-  /* draw access time dots + lines */
-  cairo_set_line_width (cr, 0.5);
-  for (n = 0; n < data->bm_access_time_samples->len; n++)
-    {
-      BMSample *sample = &g_array_index (data->bm_access_time_samples, BMSample, n);
-
-      x = gx + gw * sample->offset / data->bm_size;
-      y = gy + gh - gh * sample->value / max_visible_time;
-
-      /*g_debug ("time = %f @ %f", point->value, x);*/
-
-      cairo_set_source_rgba (cr, 0.4, 1.0, 0.4, 0.5);
-      cairo_arc (cr, x, y, 1.5, 0, 2 * M_PI);
-      cairo_fill (cr);
-
-      if (n > 0)
-        {
-          cairo_set_source_rgba (cr, 0.2, 0.5, 0.2, 0.10);
-          cairo_move_to (cr, prev_x, prev_y);
-          cairo_line_to (cr, x, y);
-          cairo_stroke (cr);
-        }
-
-      prev_x = x;
-      prev_y = y;
-    }
-
-#if 0
-  if (dialog->priv->benchmark_data != NULL) {
-                BenchmarkData *data = dialog->priv->benchmark_data;
-                gdouble prev_x;
-                gdouble prev_y;
-
-                /* draw access time dots + lines */
-                cairo_set_line_width (cr, 0.5);
-                for (n = 0; n < data->access_time_samples->len; n++) {
-                        BenchmarkPoint *point = &g_array_index (data->access_time_samples, BenchmarkPoint, n);
-
-                        x = gx + gw * point->offset / data->disk_size;
-                        y = gy + gh - gh * point->value / max_visible_time;
-
-                        /*g_debug ("time = %f @ %f", point->value, x);*/
-
-                        cairo_set_source_rgba (cr, 0.4, 1.0, 0.4, 0.5);
-                        cairo_arc (cr, x, y, 1.5, 0, 2 * M_PI);
-                        cairo_fill (cr);
-
-                        if (n > 0) {
-                                cairo_set_source_rgba (cr, 0.2, 0.5, 0.2, 0.10);
-                                cairo_move_to (cr, prev_x, prev_y);
-                                cairo_line_to (cr, x, y);
-                                cairo_stroke (cr);
-                        }
-
-                        prev_x = x;
-                        prev_y = y;
-                }
-
-                /* draw write transfer rate graph */
-                cairo_set_source_rgb (cr, 1.0, 0.5, 0.5);
-                cairo_set_line_width (cr, 2.0);
-                for (n = 0; n < data->write_transfer_rate_samples->len; n++) {
-                        BenchmarkPoint *point = &g_array_index (data->write_transfer_rate_samples, BenchmarkPoint, n);
-
-                        x = gx + gw * point->offset / data->disk_size;
-                        y = gy + gh - gh * point->value / max_visible_speed;
-
-                        if (n == 0)
-                                cairo_move_to (cr, x, y);
-                        else
-                                cairo_line_to (cr, x, y);
-                }
-                cairo_stroke (cr);
-
-                /* draw read transfer rate graph */
-                cairo_set_source_rgb (cr, 0.5, 0.5, 1.0);
-                cairo_set_line_width (cr, 1.5);
-                for (n = 0; n < data->read_transfer_rate_samples->len; n++) {
-                        BenchmarkPoint *point = &g_array_index (data->read_transfer_rate_samples, BenchmarkPoint, n);
-
-                        x = gx + gw * point->offset / data->disk_size;
-                        y = gy + gh - gh * point->value / max_visible_speed;
-
-                        if (n == 0)
-                                cairo_move_to (cr, x, y);
-                        else
-                                cairo_line_to (cr, x, y);
-                }
-                cairo_stroke (cr);
-
-        } else {
-                /* TODO: draw some text saying we don't have any data */
-        }
-#endif
-
-        g_strfreev (y_left_markers);
-        g_strfreev (y_right_markers);
-
-  G_UNLOCK (bm_lock);
-
-  /* propagate event further */
-  return FALSE;
-}
+{}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -683,472 +193,107 @@ format_transfer_rate_and_num_samples (gdouble bytes_per_sec,
   return ret;
 }
 
-
 static void
-update_updated_label (DialogData *data)
+update_dialog (GduBenchmarkDialog *self)
 {
-  gchar *s = NULL;
-
-  G_LOCK (bm_lock);
-  switch (data->bm_state)
-    {
-    case BM_STATE_NONE:
-      if (data->bm_time_benchmarked_usec > 0)
-        {
-          gint64 now_usec;
-          gchar *s2;
-          GDateTime *time_benchmarked_dt;
-          GDateTime *time_benchmarked_dt_local;
-          gchar *time_benchmarked_str;
-
-          now_usec = g_get_real_time ();
-
-          time_benchmarked_dt = g_date_time_new_from_unix_utc (data->bm_time_benchmarked_usec / G_USEC_PER_SEC);
-          time_benchmarked_dt_local = g_date_time_to_local (time_benchmarked_dt);
-          time_benchmarked_str = g_date_time_format (time_benchmarked_dt_local, "%c");
-
-          s = gdu_utils_format_duration_usec ((now_usec - data->bm_time_benchmarked_usec),
-                                              GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
-          /* Translators: The first %s is the date and time the benchmark took place in the preferred
-           * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
-           * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
-           * now, for example "3 days" or "2 hours" or "12 minutes".
-           */
-          s2 = g_strdup_printf (C_("benchmark-updated", "%s (%s ago)"),
-                                time_benchmarked_str,
-                                s);
-          gtk_label_set_text (GTK_LABEL (data->updated_label), s2);
-          g_free (s2);
-          g_free (s);
-          g_free (time_benchmarked_str);
-          g_date_time_unref (time_benchmarked_dt_local);
-          g_date_time_unref (time_benchmarked_dt);
-        }
-      else
-        {
-          gtk_label_set_markup (GTK_LABEL (data->updated_label), C_("benchmark-updated", "No benchmark data available"));
-        }
-      break;
-
-    case BM_STATE_OPENING_DEVICE:
-      gtk_label_set_markup (GTK_LABEL (data->updated_label), C_("benchmark-updated", "Opening Device…"));
-      break;
-
-    case BM_STATE_TRANSFER_RATE:
-      s = g_strdup_printf (C_("benchmark-updated", "Measuring transfer rate (%2.1f%% complete)…"),
-                           data->bm_read_samples->len * 100.0 / data->bm_num_samples);
-      gtk_label_set_markup (GTK_LABEL (data->updated_label), s);
-      g_free (s);
-      break;
-
-    case BM_STATE_ACCESS_TIME:
-      s = g_strdup_printf (C_("benchmark-updated", "Measuring access time (%2.1f%% complete)…"),
-                           data->bm_access_time_samples->len * 100.0 / data->bm_num_access_samples);
-      gtk_label_set_markup (GTK_LABEL (data->updated_label), s);
-      g_free (s);
-      break;
-
-    default:
-      g_assert_not_reached ();
-    }
-  G_UNLOCK (bm_lock);
-}
-
-/* returns NULL if it doesn't make sense to load/save benchmark data (removable media,
- * non-drive devices etc.)
- */
-static gchar *
-get_bm_filename (DialogData *data)
-{
-  gchar *ret = NULL;
-  gchar *bench_dir = NULL;
-  const gchar *id = NULL;
-
-  id = udisks_block_get_id (data->block);
-  if (id == NULL || strlen (id) == 0)
-    goto out;
-
-  bench_dir = g_strdup_printf ("%s/gnome-disks/benchmarks", g_get_user_cache_dir ());
-  if (g_mkdir_with_parents (bench_dir, 0777) != 0)
-    {
-      g_warning ("Error creating directory %s: %m", bench_dir);
-      goto out;
-    }
-
-  ret = g_strdup_printf ("%s/%s.gnome-disks-benchmark", bench_dir, id);
-
- out:
-  g_free (bench_dir);
-  return ret;
-}
-
-static void
-update_dialog (DialogData *data)
-{
-  GError *error = NULL;
-  GdkWindow *window = NULL;
+  g_autoptr(GError) error = NULL;
+  GdkSurface *window = NULL;
   gdouble read_avg = 0.0;
   gdouble write_avg = 0.0;
   gdouble access_time_avg = 0.0;
-  gchar *s = NULL;
-  UDisksDrive *drive = NULL;
-  UDisksObjectInfo *info = NULL;
+  char *s = NULL;
 
   G_LOCK (bm_lock);
-  if (data->bm_error != NULL)
+  if (self->bm_error != NULL)
     {
-      error = data->bm_error;
-      data->bm_error = NULL;
+      error = self->bm_error;
+      self->bm_error = NULL;
     }
   G_UNLOCK (bm_lock);
 
-  /* first of all, present an error if something went wrong */
-  if (error != NULL)
-    {
-      if (!data->closed)
-        {
-          if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
-            gdu_utils_show_error (GTK_WINDOW (data->window), C_("benchmarking", "An error occurred"), error);
-        }
-      g_clear_error (&error);
-
-      /* and reload old data */
-      if (!maybe_load_data (data, &error))
-        {
-          /* not worth complaining in dialog about */
-          g_warning ("Error loading cached data: %s (%s, %d)",
-                     error->message, g_quark_to_string (error->domain), error->code);
-          g_clear_error (&error);
-        }
-    }
-
-  update_updated_label (data);
-
-  /* disk / device label */
-  drive = udisks_client_get_drive_for_block (data->client, data->block);
-  info = udisks_client_get_object_info (data->client, data->object);
-  gtk_label_set_text (GTK_LABEL (data->device_label), udisks_object_info_get_one_liner (info));
-  g_free (s);
+  /* present an error if something went wrong */
+  if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
+    gdu_utils_show_error (gdu_benchmark_dialog_get_window (self), "An error occurred", error);
 
   G_LOCK (bm_lock);
 
-  if (data->bm_in_progress)
-    {
-
-      gtk_widget_set_visible (data->start_benchmark_button, FALSE);
-      gtk_widget_set_visible (data->stop_benchmark_button, TRUE);
-    }
-  else
-    {
-      gtk_widget_set_visible (data->start_benchmark_button, TRUE);
-      gtk_widget_set_visible (data->stop_benchmark_button, FALSE);
-    }
-
-  get_max_min_avg (data->bm_read_samples,
+  get_max_min_avg (self->read_samples,
                    NULL, NULL, &read_avg);
-  get_max_min_avg (data->bm_write_samples,
+  get_max_min_avg (self->write_samples,
                    NULL, NULL, &write_avg);
-  get_max_min_avg (data->bm_access_time_samples,
+  get_max_min_avg (self->atime_samples,
                    NULL, NULL, &access_time_avg);
 
   G_UNLOCK (bm_lock);
 
-  if (data->bm_sample_size == 0)
-    s = g_strdup ("–");
-  else
-    s = g_format_size_full (data->bm_sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
-  gtk_label_set_markup (GTK_LABEL (data->sample_size_label), s);
-  g_free (s);
-
-  if (read_avg == 0.0)
-    s = g_strdup ("–");
-  else
-    s = format_transfer_rate_and_num_samples (read_avg, data->bm_read_samples->len);
-  gtk_label_set_markup (GTK_LABEL (data->read_rate_label), s);
-  g_free (s);
-
-  if (write_avg == 0.0)
-    s = g_strdup ("–");
-  else
-    s = format_transfer_rate_and_num_samples (write_avg, data->bm_write_samples->len);
-  gtk_label_set_markup (GTK_LABEL (data->write_rate_label), s);
-  g_free (s);
-
-  if (access_time_avg == 0.0)
+  if (self->bm_sample_size != 0)
     {
-      s = g_strdup ("–");
+      s = g_format_size_full (self->bm_sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
+      gtk_label_set_markup (GTK_LABEL (self->sample_size_label), s);
+      g_free (s);
     }
-  else
+
+  if (read_avg != 0.0)
     {
-      gchar *s2;
-      gchar *s3;
+      s = format_transfer_rate_and_num_samples (read_avg, self->read_samples->len);
+      gtk_label_set_markup (GTK_LABEL (self->read_rate_label), s);
+      g_free (s);
+    }
+
+  if (write_avg != 0.0)
+    {
+      s = format_transfer_rate_and_num_samples (write_avg, self->write_samples->len);
+      gtk_label_set_markup (GTK_LABEL (self->write_rate_label), s);
+      g_free (s);
+    }
+
+  if (access_time_avg != 0.0)
+    {
+      g_autofree char *s2;
+      g_autofree char *s3;
       /* Translators: %d is number of milliseconds and msec means "milli-second" */
-      s2 = g_strdup_printf (C_("benchmark-access-time", "%.2f msec"), access_time_avg * 1000.0);
+      s2 = g_strdup_printf ("%.2f msec", access_time_avg * 1000.0);
       s3 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
                                          "%u sample",
                                          "%u samples",
-                                         data->bm_access_time_samples->len),
-                            data->bm_access_time_samples->len);
+                                         self->atime_samples->len),
+                            self->atime_samples->len);
       s = g_strdup_printf ("%s <small>(%s)</small>", s2, s3);
-      g_free (s3);
-      g_free (s2);
+      gtk_label_set_markup (GTK_LABEL (self->access_time_label), s);
+      g_free (s);
     }
-  gtk_label_set_markup (GTK_LABEL (data->access_time_label), s);
-  g_free (s);
 
-
-  window = gtk_widget_get_window (data->graph_drawing_area);
+  /* gtk4 todo
+  window = gtk_widget_get_window (self->drawing_area);
   if (window != NULL)
     gdk_window_invalidate_rect (window, NULL, TRUE);
+  */
 
-  g_clear_object (&drive);
-  g_clear_object (&info);
 }
-
-
-/* called every second (on the second) */
-static gboolean
-on_timeout (gpointer user_data)
-{
-  DialogData *data = user_data;
-  update_updated_label (data);
-  return TRUE; /* keep timeout around */
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-samples_from_gvariant (GArray   *array,
-                       GVariant *variant)
-{
-  GVariantIter iter;
-  BMSample sample;
-
-  g_array_set_size (array, 0);
-
-  g_variant_iter_init (&iter, variant);
-  while (g_variant_iter_next (&iter, "(td)", &sample.offset, &sample.value))
-    {
-      g_array_append_val (array, sample);
-    }
-}
-
-static gboolean
-maybe_load_data (DialogData  *data,
-                 GError     **error)
-{
-  gboolean ret = FALSE;
-  gchar *filename = NULL;
-  GVariant *value = NULL;
-  gchar *variant_data = NULL;
-  gsize variant_size;
-  GError *local_error = NULL;
-  GVariant *read_samples_variant = NULL;
-  GVariant *write_samples_variant = NULL;
-  GVariant *access_time_samples_variant = NULL;
-  gint32 version;
-  gint64 timestamp_usec;
-  guint64 device_size;
-  guint64 sample_size;
-
-  filename = get_bm_filename (data);
-  if (filename == NULL)
-    {
-      /* all good since we don't want to load data for this device */
-      ret = TRUE;
-      goto out;
-    }
-
-  if (!g_file_get_contents (filename,
-                            &variant_data,
-                            &variant_size,
-                            &local_error))
-    {
-      if (local_error->domain == G_FILE_ERROR && local_error->code == G_FILE_ERROR_NOENT)
-        {
-          /* don't complain about a missing file */
-          g_clear_error (&local_error);
-          ret = TRUE;
-          goto out;
-        }
-      g_propagate_error (error, local_error);
-      goto out;
-    }
-
-  value = g_variant_new_from_data (G_VARIANT_TYPE_VARDICT,
-                                   variant_data,
-                                   variant_size,
-                                   FALSE,
-                                   NULL, NULL);
-
-  if (!g_variant_lookup (value, "version", "i", &version))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No version key");
-      goto out;
-    }
-  if (version != 1)
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "Cannot decode version %d data", version);
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "timestamp-usec", "x", &timestamp_usec))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No timestamp-usec");
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "device-size", "t", &device_size))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No device-size");
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "read-samples", "@a(td)", &read_samples_variant))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No read-samples");
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "write-samples", "@a(td)", &write_samples_variant))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No write-samples");
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "access-time-samples", "@a(td)", &access_time_samples_variant))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No access-time-samples");
-      goto out;
-    }
-
-  if (!g_variant_lookup (value, "sample-size", "t", &sample_size))
-    {
-      g_set_error (error, G_IO_ERROR, G_IO_ERROR_FAILED,
-                   "No sample-size");
-      goto out;
-    }
-
-  data->bm_time_benchmarked_usec = timestamp_usec;
-  data->bm_size = device_size;
-  data->bm_sample_size = sample_size;
-  samples_from_gvariant (data->bm_read_samples, read_samples_variant);
-  samples_from_gvariant (data->bm_write_samples, write_samples_variant);
-  samples_from_gvariant (data->bm_access_time_samples, access_time_samples_variant);
-
-  ret = TRUE;
-
- out:
-  if (read_samples_variant != NULL)
-    g_variant_unref (read_samples_variant);
-  if (write_samples_variant != NULL)
-    g_variant_unref (write_samples_variant);
-  if (access_time_samples_variant != NULL)
-    g_variant_unref (access_time_samples_variant);
-  if (value != NULL)
-    g_variant_unref (value);
-  g_free (variant_data);
-  g_free (filename);
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static GVariant *
-samples_to_gvariant (GArray *array)
-{
-  guint n;
-  GVariantBuilder builder;
-
-  g_variant_builder_init (&builder, G_VARIANT_TYPE ("a(td)"));
-  for (n = 0; n < array->len; n++)
-    {
-      BMSample *s = &g_array_index (array, BMSample, n);
-      g_variant_builder_add (&builder, "(td)", s->offset, s->value);
-    }
-
-  return g_variant_builder_end (&builder);
-}
-
-
-static gboolean
-maybe_save_data (DialogData  *data,
-                 GError     **error)
-{
-  gboolean ret = FALSE;
-  gchar *filename = NULL;
-  GVariantBuilder builder;
-  GVariant *value = NULL;
-  gconstpointer variant_data;
-  gsize variant_size;
-
-  filename = get_bm_filename (data);
-  if (filename == NULL)
-    {
-      /* all good since we don't want to save data for this device */
-      ret = TRUE;
-      goto out;
-    }
-
-  g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-  g_variant_builder_add (&builder, "{sv}", "version", g_variant_new_int32 (1));
-  g_variant_builder_add (&builder, "{sv}", "timestamp-usec", g_variant_new_int64 (data->bm_time_benchmarked_usec));
-  g_variant_builder_add (&builder, "{sv}", "device-size", g_variant_new_uint64 (data->bm_size));
-  g_variant_builder_add (&builder, "{sv}", "sample-size", g_variant_new_uint64 (data->bm_sample_size));
-  g_variant_builder_add (&builder, "{sv}", "read-samples", samples_to_gvariant (data->bm_read_samples));
-  g_variant_builder_add (&builder, "{sv}", "write-samples", samples_to_gvariant (data->bm_write_samples));
-  g_variant_builder_add (&builder, "{sv}", "access-time-samples", samples_to_gvariant (data->bm_access_time_samples));
-  value = g_variant_builder_end (&builder);
-
-  variant_data = g_variant_get_data (value);
-  variant_size = g_variant_get_size (value);
-
-  if (!g_file_set_contents (filename,
-                            variant_data,
-                            variant_size,
-                            error))
-    goto out;
-
- out:
-  if (value != NULL)
-    g_variant_unref (value);
-  g_free (filename);
-  return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 /* called on main / UI thread */
 static gboolean
 bmt_on_timeout (gpointer user_data)
 {
-  DialogData *data = user_data;
-  update_dialog (data);
+  GduBenchmarkDialog *self = user_data;
+  update_dialog (self);
   G_LOCK (bm_lock);
-  data->bm_update_timeout_pending = FALSE;
+  self->bm_update_timeout_pending = FALSE;
   G_UNLOCK (bm_lock);
-  dialog_data_unref (data);
   return FALSE; /* don't run again */
 }
 
 static void
-bmt_schedule_update (DialogData *data)
+bmt_schedule_update (GduBenchmarkDialog *self)
 {
   /* rate-limit updates */
   G_LOCK (bm_lock);
-  if (!data->bm_update_timeout_pending)
+  if (!self->bm_update_timeout_pending)
     {
       g_timeout_add (200, /* ms */
                      bmt_on_timeout,
-                     dialog_data_ref (data));
-      data->bm_update_timeout_pending = TRUE;
+                     self);
+      self->bm_update_timeout_pending = TRUE;
     }
   G_UNLOCK (bm_lock);
 }
@@ -1156,13 +301,13 @@ bmt_schedule_update (DialogData *data)
 static gpointer
 benchmark_thread (gpointer user_data)
 {
-  DialogData *data = user_data;
-  GVariant *fd_index = NULL;
-  GUnixFDList *fd_list = NULL;
-  GError *error = NULL;
-  guchar *buffer_unaligned = NULL;
-  guchar *buffer = NULL;
-  GRand *rand = NULL;
+  GduBenchmarkDialog *self = user_data;
+  g_autoptr(GVariant) fd_index = NULL;
+  g_autoptr(GUnixFDList) fd_list = NULL;
+  g_autoptr(GError) error = NULL;
+  g_autoptr(GRand) rand = NULL;
+  g_autofree char *buffer_unaligned = NULL;
+  g_autofree char *buffer = NULL;
   int fd = -1;
   gint n;
   long page_size;
@@ -1170,29 +315,26 @@ benchmark_thread (gpointer user_data)
   GVariantBuilder options_builder;
   guint inhibit_cookie;
 
-  //g_print ("bm thread start\n");
-
   inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
-                                            GTK_WINDOW (data->dialog),
+                                            self,
                                             GTK_APPLICATION_INHIBIT_SUSPEND |
                                             GTK_APPLICATION_INHIBIT_LOGOUT,
                                             /* Translators: Reason why suspend/logout is being inhibited */
                                             C_("create-inhibit-message", "Benchmarking device"));
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  g_variant_builder_add (&options_builder, "{sv}", "writable", g_variant_new_boolean (data->bm_do_write));
+  g_variant_builder_add (&options_builder, "{sv}", "writable", g_variant_new_boolean (self->bm_do_write));
 
-  if (!udisks_block_call_open_for_benchmark_sync (data->block,
+  if (!udisks_block_call_open_for_benchmark_sync (self->block,
                                                   g_variant_builder_end (&options_builder),
                                                   NULL, /* fd_list */
                                                   &fd_index,
                                                   &fd_list,
-                                                  data->bm_cancellable,
+                                                  self->bm_cancellable,
                                                   &error))
     goto out;
 
   fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
-  g_clear_object (&fd_list);
 
   /* We can't use udisks_block_get_size() because the media may have
    * changed and udisks may not have noticed. TODO: maybe have a
@@ -1217,16 +359,16 @@ benchmark_thread (gpointer user_data)
       goto out;
     }
 
-  buffer_unaligned = g_new0 (guchar, data->bm_sample_size_mib*1024*1024 + page_size);
+  buffer_unaligned = g_new0 (guchar, self->bm_sample_size_mib*1024*1024 + page_size);
   buffer = (guchar*) (((gintptr) (buffer_unaligned + page_size)) & (~(page_size - 1)));
 
   /* transfer rate... */
   G_LOCK (bm_lock);
-  data->bm_size = disk_size;
-  data->bm_sample_size = data->bm_sample_size_mib*1024*1024;
-  data->bm_state = BM_STATE_TRANSFER_RATE;
+  self->bm_size = disk_size;
+  self->bm_sample_size = self->bm_sample_size_mib*1024*1024;
+  self->bm_state = BM_STATE_TRANSFER_RATE;
   G_UNLOCK (bm_lock);
-  for (n = 0; n < data->bm_num_samples; n++)
+  for (n = 0; n < self->bm_num_samples; n++)
     {
       gchar *s, *s2;
       gint64 begin_usec;
@@ -1235,11 +377,11 @@ benchmark_thread (gpointer user_data)
       ssize_t num_read;
       BMSample sample = {0};
 
-      if (g_cancellable_set_error_if_cancelled (data->bm_cancellable, &error))
+      if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         goto out;
 
       /* figure out offset and align to page-size */
-      offset = n * disk_size / data->bm_num_samples;
+      offset = n * disk_size / self->bm_num_samples;
       offset &= ~(page_size - 1);
 
       if (lseek (fd, offset, SEEK_SET) != offset)
@@ -1276,10 +418,10 @@ benchmark_thread (gpointer user_data)
           goto out;
         }
       begin_usec = g_get_monotonic_time ();
-      num_read = read (fd, buffer, data->bm_sample_size_mib*1024*1024);
+      num_read = read (fd, buffer, self->bm_sample_size_mib*1024*1024);
       if (G_UNLIKELY (num_read < 0))
         {
-          s = g_format_size_full (data->bm_sample_size_mib * 1024 * 1024, G_FORMAT_SIZE_LONG_FORMAT);
+          s = g_format_size_full (self->bm_sample_size_mib * 1024 * 1024, G_FORMAT_SIZE_LONG_FORMAT);
           s2 = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
           g_set_error (&error,
                        G_IO_ERROR,
@@ -1295,12 +437,12 @@ benchmark_thread (gpointer user_data)
       sample.offset = offset;
       sample.value = ((gdouble) G_USEC_PER_SEC) * num_read / (end_usec - begin_usec);
       G_LOCK (bm_lock);
-      g_array_append_val (data->bm_read_samples, sample);
+      g_array_append_val (self->read_samples, sample);
       G_UNLOCK (bm_lock);
 
-      bmt_schedule_update (data);
+      bmt_schedule_update (self);
 
-      if (data->bm_do_write)
+      if (self->bm_do_write)
         {
           ssize_t num_written;
 
@@ -1369,19 +511,19 @@ benchmark_thread (gpointer user_data)
           sample.offset = offset;
           sample.value = ((gdouble) G_USEC_PER_SEC) * num_written / (end_usec - begin_usec);
           G_LOCK (bm_lock);
-          g_array_append_val (data->bm_write_samples, sample);
+          g_array_append_val (self->write_samples, sample);
           G_UNLOCK (bm_lock);
 
-          bmt_schedule_update (data);
+          bmt_schedule_update (self);
         }
     }
 
   /* access time... */
   G_LOCK (bm_lock);
-  data->bm_state = BM_STATE_ACCESS_TIME;
+  self->bm_state = BM_STATE_ACCESS_TIME;
   G_UNLOCK (bm_lock);
   rand = g_rand_new_with_seed (42); /* want this to be deterministic (per size) so it's repeatable */
-  for (n = 0; n < data->bm_num_access_samples; n++)
+  for (n = 0; n < self->bm_num_access_samples; n++)
     {
       gint64 begin_usec;
       gint64 end_usec;
@@ -1389,7 +531,7 @@ benchmark_thread (gpointer user_data)
       ssize_t num_read;
       BMSample sample = {0};
 
-      if (g_cancellable_set_error_if_cancelled (data->bm_cancellable, &error))
+      if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         goto out;
 
       offset = (guint64) g_rand_double_range (rand, 0, (gdouble) disk_size);
@@ -1422,77 +564,66 @@ benchmark_thread (gpointer user_data)
       sample.offset = offset;
       sample.value = (end_usec - begin_usec) / ((gdouble) G_USEC_PER_SEC);
       G_LOCK (bm_lock);
-      g_array_append_val (data->bm_access_time_samples, sample);
+      g_array_append_val (self->atime_samples, sample);
       G_UNLOCK (bm_lock);
 
-      bmt_schedule_update (data);
+      bmt_schedule_update (self);
     }
 
   G_LOCK (bm_lock);
-  data->bm_time_benchmarked_usec = g_get_real_time ();
+  self->bm_time_benchmarked_usec = g_get_real_time ();
   G_UNLOCK (bm_lock);
-  if (!maybe_save_data (data, &error))
-    goto out;
 
  out:
-  if (rand != NULL)
-    g_rand_free (rand);
-  g_clear_object (&fd_list);
-
-  if (fd_index != NULL)
-    g_variant_unref (fd_index);
   if (fd != -1)
     close (fd);
-  g_free (buffer_unaligned);
-  data->bm_in_progress = FALSE;
-  data->bm_thread = NULL;
-  data->bm_state = BM_STATE_NONE;
+  self->bm_in_progress = FALSE;
+  self->bm_state = BM_STATE_NONE;
 
   if (inhibit_cookie > 0)
-    gtk_application_uninhibit ((gpointer)g_application_get_default (), inhibit_cookie);
+    {
+      gtk_application_uninhibit ((gpointer)g_application_get_default (), inhibit_cookie);
+    }
 
   if (error != NULL)
     {
       G_LOCK (bm_lock);
-      data->bm_error = error;
-      g_array_set_size (data->bm_read_samples, 0);
-      g_array_set_size (data->bm_write_samples, 0);
-      g_array_set_size (data->bm_access_time_samples, 0);
-      data->bm_time_benchmarked_usec = 0;
-      data->bm_sample_size = 0;
-      data->bm_size = 0;
+      self->bm_error = error;
+      g_array_set_size (self->read_samples, 0);
+      g_array_set_size (self->write_samples, 0);
+      g_array_set_size (self->atime_samples, 0);
+      self->bm_time_benchmarked_usec = 0;
+      self->bm_sample_size = 0;
+      self->bm_size = 0;
       G_UNLOCK (bm_lock);
     }
 
-  bmt_schedule_update (data);
+  bmt_schedule_update (self);
 
-  dialog_data_unref (data);
-
-  //g_print ("bm thread end\n");
   return NULL;
 }
 
 static void
-abort_benchmark (DialogData *data)
+abort_benchmark (GduBenchmarkDialog *self)
 {
-  g_cancellable_cancel (data->bm_cancellable);
+  g_cancellable_cancel (self->bm_cancellable);
 }
 
 static void
-start_benchmark2 (DialogData *data)
+start_benchmark2 (GduBenchmarkDialog *self)
 {
-  data->bm_in_progress = TRUE;
-  data->bm_state = BM_STATE_OPENING_DEVICE;
-  g_clear_error (&data->bm_error);
-  g_array_set_size (data->bm_read_samples, 0);
-  g_array_set_size (data->bm_write_samples, 0);
-  g_array_set_size (data->bm_access_time_samples, 0);
-  data->bm_time_benchmarked_usec = 0;
-  g_cancellable_reset (data->bm_cancellable);
+  self->bm_in_progress = TRUE;
+  self->bm_state = BM_STATE_OPENING_DEVICE;
+  g_clear_error (&self->bm_error);
+  g_array_set_size (self->read_samples, 0);
+  g_array_set_size (self->write_samples, 0);
+  g_array_set_size (self->atime_samples, 0);
+  self->bm_time_benchmarked_usec = 0;
+  g_cancellable_reset (self->bm_cancellable);
 
-  data->bm_thread = g_thread_new ("benchmark-thread",
-                                  benchmark_thread,
-                                  dialog_data_ref (data));
+  g_thread_new ("benchmark-thread",
+                benchmark_thread,
+                self);
 }
 
 static void
@@ -1500,16 +631,15 @@ ensure_unused_cb (GtkWindow     *window,
                   GAsyncResult  *res,
                   gpointer       user_data)
 {
-  DialogData *data = user_data;
-  if (gdu_utils_ensure_unused_finish (data->client, res, NULL))
+  GduBenchmarkDialog *self = user_data;
+  if (gdu_utils_ensure_unused_finish (self->client, res, NULL))
     {
-      start_benchmark2 (data);
+      start_benchmark2 (self);
     }
-  dialog_data_unref (data);
 }
 
 static void
-start_benchmark (DialogData *data)
+start_benchmark (GduBenchmarkDialog *self)
 {
   GtkWidget *dialog;
   GtkBuilder *builder = NULL;
@@ -1520,15 +650,14 @@ start_benchmark (DialogData *data)
   GSettings *settings;
   gint response;
 
-  g_assert (!data->bm_in_progress);
-  g_assert (data->bm_thread == NULL);
-  g_assert_cmpint (data->bm_state, ==, BM_STATE_NONE);
+  g_assert (!self->bm_in_progress);
+  g_assert_cmpint (self->bm_state, ==, BM_STATE_NONE);
 
   dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                    "gdu-benchmark-dialog.ui",
                                                    "dialog2",
                                                    &builder));
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (data->dialog));
+  gtk_window_set_transient_for (GTK_WINDOW (dialog), self);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   num_samples_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "num-samples-spinbutton"));
@@ -1537,27 +666,27 @@ start_benchmark (DialogData *data)
   num_access_samples_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "num-access-samples-spinbutton"));
 
   settings = g_settings_new ("org.gnome.Disks.benchmark");
-  data->bm_num_samples = g_settings_get_int (settings, "num-samples");
-  data->bm_sample_size_mib = g_settings_get_int (settings, "sample-size-mib");
-  data->bm_do_write = g_settings_get_boolean (settings, "do-write");
-  data->bm_num_access_samples = g_settings_get_int (settings, "num-access-samples");
+  self->bm_num_samples = g_settings_get_int (settings, "num-samples");
+  self->bm_sample_size_mib = g_settings_get_int (settings, "sample-size-mib");
+  self->bm_do_write = g_settings_get_boolean (settings, "do-write");
+  self->bm_num_access_samples = g_settings_get_int (settings, "num-access-samples");
 
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_samples_spinbutton), data->bm_num_samples);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(sample_size_spinbutton), data->bm_sample_size_mib);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), data->bm_do_write);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_access_samples_spinbutton), data->bm_num_access_samples);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_samples_spinbutton), self->bm_num_samples);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(sample_size_spinbutton), self->bm_sample_size_mib);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), self->bm_do_write);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_access_samples_spinbutton), self->bm_num_access_samples);
 
   /* if device is read-only, uncheck the "perform write-test"
    * check-button and also make it insensitive
    */
-  if (udisks_block_get_read_only (data->block))
+  if (udisks_block_get_read_only (self->block))
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
       gtk_widget_set_sensitive (write_checkbutton, FALSE);
     }
 
   /* If the device is currently in use, uncheck the "perform write-test" check-button */
-  if (gdu_utils_is_in_use (data->client, data->object))
+  if (gdu_utils_is_in_use (self->client, self->object))
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
     }
@@ -1570,137 +699,181 @@ start_benchmark (DialogData *data)
   if (response != GTK_RESPONSE_OK)
     goto out;
 
-  data->bm_num_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_samples_spinbutton));
-  data->bm_sample_size_mib = gtk_spin_button_get_value (GTK_SPIN_BUTTON (sample_size_spinbutton));
-  data->bm_do_write = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (write_checkbutton));
-  data->bm_num_access_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_access_samples_spinbutton));
+  self->bm_num_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_samples_spinbutton));
+  self->bm_sample_size_mib = gtk_spin_button_get_value (GTK_SPIN_BUTTON (sample_size_spinbutton));
+  self->bm_do_write = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (write_checkbutton));
+  self->bm_num_access_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_access_samples_spinbutton));
 
-  g_settings_set_int (settings, "num-samples", data->bm_num_samples);
-  g_settings_set_int (settings, "sample-size-mib", data->bm_sample_size_mib);
-  g_settings_set_boolean (settings, "do-write", data->bm_do_write);
-  g_settings_set_int (settings, "num-access-samples", data->bm_num_access_samples);
+  g_settings_set_int (settings, "num-samples", self->bm_num_samples);
+  g_settings_set_int (settings, "sample-size-mib", self->bm_sample_size_mib);
+  g_settings_set_boolean (settings, "do-write", self->bm_do_write);
+  g_settings_set_int (settings, "num-access-samples", self->bm_num_access_samples);
 
-  //g_print ("num_samples=%d\n", data->bm_num_samples);
-  //g_print ("sample_size=%d MB\n", data->bm_sample_size_mib);
-  //g_print ("do_write=%d\n", data->bm_do_write);
-  //g_print ("num_access_samples=%d\n", data->bm_num_access_samples);
+  //g_print ("num_samples=%d\n", self->bm_num_samples);
+  //g_print ("sample_size=%d MB\n", self->bm_sample_size_mib);
+  //g_print ("do_write=%d\n", self->bm_do_write);
+  //g_print ("num_access_samples=%d\n", self->bm_num_access_samples);
 
-  if (data->bm_do_write)
+  if (self->bm_do_write)
     {
       /* ensure the device is unused (e.g. unmounted) before formatting it... */
-      gdu_utils_ensure_unused (data->client,
-                               data->window,
-                               data->object,
+      gdu_utils_ensure_unused (self->client,
+                               gdu_benchmark_dialog_get_window (self),
+                               self->object,
                                (GAsyncReadyCallback) ensure_unused_cb,
                                NULL, /* GCancellable */
-                               dialog_data_ref (data));
+                               self);
     }
   else
     {
-      start_benchmark2 (data);
+      start_benchmark2 (self);
     }
 
  out:
   gtk_window_close (GTK_WINDOW (dialog));
   g_clear_object (&builder);
   g_clear_object (&settings);
-  update_dialog (data);
+  update_dialog (self);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+on_start_clicked_cb (GduBenchmarkDialog *self,
+                     GtkButton          *button)
+{
+  gtk_stack_set_visible_child_name (GTK_STACK (self->pages_stack), "results");
+}
+
+static void
+gdu_benchmark_dialog_set_title (GduBenchmarkDialog *self)
+{
+  g_autoptr(UDisksObjectInfo) info = NULL;
+
+  info = udisks_client_get_object_info (self->client, self->object);
+  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (self->window_title), udisks_object_info_get_one_liner (info));
+}
+
+static gboolean
+set_sample_size_unit_cb (AdwSpinRow  *spin_row,
+                        gpointer    *user_data)
+{
+  GtkAdjustment *adjustment;
+  g_autofree char *unit = NULL;
+  
+  adjustment = adw_spin_row_get_adjustment (spin_row);
+  unit = g_strdup_printf ("%.2f MiB", gtk_adjustment_get_value (adjustment));
+  gtk_editable_set_text (GTK_EDITABLE (spin_row), unit);
+  
+  return TRUE;
+}
+
+static void
+gdu_benchmark_dialog_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (gdu_benchmark_dialog_parent_class)->finalize (object);
+}
+
 void
-gdu_benchmark_dialog_show (GtkWindow    *window,
+gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+ 
+  object_class->finalize = gdu_benchmark_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-benchmark-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, window_title);
+
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, pages_stack);
+
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_size_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, access_samples_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_bench_switch);
+
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, drawing_area);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, read_rate_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_rate_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, access_time_label);
+
+  gtk_widget_class_bind_template_callback (widget_class, set_sample_size_unit_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_start_clicked_cb);
+}
+
+void
+gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+
+  self->bm_cancellable = g_cancellable_new ();
+
+  self->read_samples = g_array_new (FALSE, /* zero-terminated */
+                                       FALSE, /* clear */
+                                       sizeof (BMSample));
+  self->write_samples = g_array_new (FALSE, /* zero-terminated */
+                                        FALSE, /* clear */
+                                        sizeof (BMSample));
+  self->atime_samples = g_array_new (FALSE, /* zero-terminated */
+                                              FALSE, /* clear */
+                                              sizeof (BMSample));
+}
+
+void
+gdu_benchmark_dialog_show (GtkWindow    *parent_window,
                            UDisksObject *object,
                            UDisksClient *client)
 {
-  DialogData *data;
-  guint n;
+  GduBenchmarkDialog *self;
   guint timeout_id;
   GError *error = NULL;
 
-  data = g_new0 (DialogData, 1);
-  data->ref_count = 1;
-  data->object = g_object_ref (object);
-  data->block = udisks_object_peek_block (data->object);
-  data->client = client;
-  data->window = g_object_ref (window);
-  data->bm_cancellable = g_cancellable_new ();
+  self = g_object_new (GDU_TYPE_BENCHMARK_DIALOG,
+                       "transient-for", parent_window,
+                       NULL);
+  self->object = g_object_ref (object);
+  self->block = udisks_object_peek_block (self->object);
+  self->client = client;
 
-  data->bm_read_samples = g_array_new (FALSE, /* zero-terminated */
-                                       FALSE, /* clear */
-                                       sizeof (BMSample));
-  data->bm_write_samples = g_array_new (FALSE, /* zero-terminated */
-                                        FALSE, /* clear */
-                                        sizeof (BMSample));
-  data->bm_access_time_samples = g_array_new (FALSE, /* zero-terminated */
-                                              FALSE, /* clear */
-                                              sizeof (BMSample));
-
-  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "gdu-benchmark-dialog.ui",
-                                                         "dialog1",
-                                                         &data->builder));
-  for (n = 0; widget_mapping[n].name != NULL; n++)
-    {
-      gpointer *p = (gpointer *) ((char *) data + widget_mapping[n].offset);
-      *p = GTK_WIDGET (gtk_builder_get_object (data->builder, widget_mapping[n].name));
-    }
-
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
-
-  data->start_benchmark_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), 0);
-  data->stop_benchmark_button = gtk_dialog_get_widget_for_response (GTK_DIALOG (data->dialog), 1);
-
-  g_signal_connect (data->graph_drawing_area,
+  /*
+  g_signal_connect (self->drawing_area,
                     "draw",
                     G_CALLBACK (on_drawing_area_draw),
-                    data);
+                    self);
+  */
+  gdu_benchmark_dialog_set_title (self);
 
-  /* set minimum size for the graph */
-  gtk_widget_set_size_request (data->graph_drawing_area,
-                               600,
-                               300);
+  // update_dialog (self);
 
-  /* need this to update the "Updated" value */
-  timeout_id = g_timeout_add_seconds (1, on_timeout, data);
+  // while (TRUE)
+  //   {
+  //     gint response;
+  //     // response = gtk_dialog_run (GTK_DIALOG (self->dialog));
 
-  /* see if we have cached data */
-  if (!maybe_load_data (data, &error))
-    {
-      /* not worth complaining in dialog about */
-      g_warning ("Error loading cached data: %s (%s, %d)",
-                 error->message, g_quark_to_string (error->domain), error->code);
-      g_clear_error (&error);
-    }
+  //     if (response < 0)
+  //       break;
 
-  update_dialog (data);
+  //     /* Keep in sync with .ui file */
+  //     switch (response)
+  //       {
+  //       case 0: /* start benchmark */
+  //         start_benchmark (self);
+  //         break;
 
-  while (TRUE)
-    {
-      gint response;
-      // response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+  //       case 1: /* abort benchmark */
+  //         abort_benchmark (self);
+  //         break;
 
-      if (response < 0)
-        break;
+  //       default:
+  //         g_assert_not_reached ();
+  //       }
+  //   }
 
-      /* Keep in sync with .ui file */
-      switch (response)
-        {
-        case 0: /* start benchmark */
-          start_benchmark (data);
-          break;
+  // g_source_remove (timeout_id);
 
-        case 1: /* abort benchmark */
-          abort_benchmark (data);
-          break;
-
-        default:
-          g_assert_not_reached ();
-        }
-    }
-
-  g_source_remove (timeout_id);
-  dialog_data_close (data);
+  gtk_window_present (GTK_WINDOW (self));
 }

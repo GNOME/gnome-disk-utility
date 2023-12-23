@@ -14,7 +14,7 @@
 # include "config.h"
 #endif
 
-#include <handy.h>
+#include <adwaita.h>
 #include <udisks/udisks.h>
 #include <glib/gi18n.h>
 
@@ -31,7 +31,7 @@
 
 struct _GduDriveView
 {
-  GtkBox         parent_instance;
+  AdwBin         parent_instance;
 
   GtkBox        *drive_page;
   GtkImage      *drive_image;
@@ -43,25 +43,13 @@ struct _GduDriveView
   GtkLabel      *drive_part_type_label;
   GtkLabel      *drive_size_label;
 
-  GtkListBox    *drive_parts_listbox;
-
-  GtkButton     *format_disk_button;
-  GtkButton     *create_disk_image_button;
-  GtkButton     *restore_disk_image_button;
-
-  GtkButton     *benchmark_disk_button;
-  GtkButton     *smart_disk_button;
-  GtkButton     *drive_settings_button;
-
-  GtkButton     *standby_button;
-  GtkButton     *wakeup_button;
-  GtkButton     *poweroff_button;
+  GtkListBox    *drive_partitions_listbox;
 
   GduDrive      *drive;
 };
 
 
-G_DEFINE_TYPE (GduDriveView, gdu_drive_view, GTK_TYPE_BOX)
+G_DEFINE_TYPE (GduDriveView, gdu_drive_view, ADW_TYPE_BIN)
 
 static gpointer
 drive_view_get_window (GduDriveView *self)
@@ -110,33 +98,33 @@ update_drive_view (GduDriveView *self)
   gtk_label_set_label (self->drive_size_label, size ? size_str : "—");
 
   partitions = gdu_item_get_partitions (GDU_ITEM (self->drive));
-  gtk_list_box_bind_model (self->drive_parts_listbox,
+  gtk_list_box_bind_model (self->drive_partitions_listbox,
                            partitions,
                            (GtkListBoxCreateWidgetFunc)gdu_block_row_new,
                            NULL, NULL);
 
+
   features = gdu_item_get_features (GDU_ITEM (self->drive));
+  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0) 
+  ENABLE ("view.format", GDU_FEATURE_FORMAT);
+  ENABLE ("view.create-image", GDU_FEATURE_CREATE_IMAGE);
+  ENABLE ("view.restore-image", GDU_FEATURE_RESTORE_IMAGE);
+  ENABLE ("view.benchmark", GDU_FEATURE_BENCHMARK);
+  ENABLE ("view.smart", GDU_FEATURE_SMART);
+  ENABLE ("view.settings", GDU_FEATURE_SETTINGS);
+  ENABLE ("view.standby", GDU_FEATURE_STANDBY);
+  ENABLE ("view.wakeup", GDU_FEATURE_WAKEUP);
+  ENABLE ("view.poweroff", GDU_FEATURE_POWEROFF);
 
-#define ENABLE(_widget, _feature) gtk_widget_set_sensitive (GTK_WIDGET (_widget), features & _feature)
-
-  ENABLE (self->format_disk_button, GDU_FEATURE_FORMAT);
-  ENABLE (self->create_disk_image_button, GDU_FEATURE_CREATE_IMAGE);
-  ENABLE (self->restore_disk_image_button, GDU_FEATURE_RESTORE_IMAGE);
-
-  ENABLE (self->benchmark_disk_button, GDU_FEATURE_BENCHMARK);
-  ENABLE (self->smart_disk_button, GDU_FEATURE_SMART);
-  ENABLE (self->drive_settings_button, GDU_FEATURE_SETTINGS);
-
-  ENABLE (self->standby_button, GDU_FEATURE_STANDBY);
-  ENABLE (self->wakeup_button, GDU_FEATURE_WAKEUP);
-  ENABLE (self->poweroff_button, GDU_FEATURE_POWEROFF);
-
-#undef ENABLE
+  #undef ENABLE
 }
 
 static void
-format_disk_clicked_cb (GduDriveView *self)
+format_disk_clicked_cb (GtkWidget  *widget,
+                        const char *action_name,
+                        GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -152,8 +140,11 @@ format_disk_clicked_cb (GduDriveView *self)
 }
 
 static void
-create_disk_image_clicked_cb (GduDriveView *self)
+create_disk_image_clicked_cb (GtkWidget  *widget,
+                              const char *action_name,
+                              GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -161,18 +152,19 @@ create_disk_image_clicked_cb (GduDriveView *self)
 
   object = gdu_drive_get_object_for_format (self->drive);
   manager = gdu_manager_get_default (NULL);
-  g_warning ("create disk :%p", object);
   g_assert (object != NULL);
 
-  g_assert (object != NULL);
   gdu_create_disk_image_dialog_show (drive_view_get_window (self),
                                      object,
                                      gdu_manager_get_client (manager));
 }
 
 static void
-restore_disk_image_clicked_cb (GduDriveView *self)
+restore_disk_image_clicked_cb (GtkWidget  *widget,
+                               const char *action_name,
+                               GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -191,8 +183,11 @@ restore_disk_image_clicked_cb (GduDriveView *self)
 }
 
 static void
-benchmark_disk_clicked_cb (GduDriveView *self)
+benchmark_disk_clicked_cb (GtkWidget  *widget,
+                           const char *action_name,
+                           GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -210,8 +205,11 @@ benchmark_disk_clicked_cb (GduDriveView *self)
 }
 
 static void
-smart_disk_clicked_cb (GduDriveView *self)
+smart_disk_clicked_cb (GtkWidget  *widget,
+                       const char *action_name,
+                       GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -227,8 +225,11 @@ smart_disk_clicked_cb (GduDriveView *self)
 }
 
 static void
-drive_settings_clicked_cb (GduDriveView *self)
+drive_settings_clicked_cb (GtkWidget  *widget,
+                           const char *action_name,
+                           GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
 
@@ -263,8 +264,11 @@ drive_view_standby_cb (GObject      *object,
 }
 
 static void
-standby_drive_clicked_cb (GduDriveView *self)
+standby_drive_clicked_cb (GtkWidget  *widget,
+                          const char *action_name,
+                          GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
   gdu_drive_standby_async (self->drive, NULL,
@@ -292,8 +296,11 @@ drive_view_wakeup_cb (GObject      *object,
 }
 
 static void
-wakeup_drive_clicked_cb (GduDriveView *self)
+wakeup_drive_clicked_cb (GtkWidget  *widget,
+                         const char *action_name,
+                         GVariant   *parameter)
 {
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
   gdu_drive_wakeup_async (self->drive, NULL,
@@ -319,47 +326,66 @@ drive_view_power_off_cb (GObject      *object,
     }
 }
 
+
 static void
-poweroff_drive_clicked_cb (GduDriveView *self)
+poweroff_confirmation_response_cb (GObject      *object,
+                                   GAsyncResult *response,
+                                   gpointer      user_data)
 {
-  GtkWindow *window;
-  GList *siblings;
+  GduDriveView *self = GDU_DRIVE_VIEW (user_data);
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
 
-  g_assert (GDU_IS_DRIVE_VIEW (self));
-
-  window = drive_view_get_window (self);
-  siblings = gdu_drive_get_siblings (self->drive);
-
-  if (siblings != NULL)
-    {
-      g_autoptr(GList) objects = NULL;
-      UDisksClient *client;
-      const char *heading;
-      const char *message;
-
-      client = drive_view_get_client ();
-      objects = g_list_append (NULL, gdu_drive_get_object (self->drive));
-      objects = g_list_concat (objects, siblings);
-
-      /* Translators: Heading for powering off a device with multiple drives */
-      heading = _("Are you sure you want to power off the drives?");
-      /* Translators: Message for powering off a device with multiple drives */
-      message = _("This operation will prepare the system for the following drives to be powered down and removed.");
-
-      if (!gdu_utils_show_confirmation (window, heading, message,
-                                        _("_Power Off"),
-                                        NULL, NULL,
-                                        client, objects, FALSE))
-        {
-          return;
-        }
-    }
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
 
   gdu_drive_power_off_async (self->drive,
-                             window,
+                             drive_view_get_window (self),
                              NULL,
                              drive_view_power_off_cb,
                              g_object_ref (self));
+}
+
+static void
+poweroff_drive_clicked_cb (GtkWidget  *widget,
+                           const char *action_name,
+                           GVariant   *parameter)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
+  GList *siblings;
+  UDisksClient *client;
+  g_autoptr(GList) objects = NULL;
+
+  g_assert (GDU_IS_DRIVE_VIEW (self));
+
+  siblings = gdu_drive_get_siblings (self->drive);
+
+  if (siblings == NULL)
+  {
+    gdu_drive_power_off_async (self->drive,
+                               drive_view_get_window (self),
+                               NULL,
+                               drive_view_power_off_cb,
+                               g_object_ref (self));
+    return;  
+  }
+
+  client = drive_view_get_client ();
+  objects = g_list_append (NULL, gdu_drive_get_object (self->drive));
+  objects = g_list_concat (objects, siblings);
+
+  gdu_utils_show_confirmation (drive_view_get_window (self),
+                               /* Translators: Heading for powering off a device with multiple drives */
+                               _("Are you sure you want to power off the drives?"),
+                               /* Translators: Message for powering off a device with multiple drives */
+                               _("This operation will prepare the system for the following drives to be powered down and removed."),
+                              _("_Power Off"),
+                              NULL,
+                              NULL,
+                              client,
+                              objects,
+                              poweroff_confirmation_response_cb,
+                              self,
+                              ADW_RESPONSE_DEFAULT);
 }
 
 static void
@@ -394,31 +420,19 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_part_type_label);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_size_label);
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_parts_listbox);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_partitions_listbox);
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, format_disk_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, create_disk_image_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, restore_disk_image_button);
+  gtk_widget_class_install_action (widget_class, "view.format", NULL, format_disk_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.create-image", NULL, create_disk_image_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.restore-image", NULL, restore_disk_image_clicked_cb);
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, benchmark_disk_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, smart_disk_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_settings_button);
+  gtk_widget_class_install_action (widget_class, "view.benchmark", NULL, benchmark_disk_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.smart", NULL, smart_disk_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.settings", NULL, drive_settings_clicked_cb);
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, standby_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, wakeup_button);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, poweroff_button);
-
-  gtk_widget_class_bind_template_callback (widget_class, format_disk_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, create_disk_image_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, restore_disk_image_clicked_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, benchmark_disk_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, smart_disk_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, drive_settings_clicked_cb);
-
-  gtk_widget_class_bind_template_callback (widget_class, standby_drive_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, wakeup_drive_clicked_cb);
-  gtk_widget_class_bind_template_callback (widget_class, poweroff_drive_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.standby", NULL, standby_drive_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.wakeup", NULL, wakeup_drive_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.poweroff", NULL, poweroff_drive_clicked_cb);
 }
 
 static void

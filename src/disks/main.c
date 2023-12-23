@@ -9,6 +9,8 @@
 #include "config.h"
 #include <glib/gi18n.h>
 
+#include <adwaita.h>
+
 #include "gdu-application.h"
 #include "gdu-log.h"
 
@@ -24,6 +26,8 @@ main (int argc, char *argv[])
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
+
+  adw_init ();
 
   app = gdu_application_new ();
   status = g_application_run (G_APPLICATION (app), argc, argv);

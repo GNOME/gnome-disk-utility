@@ -33,9 +33,9 @@ struct _GduCreateOtherPagePrivate
 {
   GtkBox *other_fs_box;
   GtkCheckButton *other_encrypt_checkbutton;
-  GtkRadioButton *group_radio_button;
+  GtkCheckButton *group_radio_button;
   /* The first item from the radio button that's sensitive */
-  GtkRadioButton *first_sensitive_button;
+  GtkCheckButton *first_sensitive_button;
 
   UDisksClient *client;
   const char   *selected_fs_type;

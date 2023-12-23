@@ -23,11 +23,11 @@ struct _GduCreateFilesystemPagePrivate
 {
   GtkEntry *name_entry;
   GtkSwitch *erase_switch;
-  GtkRadioButton *internal_radiobutton;
+  GtkCheckButton *internal_checkbutton;
   GtkCheckButton *internal_encrypt_checkbutton;
-  GtkRadioButton *windows_radiobutton;
-  GtkRadioButton *all_radiobutton;
-  GtkRadioButton *other_radiobutton;
+  GtkCheckButton *windows_checkbutton;
+  GtkCheckButton *all_checkbutton;
+  GtkCheckButton *other_checkbutton;
 };
 
 enum
@@ -71,11 +71,11 @@ gdu_create_filesystem_page_class_init (GduCreateFilesystemPageClass *class)
                                                "/org/gnome/Disks/ui/gdu-create-filesystem-page.ui");
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, name_entry);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, erase_switch);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, internal_radiobutton);
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, internal_checkbutton);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, internal_encrypt_checkbutton);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, windows_radiobutton);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, all_radiobutton);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, other_radiobutton);
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, windows_checkbutton);
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, all_checkbutton);
+  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, other_checkbutton);
 
   gobject_class = G_OBJECT_CLASS (class);
   gobject_class->get_property = gdu_create_filesystem_page_get_property;
@@ -103,7 +103,7 @@ gdu_create_filesystem_page_is_other (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->other_radiobutton));
+  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->other_checkbutton));
 }
 
 const gchar *
@@ -113,11 +113,11 @@ gdu_create_filesystem_page_get_fs (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_radiobutton)))
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_checkbutton)))
     return "ext4";
-  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->windows_radiobutton)))
+  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->windows_checkbutton)))
     return "ntfs";
-  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton)))
+  else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->all_checkbutton)))
     return "vfat";
   else
     return NULL;
@@ -130,7 +130,7 @@ gdu_create_filesystem_page_is_encrypted (GduCreateFilesystemPage *page)
 
   priv = gdu_create_filesystem_page_get_instance_private (page);
 
-  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_radiobutton)) &&
+  return gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_checkbutton)) &&
          gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (priv->internal_encrypt_checkbutton));
 }
 
@@ -183,12 +183,12 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
   priv = gdu_create_filesystem_page_get_instance_private (page);
   g_signal_connect (priv->name_entry, "notify::text", G_CALLBACK (on_fs_name_changed), page);
   g_signal_connect (priv->internal_encrypt_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
-  g_signal_connect (priv->internal_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
-  g_signal_connect (priv->windows_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
-  g_signal_connect (priv->all_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
-  g_signal_connect (priv->other_radiobutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
+  g_signal_connect (priv->internal_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
+  g_signal_connect (priv->windows_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
+  g_signal_connect (priv->all_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
+  g_signal_connect (priv->other_checkbutton, "toggled", G_CALLBACK (on_fs_type_changed), page);
 
-  g_object_bind_property (priv->internal_radiobutton, "active", priv->internal_encrypt_checkbutton, "sensitive", G_BINDING_SYNC_CREATE);
+  g_object_bind_property (priv->internal_checkbutton, "active", priv->internal_encrypt_checkbutton, "sensitive", G_BINDING_SYNC_CREATE);
 
   /* Default to FAT or NTFS for removable drives... */
   if (drive != NULL && udisks_drive_get_removable (drive))
@@ -200,11 +200,11 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
           !gdu_utils_can_format (client, "ntfs", FALSE, NULL))
           )
         {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_radiobutton), TRUE);
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->all_checkbutton), TRUE);
         }
       else if (gdu_utils_can_format (client, "ntfs", FALSE, NULL))
         {
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->windows_radiobutton), TRUE);
+          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (priv->windows_checkbutton), TRUE);
         }
     }
 
@@ -213,9 +213,9 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
     {
       gchar *s;
 
-      gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_radiobutton), FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->windows_checkbutton), FALSE);
       s = g_strdup_printf (_("The utility %s is missing."), missing_util);
-      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->windows_radiobutton), s);
+      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->windows_checkbutton), s);
 
       g_free (s);
     }
@@ -225,9 +225,9 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
     {
       gchar *s;
 
-      gtk_widget_set_sensitive (GTK_WIDGET (priv->all_radiobutton), FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (priv->all_checkbutton), FALSE);
       s = g_strdup_printf (_("The utility %s is missing."), missing_util);
-      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->all_radiobutton), s);
+      gtk_widget_set_tooltip_text (GTK_WIDGET (priv->all_checkbutton), s);
 
       g_free (s);
     }

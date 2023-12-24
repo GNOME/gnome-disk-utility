@@ -13,8 +13,8 @@
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_CREATE_FORMAT_DIALOG (gdu_create_format_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduCreateFormatDialog, gdu_create_format_dialog, GDU, CREATE_FORMAT_DIALOG, GtkDialog)
+#define GDU_TYPE_FORMAT_VOLUME_DIALOG (gdu_format_volume_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, GDU, FORMAT_VOLUME_DIALOG, AdwWindow)
 
 void gdu_create_format_show (UDisksClient *client,
                              GtkWindow    *parent_window,

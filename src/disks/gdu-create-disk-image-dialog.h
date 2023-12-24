@@ -5,19 +5,18 @@
  *
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
-
-#ifndef __GDU_CREATE_DISK_IMAGE_DIALOG_H__
-#define __GDU_CREATE_DISK_IMAGE_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_CREATE_DISK_IMAGE_DIALOG (gdu_create_disk_image_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, GDU, CREATE_DISK_IMAGE_DIALOG, AdwWindow)
+
 void     gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
                                             UDisksObject *object,
                                             UDisksClient *client);
 
 G_END_DECLS
-
-#endif /* __GDU_CREATE_DISK_IMAGE_DIALOG_H__ */

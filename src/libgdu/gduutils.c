@@ -138,57 +138,59 @@ gdu_utils_create_info_bar (GtkMessageType   message_type,
                            const gchar     *markup,
                            GtkWidget      **out_label)
 {
-  GtkWidget *info_bar;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *image;
-  const gchar *stock_id;
+  return gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+  /* gtk4 todo: Find a replacement for InfoBar */
+  // GtkWidget *info_bar;
+  // GtkWidget *hbox;
+  // GtkWidget *label;
+  // GtkWidget *image;
+  // const gchar *stock_id;
 
-  info_bar = gtk_info_bar_new ();
-  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
+  // info_bar = gtk_info_bar_new ();
+  // gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar), message_type);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_append (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
-                  hbox);
+  // hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  // gtk_box_append (GTK_BOX (gtk_info_bar_get_content_area (GTK_INFO_BAR (info_bar))),
+  //                 hbox);
 
-  switch (message_type)
-    {
-    case GTK_MESSAGE_QUESTION:
-      stock_id = "dialog-question";
-      break;
+  // switch (message_type)
+  //   {
+  //   case GTK_MESSAGE_QUESTION:
+  //     stock_id = "dialog-question";
+  //     break;
 
-    default:                 /* explicit fall-through */
-    case GTK_MESSAGE_OTHER:  /* explicit fall-through */
-    case GTK_MESSAGE_INFO:
-      stock_id = "dialog-information";
-      break;
+  //   default:                 /* explicit fall-through */
+  //   case GTK_MESSAGE_OTHER:  /* explicit fall-through */
+  //   case GTK_MESSAGE_INFO:
+  //     stock_id = "dialog-information";
+  //     break;
 
-    case GTK_MESSAGE_WARNING:
-      stock_id = "dialog-warning";
-      break;
+  //   case GTK_MESSAGE_WARNING:
+  //     stock_id = "dialog-warning";
+  //     break;
 
-    case GTK_MESSAGE_ERROR:
-      stock_id = "dialog-error";
-      break;
-    }
-  image = gtk_image_new_from_icon_name (stock_id);
-  gtk_box_append (GTK_BOX (hbox), image);
+  //   case GTK_MESSAGE_ERROR:
+  //     stock_id = "dialog-error";
+  //     break;
+  //   }
+  // image = gtk_image_new_from_icon_name (stock_id);
+  // gtk_box_append (GTK_BOX (hbox), image);
 
-  label = gtk_label_new (NULL);
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-  gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
-  gtk_label_set_markup (GTK_LABEL (label), markup);
-  gtk_box_append (GTK_BOX (hbox), label);
+  // label = gtk_label_new (NULL);
+  // gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  // gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  // gtk_label_set_max_width_chars (GTK_LABEL (label), 80);
+  // gtk_label_set_markup (GTK_LABEL (label), markup);
+  // gtk_box_append (GTK_BOX (hbox), label);
 
-  if (out_label != NULL)
-    *out_label = label;
+  // if (out_label != NULL)
+  //   *out_label = label;
 
-  gtk_widget_set_visible (hbox, TRUE);
-  gtk_widget_set_visible (image, TRUE);
-  gtk_widget_set_visible (label, TRUE);
+  // gtk_widget_set_visible (hbox, TRUE);
+  // gtk_widget_set_visible (image, TRUE);
+  // gtk_widget_set_visible (label, TRUE);
 
-  return info_bar;
+  // return info_bar;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

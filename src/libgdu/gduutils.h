@@ -20,9 +20,9 @@ gboolean gdu_utils_has_configuration (UDisksBlock  *block,
 gboolean gdu_utils_has_userspace_mount_option (UDisksBlock *block,
                                                const gchar *option);
 
-void gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
-                                                       gboolean        set_file_types,
-                                                       gboolean        allow_compressed);
+void gdu_utils_configure_file_dialog_for_disk_images (GtkFileDialog  *file_dialog,
+                                                      gboolean        set_file_types,
+                                                      gboolean        allow_compressed);
 
 void gdu_utils_file_chooser_for_disk_images_set_default_folder (GFile *folder);
 

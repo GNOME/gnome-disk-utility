@@ -79,33 +79,24 @@ gdu_utils_has_userspace_mount_option (UDisksBlock *block,
 }
 
 void
-gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
-                                                  gboolean        set_file_types,
-                                                  gboolean        allow_compressed)
+gdu_utils_configure_file_dialog_for_disk_images (GtkFileDialog   *file_dialog,
+                                                 gboolean         set_file_types,
+                                                 gboolean         allow_compressed)
 {
   GtkFileFilter *filter;
-  gchar *folder;
-  GSettings *settings;
+  GListStore *filters;
+  g_autoptr(GFile) folder = NULL;
 
-  gtk_file_chooser_set_local_only (file_chooser, FALSE);
-
-  /* Get folder from GSettings, and default to the "Documents" folder if not set */
-  settings = g_settings_new ("org.gnome.Disks");
-  folder = g_settings_get_string (settings, "image-dir-uri");
-  if (folder == NULL || strlen (folder) == 0)
-    {
-      g_free (folder);
-      folder = g_strdup_printf ("file://%s", g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS));
-    }
-  g_object_set_data_full (G_OBJECT (file_chooser), "x-gdu-orig-folder", g_strdup (folder), g_free);
-  gtk_file_chooser_set_current_folder_uri (file_chooser, folder);
+  folder = g_file_new_for_path (g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS));
+  gtk_file_dialog_set_initial_folder (file_dialog, folder);
 
   if (set_file_types)
     {
+      filters = g_list_store_new (GTK_TYPE_FILE_FILTER);
       filter = gtk_file_filter_new ();
       gtk_file_filter_set_name (filter, _("All Files"));
       gtk_file_filter_add_pattern (filter, "*");
-      gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
+      g_list_store_append(filters, filter);
       filter = gtk_file_filter_new ();
       if (allow_compressed)
         gtk_file_filter_set_name (filter, _("Disk Images (*.img, *.img.xz, *.iso)"));
@@ -117,12 +108,11 @@ gdu_utils_configure_file_chooser_for_disk_images (GtkFileChooser *file_chooser,
           gtk_file_filter_add_mime_type (filter, "application/x-raw-disk-image-xz-compressed");
         }
       gtk_file_filter_add_mime_type (filter, "application/x-cd-image");
-      gtk_file_chooser_add_filter (file_chooser, filter); /* adopts filter */
-      gtk_file_chooser_set_filter (file_chooser, filter);
+      g_list_store_append(filters, filter);
+      gtk_file_dialog_set_filters (file_dialog, G_LIST_MODEL (filters));
+      
+      gtk_file_dialog_set_default_filter (file_dialog, filter);
     }
-
-  g_clear_object (&settings);
-  g_free (folder);
 }
 
 /* should be called when user chooses file/dir from @file_chooser */

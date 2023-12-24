@@ -286,38 +286,25 @@ attach_disk_image_activated (GSimpleAction *action,
 }
 
 static void
-on_about_dialog_response (GtkDialog *dialog)
-{
-  gtk_window_close (GTK_WINDOW (dialog));
-}
-
-static void
 about_activated (GSimpleAction *action,
                  GVariant      *parameter,
                  gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  GtkWidget *dialog;
-  gchar *s;
+  AdwAboutWindow *dialog;
 
-  dialog = GTK_WIDGET (gdu_application_new_widget (app,
-                                                   "about-dialog.ui",
-                                                   "about-dialog",
-                                                   NULL));
+  dialog = ADW_ABOUT_WINDOW (gdu_application_new_widget (app,
+                                                         "about-dialog.ui",
+                                                         "about-dialog",
+                                                         NULL));
   /* Translators: Shown in the About dialog to convey version numbers.
    *              The first %s is the version of Disks (for example "3.6").
    *              The second %s is the version of the running udisks daemon (for example "2.0.90").
    *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
    */
-  s = g_strdup_printf (_("gnome-disk-utility %s\nUDisks %s (built against %d.%d.%d)"),
-                       PACKAGE_VERSION,
-                       udisks_manager_get_version (udisks_client_get_manager (app->client)),
-                       UDISKS_MAJOR_VERSION, UDISKS_MINOR_VERSION, UDISKS_MICRO_VERSION);
-  gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (dialog), s);
-  g_free (s);
+  adw_about_window_set_version (dialog , PACKAGE_VERSION);
 
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
-  g_signal_connect (dialog, "response", G_CALLBACK (on_about_dialog_response), NULL);
   gtk_window_present (GTK_WINDOW (dialog));
 }
 

@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkAboutDialog" id="about-dialog">
-    <property name="can_focus">False</property>
-    <property name="border_width">5</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
-    <property name="program_name" translatable="yes">Disks</property>
-    <property name="copyright" translatable="yes">Copyright © 2008-2013 Red Hat, Inc.
+  <object class="AdwAboutWindow" id="about-dialog">
+    <property name="application-name">Disks</property>
+    <property name="application-icon">org.gnome.DiskUtility</property>
+    <property name="modal">true</property>
+    <property name="copyright">Copyright © 2008-2013 Red Hat, Inc.
 Copyright © 2008-2013 David Zeuthen
-Copyright © 2009-2017 The GNOME Project
-</property>
-    <property name="comments" translatable="yes">View, modify and configure disks and media</property>
+Copyright © 2009-2017 The GNOME Project</property>
     <property name="website">https://apps.gnome.org/DiskUtility/</property>
-    <property name="authors">David Zeuthen</property>
-    <property name="translator_credits" translatable="yes">translator-credits</property>
-    <property name="logo_icon_name">org.gnome.DiskUtility</property>
-    <property name="license_type">gpl-2-0</property>
+    <property name="issue-url">https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/issues</property>
+    <property name="license-type">gpl-2-0</property>
+    <property name="developer-name" translatable="true">GNOME</property>
+    <property name="developers">David Zeuthen</property>
   </object>
 </interface>
-

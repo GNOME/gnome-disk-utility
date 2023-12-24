@@ -286,22 +286,6 @@ attach_disk_image_activated (GSimpleAction *action,
 }
 
 static void
-shortcuts_activated (GSimpleAction *action,
-                     GVariant      *parameter,
-                     gpointer       user_data)
-{
-  GduApplication *app = GDU_APPLICATION (user_data);
-  GtkWidget *dialog;
-
-  dialog = GTK_WIDGET (gdu_application_new_widget (app,
-                                                   "shortcuts.ui",
-                                                   "shortcuts",
-                                                   NULL));
-
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
-}
-
-static void
 on_about_dialog_response (GtkDialog *dialog)
 {
   gtk_window_close (GTK_WINDOW (dialog));
@@ -397,7 +381,6 @@ static GActionEntry app_entries[] =
 {
   { "new_disk_image", new_disk_image_activated, NULL, NULL, NULL },
   { "attach_disk_image", attach_disk_image_activated, NULL, NULL, NULL },
-  { "shortcuts", shortcuts_activated, NULL, NULL, NULL },
   { "help", help_activated, NULL, NULL, NULL },
   { "about", about_activated, NULL, NULL, NULL },
   { "quit", gdu_application_quit, NULL, NULL, NULL }
@@ -426,7 +409,6 @@ gdu_application_startup (GApplication *_app)
 
     "app.help",                  "F1", NULL,
     "app.quit",                  "<Primary>Q", NULL,
-    "app.shortcuts",             "<Primary>question", NULL,
 
     NULL
   };

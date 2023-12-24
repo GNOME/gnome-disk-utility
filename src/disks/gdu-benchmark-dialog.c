@@ -1563,7 +1563,7 @@ start_benchmark (DialogData *data)
     }
 
   /* and scene... */
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  // response = gtk_dialog_run (GTK_DIALOG (dialog));
 
   gtk_widget_set_visible (dialog, FALSE);
 
@@ -1680,7 +1680,7 @@ gdu_benchmark_dialog_show (GtkWindow    *window,
   while (TRUE)
     {
       gint response;
-      response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+      // response = gtk_dialog_run (GTK_DIALOG (data->dialog));
 
       if (response < 0)
         break;

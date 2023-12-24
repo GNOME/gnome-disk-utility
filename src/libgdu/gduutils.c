@@ -864,7 +864,7 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
 
   gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL));
 
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  // response = gtk_dialog_run (GTK_DIALOG (dialog));
 
   if (inout_checkbox_value != NULL && check_button != NULL)
     *inout_checkbox_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));

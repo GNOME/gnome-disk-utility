@@ -952,7 +952,8 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                                     resize_dialog_data_ref (data));
     }
 
-  if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
+  // if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
+  if (FALSE)
     {
       gtk_widget_set_visible (data->dialog, FALSE);
       g_clear_pointer (&data->dialog, gtk_window_close);

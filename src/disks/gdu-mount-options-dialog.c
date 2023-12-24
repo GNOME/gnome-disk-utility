@@ -514,7 +514,7 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
                     "notify::text", G_CALLBACK (on_property_changed), &data);
 
  again:
-  response = gtk_dialog_run (GTK_DIALOG (dialog));
+  // response = gtk_dialog_run (GTK_DIALOG (dialog));
   if (response == GTK_RESPONSE_OK)
     {
       gboolean ui_configured;

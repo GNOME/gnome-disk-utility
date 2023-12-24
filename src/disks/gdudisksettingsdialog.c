@@ -605,7 +605,7 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
   while (TRUE)
     {
       gint response;
-      response = gtk_dialog_run (GTK_DIALOG (data->dialog));
+      // response = gtk_dialog_run (GTK_DIALOG (data->dialog));
       /* Keep in sync with .ui file */
       switch (response)
         {

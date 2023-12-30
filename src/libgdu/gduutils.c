@@ -10,6 +10,7 @@
 #include <glib/gi18n.h>
 #include <math.h>
 #include <sys/statvfs.h>
+#include <adwaita.h>
 
 #include "gduutils.h"
 
@@ -694,8 +695,9 @@ gdu_utils_is_inside_dos_extended (UDisksClient         *client,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-response_cb (GtkDialog *dialog,
-             gint       response)
+response_cb (AdwMessageDialog *dialog,
+             gchar            *response,
+             gpointer         *user_data)
 {
   gtk_window_close (GTK_WINDOW (dialog));
 }
@@ -706,7 +708,7 @@ gdu_utils_show_error (GtkWindow   *parent_window,
                       GError      *error)
 {
   GtkWidget *dialog;
-  GError *fixed_up_error;
+  g_autoptr(GError) fixed_up_error = NULL;
 
   /* Never show an error if it's because the user dismissed the
    * authentication dialog himself
@@ -715,7 +717,7 @@ gdu_utils_show_error (GtkWindow   *parent_window,
    */
   if ((error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED) ||
       (error->domain == UDISKS_ERROR && error->code == UDISKS_ERROR_CANCELLED))
-    goto no_dialog;
+      return;
 
   fixed_up_error = g_error_copy (error);
   if (g_dbus_error_is_remote_error (fixed_up_error))
@@ -724,23 +726,24 @@ gdu_utils_show_error (GtkWindow   *parent_window,
   /* TODO: probably provide the error-domain / error-code / D-Bus error name
    * in a GtkExpander.
    */
-  dialog = gtk_message_dialog_new_with_markup (parent_window,
-                                               GTK_DIALOG_MODAL,
-                                               GTK_MESSAGE_ERROR,
-                                               GTK_BUTTONS_CLOSE,
-                                               "<big><b>%s</b></big>",
-                                               message);
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s (%s, %d)",
-                                              fixed_up_error->message,
-                                              g_quark_to_string (error->domain),
-                                              error->code);
-  g_error_free (fixed_up_error);
-  g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
-  gtk_window_present (GTK_WINDOW (dialog));
+  dialog = adw_message_dialog_new (parent_window,
+                                   message,
+                                   NULL);
 
- no_dialog:
-  ;
+  adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
+                                         "%s (%s, %d)",
+                                         fixed_up_error->message,
+                                         g_quark_to_string (error->domain),
+                                         error->code);
+
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                    "close",  _("_Close"),
+                                    NULL);
+
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                         "close");
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

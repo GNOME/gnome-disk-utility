@@ -15,6 +15,7 @@ private_deps = [m_dep]
 
 deps = [
   gtk_dep,
+  libadwaita_dep,
   udisk_dep,
 ]
 

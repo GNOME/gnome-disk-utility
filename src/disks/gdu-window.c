@@ -31,6 +31,7 @@ struct _GduWindow
   AdwApplicationWindow       parent_instance;
 
   AdwOverlaySplitView       *split_view;
+  GtkStack                  *main_stack;
   GtkListBox                *drives_listbox;
   GduDriveView              *drive_view;
 
@@ -51,12 +52,12 @@ drive_list_row_selection_changed_cb (GduWindow *self)
   g_assert (GDU_IS_WINDOW (self));
 
   row = (gpointer)gtk_list_box_get_selected_row (self->drives_listbox);
-  gdu_drive_view_set_drive (self->drive_view, row ? gdu_drive_row_get_drive (row) : NULL);
-
-  if (row)
-    hdy_leaflet_navigate (self->main_leaflet, HDY_NAVIGATION_DIRECTION_FORWARD);
+  if (!row)
+    gtk_stack_set_visible_child_name (self->main_stack, "empty_page");
   else
-    hdy_leaflet_navigate (self->main_leaflet, HDY_NAVIGATION_DIRECTION_BACK);
+    gtk_stack_set_visible_child_name (self->main_stack, "drive_page");
+
+  gdu_drive_view_set_drive (self->drive_view, gdu_drive_row_get_drive (row));
 }
 
 static void
@@ -132,6 +133,7 @@ gdu_window_class_init (GduWindowClass *klass)
                                                "gdu-window.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduWindow, split_view);
+  gtk_widget_class_bind_template_child (widget_class, GduWindow, main_stack);
   gtk_widget_class_bind_template_child (widget_class, GduWindow, drives_listbox);
   gtk_widget_class_bind_template_child (widget_class, GduWindow, drive_view);
 

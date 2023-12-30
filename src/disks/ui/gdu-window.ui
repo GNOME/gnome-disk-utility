@@ -74,7 +74,28 @@
             </child>
 
             <property name="content">
-              <object class="GduDriveView" id="drive_view">
+              <object class="GtkStack" id="main_stack">
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">empty_page</property>
+                    <property name="child">
+                      <object class="AdwStatusPage">
+                        <property name="title" translatable="yes">No Device Selected</property>
+                        <property name="icon-name">drive-multidisk-symbolic</property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">drive_page</property>
+                    <property name="child">
+                      <object class="GduDriveView" id="drive_view">
+                      </object>
+                    </property>
+                  </object>
+                </child>
               </object>
             </property>
 

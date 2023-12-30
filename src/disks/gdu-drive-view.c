@@ -33,9 +33,6 @@ struct _GduDriveView
 {
   GtkBox         parent_instance;
 
-  GtkStack      *main_stack;
-  HdyStatusPage *empty_page;
-
   GtkBox        *drive_page;
   GtkImage      *drive_image;
   GtkLabel      *drive_name_label;
@@ -387,9 +384,6 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-drive-view.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, main_stack);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, empty_page);
-
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_page);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_image);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_name_label);
@@ -437,20 +431,11 @@ void
 gdu_drive_view_set_drive (GduDriveView *self,
                           GduDrive     *drive)
 {
-  GtkWidget *child;
-
   g_return_if_fail (GDU_IS_DRIVE_VIEW (self));
   g_return_if_fail (!drive || GDU_IS_DRIVE (drive));
 
   if (self->drive == drive)
     return;
-
-  if (drive)
-    child = GTK_WIDGET (self->drive_page);
-  else
-    child = GTK_WIDGET (self->empty_page);
-
-  gtk_stack_set_visible_child (self->main_stack, child);
 
   g_set_object (&self->drive, drive);
 

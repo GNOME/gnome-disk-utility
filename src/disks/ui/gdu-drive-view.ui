@@ -3,163 +3,146 @@
   <template class="GduDriveView" parent="GtkBox">
     <property name="visible">1</property>
     <child>
-      <object class="GtkStack" id="main_stack">
+      <object class="HdyClamp" id="drive_page">
         <property name="visible">1</property>
-        <property name="hexpand">1</property>
-        <property name="vexpand">1</property>
-
         <child>
-          <object class="HdyStatusPage" id="empty_page">
+          <object class="GtkBox">
             <property name="visible">1</property>
-            <property name="title" translatable="yes">No Device Selected</property>
-            <property name="icon-name">drive-multidisk-symbolic</property>
-          </object>
-        </child>
+            <property name="margin">6</property>
+            <property name="spacing">12</property>
+            <property name="orientation">vertical</property>
 
-        <child>
-          <object class="HdyClamp" id="drive_page">
-            <property name="visible">1</property>
             <child>
-              <object class="GtkBox">
+              <object class="GtkGrid">
                 <property name="visible">1</property>
-                <property name="margin">6</property>
-                <property name="spacing">12</property>
-                <property name="orientation">vertical</property>
+                <property name="column-spacing">6</property>
+                <property name="column-homogeneous">0</property>
 
+                <!-- Drive Icon -->
                 <child>
-                  <object class="GtkGrid">
+                  <object class="GtkImage" id="drive_image">
                     <property name="visible">1</property>
-                    <property name="column-spacing">6</property>
-                    <property name="column-homogeneous">0</property>
-
-                    <!-- Drive Icon -->
-                    <child>
-                      <object class="GtkImage" id="drive_image">
-                        <property name="visible">1</property>
-                        <property name="margin-end">12</property>
-                        <property name="pixel-size">96</property>
-                      </object>
-                      <packing>
-                        <property name="height">2</property>
-                      </packing>
-                    </child>
-
-                    <!-- Drive Human readable name -->
-                    <child>
-                      <object class="GtkLabel" id="drive_name_label">
-                        <property name="visible">1</property>
-                        <property name="halign">start</property>
-                        <property name="valign">end</property>
-                        <property name="xalign">0.0</property>
-                        <property name="width-request">180</property>
-                        <property name="selectable">1</property>
-                        <style>
-                          <class name="title-1"/>
-                        </style>
-                      </object>
-                    </child>
-
-                    <!-- Drive path -->
-                    <child>
-                      <object class="GtkLabel" id="drive_path_label">
-                        <property name="visible">1</property>
-                        <property name="halign">start</property>
-                        <property name="xalign">0.0</property>
-                        <property name="hexpand">1</property>
-                        <property name="width-request">180</property>
-                        <property name="valign">start</property>
-                        <property name="selectable">1</property>
-                      </object>
-                      <packing>
-                        <property name="top-attach">1</property>
-                        <property name="left-attach">1</property>
-                      </packing>
-                    </child>
-
-                    <!-- Drive info button -->
-                    <child>
-                      <object class="GtkMenuButton" id="drive_info_button">
-                        <property name="visible">1</property>
-                        <property name="valign">center</property>
-                        <property name="popover">drive_info_popover</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">1</property>
-                            <property name="icon-name">help-about-symbolic</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="height">2</property>
-                      </packing>
-                    </child>
-
-                    <!-- Drive menu button -->
-                    <child>
-                      <object class="GtkMenuButton" id="drive_menu_button">
-                        <property name="visible">1</property>
-                        <property name="valign">center</property>
-                        <property name="popover">drive_menu_popover</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="visible">1</property>
-                            <property name="icon-name">view-more-symbolic</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="height">2</property>
-                      </packing>
-                    </child>
-
-                  </object> <!-- ./GtkGrid -->
+                    <property name="margin-end">12</property>
+                    <property name="pixel-size">96</property>
+                  </object>
+                  <packing>
+                    <property name="height">2</property>
+                  </packing>
                 </child>
 
+                <!-- Drive Human readable name -->
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="drive_name_label">
                     <property name="visible">1</property>
                     <property name="halign">start</property>
-                    <property name="label" translatable="yes">Volumes</property>
+                    <property name="valign">end</property>
+                    <property name="xalign">0.0</property>
+                    <property name="width-request">180</property>
+                    <property name="selectable">1</property>
                     <style>
-                      <class name="title-4"/>
+                      <class name="title-1"/>
                     </style>
                   </object>
                 </child>
 
+                <!-- Drive path -->
                 <child>
-                  <object class="GtkScrolledWindow">
+                  <object class="GtkLabel" id="drive_path_label">
                     <property name="visible">1</property>
-                    <property name="vexpand">1</property>
-                    <property name="hscrollbar_policy">never</property>
-                    <property name="min_content_width">0</property>
-                    <property name="width-request">200</property>
+                    <property name="halign">start</property>
+                    <property name="xalign">0.0</property>
+                    <property name="hexpand">1</property>
+                    <property name="width-request">180</property>
+                    <property name="valign">start</property>
+                    <property name="selectable">1</property>
+                  </object>
+                  <packing>
+                    <property name="top-attach">1</property>
+                    <property name="left-attach">1</property>
+                  </packing>
+                </child>
+
+                <!-- Drive info button -->
+                <child>
+                  <object class="GtkMenuButton" id="drive_info_button">
+                    <property name="visible">1</property>
+                    <property name="valign">center</property>
+                    <property name="popover">drive_info_popover</property>
                     <child>
-                      <object class="GtkBox" id="drive_parts_list_view">
+                      <object class="GtkImage">
                         <property name="visible">1</property>
-                        <property name="hexpand">1</property>
+                        <property name="icon-name">help-about-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+
+                <!-- Drive menu button -->
+                <child>
+                  <object class="GtkMenuButton" id="drive_menu_button">
+                    <property name="visible">1</property>
+                    <property name="valign">center</property>
+                    <property name="popover">drive_menu_popover</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">1</property>
+                        <property name="icon-name">view-more-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+
+              </object> <!-- ./GtkGrid -->
+            </child>
+
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">1</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Volumes</property>
+                <style>
+                  <class name="title-4"/>
+                </style>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">1</property>
+                <property name="vexpand">1</property>
+                <property name="hscrollbar_policy">never</property>
+                <property name="min_content_width">0</property>
+                <property name="width-request">200</property>
+                <child>
+                  <object class="GtkBox" id="drive_parts_list_view">
+                    <property name="visible">1</property>
+                    <property name="hexpand">1</property>
+                    <property name="vexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkListBox" id="drive_parts_listbox">
+                        <property name="visible">1</property>
                         <property name="vexpand">1</property>
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkListBox" id="drive_parts_listbox">
-                            <property name="visible">1</property>
-                            <property name="vexpand">1</property>
-                            <property name="height-request">120</property>
-                            <property name="valign">start</property>
-                            <property name="selection-mode">none</property>
-                          </object>
-                        </child>
+                        <property name="height-request">120</property>
+                        <property name="valign">start</property>
+                        <property name="selection-mode">none</property>
                       </object>
                     </child>
                   </object>
                 </child>
-
-              </object> <!-- ./GtkBox drive_page -->
+              </object>
             </child>
-          </object>
-        </child> <!-- ./HdyClamp -->
 
-      </object> <!-- ./GtkStack main_stack -->
-    </child>
+          </object> <!-- ./GtkBox drive_page -->
+        </child>
+      </object>
+    </child> <!-- ./HdyClamp -->
   </template>
 
   <object class="GtkPopover" id="drive_info_popover">

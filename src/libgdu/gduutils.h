@@ -65,15 +65,18 @@ void            gdu_utils_show_error      (GtkWindow      *parent_window,
                                            const gchar    *message,
                                            GError         *error);
 
-gboolean        gdu_utils_show_confirmation (GtkWindow    *parent_window,
-                                             const gchar  *message,
-                                             const gchar  *secondary_message,
-                                             const gchar  *affirmative_verb,
-                                             const gchar  *checkbox_mnemonic,
-                                             gboolean     *inout_checkbox_value,
-                                             UDisksClient *client,
-                                             GList        *objects,
-                                             gboolean     destructive_action);
+void
+gdu_utils_show_confirmation (GtkWindow              *parent_window,
+                             const gchar            *message,
+                             const gchar            *secondary_message,
+                             const gchar            *affirmative_verb,
+                             const gchar            *checkbox_mnemonic,
+                             gboolean               *inout_checkbox_value,
+                             UDisksClient           *client,
+                             GList                  *objects,
+                             GAsyncReadyCallback     callback,
+                             gpointer                user_data,
+                             gboolean                destructive_action);
 
 
 /* Defined by libblockdev/UDisks */

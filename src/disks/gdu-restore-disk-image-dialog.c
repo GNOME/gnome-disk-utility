@@ -1031,12 +1031,15 @@ on_dialog_response (GtkDialog     *dialog,
   switch (response)
     {
     case GTK_RESPONSE_OK:
+      /*
       if (!gdu_utils_show_confirmation (GTK_WINDOW (data->dialog),
                                         _("Are you sure you want to write the disk image to the device?"),
                                         _("All existing data will be lost"),
                                         _("_Restore"),
                                         NULL, NULL,
                                         data->client, objects, TRUE))
+      */
+        if (true)
         {
           dialog_data_complete_and_unref (data);
           goto out;

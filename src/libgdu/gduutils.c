@@ -774,39 +774,42 @@ get_widget_for_object (UDisksClient *client,
   return hbox;
 }
 
-gboolean
-gdu_utils_show_confirmation (GtkWindow    *parent_window,
-                             const gchar  *message,
-                             const gchar  *secondary_message,
-                             const gchar  *affirmative_verb,
-                             const gchar  *checkbox_mnemonic,
-                             gboolean     *inout_checkbox_value,
-                             UDisksClient *client,
-                             GList        *objects,
-                             gboolean     destructive_action)
+void
+gdu_utils_show_confirmation (GtkWindow              *parent_window,
+                             const gchar            *message,
+                             const gchar            *secondary_message,
+                             const gchar            *affirmative_verb,
+                             const gchar            *checkbox_mnemonic,
+                             gboolean               *inout_checkbox_value,
+                             UDisksClient           *client,
+                             GList                  *objects,
+                             GAsyncReadyCallback     callback,
+                             gpointer                user_data,
+                             gboolean                destructive_action)
 {
-  GtkWidget *check_button = NULL;
   GtkWidget *dialog;
-  GtkWidget *affirmative_button;
-  gint response;
+  GtkWidget *check_button = NULL;
 
-  dialog = gtk_message_dialog_new_with_markup (parent_window,
-                                               GTK_DIALOG_MODAL,
-                                               GTK_MESSAGE_INFO,
-                                               GTK_BUTTONS_CANCEL,
-                                               "<big><b>%s</b></big>",
-                                               message);
-  gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                              "%s",
-                                              secondary_message);
+  dialog = adw_message_dialog_new (parent_window,
+                                   message,
+                                   secondary_message);
 
-  if (checkbox_mnemonic != NULL)
+  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                  "cancel",  _("_Cancel"),
+                                  "confirm", affirmative_verb,
+                                  NULL);
+
+  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
+                                         "cancel");
+
+  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
+                                           "cancel");
+
+  if (destructive_action) 
     {
-      check_button = gtk_check_button_new_with_mnemonic (checkbox_mnemonic);
-      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                      check_button);
-      if (inout_checkbox_value != NULL)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button), *inout_checkbox_value);
+      adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                                  "confirm", 
+                                                  ADW_RESPONSE_DESTRUCTIVE);
     }
 
   if (objects != NULL)
@@ -818,7 +821,6 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       PangoAttrList *attrs;
 
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
       for (l = objects; l != NULL; l = l->next)
         {
           UDisksObject *object = UDISKS_OBJECT (l->data);
@@ -838,35 +840,29 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
       scrolled_window = gtk_scrolled_window_new ();
       gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
       gtk_scrolled_window_set_has_frame (GTK_SCROLLED_WINDOW (scrolled_window), TRUE);
-      gtk_container_add (GTK_CONTAINER (scrolled_window), vbox);
+      gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled_window), vbox);
       gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
 
-      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                      label);
-      gtk_box_append (GTK_BOX (gtk_message_dialog_get_message_area (GTK_MESSAGE_DIALOG (dialog))),
-                      scrolled_window);
+      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), label);
+      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), scrolled_window);
     }
 
-  affirmative_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         affirmative_verb,
-                         GTK_RESPONSE_OK);
 
-  if (destructive_action) {
-      GtkStyleContext *context;
-      context = gtk_widget_get_style_context (affirmative_button);
-      gtk_style_context_add_class (context,"destructive-action");
-  }
-
-  gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL));
-
-  // response = gtk_dialog_run (GTK_DIALOG (dialog));
+  if (checkbox_mnemonic != NULL)
+    {
+      check_button = gtk_check_button_new_with_mnemonic (checkbox_mnemonic);
+      if (inout_checkbox_value != NULL)
+        gtk_check_button_set_active (GTK_CHECK_BUTTON (check_button), *inout_checkbox_value);
+      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), check_button);
+    }
 
   if (inout_checkbox_value != NULL && check_button != NULL)
-    *inout_checkbox_value = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (check_button));
+    *inout_checkbox_value = gtk_check_button_get_active (GTK_CHECK_BUTTON (check_button));
 
-  gtk_window_close (GTK_WINDOW (dialog));
-
-  return response == GTK_RESPONSE_OK;
+  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
+                             NULL,
+                             callback,
+                             user_data);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

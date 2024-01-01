@@ -140,6 +140,8 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
 
   objects = g_list_append (NULL, self->udisks_object);
   gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+  
+  /* gtk4 todo
   if (!gdu_utils_show_confirmation (self->parent_window,
                                     primary_message,
                                     str->str,
@@ -152,7 +154,8 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
 
       return;
     }
-
+  */
+  return;
   /* ensure the volume is unused (e.g. unmounted) before formatting it... */
   gdu_utils_ensure_unused(self->udisks_client,
                           self->parent_window,

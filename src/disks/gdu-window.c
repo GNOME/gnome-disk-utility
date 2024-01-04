@@ -35,7 +35,7 @@ struct _GduWindow
   GtkListBox                *drives_listbox;
   GduDriveView              *drive_view;
 
-  // GtkFileChooserDialog      *loop_file_chooser;
+  GtkFileDialog             *loop_file_chooser;
   GtkCheckButton            *readonly_check_button;
 
   GduManager                *manager;
@@ -68,17 +68,9 @@ loop_open_cb (GObject      *object,
   g_autoptr(GduWindow) self = user_data;
   g_autoptr(GError) error = NULL;
 
-  if (gdu_manager_open_loop_finish (self->manager, result, &error))
-    {
-      g_autoptr(GFile) folder = NULL;
-
-      /* now that we know the user picked a folder, update file chooser settings */
-      /* gtk4 todo: Update to GtkFileDialog
-      folder = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (self->loop_file_chooser));
-      gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
-      */
-    }
-  else if (error)
+  gdu_manager_open_loop_finish (self->manager, result, &error);
+  
+  if (error)
     {
       gdu_utils_show_error (GTK_WINDOW (self),
                             _("Error attaching disk image"),
@@ -86,29 +78,30 @@ loop_open_cb (GObject      *object,
     }
 }
 
-/*
+
 static void
-loop_file_chooser_response_cb (GduWindow *self,
-                               int         response)
+file_dialog_open_cb (GObject      *source_object,
+                     GAsyncResult *res,
+                     gpointer      user_data)
 {
-  g_autofree char *file_name = NULL;
-  gboolean read_only;
+  GduWindow *self = GDU_WINDOW (user_data);
+  GtkFileDialog *file_dialog = GTK_FILE_DIALOG (source_object);
+  GFile *file = NULL;
 
   g_assert (GDU_IS_WINDOW (self));
 
-  gtk_widget_set_visible (GTK_WIDGET (self->loop_file_chooser), FALSE);
 
-  if (response != GTK_RESPONSE_ACCEPT)
+  file = gtk_file_dialog_open_finish (file_dialog, res, NULL);
+  
+  if (!file)
     return;
 
-  // file_name = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (self->loop_file_chooser)); gtk4 todo
-  read_only = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (self->readonly_check_button));
-
-  gdu_manager_open_loop_async (self->manager, file_name, read_only,
+  gdu_manager_open_loop_async (self->manager,
+                               file,
+                               TRUE,
                                loop_open_cb,
                                g_object_ref (self));
 }
-*/
 
 static void
 gdu_window_finalize (GObject *object)
@@ -137,21 +130,15 @@ gdu_window_class_init (GduWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduWindow, drives_listbox);
   gtk_widget_class_bind_template_child (widget_class, GduWindow, drive_view);
 
-  // gtk_widget_class_bind_template_child (widget_class, GduWindow, loop_file_chooser);
   gtk_widget_class_bind_template_child (widget_class, GduWindow, readonly_check_button);
 
   gtk_widget_class_bind_template_callback (widget_class, drive_list_row_selection_changed_cb);
-  // gtk_widget_class_bind_template_callback (widget_class, loop_file_chooser_response_cb);
 }
 
 static void
 gdu_window_init (GduWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
-  // gtk4 todo
-  // gdu_utils_configure_file_chooser_for_disk_images (GTK_FILE_CHOOSER (self->loop_file_chooser),
-  //                                                   TRUE,   /* set file types */
-  //                                                   FALSE); /* allow_compressed */
 }
 
 GduWindow *
@@ -180,9 +167,20 @@ gdu_window_new (GApplication *application,
 void
 gdu_window_show_attach_disk_image (GduWindow *self)
 {
+  GtkFileDialog *dialog;
   g_return_if_fail (GDU_IS_WINDOW (self));
 
-/*
-  gtk_window_present (GTK_WINDOW (self->loop_file_chooser));
-*/
+  dialog = gtk_file_dialog_new ();
+  gtk_file_dialog_set_title (dialog, _("Select a Disk Image to Attach"));
+  gtk_file_dialog_set_modal (dialog, TRUE);
+
+  gdu_utils_configure_file_dialog_for_disk_images (dialog,
+                                                   TRUE,   /* set file types */
+                                                   FALSE); /* allow_compressed */
+
+  gtk_file_dialog_open (dialog,
+                        GTK_WINDOW (self),
+                        NULL,
+                        file_dialog_open_cb,
+                        self);
 }

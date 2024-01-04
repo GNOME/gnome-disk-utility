@@ -20,7 +20,7 @@ G_DECLARE_FINAL_TYPE (GduManager, gdu_manager, GDU, MANAGER, GObject)
 GduManager   *gdu_manager_get_default         (GError              **error);
 GListModel   *gdu_manager_get_drives          (GduManager           *self);
 void          gdu_manager_open_loop_async     (GduManager           *self,
-                                               const char           *path,
+                                               GFile                *file,
                                                gboolean              read_only,
                                                GAsyncReadyCallback   callback,
                                                gpointer              user_data);

@@ -414,7 +414,7 @@ manager_create_loop_cb (GObject      *object,
 
 void
 gdu_manager_open_loop_async (GduManager          *self,
-                             const char          *path,
+                             GFile               *file,
                              gboolean             read_only,
                              GAsyncReadyCallback  callback,
                              gpointer             user_data)
@@ -423,8 +423,10 @@ gdu_manager_open_loop_async (GduManager          *self,
   GVariantBuilder options_builder;
   g_autoptr(GTask) task = NULL;
   int fd = -1;
-
+  g_autofree char *path = NULL;
   g_return_if_fail (GDU_IS_MANAGER (self));
+
+  path = g_file_get_path (file);
   g_return_if_fail (path && *path);
 
   task = g_task_new (self, NULL, callback, user_data);

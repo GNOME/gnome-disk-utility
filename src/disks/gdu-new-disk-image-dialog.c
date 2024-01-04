@@ -277,8 +277,9 @@ static void
 on_create_image_button_clicked_cb (GduNewDiskImageDialog *self)
 {
   const char *filename = NULL;
+  g_autofree char *heading = NULL;
+  g_autofree char *body = NULL;
   g_autoptr(GFile) file = NULL;
-  GtkWidget *dialog;
 
   filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   file = g_file_get_child (self->directory, filename);

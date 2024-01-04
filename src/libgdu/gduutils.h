@@ -9,6 +9,7 @@
 #ifndef __GDU_UTILS_H__
 #define __GDU_UTILS_H__
 
+#include <adwaita.h>
 #include "libgdutypes.h"
 
 G_BEGIN_DECLS
@@ -76,7 +77,7 @@ gdu_utils_show_confirmation (GtkWindow              *parent_window,
                              GList                  *objects,
                              GAsyncReadyCallback     callback,
                              gpointer                user_data,
-                             gboolean                destructive_action);
+                             AdwResponseAppearance   appearance);
 
 
 /* Defined by libblockdev/UDisks */

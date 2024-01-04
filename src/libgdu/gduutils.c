@@ -783,9 +783,9 @@ gdu_utils_show_confirmation (GtkWindow              *parent_window,
                              gboolean               *inout_checkbox_value,
                              UDisksClient           *client,
                              GList                  *objects,
-                             GAsyncReadyCallback     callback,
+                             GAsyncReadyCallback               callback,
                              gpointer                user_data,
-                             gboolean                destructive_action)
+                             AdwResponseAppearance   appearance)
 {
   GtkWidget *dialog;
   GtkWidget *check_button = NULL;
@@ -803,14 +803,12 @@ gdu_utils_show_confirmation (GtkWindow              *parent_window,
                                          "cancel");
 
   adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                           "cancel");
+                                           appearance == ADW_RESPONSE_SUGGESTED ? 
+                                           "confirm" : "cancel");
 
-  if (destructive_action) 
-    {
-      adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                                  "confirm", 
-                                                  ADW_RESPONSE_DESTRUCTIVE);
-    }
+  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
+                                              "confirm", 
+                                              appearance);
 
   if (objects != NULL)
     {

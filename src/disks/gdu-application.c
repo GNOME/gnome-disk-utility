@@ -73,13 +73,18 @@ gdu_application_finalize (GObject *object)
   G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
 }
 
-void
-application_quit_response_cb (AdwMessageDialog* self,
-                               gchar* response,
-                               gpointer user_data)
+static void
+application_quit_response_cb (GObject           *source_object,
+                              GAsyncResult      *response,
+                              gpointer           user_data)
 {
-  GduApplication *app = GDU_APPLICATION (user_data);
-  gtk_window_close (GTK_WINDOW (app->window));
+  GduApplication *self = GDU_APPLICATION (user_data);
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
+
+  gtk_window_close (GTK_WINDOW (self->window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -314,35 +319,20 @@ gdu_application_quit (GSimpleAction *action,
                       gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  GtkWidget *dialog;
 
   if (app->local_jobs != NULL && g_hash_table_size (app->local_jobs) != 0)
     {
-      dialog = adw_message_dialog_new (GTK_WINDOW (app->window),
-                                       _("Stop running jobs?"),
-                                       _("Closing now stops the running jobs and leads to a corrupt result."));
-
-      adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                        "cancel", _("Cancel"),
-                                        "exit", _("Ok"),
-                                        NULL);
-
-      adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                                  "exit",
-                                                  ADW_RESPONSE_DESTRUCTIVE);
-
-      adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                              "cancel");
-
-      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                            "cancel");
-      
-      g_signal_connect_swapped (dialog,
-                                "response",
-                                G_CALLBACK (application_quit_response_cb),
-                                app);
-
-      gtk_window_present (GTK_WINDOW (dialog));
+      gdu_utils_show_confirmation (GTK_WINDOW (app->window),
+                                    _("Stop running jobs?"),
+                                    _("Closing now stops the running jobs and leads to a corrupt result."),
+                                    _("Ok"),
+                                    NULL,
+                                    NULL,
+                                    NULL,
+                                    NULL,
+                                    application_quit_response_cb,
+                                    app,
+                                    ADW_RESPONSE_DESTRUCTIVE);
     }
   else
     {

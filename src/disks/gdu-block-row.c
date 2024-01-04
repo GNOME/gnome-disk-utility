@@ -517,20 +517,21 @@ fs_check_unmount_cb (GObject      *obj,
 }
 
 static void
-on_check_message_dialog_response (GduBlockRow      *self,
-                                  gchar            *response,
-                                  AdwMessageDialog *dialog)
+on_check_message_dialog_response (GObject          *obj,
+                                  GAsyncResult     *response,
+                                  gpointer          user_data)
 {
+  GduBlockRow *self = user_data;
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (obj);
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  gtk_window_close (GTK_WINDOW (dialog));
-  if (g_strcmp0 (response, "cancel") == 0)
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
-
+  
   gdu_utils_ensure_unused (block_row_get_client (),
                            block_row_get_window (self),
                            object,
@@ -545,33 +546,18 @@ check_fs_cb (GtkWidget  *widget,
              GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
-  GtkWidget *dialog;
 
-  dialog = adw_message_dialog_new (block_row_get_window (self),
-                                           _("Confirm Check"),
-                                          _("The check may take a long time, especially if the partition contains a lot of data."));
-
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                    "cancel",  _("_Cancel"),
-                                    "confirm", _("_Ok"),
-                                    NULL);
-
-  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm", 
-                                              ADW_RESPONSE_SUGGESTED);
-  
-  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                           "confirm");
-
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                         "cancel");
-
-  g_signal_connect_swapped (dialog,
-                            "response",
-                            G_CALLBACK (on_check_message_dialog_response),
-                            self);
-  
-  gtk_window_present (GTK_WINDOW (dialog));
+  gdu_utils_show_confirmation (block_row_get_window (self),
+                               _("Confirm Check"),
+                               _("The check may take a long time, especially if the partition contains a lot of data."),
+                               _("Ok"),
+                               NULL,
+                               NULL,
+                               NULL,
+                               NULL,
+                               on_check_message_dialog_response,
+                               self,
+                               ADW_RESPONSE_SUGGESTED);
 }
 
 static void
@@ -658,16 +644,19 @@ fs_repair_unmount_cb (GObject      *obj,
 }
 
 static void
-on_repair_message_dialog_response (GduBlockRow      *self,
-                                   gchar            *response,
-                                   AdwMessageDialog *dialog)
+on_repair_message_dialog_response (GObject        *source_object,
+                                   GAsyncResult   *response,
+                                   gpointer        user_data)
 {
+  GduBlockRow *self = GDU_BLOCK_ROW (user_data);
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
+  g_assert (object != NULL);
 
-  if (g_strcmp0 (response, "cancel") == 0)
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gdu_utils_ensure_unused (block_row_get_client (),
@@ -684,39 +673,21 @@ repair_fs_cb (GtkWidget  *widget,
               GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
-  GtkWidget *dialog;
-  UDisksObject *object;
 
-  object = gdu_block_get_object (self->block);
-  g_assert (object != NULL);
-
-  dialog = adw_message_dialog_new (block_row_get_window (self),
-                                   _("Confirm Repair"),
-                                   _("A filesystem repair is not always possible and can cause data loss. "
-                                     "Consider backing it up first in order to use forensic recovery tools "
-                                     "that retrieve lost files. "
-                                     "The operation may take a long time, especially if the partition contains a lot of data."));
-
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                    "cancel",  _("_Cancel"),
-                                    "confirm", _("_Ok"),
-                                    NULL);
-
-  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm", 
-                                              ADW_RESPONSE_DESTRUCTIVE);
-
-  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                            "cancel");
-
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                          "cancel");
-
-  g_signal_connect_swapped (dialog,
-                            "response",
-                            G_CALLBACK (on_repair_message_dialog_response),
-                            self);
-  gtk_window_present (GTK_WINDOW (dialog));
+  gdu_utils_show_confirmation (block_row_get_window (self),
+                               _("Confirm Repair"),
+                               _("A filesystem repair is not always possible and can cause data loss. "
+                                 "Consider backing it up first in order to use forensic recovery tools "
+                                 "that retrieve lost files. "
+                                 "The operation may take a long time, especially if the partition contains a lot of data."),
+                               _("Ok"),
+                               NULL,
+                               NULL,
+                               NULL,
+                               NULL,
+                               on_repair_message_dialog_response,
+                               self,
+                               ADW_RESPONSE_DESTRUCTIVE);
 }
 
 static void

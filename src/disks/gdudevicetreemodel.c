@@ -12,7 +12,6 @@
 #include <glib/gi18n.h>
 
 #include "gdudevicetreemodel.h"
-#include "gdu-application.h"
 #include "gduatasmartdialog.h"
 #include "gduenumtypes.h"
 
@@ -20,7 +19,7 @@ struct _GduDeviceTreeModel
 {
   GtkTreeStore parent_instance;
 
-  GduApplication *application;
+  GtkApplication *application;
   UDisksClient *client;
 
   GduDeviceTreeModelFlags flags;
@@ -520,7 +519,7 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
   g_object_class_install_property (gobject_class,
                                    PROP_APPLICATION,
                                    g_param_spec_object ("application", NULL, NULL,
-                                                        GDU_TYPE_APPLICATION,
+                                                        GTK_TYPE_APPLICATION,
                                                         G_PARAM_READABLE |
                                                         G_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY |
@@ -544,7 +543,7 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
 
 /**
  * gdu_device_tree_model_new:
- * @application: A #GduApplication.
+ * @application: A #GtkApplication.
  * @flags: Flags from #GduDeviceTreeModelFlags.
  *
  * Creates a new #GduDeviceTreeModel for viewing the devices belonging to
@@ -553,7 +552,7 @@ gdu_device_tree_model_class_init (GduDeviceTreeModelClass *klass)
  * Returns: A #GduDeviceTreeModel. Free with g_object_unref().
  */
 GduDeviceTreeModel *
-gdu_device_tree_model_new (GduApplication          *application,
+gdu_device_tree_model_new (GtkApplication          *application,
                            GduDeviceTreeModelFlags  flags)
 {
   return GDU_DEVICE_TREE_MODEL (g_object_new (GDU_TYPE_DEVICE_TREE_MODEL,
@@ -568,10 +567,10 @@ gdu_device_tree_model_new (GduApplication          *application,
  *
  * Gets the #GduApplication used by @model.
  *
- * Returns: (transfer none): A #GduApplication. Do not free, the
+ * Returns: (transfer none): A #GtkApplication. Do not free, the
  * object belongs to @model.
  */
-GduApplication *
+GtkApplication *
 gdu_device_tree_model_get_application (GduDeviceTreeModel *model)
 {
   g_return_val_if_fail (GDU_IS_DEVICE_TREE_MODEL (model), NULL);

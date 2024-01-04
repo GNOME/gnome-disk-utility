@@ -17,7 +17,6 @@
 #include "gdu-block.h"
 #include "gdu-application.h"
 #include "gdu-edit-filesystem-dialog.h"
-#include "gduvolumegrid.h"
 
 struct _GduFilesystemDialog
 {

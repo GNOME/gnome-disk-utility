@@ -21,7 +21,6 @@
 #include "gdu-application.h"
 #include "gdu-window.h"
 #include "gdu-restore-disk-image-dialog.h"
-#include "gduvolumegrid.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 #include "gdudevicetreemodel.h"

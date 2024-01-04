@@ -24,7 +24,6 @@
 
 #include "gdu-application.h"
 #include "gdu-create-disk-image-dialog.h"
-#include "gduvolumegrid.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 

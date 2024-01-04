@@ -13,7 +13,6 @@
 #include "gdu-application.h"
 #include "gdu-window.h"
 #include "gdu-mount-options-dialog.h"
-#include "gduvolumegrid.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

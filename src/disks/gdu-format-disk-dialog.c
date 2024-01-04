@@ -18,7 +18,6 @@
 #include "gdu-application.h"
 #include "gdu-window.h"
 #include "gdu-format-disk-dialog.h"
-#include "gduvolumegrid.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

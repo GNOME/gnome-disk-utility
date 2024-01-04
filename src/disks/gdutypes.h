@@ -27,9 +27,6 @@ typedef struct _GduDeviceTreeModel GduDeviceTreeModel;
 struct _GduWindow;
 typedef struct _GduWindow GduWindow;
 
-struct _GduVolumeGrid;
-typedef struct _GduVolumeGrid GduVolumeGrid;
-
 struct _GduCreateFilesystemWidget;
 typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
 

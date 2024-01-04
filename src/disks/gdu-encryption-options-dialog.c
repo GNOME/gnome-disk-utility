@@ -18,7 +18,6 @@
 #include "gdu-application.h"
 #include "gdu-window.h"
 #include "gdu-encryption-options-dialog.h"
-#include "gduvolumegrid.h"
 
 struct _GduCrypttabDialog
 {

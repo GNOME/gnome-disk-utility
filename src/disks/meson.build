@@ -37,7 +37,6 @@ sources = files(
   'gdupasswordstrengthwidget.c',
   'gdu-resize-volume-dialog.c',
   'gduunlockdialog.c',
-  'gduvolumegrid.c',
   'gduxzdecompressor.c',
   'gdu-log.c',
   'main.c',
@@ -45,7 +44,6 @@ sources = files(
 
 resource_data = files(
   'ui/about-dialog.ui',
-  'ui/app-menu.ui',
   'ui/gdu-benchmark-dialog.ui',
   'ui/gdu-change-passphrase-dialog.ui',
   'ui/gdu-create-confirm-page.ui',
@@ -56,7 +54,6 @@ resource_data = files(
   'ui/gdu-create-partition-page.ui',
   'ui/gdu-create-password-page.ui',
   'ui/disk-settings-dialog.ui',
-  'ui/disks.ui',
   'ui/gdu-edit-filesystem-dialog.ui',
   'ui/gdu-encryption-options-dialog.ui',
   'ui/gdu-mount-options-dialog.ui',

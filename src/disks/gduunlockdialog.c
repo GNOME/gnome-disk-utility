@@ -19,7 +19,6 @@
 #include "gdu-application.h"
 #include "gdu-window.h"
 #include "gduunlockdialog.h"
-#include "gduvolumegrid.h"
 
 /* From GVfs's monitor/udisks2/gvfsudisks2volume.c */
 static const SecretSchema luks_passphrase_schema =

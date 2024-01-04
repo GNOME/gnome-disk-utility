@@ -25,7 +25,6 @@
 #include "gdu-create-other-page.h"
 #include "gdu-create-password-page.h"
 #include "gdu-create-confirm-page.h"
-#include "gduvolumegrid.h"
 
 #define PARTITION_PAGE "partition"
 #define FORMAT_PAGE "format"

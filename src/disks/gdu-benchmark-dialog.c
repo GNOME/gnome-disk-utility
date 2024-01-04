@@ -1496,7 +1496,7 @@ start_benchmark2 (DialogData *data)
 }
 
 static void
-ensure_unused_cb (GduWindow     *window,
+ensure_unused_cb (GtkWindow     *window,
                   GAsyncResult  *res,
                   gpointer       user_data)
 {

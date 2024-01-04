@@ -21,9 +21,6 @@ G_BEGIN_DECLS
 struct _GduDeviceTreeModel;
 typedef struct _GduDeviceTreeModel GduDeviceTreeModel;
 
-struct _GduWindow;
-typedef struct _GduWindow GduWindow;
-
 struct _GduCreateFilesystemWidget;
 typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
 

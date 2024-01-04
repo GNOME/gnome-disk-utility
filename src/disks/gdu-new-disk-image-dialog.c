@@ -376,12 +376,12 @@ gdu_new_disk_image_dialog_new (void)
 }
 
 void
-gdu_new_disk_image_dialog_show (UDisksClient *client, GduWindow *window)
+gdu_new_disk_image_dialog_show (UDisksClient *client, GtkWindow *window)
 {
   GduNewDiskImageDialog *self;
 
   self = gdu_new_disk_image_dialog_new ();
-  gtk_window_set_transient_for (GTK_WINDOW (self), GTK_WINDOW (window));
+  gtk_window_set_transient_for (GTK_WINDOW (self), window);
 
   g_return_if_fail (client != NULL);
   self->client = client;

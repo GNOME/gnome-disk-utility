@@ -306,12 +306,12 @@ on_get_secret_configuration_cb (GObject      *source_object,
 }
 
 void
-gdu_change_passphrase_dialog_show (GduWindow    *window,
+gdu_change_passphrase_dialog_show (GtkWindow    *window,
                                    UDisksObject *object)
 {
   GduChangePassphraseDialog *self;
 
-  g_return_if_fail (GDU_IS_WINDOW (window));
+  g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
   self = g_object_new (GDU_TYPE_CHANGE_PASSPHRASE_DIALOG,

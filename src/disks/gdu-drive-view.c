@@ -162,7 +162,7 @@ create_disk_image_clicked_cb (GduDriveView *self)
 
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
-  object = gdu_drive_get_object (self->drive);
+  object = gdu_drive_get_object_for_format (self->drive);
   manager = gdu_manager_get_default (NULL);
   g_warning ("create disk :%p", object);
   g_assert (object != NULL);
@@ -181,7 +181,7 @@ restore_disk_image_clicked_cb (GduDriveView *self)
 
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
-  object = gdu_drive_get_object (self->drive);
+  object = gdu_drive_get_object_for_format (self->drive);
   manager = gdu_manager_get_default (NULL);
   g_warning ("restore disk :%p", object);
   g_assert (object != NULL);

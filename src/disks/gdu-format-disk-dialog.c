@@ -16,28 +16,54 @@
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-window.h"
 #include "gdu-format-disk-dialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-struct _GduFormatDiskDialog
+enum
 {
-  GtkDialog          parent_instance;
-
-  GtkComboBox       *type_combobox;
-  GtkComboBox       *erase_combobox;
-
-  GtkWindow         *parent_window;
-  UDisksClient      *udisks_client;
-  UDisksObject      *udisks_object;
-  UDisksBlock       *udisks_block;
-  UDisksDrive       *udisks_drive;
-  UDisksDriveAta    *udisks_drive_ata;
+  PROP_0,
+  PROP_PARTITIONING_TYPE,
+  N_PROPS
 };
 
+static GParamSpec *properties [N_PROPS];
 
-G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, GTK_TYPE_DIALOG)
+struct _GduFormatDiskDialog
+{
+  AdwWindow              parent_instance;
+
+  GtkWidget             *erase_row;
+
+  GtkWindow             *parent_window;
+  UDisksClient          *udisks_client;
+  UDisksObject          *udisks_object;
+  UDisksBlock           *udisks_block;
+  UDisksDrive           *udisks_drive;
+  UDisksDriveAta        *udisks_drive_ata;
+  GduPartitioningType    partitioning_type;
+};
+
+G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_WINDOW)
+
+G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type,
+                    G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_GPT, "gpt"),
+                    G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_DOS, "dos"),
+                    G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_EMPTY, "empty"));
+
+static const gchar *
+gdu_format_disk_dialog_get_partitioning_type (GduFormatDiskDialog *self)
+{
+	GEnumClass *eclass;
+  GEnumValue *value;
+
+	eclass = G_ENUM_CLASS (g_type_class_peek (GDU_TYPE_PARTITIONING_TYPE));
+	value = g_enum_get_value (eclass, self->partitioning_type);
+
+	g_assert (value);
+
+	return value->value_nick;
+}
 
 static void
 format_cb (GObject      *source_object,
@@ -48,9 +74,12 @@ format_cb (GObject      *source_object,
   g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_format_finish (self->udisks_block, res, &error))
-    gdu_utils_show_error (self->parent_window, _("Error formatting disk"), error);
+    {
+      gdu_utils_show_error (self->parent_window,
+                            _("Error formatting disk"),
+                            error);
+    }
 
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -60,25 +89,25 @@ ensure_unused_cb (GtkWindow    *parent_window,
                   gpointer      user_data)
 {
   GduFormatDiskDialog *self = user_data;
-  const char *partition_table_type, *erase_type;
+  const char *erase_type;
   GVariantBuilder options_builder;
 
   if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL))
     {
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
       gtk_window_close (GTK_WINDOW (self));
-
       return;
     }
 
-  partition_table_type = gtk_combo_box_get_active_id (self->type_combobox);
+  /* gtk4 todo : Waiting for design update
   erase_type = gtk_combo_box_get_active_id (self->erase_combobox);
+  */
+  erase_type = "";
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (erase_type && *erase_type)
     g_variant_builder_add (&options_builder, "{sv}", "erase", g_variant_new_string (erase_type));
   udisks_block_call_format (self->udisks_block,
-                            partition_table_type,
+                            gdu_format_disk_dialog_get_partitioning_type (self),
                             g_variant_builder_end (&options_builder),
                             NULL, /* GCancellable */
                             format_cb,
@@ -87,28 +116,35 @@ ensure_unused_cb (GtkWindow    *parent_window,
 }
 
 static void
-format_disk_dialog_response_cb (GduFormatDiskDialog *self,
-                                int                  response_id)
+on_confirmation_response_cb (GObject                     *object,
+                             GAsyncResult                *response,
+                             gpointer                     user_data)
 {
-  const char *erase_type, *primary_message;
+  GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (user_data);
+
+  /* ensure the volume is unused (e.g. unmounted) before formatting it... */
+  gdu_utils_ensure_unused(self->udisks_client,
+                          self->parent_window,
+                          self->udisks_object,
+                          (GAsyncReadyCallback) ensure_unused_cb,
+                          NULL, /* GCancellable */
+                          user_data);
+}
+
+static void
+on_format_clicked_cb (GduFormatDiskDialog *self,
+                      GtkButton           *button)
+{
+  gboolean erase_data;
   g_autoptr(GList) objects = NULL;
   g_autoptr(GString) str = NULL;
 
   g_assert (GDU_IS_FORMAT_DISK_DIALOG (self));
 
-  if (response_id == GTK_RESPONSE_CANCEL ||
-      response_id == GTK_RESPONSE_CLOSE ||
-      response_id == GTK_RESPONSE_DELETE_EVENT)
-    {
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-      gtk_window_close (GTK_WINDOW (self));
-      return;
-    }
+  erase_data = adw_switch_row_get_active (ADW_SWITCH_ROW (self->erase_row));
+  objects = g_list_append (NULL, self->udisks_object);
 
-  erase_type = gtk_combo_box_get_active_id (self->erase_combobox);
-  primary_message = _("Are you sure you want to format the disk?");
-
-  if (!erase_type || !*erase_type)
+  if (erase_data)
     {
       /* Translators: warning used for quick format */
       str = g_string_new (_("All data on the disk will be lost but may still be recoverable by "
@@ -125,6 +161,7 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
                             "recoverable by data recovery services"));
     }
 
+  /* gtk4 todo
   if (self->udisks_drive_ata &&
       (g_strcmp0 (erase_type, "ata-secure-erase") == 0 ||
        g_strcmp0 (erase_type, "ata-secure-erase-enhanced") == 0))
@@ -137,69 +174,19 @@ format_disk_dialog_response_cb (GduFormatDiskDialog *self,
                                "article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> "
                                "and make sure you understand the risks"));
     }
-
-  objects = g_list_append (NULL, self->udisks_object);
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-  
-  /* gtk4 todo
-  if (!gdu_utils_show_confirmation (self->parent_window,
-                                    primary_message,
-                                    str->str,
-                                    _("_Format"),
-                                    NULL, NULL,
-                                    self->udisks_client, objects, TRUE))
-    {
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-      gtk_window_close (GTK_WINDOW (self));
-
-      return;
-    }
   */
-  return;
-  /* ensure the volume is unused (e.g. unmounted) before formatting it... */
-  gdu_utils_ensure_unused(self->udisks_client,
-                          self->parent_window,
-                          self->udisks_object,
-                          (GAsyncReadyCallback) ensure_unused_cb,
-                          NULL, /* GCancellable */
-                          self);
-}
 
-static void
-gdu_format_disk_dialog_finalize (GObject *object)
-{
-  GduFormatDiskDialog *self = (GduFormatDiskDialog *)object;
-
-  g_clear_object (&self->udisks_object);
-  g_clear_object (&self->udisks_block);
-  g_clear_object (&self->udisks_drive);
-  g_clear_object (&self->udisks_drive_ata);
-
-  G_OBJECT_CLASS (gdu_format_disk_dialog_parent_class)->finalize (object);
-}
-
-static void
-gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
-{
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  object_class->finalize = gdu_format_disk_dialog_finalize;
-
-  gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/DiskUtility/ui/"
-                                               "gdu-format-disk-dialog.ui");
-
-  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, type_combobox);
-  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_combobox);
-
-  gtk_widget_class_bind_template_callback (widget_class, format_disk_dialog_response_cb);
-}
-
-static void
-gdu_format_disk_dialog_init (GduFormatDiskDialog *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
+  gdu_utils_show_confirmation (self->parent_window,
+                               _("Are you sure you want to format the disk?"),
+                               str->str,
+                               _("_Format"),
+                               NULL,
+                               NULL,
+                               self->udisks_client,
+                               objects,
+                               on_confirmation_response_cb,
+                               self,
+                               ADW_RESPONSE_DESTRUCTIVE);
 }
 
 enum
@@ -210,18 +197,6 @@ enum
   MODEL_COLUMN_SENSITIVE,
   MODEL_N_COLUMNS,
 };
-
-static gboolean
-separator_func (GtkTreeModel *model,
-                GtkTreeIter *iter,
-                gpointer data)
-{
-  gboolean is_separator;
-  gtk_tree_model_get (model, iter,
-                      MODEL_COLUMN_SEPARATOR, &is_separator,
-                      -1);
-  return is_separator;
-}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -254,193 +229,146 @@ get_erase_duration_string (gint minutes)
   return s;
 }
 
-static void
-populate_erase_combobox (GduFormatDiskDialog *self)
-{
-  g_autoptr(GtkListStore) model = NULL;
-  GtkCellRenderer *renderer;
-  gchar *s, *s2;
+/* gtk4 todo */
+// static void
+// populate_erase_combobox (GduFormatDiskDialog *self)
+// {
 
-  model = gtk_list_store_new (MODEL_N_COLUMNS,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_BOOLEAN,
-                              G_TYPE_BOOLEAN);
-  gtk_combo_box_set_model (self->erase_combobox, GTK_TREE_MODEL (model));
+//   if (self->udisks_drive_ata != NULL)
+//     {
+//       gint erase_minutes, enhanced_erase_minutes;
+//       gboolean frozen;
 
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (self->erase_combobox), renderer, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (self->erase_combobox), renderer,
-                                  "markup", MODEL_COLUMN_MARKUP,
-                                  "sensitive", MODEL_COLUMN_SENSITIVE,
-                                  NULL);
+//       erase_minutes = udisks_drive_ata_get_security_erase_unit_minutes (self->udisks_drive_ata);
+//       enhanced_erase_minutes = udisks_drive_ata_get_security_enhanced_erase_unit_minutes (self->udisks_drive_ata);
+//       frozen = udisks_drive_ata_get_security_frozen (self->udisks_drive_ata);
 
-  gtk_combo_box_set_row_separator_func (self->erase_combobox,
-                                        separator_func,
-                                        self,
-                                        NULL); /* GDestroyNotify */
+//       if (erase_minutes > 0 || enhanced_erase_minutes > 0)
+//         {
+//           /* separator */
+//           gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+//                                              MODEL_COLUMN_SEPARATOR, TRUE,
+//                                              MODEL_COLUMN_SENSITIVE, TRUE,
+//                                              -1);
 
-  /* Quick */
-  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Don’t overwrite existing data"),
-                       _("Quick"));
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_ID, "",
-                                     MODEL_COLUMN_MARKUP, s,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-  g_free (s);
+//           /* if both normal and enhanced erase methods are available, only show the enhanced one */
+//           if (erase_minutes > 0 && enhanced_erase_minutes == 0)
+//             {
+//               s2 = get_erase_duration_string (erase_minutes);
+//               s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+//                                    _("ATA Secure Erase"),
+//                                    s2);
+//               gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+//                                                  MODEL_COLUMN_ID, "ata-secure-erase",
+//                                                  MODEL_COLUMN_MARKUP, s,
+//                                                  MODEL_COLUMN_SENSITIVE, !frozen,
+//                                                  -1);
+//               g_free (s);
+//               g_free (s2);
+//             }
 
-  /* Full */
-  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Overwrite existing data with zeroes"),
-                       _("Slow"));
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_ID, "zero",
-                                     MODEL_COLUMN_MARKUP, s,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-  g_free (s);
-
-  /* TODO: include 7-pass and 35-pass (DoD 5220-22 M) */
-
-  if (self->udisks_drive_ata != NULL)
-    {
-      gint erase_minutes, enhanced_erase_minutes;
-      gboolean frozen;
-
-      erase_minutes = udisks_drive_ata_get_security_erase_unit_minutes (self->udisks_drive_ata);
-      enhanced_erase_minutes = udisks_drive_ata_get_security_enhanced_erase_unit_minutes (self->udisks_drive_ata);
-      frozen = udisks_drive_ata_get_security_frozen (self->udisks_drive_ata);
-
-      if (erase_minutes > 0 || enhanced_erase_minutes > 0)
-        {
-          /* separator */
-          gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                             MODEL_COLUMN_SEPARATOR, TRUE,
-                                             MODEL_COLUMN_SENSITIVE, TRUE,
-                                             -1);
-
-          /* if both normal and enhanced erase methods are available, only show the enhanced one */
-          if (erase_minutes > 0 && enhanced_erase_minutes == 0)
-            {
-              s2 = get_erase_duration_string (erase_minutes);
-              s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                                   _("ATA Secure Erase"),
-                                   s2);
-              gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                                 MODEL_COLUMN_ID, "ata-secure-erase",
-                                                 MODEL_COLUMN_MARKUP, s,
-                                                 MODEL_COLUMN_SENSITIVE, !frozen,
-                                                 -1);
-              g_free (s);
-              g_free (s2);
-            }
-
-          if (enhanced_erase_minutes > 0)
-            {
-              s2 = get_erase_duration_string (enhanced_erase_minutes);
-              s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                                   _("ATA Enhanced Secure Erase"),
-                                   s2);
-              gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                                 MODEL_COLUMN_ID, "ata-secure-erase-enhanced",
-                                                 MODEL_COLUMN_MARKUP, s,
-                                                 MODEL_COLUMN_SENSITIVE, !frozen,
-                                                 -1);
-              g_free (s);
-              g_free (s2);
-            }
-        }
-    }
-
-  gtk_combo_box_set_active_id (self->erase_combobox, "");
-}
+//           if (enhanced_erase_minutes > 0)
+//             {
+//               s2 = get_erase_duration_string (enhanced_erase_minutes);
+//               s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
+//                                    _("ATA Enhanced Secure Erase"),
+//                                    s2);
+//               gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
+//                                                  MODEL_COLUMN_ID, "ata-secure-erase-enhanced",
+//                                                  MODEL_COLUMN_MARKUP, s,
+//                                                  MODEL_COLUMN_SENSITIVE, !frozen,
+//                                                  -1);
+//               g_free (s);
+//               g_free (s2);
+//             }
+//         }
+//     }
+// }
 
 static void
-populate_partitioning_combobox (GduFormatDiskDialog *self)
+gdu_format_disk_dialog_get_property (GObject    *object,
+                                     guint       property_id,
+                                     GValue     *value,
+                                     GParamSpec *pspec)
 {
-  g_autoptr(GtkListStore) model = NULL;
-  GtkCellRenderer *renderer;
-  gchar *s;
+  GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
 
-  model = gtk_list_store_new (MODEL_N_COLUMNS,
-                              G_TYPE_STRING,
-                              G_TYPE_STRING,
-                              G_TYPE_BOOLEAN,
-                              G_TYPE_BOOLEAN);
-  gtk_combo_box_set_model (self->type_combobox, GTK_TREE_MODEL (model));
-
-  renderer = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (self->type_combobox), renderer, FALSE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (self->type_combobox), renderer,
-                                  "markup", MODEL_COLUMN_MARKUP,
-                                  NULL);
-
-  gtk_combo_box_set_row_separator_func (self->type_combobox,
-                                        separator_func,
-                                        self,
-                                        NULL); /* GDestroyNotify */
-
-  /* MBR */
-  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Compatible with all systems and devices"),
-                       _("MBR / DOS"));
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_ID, "dos",
-                                     MODEL_COLUMN_MARKUP, s,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-  g_free (s);
-
-  /* GPT */
-  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("Compatible with modern systems and hard disks > 2TB"),
-                       _("GPT"));
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_ID, "gpt",
-                                     MODEL_COLUMN_MARKUP, s,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-  g_free (s);
-
-  /* separator */
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_SEPARATOR, TRUE,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-
-
-  /* Empty */
-  s = g_strdup_printf ("%s <span size=\"small\">(%s)</span>",
-                       _("No partitioning"),
-                       _("Empty"));
-  gtk_list_store_insert_with_values (model, NULL /* out_iter */, G_MAXINT, /* position */
-                                     MODEL_COLUMN_ID, "empty",
-                                     MODEL_COLUMN_MARKUP, s,
-                                     MODEL_COLUMN_SENSITIVE, TRUE,
-                                     -1);
-  g_free (s);
-
-
-  /* Default to MBR for removable drives < 2TB... GPT otherwise */
-  if (self->udisks_drive != NULL &&
-      udisks_drive_get_removable (self->udisks_drive) &&
-      udisks_drive_get_size (self->udisks_drive) < (guint64)(2ULL * 1000ULL*1000ULL*1000ULL*1000ULL))
+  switch (property_id)
     {
-      gtk_combo_box_set_active_id (self->type_combobox, "dos");
-    }
-  else
-    {
-      gtk_combo_box_set_active_id (self->type_combobox, "gpt");
+    case PROP_PARTITIONING_TYPE:
+      g_value_set_enum (value, self->partitioning_type);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
 static void
-format_disk_populate (GduFormatDiskDialog *self)
+gdu_format_disk_dialog_set_property (GObject      *object,
+                                     guint         property_id,
+                                     const GValue *value,
+                                     GParamSpec   *pspec)
 {
-  populate_erase_combobox (self);
-  populate_partitioning_combobox (self);
+  GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_PARTITIONING_TYPE:
+      self->partitioning_type = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+}
+
+static void
+gdu_format_disk_dialog_finalize (GObject *object)
+{
+  GduFormatDiskDialog *self = (GduFormatDiskDialog *)object;
+
+  g_clear_object (&self->udisks_object);
+  g_clear_object (&self->udisks_block);
+  g_clear_object (&self->udisks_drive);
+  g_clear_object (&self->udisks_drive_ata);
+
+  G_OBJECT_CLASS (gdu_format_disk_dialog_parent_class)->finalize (object);
+}
+
+static void
+gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize = gdu_format_disk_dialog_finalize;
+  object_class->get_property = gdu_format_disk_dialog_get_property;
+  object_class->set_property = gdu_format_disk_dialog_set_property;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-format-disk-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_row);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_format_clicked_cb);
+
+  properties[PROP_PARTITIONING_TYPE] =
+    g_param_spec_enum ("part-type",
+                        NULL,
+                        NULL,
+                        GDU_TYPE_PARTITIONING_TYPE,
+                        GDU_PARTITIONING_TYPE_GPT,
+                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
+  gtk_widget_class_install_property_action (widget_class, "format.update_part_type", "part-type");
+}
+
+static void
+gdu_format_disk_dialog_init (GduFormatDiskDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 void
@@ -469,6 +397,13 @@ gdu_format_disk_dialog_show (GtkWindow    *parent,
         self->udisks_drive_ata = udisks_object_get_drive_ata (UDISKS_OBJECT (drive_object));
     }
 
-  format_disk_populate (self);
+  /* Default to MBR for removable drives < 2TB */
+  if (self->udisks_drive != NULL
+      && udisks_drive_get_removable (self->udisks_drive)
+      && udisks_drive_get_size (self->udisks_drive) < (guint64) (2000000000000ULL))
+    {
+      self->partitioning_type = GDU_PARTITIONING_TYPE_DOS;
+    }
+
   gtk_window_present (GTK_WINDOW (self));
 }

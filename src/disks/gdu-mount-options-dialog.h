@@ -14,7 +14,10 @@
 
 G_BEGIN_DECLS
 
-void   gdu_fstab_dialog_show (GtkWindow    *parent_window,
+#define GDU_TYPE_MOUNT_OPTIONS_DIALOG (gdu_mount_options_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, GDU, MOUNT_OPTIONS_DIALOG, AdwWindow)
+
+void   gdu_mount_options_dialog_show (GtkWindow    *parent_window,
                               UDisksObject *object,
                               UDisksClient *client);
 

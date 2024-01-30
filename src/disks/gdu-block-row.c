@@ -834,7 +834,7 @@ configure_fstab_cb (GtkWidget  *widget,
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  gdu_fstab_dialog_show (block_row_get_window (self),
+  gdu_mount_options_dialog_show (block_row_get_window (self),
                           object,
                           block_row_get_client ());
 }

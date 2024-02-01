@@ -917,5 +917,5 @@ gdu_drive_get_object_for_format (GduDrive *self)
   if (self->partition_table)
     return self->partition_table;
 
-  return NULL;
+  return self->object;
 }

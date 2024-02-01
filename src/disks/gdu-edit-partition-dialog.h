@@ -8,16 +8,13 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include "gdutypes.h"
-
 G_BEGIN_DECLS
 
-#define GDU_TYPE_PARTITION_DIALOG (gdu_partition_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduPartitionDialog, gdu_partition_dialog, GDU, PARTITION_DIALOG, GtkDialog)
+#define GDU_TYPE_EDIT_PARTITION_DIALOG (gdu_edit_partition_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, GDU, EDIT_PARTITION_DIALOG, AdwWindow)
 
-void     gdu_partition_dialog_show (GtkWindow    *parent_window,
-                                    UDisksObject *object,
-                                    UDisksClient *client);
+void     gdu_edit_partition_dialog_show (GtkWindow    *parent_window,
+                                         UDisksObject *object,
+                                         UDisksClient *client);
 
 G_END_DECLS

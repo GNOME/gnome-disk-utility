@@ -1,166 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <template class="GduPartitionDialog" parent="GtkDialog">
-    <property name="border_width">12</property>
-    <property name="title" translatable="yes">Edit Partition</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
-    <signal name="response" handler="partition_dialog_response_cb" swapped="yes" />
-
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-        <child>
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="row_spacing">6</property>
-            <property name="column_spacing">10</property>
-
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Type</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">type_combobox</property>
-                <style><class name="dim-label"/></style>
+  <template class="GduEditPartitionDialog" parent="AdwWindow">
+    <property name="title" translatable="true">Edit Partition</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">false</property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="true">Cancel</property>
+                <property name="action-name">window.close</property>
               </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
             </child>
-            <child>
-              <object class="GtkComboBox" id="type_combobox">
-                <property name="visible">True</property>
-                <signal name="notify::active" handler="partition_dialog_property_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-
-            <child>
-              <object class="GtkLabel">
-                <property name="visible" bind-source="name_entry" bind-property="visible" bind-flags="sync-create" />
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Name</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic-widget">name_entry</property>
+            <child type="end">
+              <object class="GtkButton" id="confirm_button">
+                <property name="label" translatable="true">Done</property>
+                <property name="sensitive">false</property>
+                <signal name="clicked" handler="on_confirm_button_clicked_cb"
+                  swapped="True" object="GduEditPartitionDialog" />
                 <style>
-                  <class name="dim-label"/>
+                  <class name="suggested-action" />
                 </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="name_entry">
-                <property name="tooltip_markup" translatable="yes">The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the &lt;b&gt;/dev/disk/by-partlabel&lt;/b&gt; directory</property>
-                <property name="max_length">36</property>
-                <signal name="changed" handler="partition_dialog_property_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Flags</property>
-                <property name="use_underline">True</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="bootable_check_button">
-                <property name="visible">True</property>
-                <property name="tooltip_markup" translatable="yes">This is equivalent to Master Boot Record &lt;i&gt;bootable&lt;/i&gt; flag. It is normally only used for GPT partitions on MBR systems</property>
-                <property name="use_underline">True</property>
-                <property name="xalign">0</property>
-                <signal name="notify::active" handler="partition_dialog_property_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="system_check_button">
-                <property name="label" translatable="yes">_System Partition</property>
-                <property name="receives_default">False</property>
-                <property name="tooltip_markup" translatable="yes">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents</property>
-                <property name="use_underline">True</property>
-                <property name="xalign">0</property>
-                <signal name="notify::active" handler="partition_dialog_property_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="hide_from_firmware_check_button">
-                <property name="label" translatable="yes">Hide from _Firmware</property>
-                <property name="tooltip_markup" translatable="yes">Indicates that EFI firmware should ignore the content of the partition and not try to read from it</property>
-                <property name="use_underline">True</property>
-                <property name="xalign">0</property>
-                <signal name="notify::active" handler="partition_dialog_property_changed_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-
-          </object>
-        </child>
-
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="visible">True</property>
-                <property name="use_underline">True</property>
-                <property name="receives_default">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="change_button">
-                <property name="label" translatable="yes">C_hange</property>
-                <property name="visible">True</property>
-                <property name="can-default">True</property>
-                <property name="use_underline">True</property>
               </object>
             </child>
           </object>
         </child>
-
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwComboRow" id="type_row">
+                    <property name="title" translatable="true">Partition Type</property>
+                    <property name="tooltip-markup" translatable="true">The partition type represented as a 32-bit &lt;i&gt;GUID&lt;/i&gt;</property>
+                    <signal name="notify::selected-item" handler="on_property_changed_cb"
+                      swapped="True" object="GduEditPartitionDialog" />
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="name_entry">
+                    <property name="title" translatable="true">Name</property>
+                    <property name="tooltip-markup" translatable="true">The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the &lt;b&gt;/dev/disk/by-partlabel&lt;/b&gt; directory</property>
+                    <signal name="apply" handler="on_property_changed_cb"
+                      swapped="True" object="GduEditPartitionDialog" />
+                    <style>
+                      <class name="property" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="title" translatable="true">Flags</property>
+                <child>
+                  <object class="AdwSwitchRow" id="bootable_switch">
+                    <property name="title" translatable="true">Legacy BIOS Bootable</property>
+                    <property name="subtitle" translatable="true">This is equivalent to Master Boot Record &lt;i&gt;bootable&lt;/i&gt; flag. It is normally only used for GPT partitions on MBR systems</property>
+                    <signal name="notify::active" handler="on_property_changed_cb"
+                    swapped="True" object="GduEditPartitionDialog" />
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="system_partition_switch">
+                    <property name="title" translatable="true">System Partition</property>
+                    <property name="subtitle" translatable="true">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents</property>
+                    <signal name="notify::active" handler="on_property_changed_cb"
+                    swapped="True" object="GduEditPartitionDialog" />
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="firmware_hide_switch">
+                    <property name="title" translatable="true">Hide from Firmware</property>
+                    <property name="subtitle" translatable="true">Indicates that EFI firmware should ignore the content of the partition and not try to read from it</property>
+                    <signal name="notify::active" handler="on_property_changed_cb"
+                    swapped="True" object="GduEditPartitionDialog" />
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
-    </child>
-    <action-widgets>
-      <action-widget response="cancel">cancel_button</action-widget>
-      <action-widget response="ok" default="yes">change_button</action-widget>
-    </action-widgets>
+    </property>
   </template>
 </interface>

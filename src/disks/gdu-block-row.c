@@ -253,7 +253,7 @@ edit_partition_cb (GtkWidget  *widget,
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
-  gdu_partition_dialog_show (block_row_get_window (self),
+  gdu_edit_partition_dialog_show (block_row_get_window (self),
                              object,
                              block_row_get_client ());
 }

@@ -1,212 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
-  <template class="GduCreateFilesystemPage" parent="GtkGrid">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_start">40</property>
-    <property name="margin_end">40</property>
-    <property name="margin_top">40</property>
-    <property name="margin_bottom">40</property>
-    <property name="row_spacing">8</property>
-    <property name="column_spacing">16</property>
+  <template class="GduCreateFilesystemPage" parent="AdwBin">
+    <signal name="notify::fs-type"
+      handler="on_fs_type_changed"
+      object="GduCreateFilesystemPage"
+      swapped="yes" />
     <child>
-      <object class="GtkLabel" id="name_label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">end</property>
-        <property name="label" translatable="yes">Volume _Name</property>
-        <property name="use_underline">True</property>
-        <property name="mnemonic_widget">name_entry</property>
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwEntryRow" id="name_entry">
+                <property name="title" translatable="true">Volume Name</property>
+                <signal name="apply" handler="on_fs_name_changed" object="GduCreateFilesystemPage" swapped="yes" />
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwSwitchRow" id="erase_switch">
+                <property name="title" translatable="true">Overwrite Existing Data</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="true">Type</property>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Ext4</property>
+                <property name="subtitle" translatable="true">For use only with Linux systems</property>
+                <property name="activatable-widget">ext4_checkbutton</property>
+                <child type="prefix">
+                  <object class="GtkCheckButton" id="ext4_checkbutton">
+                      <property name="action-name">update_fs_type</property>
+                      <property name="action-target">'ext4'</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">NTFS</property>
+                <property name="subtitle" translatable="true">For use with Windows</property>
+                <property name="activatable-widget">ntfs_checkbutton</property>
+                <child type="prefix">
+                  <object class="GtkCheckButton" id="ntfs_checkbutton">
+                    <property name="action-name">update_fs_type</property>
+                    <property name="action-target">'ntfs'</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">FAT</property>
+                <property name="subtitle" translatable="true">For use with all systems and devices</property>
+                <property name="activatable-widget">fat_checkbutton</property>
+                <child type="prefix">
+                  <object class="GtkCheckButton" id="fat_checkbutton">
+                    <property name="action-name">update_fs_type</property>
+                    <property name="action-target">'vfat'</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
+                <property name="title">Other</property>
+                <property name="activatable-widget">other_checkbutton</property>
+                <child type="prefix">
+                  <object class="GtkCheckButton" id="other_checkbutton">
+                    <property name="action-name">update_fs_type</property>
+                    <property name="action-target">'other'</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="AdwSwitchRow" id="encrypt_switch">
+                <property name="title" translatable="true">Password Protect Volume</property>
+                <property name="subtitle" translatable="true">Encrypts the volume using LUKS</property>
+                <signal name="notify::active" handler="on_fs_type_changed" object="GduCreateFilesystemPage" swapped="yes" />
+                <property name="sensitive"
+                      bind-source="ext4_checkbutton"
+                      bind-property="active"
+                      bind-flags="sync-create" />
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkEntry" id="name_entry">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="has_tooltip">True</property>
-        <property name="tooltip_text" translatable="yes">The name to use for the filesystem. This is useful if you want to refer to the device via a symlink in the /dev/disk/by-label directory.</property>
-        <property name="activates_default">True</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">0</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="name_description_label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="margin_bottom">20</property>
-        <property name="label" translatable="yes">For example: “Angela’s Files” or “Backup”.</property>
-        <style>
-          <class name="dim-label"/>
-          <class name="explanation-label"/>
-        </style>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkSwitch" id="erase_switch">
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="halign">start</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">2</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="erase_label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">end</property>
-        <property name="label" translatable="yes">_Erase</property>
-        <property name="use_underline">True</property>
-        <property name="mnemonic_widget">erase_switch</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">2</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="erase_description_label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">start</property>
-        <property name="margin_bottom">20</property>
-        <property name="label" translatable="yes">Overwrites existing data, but takes longer.</property>
-        <style>
-          <class name="dim-label"/>
-          <class name="explanation-label"/>
-        </style>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">3</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkLabel" id="type_label">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">end</property>
-        <property name="label" translatable="yes">Type</property>
-        <property name="mnemonic_widget">internal_checkbutton</property>
-      </object>
-      <packing>
-        <property name="left_attach">0</property>
-        <property name="top_attach">4</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="internal_checkbutton">
-        <property name="label" translatable="yes">_Internal disk for use with Linux systems only (Ext4)</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="halign">start</property>
-        <property name="use_underline">True</property>
-        <property name="active">True</property>
-        <property name="draw_indicator">True</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">4</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="internal_encrypt_checkbutton">
-        <property name="label" translatable="yes">_Password protect volume (LUKS)</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="halign">start</property>
-        <property name="margin_start">18</property>
-        <property name="use_underline">True</property>
-        <property name="draw_indicator">True</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">5</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="windows_checkbutton">
-        <property name="label" translatable="yes">For use with _Windows (NTFS)</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="halign">start</property>
-        <property name="use_underline">True</property>
-        <property name="draw_indicator">True</property>
-        <property name="group">internal_checkbutton</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">6</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="all_checkbutton">
-        <property name="label" translatable="yes">For use with all _systems and devices (FAT)</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="halign">start</property>
-        <property name="use_underline">True</property>
-        <property name="draw_indicator">True</property>
-        <property name="group">internal_checkbutton</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">7</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkCheckButton" id="other_checkbutton">
-        <property name="label" translatable="yes">_Other</property>
-        <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="receives_default">False</property>
-        <property name="halign">start</property>
-        <property name="use_underline">True</property>
-        <property name="draw_indicator">True</property>
-        <property name="group">internal_checkbutton</property>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">8</property>
-      </packing>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
     </child>
   </template>
 </interface>

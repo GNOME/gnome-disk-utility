@@ -6,16 +6,26 @@
  * Author: Kai Lüke <kailueke@riseup.net>
  */
 
-#ifndef __GDU_CREATE_FILESYSTEM_PAGE_H__
-#define __GDU_CREATE_FILESYSTEM_PAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_CREATE_FILESYSTEM_PAGE gdu_create_filesystem_page_get_type ()
-G_DECLARE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, GDU, CREATE_FILESYSTEM_PAGE, GtkGrid)
+#define GDU_TYPE_CREATE_FILESYSTEM_PAGE (gdu_create_filesystem_page_get_type ())
+G_DECLARE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, GDU, CREATE_FILESYSTEM_PAGE, AdwBin)
+
+GType gdu_fs_type_get_type (void) G_GNUC_CONST;
+#define GDU_TYPE_FS_TYPE (gdu_fs_type_get_type ())
+
+typedef enum
+{
+  GDU_FS_TYPE_EXT4,
+  GDU_FS_TYPE_NTFS,
+  GDU_FS_TYPE_FAT,
+  GDU_FS_TYPE_OTHER
+} GduFsType;
 
 GduCreateFilesystemPage *gdu_create_filesystem_page_new          (UDisksClient *client,
                                                                   UDisksDrive  *drive);
@@ -32,4 +42,3 @@ const gchar *            gdu_create_filesystem_page_get_erase    (GduCreateFiles
 
 G_END_DECLS
 
-#endif /* __GDU_CREATE_FILESYSTEM_PAGE_H__ */

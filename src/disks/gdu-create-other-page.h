@@ -15,7 +15,22 @@
 G_BEGIN_DECLS
 
 #define GDU_TYPE_CREATE_OTHER_PAGE gdu_create_other_page_get_type ()
-G_DECLARE_FINAL_TYPE (GduCreateOtherPage, gdu_create_other_page, GDU, CREATE_OTHER_PAGE, GtkBox)
+G_DECLARE_FINAL_TYPE (GduCreateOtherPage, gdu_create_other_page, GDU, CREATE_OTHER_PAGE, AdwBin)
+
+GType gdu_other_fs_type_get_type (void) G_GNUC_CONST;
+#define GDU_TYPE_OTHER_FS_TYPE (gdu_other_fs_type_get_type ())
+
+typedef enum
+{
+  GDU_OTHER_FS_TYPE_XFS,
+  GDU_OTHER_FS_TYPE_SWAP,
+  GDU_OTHER_FS_TYPE_BTRFS,
+  GDU_OTHER_FS_TYPE_F2FS,
+  GDU_OTHER_FS_TYPE_EXFAT,
+  GDU_OTHER_FS_TYPE_UDF,
+  GDU_OTHER_FS_TYPE_EMPTY,
+  N_OTHER_FS
+} GduOtherFsType;
 
 GduCreateOtherPage *gdu_create_other_page_new          (UDisksClient *client);
 

@@ -11,25 +11,6 @@
 #include <glib/gi18n.h>
 
 #include "gdu-create-password-page.h"
-#include "gdupasswordstrengthwidget.h"
-
-struct _GduCreatePasswordPage
-{
-  GtkGrid parent_instance;
-};
-
-typedef struct _GduCreatePasswordPagePrivate GduCreatePasswordPagePrivate;
-
-struct _GduCreatePasswordPagePrivate
-{
-  GtkEntry *password_entry;
-  GtkEntry *confirm_password_entry;
-  GtkCheckButton *show_password_checkbutton;
-  GtkBox *password_strength_box;
-  GtkWidget *password_strengh_widget;
-
-  gboolean complete;
-};
 
 enum
 {
@@ -37,12 +18,88 @@ enum
   PROP_COMPLETE
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GduCreatePasswordPage, gdu_create_password_page, GTK_TYPE_GRID);
+struct _GduCreatePasswordPage
+{
+  AdwBin     parent_instance;
+
+  GtkWidget *password_entry;
+  GtkWidget *confirm_password_entry;
+  GtkWidget *strength_indicator;
+  GtkWidget *confirm_password_label;
+  GtkWidget *strength_hint_label;
+
+  gboolean complete;
+};
+
+G_DEFINE_TYPE (GduCreatePasswordPage, gdu_create_password_page, ADW_TYPE_BIN);
+
+const gchar *
+gdu_create_password_page_get_password (GduCreatePasswordPage *self)
+{
+  return gtk_editable_get_text (GTK_EDITABLE (self->password_entry));
+}
 
 static void
-gdu_create_password_page_init (GduCreatePasswordPage *page)
+update_password_strength (GduCreatePasswordPage *self)
 {
-  gtk_widget_init_template (GTK_WIDGET (page));
+  gint strength_level;
+  const gchar *hint;
+  const gchar *password;
+  const gchar *verify;
+
+  password = gtk_editable_get_text (GTK_EDITABLE (self->password_entry));
+
+  pw_strength (password, &hint, &strength_level);
+
+  gtk_level_bar_set_value (GTK_LEVEL_BAR (self->strength_indicator), strength_level);
+  gtk_label_set_label (GTK_LABEL (self->strength_hint_label), hint);
+
+  if (strength_level > 0)
+    {
+      gtk_widget_remove_css_class (self->password_entry, "error");
+    }
+  else
+    {
+      gtk_widget_add_css_class (self->password_entry, "error");
+    }
+
+  verify = gtk_editable_get_text (GTK_EDITABLE (self->confirm_password_entry));
+  if (strlen (verify) == 0)
+    {
+      gtk_widget_set_sensitive (self->confirm_password_entry, strength_level > 0);
+    }
+}
+
+static void
+on_password_changed (GduCreatePasswordPage *self)
+{
+  gboolean can_proceed = FALSE;
+  const gchar *password = NULL;
+  const gchar *verify = NULL;
+
+  password = gtk_editable_get_text (GTK_EDITABLE (self->password_entry));
+  verify = gtk_editable_get_text (GTK_EDITABLE (self->confirm_password_entry));
+
+  gtk_widget_add_css_class (self->password_entry, "error");
+
+  if (strlen (password) > 0)
+    {
+      if (g_strcmp0 (password, verify) == 0)
+        {
+          gtk_widget_remove_css_class (self->confirm_password_entry, "error");
+          gtk_widget_set_visible (self->confirm_password_label, FALSE);
+          can_proceed = TRUE;
+        }
+      else if (strlen (verify) > 0)
+        {
+          gtk_widget_add_css_class (self->confirm_password_entry, "error");
+          gtk_widget_set_visible (self->confirm_password_label, TRUE);
+        }
+    }
+  update_password_strength (self);
+
+  self->complete = can_proceed;
+  g_object_notify (G_OBJECT (self), "complete");
 }
 
 static void
@@ -51,15 +108,12 @@ gdu_create_password_page_get_property (GObject    *object,
                                        GValue     *value,
                                        GParamSpec *pspec)
 {
-  GduCreatePasswordPage *page = GDU_CREATE_PASSWORD_PAGE (object);
-  GduCreatePasswordPagePrivate *priv;
-
-  priv = gdu_create_password_page_get_instance_private (page);
+  GduCreatePasswordPage *self = GDU_CREATE_PASSWORD_PAGE (object);
 
   switch (property_id)
     {
     case PROP_COMPLETE:
-      g_value_set_boolean (value, priv->complete);
+      g_value_set_boolean (value, self->complete);
       break;
 
     default:
@@ -69,83 +123,40 @@ gdu_create_password_page_get_property (GObject    *object,
 }
 
 static void
-gdu_create_password_page_class_init (GduCreatePasswordPageClass *class)
+gdu_create_password_page_init (GduCreatePasswordPage *self)
 {
-  GObjectClass *gobject_class;
-
-  gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/DiskUtility/ui/gdu-create-password-page.ui");
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, password_strength_box);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, password_entry);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, confirm_password_entry);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, show_password_checkbutton);
-
-  gobject_class = G_OBJECT_CLASS (class);
-  gobject_class->get_property = gdu_create_password_page_get_property;
-  g_object_class_install_property (gobject_class, PROP_COMPLETE,
-                                   g_param_spec_boolean ("complete", NULL, NULL,
-                                                         FALSE,
-                                                         G_PARAM_READABLE |
-                                                         G_PARAM_STATIC_STRINGS));
-}
-
-const gchar *
-gdu_create_password_page_get_password (GduCreatePasswordPage *page)
-{
-  GduCreatePasswordPagePrivate *priv;
-
-  priv = gdu_create_password_page_get_instance_private (page);
-
-  return gtk_editable_get_text (GTK_EDITABLE (priv->password_entry));
+  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 static void
-on_password_changed (GObject *object, GParamSpec *pspec, gpointer user_data)
+gdu_create_password_page_class_init (GduCreatePasswordPageClass *klass)
 {
-  GduCreatePasswordPage *page = GDU_CREATE_PASSWORD_PAGE (user_data);
-  GduCreatePasswordPagePrivate *priv;
-  gboolean can_proceed = FALSE;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  priv = gdu_create_password_page_get_instance_private (page);
+  object_class->get_property = gdu_create_password_page_get_property;
 
-  gtk_entry_set_icon_from_icon_name (priv->confirm_password_entry, GTK_ENTRY_ICON_SECONDARY, NULL);
-  gtk_entry_set_icon_tooltip_text (priv->confirm_password_entry, GTK_ENTRY_ICON_SECONDARY, NULL);
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-create-password-page.ui");
 
-  if (gtk_entry_get_text_length (priv->password_entry) > 0)
-    {
-      if (g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (priv->password_entry)),
-                     gtk_editable_get_text (GTK_EDITABLE (priv->confirm_password_entry))) == 0)
-        {
-          can_proceed = TRUE;
-        }
-      else if (gtk_entry_get_text_length (priv->confirm_password_entry) > 0)
-        {
-          gtk_entry_set_icon_from_icon_name (priv->confirm_password_entry, GTK_ENTRY_ICON_SECONDARY, "dialog-warning-symbolic");
-          gtk_entry_set_icon_tooltip_text (priv->confirm_password_entry, GTK_ENTRY_ICON_SECONDARY, _("The passwords do not match"));
-        }
-    }
+  gtk_widget_class_bind_template_child (widget_class, GduCreatePasswordPage, password_entry);
+  gtk_widget_class_bind_template_child (widget_class, GduCreatePasswordPage, confirm_password_entry);
+  gtk_widget_class_bind_template_child (widget_class, GduCreatePasswordPage, strength_indicator);
+  gtk_widget_class_bind_template_child (widget_class, GduCreatePasswordPage, confirm_password_label);
+  gtk_widget_class_bind_template_child (widget_class, GduCreatePasswordPage, strength_hint_label);
 
-  gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (priv->password_strengh_widget),
-                                             gtk_editable_get_text (GTK_EDITABLE (priv->password_entry)));
+  gtk_widget_class_bind_template_callback (widget_class, on_password_changed);
 
-  priv->complete = can_proceed;
-  g_object_notify (G_OBJECT (page), "complete");
+  g_object_class_install_property (object_class, PROP_COMPLETE,
+                                   g_param_spec_boolean ("complete",
+                                                         NULL, NULL, FALSE,
+                                                         G_PARAM_READABLE |
+                                                         G_PARAM_STATIC_STRINGS));
 }
 
 GduCreatePasswordPage *
 gdu_create_password_page_new (void)
 {
-  GduCreatePasswordPage *page;
-  GduCreatePasswordPagePrivate *priv;
-
-  page = g_object_new (GDU_TYPE_CREATE_PASSWORD_PAGE, NULL);
-  priv = gdu_create_password_page_get_instance_private (page);
-  g_signal_connect (priv->password_entry, "notify::text", G_CALLBACK (on_password_changed), page);
-  g_signal_connect (priv->confirm_password_entry, "notify::text", G_CALLBACK (on_password_changed), page);
-  g_object_bind_property (priv->show_password_checkbutton, "active", priv->password_entry, "visibility", G_BINDING_SYNC_CREATE);
-  g_object_bind_property (priv->show_password_checkbutton, "active", priv->confirm_password_entry, "visibility", G_BINDING_SYNC_CREATE);
-  priv->password_strengh_widget = gdu_password_strength_widget_new ();
-  gtk_box_append (priv->password_strength_box, priv->password_strengh_widget);
-
-  return page;
+  return g_object_new (GDU_TYPE_CREATE_PASSWORD_PAGE, NULL);
 }

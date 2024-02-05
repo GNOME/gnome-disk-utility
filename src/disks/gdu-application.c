@@ -390,6 +390,8 @@ static void
 gdu_application_startup (GApplication *_app)
 {
   GduApplication *app = GDU_APPLICATION (_app);
+  g_autoptr(GtkCssProvider) provider = NULL;
+
   const gchar **it;
   const gchar *action_accels[] = {
     "win.go-back",               "Escape", NULL,
@@ -420,6 +422,14 @@ gdu_application_startup (GApplication *_app)
 
   for (it = action_accels; it[0] != NULL; it += g_strv_length ((gchar **)it) + 1)
     gtk_application_set_accels_for_action (GTK_APPLICATION (app), it[0], &it[1]);
+
+  provider = gtk_css_provider_new ();
+  gtk_css_provider_load_from_resource (provider,
+                                       "/org/gnome/DiskUtility/gtk/"
+                                       "style.css");
+  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
+                                              GTK_STYLE_PROVIDER (provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

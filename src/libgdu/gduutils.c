@@ -863,7 +863,6 @@ gdu_utils_show_confirmation (GtkWindow    *parent_window,
   }
 
   gtk_widget_grab_focus (gtk_dialog_get_widget_for_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL));
-  gtk_widget_show_all (dialog);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
 

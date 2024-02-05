@@ -183,7 +183,6 @@ gdu_password_strength_widget_constructed (GObject *object)
       gtk_notebook_append_page (GTK_NOTEBOOK (widget->notebook), label, NULL);
     }
 
-  gtk_widget_show_all (GTK_WIDGET (widget));
 
   update (widget);
 

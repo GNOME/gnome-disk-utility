@@ -103,7 +103,6 @@ do_filechooser (void)
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), ro_checkbutton);
 
-  //gtk_widget_show_all (dialog);
   if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_ACCEPT)
     goto out;
 

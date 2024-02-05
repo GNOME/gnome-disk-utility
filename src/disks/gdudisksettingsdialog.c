@@ -632,7 +632,6 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
 static void
 hide_forever (GtkWidget *widget)
 {
-  gtk_widget_set_no_show_all (widget, TRUE);
   gtk_widget_set_visible (widget, FALSE);
 }
 

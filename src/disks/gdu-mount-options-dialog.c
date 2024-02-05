@@ -484,7 +484,6 @@ gdu_fstab_dialog_show (GtkWindow    *parent_window,
     }
 
   gtk_switch_set_active (GTK_SWITCH (data.automatic_mount_options_switch), !configured);
-  gtk_widget_show_all (dialog);
 
   update_device_explanation (&data);
   update (&data, NULL);

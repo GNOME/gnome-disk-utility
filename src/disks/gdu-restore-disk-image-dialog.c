@@ -1099,12 +1099,10 @@ gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
 
   data->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO, "", &data->warning_label);
   gtk_box_append (GTK_BOX (data->infobar_vbox), data->warning_infobar);
-  gtk_widget_set_no_show_all (data->warning_infobar, TRUE);
   g_object_ref (data->warning_infobar);
 
   data->error_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_ERROR, "", &data->error_label);
   gtk_box_append (GTK_BOX (data->infobar_vbox), data->error_infobar);
-  gtk_widget_set_no_show_all (data->error_infobar, TRUE);
   g_object_ref (data->error_infobar);
 
   restore_disk_image_populate (data);

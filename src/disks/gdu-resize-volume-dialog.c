@@ -906,7 +906,6 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
     {
       gtk_spinner_stop (GTK_SPINNER (data->spinner));
       gtk_stack_set_visible_child (GTK_STACK (data->size_stack), data->resize_number_grid);
-      gtk_widget_set_no_show_all (data->explanation_label, TRUE);
       gtk_widget_set_visible (data->explanation_label, FALSE);
     }
   else
@@ -937,7 +936,6 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                                data,
                                NULL);
 
-  gtk_widget_show_all (data->dialog);
   set_unit_num (data, data->cur_unit_num);
 
   if (data->filesystem != NULL)

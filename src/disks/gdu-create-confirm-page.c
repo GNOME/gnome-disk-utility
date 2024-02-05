@@ -12,38 +12,92 @@
 
 #include "gdu-create-confirm-page.h"
 
-struct _GduCreateConfirmPage
-{
-  GtkGrid parent_instance;
-};
-
-typedef struct _GduCreateConfirmPagePrivate GduCreateConfirmPagePrivate;
-
-struct _GduCreateConfirmPagePrivate
-{
-  GtkLabel *device_name_label;
-  GtkLabel *volume_name_label;
-  GtkLabel *used_label;
-  GtkLabel *used_amount_label;
-  GtkLabel *location_path_label;
-
-  UDisksClient *client;
-  UDisksObject *object;
-  UDisksBlock *block;
-};
-
 enum
 {
   PROP_0,
   PROP_COMPLETE
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (GduCreateConfirmPage, gdu_create_confirm_page, GTK_TYPE_GRID);
+struct _GduCreateConfirmPage
+{
+  AdwBin         parent_instance;
+
+  GtkWidget     *device_row;
+  GtkWidget     *volume_row;
+  GtkWidget     *usage_row;
+  GtkWidget     *location_row;
+
+  UDisksClient  *client;
+  UDisksObject  *object;
+  UDisksBlock   *block;
+};
+
+G_DEFINE_TYPE (GduCreateConfirmPage, gdu_create_confirm_page, ADW_TYPE_BIN);
 
 static void
-gdu_create_confirm_page_init (GduCreateConfirmPage *page)
+gdu_create_confirm_page_set_device_name (GduCreateConfirmPage *self)
 {
-  gtk_widget_init_template (GTK_WIDGET (page));
+  g_autoptr(UDisksObjectInfo) info;
+  g_autofree char *s = NULL;
+
+  info = udisks_client_get_object_info (self->client, self->object);
+
+  /* Translators: In most cases this should not need translation unless the
+   *              separation character '—' is not appropriate. The strings come
+   *              from UDisks, first is description, second the name:
+   *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
+   */
+  s = g_strdup_printf (_("%s — %s"),
+                       udisks_object_info_get_description (info),
+                       udisks_object_info_get_name (info));
+
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->device_row), s);
+}
+
+static void
+gdu_create_confirm_page_set_volume_label (GduCreateConfirmPage *self)
+{
+  const gchar *s = NULL;
+
+  s = udisks_block_get_id_label (self->block);
+  if (s == NULL || strlen (s) == 0)
+    {
+      s = udisks_block_get_id_type (self->block);
+    }
+
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->volume_row), s);
+}
+
+static void
+gdu_create_confirm_page_set_location (GduCreateConfirmPage *self)
+{
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->location_row),
+                               udisks_block_get_preferred_device (self->block));
+}
+
+static void
+gdu_create_confirm_page_set_usage (GduCreateConfirmPage *self)
+{
+  gint64 unused_space = -1;
+  gint64 size;
+  g_autofree char *s1 = NULL;
+  g_autofree char *s2 = NULL;
+
+  unused_space = gdu_utils_get_unused_for_block (self->client, self->block);
+
+  size = udisks_block_get_size (self->block);
+  if (unused_space > 0)
+    {
+      gtk_widget_set_visible (GTK_WIDGET (self->usage_row), TRUE);
+      s1 = udisks_client_get_size_for_display (self->client,
+                                               size - unused_space,
+                                               FALSE, FALSE);
+      /* Translators: Disk usage in the format '3 GB (7%)', unit string comes
+       * from UDisks.
+       */
+      s2 = g_strdup_printf (_ ("%s (%.1f%%)"), s1, 100.0 * (size - unused_space) / size);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->usage_row), s2);
+    }
 }
 
 static void
@@ -65,92 +119,52 @@ gdu_create_confirm_page_get_property (GObject    *object,
 }
 
 static void
-gdu_create_confirm_page_class_init (GduCreateConfirmPageClass *class)
+gdu_create_confirm_page_init (GduCreateConfirmPage *self)
 {
-  GObjectClass *gobject_class;
+  gtk_widget_init_template (GTK_WIDGET (self));
+}
 
-  gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/DiskUtility/ui/gdu-create-confirm-page.ui");
+static void
+gdu_create_confirm_page_class_init (GduCreateConfirmPageClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->get_property = gdu_create_confirm_page_get_property;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-create-confirm-page.ui");
+
   /* confirm page with information on current device usage */
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, device_name_label);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, volume_name_label);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, used_amount_label);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, used_label);
-  gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, location_path_label);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, device_row);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, volume_row);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, usage_row);
+  gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, location_row);
 
-  gobject_class = G_OBJECT_CLASS (class);
-  gobject_class->get_property = gdu_create_confirm_page_get_property;
-  g_object_class_install_property (gobject_class, PROP_COMPLETE,
-                                   g_param_spec_boolean ("complete", NULL, NULL,
-                                                         TRUE,
+  g_object_class_install_property (object_class, PROP_COMPLETE,
+                                   g_param_spec_boolean ("complete",
+                                                         NULL, NULL, TRUE,
                                                          G_PARAM_READABLE |
                                                          G_PARAM_STATIC_STRINGS));
 }
 
-void
-gdu_create_confirm_page_fill_confirmation (GduCreateConfirmPage *page)
-{
-  GduCreateConfirmPagePrivate *priv;
-  UDisksObjectInfo *info;
-  gint64 unused_space = -1;
-  gint64 size;
-  const gchar *s;
-  gchar *s1;
-  gchar *s2;
-
-  priv = gdu_create_confirm_page_get_instance_private (page);
-  /* gather data on current device usage for the confirmation page */
-  info = udisks_client_get_object_info (priv->client, priv->object);
-  unused_space = gdu_utils_get_unused_for_block (priv->client, priv->block);
-  /* Translators: In most cases this should not need translation unless the
-   *              separation character '—' is not appropriate. The strings come
-   *              from UDisks, first is description, second the name:
-   *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
-   */
-  s1 = g_strdup_printf (_("%s — %s"), udisks_object_info_get_description (info),
-                                      udisks_object_info_get_name (info));
-  gtk_label_set_text (priv->device_name_label, s1);
-  g_free (s1);
-
-  s = udisks_block_get_id_label (priv->block);
-  if (s != NULL && strlen(s) > 0)
-    gtk_label_set_text (priv->volume_name_label, s);
-  else
-    gtk_label_set_text (priv->volume_name_label, udisks_block_get_id_type (priv->block));
-  size = udisks_block_get_size (priv->block);
-  if (unused_space > 0)
-    {
-      gtk_widget_set_visible (GTK_WIDGET (priv->used_label), TRUE);
-      gtk_widget_set_visible (GTK_WIDGET (priv->used_amount_label), TRUE);
-      s1 = udisks_client_get_size_for_display (priv->client, size - unused_space, FALSE, FALSE);
-      /* Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
-       */
-      s2 = g_strdup_printf (_("%s (%.1f%%)"), s1, 100.0 * (size - unused_space) / size);
-      gtk_label_set_text (priv->used_amount_label, s2);
-      g_free (s1);
-      g_free (s2);
-    }
-  else
-    {
-      gtk_widget_set_visible (GTK_WIDGET (priv->used_label), FALSE);
-      gtk_widget_set_visible (GTK_WIDGET (priv->used_amount_label), FALSE);
-    }
-  gtk_label_set_text (priv->location_path_label, udisks_block_get_preferred_device (priv->block));
-
-  g_object_unref (info);
-}
-
 GduCreateConfirmPage *
-gdu_create_confirm_page_new (UDisksClient *client, UDisksObject *object, UDisksBlock *block)
+gdu_create_confirm_page_new (UDisksClient *client,
+                             UDisksObject *object,
+                             UDisksBlock  *block)
 {
-  GduCreateConfirmPage *page;
-  GduCreateConfirmPagePrivate *priv;
+  GduCreateConfirmPage *self;
 
-  page = g_object_new (GDU_TYPE_CREATE_CONFIRM_PAGE, NULL);
-  priv = gdu_create_confirm_page_get_instance_private (page);
-  priv->client = client;
-  priv->object = object;
-  priv->block = block;
+  self = g_object_new (GDU_TYPE_CREATE_CONFIRM_PAGE, NULL);
+  self->client = client;
+  self->object = object;
+  self->block = block;
 
-  return page;
+  gdu_create_confirm_page_set_device_name (self);
+  gdu_create_confirm_page_set_volume_label (self);
+  gdu_create_confirm_page_set_usage (self);
+  gdu_create_confirm_page_set_location (self);
+
+  return self;
 }

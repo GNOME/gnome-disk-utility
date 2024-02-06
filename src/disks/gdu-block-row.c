@@ -267,6 +267,24 @@ create_partition_cb (GtkWidget  *widget,
 }
 
 static void
+unmount_clicked_cb (GtkWidget  *widget,
+                    const char *action_name,
+                    GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  UDisksObject *object;
+
+  object = gdu_block_get_object (self->block);
+
+  gdu_utils_ensure_unused (block_row_get_client (),
+                           block_row_get_window (self),
+                           object,
+                           NULL,
+                           NULL,
+                           NULL);
+}
+
+static void
 change_passphrase_clicked_cb (GtkWidget  *widget,
                               const char *action_name,
                               GVariant   *parameter)
@@ -826,6 +844,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_label);
 
   gtk_widget_class_install_action (widget_class, "row.create_partition", NULL, create_partition_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.unmount", NULL, unmount_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.change_passphrase", NULL, change_passphrase_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.resize", NULL, resize_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.edit_partition", NULL, edit_partition_clicked_cb);

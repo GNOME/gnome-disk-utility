@@ -33,10 +33,26 @@
         </child>
 
         <child>
-          <object class="GtkMenuButton" id="menu_botton">
+          <object class="GtkButton" id="create_partition_button">
+            <property name="valign">center</property>
+            <property name="icon-name">list-add-symbolic</property>
+            <property name="action-name">row.create_partition</property>
+            <property name="visible">false</property>
+            <style>
+              <class name="flat"></class>
+            </style>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkMenuButton" id="block_menu_button">
             <property name="valign">center</property>
             <property name="menu-model">block_menu</property>
             <property name="icon_name">view-more-symbolic</property>
+            <property name="visible"
+              bind-source="create_partition_button"
+              bind-property="visible"
+              bind-flags="sync-create|invert-boolean" />
             <style>
               <class name="flat"></class>
             </style>

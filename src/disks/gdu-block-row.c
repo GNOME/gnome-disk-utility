@@ -33,6 +33,7 @@
 #include "gduutils.h"
 #include "gdu-item.h"
 #include "gdu-block-row.h"
+#include "gdu-drive.h"
 
 /**
  * GduBlockRow:
@@ -47,6 +48,8 @@ struct _GduBlockRow
   GtkImage       *partition_image;
   GtkLabel       *partition_depth_label;
   GtkLevelBar    *space_level_bar;
+  GtkWidget      *create_partition_button;
+  GtkWidget      *block_menu_button;
 
   GtkLabel       *size_label;
   GtkLabel       *device_id_label;
@@ -158,7 +161,20 @@ update_block_row (GduBlockRow *self)
       adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), mount_points[0]);
     }
 
+  if (!features)
+    {
+      /* Hide the block menu button if there are no features
+      * This usually happens when the block is a free space
+      * or the parent is mounted as read only.
+      */
+      gtk_widget_set_visible (self->block_menu_button, FALSE);
+    }
+  else if (features & GDU_FEATURE_CREATE_PARTITION)
+    {
+      gtk_widget_set_visible (self->create_partition_button, TRUE);
+    }
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
+  ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
   ENABLE ("row.change_passphrase", GDU_FEATURE_CHANGE_PASSPHRASE);
   ENABLE ("row.resize", GDU_FEATURE_RESIZE_PARTITION);
   ENABLE ("row.edit_partition", GDU_FEATURE_EDIT_PARTITION);
@@ -221,6 +237,33 @@ edit_filesystem_clicked_cb (GtkWidget  *widget,
   gdu_filesystem_dialog_show (block_row_get_window (self),
                              object,
                              block_row_get_client ());
+}
+
+static void
+create_partition_cb (GtkWidget  *widget,
+                     const char *action_name,
+                     GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  GduItem *drive = NULL;
+  UDisksObject *object = NULL;
+
+  drive = gdu_item_get_parent (GDU_ITEM (self->block));
+  while (!GDU_IS_DRIVE (drive))
+    {
+      g_assert (drive);
+      drive = gdu_item_get_parent (drive);
+    }
+
+  object = gdu_drive_get_object (GDU_DRIVE (drive));
+  g_assert (object != NULL);
+
+  gdu_create_format_show (block_row_get_client (),
+                          block_row_get_window (self),
+                          object,
+                          TRUE,
+                          gdu_block_get_offset (self->block),
+                          gdu_item_get_size (GDU_ITEM (self->block)));
 }
 
 static void
@@ -774,12 +817,15 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_image);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_depth_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, space_level_bar);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, create_partition_button);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, block_menu_button);
 
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, size_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, device_id_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, uuid_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_label);
 
+  gtk_widget_class_install_action (widget_class, "row.create_partition", NULL, create_partition_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.change_passphrase", NULL, change_passphrase_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.resize", NULL, resize_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.edit_partition", NULL, edit_partition_clicked_cb);

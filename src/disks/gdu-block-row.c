@@ -285,6 +285,93 @@ unmount_clicked_cb (GtkWidget  *widget,
 }
 
 static void
+partition_delete_cb (UDisksPartition *partition,
+                     GAsyncResult    *res,
+                     gpointer         user_data)
+{
+  GduBlockRow *self = user_data;
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_partition_call_delete_finish (partition,
+                                            res,
+                                            &error))
+    {
+      gdu_utils_show_error (block_row_get_window (self),
+                            _("Error deleting partition"),
+                            error);
+    }
+}
+
+static void
+delete_ensure_unused_cb (GObject      *obj,
+                         GAsyncResult *result,
+                         gpointer      user_data)
+{
+  GduBlockRow *self = user_data;
+  g_autoptr(UDisksObject) object;
+
+  object = gdu_block_get_object (self->block);
+  if (gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))
+    {
+      UDisksPartition *partition;
+      partition = udisks_object_peek_partition (object);
+      udisks_partition_call_delete (partition,
+                                    g_variant_new ("a{sv}", NULL), /* options */
+                                    NULL, /* cancellable */
+                                    partition_delete_cb,
+                                    self);
+    }
+}
+
+static void
+delete_response_cb (GObject      *source_object,
+                    GAsyncResult *response,
+                    gpointer      user_data)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (user_data);
+  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+  UDisksObject *object;
+
+  object = gdu_block_get_object (self->block);
+  g_assert (object != NULL);
+
+  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
+
+  gdu_utils_ensure_unused (block_row_get_client (),
+                           block_row_get_window (self),
+                           object,
+                           delete_ensure_unused_cb,
+                           NULL, /* GCancellable */
+                           self);
+}
+
+static void
+delete_clicked_cb (GtkWidget  *widget,
+                    const char *action_name,
+                    GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  UDisksObject *object;
+  g_autoptr(GList) objects;
+
+  object = gdu_block_get_object (self->block);
+  objects = g_list_append (NULL, object);
+
+  gdu_utils_show_confirmation (block_row_get_window (self),
+                               _("Are you sure you want to delete the partition?"),
+                               _("All data on the partition will be lost"),
+                               _("_Delete"),
+                               NULL,
+                               NULL,
+                               block_row_get_client (),
+                               objects,
+                               delete_response_cb,
+                               self,
+                               ADW_RESPONSE_DESTRUCTIVE);
+}
+
+static void
 change_passphrase_clicked_cb (GtkWidget  *widget,
                               const char *action_name,
                               GVariant   *parameter)
@@ -845,6 +932,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
 
   gtk_widget_class_install_action (widget_class, "row.create_partition", NULL, create_partition_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.unmount", NULL, unmount_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "row.delete", NULL, delete_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.change_passphrase", NULL, change_passphrase_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.resize", NULL, resize_clicked_cb);
   gtk_widget_class_install_action (widget_class, "row.edit_partition", NULL, edit_partition_clicked_cb);

@@ -78,12 +78,9 @@ gdu_format_volume_dialog_get_fs_type (GduFormatVolumeDialog *self)
       return "dos_extended";
     }
 
-  if (gdu_create_filesystem_page_get_fs (self->filesystem_page) != NULL)
-    {
-      return gdu_create_filesystem_page_get_fs (self->filesystem_page);
-    }
-
-  return gdu_create_other_page_get_fs (self->other_page);
+  return g_strcmp0 (gdu_create_filesystem_page_get_fs (self->filesystem_page), "other") != 0 ?
+         gdu_create_filesystem_page_get_fs (self->filesystem_page) :
+         gdu_create_other_page_get_fs (self->other_page);
 }
 
 static gboolean

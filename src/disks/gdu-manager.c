@@ -165,6 +165,10 @@ manager_add_drive (GduManager   *self,
       const char *drive;
       GduDrive *d;
 
+      g_debug ("UDisksObject is block, partition-table: %p, drive: %s",
+               udisks_object_peek_partition_table (object),
+               udisks_block_get_drive (block));
+
       if (!udisks_object_peek_partition_table (object))
         return NULL;
 
@@ -174,6 +178,7 @@ manager_add_drive (GduManager   *self,
 
       obj = udisks_client_get_object (self->udisks_client, udisks_block_get_drive (block));
       d = g_object_get_data (G_OBJECT (obj), "gdu-item");
+      g_debug ("UDisksObject block's GduDrive: %p", d);
 
       if (d == NULL)
         return NULL;
@@ -182,9 +187,13 @@ manager_add_drive (GduManager   *self,
     }
 
   if (gdu_drive != NULL)
+    {
+      g_debug ("UDisksObject %p added, GduDrive %p", object, gdu_drive);
+
       g_list_store_insert_sorted (self->drives, gdu_drive,
                                   (GCompareDataFunc)compare_drive_path,
                                   self);
+    }
 
   return gdu_drive;
 }
@@ -195,6 +204,9 @@ object_added_cb (GduManager   *self,
 {
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
+
+  g_debug ("UDisksObject %p added, GduItem: %p", object,
+           g_object_get_data (G_OBJECT (object), "gdu-item"));
 
   /* If we are already managing it, skip */
   if (g_object_get_data (G_OBJECT (object), "gdu-item"))
@@ -212,8 +224,15 @@ object_removed_cb (GduManager *self,
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
 
-  if (drive_in_manager (self, object, &position))
-    g_list_store_remove (self->drives, position);
+  if (drive_in_manager(self, object, &position))
+    {
+      g_autoptr(GduItem) item = NULL;
+
+      item = g_list_model_get_item (G_LIST_MODEL (self->drives), position);
+      g_debug ("UDisksObject %p removed, GduItem: %p", object, item);
+
+      g_list_store_remove (self->drives, position);
+    }
 }
 
 static int

@@ -33,7 +33,6 @@ struct _GduDriveView
 {
   AdwBin         parent_instance;
 
-  GtkBox        *drive_page;
   GtkImage      *drive_image;
   GtkLabel      *drive_name_label;
   GtkLabel      *drive_path_label;
@@ -410,7 +409,6 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-drive-view.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_page);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_image);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_name_label);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_path_label);

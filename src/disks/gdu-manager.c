@@ -224,7 +224,8 @@ object_removed_cb (GduManager *self,
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
 
-  if (drive_in_manager(self, object, &position))
+  if (udisks_object_peek_drive(object) != NULL &&
+      drive_in_manager (self, object, &position))
     {
       g_autoptr(GduItem) item = NULL;
 

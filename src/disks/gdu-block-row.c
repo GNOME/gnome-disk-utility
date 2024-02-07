@@ -47,6 +47,7 @@ struct _GduBlockRow
 
   GtkWidget      *partition_image;
   GtkWidget      *partition_depth_label;
+  GtkWidget      *job_indicator_spinner;
   GtkWidget      *space_level_bar;
   GtkWidget      *create_partition_button;
   GtkWidget      *block_menu_button;
@@ -975,6 +976,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_image);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_depth_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, job_indicator_spinner);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, space_level_bar);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, create_partition_button);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, block_menu_button);

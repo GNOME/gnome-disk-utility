@@ -4,8 +4,13 @@
     <child>
       <object class="GtkScrolledWindow">
         <property name="vexpand">1</property>
+        <property name="hscrollbar-policy">never</property>
         <child>
           <object class="AdwClamp">
+            <property name="margin-start">6</property>
+            <property name="margin-end">6</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
             <child>
               <object class="GtkBox">
                 <property name="spacing">12</property>
@@ -36,6 +41,7 @@
                         <child>
                           <object class="GtkLabel" id="drive_name_label">
                             <property name="halign">start</property>
+                            <property name="wrap">True</property>
                             <style>
                               <class name="title-1" />
                             </style>
@@ -46,6 +52,7 @@
                         <child>
                           <object class="GtkLabel" id="drive_path_label">
                             <property name="halign">start</property>
+                            <property name="wrap">True</property>
                           </object>
                         </child>
                         <layout>

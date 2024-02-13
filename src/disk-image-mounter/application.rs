@@ -3,26 +3,20 @@ use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 
 use crate::config::{PKGDATADIR, PROFILE, VERSION};
-use crate::window::ImageMounterWindow;
 
 mod imp {
-
-    use crate::window::ImageMounterWindow;
-
     use super::*;
-    use glib::WeakRef;
-    use std::cell::OnceCell;
+    use crate::window::ImageMounterWindow;
+    use adw::subclass::prelude::AdwApplicationImpl;
 
     #[derive(Debug, Default)]
-    pub struct ImageMounterApplication {
-        pub window: OnceCell<WeakRef<ImageMounterWindow>>,
-    }
+    pub struct ImageMounterApplication {}
 
     #[glib::object_subclass]
     impl ObjectSubclass for ImageMounterApplication {
         const NAME: &'static str = "ImageMounterApplication";
         type Type = super::ImageMounterApplication;
-        type ParentType = gtk::Application;
+        type ParentType = adw::Application;
     }
 
     impl ObjectImpl for ImageMounterApplication {}
@@ -30,27 +24,13 @@ mod imp {
     impl ApplicationImpl for ImageMounterApplication {
         fn activate(&self) {
             log::debug!("GtkApplication<ImageMounterApplication>::activate");
-            self.parent_activate();
-            let app = self.obj();
-
-            if let Some(window) = self.window.get() {
-                let window = window.upgrade().unwrap();
-                window.present();
-                return;
-            }
-
-            let window = ImageMounterWindow::new(&app);
-            self.window
-                .set(window.downgrade())
-                .expect("Window already set.");
-
-            app.main_window().present();
         }
 
         fn open(&self, files: &[gio::File], _hint: &str) {
-            files
-                .iter()
-                .for_each(|file| log::debug!("Path: {:?}", file.peek_path()))
+            for file in files {
+                let win = ImageMounterWindow::new(&self.obj(), file);
+                win.present();
+            }
         }
 
         fn startup(&self) {
@@ -67,6 +47,7 @@ mod imp {
     }
 
     impl GtkApplicationImpl for ImageMounterApplication {}
+    impl AdwApplicationImpl for ImageMounterApplication {}
 }
 
 glib::wrapper! {
@@ -75,15 +56,11 @@ glib::wrapper! {
         @implements gio::ActionMap, gio::ActionGroup;
 }
 
+#[gtk::template_callbacks]
 impl ImageMounterApplication {
-    fn main_window(&self) -> ImageMounterWindow {
-        self.imp().window.get().unwrap().upgrade().unwrap()
-    }
-
     fn setup_gactions(&self) {
         let action_quit = gio::ActionEntry::builder("quit")
             .activate(move |app: &Self, _, _| {
-                app.main_window().close();
                 app.quit();
             })
             .build();

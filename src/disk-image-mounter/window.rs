@@ -7,7 +7,7 @@ use crate::application::ImageMounterApplication;
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
 #[repr(i32)]
-enum Action {
+pub enum Action {
     /// Open the image in Nautilus.
     #[default]
     #[enum_value(name = "Open in Files", nick = "open-in-files")]

@@ -376,7 +376,7 @@ gdu_block_dispose (GObject *object)
   GduBlock *self = (GduBlock *)object;
 
   if (self->object)
-    g_object_set_data (G_OBJECT (self->object), "gdu-item", NULL);
+    g_object_set_data (G_OBJECT (self->object), "gdu-block", NULL);
 
   G_OBJECT_CLASS (gdu_block_parent_class)->dispose (object);
 }
@@ -445,7 +445,7 @@ gdu_block_new (gpointer  udisk_client,
         self->start_offset = 0;
     }
 
-  g_object_set_data (G_OBJECT (udisk_object), "gdu-item", self);
+  g_object_set_data (G_OBJECT (udisk_object), "gdu-block", self);
 
   return self;
 }

@@ -177,7 +177,7 @@ manager_add_drive (GduManager   *self,
         return NULL;
 
       obj = udisks_client_get_object (self->udisks_client, udisks_block_get_drive (block));
-      d = g_object_get_data (G_OBJECT (obj), "gdu-item");
+      d = g_object_get_data (G_OBJECT (obj), "gdu-drive");
       g_debug ("UDisksObject block's GduDrive: %p", d);
 
       if (d == NULL)
@@ -205,11 +205,11 @@ object_added_cb (GduManager   *self,
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
 
-  g_debug ("UDisksObject %p added, GduItem: %p", object,
-           g_object_get_data (G_OBJECT (object), "gdu-item"));
+  g_debug ("UDisksObject %p added, GduDrive: %p", object,
+           g_object_get_data (G_OBJECT (object), "gdu-drive"));
 
   /* If we are already managing it, skip */
-  if (g_object_get_data (G_OBJECT (object), "gdu-item"))
+  if (g_object_get_data (G_OBJECT (object), "gdu-drive"))
     return;
 
   manager_add_drive (self, object);

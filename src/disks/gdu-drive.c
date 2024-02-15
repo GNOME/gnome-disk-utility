@@ -272,7 +272,7 @@ gdu_drive_dispose (GObject *object)
 {
   GduDrive *self = (GduDrive *)object;
 
-  g_object_set_data (G_OBJECT (self->object), "gdu-item", NULL);
+  g_object_set_data (G_OBJECT (self->object), "gdu-drive", NULL);
 
   G_OBJECT_CLASS (gdu_drive_parent_class)->dispose (object);
 }
@@ -347,7 +347,7 @@ gdu_drive_new (gpointer  udisk_client,
     self->block = udisks_client_get_block_for_drive (self->client,
                                                      self->drive,
                                                      FALSE);
-  g_object_set_data (udisk_object, "gdu-item", self);
+  g_object_set_data (udisk_object, "gdu-drive", self);
 
   size = gdu_item_get_size (GDU_ITEM (self));
 

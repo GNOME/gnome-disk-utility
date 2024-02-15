@@ -247,7 +247,7 @@ gdu_block_get_features (GduItem *item)
   block = self->block;
 
   if (block == NULL)
-    return features;
+    return drive_features & GDU_FEATURE_CREATE_PARTITION;
 
   read_only = udisks_block_get_read_only (self->block);
   features = drive_features & (GDU_FEATURE_CREATE_IMAGE |

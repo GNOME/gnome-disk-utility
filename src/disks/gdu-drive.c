@@ -227,6 +227,7 @@ gdu_drive_get_features (GduItem *item)
       if (!read_only)
         {
           features |= GDU_FEATURE_RESTORE_IMAGE;
+          features |= GDU_FEATURE_CREATE_PARTITION;
           if (udisks_block_get_hint_partitionable (self->block))
             features |= GDU_FEATURE_FORMAT;
         }

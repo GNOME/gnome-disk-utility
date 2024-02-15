@@ -144,6 +144,47 @@ compare_drive_path (GduDrive *drive_a,
                     g_dbus_object_get_object_path (obj_b));
 }
 
+static void
+manager_update_partition (GduManager   *self,
+                          UDisksObject *object)
+{
+  UDisksObject *obj = NULL;
+  UDisksBlock *block;
+  const char *drive;
+  GduDrive *d;
+
+  block = udisks_object_peek_block (object);
+
+  if (!block)
+    return;
+
+  g_debug ("UDisksObject is block, partition-table: %p, device: %s, drive: %s",
+           udisks_object_peek_partition_table (object),
+           udisks_block_get_device (block),
+           udisks_block_get_drive (block));
+
+  if (!udisks_object_peek_partition_table (object))
+    return;
+
+  drive = udisks_block_get_drive (block);
+  if (!udisks_object_peek_loop (object) &&
+      g_strcmp0 (drive, "/") == 0)
+    return;
+
+  if (udisks_object_peek_loop (object))
+    obj = object;
+  else
+    obj = udisks_client_peek_object (self->udisks_client, udisks_block_get_drive (block));
+
+  d = g_object_get_data (G_OBJECT (obj), "gdu-drive");
+  g_debug ("UDisksObject block's GduDrive: %p", d);
+
+  if (d == NULL)
+    return;
+
+  gdu_drive_set_child (d, object);
+}
+
 static GduDrive *
 manager_add_drive (GduManager   *self,
                    UDisksObject *object)
@@ -159,31 +200,9 @@ manager_add_drive (GduManager   *self,
     {
       gdu_drive = gdu_drive_new (self->udisks_client, object, NULL);
     }
-  else if (block)
+  else
     {
-      g_autoptr(UDisksObject) obj = NULL;
-      const char *drive;
-      GduDrive *d;
-
-      g_debug ("UDisksObject is block, partition-table: %p, drive: %s",
-               udisks_object_peek_partition_table (object),
-               udisks_block_get_drive (block));
-
-      if (!udisks_object_peek_partition_table (object))
-        return NULL;
-
-      drive = udisks_block_get_drive (block);
-      if (g_strcmp0 (drive, "/") == 0)
-        return NULL;
-
-      obj = udisks_client_get_object (self->udisks_client, udisks_block_get_drive (block));
-      d = g_object_get_data (G_OBJECT (obj), "gdu-drive");
-      g_debug ("UDisksObject block's GduDrive: %p", d);
-
-      if (d == NULL)
-        return NULL;
-
-      gdu_drive_set_child (d, object);
+      manager_update_partition (self, object);
     }
 
   if (gdu_drive != NULL)
@@ -208,9 +227,12 @@ object_added_cb (GduManager   *self,
   g_debug ("UDisksObject %p added, GduDrive: %p", object,
            g_object_get_data (G_OBJECT (object), "gdu-drive"));
 
-  /* If we are already managing it, skip */
-  if (g_object_get_data (G_OBJECT (object), "gdu-drive"))
-    return;
+  /* If we are already managing it, update partitions */
+  if (g_object_get_data (G_OBJECT(object), "gdu-drive"))
+    {
+      manager_update_partition (self, object);
+      return;
+    }
 
   manager_add_drive (self, object);
 }

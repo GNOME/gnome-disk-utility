@@ -364,10 +364,7 @@ gdu_drive_new (gpointer  udisk_client,
       g_list_store_append (self->partitions, block);
     }
 
-  if (udisks_object_get_partition_table (self->object))
-    gdu_drive_set_child (self, udisk_object);
-
-
+  /* First, add a single empty full disk partition */
   if (self->block != NULL && self->drive == NULL)
     {
       g_autoptr(GduBlock) partition = NULL;
@@ -381,6 +378,10 @@ gdu_drive_new (gpointer  udisk_client,
       if (udisks_object_peek_encrypted (udisk_object))
         gdu_drive_add_decrypted (self, udisk_object, GDU_ITEM (partition));
     }
+
+  /* Now, try populating the partitions if we have a partition table */
+  if (udisks_object_get_partition_table (self->object))
+    gdu_drive_set_child (self, udisk_object);
 
   gdu_item_changed (GDU_ITEM (self));
 

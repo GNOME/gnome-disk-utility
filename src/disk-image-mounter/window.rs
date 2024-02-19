@@ -1,6 +1,15 @@
+use std::collections::HashMap;
+use std::ffi::CString;
+use std::fs::OpenOptions;
+use std::os::fd::AsFd;
+use std::path::PathBuf;
+
 use gtk::prelude::FileExt;
+use gtk::prelude::GtkWindowExt;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
+use udisks::zbus;
+use udisks::zbus::zvariant::{OwnedObjectPath, Value};
 
 use crate::application::ImageMounterApplication;
 
@@ -40,6 +49,8 @@ mod imp {
     #[template(file = "window.ui")]
     #[properties(wrapper_type = super::ImageMounterWindow)]
     pub struct ImageMounterWindow {
+        #[template_child]
+        pub(super) status_page: TemplateChild<adw::StatusPage>,
         #[property(get, set)]
         pub(super) file: RefCell<Option<gio::File>>,
         #[property(get, set, builder(Action::default()))]
@@ -68,7 +79,6 @@ mod imp {
     impl ObjectImpl for ImageMounterWindow {
         fn constructed(&self) {
             self.parent_constructed();
-            let _obj = self.obj();
 
             // Devel Profile
             if config::PROFILE == "Devel" {
@@ -76,6 +86,21 @@ mod imp {
                 // disabled, causes a GTK Criticial
                 // obj.add_css_class("devel");
             }
+
+            let main_context = glib::MainContext::default();
+            main_context.spawn_local(
+                glib::clone!(@weak self as window => @default-return None, async move {
+                    let object = window.obj().mounted_file_object_path()
+                        .await?;
+                    let description = if object.block().await.ok()?.read_only().await.ok()? {
+                        gettextrs::gettext("Already mounted read-only")
+                    } else {
+                        gettextrs::gettext("Already mounted")
+                    };
+                    window.status_page.set_description(Some(&description));
+                    None::<()>
+                }),
+            );
         }
     }
 
@@ -122,8 +147,34 @@ impl ImageMounterWindow {
         Some(info.display_name().to_string())
     }
 
-    #[template_callback]
-    fn on_continue_button(&self, _button: &gtk::Button) {
-        unimplemented!()
+    async fn mounted_file_object_path(&self) -> Option<udisks::Object> {
+        let path = self.file().and_then(|file| file.path())?;
+        let client = udisks::Client::new().await.ok()?;
+
+        for object in client
+            .object_manager()
+            .get_managed_objects()
+            .await
+            .ok()?
+            .into_iter()
+            .filter_map(|(object_path, _)| client.object(object_path).ok())
+        {
+            let Ok(loop_proxy) = object.r#loop().await else {
+                continue;
+            };
+            if loop_proxy
+                .backing_file()
+                .await
+                .into_iter()
+                .filter_map(|data| CString::from_vec_with_nul(data).ok())
+                .filter_map(|data| data.into_string().ok())
+                .map(PathBuf::from)
+                .any(|mount_point| mount_point == path)
+            {
+                return Some(object);
+            }
+        }
+        None
     }
+
 }

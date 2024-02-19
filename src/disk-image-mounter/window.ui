@@ -14,14 +14,13 @@
                     </object>
                 </child>
                 <property name="content">
-                    <object class="AdwStatusPage">
+                    <object class="AdwStatusPage" id="status_page">
                         <property name="icon-name">media-optical-symbolic</property>
                         <binding name="title">
                             <closure type="gchararray" function="window_title">
                                 <lookup type="ImageMounterWindow" name="file"/>
                             </closure>
                         </binding>
-                        <property name="description" translatable="yes">Already mounted read-only</property>
                         <property name="child">
                             <object class="AdwClamp">
                                 <property name="maximum-size">400</property>

@@ -177,4 +177,24 @@ impl ImageMounterWindow {
         None
     }
 
+    #[template_callback]
+    fn on_continue_button(&self, _button: &gtk::Button) {
+        let main_context = glib::MainContext::default();
+        main_context.spawn_local(glib::clone!(@weak self as window => async move {
+            let action = window.continue_action();
+            match action {
+                Action::OpenInFiles => {
+                    unimplemented!()
+                }
+                Action::OpenInFilesWritable => {
+                    unimplemented!()
+                }
+                Action::Write => {unimplemented!()}
+                Action::Inspect => {
+                    unimplemented!()
+                }
+            };
+            window.close();
+        }));
+    }
 }

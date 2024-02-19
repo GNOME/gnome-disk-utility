@@ -189,7 +189,7 @@ impl ImageMounterWindow {
                 Action::OpenInFilesWritable => {
                     window.mount(false).await.expect("Failed to mount");
                 }
-                Action::Write => {unimplemented!()}
+                Action::Write => {window.write_image();}
                 Action::Inspect => {
                     unimplemented!()
                 }
@@ -221,5 +221,17 @@ impl ImageMounterWindow {
             .to_owned();
 
         Ok(device)
+    }
+
+    fn write_image(&self) {
+        let path = self
+            .file()
+            .and_then(|file| file.path())
+            .expect("Failed to get file path");
+
+        std::process::Command::new("gnome-disks")
+            .args(["--restore-disk-image", path.to_str().unwrap()])
+            .spawn()
+            .expect("Failed to execute command");
     }
 }

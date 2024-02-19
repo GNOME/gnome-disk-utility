@@ -191,7 +191,12 @@ impl ImageMounterWindow {
                 }
                 Action::Write => {window.write_image();}
                 Action::Inspect => {
-                    unimplemented!()
+                    //TODO: only mount if not mounted already
+                    let device = window.mount(false).await.expect("Failed to mount");
+                    window
+                        .open_in_disks(device)
+                        .await
+                        .expect("Failed to open in Disks");
                 }
             };
             window.close();
@@ -233,5 +238,34 @@ impl ImageMounterWindow {
             .args(["--restore-disk-image", path.to_str().unwrap()])
             .spawn()
             .expect("Failed to execute command");
+    }
+
+    async fn open_in_disks(&self, device: String) -> zbus::Result<()> {
+        let connection = zbus::Connection::session().await?;
+
+        const EMPTY_ARR: &[&[u8]] = &[];
+
+        //('/org/gnome/DiskUtility', [], {'options': <{'block-device': <'/dev/loop0'>}>})
+        connection
+            .call_method(
+                Some("org.gnome.DiskUtility"),
+                "/org/gnome/DiskUtility",
+                Some("org.gtk.Application"),
+                "CommandLine",
+                &(
+                    OwnedObjectPath::try_from("/org/gnome/DiskUtility")?,
+                    &EMPTY_ARR,
+                    HashMap::<&str, &Value>::from([(
+                        "options",
+                        &Value::new(HashMap::<&str, Value>::from([(
+                            "block-device",
+                            device.into(),
+                        )])),
+                    )]),
+                ),
+            )
+            .await
+            .expect("Failed to send message");
+        Ok(())
     }
 }

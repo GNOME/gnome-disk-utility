@@ -201,18 +201,18 @@ impl ImageMounterWindow {
                 }
                 Action::Write => {window.write_image();}
                 Action::Inspect => {
-                let device = if let Some(object) = window.mounted_file_object().await {
-                    log::debug!("File already mounted, reading device");
-                    window.read_device(object).await.expect("Failed to read device")
-                } else {
-                    log::debug!("File not yet mounted, mounting first");
-                    window.mount(false).await.expect("Failed to mount")
-                };
-                window
-                    .open_in_disks(device)
-                    .await
-                    .expect("Failed to open in Disks");
-            }
+                    let device = if let Some(object) = window.mounted_file_object().await {
+                        log::debug!("File already mounted, reading device");
+                        window.read_device(object).await.expect("Failed to read device")
+                    } else {
+                        log::debug!("File not yet mounted, mounting first");
+                        window.mount(false).await.expect("Failed to mount")
+                    };
+                    window
+                        .open_in_disks(device)
+                        .await
+                        .expect("Failed to open in Disks");
+                }
             };
             window.close();
         }));

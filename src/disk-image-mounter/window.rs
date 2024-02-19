@@ -184,7 +184,7 @@ impl ImageMounterWindow {
             let action = window.continue_action();
             match action {
                 Action::OpenInFiles => {
-                    unimplemented!()
+                    window.mount(true).await.expect("Failed to read-only mount");
                 }
                 Action::OpenInFilesWritable => {
                     unimplemented!()
@@ -196,5 +196,30 @@ impl ImageMounterWindow {
             };
             window.close();
         }));
+    }
+
+    async fn mount(&self, read_only: bool) -> Result<String, Box<dyn std::error::Error>> {
+        let client = udisks::Client::new().await?;
+        let manager = client.manager();
+
+        let path = self
+            .file()
+            .and_then(|file| file.path())
+            .ok_or("Failed to open file")?;
+        let file = OpenOptions::new()
+            .read(true)
+            .write(!read_only)
+            .open(&path)?;
+
+        let options = HashMap::from([("read-only", read_only.into())]);
+        let obj_path = manager.loop_setup(file.as_fd().into(), options).await?;
+        log::info!("Mounted {}", path.display());
+
+        let block = client.object(obj_path)?.block().await?;
+        let device = CString::from_vec_with_nul(block.device().await?)?
+            .to_str()?
+            .to_owned();
+
+        Ok(device)
     }
 }

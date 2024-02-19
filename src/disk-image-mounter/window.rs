@@ -187,7 +187,7 @@ impl ImageMounterWindow {
                     window.mount(true).await.expect("Failed to read-only mount");
                 }
                 Action::OpenInFilesWritable => {
-                    unimplemented!()
+                    window.mount(false).await.expect("Failed to mount");
                 }
                 Action::Write => {unimplemented!()}
                 Action::Inspect => {

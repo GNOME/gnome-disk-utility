@@ -90,7 +90,7 @@ mod imp {
             let main_context = glib::MainContext::default();
             main_context.spawn_local(
                 glib::clone!(@weak self as window => @default-return None, async move {
-                    let object = window.obj().mounted_file_object_path()
+                    let object = window.obj().mounted_file_object()
                         .await?;
                     let description = if object.block().await.ok()?.read_only().await.ok()? {
                         gettextrs::gettext("Already mounted read-only")
@@ -147,7 +147,7 @@ impl ImageMounterWindow {
         Some(info.display_name().to_string())
     }
 
-    async fn mounted_file_object_path(&self) -> Option<udisks::Object> {
+    async fn mounted_file_object(&self) -> Option<udisks::Object> {
         let path = self.file().and_then(|file| file.path())?;
         let client = udisks::Client::new().await.ok()?;
 
@@ -177,6 +177,16 @@ impl ImageMounterWindow {
         None
     }
 
+    async fn read_device(
+        &self,
+        object: udisks::Object,
+    ) -> Result<String, Box<dyn std::error::Error>> {
+        let block = object.block().await?;
+        Ok(CString::from_vec_with_nul(block.device().await?)?
+            .to_str()?
+            .to_owned())
+    }
+
     #[template_callback]
     fn on_continue_button(&self, _button: &gtk::Button) {
         let main_context = glib::MainContext::default();
@@ -191,13 +201,18 @@ impl ImageMounterWindow {
                 }
                 Action::Write => {window.write_image();}
                 Action::Inspect => {
-                    //TODO: only mount if not mounted already
-                    let device = window.mount(false).await.expect("Failed to mount");
-                    window
-                        .open_in_disks(device)
-                        .await
-                        .expect("Failed to open in Disks");
-                }
+                let device = if let Some(object) = window.mounted_file_object().await {
+                    log::debug!("File already mounted, reading device");
+                    window.read_device(object).await.expect("Failed to read device")
+                } else {
+                    log::debug!("File not yet mounted, mounting first");
+                    window.mount(false).await.expect("Failed to mount")
+                };
+                window
+                    .open_in_disks(device)
+                    .await
+                    .expect("Failed to open in Disks");
+            }
             };
             window.close();
         }));
@@ -217,14 +232,11 @@ impl ImageMounterWindow {
             .open(&path)?;
 
         let options = HashMap::from([("read-only", read_only.into())]);
-        let obj_path = manager.loop_setup(file.as_fd().into(), options).await?;
+        let object_path = manager.loop_setup(file.as_fd().into(), options).await?;
         log::info!("Mounted {}", path.display());
 
-        let block = client.object(obj_path)?.block().await?;
-        let device = CString::from_vec_with_nul(block.device().await?)?
-            .to_str()?
-            .to_owned();
-
+        let object = client.object(object_path)?;
+        let device = self.read_device(object).await?;
         Ok(device)
     }
 

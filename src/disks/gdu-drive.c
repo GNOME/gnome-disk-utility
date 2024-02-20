@@ -376,7 +376,7 @@ gdu_drive_new (gpointer  udisk_client,
     }
 
   /* Now, try populating the partitions if we have a partition table */
-  if (udisks_object_get_partition_table (self->object))
+  if (udisks_object_peek_partition_table (self->object))
     gdu_drive_set_child (self, udisk_object);
 
   gdu_item_changed (GDU_ITEM (self));

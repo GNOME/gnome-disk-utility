@@ -265,6 +265,9 @@ gdu_drive_changed (GduItem *item)
     g_set_object (&self->drive, udisks_object_get_drive (self->object));
   g_set_object (&self->file_system, udisks_object_get_filesystem (self->object));
 
+  if (udisks_object_peek_partition_table (self->object))
+    gdu_drive_set_child (self, self->object);
+
   g_signal_emit_by_name (self, "changed", 0);
 }
 

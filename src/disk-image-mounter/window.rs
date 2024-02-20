@@ -12,6 +12,7 @@ use udisks::zbus;
 use udisks::zbus::zvariant::{OwnedObjectPath, Value};
 
 use crate::application::ImageMounterApplication;
+use crate::error::ImageMounterError;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
@@ -177,10 +178,7 @@ impl ImageMounterWindow {
         None
     }
 
-    async fn read_device(
-        &self,
-        object: udisks::Object,
-    ) -> Result<String, Box<dyn std::error::Error>> {
+    async fn read_device(&self, object: udisks::Object) -> Result<String, ImageMounterError> {
         let block = object.block().await?;
         Ok(CString::from_vec_with_nul(block.device().await?)?
             .to_str()?
@@ -218,14 +216,15 @@ impl ImageMounterWindow {
         }));
     }
 
-    async fn mount(&self, read_only: bool) -> Result<String, Box<dyn std::error::Error>> {
+    async fn mount(&self, read_only: bool) -> Result<String, ImageMounterError> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
 
         let path = self
             .file()
             .and_then(|file| file.path())
-            .ok_or("Failed to open file")?;
+            .ok_or(ImageMounterError::Conversion)?;
+
         let file = OpenOptions::new()
             .read(true)
             .write(!read_only)
@@ -235,7 +234,9 @@ impl ImageMounterWindow {
         let object_path = manager.loop_setup(file.as_fd().into(), options).await?;
         log::info!("Mounted {}", path.display());
 
-        let object = client.object(object_path)?;
+        //safe to unwrap, since the given path is
+        //already an oject path
+        let object = client.object(object_path).unwrap();
         let device = self.read_device(object).await?;
         Ok(device)
     }
@@ -252,7 +253,7 @@ impl ImageMounterWindow {
             .expect("Failed to execute command");
     }
 
-    async fn open_in_disks(&self, device: String) -> zbus::Result<()> {
+    async fn open_in_disks(&self, device: String) -> Result<(), ImageMounterError> {
         let connection = zbus::Connection::session().await?;
 
         const EMPTY_ARR: &[&[u8]] = &[];
@@ -265,7 +266,7 @@ impl ImageMounterWindow {
                 Some("org.gtk.Application"),
                 "CommandLine",
                 &(
-                    OwnedObjectPath::try_from("/org/gnome/DiskUtility")?,
+                    OwnedObjectPath::try_from("/org/gnome/DiskUtility").unwrap(),
                     &EMPTY_ARR,
                     HashMap::<&str, &Value>::from([(
                         "options",
@@ -276,8 +277,7 @@ impl ImageMounterWindow {
                     )]),
                 ),
             )
-            .await
-            .expect("Failed to send message");
+            .await?;
         Ok(())
     }
 }

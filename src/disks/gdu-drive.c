@@ -159,8 +159,6 @@ static GduFeature
 gdu_drive_get_features (GduItem *item)
 {
   GduDrive *self = (GduDrive *)item;
-  UDisksPartitionTable *partition_table = NULL;
-  UDisksPartition *partition;
   UDisksObject *drive_object;
   UDisksObject *object;
   UDisksBlock *block;
@@ -203,12 +201,6 @@ gdu_drive_get_features (GduItem *item)
     return features;
 
   read_only = udisks_block_get_read_only (block);
-  partition = udisks_object_peek_partition (object);
-
-  partition_table = udisks_object_get_partition_table (object);
-  if (partition_table == NULL && partition != NULL)
-    partition_table = udisks_client_get_partition_table (self->client, partition);
-
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (self->client),
                                                                     udisks_block_get_drive (block));
 
@@ -428,7 +420,7 @@ gdu_drive_matches_object (GduDrive *self,
       UDisksPartitionTable *table;
       UDisksPartition *partition;
 
-      table = udisks_object_get_partition_table (self->partition_table);
+      table = udisks_object_peek_partition_table (self->partition_table);
       partition = udisks_object_peek_partition (udisk_object);
       obj_table = udisks_client_get_partition_table (self->client, partition);
 

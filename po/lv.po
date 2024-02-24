@@ -4,7 +4,7 @@
 #
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
-# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2010.
+# SPDX-FileCopyrightText: 2010, 2024 Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>
 # Rudolfs <rudolfs.mazurs@gmail.com>, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Peteris Krisjanis <pecisk@gmail.com>, 2012.
 msgid ""
@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2023-01-28 12:53+0000\n"
-"PO-Revision-Date: 2023-03-24 19:46+0200\n"
+"POT-Creation-Date: 2024-02-04 12:04+0000\n"
+"PO-Revision-Date: 2024-02-25 01:09+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -22,10 +22,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
 " 2);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Launchpad-Export-Date: 2010-05-09 08:28+0000\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
+#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
 msgid "Disk Image Mounter"
 msgstr "Disku attēlu montētājs"
 
@@ -74,8 +74,8 @@ msgstr ""
 "Paraugu skaits, ko veiktspējas testos izmantos, lai mērītu piekļuves laiku."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
-#: src/disks/ui/about-dialog.ui:10 src/disks/ui/disks.ui:28
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/ui/about-dialog.ui:10
+#: src/disks/ui/disks.ui:28
 msgid "Disks"
 msgstr "Diski"
 
@@ -99,7 +99,8 @@ msgstr ""
 "Izmantojot “Diskus”, jūs varat skatīt SMART datus, pārvaldīt ierīces, "
 "pārbaudīt veiktspēju un veidot USB atmiņas attēlus."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:45
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.DiskUtility.appdata.xml.in:47
 msgid "The GNOME Project"
 msgstr "GNOME projekts"
 
@@ -116,44 +117,43 @@ msgstr ""
 "disks;dzinis;sējums;cietais disks;hdd;kompaktdisks;cdrom;dvd;iso;attēls;"
 "dublējums;atjaunot;etalonuzdevums;raid;luks;šifrēšana;S.M.A.R.T.;smart;"
 
-#: src/disk-image-mounter/main.c:53
+#: src/disk-image-mounter/main.c:52
 msgid "An error occurred"
 msgstr "Gadījās kļūda"
 
-#: src/disk-image-mounter/main.c:74
+#: src/disk-image-mounter/main.c:73
 msgid "Allow writing to the image"
 msgstr "Atļaut rakstīt attēlu"
 
-#: src/disk-image-mounter/main.c:89
+#: src/disk-image-mounter/main.c:88
 msgid "Select Disk Image(s) to Mount"
 msgstr "Izvēlieties diska attēlu(-s), ko piemontēt"
 
-#: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
-#: src/disks/gdunewdiskimagedialog.c:171 src/disks/gduwindow.c:818
+#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:936
+#: src/disks/gducreateformatdialog.c:166 src/disks/gdunewdiskimagedialog.c:260
 #: src/disks/ui/benchmark-dialog.ui:287
 #: src/disks/ui/change-passphrase-dialog.ui:169
 #: src/disks/ui/create-disk-image-dialog.ui:123
 #: src/disks/ui/edit-crypttab-dialog.ui:236
 #: src/disks/ui/edit-filesystem-dialog.ui:67
 #: src/disks/ui/edit-partition-dialog.ui:142
-#: src/disks/ui/format-disk-dialog.ui:90
+#: src/disks/ui/format-disk-dialog.ui:90 src/disks/ui/gdu-window.ui:159
 #: src/disks/ui/new-disk-image-dialog.ui:161
 #: src/disks/ui/restore-disk-image-dialog.ui:184
 #: src/disks/ui/unlock-device-dialog.ui:218
 msgid "_Cancel"
 msgstr "At_celt"
 
-#: src/disk-image-mounter/main.c:93
+#: src/disk-image-mounter/main.c:92
 msgid "_Mount"
 msgstr "_Montēt"
 
 #. Add a RO check button that defaults to RO
-#: src/disk-image-mounter/main.c:101
+#: src/disk-image-mounter/main.c:100
 msgid "Set up _read-only mount"
 msgstr "Iestatīt _tikai lasāmo montējumu"
 
-#: src/disk-image-mounter/main.c:102
+#: src/disk-image-mounter/main.c:101
 msgid ""
 "If checked, the mount will be read-only. This is useful if you don’t want "
 "the underlying disk image to be modified"
@@ -161,71 +161,71 @@ msgstr ""
 "Ja atzīmēts, montējums būs tikai lasāms. Tas ir noderīgi tad, ja jūs "
 "nevēlaties piesaistīto diska attēlu mainīt."
 
-#: src/disk-image-mounter/main.c:143
+#: src/disk-image-mounter/main.c:142
 #, c-format
 msgid "Error connecting to udisks daemon: %s (%s, %d)"
 msgstr "Kļūda, savienojoties ar udisks dēmonu: %s (%s, %d)"
 
-#: src/disk-image-mounter/main.c:151
+#: src/disk-image-mounter/main.c:150
 msgid "Attach and mount one or more disk image files."
 msgstr "Pievieno un montē vienu vai vairākas disku attēlu datnes."
 
-#: src/disk-image-mounter/main.c:199
+#: src/disk-image-mounter/main.c:198
 #, c-format
 msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
 msgstr "Nevar atvērt “%s” — varbūt sējums nav piemontēts?"
 
-#: src/disk-image-mounter/main.c:206
+#: src/disk-image-mounter/main.c:205
 #, c-format
 msgid "Error opening “%s”: %m"
 msgstr "Kļūda, atverot “%s” — %m"
 
-#: src/disk-image-mounter/main.c:227
+#: src/disk-image-mounter/main.c:226
 #, c-format
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Kļūda, pievienojot diska attēlu: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:92
+#: src/disks/gduapplication.c:93
 msgid "Stop running jobs?"
 msgstr "Apturēt palaistos uzdevumus?"
 
-#: src/disks/gduapplication.c:94
+#: src/disks/gduapplication.c:95
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr ""
 "Aizvēršana tagad apturēs palaistos procesus un var novest līdz sabojātiem "
 "rezultātiem."
 
-#: src/disks/gduapplication.c:144
+#: src/disks/gduapplication.c:136
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Kļūda, atverot %s — %s"
 
-#: src/disks/gduapplication.c:151
+#: src/disks/gduapplication.c:143
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Kļūda, uzmeklējot %s bloka ierīci"
 
-#: src/disks/gduapplication.c:173
+#: src/disks/gduapplication.c:165
 msgid "Select device"
 msgstr "Izvēlieties ierīci"
 
-#: src/disks/gduapplication.c:174
+#: src/disks/gduapplication.c:166
 msgid "Format selected device"
 msgstr "Formatēt izvēlēto ierīci"
 
-#: src/disks/gduapplication.c:175
+#: src/disks/gduapplication.c:167
 msgid "Ignored, kept for compatibility"
 msgstr "Ignorēts — atstāts savietojamībai"
 
-#: src/disks/gduapplication.c:176
+#: src/disks/gduapplication.c:168
 msgid "Restore disk image"
 msgstr "Atjaunot diska attēlu"
 
-#: src/disks/gduapplication.c:208
+#: src/disks/gduapplication.c:200
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device jāizmanto kopā ar --block-device\n"
 
-#: src/disks/gduapplication.c:214
+#: src/disks/gduapplication.c:206
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device nevar izmantot kopā ar --restore-disk-image"
 
@@ -234,7 +234,7 @@ msgstr "--format-device nevar izmantot kopā ar --restore-disk-image"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:348
+#: src/disks/gduapplication.c:340
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -305,8 +305,9 @@ msgid ""
 "to a special reserved area (spare area)"
 msgstr ""
 "Sektoru skaits, kuriem mainīta adrese. Kad cietais disks atrod lasīšanas/"
-"rakstīšanas/verifikācijas kļūdu, tas atzīmē sektoru kā \"reallocated"
-"\" (pārdalīts) un pārsūta datus uz rezervētu vietu (rezerves laukums)"
+"rakstīšanas/verifikācijas kļūdu, tas atzīmē sektoru kā "
+"\"reallocated\" (pārdalīts) un pārsūta datus uz rezervētu vietu (rezerves "
+"laukums)"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1072,48 +1073,48 @@ msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Notika kļūda, mēģinot pārslēgt SMART novērošanu"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1566
+#: src/disks/gduatasmartdialog.c:1568
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1578
+#: src/disks/gduatasmartdialog.c:1580
 msgid "Attribute"
 msgstr "Atribūts"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1592
+#: src/disks/gduatasmartdialog.c:1594
 msgid "Value"
 msgstr "Vērtība"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1604
+#: src/disks/gduatasmartdialog.c:1606
 msgid "Normalized"
 msgstr "Normalizēti"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1616
+#: src/disks/gduatasmartdialog.c:1618
 msgid "Threshold"
 msgstr "Slieksnis"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1628
+#: src/disks/gduatasmartdialog.c:1630
 msgid "Worst"
 msgstr "Sliktākā"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1640
+#: src/disks/gduatasmartdialog.c:1642
 #: src/disks/ui/create-filesystem-page.ui:105
 msgid "Type"
 msgstr "Tips"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1652
+#: src/disks/gduatasmartdialog.c:1654
 msgid "Updates"
 msgstr "Atjauninājumi"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1664 src/disks/ui/disks.ui:355
+#: src/disks/gduatasmartdialog.c:1666 src/disks/ui/disks.ui:355
 msgid "Assessment"
 msgstr "Novērtējums"
 
@@ -1270,31 +1271,128 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Kļūda, lasot %lld baitus no nobīdes %lld"
 
-#: src/disks/gduchangepassphrasedialog.c:78
+#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
+#| msgctxt "volume-grid"
+#| msgid "Free Space"
+msgid "Free Space"
+msgstr "Brīvā vieta"
+
+#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+msgid "Extended Partition"
+msgstr "Paplašinātais nodalījums"
+
+#. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
+#. *              space.
+#. *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
+#. *              The second %s is a short string with the space free (e.g. '43 GB').
+#. *              The %f is the percentage in use (e.g. 62.2).
+#.
+#: src/disks/gdu-block.c:567
+#, c-format
+msgid "%s — %s free (%.1f%% full)"
+msgstr "%s — %s brīvs (%.1f%% aizņemts)"
+
+#: src/disks/gdu-block-row.c:288
+msgid "Error while checking filesystem"
+msgstr "Kļūda, pārbaudot datņu sistēmu"
+
+#: src/disks/gdu-block-row.c:314
+msgid "Filesystem intact"
+msgstr "Datņu sistēmas ir neskarta"
+
+#: src/disks/gdu-block-row.c:314
+msgid "Filesystem damaged"
+msgstr "Datņu sistēma ir bojāta"
+
+#: src/disks/gdu-block-row.c:317
+#, c-format
+msgid "Filesystem %s on %s is undamaged."
+msgstr "Datņu sistēma %s uz %s nav bojāta."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gdu-block-row.c:323
+#, c-format
+msgid "Filesystem %s on %s needs repairing."
+msgstr "Datņu sistēmu %s uz %s vajag salabot."
+
+#: src/disks/gdu-block-row.c:392
+msgid "Confirm Check"
+msgstr "Apstiprināt pārbaudi"
+
+#: src/disks/gdu-block-row.c:395
+msgid ""
+"The check may take a long time, especially if the partition contains a lot "
+"of data."
+msgstr ""
+"Pārbaude var aizņemt daudz laika, it īpaši ja nodalījums satur daudz datu."
+
+#: src/disks/gdu-block-row.c:431
+msgid "Error while repairing filesystem"
+msgstr "Kļūda, labojot datņu sistēmu"
+
+#: src/disks/gdu-block-row.c:457
+msgid "Repair successful"
+msgstr "Labošana bija veiksmīga"
+
+#: src/disks/gdu-block-row.c:457
+msgid "Repair failed"
+msgstr "Neizdevās salabot"
+
+#: src/disks/gdu-block-row.c:460
+#, c-format
+msgid "Filesystem %s on %s has been repaired."
+msgstr "Datņu sistēma %s uz %s ir salabota."
+
+#. show as result and not error message, because it's not a malfunction of GDU
+#: src/disks/gdu-block-row.c:466
+#, c-format
+msgid "Filesystem %s on %s could not be repaired."
+msgstr "Datņu sistēmu %s uz %s nevarēja salabot."
+
+#: src/disks/gdu-block-row.c:540
+msgid "Confirm Repair"
+msgstr "Apstiprināt labošanu"
+
+#: src/disks/gdu-block-row.c:543
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider "
+"backing it up first in order to use forensic recovery tools that retrieve "
+"lost files. The operation may take a long time, especially if the partition "
+"contains a lot of data."
+msgstr ""
+"Datņu sistēmas salabošana ne vienmēr ir iespējama un var beigties ar datu "
+"zaudēšanu. Darbība var aizņemt daudz laika, it īpaši, ja nodalījums satur "
+"daudz datu."
+
+#: src/disks/gdu-block-row.c:568
+msgid "Error while taking filesystem ownership"
+msgstr "Kļūda, pārņemot datņu sistēmas īpašumtiesības"
+
+#: src/disks/gduchangepassphrasedialog.c:77
 msgid "The passphrases do not match"
 msgstr "Paroles nesakrīt"
 
-#: src/disks/gduchangepassphrasedialog.c:87
+#: src/disks/gduchangepassphrasedialog.c:86
 msgid "The passphrase matches the existing passphrase"
 msgstr "Parole sakrīt ar esošo paroli"
 
-#: src/disks/gduchangepassphrasedialog.c:107
+#: src/disks/gduchangepassphrasedialog.c:106
 msgid "Error updating /etc/crypttab"
 msgstr "Kļūda, atjauninot /etc/crypttab"
 
-#: src/disks/gduchangepassphrasedialog.c:122
+#: src/disks/gduchangepassphrasedialog.c:121
 msgid "Error changing passphrase"
 msgstr "Kļūda, mainot paroli"
 
-#: src/disks/gduchangepassphrasedialog.c:276 src/disks/gducrypttabdialog.c:410
+#: src/disks/gduchangepassphrasedialog.c:275 src/disks/gducrypttabdialog.c:409
 msgid "Error retrieving configuration data"
 msgstr "Kļūda, iegūstot konfigurācijas datus"
 
-#: src/disks/gduchangepassphrasedialog.c:304
+#: src/disks/gduchangepassphrasedialog.c:303
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "/etc/crypttab konfigurācijas dati ir slikti formatēti"
 
-#: src/disks/gduchangepassphrasedialog.c:333
+#: src/disks/gduchangepassphrasedialog.c:332
 msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
@@ -1323,7 +1421,7 @@ msgstr "%s (%.1f%%)"
 #. *              The first %s is a name for the disk (e.g. 'sdb').
 #. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gducreatediskimagedialog.c:274
+#: src/disks/gducreatediskimagedialog.c:273
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Diska attēls %s (%s).img"
@@ -1332,33 +1430,33 @@ msgstr "Diska attēls %s (%s).img"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:307
+#: src/disks/gducreatediskimagedialog.c:306
 msgid "Disk image read error"
 msgstr "Diska attēla lasīšanas kļūda"
 
-#: src/disks/gducreatediskimagedialog.c:343
+#: src/disks/gducreatediskimagedialog.c:342
 msgid "Allocating Disk Image"
 msgstr "Piešķir diska attēlu"
 
-#: src/disks/gducreatediskimagedialog.c:347
+#: src/disks/gducreatediskimagedialog.c:346
 msgid "Retrieving DVD keys"
 msgstr "Iegūst DVD atslēgas"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:356
+#: src/disks/gducreatediskimagedialog.c:355
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s nav lasāms (tiek aizvietots ar nullēm)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:410
+#: src/disks/gducreatediskimagedialog.c:409
 #: src/disks/gdurestorediskimagedialog.c:613
 msgid "Disk image copying complete"
 msgstr "Disku attēla kopēšana ir pabeigta"
 
-#: src/disks/gducreatediskimagedialog.c:439
+#: src/disks/gducreatediskimagedialog.c:438
 msgid "Error creating disk image"
 msgstr "Kļūda, veidojot diska attēlu"
 
@@ -1408,25 +1506,25 @@ msgid "Error allocating space for disk image file: "
 msgstr "Kļūda, piešķirot vietu diska attēla datnei:"
 
 #: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:166
+#: src/disks/gdunewdiskimagedialog.c:255
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Datne ar nosaukumu “%s” jau eksistē. Vai jūs vēlaties to aizvietot?"
 
 #: src/disks/gducreatediskimagedialog.c:934
-#: src/disks/gdunewdiskimagedialog.c:169
+#: src/disks/gdunewdiskimagedialog.c:258
 #, c-format
 msgid ""
 "The file already exists in “%s”.  Replacing it will overwrite its contents."
 msgstr "Datne jau eksistē “%s”. Aizvietojot tiks pārrakstīts tās saturs."
 
 #: src/disks/gducreatediskimagedialog.c:937
-#: src/disks/gdunewdiskimagedialog.c:172
+#: src/disks/gdunewdiskimagedialog.c:261
 msgid "_Replace"
 msgstr "_Aizvietot"
 
 #: src/disks/gducreatediskimagedialog.c:987
-#: src/disks/gdunewdiskimagedialog.c:84
+#: src/disks/gdunewdiskimagedialog.c:175
 msgid "Error opening file for writing"
 msgstr "Kļūda, atverot datni rakstīšanai"
 
@@ -1447,53 +1545,49 @@ msgstr "Izveido diska attēlu"
 msgid "The utility %s is missing."
 msgstr "Nav utilītprogrammas %s."
 
-#: src/disks/gducreateformatdialog.c:175
+#: src/disks/gducreateformatdialog.c:168
 msgid "_Previous"
 msgstr "Ie_priekšējais"
 
-#: src/disks/gducreateformatdialog.c:181
+#: src/disks/gducreateformatdialog.c:174
 msgid "Cre_ate"
 msgstr "Iz_veidot"
 
-#: src/disks/gducreateformatdialog.c:187
+#: src/disks/gducreateformatdialog.c:180
 msgid "Form_at"
 msgstr "Form_atēt"
 
-#: src/disks/gducreateformatdialog.c:194
+#: src/disks/gducreateformatdialog.c:187
 msgid "N_ext"
 msgstr "Nā_kamais"
 
-#: src/disks/gducreateformatdialog.c:221
+#: src/disks/gducreateformatdialog.c:206
 msgid "Error formatting volume"
 msgstr "Kļūda, formatējot sējumu"
 
-#: src/disks/gducreateformatdialog.c:292
+#: src/disks/gducreateformatdialog.c:272
 msgid "Error creating partition"
 msgstr "Kļūda, veidojot nodalījumu"
 
-#: src/disks/gducreateformatdialog.c:454
+#: src/disks/gducreateformatdialog.c:469
 msgid "Create Partition"
 msgstr "Izveidot nodalījumu"
 
-#: src/disks/gducreateformatdialog.c:463
+#: src/disks/gducreateformatdialog.c:474
 msgid "Format Volume"
 msgstr "Formatēt sējumu"
 
-#: src/disks/gducreateformatdialog.c:466
+#: src/disks/gducreateformatdialog.c:477
 msgid "Custom Format"
 msgstr "Pielāgota formatēšana"
 
-#: src/disks/gducreateformatdialog.c:469
+#: src/disks/gducreateformatdialog.c:480
 msgid "Set Password"
 msgstr "Iestatīt paroli"
 
-#: src/disks/gducreateformatdialog.c:472
+#: src/disks/gducreateformatdialog.c:483
 msgid "Confirm Details"
 msgstr "Apstiprināt informāciju"
-
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:147
-msgid "_Format"
-msgstr "_Formatēt"
 
 #: src/disks/gducreateotherpage.c:16
 msgid "XFS — Linux Filesystem"
@@ -1523,12 +1617,12 @@ msgstr "UDF — universāls diska formāts, noņemamām ierīcēm uz daudzām si
 msgid "No Filesystem"
 msgstr "Bez datņu sistēmas"
 
-#: src/disks/gducreatepartitionpage.c:320
+#: src/disks/gducreatepartitionpage.c:319
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr "Nevar izveidot jaunu nodalījumu. Te jau ir četri primārie nodalījumi."
 
-#: src/disks/gducreatepartitionpage.c:324
+#: src/disks/gducreatepartitionpage.c:323
 msgid "This is the last primary partition that can be created."
 msgstr "Šis ir pēdējais primārais nodalījums, kas var tikt izveidots."
 
@@ -1536,31 +1630,31 @@ msgstr "Šis ir pēdējais primārais nodalījums, kas var tikt izveidots."
 msgid "The passwords do not match"
 msgstr "Paroles nesakrīt"
 
-#: src/disks/gducrypttabdialog.c:86
+#: src/disks/gducrypttabdialog.c:85
 msgid "Error removing /etc/crypttab entry"
 msgstr "Kļūda, izņemot /etc/crypttab ierakstu"
 
-#: src/disks/gducrypttabdialog.c:164
+#: src/disks/gducrypttabdialog.c:163
 msgid "Error adding /etc/crypttab entry"
 msgstr "Kļūda, pievienojot /etc/crypttab ierakstu"
 
-#: src/disks/gducrypttabdialog.c:185
+#: src/disks/gducrypttabdialog.c:184
 msgid "Error updating /etc/crypttab entry"
 msgstr "Kļūda, atjauninot /etc/crypttab ierakstu"
 
-#: src/disks/gducrypttabdialog.c:242 src/disks/gducrypttabdialog.c:257
+#: src/disks/gducrypttabdialog.c:241 src/disks/gducrypttabdialog.c:256
 msgid "Will be created"
 msgstr "Tiks izveidots"
 
-#: src/disks/gducrypttabdialog.c:244 src/disks/gducrypttabdialog.c:264
+#: src/disks/gducrypttabdialog.c:243 src/disks/gducrypttabdialog.c:263
 msgid "None"
 msgstr "Neviens"
 
-#: src/disks/gducrypttabdialog.c:266
+#: src/disks/gducrypttabdialog.c:265
 msgid "Will be deleted"
 msgstr "Tiks dzēsts"
 
-#: src/disks/gducrypttabdialog.c:346
+#: src/disks/gducrypttabdialog.c:345
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
@@ -1568,56 +1662,56 @@ msgstr ""
 "Tiks mainīta tikai parole, kas norādīta <i>/etc/crypttab</i> datnē. Lai "
 "mainītu paša diska paroli, izmantojiet <i>Mainīt paroli</i>"
 
-#: src/disks/gdudevicetreemodel.c:496
+#: src/disks/gdudevicetreemodel.c:495
 msgid "(None)"
 msgstr "(Nekas)"
 
-#: src/disks/gdudevicetreemodel.c:611
+#: src/disks/gdudevicetreemodel.c:610
 msgid "Disk Drives"
 msgstr "Disku dziņi"
 
-#: src/disks/gdudevicetreemodel.c:1025
+#: src/disks/gdudevicetreemodel.c:1024
 msgid "Other Devices"
 msgstr "Citas ierīces"
 
-#: src/disks/gdudisksettingsdialog.c:288
+#: src/disks/gdudisksettingsdialog.c:287
 msgctxt "standby-value"
 msgid "Never"
 msgstr "Nekad"
 
-#: src/disks/gdudisksettingsdialog.c:307
+#: src/disks/gdudisksettingsdialog.c:306
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "Ražotāja noteikts"
 
-#: src/disks/gdudisksettingsdialog.c:311
+#: src/disks/gdudisksettingsdialog.c:310
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "Rezervēts"
 
-#: src/disks/gdudisksettingsdialog.c:332
+#: src/disks/gdudisksettingsdialog.c:331
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (Atslēgts)"
 
-#: src/disks/gdudisksettingsdialog.c:336
+#: src/disks/gdudisksettingsdialog.c:335
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr "%d (Griezstāje atļauta)"
 
-#: src/disks/gdudisksettingsdialog.c:340
+#: src/disks/gdudisksettingsdialog.c:339
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr "%d (Griezstāje nav atļauja)"
 
-#: src/disks/gdudisksettingsdialog.c:355
+#: src/disks/gdudisksettingsdialog.c:354
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (Atslēgts)"
 
-#: src/disks/gdudisksettingsdialog.c:384
+#: src/disks/gdudisksettingsdialog.c:383
 msgid "Error setting configuration"
 msgstr "Kļūda, iestatot konfigurāciju"
 
@@ -1671,11 +1765,41 @@ msgstr "Kluss (lēns)"
 msgid "Loud (Fast)"
 msgstr "Skaļš (ātrs)"
 
-#: src/disks/gdufilesystemdialog.c:59
+#: src/disks/gdu-drive-view.c:262
+msgid "An error occurred when trying to put the drive into standby mode"
+msgstr "Notika kļūda, mēģinot iestatīt dzini gaidstāves režīmā"
+
+#: src/disks/gdu-drive-view.c:291
+msgid "An error occurred when trying to wake up the drive from standby mode"
+msgstr "Notika kļūda, mēģinot pamodināt dzini no gaidstāves režīma"
+
+#: src/disks/gdu-drive-view.c:320
+msgid "Error powering off drive"
+msgstr "Kļūda, izslēdzot ierīci"
+
+#. Translators: Heading for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:348
+msgid "Are you sure you want to power off the drives?"
+msgstr "Vai tiešām vēlaties izslēgt diskus?"
+
+#. Translators: Message for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:350
+msgid ""
+"This operation will prepare the system for the following drives to be "
+"powered down and removed."
+msgstr ""
+"Šī darbība sagatavos sistēmu, lai varētu izslēgt un izņemt sekojošas ierīces."
+
+#: src/disks/gdu-drive-view.c:353 src/disks/ui/drive-menu.ui:44
+#: src/disks/ui/gdu-drive-view.ui:403
+msgid "_Power Off"
+msgstr "_Izslēgt"
+
+#: src/disks/gdufilesystemdialog.c:48
 msgid "Error setting label"
 msgstr "Kļūda, iestatot etiķeti"
 
-#: src/disks/gdufilesystemdialog.c:154
+#: src/disks/gdufilesystemdialog.c:101
 msgid "The label matches the existing label"
 msgstr "Etiķete sakrīt ar esošo etiķeti"
 
@@ -1733,11 +1857,15 @@ msgstr ""
 "Erase</a> un pārliecinieties, ka jūs saprotat risku, kas saistīts ar doto "
 "darbību."
 
+#: src/disks/gduformatdiskdialog.c:147
+msgid "_Format"
+msgstr "_Formatēt"
+
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:238
+#: src/disks/gduformatdiskdialog.c:239
 #, c-format
 msgid "At least %s"
 msgstr "Vismaz %s"
@@ -1746,92 +1874,92 @@ msgstr "Vismaz %s"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:248
+#: src/disks/gduformatdiskdialog.c:249
 #, c-format
 msgid "Approximately %s"
 msgstr "Apmēram %s"
 
-#: src/disks/gduformatdiskdialog.c:282
+#: src/disks/gduformatdiskdialog.c:283
 msgid "Don’t overwrite existing data"
 msgstr "Nepārrakstīt esošos datus"
 
-#: src/disks/gduformatdiskdialog.c:283
+#: src/disks/gduformatdiskdialog.c:284
 msgid "Quick"
 msgstr "Ātri"
 
-#: src/disks/gduformatdiskdialog.c:293
+#: src/disks/gduformatdiskdialog.c:294
 msgid "Overwrite existing data with zeroes"
 msgstr "Pārrakstīt esošos datus ar nullēm"
 
-#: src/disks/gduformatdiskdialog.c:294
+#: src/disks/gduformatdiskdialog.c:295
 msgid "Slow"
 msgstr "Lēni"
 
-#: src/disks/gduformatdiskdialog.c:326
+#: src/disks/gduformatdiskdialog.c:327
 msgid "ATA Secure Erase"
 msgstr "ATA Secure Erase"
 
-#: src/disks/gduformatdiskdialog.c:341
+#: src/disks/gduformatdiskdialog.c:342
 msgid "ATA Enhanced Secure Erase"
 msgstr "ATA Enhanced Secure Erase"
 
-#: src/disks/gduformatdiskdialog.c:384
+#: src/disks/gduformatdiskdialog.c:385
 msgid "Compatible with all systems and devices"
 msgstr "Savietojams ar visām sistēmām un ierīcēm"
 
-#: src/disks/gduformatdiskdialog.c:385
+#: src/disks/gduformatdiskdialog.c:386
 msgid "MBR / DOS"
 msgstr "MBR / DOS"
 
-#: src/disks/gduformatdiskdialog.c:395
+#: src/disks/gduformatdiskdialog.c:396
 msgid "Compatible with modern systems and hard disks > 2TB"
 msgstr ""
 "Savietojams ar modernām sistēmām un cietajiem diskiem, lielākiem par 2TB"
 
-#: src/disks/gduformatdiskdialog.c:396
+#: src/disks/gduformatdiskdialog.c:397
 msgid "GPT"
 msgstr "GPT"
 
-#: src/disks/gduformatdiskdialog.c:413
+#: src/disks/gduformatdiskdialog.c:414
 msgid "No partitioning"
 msgstr "Nav nodalījumu"
 
-#: src/disks/gduformatdiskdialog.c:414
+#: src/disks/gduformatdiskdialog.c:415
 msgid "Empty"
 msgstr "Tukšs"
 
-#: src/disks/gdufstabdialog.c:155
+#: src/disks/gdufstabdialog.c:154
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr "Atbilst sadaļai %u ierīcei ar dotajiem svarīgajiem produkta datiem"
 
-#: src/disks/gdufstabdialog.c:158
+#: src/disks/gdufstabdialog.c:157
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr "Atbilst visam diskam ierīcei ar dotajiem svarīgajiem produkta datiem"
 
-#: src/disks/gdufstabdialog.c:163
+#: src/disks/gdufstabdialog.c:162
 #, c-format
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
 "Atbilst sadaļai %u jebkurai ierīcei, kas ir savienota dotajā portā vai adresē"
 
-#: src/disks/gdufstabdialog.c:166
+#: src/disks/gdufstabdialog.c:165
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
 "Atbilst visam diskam jebkurai ierīcei, kas ir savienota dotajā portā vai "
 "adresē"
 
-#: src/disks/gdufstabdialog.c:170
+#: src/disks/gdufstabdialog.c:169
 msgid "Matches any device with the given label"
 msgstr "Atbilst jebkurai ierīcei ar doto etiķeti"
 
-#: src/disks/gdufstabdialog.c:174
+#: src/disks/gdufstabdialog.c:173
 msgid "Matches the device with the given UUID"
 msgstr "Atbilst ierīcei ar doto UUID"
 
-#: src/disks/gdufstabdialog.c:178
+#: src/disks/gdufstabdialog.c:177
 msgid "Matches the given device"
 msgstr "Atbilst dotajai ierīcei"
 
@@ -1852,14 +1980,19 @@ msgstr "Kļūda, pievienojot jaunu /etc/fstab ierakstu"
 msgid "Error updating /etc/fstab entry"
 msgstr "Kļūda, atjauninot /etc/fstab ierakstu"
 
-#: src/disks/gdunewdiskimagedialog.c:99
+#: src/disks/gdunewdiskimagedialog.c:89 src/disks/gdunewdiskimagedialog.c:132
+#: src/disks/gduwindow.c:89
+msgid "Error attaching disk image"
+msgstr "Kļūda, pievienojot diska attēlu"
+
+#: src/disks/gdunewdiskimagedialog.c:190
 msgid "Error writing file"
 msgstr "Kļūda, rakstot datnē"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:196
+#: src/disks/gdunewdiskimagedialog.c:285
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "Nenosaukts (%s).img"
@@ -1876,15 +2009,15 @@ msgstr "Kļūda, iestatot nodalījuma nosaukumu"
 msgid "Error setting partition flags"
 msgstr "Kļūda, iestatot nodalījuma karogus"
 
-#: src/disks/gdupartitiondialog.c:386
+#: src/disks/gdupartitiondialog.c:388
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgstr "Nodalījuma tips, norādīts kā 32 bitu <i>GUID</i>"
 
-#: src/disks/gdupartitiondialog.c:387
+#: src/disks/gdupartitiondialog.c:389
 msgid "Legacy BIOS _Bootable"
 msgstr "_Palaižams ar mantoto BIOS"
 
-#: src/disks/gdupartitiondialog.c:389 src/disks/ui/edit-partition-dialog.ui:94
+#: src/disks/gdupartitiondialog.c:391 src/disks/ui/edit-partition-dialog.ui:94
 msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
@@ -1892,15 +2025,15 @@ msgstr ""
 "Tas ir līdzvērtīgs pamatpalaišanas ieraksta (MBR) <i>bootable (palaižams)</"
 "i> karogam. Šis tiek parasti izmantots tikai GPT nodalījumiem MBR sistēmās."
 
-#: src/disks/gdupartitiondialog.c:395
+#: src/disks/gdupartitiondialog.c:397
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "Nodalījuma tips kā 8 bitu nenegatīvs veselais skaitlis"
 
-#: src/disks/gdupartitiondialog.c:396
+#: src/disks/gdupartitiondialog.c:398
 msgid "_Bootable"
 msgstr "_Palaižams"
 
-#: src/disks/gdupartitiondialog.c:398
+#: src/disks/gdupartitiondialog.c:400
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -1910,22 +2043,22 @@ msgstr ""
 "jāielādē. Dažreiz nodalījums ar šo karogu tiek apzīmēts kā <i>aktīvais</i> "
 "nodalījums."
 
-#: src/disks/gdupasswordstrengthwidget.c:99
+#: src/disks/gdupasswordstrengthwidget.c:98
 msgctxt "Password strength"
 msgid "Weak"
 msgstr "Vāja"
 
-#: src/disks/gdupasswordstrengthwidget.c:100
+#: src/disks/gdupasswordstrengthwidget.c:99
 msgctxt "Password strength"
 msgid "Fair"
 msgstr "Pietiekama"
 
-#: src/disks/gdupasswordstrengthwidget.c:101
+#: src/disks/gdupasswordstrengthwidget.c:100
 msgctxt "Password strength"
 msgid "Good"
 msgstr "Laba"
 
-#: src/disks/gdupasswordstrengthwidget.c:102
+#: src/disks/gdupasswordstrengthwidget.c:101
 msgctxt "Password strength"
 msgid "Strong"
 msgstr "Stipra"
@@ -2029,48 +2162,48 @@ msgstr "Kopē diska attēlu uz ierīci"
 msgid "Restoring Disk Image"
 msgstr "Atjauno diska attēlu"
 
-#: src/disks/gdurestorediskimagedialog.c:1035
+#: src/disks/gdurestorediskimagedialog.c:1036
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Vai jūs tiešām vēlaties rakstīt diska attēlu šajā ierīcē?"
 
-#: src/disks/gdurestorediskimagedialog.c:1036
+#: src/disks/gdurestorediskimagedialog.c:1037
 msgid "All existing data will be lost"
 msgstr "Visi esošie dati tiks zaudēti"
 
-#: src/disks/gdurestorediskimagedialog.c:1037
+#: src/disks/gdurestorediskimagedialog.c:1038
 msgid "_Restore"
 msgstr "_Atjaunot"
 
-#: src/disks/gduunlockdialog.c:85
+#: src/disks/gduunlockdialog.c:84
 msgid "The encryption passphrase was retrieved from the keyring"
 msgstr "Šifrēšanas parole tika iegūta no saišķa"
 
-#: src/disks/gduunlockdialog.c:113
+#: src/disks/gduunlockdialog.c:112
 msgid "Error unlocking device"
 msgstr "Kļūda, atbloķējot ierīci"
 
-#: src/disks/gduunlockdialog.c:253 src/disks/ui/unlock-device-dialog.ui:193
+#: src/disks/gduunlockdialog.c:252 src/disks/ui/unlock-device-dialog.ui:193
 msgid "Select a Keyfile"
 msgstr "Izvēlieties atslēgdatni"
 
-#: src/disks/gduunlockdialog.c:339
+#: src/disks/gduunlockdialog.c:338
 msgid "Set options to unlock"
 msgstr "Iestatīt opcijas, lai atbloķētu"
 
-#: src/disks/gduvolumegrid.c:262
+#: src/disks/gduvolumegrid.c:261
 msgid "Volumes Grid"
 msgstr "Sējumu režģis"
 
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
+#: src/disks/gduvolumegrid.c:565
 msgid "No Media"
 msgstr "Nav datu nesēja"
 
-#: src/disks/gduvolumegrid.c:1666
+#: src/disks/gduvolumegrid.c:1665
 msgctxt "volume-grid"
 msgid "Filesystem"
 msgstr "Datņu sistēma"
 
-#: src/disks/gduvolumegrid.c:1676
+#: src/disks/gduvolumegrid.c:1675
 msgctxt "volume-grid"
 msgid "Swap"
 msgstr "Maiņvieta"
@@ -2078,7 +2211,7 @@ msgstr "Maiņvieta"
 #. Translators: This is shown in the volume grid for a partition with a name/label.
 #. *              The %d is the partition number. The %s is the name
 #.
-#: src/disks/gduvolumegrid.c:1699
+#: src/disks/gduvolumegrid.c:1698
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u: %s"
@@ -2087,343 +2220,21 @@ msgstr "Nodalījums %u: %s"
 #. Translators: This is shown in the volume grid for a partition with no name/label.
 #. *              The %d is the partition number
 #.
-#: src/disks/gduvolumegrid.c:1706
+#: src/disks/gduvolumegrid.c:1705
 #, c-format
 msgctxt "volume-grid"
 msgid "Partition %u"
 msgstr "Nodalījums %u"
 
-#: src/disks/gduvolumegrid.c:1763
+#: src/disks/gduvolumegrid.c:1762
 msgctxt "volume-grid"
 msgid "Extended Partition"
 msgstr "Paplašinātais nodalījums"
 
-#: src/disks/gduvolumegrid.c:1838
+#: src/disks/gduvolumegrid.c:1837
 msgctxt "volume-grid"
 msgid "Free Space"
 msgstr "Brīvā vieta"
-
-#: src/disks/gduwindow.c:642
-msgid "Error deleting loop device"
-msgstr "Kļūda, dzēšot cikla ierīci"
-
-#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
-msgid "Error attaching disk image"
-msgstr "Kļūda, pievienojot diska attēlu"
-
-#: src/disks/gduwindow.c:815
-msgid "Select Disk Image to Attach"
-msgstr "Izvēlieties diska attēlu, ko pievienot"
-
-#: src/disks/gduwindow.c:819
-msgid "_Attach"
-msgstr "_Pievienot"
-
-#. set file types
-#. allow_compressed
-#. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:826
-msgid "Set up _read-only loop device"
-msgstr "Iestatīt _tikai lasāmo cikla ierīci"
-
-#: src/disks/gduwindow.c:827
-msgid ""
-"If checked, the loop device will be read-only. This is useful if you don’t "
-"want the underlying file to be modified"
-msgstr ""
-"Ja atzīmēts, cikla ierīce būs tikai lasāma. Tas ir noderīgi tad, ja jūs "
-"nevēlaties piesaistīto datni mainīt."
-
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1674
-#, c-format
-msgid "%s (Read-Only)"
-msgstr "%s (tikai lasāms)"
-
-#. Translators: Used for job progress.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-#.
-#: src/disks/gduwindow.c:1712
-#, c-format
-msgctxt "job-remaining-with-rate"
-msgid "%s remaining (%s/sec)"
-msgstr "%s atlikuši (%s/sec)"
-
-#. Translators: Used for job progress.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#.
-#: src/disks/gduwindow.c:1720
-#, c-format
-msgctxt "job-remaining"
-msgid "%s remaining"
-msgstr "%s atlikuši"
-
-#. Translators: Used to convey job progress where the amount of bytes to process is known.
-#. *              The first %s is the amount of bytes processed (ex. "650 MB").
-#. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
-#. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
-#.
-#: src/disks/gduwindow.c:1735
-#, c-format
-msgid "%s of %s — %s"
-msgstr "%s no %s — %s"
-
-#. Translators: Used in job progress bar.
-#. *              The %s is the job description (e.g. "Erasing Device").
-#. *              The %f is the completion percentage (between 0.0 and 100.0).
-#.
-#: src/disks/gduwindow.c:1860
-#, c-format
-msgid "%s: %2.1f%%"
-msgstr "%s: %2.1f%%"
-
-#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
-msgid "Block device is empty"
-msgstr "Bloka ierīce ir tukša"
-
-#. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1963
-#, c-format
-msgctxt "partitioning"
-msgid "Unknown (%s)"
-msgstr "Nezināms (%s)"
-
-#. Translators: Shown in "Location" when drive is connected to another seat than where
-#. * our application is running.
-#.
-#: src/disks/gduwindow.c:2122
-msgid "Connected to another seat"
-msgstr "Savienots ar citu sēdvietu"
-
-#: src/disks/gduwindow.c:2267
-msgid "Loop device is empty"
-msgstr "Cikla ierīce ir aizņemta"
-
-#. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
-#. *              space.
-#. *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
-#. *              The second %s is a short string with the space free (e.g. '43 GB').
-#. *              The %f is the percentage in use (e.g. 62.2).
-#.
-#: src/disks/gduwindow.c:2484
-#, c-format
-msgid "%s — %s free (%.1f%% full)"
-msgstr "%s — %s brīvs (%.1f%% aizņemts)"
-
-#: src/disks/gduwindow.c:2514
-msgctxt "partition type"
-msgid "Unknown"
-msgstr "Nezināms"
-
-#. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
-#.
-#: src/disks/gduwindow.c:2552
-msgctxt "volume-content-fs"
-msgid "Filesystem Root"
-msgstr "Datņu sistēmas sakne"
-
-#. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2560
-#, c-format
-msgctxt "volume-content-fs"
-msgid "Mounted at %s"
-msgstr "Montēts pie %s"
-
-#. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2566
-msgctxt "volume-content-fs"
-msgid "Not Mounted"
-msgstr "Nav montēts"
-
-#. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2589
-msgctxt "volume-content-swap"
-msgid "Active"
-msgstr "Aktīvs"
-
-#. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2595
-msgctxt "volume-content-swap"
-msgid "Not Active"
-msgstr "Nav aktīvs"
-
-#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2610
-msgctxt "volume-content-crypto"
-msgid "Unlocked"
-msgstr "Atbloķēts"
-
-#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2616
-msgctxt "volume-content-crypto"
-msgid "Locked"
-msgstr "Bloķēts"
-
-#: src/disks/gduwindow.c:2630
-msgctxt "volume-contents-msdos-ext"
-msgid "Extended Partition"
-msgstr "Paplašinātais nodalījums"
-
-#. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
-#. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
-#. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
-#.
-#: src/disks/gduwindow.c:2650
-#, c-format
-msgctxt "volume-contents-combiner"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2773
-msgid "Unallocated Space"
-msgstr "Neiedalītā vieta"
-
-#: src/disks/gduwindow.c:2982
-msgid "Error while repairing filesystem"
-msgstr "Kļūda, labojot datņu sistēmu"
-
-#: src/disks/gduwindow.c:3009
-msgid "Repair successful"
-msgstr "Labošana bija veiksmīga"
-
-#: src/disks/gduwindow.c:3009
-msgid "Repair failed"
-msgstr "Neizdevās salabot"
-
-#: src/disks/gduwindow.c:3012
-#, c-format
-msgid "Filesystem %s on %s has been repaired."
-msgstr "Datņu sistēma %s uz %s ir salabota."
-
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3018
-#, c-format
-msgid "Filesystem %s on %s could not be repaired."
-msgstr "Datņu sistēmu %s uz %s nevarēja salabot."
-
-#: src/disks/gduwindow.c:3088
-msgid "Confirm Repair"
-msgstr "Apstiprināt labošanu"
-
-#: src/disks/gduwindow.c:3091
-msgid ""
-"A filesystem repair is not always possible and can cause data loss. Consider "
-"backing it up first in order to use forensic recovery tools that retrieve "
-"lost files. The operation may take a long time, especially if the partition "
-"contains a lot of data."
-msgstr ""
-"Datņu sistēmas salabošana ne vienmēr ir iespējama un var beigties ar datu "
-"zaudēšanu. Darbība var aizņemt daudz laika, it īpaši, ja nodalījums satur "
-"daudz datu."
-
-#: src/disks/gduwindow.c:3133
-msgid "Error while taking filesystem ownership"
-msgstr "Kļūda, pārņemot datņu sistēmas īpašumtiesības"
-
-#: src/disks/gduwindow.c:3205
-msgid "Error while checking filesystem"
-msgstr "Kļūda, pārbaudot datņu sistēmu"
-
-#: src/disks/gduwindow.c:3232
-msgid "Filesystem intact"
-msgstr "Datņu sistēmas ir neskarta"
-
-#: src/disks/gduwindow.c:3232
-msgid "Filesystem damaged"
-msgstr "Datņu sistēma ir bojāta"
-
-#: src/disks/gduwindow.c:3235
-#, c-format
-msgid "Filesystem %s on %s is undamaged."
-msgstr "Datņu sistēma %s uz %s nav bojāta."
-
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3241
-#, c-format
-msgid "Filesystem %s on %s needs repairing."
-msgstr "Datņu sistēmu %s uz %s vajag salabot."
-
-#: src/disks/gduwindow.c:3309
-msgid "Confirm Check"
-msgstr "Apstiprināt pārbaudi"
-
-#: src/disks/gduwindow.c:3312
-msgid ""
-"The check may take a long time, especially if the partition contains a lot "
-"of data."
-msgstr ""
-"Pārbaude var aizņemt daudz laika, it īpaši ja nodalījums satur daudz datu."
-
-#: src/disks/gduwindow.c:3589
-msgid "An error occurred when trying to put the drive into standby mode"
-msgstr "Notika kļūda, mēģinot iestatīt dzini gaidstāves režīmā"
-
-#: src/disks/gduwindow.c:3636
-msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr "Notika kļūda, mēģinot pamodināt dzini no gaidstāves režīma"
-
-#: src/disks/gduwindow.c:3682
-msgid "Error powering off drive"
-msgstr "Kļūda, izslēdzot ierīci"
-
-#. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3734
-msgid "Are you sure you want to power off the drives?"
-msgstr "Vai tiešām vēlaties izslēgt diskus?"
-
-#. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3736
-msgid ""
-"This operation will prepare the system for the following drives to be "
-"powered down and removed."
-msgstr ""
-"Šī darbība sagatavos sistēmu, lai varētu izslēgt un izņemt sekojošas ierīces."
-
-#: src/disks/gduwindow.c:3740 src/disks/ui/drive-menu.ui:44
-msgid "_Power Off"
-msgstr "_Izslēgt"
-
-#: src/disks/gduwindow.c:3820
-msgid "Error mounting filesystem"
-msgstr "Kļūda, montējot datņu sistēmu"
-
-#: src/disks/gduwindow.c:3905
-msgid "Error deleting partition"
-msgstr "Kļūda, dzēšot nodalījumu"
-
-#: src/disks/gduwindow.c:3942
-msgid "Are you sure you want to delete the partition?"
-msgstr "Vai tiešām vēlaties dzēst nodalījumu?"
-
-#: src/disks/gduwindow.c:3943
-msgid "All data on the partition will be lost"
-msgstr "Visi dati šajā nodalījumā tiks zaudēti"
-
-#: src/disks/gduwindow.c:3944
-msgid "_Delete"
-msgstr "_Dzēst"
-
-#: src/disks/gduwindow.c:3975
-msgid "Error ejecting media"
-msgstr "Kļūda, izgrūžot datu nesēju"
-
-#: src/disks/gduwindow.c:4058
-msgid "Error starting swap"
-msgstr "Kļūda, palaižot maiņvietu"
-
-#: src/disks/gduwindow.c:4095
-msgid "Error stopping swap"
-msgstr "Kļūda, apturot maiņvietu"
-
-#: src/disks/gduwindow.c:4137
-msgid "Error setting autoclear flag"
-msgstr "Kļūda, iestatot automātiskās attīrīšanas karogu"
-
-#: src/disks/gduwindow.c:4190 src/disks/gduwindow.c:4254
-msgid "Error canceling job"
-msgstr "Kļūda, atceļot darbu"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -2462,23 +2273,23 @@ msgstr ""
 "Rūdolfs Mazurs <rudolfs.mazurs@gmail.com> Pēteris Krišjānis <pecisk@gmail."
 "com>"
 
-#: src/disks/ui/app-menu.ui:6
+#: src/disks/ui/app-menu.ui:6 src/disks/ui/gdu-window.ui:124
 msgid "_New Disk Image…"
 msgstr "Jau_ns diska attēls…"
 
-#: src/disks/ui/app-menu.ui:10
+#: src/disks/ui/app-menu.ui:10 src/disks/ui/gdu-window.ui:128
 msgid "_Attach Disk Image… (.iso, .img)"
 msgstr "Pievienot diska _attēlu… (.iso, .img)"
 
-#: src/disks/ui/app-menu.ui:17
+#: src/disks/ui/app-menu.ui:17 src/disks/ui/gdu-window.ui:135
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastatūras īsinājumtaustiņi"
 
-#: src/disks/ui/app-menu.ui:21
+#: src/disks/ui/app-menu.ui:21 src/disks/ui/gdu-window.ui:139
 msgid "_Help"
 msgstr "_Palīdzība"
 
-#: src/disks/ui/app-menu.ui:24
+#: src/disks/ui/app-menu.ui:24 src/disks/ui/gdu-window.ui:142
 msgid "_About Disks"
 msgstr "P_ar diskiem"
 
@@ -2840,10 +2651,6 @@ msgstr "Brīvā diska vieta _pēc"
 msgid "The free space following the partition"
 msgstr "Brīvā diska vieta pēc nodalījuma"
 
-#: src/disks/ui/create-partition-page.ui:165
-msgid "Extended Partition"
-msgstr "Paplašinātais nodalījums"
-
 #: src/disks/ui/create-partition-page.ui:169
 msgid "Extended Partitions can contain Logical Partitions"
 msgstr "Paplašinātais nodalījums var saturēt loģiskos nodalījumus"
@@ -2982,30 +2789,35 @@ msgid "Wr_ite Cache"
 msgstr "Rakstīšanas kešatm_iņa"
 
 #: src/disks/ui/disks.ui:34
-msgid "Application Menu"
-msgstr "Lietotņu izvēlne"
+#| msgid "Application Menu"
+msgid "Main Menu"
+msgstr "Galvenā izvēlne"
 
-#: src/disks/ui/disks.ui:94
-msgid "Go back to main view"
-msgstr "Atgriezties pie galvenā skata"
+#. <property name="action-name">win.go-back</property>
+#: src/disks/ui/disks.ui:94 src/disks/ui/gdu-window.ui:95
+msgid "Back"
+msgstr "Atpakaļ"
 
 #: src/disks/ui/disks.ui:106
 msgid "Drive Options"
 msgstr "Dziņa opcijas"
 
 #: src/disks/ui/disks.ui:121
-msgid "Power off this disk"
-msgstr "Izslēgt šo disku"
+#| msgid "_Power Off"
+msgid "Power Off Disk"
+msgstr "Izslēgt disku"
 
 #: src/disks/ui/disks.ui:136
-msgid "Eject this disk"
-msgstr "Izgrūst šo disku"
+#| msgid "Eject this disk"
+msgid "Eject Disk"
+msgstr "Izgrūst disku"
 
 #: src/disks/ui/disks.ui:151
-msgid "Detach this loop device"
-msgstr "Atvienot šo cikla ierīci"
+#| msgid "Detach this loop device"
+msgid "Detach Loop Device"
+msgstr "Atvienot cikla ierīci"
 
-#: src/disks/ui/disks.ui:174
+#: src/disks/ui/disks.ui:174 src/disks/ui/gdu-drive-view.ui:14
 msgid "No Device Selected"
 msgstr "Neviena ierīce nav izvēlēta"
 
@@ -3013,7 +2825,7 @@ msgstr "Neviena ierīce nav izvēlēta"
 msgid "Select a device to manage."
 msgstr "Izvēlieties ierīci, kuru pārvaldīt."
 
-#: src/disks/ui/disks.ui:210
+#: src/disks/ui/disks.ui:210 src/disks/ui/gdu-drive-view.ui:177
 msgid "Model"
 msgstr "Modelis"
 
@@ -3038,6 +2850,7 @@ msgid "Name"
 msgstr "Nosaukums"
 
 #: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
+#: src/disks/ui/gdu-block-row.ui:68 src/disks/ui/gdu-drive-view.ui:258
 msgid "Size"
 msgstr "Izmērs"
 
@@ -3046,15 +2859,16 @@ msgid "Auto-clear"
 msgstr "Automātiski attīrīts"
 
 #: src/disks/ui/disks.ui:560
-msgid "Detach loop device after unmount action"
-msgstr "Atvienot cilpas ierīci pēc atmontēšanas darbības"
+#| msgid "Detach loop device after unmount action"
+msgid "Detach Loop Device After Unmounting"
+msgstr "Atvienot cilpas ierīci pēc atmontēšanas"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: src/disks/ui/disks.ui:574
 msgid "Backing File"
 msgstr "Atbalstošā datne"
 
-#: src/disks/ui/disks.ui:603
+#: src/disks/ui/disks.ui:603 src/disks/ui/gdu-drive-view.ui:231
 msgid "Partitioning"
 msgstr "Nodalīšana"
 
@@ -3063,39 +2877,48 @@ msgid "_Volumes"
 msgstr "_Sējumi"
 
 #: src/disks/ui/disks.ui:675
-msgid "Mount selected partition"
+#| msgid "Mount selected partition"
+msgid "Mount Selected Partition"
 msgstr "Montēt izvēlēto nodalījumu"
 
 #: src/disks/ui/disks.ui:692
-msgid "Unmount selected partition"
+#| msgid "Unmount selected partition"
+msgid "Unmount Selected Partition"
 msgstr "Atmontēt izvēlēto nodalījumu"
 
 #: src/disks/ui/disks.ui:709
-msgid "Activate selected swap partition"
+#| msgid "Activate selected swap partition"
+msgid "Activate Selected Swap Partition"
 msgstr "Aktivizēt izvēlēto maiņvietas nodalījumu"
 
 #: src/disks/ui/disks.ui:726
-msgid "Deactivate selected swap partition"
+#| msgid "Deactivate selected swap partition"
+msgid "Deactivate Selected Swap Partition"
 msgstr "Deaktivizēt izvēlēto maiņvietas nodalījumu"
 
 #: src/disks/ui/disks.ui:743
-msgid "Unlock selected encrypted partition"
+#| msgid "Unlock selected encrypted partition"
+msgid "Unlock Selected Encrypted Partition"
 msgstr "Atbloķēt izvēlēto šifrēto nodalījumu"
 
 #: src/disks/ui/disks.ui:760
-msgid "Lock selected encrypted partition"
+#| msgid "Lock selected encrypted partition"
+msgid "Lock Selected Encrypted Partition"
 msgstr "Bloķēt izvēlēto šifrēto nodalījumu"
 
 #: src/disks/ui/disks.ui:777
-msgid "Create partition in unallocated space"
+#| msgid "Create partition in unallocated space"
+msgid "Create Partition in Unallocated Space"
 msgstr "Izveidot nodalījumu neizmantotajā apgabalā"
 
 #: src/disks/ui/disks.ui:794
-msgid "Additional partition options"
+#| msgid "Additional partition options"
+msgid "Additional Partition Options"
 msgstr "Papildu opcijas nodalījumam"
 
 #: src/disks/ui/disks.ui:821
-msgid "Delete selected partition"
+#| msgid "Delete selected partition"
+msgid "Delete Selected Partition"
 msgstr "Dzēst izvēlēto nodalījumu"
 
 #. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
@@ -3103,43 +2926,43 @@ msgstr "Dzēst izvēlēto nodalījumu"
 msgid "Contents"
 msgstr "Saturs"
 
-#: src/disks/ui/disks.ui:939
+#: src/disks/ui/disks.ui:939 src/disks/ui/gdu-block-row.ui:122
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/disks.ui:968
+#: src/disks/ui/disks.ui:968 src/disks/ui/gdu-block-row.ui:149
 msgid "Partition Type"
 msgstr "Nodalījuma tips"
 
-#: src/disks/ui/drive-menu.ui:6
+#: src/disks/ui/drive-menu.ui:6 src/disks/ui/gdu-drive-view.ui:297
 msgid "Format _Disk…"
 msgstr "Formatēt _disku…"
 
-#: src/disks/ui/drive-menu.ui:12
+#: src/disks/ui/drive-menu.ui:12 src/disks/ui/gdu-drive-view.ui:314
 msgid "_Create Disk Image…"
 msgstr "_Izveidot diska attēlu…"
 
-#: src/disks/ui/drive-menu.ui:16
+#: src/disks/ui/drive-menu.ui:16 src/disks/ui/gdu-drive-view.ui:325
 msgid "_Restore Disk Image…"
 msgstr "_Atjaunot diska attēlu…"
 
-#: src/disks/ui/drive-menu.ui:22
+#: src/disks/ui/drive-menu.ui:22 src/disks/ui/gdu-drive-view.ui:342
 msgid "_Benchmark Disk…"
 msgstr "_Mērīt diska veiktspēju…"
 
-#: src/disks/ui/drive-menu.ui:26
+#: src/disks/ui/drive-menu.ui:26 src/disks/ui/gdu-drive-view.ui:353
 msgid "_SMART Data & Self-Tests…"
 msgstr "_SMART dati un testi…"
 
-#: src/disks/ui/drive-menu.ui:30
+#: src/disks/ui/drive-menu.ui:30 src/disks/ui/gdu-drive-view.ui:364
 msgid "Drive S_ettings…"
 msgstr "Dziņa i_estatījumi…"
 
-#: src/disks/ui/drive-menu.ui:36
+#: src/disks/ui/drive-menu.ui:36 src/disks/ui/gdu-drive-view.ui:381
 msgid "S_tandby Now"
 msgstr "Gaidstāvēt _tagad"
 
-#: src/disks/ui/drive-menu.ui:40
+#: src/disks/ui/drive-menu.ui:40 src/disks/ui/gdu-drive-view.ui:392
 msgid "_Wake-Up from Standby"
 msgstr "_Pamodināt no gaidstāves"
 
@@ -3220,7 +3043,6 @@ msgid "Passphrase File"
 msgstr "Paroles datne"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:246
-#| msgid "OK"
 msgid "_OK"
 msgstr "_Labi"
 
@@ -3431,6 +3253,95 @@ msgstr "_Nodalīšana"
 #: src/disks/ui/format-disk-dialog.ui:97
 msgid "_Format…"
 msgstr "_Formatēt…"
+
+#: src/disks/ui/gdu-block-row.ui:95
+#| msgid "Device"
+msgid "Device ID"
+msgstr "Ierīces ID"
+
+#: src/disks/ui/gdu-block-row.ui:189 src/disks/ui/volume-menu.ui:6
+msgid "Format _Partition…"
+msgstr "Formatēt _nodalījumu…"
+
+#: src/disks/ui/gdu-block-row.ui:206 src/disks/ui/volume-menu.ui:12
+msgid "_Edit Partition…"
+msgstr "R_ediģēt nodalījumu…"
+
+#: src/disks/ui/gdu-block-row.ui:217 src/disks/ui/volume-menu.ui:16
+msgid "Edit _Filesystem…"
+msgstr "Rediģēt _datņu sistēmu…"
+
+#: src/disks/ui/gdu-block-row.ui:228 src/disks/ui/volume-menu.ui:20
+msgid "Change Pa_ssphrase…"
+msgstr "_Mainīt paroli…"
+
+#: src/disks/ui/gdu-block-row.ui:245 src/disks/ui/volume-menu.ui:26
+msgid "Resi_ze…"
+msgstr "Mainīt i_zmēru…"
+
+#: src/disks/ui/gdu-block-row.ui:256 src/disks/ui/volume-menu.ui:30
+msgid "C_heck Filesystem…"
+msgstr "Pārbaudīt _datņu sistēmu…"
+
+#: src/disks/ui/gdu-block-row.ui:267 src/disks/ui/volume-menu.ui:34
+msgid "Rep_air Filesystem…"
+msgstr "S_alabot datņu sistēmu…"
+
+#: src/disks/ui/gdu-block-row.ui:278 src/disks/ui/volume-menu.ui:38
+msgid "_Take Ownership…"
+msgstr "Pārņemt īpašum_tiesības…"
+
+#: src/disks/ui/gdu-block-row.ui:295 src/disks/ui/volume-menu.ui:44
+msgid "Edit _Mount Options…"
+msgstr "Mainīt _montēšanas opcijas…"
+
+#: src/disks/ui/gdu-block-row.ui:306 src/disks/ui/volume-menu.ui:48
+msgid "Edit Encr_yption Options…"
+msgstr "Mainīt š_ifrēšanas opcijas…"
+
+#: src/disks/ui/gdu-block-row.ui:323 src/disks/ui/volume-menu.ui:54
+msgid "_Create Partition Image…"
+msgstr "_Izveidot nodalījuma attēlu…"
+
+#: src/disks/ui/gdu-block-row.ui:334 src/disks/ui/volume-menu.ui:58
+msgid "_Restore Partition Image…"
+msgstr "_Atjaunot nodalījuma attēlu…"
+
+#: src/disks/ui/gdu-block-row.ui:345 src/disks/ui/volume-menu.ui:62
+msgid "_Benchmark Partition…"
+msgstr "_Mērīt nodalījuma veiktspēju…"
+
+#: src/disks/ui/gdu-drive-view.ui:122
+#| msgid "_Volumes"
+msgid "Volumes"
+msgstr "Sējumi"
+
+#: src/disks/ui/gdu-drive-view.ui:204
+#| msgid "Serial Number"
+msgid "Serial"
+msgstr "Sērija"
+
+#: src/disks/ui/gdu-window.ui:28
+msgid "Application Menu"
+msgstr "Lietotņu izvēlne"
+
+#: src/disks/ui/gdu-window.ui:89
+#| msgctxt "shortcut window"
+#| msgid "Drive"
+msgid "Drives"
+msgstr "Dziņi"
+
+#: src/disks/ui/gdu-window.ui:149
+msgid "Select Disk Image to Attach"
+msgstr "Izvēlieties diska attēlu, ko pievienot"
+
+#: src/disks/ui/gdu-window.ui:169
+msgid "_Attach"
+msgstr "_Pievienot"
+
+#: src/disks/ui/gdu-window.ui:181
+msgid "Set up _read-only loop device"
+msgstr "Iestatīt _tikai lasāmo cikla ierīci"
 
 #: src/disks/ui/new-disk-image-dialog.ui:7
 msgid "New Disk Image"
@@ -3752,72 +3663,20 @@ msgstr "Izvēlieties atslēgdatni, lai atslēgtu šo sējumu"
 msgid "_Unlock"
 msgstr "_Atbloķēt"
 
-#: src/disks/ui/volume-menu.ui:6
-msgid "Format _Partition…"
-msgstr "Formatēt _nodalījumu…"
-
-#: src/disks/ui/volume-menu.ui:12
-msgid "_Edit Partition…"
-msgstr "R_ediģēt nodalījumu…"
-
-#: src/disks/ui/volume-menu.ui:16
-msgid "Edit _Filesystem…"
-msgstr "Rediģēt _datņu sistēmu…"
-
-#: src/disks/ui/volume-menu.ui:20
-msgid "Change Pa_ssphrase…"
-msgstr "_Mainīt paroli…"
-
-#: src/disks/ui/volume-menu.ui:26
-msgid "Resi_ze…"
-msgstr "Mainīt i_zmēru…"
-
-#: src/disks/ui/volume-menu.ui:30
-msgid "C_heck Filesystem…"
-msgstr "Pārbaudīt _datņu sistēmu…"
-
-#: src/disks/ui/volume-menu.ui:34
-msgid "Rep_air Filesystem…"
-msgstr "S_alabot datņu sistēmu…"
-
-#: src/disks/ui/volume-menu.ui:38
-msgid "_Take Ownership…"
-msgstr "Pārņemt īpašum_tiesības…"
-
-#: src/disks/ui/volume-menu.ui:44
-msgid "Edit _Mount Options…"
-msgstr "Mainīt _montēšanas opcijas…"
-
-#: src/disks/ui/volume-menu.ui:48
-msgid "Edit Encr_yption Options…"
-msgstr "Mainīt š_ifrēšanas opcijas…"
-
-#: src/disks/ui/volume-menu.ui:54
-msgid "_Create Partition Image…"
-msgstr "_Izveidot nodalījuma attēlu…"
-
-#: src/disks/ui/volume-menu.ui:58
-msgid "_Restore Partition Image…"
-msgstr "_Atjaunot nodalījuma attēlu…"
-
-#: src/disks/ui/volume-menu.ui:62
-msgid "_Benchmark Partition…"
-msgstr "_Mērīt nodalījuma veiktspēju…"
-
-#: src/libgdu/gduutils.c:107
+#: src/libgdu/gduutils.c:106
 msgid "All Files"
 msgstr "Visas datnes"
 
-#: src/libgdu/gduutils.c:112
+#: src/libgdu/gduutils.c:111
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Disku attēli (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:114
+#: src/libgdu/gduutils.c:113
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Disku attēli (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:443
+#: src/libgdu/gduutils.c:442
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3826,7 +3685,7 @@ msgstr[1] "%d gadi"
 msgstr[2] "%d gadu"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:450
+#: src/libgdu/gduutils.c:449
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3835,7 +3694,7 @@ msgstr[1] "%d mēneši"
 msgstr[2] "%d mēnešu"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:457
+#: src/libgdu/gduutils.c:456
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3844,7 +3703,7 @@ msgstr[1] "%d dienas"
 msgstr[2] "%d dienu"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:464
+#: src/libgdu/gduutils.c:463
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3853,7 +3712,7 @@ msgstr[1] "%d stundas"
 msgstr[2] "%d stundu"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:471
+#: src/libgdu/gduutils.c:470
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3862,7 +3721,7 @@ msgstr[1] "%d minūtes"
 msgstr[2] "%d minūšu"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:478
+#: src/libgdu/gduutils.c:477
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3871,7 +3730,7 @@ msgstr[1] "%d sekundes"
 msgstr[2] "%d sekunžu"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:485
+#: src/libgdu/gduutils.c:484
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3880,94 +3739,221 @@ msgstr[1] "%d milisekundes"
 msgstr[2] "%d milisekunžu"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:549
+#: src/libgdu/gduutils.c:548
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s un %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:554
+#: src/libgdu/gduutils.c:553
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:558
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:564
+#: src/libgdu/gduutils.c:563
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s un %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:575
+#: src/libgdu/gduutils.c:574
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s un %s"
 
-#: src/libgdu/gduutils.c:584
+#: src/libgdu/gduutils.c:583
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Mazāk kā minūte"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:589
+#: src/libgdu/gduutils.c:588
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:595
+#: src/libgdu/gduutils.c:594
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:840
+#: src/libgdu/gduutils.c:839
 msgctxt "confirmation-list-of-devices"
 msgid "Affected Devices"
 msgstr "Ietekmētās ierīces"
 
-#: src/libgdu/gduutils.c:1443
+#: src/libgdu/gduutils.c:1442
 msgid "Error unmounting filesystem"
 msgstr "Kļūda, atmontējot datņu sistēmu"
 
-#: src/libgdu/gduutils.c:1475
+#: src/libgdu/gduutils.c:1474
 msgid "Error locking device"
 msgstr "Kļūda, bloķējot ierīci"
 
-#: src/libgdu/gduutils.c:1496
+#: src/libgdu/gduutils.c:1495
 msgid "Error disabling autoclear for loop device"
 msgstr "Kļūda, izslēdzot automātisko attīrīšanu cikla ierīcei"
 
 #. Translators: This is used as the title of the SMART failure notification
-#: src/notify/gdusdmonitor.c:356
+#: src/notify/gdusdmonitor.c:355
 msgctxt "notify-smart"
 msgid "Hard Disk Problems Detected"
 msgstr "Konstatētas problēmas ar cieto disku"
 
 #. Translators: This is used as the text of the SMART failure notification
-#: src/notify/gdusdmonitor.c:358
+#: src/notify/gdusdmonitor.c:357
 msgctxt "notify-smart"
 msgid "A hard disk is likely to fail soon."
 msgstr "Iespējams, ka cietais disks drīz avarēs."
 
 #. Translators: Text for button in SMART failure notification
-#: src/notify/gdusdmonitor.c:362
+#: src/notify/gdusdmonitor.c:361
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Izpētīt"
+
+#~ msgid "Error deleting loop device"
+#~ msgstr "Kļūda, dzēšot cikla ierīci"
+
+#~ msgid ""
+#~ "If checked, the loop device will be read-only. This is useful if you "
+#~ "don’t want the underlying file to be modified"
+#~ msgstr ""
+#~ "Ja atzīmēts, cikla ierīce būs tikai lasāma. Tas ir noderīgi tad, ja jūs "
+#~ "nevēlaties piesaistīto datni mainīt."
+
+#, c-format
+#~ msgid "%s (Read-Only)"
+#~ msgstr "%s (tikai lasāms)"
+
+#, c-format
+#~ msgctxt "job-remaining-with-rate"
+#~ msgid "%s remaining (%s/sec)"
+#~ msgstr "%s atlikuši (%s/sec)"
+
+#, c-format
+#~ msgctxt "job-remaining"
+#~ msgid "%s remaining"
+#~ msgstr "%s atlikuši"
+
+#, c-format
+#~ msgid "%s of %s — %s"
+#~ msgstr "%s no %s — %s"
+
+#, c-format
+#~ msgid "%s: %2.1f%%"
+#~ msgstr "%s: %2.1f%%"
+
+#~ msgid "Block device is empty"
+#~ msgstr "Bloka ierīce ir tukša"
+
+#, c-format
+#~ msgctxt "partitioning"
+#~ msgid "Unknown (%s)"
+#~ msgstr "Nezināms (%s)"
+
+#~ msgid "Connected to another seat"
+#~ msgstr "Savienots ar citu sēdvietu"
+
+#~ msgid "Loop device is empty"
+#~ msgstr "Cikla ierīce ir aizņemta"
+
+#~ msgctxt "partition type"
+#~ msgid "Unknown"
+#~ msgstr "Nezināms"
+
+#~ msgctxt "volume-content-fs"
+#~ msgid "Filesystem Root"
+#~ msgstr "Datņu sistēmas sakne"
+
+#, c-format
+#~ msgctxt "volume-content-fs"
+#~ msgid "Mounted at %s"
+#~ msgstr "Montēts pie %s"
+
+#~ msgctxt "volume-content-fs"
+#~ msgid "Not Mounted"
+#~ msgstr "Nav montēts"
+
+#~ msgctxt "volume-content-swap"
+#~ msgid "Active"
+#~ msgstr "Aktīvs"
+
+#~ msgctxt "volume-content-swap"
+#~ msgid "Not Active"
+#~ msgstr "Nav aktīvs"
+
+#~ msgctxt "volume-content-crypto"
+#~ msgid "Unlocked"
+#~ msgstr "Atbloķēts"
+
+#~ msgctxt "volume-content-crypto"
+#~ msgid "Locked"
+#~ msgstr "Bloķēts"
+
+#~ msgctxt "volume-contents-msdos-ext"
+#~ msgid "Extended Partition"
+#~ msgstr "Paplašinātais nodalījums"
+
+#, c-format
+#~ msgctxt "volume-contents-combiner"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgid "Unallocated Space"
+#~ msgstr "Neiedalītā vieta"
+
+#~ msgid "Error mounting filesystem"
+#~ msgstr "Kļūda, montējot datņu sistēmu"
+
+#~ msgid "Error deleting partition"
+#~ msgstr "Kļūda, dzēšot nodalījumu"
+
+#~ msgid "Are you sure you want to delete the partition?"
+#~ msgstr "Vai tiešām vēlaties dzēst nodalījumu?"
+
+#~ msgid "All data on the partition will be lost"
+#~ msgstr "Visi dati šajā nodalījumā tiks zaudēti"
+
+#~ msgid "_Delete"
+#~ msgstr "_Dzēst"
+
+#~ msgid "Error ejecting media"
+#~ msgstr "Kļūda, izgrūžot datu nesēju"
+
+#~ msgid "Error starting swap"
+#~ msgstr "Kļūda, palaižot maiņvietu"
+
+#~ msgid "Error stopping swap"
+#~ msgstr "Kļūda, apturot maiņvietu"
+
+#~ msgid "Error setting autoclear flag"
+#~ msgstr "Kļūda, iestatot automātiskās attīrīšanas karogu"
+
+#~ msgid "Error canceling job"
+#~ msgstr "Kļūda, atceļot darbu"
+
+#~ msgid "Go back to main view"
+#~ msgstr "Atgriezties pie galvenā skata"
+
+#~ msgid "Power off this disk"
+#~ msgstr "Izslēgt šo disku"
 
 #, c-format
 #~ msgid "Invalid PIM"
@@ -4204,3 +4190,4 @@ msgstr "Izpētīt"
 
 #~ msgid "Warns about problems with disks and storage devices"
 #~ msgstr "Brīdina par problēmām ar diskiem un krātuvju ierīcēm"
+

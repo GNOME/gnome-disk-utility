@@ -45,16 +45,16 @@ struct _GduBlockRow
 {
   AdwExpanderRow  parent_instance;
 
-  GtkImage       *partition_image;
-  GtkLabel       *partition_depth_label;
-  GtkLevelBar    *space_level_bar;
+  GtkWidget      *partition_image;
+  GtkWidget      *partition_depth_label;
+  GtkWidget      *space_level_bar;
   GtkWidget      *create_partition_button;
   GtkWidget      *block_menu_button;
 
-  GtkLabel       *size_label;
-  GtkLabel       *device_id_label;
-  GtkLabel       *uuid_label;
-  GtkLabel       *partition_type_label;
+  GtkWidget      *size_label;
+  GtkWidget      *device_id_label;
+  GtkWidget      *uuid_label;
+  GtkWidget      *partition_type_label;
 
   UDisksClient   *client;
   GduBlock       *block;
@@ -79,87 +79,36 @@ block_row_get_client (void)
 }
 
 static void
-update_block_row (GduBlockRow *self)
+gdu_block_row_update_label (GduBlockRow *self)
 {
-  const char *description, *partition, *uuid, *device_id;
+  const char *label;
+  label = gdu_item_get_description (GDU_ITEM (self->block));
+
+  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self), label);
+}
+
+static void
+gdu_block_row_update_information (GduBlockRow *self)
+{
+  const char *partition, *uuid, *device_id;
   g_autofree char *size_str = NULL;
-  const char *const *mount_points;
-  GduItem *parent;
-  GduFeature features;
-  int depth = 0;
 
-  g_assert (GDU_IS_BLOCK_ROW (self));
-
-  description = gdu_item_get_description (GDU_ITEM (self->block));
   partition = gdu_item_get_partition_type (GDU_ITEM (self->block));
   uuid = gdu_block_get_uuid (self->block);
   device_id = gdu_block_get_device_id (self->block);
   size_str = gdu_block_get_size_str (self->block);
+
+  gtk_label_set_label (GTK_LABEL (self->partition_type_label), partition);
+  gtk_label_set_label (GTK_LABEL (self->uuid_label), uuid);
+  gtk_label_set_label (GTK_LABEL (self->device_id_label), device_id);
+  gtk_label_set_label (GTK_LABEL (self->size_label), size_str);
+}
+
+static void
+gdu_block_row_update_features (GduBlockRow *self)
+{
+  GduFeature features;
   features = gdu_item_get_features (GDU_ITEM (self->block));
-
-  adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self), description);
-  gtk_label_set_label (self->partition_type_label, partition);
-  gtk_label_set_label (self->uuid_label, uuid);
-  gtk_label_set_label (self->device_id_label, device_id);
-  gtk_label_set_label (self->size_label, size_str);
-
-  parent = gdu_item_get_parent (GDU_ITEM (self->block));
-
-  while (parent != NULL)
-    {
-      depth++;
-      parent = gdu_item_get_parent (parent);
-    }
-
-  /* Don't count the topmost parent, which is the drive */
-  depth--;
-  gtk_widget_set_visible (GTK_WIDGET (self->partition_depth_label), depth > 0);
-
-  if (depth > 0)
-    {
-      g_autoptr(GString) partition_depth = NULL;
-
-      partition_depth = g_string_new ("┗");
-
-      while (--depth)
-        g_string_append_len (partition_depth, "━", strlen ("━"));
-
-      g_string_append_len (partition_depth, "╸", strlen ("╸"));
-      gtk_label_set_label (self->partition_depth_label, partition_depth->str);
-    }
-
-  mount_points = gdu_block_get_mount_points (self->block);
-
-  if (mount_points && mount_points[0])
-    {
-      g_autofree char *mount_point = NULL;
-      guint64 size, free_space;
-
-      gtk_widget_set_visible (GTK_WIDGET (self->space_level_bar), TRUE);
-
-      size = gdu_item_get_size (GDU_ITEM (self->block));
-      free_space = gdu_block_get_unused_size (self->block);
-
-      gtk_level_bar_set_max_value (self->space_level_bar, size / 1000);
-      gtk_level_bar_set_value (self->space_level_bar, (size - free_space) / 1000);
-
-      /* gtk4 todo: once we move to Adwaita */
-      /* todo: right now we only display the first mount point */
-      /* if (g_strcmp0 (mount_points[0], "/") == 0) */
-      /*   { */
-      /*     /\* Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink */
-      /*      *\/ */
-      /*     mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", */
-      /*                                    C_("volume-content-fs", "Filesystem Root")); */
-      /*   } */
-      /* else */
-      /*   { */
-      /*     mount_point = g_markup_printf_escaped ("<a href=\"file://%s\">%s</a>", */
-      /*                                            mount_points[0], mount_points[0]); */
-      /*   } */
-
-      adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), mount_points[0]);
-    }
 
   if (!features)
     {
@@ -173,16 +122,19 @@ update_block_row (GduBlockRow *self)
     {
       gtk_widget_set_visible (self->create_partition_button, TRUE);
     }
+
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
-  ENABLE ("row.change_passphrase", GDU_FEATURE_CHANGE_PASSPHRASE);
+  ENABLE ("row.unmount", GDU_FEATURE_CAN_UNMOUNT);
   ENABLE ("row.resize", GDU_FEATURE_RESIZE_PARTITION);
   ENABLE ("row.edit_partition", GDU_FEATURE_EDIT_PARTITION);
   ENABLE ("row.edit_filesystem", GDU_FEATURE_EDIT_LABEL);
-  ENABLE ("row.take_ownership", GDU_FEATURE_TAKE_OWNERSHIP);
-  ENABLE ("row.format_partition", GDU_FEATURE_FORMAT);
+  ENABLE ("row.change_passphrase", GDU_FEATURE_CHANGE_PASSPHRASE);
   ENABLE ("row.configure_fstab", GDU_FEATURE_CONFIGURE_FSTAB);
   ENABLE ("row.configure_crypttab", GDU_FEATURE_CONFIGURE_CRYPTTAB);
+  ENABLE ("row.take_ownership", GDU_FEATURE_TAKE_OWNERSHIP);
+  ENABLE ("row.format_partition", GDU_FEATURE_FORMAT);
+  ENABLE ("row.delete", GDU_FEATURE_DELETE_PARTITION);
   ENABLE ("row.check_fs", GDU_FEATURE_CHECK_FILESYSTEM);
   ENABLE ("row.repair_fs", GDU_FEATURE_REPAIR_FILESYSTEM);
   ENABLE ("row.benchmark_partition", GDU_FEATURE_BENCHMARK);
@@ -193,7 +145,88 @@ update_block_row (GduBlockRow *self)
 }
 
 static void
-format_partition_clicked_cb (GtkWidget  *widget,
+gdu_block_row_update_depth_label (GduBlockRow *self)
+{
+  GduItem *parent;
+  int depth = 0;
+
+  parent = gdu_item_get_parent (GDU_ITEM (self->block));
+  while ((parent = gdu_item_get_parent (parent)) != NULL)
+    {
+      depth++;
+    }
+
+
+  if (depth > 0)
+    {
+      g_autoptr(GString) depth_str = NULL;
+
+      depth_str = g_string_new ("┗");
+
+      while (--depth)
+        g_string_append_len (depth_str, "━", strlen ("━"));
+
+      g_string_append_len (depth_str, "╸", strlen ("╸"));
+      gtk_label_set_label (GTK_LABEL (self->partition_depth_label), depth_str->str);
+      gtk_widget_set_visible (self->partition_depth_label, TRUE);
+    }
+}
+
+static void
+gdu_block_row_update_mount_point_label (GduBlockRow *self)
+{
+  guint64 size, free_space;
+  const char *const *mount_points;
+
+  mount_points = gdu_block_get_mount_points (self->block);
+  
+  if (mount_points == NULL || *mount_points == NULL)
+    {
+      adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), ("—"));
+      return;
+    }
+
+
+  gtk_widget_set_visible (self->space_level_bar, TRUE);
+
+  size = gdu_item_get_size (GDU_ITEM (self->block));
+  free_space = gdu_block_get_unused_size (self->block);
+
+  gtk_level_bar_set_max_value (GTK_LEVEL_BAR (self->space_level_bar), size / 1000);
+  gtk_level_bar_set_value (GTK_LEVEL_BAR (self->space_level_bar), (size - free_space) / 1000);
+
+  /* gtk4 todo: once we move to Adwaita */
+  /* todo: right now we only display the first mount point */
+  /* if (g_strcmp0 (mount_points[0], "/") == 0) */
+  /*   { */
+  /*     /\* Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink */
+  /*      *\/ */
+  /*     mount_point = g_strdup_printf ("<a href=\"file:///\">%s</a>", */
+  /*                                    C_("volume-content-fs", "Filesystem Root")); */
+  /*   } */
+  /* else */
+  /*   { */
+  /*     mount_point = g_markup_printf_escaped ("<a href=\"file://%s\">%s</a>", */
+  /*                                            mount_points[0], mount_points[0]); */
+  /*   } */
+
+  adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), mount_points[0]);
+}
+
+static void
+gdu_block_row_update (GduBlockRow *self)
+{
+  g_assert (GDU_IS_BLOCK_ROW (self));
+
+  gdu_block_row_update_label (self);
+  gdu_block_row_update_information (self);
+  gdu_block_row_update_depth_label (self);
+  gdu_block_row_update_mount_point_label (self);
+  gdu_block_row_update_features (self);
+}
+
+static void
+format_partition_cb (GtkWidget  *widget,
                              const char *action_name,
                              GVariant   *parameter)
 {
@@ -210,7 +243,7 @@ format_partition_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-edit_partition_clicked_cb (GtkWidget  *widget,
+edit_partition_cb (GtkWidget  *widget,
                            const char *action_name,
                            GVariant   *parameter)
 {
@@ -225,7 +258,7 @@ edit_partition_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-edit_filesystem_clicked_cb (GtkWidget  *widget,
+edit_filesystem_cb (GtkWidget  *widget,
                             const char *action_name,
                             GVariant   *parameter)
 {
@@ -267,7 +300,7 @@ create_partition_cb (GtkWidget  *widget,
 }
 
 static void
-unmount_clicked_cb (GtkWidget  *widget,
+unmount_cb (GtkWidget  *widget,
                     const char *action_name,
                     GVariant   *parameter)
 {
@@ -285,11 +318,12 @@ unmount_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-partition_delete_cb (UDisksPartition *partition,
+partition_delete_cb (GObject         *object,
                      GAsyncResult    *res,
                      gpointer         user_data)
 {
   GduBlockRow *self = user_data;
+  UDisksPartition *partition = UDISKS_PARTITION (object);
   g_autoptr(GError) error = NULL;
 
   if (!udisks_partition_call_delete_finish (partition,
@@ -347,7 +381,7 @@ delete_response_cb (GObject      *source_object,
 }
 
 static void
-delete_clicked_cb (GtkWidget  *widget,
+delete_cb (GtkWidget  *widget,
                     const char *action_name,
                     GVariant   *parameter)
 {
@@ -372,7 +406,7 @@ delete_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-change_passphrase_clicked_cb (GtkWidget  *widget,
+change_passphrase_cb (GtkWidget  *widget,
                               const char *action_name,
                               GVariant   *parameter)
 {
@@ -384,7 +418,7 @@ change_passphrase_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-resize_clicked_cb (GtkWidget  *widget,
+resize_cb (GtkWidget  *widget,
                    const char *action_name,
                    GVariant   *parameter)
 {
@@ -818,7 +852,7 @@ take_ownership_cb (GtkWidget  *widget,
 }
 
 static void
-configure_fstab_clicked_cb (GtkWidget  *widget,
+configure_fstab_cb (GtkWidget  *widget,
                             const char *action_name,
                             GVariant   *parameter)
 {
@@ -827,15 +861,14 @@ configure_fstab_clicked_cb (GtkWidget  *widget,
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
-  /* if (object == NULL) */
-  /*   object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid)); */
+
   gdu_fstab_dialog_show (block_row_get_window (self),
                           object,
                           block_row_get_client ());
 }
 
 static void
-configure_crypttab_clicked_cb (GtkWidget  *widget,
+configure_crypttab_cb (GtkWidget  *widget,
                                const char *action_name,
                                GVariant   *parameter)
 {
@@ -844,15 +877,14 @@ configure_crypttab_clicked_cb (GtkWidget  *widget,
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
-  /* if (object == NULL) */
-  /*   object = gdu_volume_grid_get_block_object (GDU_VOLUME_GRID (window->volume_grid)); */
+
   gdu_crypttab_dialog_show (block_row_get_window (self),
                             object,
                             block_row_get_client ());
 }
 
 static void
-create_partition_image_clicked_cb (GtkWidget  *widget,
+create_partition_image_cb (GtkWidget  *widget,
                                    const char *action_name,
                                    GVariant   *parameter)
 {
@@ -867,7 +899,7 @@ create_partition_image_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-restore_partition_image_clicked_cb (GtkWidget  *widget,
+restore_partition_image_cb (GtkWidget  *widget,
                                     const char *action_name,
                                     GVariant   *parameter)
 {
@@ -883,7 +915,7 @@ restore_partition_image_clicked_cb (GtkWidget  *widget,
 }
 
 static void
-benchmark_partition_clicked_cb (GtkWidget  *widget,
+benchmark_partition_cb (GtkWidget  *widget,
                                 const char *action_name,
                                 GVariant   *parameter)
 {
@@ -912,7 +944,29 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
+ 
+  static struct {
+    const char *name;
+    void (*cb) (GtkWidget *widget, const char *action_name, GVariant *parameter);
+  } actions[] = {
+    { "row.create_partition", create_partition_cb },
+    { "row.unmount", unmount_cb },
+    { "row.resize", resize_cb },
+    { "row.edit_partition", edit_partition_cb },
+    { "row.edit_filesystem", edit_filesystem_cb },
+    { "row.change_passphrase", change_passphrase_cb },
+    { "row.configure_fstab", configure_fstab_cb },
+    { "row.configure_crypttab", configure_crypttab_cb },
+    { "row.take_ownership", take_ownership_cb },
+    { "row.format_partition", format_partition_cb },
+    { "row.delete", delete_cb },
+    { "row.check_fs", check_fs_cb },
+    { "row.repair_fs", repair_fs_cb },
+    { "row.benchmark_partition", benchmark_partition_cb },
+    { "row.create_partition_image", create_partition_image_cb },
+    { "row.restore_partition_image", restore_partition_image_cb },
+  };
+  
   object_class->finalize = gdu_block_row_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
@@ -930,24 +984,10 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, uuid_label);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_label);
 
-  gtk_widget_class_install_action (widget_class, "row.create_partition", NULL, create_partition_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.unmount", NULL, unmount_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.delete", NULL, delete_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.change_passphrase", NULL, change_passphrase_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.resize", NULL, resize_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.edit_partition", NULL, edit_partition_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.edit_filesystem", NULL, edit_filesystem_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.take_ownership", NULL, take_ownership_cb);
-  gtk_widget_class_install_action (widget_class, "row.format_partition", NULL, format_partition_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.configure_fstab", NULL, configure_fstab_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.configure_crypttab", NULL, configure_crypttab_clicked_cb);
-
-  gtk_widget_class_install_action (widget_class, "row.check_fs", NULL, check_fs_cb);
-  gtk_widget_class_install_action (widget_class, "row.repair_fs", NULL, repair_fs_cb);
-  gtk_widget_class_install_action (widget_class, "row.benchmark_partition", NULL, benchmark_partition_clicked_cb);
-  
-  gtk_widget_class_install_action (widget_class, "row.create_partition_image", NULL, create_partition_image_clicked_cb);
-  gtk_widget_class_install_action (widget_class, "row.restore_partition_image", NULL, restore_partition_image_clicked_cb);
+  for (guint i = 0; i < G_N_ELEMENTS (actions); i++)
+    {
+      gtk_widget_class_install_action (widget_class, actions[i].name, NULL, actions[i].cb);
+    }
 }
 
 static void
@@ -968,17 +1008,9 @@ gdu_block_row_new (GduBlock *block)
 
   g_signal_connect_object (self->block,
                            "changed",
-                           G_CALLBACK (update_block_row),
+                           G_CALLBACK (gdu_block_row_update),
                            self, G_CONNECT_SWAPPED);
-  update_block_row (self);
+  gdu_block_row_update (self);
 
   return self;
-}
-
-GduBlock *
-gdu_block_row_get_item (GduBlockRow *self)
-{
-  g_return_val_if_fail (GDU_IS_BLOCK_ROW (self), NULL);
-
-  return self->block;
 }

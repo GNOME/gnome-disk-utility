@@ -20,6 +20,5 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GduBlockRow, gdu_block_row, GDU, BLOCK_ROW, AdwExpanderRow)
 
 GduBlockRow *gdu_block_row_new       (GduBlock    *block);
-GduBlock    *gdu_block_row_get_item  (GduBlockRow *self);
 
 G_END_DECLS

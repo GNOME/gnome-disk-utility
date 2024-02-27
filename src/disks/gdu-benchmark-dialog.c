@@ -83,6 +83,7 @@ struct _GduBenchmarkDialog
   GArray        *write_samples;
   GArray        *atime_samples;
 
+  GSettings     *settings;
   UDisksClient  *client;
   UDisksObject  *object;
   UDisksBlock   *block;
@@ -100,6 +101,44 @@ static gpointer
 gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 {
   return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
+
+static void
+gdu_benchmark_dialog_restore_options (GduBenchmarkDialog *self)
+{
+  gint num_samples;
+  gint sample_size_mib;
+  gint num_access_samples;
+  gboolean write_benchmark;
+
+  num_samples = g_settings_get_int (self->settings, "num-samples");
+  sample_size_mib = g_settings_get_int (self->settings, "sample-size-mib");
+  num_access_samples = g_settings_get_int (self->settings, "num-access-samples");
+  write_benchmark = g_settings_get_boolean (self->settings, "do-write");
+
+  adw_spin_row_set_value (ADW_SPIN_ROW (self->sample_row), num_samples);
+  adw_spin_row_set_value (ADW_SPIN_ROW (self->sample_size_row), sample_size_mib);
+  adw_spin_row_set_value (ADW_SPIN_ROW (self->access_samples_row), num_access_samples);
+  adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), write_benchmark);
+}
+
+static void
+gdu_benchmark_dialog_save_options (GduBenchmarkDialog *self)
+{
+  gint num_samples;
+  gint sample_size_mib;
+  gint num_access_samples;
+  gboolean write_benchmark;
+
+  num_samples = adw_spin_row_get_value (ADW_SPIN_ROW (self->sample_row));
+  sample_size_mib = adw_spin_row_get_value (ADW_SPIN_ROW (self->sample_size_row));
+  num_access_samples = adw_spin_row_get_value (ADW_SPIN_ROW (self->access_samples_row));
+  write_benchmark = adw_switch_row_get_active (ADW_SWITCH_ROW (self->write_bench_switch));
+
+  g_settings_set_int (self->settings, "num-samples", num_samples);
+  g_settings_set_int (self->settings, "sample-size-mib", sample_size_mib);
+  g_settings_set_int (self->settings, "num-access-samples", num_access_samples);
+  g_settings_set_boolean (self->settings, "do-write", write_benchmark);
 }
 
 static BMStats
@@ -579,7 +618,7 @@ abort_benchmark (GduBenchmarkDialog *self)
 }
 
 static void
-start_benchmark2 (GduBenchmarkDialog *self)
+start_benchmark (GduBenchmarkDialog *self)
 {
   self->bm_in_progress = TRUE;
   self->bm_state = BM_STATE_OPENING_DEVICE;
@@ -603,85 +642,18 @@ ensure_unused_cb (GtkWindow     *window,
   GduBenchmarkDialog *self = user_data;
   if (gdu_utils_ensure_unused_finish (self->client, res, NULL))
     {
-      start_benchmark2 (self);
+      start_benchmark (self);
     }
 }
 
 static void
-start_benchmark (GduBenchmarkDialog *self)
+on_start_clicked_cb (GduBenchmarkDialog *self,
+                     GtkButton          *button)
 {
-  GtkWidget *dialog;
-  GtkBuilder *builder = NULL;
-  GtkWidget *num_samples_spinbutton;
-  GtkWidget *sample_size_spinbutton;
-  GtkWidget *write_checkbutton;
-  GtkWidget *num_access_samples_spinbutton;
-  GSettings *settings;
-  gint response;
-
   g_assert (!self->bm_in_progress);
   g_assert_cmpint (self->bm_state, ==, BM_STATE_NONE);
 
-  dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                   "gdu-benchmark-dialog.ui",
-                                                   "dialog2",
-                                                   &builder));
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), self);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-  num_samples_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "num-samples-spinbutton"));
-  sample_size_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "sample-size-spinbutton"));
-  write_checkbutton = GTK_WIDGET (gtk_builder_get_object (builder, "write-checkbutton"));
-  num_access_samples_spinbutton = GTK_WIDGET (gtk_builder_get_object (builder, "num-access-samples-spinbutton"));
-
-  settings = g_settings_new ("org.gnome.Disks.benchmark");
-  self->bm_num_samples = g_settings_get_int (settings, "num-samples");
-  self->bm_sample_size_mib = g_settings_get_int (settings, "sample-size-mib");
-  self->bm_do_write = g_settings_get_boolean (settings, "do-write");
-  self->bm_num_access_samples = g_settings_get_int (settings, "num-access-samples");
-
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_samples_spinbutton), self->bm_num_samples);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(sample_size_spinbutton), self->bm_sample_size_mib);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), self->bm_do_write);
-  gtk_spin_button_set_value (GTK_SPIN_BUTTON(num_access_samples_spinbutton), self->bm_num_access_samples);
-
-  /* if device is read-only, uncheck the "perform write-test"
-   * check-button and also make it insensitive
-   */
-  if (udisks_block_get_read_only (self->block))
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
-      gtk_widget_set_sensitive (write_checkbutton, FALSE);
-    }
-
-  /* If the device is currently in use, uncheck the "perform write-test" check-button */
-  if (gdu_utils_is_in_use (self->client, self->object))
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (write_checkbutton), FALSE);
-    }
-
-  /* and scene... */
-  // response = gtk_dialog_run (GTK_DIALOG (dialog));
-
-  gtk_widget_set_visible (dialog, FALSE);
-
-  if (response != GTK_RESPONSE_OK)
-    goto out;
-
-  self->bm_num_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_samples_spinbutton));
-  self->bm_sample_size_mib = gtk_spin_button_get_value (GTK_SPIN_BUTTON (sample_size_spinbutton));
-  self->bm_do_write = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (write_checkbutton));
-  self->bm_num_access_samples = gtk_spin_button_get_value (GTK_SPIN_BUTTON (num_access_samples_spinbutton));
-
-  g_settings_set_int (settings, "num-samples", self->bm_num_samples);
-  g_settings_set_int (settings, "sample-size-mib", self->bm_sample_size_mib);
-  g_settings_set_boolean (settings, "do-write", self->bm_do_write);
-  g_settings_set_int (settings, "num-access-samples", self->bm_num_access_samples);
-
-  //g_print ("num_samples=%d\n", self->bm_num_samples);
-  //g_print ("sample_size=%d MB\n", self->bm_sample_size_mib);
-  //g_print ("do_write=%d\n", self->bm_do_write);
-  //g_print ("num_access_samples=%d\n", self->bm_num_access_samples);
+  gdu_benchmark_dialog_save_options (self);
 
   if (self->bm_do_write)
     {
@@ -695,22 +667,11 @@ start_benchmark (GduBenchmarkDialog *self)
     }
   else
     {
-      start_benchmark2 (self);
+      start_benchmark (self);
     }
 
- out:
-  gtk_window_close (GTK_WINDOW (dialog));
-  g_clear_object (&builder);
-  g_clear_object (&settings);
   update_dialog (self);
-}
 
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_start_clicked_cb (GduBenchmarkDialog *self,
-                     GtkButton          *button)
-{
   gtk_stack_set_visible_child_name (GTK_STACK (self->pages_stack), "results");
 }
 
@@ -779,6 +740,7 @@ gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
 
+  self->settings = g_settings_new ("org.gnome.Disks.benchmark");
   self->bm_cancellable = g_cancellable_new ();
 
   self->read_samples = g_array_new (FALSE, /* zero-terminated */
@@ -815,6 +777,22 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
                     self);
   */
   gdu_benchmark_dialog_set_title (self);
+  gdu_benchmark_dialog_restore_options (self);
+
+  /* if device is read-only, uncheck the "perform write-test"
+   * check-button and also make it insensitive
+   */
+  if (udisks_block_get_read_only (self->block))
+    {
+      adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), FALSE);
+      gtk_widget_set_sensitive (self->write_bench_switch, FALSE);
+    }
+
+  /* If the device is currently in use, uncheck the "perform write-test" check-button */
+  if (gdu_utils_is_in_use (self->client, self->object))
+    {
+      adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), FALSE);
+    }
 
   // update_dialog (self);
 

@@ -16,7 +16,6 @@ use crate::error::ImageMounterError;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
-#[repr(i32)]
 pub enum Action {
     /// Open the image in Nautilus.
     #[default]
@@ -28,6 +27,9 @@ pub enum Action {
         nick = "open-in-files-writable"
     )]
     OpenInFilesWritable,
+    /// Unmount the mounted image
+    #[enum_value(name = "Unmount the mounted image", nick = "unmount")]
+    Unmount,
     /// Opens Disks to write the image
     #[enum_value(name = "Open Disks to write", nick = "write")]
     Write,
@@ -40,7 +42,7 @@ mod imp {
     use std::cell::{Cell, RefCell};
 
     use adw::subclass::prelude::AdwApplicationWindowImpl;
-    use gtk::prelude::ObjectExt;
+    use gtk::{prelude::ObjectExt, prelude::WidgetExt};
 
     use crate::config;
 
@@ -52,7 +54,9 @@ mod imp {
     pub struct ImageMounterWindow {
         #[template_child]
         pub(super) status_page: TemplateChild<adw::StatusPage>,
-        #[property(get, set)]
+        #[template_child]
+        pub(super) unmount_row: TemplateChild<adw::ActionRow>,
+        #[property(get, set, construct_only)]
         pub(super) file: RefCell<Option<gio::File>>,
         #[property(get, set, builder(Action::default()))]
         pub(super) continue_action: Cell<Action>,
@@ -99,6 +103,7 @@ mod imp {
                         gettextrs::gettext("Already mounted")
                     };
                     window.status_page.set_description(Some(&description));
+                    window.unmount_row.set_visible(true);
                     None::<()>
                 }),
             );
@@ -131,6 +136,7 @@ impl ImageMounterWindow {
         gettextrs::gettext(match action {
             Action::OpenInFiles => "Open in Files",
             Action::OpenInFilesWritable => "Edit Image",
+            Action::Unmount => "Unmount",
             Action::Write => "Write to Drive",
             Action::Inspect => "Inspect",
         })
@@ -172,6 +178,7 @@ impl ImageMounterWindow {
                 .map(PathBuf::from)
                 .any(|mount_point| mount_point == path)
             {
+                log::debug!("Found mounted file at {:?}", object.object_path());
                 return Some(object);
             }
         }
@@ -197,6 +204,7 @@ impl ImageMounterWindow {
                 Action::OpenInFilesWritable => {
                     window.mount(false).await.expect("Failed to mount");
                 }
+                Action::Unmount => {window.unmount().await.expect("Failed to unmount");}
                 Action::Write => {window.write_image();}
                 Action::Inspect => {
                     let device = if let Some(object) = window.mounted_file_object().await {
@@ -216,6 +224,30 @@ impl ImageMounterWindow {
         }));
     }
 
+    async fn unmount(&self) -> Result<(), ImageMounterError> {
+        let mounted_object = self
+            .mounted_file_object()
+            .await
+            .ok_or(ImageMounterError::File)?;
+
+        let partition_table = mounted_object.partition_table().await?;
+        let partitions = partition_table.partitions().await?;
+        let block_dev_path = partitions
+            .iter()
+            // object path that can be used to unmount always end in 1
+            .find(|part| part.ends_with('1'))
+            .ok_or(ImageMounterError::File)?;
+
+        let client = udisks::Client::new().await?;
+        let object = client.object(block_dev_path.to_owned()).unwrap();
+
+        let fs_proxy = object.filesystem().await?;
+        fs_proxy.unmount(HashMap::new()).await?;
+        log::info!("Succesfully unmounted {}", block_dev_path);
+
+        Ok(())
+    }
+
     async fn mount(&self, read_only: bool) -> Result<String, ImageMounterError> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
@@ -223,7 +255,7 @@ impl ImageMounterWindow {
         let path = self
             .file()
             .and_then(|file| file.path())
-            .ok_or(ImageMounterError::Conversion)?;
+            .ok_or(ImageMounterError::File)?;
 
         let file = OpenOptions::new()
             .read(true)
@@ -232,7 +264,7 @@ impl ImageMounterWindow {
 
         let options = HashMap::from([("read-only", read_only.into())]);
         let object_path = manager.loop_setup(file.as_fd().into(), options).await?;
-        log::info!("Mounted {}", path.display());
+        log::info!("Mounted {} at {}", path.display(), object_path);
 
         //safe to unwrap, since the given path is
         //already an oject path

@@ -5,12 +5,14 @@ use udisks::zbus;
 /// Indicates a failure
 #[derive(Debug)]
 pub enum ImageMounterError {
-    /// An error occured  while communicating via zbus.
+    /// An error occured while communicating via zbus.
     Zbus(zbus::Error),
-    /// An error occured  while doing an IO operation.
+    /// An error occured while doing an IO operation.
     Io(io::Error),
-    /// An error occured  while converting types.
+    /// An error occured while converting types.
     Conversion,
+    /// An error occured while trying to load the input file
+    File,
 }
 
 impl std::error::Error for ImageMounterError {}
@@ -21,6 +23,7 @@ impl Display for ImageMounterError {
             ImageMounterError::Zbus(err) => err.fmt(f),
             ImageMounterError::Io(err) => err.fmt(f),
             ImageMounterError::Conversion => write!(f, "Failed to convert value"),
+            ImageMounterError::File => write!(f, "Failed to interact with input file"),
         }
     }
 }

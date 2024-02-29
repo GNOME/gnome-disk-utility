@@ -51,6 +51,7 @@ struct _GduBenchmarkDialog
   GtkWidget     *access_time_label;
 
   /* must hold bm_lock when reading/writing these */
+  GError        *bm_error;
   GCancellable  *bm_cancellable;
   gboolean       bm_in_progress;
   gboolean       bm_update_timeout_pending;
@@ -190,17 +191,39 @@ static void
 update_dialog (GduBenchmarkDialog *self)
 {
   GdkSurface *window = NULL;
+  g_autoptr(GError) error = NULL;
   BMStats read_stats;
   BMStats write_stats;
   BMStats atime_stats;
   char *s = NULL;
 
   G_LOCK (bm_lock);
+  if (self->bm_error != NULL)
+    {
+      error = g_steal_pointer (&self->bm_error);
+    }  
+  G_UNLOCK (bm_lock);
 
+  /* present an error if something went wrong */
+  if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
+    {
+      gdu_utils_show_error (gdu_benchmark_dialog_get_window (self),
+                            "An error occurred",
+                            error);          
+
+      
+      s = g_strdup ("–");
+      gtk_label_set_text (GTK_LABEL (self->sample_size_label), s);
+      gtk_label_set_text (GTK_LABEL (self->read_rate_label), s);
+      gtk_label_set_text (GTK_LABEL (self->write_rate_label), s);
+      gtk_label_set_text (GTK_LABEL (self->access_time_label), s);
+      return;
+    }
+
+  G_LOCK (bm_lock);
   read_stats = get_max_min_avg (self->read_samples);
   write_stats = get_max_min_avg (self->write_samples);
   atime_stats = get_max_min_avg (self->atime_samples);
-
   G_UNLOCK (bm_lock);
 
   if (read_stats.avg != 0.0)
@@ -276,13 +299,14 @@ end_benchmark (GduBenchmarkDialog *self,
                                  inhibit_cookie);
     }
 
-  /* present an error if something went wrong */
-  if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
+  if (error != NULL)
     {
-      gdu_utils_show_error (gdu_benchmark_dialog_get_window (self),
-                            C_("benchmarking", "An error occurred"),
-                            error);
+      G_LOCK (bm_lock);
+      self->bm_error = error;
+      G_UNLOCK (bm_lock);
     }
+
+  bmt_schedule_update (self);
 
   return NULL;
 }
@@ -540,7 +564,7 @@ static gpointer
 benchmark_thread (gpointer user_data)
 {
   GduBenchmarkDialog *self = user_data;
-  g_autoptr (GError) error = NULL;
+  GError *error = NULL;
   guchar *buffer = NULL;
   g_autofree guchar *buffer_unaligned = NULL;
   int fd = -1;

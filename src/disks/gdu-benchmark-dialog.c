@@ -156,36 +156,22 @@ on_drawing_area_draw (GtkWidget      *widget,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
-format_transfer_rate (gdouble bytes_per_sec)
+format_stats (gdouble stat,
+              guint   num_samples,
+              gdouble is_atime)
 {
-  gchar *ret = NULL;
-  gchar *s;
+  g_autofree char *s;
+  g_autofree char *s2;
 
-  s = g_format_size ((guint64) bytes_per_sec);
-  /* Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second */
-  ret = g_strdup_printf (C_("benchmark-transfer-rate", "%s/s"), s);
-  g_free (s);
-  return ret;
-}
-
-static gchar *
-format_transfer_rate_and_num_samples (gdouble bytes_per_sec,
-                                      guint   num_samples)
-{
-  gchar *ret = NULL;
-  gchar *s;
-  gchar *s2;
-
-  s = format_transfer_rate (bytes_per_sec);
+  s = is_atime ? g_strdup_printf ("%.2f msec", stat * 1000.0)
+               : g_strdup_printf ("%s/s", g_format_size ((guint64) stat));
   s2 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
                                      "%u sample",
                                      "%u samples",
                                      num_samples),
-                        num_samples);
-  ret = g_strdup_printf ("%s <small>(%s)</small>", s, s2);
-  g_free (s2);
-  g_free (s);
-  return ret;
+                                     num_samples);
+
+  return g_strdup_printf ("%s <small>(%s)</small>", s, s2);
 }
 
 static void
@@ -227,30 +213,21 @@ update_dialog (GduBenchmarkDialog *self)
 
   if (read_stats.avg != 0.0)
     {
-      s = format_transfer_rate_and_num_samples (read_stats.avg, self->read_samples->len);
+      s = format_stats (read_stats.avg, self->read_samples->len, FALSE);
       gtk_label_set_markup (GTK_LABEL (self->read_rate_label), s);
       g_free (s);
     }
 
   if (write_stats.avg != 0.0)
     {
-      s = format_transfer_rate_and_num_samples (write_stats.avg, self->write_samples->len);
+      s = format_stats (write_stats.avg, self->write_samples->len, FALSE);
       gtk_label_set_markup (GTK_LABEL (self->write_rate_label), s);
       g_free (s);
     }
 
   if (atime_stats.avg != 0.0)
     {
-      g_autofree char *s2;
-      g_autofree char *s3;
-      /* Translators: %d is number of milliseconds and msec means "milli-second" */
-      s2 = g_strdup_printf ("%.2f msec", atime_stats.avg * 1000.0);
-      s3 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
-                                         "%u sample",
-                                         "%u samples",
-                                         self->atime_samples->len),
-                            self->atime_samples->len);
-      s = g_strdup_printf ("%s <small>(%s)</small>", s2, s3);
+      s = format_stats (atime_stats.avg, self->atime_samples->len, TRUE);
       gtk_label_set_markup (GTK_LABEL (self->access_time_label), s);
       g_free (s);
     }

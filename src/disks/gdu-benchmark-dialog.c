@@ -33,6 +33,8 @@ struct _GduBenchmarkDialog
 
   GCancellable  *cancellable;
 
+  GtkWidget     *close_button;
+  GtkWidget     *cancel_button;
   GtkWidget     *window_title;
 
   GtkWidget     *pages_stack;
@@ -292,6 +294,7 @@ end_benchmark (GduBenchmarkDialog *self,
       close (fd);
     }
   self->bm_in_progress = FALSE;
+  gtk_widget_set_visible (self->cancel_button, FALSE);
 
   if (inhibit_cookie != 0)
     {
@@ -630,7 +633,7 @@ benchmark_thread (gpointer user_data)
 }
 
 static void
-cancel_benchmark (GduBenchmarkDialog *self)
+on_cancel_clicked_cb (GduBenchmarkDialog *self)
 {
   g_cancellable_cancel (self->bm_cancellable);
 }
@@ -700,6 +703,7 @@ on_start_clicked_cb (GduBenchmarkDialog *self,
     }
 
   gtk_stack_set_visible_child_name (GTK_STACK (self->pages_stack), "results");
+  gtk_widget_set_visible (self->close_button, FALSE);
 }
 
 static void
@@ -743,6 +747,8 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-benchmark-dialog.ui");
 
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, close_button);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, cancel_button);
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, window_title);
 
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, pages_stack);
@@ -760,6 +766,7 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, set_sample_size_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_start_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_cancel_clicked_cb);
 }
 
 void

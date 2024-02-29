@@ -7,19 +7,37 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
-            <property name="show-end-title-buttons">false</property>
+            <property name="show-end-title-buttons"
+                      bind-source="close_button"
+                      bind-property="visible"
+                      bind-flags="sync-create|invert-boolean" />
             <child type="start">
-              <object class="GtkButton" id="cancel">
-                <property name="label" translatable="true">_Cancel</property>
+              <object class="GtkButton" id="close_button">
+                <property name="label" translatable="true">_Close</property>
                 <property name="use-underline">true</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
+            <child type="start">
+              <object class="GtkButton" id="cancel_button">
+                <property name="label" translatable="true">Ca_ncel</property>
+                <property name="use-underline">true</property>
+                <property name="visible"
+                          bind-source="close_button"
+                          bind-property="visible"
+                          bind-flags="sync-create|invert-boolean" />
+                <signal name="clicked" handler="on_cancel_clicked_cb" swapped="true" />
+              </object>
+            </child>
             <child type="end">
-              <object class="GtkButton" id="start_button">
+              <object class="GtkButton">
                 <property name="label" translatable="true">St_art</property>
                 <property name="use-underline">true</property>
                 <signal name="clicked" handler="on_start_clicked_cb" swapped="true" />
+                <property name="visible"
+                          bind-source="close_button"
+                          bind-property="visible"
+                          bind-flags="sync-create|bidirectional" />
                 <style>
                   <class name="suggested-action"/>
                 </style>

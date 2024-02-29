@@ -22,6 +22,13 @@ typedef struct {
   gdouble value;
 } BMSample;
 
+typedef struct
+{
+  gdouble max;
+  gdouble min;
+  gdouble avg;
+} BMStats;
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 typedef enum {
@@ -95,43 +102,31 @@ gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
   return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
 }
 
-static void
-get_max_min_avg (GArray  *array,
-                 gdouble *out_max,
-                 gdouble *out_min,
-                 gdouble *out_avg)
+static BMStats
+get_max_min_avg (GArray *array)
 {
   guint n;
-  gdouble max = 0;
-  gdouble min = 0;
-  gdouble avg = 0;
-  gdouble sum = 0;
+  gdouble sum;
+  BMStats ret = { 0 };
 
   if (array->len == 0)
-    goto out;
+    return ret;
 
-  max = -G_MAXDOUBLE;
-  min = G_MAXDOUBLE;
+  ret.max = -G_MAXDOUBLE;
+  ret.min = G_MAXDOUBLE;
   sum = 0;
 
   for (n = 0; n < array->len; n++)
     {
-      BMSample *s = &g_array_index (array, BMSample, n);
-      if (s->value > max)
-        max = s->value;
-      if (s->value < min)
-        min = s->value;
+      BMSample *s = &g_array_index(array, BMSample, n);
+      ret.max = MAX (ret.max, s->value);
+      ret.min = MIN (ret.min, s->value);
       sum += s->value;
     }
-  avg = sum / array->len;
 
- out:
-  if (out_max != NULL)
-    *out_max = max;
-  if (out_min != NULL)
-    *out_min = min;
-  if (out_avg != NULL)
-    *out_avg = avg;
+  ret.avg = sum / array->len;
+
+  return ret;
 }
 
 static gdouble
@@ -198,9 +193,9 @@ update_dialog (GduBenchmarkDialog *self)
 {
   g_autoptr(GError) error = NULL;
   GdkSurface *window = NULL;
-  gdouble read_avg = 0.0;
-  gdouble write_avg = 0.0;
-  gdouble access_time_avg = 0.0;
+  BMStats read_stats;
+  BMStats write_stats;
+  BMStats atime_stats;
   char *s = NULL;
 
   G_LOCK (bm_lock);
@@ -217,12 +212,9 @@ update_dialog (GduBenchmarkDialog *self)
 
   G_LOCK (bm_lock);
 
-  get_max_min_avg (self->read_samples,
-                   NULL, NULL, &read_avg);
-  get_max_min_avg (self->write_samples,
-                   NULL, NULL, &write_avg);
-  get_max_min_avg (self->atime_samples,
-                   NULL, NULL, &access_time_avg);
+  read_stats = get_max_min_avg (self->read_samples);
+  write_stats = get_max_min_avg (self->write_samples);
+  atime_stats = get_max_min_avg (self->atime_samples);
 
   G_UNLOCK (bm_lock);
 
@@ -233,26 +225,26 @@ update_dialog (GduBenchmarkDialog *self)
       g_free (s);
     }
 
-  if (read_avg != 0.0)
+  if (read_stats.avg != 0.0)
     {
-      s = format_transfer_rate_and_num_samples (read_avg, self->read_samples->len);
+      s = format_transfer_rate_and_num_samples (read_stats.avg, self->read_samples->len);
       gtk_label_set_markup (GTK_LABEL (self->read_rate_label), s);
       g_free (s);
     }
 
-  if (write_avg != 0.0)
+  if (write_stats.avg != 0.0)
     {
-      s = format_transfer_rate_and_num_samples (write_avg, self->write_samples->len);
+      s = format_transfer_rate_and_num_samples (write_stats.avg, self->write_samples->len);
       gtk_label_set_markup (GTK_LABEL (self->write_rate_label), s);
       g_free (s);
     }
 
-  if (access_time_avg != 0.0)
+  if (atime_stats.avg != 0.0)
     {
       g_autofree char *s2;
       g_autofree char *s3;
       /* Translators: %d is number of milliseconds and msec means "milli-second" */
-      s2 = g_strdup_printf ("%.2f msec", access_time_avg * 1000.0);
+      s2 = g_strdup_printf ("%.2f msec", atime_stats.avg * 1000.0);
       s3 = g_strdup_printf (g_dngettext (GETTEXT_PACKAGE,
                                          "%u sample",
                                          "%u samples",

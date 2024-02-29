@@ -84,12 +84,11 @@ mod imp {
     impl ObjectImpl for ImageMounterWindow {
         fn constructed(&self) {
             self.parent_constructed();
+            let obj = self.obj();
 
             // Devel Profile
             if config::PROFILE == "Devel" {
-                // TODO: investigate
-                // disabled, causes a GTK Criticial
-                // obj.add_css_class("devel");
+                obj.add_css_class("devel");
             }
 
             let main_context = glib::MainContext::default();

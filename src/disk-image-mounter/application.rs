@@ -23,7 +23,7 @@ mod imp {
 
     impl ApplicationImpl for ImageMounterApplication {
         fn activate(&self) {
-            log::debug!("GtkApplication<ImageMounterApplication>::activate");
+            log::debug!("AdwApplication<ImageMounterApplication>::activate");
         }
 
         fn open(&self, files: &[gio::File], _hint: &str) {
@@ -34,7 +34,7 @@ mod imp {
         }
 
         fn startup(&self) {
-            log::debug!("GtkApplication<ImageMounterApplication>::startup");
+            log::debug!("AdwApplication<ImageMounterApplication>::startup");
             self.parent_startup();
             let app = self.obj();
 
@@ -52,7 +52,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct ImageMounterApplication(ObjectSubclass<imp::ImageMounterApplication>)
-        @extends gio::Application, gtk::Application,
+        @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionMap, gio::ActionGroup;
 }
 

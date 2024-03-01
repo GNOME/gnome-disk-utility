@@ -12,9 +12,9 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gduchangepassphrasedialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-change-passphrase-dialog.h"
 #include "gdupasswordstrengthwidget.h"
 
 struct _GduChangePassphraseDialog
@@ -208,7 +208,7 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Disks/ui/"
-                                               "change-passphrase-dialog.ui");
+                                               "gdu-change-passphrase-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, infobar_box);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, existing_passphrase_entry);

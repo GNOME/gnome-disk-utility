@@ -12,8 +12,8 @@
 
 #include <math.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
 #include "gdudisksettingsdialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

@@ -16,9 +16,9 @@
 #include <inttypes.h>
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gdupartitiondialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-edit-partition-dialog.h"
 #include "gduvolumegrid.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

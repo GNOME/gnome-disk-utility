@@ -9,7 +9,7 @@
 #include "config.h"
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
+#include "gdu-application.h"
 #include "gdu-log.h"
 
 int

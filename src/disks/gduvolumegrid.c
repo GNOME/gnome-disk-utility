@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 #include "gduvolumegrid.h"
-#include "gduapplication.h"
+#include "gdu-application.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

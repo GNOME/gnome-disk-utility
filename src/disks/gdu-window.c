@@ -21,10 +21,10 @@
 #include <glib/gi18n.h>
 
 #include "gduutils.h"
-#include "gdunewdiskimagedialog.h"
+#include "gdu-new-disk-image-dialog.h"
 #include "gdu-drive-row.h"
 #include "gdu-drive-view.h"
-#include "gduwindow.h"
+#include "gdu-window.h"
 
 struct _GduWindow
 {

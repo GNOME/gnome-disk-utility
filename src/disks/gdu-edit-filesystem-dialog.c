@@ -15,8 +15,8 @@
 
 #include "gduutils.h"
 #include "gdu-block.h"
-#include "gduapplication.h"
-#include "gdufilesystemdialog.h"
+#include "gdu-application.h"
+#include "gdu-edit-filesystem-dialog.h"
 #include "gduvolumegrid.h"
 
 struct _GduFilesystemDialog
@@ -126,7 +126,7 @@ gdu_filesystem_dialog_class_init (GduFilesystemDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Disks/"
-                                               "ui/edit-filesystem-dialog.ui");
+                                               "ui/gdu-edit-filesystem-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduFilesystemDialog, warning_label);
   gtk_widget_class_bind_template_child (widget_class, GduFilesystemDialog, filesystem_label_entry);

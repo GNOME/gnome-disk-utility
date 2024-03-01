@@ -17,14 +17,14 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gducreateformatdialog.h"
-#include "gducreatepartitionpage.h"
-#include "gducreatefilesystempage.h"
-#include "gducreateotherpage.h"
-#include "gducreatepasswordpage.h"
-#include "gducreateconfirmpage.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-format-volume-dialog.h"
+#include "gdu-create-partition-page.h"
+#include "gdu-create-filesystem-page.h"
+#include "gdu-create-other-page.h"
+#include "gdu-create-password-page.h"
+#include "gdu-create-confirm-page.h"
 #include "gduvolumegrid.h"
 
 #define PARTITION_PAGE "partition"
@@ -37,7 +37,7 @@
 # include "config.h"
 #endif
 
-#include "gducreateformatdialog.h"
+#include "gdu-format-volume-dialog.h"
 
 struct _GduCreateFormatDialog
 {
@@ -418,7 +418,7 @@ gdu_create_format_dialog_class_init (GduCreateFormatDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Disks/ui/"
-                                               "create-format.ui");
+                                               "gdu-create-format.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, pages_stack);
   gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, back_button);

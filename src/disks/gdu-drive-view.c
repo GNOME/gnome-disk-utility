@@ -22,11 +22,11 @@
 #include "gdu-item.h"
 #include "gdu-manager.h"
 #include "gduatasmartdialog.h"
-#include "gdubenchmarkdialog.h"
-#include "gducreatediskimagedialog.h"
+#include "gdu-benchmark-dialog.h"
+#include "gdu-create-disk-image-dialog.h"
 #include "gdudisksettingsdialog.h"
-#include "gduformatdiskdialog.h"
-#include "gdurestorediskimagedialog.h"
+#include "gdu-format-disk-dialog.h"
+#include "gdu-restore-disk-image-dialog.h"
 #include "gdu-drive-view.h"
 
 struct _GduDriveView

@@ -22,8 +22,8 @@
 
 #include <canberra-gtk.h>
 
-#include "gduapplication.h"
-#include "gducreatediskimagedialog.h"
+#include "gdu-application.h"
+#include "gdu-create-disk-image-dialog.h"
 #include "gduvolumegrid.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
@@ -1105,7 +1105,7 @@ gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
   data->cancellable = g_cancellable_new ();
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "create-disk-image-dialog.ui",
+                                                         "gdu-create-disk-image-dialog.ui",
                                                          "create-disk-image-dialog",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)

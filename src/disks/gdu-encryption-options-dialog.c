@@ -15,9 +15,9 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gducrypttabdialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-encryption-options-dialog.h"
 #include "gduvolumegrid.h"
 
 struct _GduCrypttabDialog
@@ -318,7 +318,7 @@ gdu_crypttab_dialog_class_init (GduCrypttabDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Disks/ui/"
-                                               "edit-crypttab-dialog.ui");
+                                               "gdu-encryption-options-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, infobar_box);
   gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, use_defaults_switch);

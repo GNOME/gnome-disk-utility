@@ -10,9 +10,9 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gdufstabdialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-mount-options-dialog.h"
 #include "gduvolumegrid.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

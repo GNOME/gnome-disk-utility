@@ -12,9 +12,9 @@
 #include <glib/gi18n.h>
 #include <math.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gduresizedialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-resize-volume-dialog.h"
 #include "gduutils.h"
 
 #define FILESYSTEM_WAIT_STEP_MS 500

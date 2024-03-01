@@ -15,9 +15,9 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gduformatdiskdialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-format-disk-dialog.h"
 #include "gduvolumegrid.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -186,7 +186,7 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/Disks/ui/"
-                                               "format-disk-dialog.ui");
+                                               "gdu-format-disk-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, type_combobox);
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_combobox);

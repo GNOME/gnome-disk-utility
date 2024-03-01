@@ -19,9 +19,9 @@
 
 #include <math.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gdubenchmarkdialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-benchmark-dialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -1525,7 +1525,7 @@ start_benchmark (DialogData *data)
   g_assert_cmpint (data->bm_state, ==, BM_STATE_NONE);
 
   dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                   "benchmark-dialog.ui",
+                                                   "gdu-benchmark-dialog.ui",
                                                    "dialog2",
                                                    &builder));
   gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (data->dialog));
@@ -1638,7 +1638,7 @@ gdu_benchmark_dialog_show (GtkWindow    *window,
                                               sizeof (BMSample));
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "benchmark-dialog.ui",
+                                                         "gdu-benchmark-dialog.ui",
                                                          "dialog1",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)

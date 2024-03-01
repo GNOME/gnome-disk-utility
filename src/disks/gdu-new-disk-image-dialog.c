@@ -24,9 +24,9 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
-#include "gdunewdiskimagedialog.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
+#include "gdu-new-disk-image-dialog.h"
 #include "gduutils.h"
 
 /* TODOs / ideas for New Disk Image creation
@@ -351,8 +351,8 @@ gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/"
-                                               "ui/new-disk-image-dialog.ui");
+                                               "/org/gnome/Disks/ui/"
+                                               "gdu-new-disk-image-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_spin_button);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_combobox);

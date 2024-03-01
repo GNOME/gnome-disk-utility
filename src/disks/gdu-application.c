@@ -16,11 +16,11 @@
 #include <unistd.h>
 
 #include "gdu-manager.h"
-#include "gduapplication.h"
-#include "gducreateformatdialog.h"
-#include "gdurestorediskimagedialog.h"
-#include "gdunewdiskimagedialog.h"
-#include "gduwindow.h"
+#include "gdu-application.h"
+#include "gdu-format-volume-dialog.h"
+#include "gdu-restore-disk-image-dialog.h"
+#include "gdu-new-disk-image-dialog.h"
+#include "gdu-window.h"
 #include "gdulocaljob.h"
 #include "gdu-log.h"
 

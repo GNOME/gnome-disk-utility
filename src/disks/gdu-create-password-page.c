@@ -10,7 +10,7 @@
 
 #include <glib/gi18n.h>
 
-#include "gducreatepasswordpage.h"
+#include "gdu-create-password-page.h"
 #include "gdupasswordstrengthwidget.h"
 
 struct _GduCreatePasswordPage
@@ -74,7 +74,7 @@ gdu_create_password_page_class_init (GduCreatePasswordPageClass *class)
   GObjectClass *gobject_class;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/Disks/ui/create-password-page.ui");
+                                               "/org/gnome/Disks/ui/gdu-create-password-page.ui");
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, password_strength_box);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, password_entry);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePasswordPage, confirm_password_entry);

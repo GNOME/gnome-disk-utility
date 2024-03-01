@@ -12,7 +12,7 @@
 #include <glib/gi18n.h>
 
 #include "gdudevicetreemodel.h"
-#include "gduapplication.h"
+#include "gdu-application.h"
 #include "gduatasmartdialog.h"
 #include "gduenumtypes.h"
 

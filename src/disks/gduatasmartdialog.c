@@ -10,8 +10,8 @@
 
 #include <glib/gi18n.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
 #include "gduatasmartdialog.h"
 
 enum

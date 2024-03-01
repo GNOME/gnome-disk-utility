@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "gduapplication.h"
-#include "gduwindow.h"
+#include "gdu-application.h"
+#include "gdu-window.h"
 #include "gduunlockdialog.h"
 #include "gduvolumegrid.h"
 

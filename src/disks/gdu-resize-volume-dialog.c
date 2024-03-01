@@ -8,835 +8,694 @@
 
 #include "config.h"
 
-#include <inttypes.h>
 #include <glib/gi18n.h>
-#include <math.h>
 
-#include "gdu-application.h"
-#include "gdu-window.h"
 #include "gdu-resize-volume-dialog.h"
 #include "gduutils.h"
 
 #define FILESYSTEM_WAIT_STEP_MS 500
 #define FILESYSTEM_WAIT_SEC 10
 
-typedef struct
+struct _GduResizeVolumeDialog
 {
-  volatile guint ref_count;
+  AdwWindow              parent_instance;
 
-  GtkWindow *window;
-  UDisksClient *client;
-  UDisksObject *object;
-  UDisksBlock *block;
-  UDisksPartition *partition;
-  UDisksFilesystem *filesystem;
-  UDisksPartitionTable *table;
-  ResizeFlags support;
-  guint64 min_size;
-  guint64 max_size;
-  guint64 current_size;
+  UDisksClient          *client;
+  UDisksObject          *object;
+  UDisksBlock           *block;
+  UDisksPartition       *partition;
+  UDisksFilesystem      *filesystem;
+  UDisksPartitionTable  *table;
 
-  GtkBuilder *builder;
-  GtkWidget *dialog;
-  GtkWidget *size_stack;
-  GtkWidget *resize_number_grid;
-  GtkWidget *size_scale;
-  GtkWidget *size_spinbutton;
-  GtkWidget *size_difference_spinbutton;
-  GtkWidget *free_following_spinbutton;
-  GtkAdjustment *size_adjustment;
-  GtkAdjustment *free_following_adjustment;
-  GtkAdjustment *difference_adjustment;
+  ResizeFlags            support;
+  guint64                min_size;
+  guint64                max_size;
+  guint64                current_size;
 
-  GtkWidget *size_unit_combobox;
-  GtkWidget *size_unit_following_label;
-  GtkWidget *size_unit_difference_label;
-  gint cur_unit_num;
-  GtkStyleProvider *css_provider;
+  GtkWidget             *size_scale;
 
-  GtkWidget *difference_label;
-  GtkWidget *explanation_label;
-  GtkWidget *spinner;
-  GtkWidget *apply;
+  GtkWidget             *max_size_label;
+  GtkWidget             *min_size_label;
+  GtkWidget             *current_size_label;
+  GtkWidget             *size_unit_label;
+  GtkWidget             *size_unit_dropdown;
 
-  GCancellable *mount_cancellable;
-  guint running_id;
-  guint wait_for_filesystem;
-} ResizeDialogData;
+  GtkAdjustment         *size_adjustment;
+  GtkAdjustment         *free_size_adjustment;
 
-static ResizeDialogData *
-resize_dialog_data_ref (ResizeDialogData *data)
+  gint                   cur_unit_num;
+  GCancellable          *mount_cancellable;
+  guint                  running_id;
+  guint                  wait_for_filesystem;
+};
+
+G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_WINDOW)
+
+static gpointer
+gdu_resize_volume_dialog_get_window (GduResizeVolumeDialog *self)
 {
-  g_atomic_int_inc (&data->ref_count);
-  return data;
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
 }
 
 static void
-resize_dialog_data_unref (ResizeDialogData *data)
+gdu_resize_volume_dialog_update (GduResizeVolumeDialog *self)
 {
-  if (g_atomic_int_dec_and_test (&data->ref_count))
-    {
-      if (data->running_id)
-        {
-          g_source_remove (data->running_id);
-        }
+  GObject *object;
+  const char *unit;
 
-      g_object_unref (data->window);
-      g_object_unref (data->object);
-      g_object_unref (data->block);
-      g_clear_object (&data->filesystem);
-      g_clear_object (&data->partition);
-      if (data->dialog != NULL)
-        {
-          gtk_widget_set_visible (data->dialog, FALSE);
-          gtk_window_close (GTK_WINDOW (data->dialog));
-        }
+  object = gtk_drop_down_get_selected_item (GTK_DROP_DOWN (self->size_unit_dropdown));
+  unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
 
-      g_clear_object (&data->builder);
-      g_clear_object (&data->mount_cancellable);
-      g_free (data);
-    }
-}
-
-static void
-resize_dialog_update (ResizeDialogData *data)
-{
-  gchar *s;
-
-  s = gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (data->size_unit_combobox));
-  gtk_label_set_text (GTK_LABEL (data->size_unit_following_label), s);
-  gtk_label_set_text (GTK_LABEL (data->size_unit_difference_label), s);
-
-  g_free (s);
-}
-
-static void
-set_unit_num (ResizeDialogData *data,
-              gint              unit_num)
-{
-  GtkStyleContext *context;
-  gchar *css;
-  gdouble unit_size;
-  gdouble value;
-  gdouble value_units;
-  gdouble min_size_units;
-  gdouble max_size_units;
-  gdouble current_units;
-  gint num_digits;
-
-  g_assert (unit_num < NUM_UNITS);
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (data->size_unit_combobox), unit_num);
-
-  if (data->cur_unit_num == -1)
-    {
-      value = data->current_size;
-    }
-  else
-    {
-      value = gtk_adjustment_get_value (data->size_adjustment) * ((gdouble) unit_sizes[data->cur_unit_num]);
-    }
-
-  unit_size = unit_sizes[unit_num];
-  value_units = value / unit_size;
-  min_size_units = ((gdouble) data->min_size) / unit_size;
-  max_size_units = ((gdouble) data->max_size) / unit_size;
-  current_units = ((gdouble) data->current_size) / unit_size;
-
-  /* show at least three digits in the spin buttons */
-  num_digits = 3.0 - ceil (log10 (max_size_units));
-  if (num_digits < 0)
-    num_digits = 0;
-
-  g_object_freeze_notify (G_OBJECT (data->size_adjustment));
-  g_object_freeze_notify (G_OBJECT (data->free_following_adjustment));
-  g_object_freeze_notify (G_OBJECT (data->difference_adjustment));
-
-  data->cur_unit_num = unit_num;
-
-  gtk_adjustment_configure (data->size_adjustment,
-                            value_units,
-                            min_size_units,         /* lower */
-                            max_size_units,         /* upper */
-                            1,                      /* step increment */
-                            100,                    /* page increment */
-                            0.0);                   /* page_size */
-  gtk_adjustment_configure (data->free_following_adjustment,
-                            max_size_units - value_units,
-                            0.0,                             /* lower */
-                            max_size_units - min_size_units, /* upper */
-                            1,                               /* step increment */
-                            100,                             /* page increment */
-                            0.0);                            /* page_size */
-  gtk_adjustment_configure (data->difference_adjustment,
-                            value_units - current_units,
-                            min_size_units - current_units, /* lower */
-                            max_size_units - current_units, /* upper */
-                            1,                              /* step increment */
-                            100,                            /* page increment */
-                            0.0);                           /* page_size */
-
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (data->size_spinbutton), num_digits);
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (data->size_difference_spinbutton), num_digits);
-  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (data->free_following_spinbutton), num_digits);
-
-  gtk_adjustment_set_value (data->size_adjustment, value_units);
-  gtk_adjustment_set_value (data->free_following_adjustment, max_size_units - value_units);
-  gtk_adjustment_set_value (data->difference_adjustment, value_units - current_units);
-
-  gtk_scale_clear_marks (GTK_SCALE (data->size_scale));
-  gtk_scale_add_mark (GTK_SCALE (data->size_scale), current_units, GTK_POS_TOP, _("Current Size"));
-
-  context = gtk_widget_get_style_context (data->size_scale);
-  if (data->css_provider)
-    {
-      gtk_style_context_remove_provider (context, data->css_provider);
-      g_clear_object (&data->css_provider);
-    }
-
-  if (data->min_size > 1)
-    {
-      gtk_scale_add_mark (GTK_SCALE (data->size_scale), min_size_units, GTK_POS_BOTTOM, _("Minimal Size"));
-      css = g_strdup_printf (".partition-scale contents {\n"
-                             "  border-left-width: %dpx;\n"
-                             "}\n",
-                             (gint) (min_size_units / max_size_units * gtk_widget_get_allocated_width (data->size_stack)));
-      data->css_provider = GTK_STYLE_PROVIDER (gtk_css_provider_new ());
-      gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (data->css_provider), css, -1, NULL);
-      gtk_style_context_add_provider (context, data->css_provider, GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-      g_free (css);
-    }
-
-  g_object_thaw_notify (G_OBJECT (data->size_adjustment));
-  g_object_thaw_notify (G_OBJECT (data->free_following_adjustment));
-  g_object_thaw_notify (G_OBJECT (data->difference_adjustment));
-}
-
-static void
-resize_dialog_property_changed (GObject     *object,
-                                GParamSpec  *pspec,
-                                gpointer     user_data)
-{
-  ResizeDialogData *data = user_data;
-
-  resize_dialog_update (data);
-}
-
-static void
-on_size_unit_combobox_changed (GtkComboBox *combobox,
-                               gpointer     user_data)
-{
-  ResizeDialogData *data = user_data;
-  gint unit_num;
-
-  unit_num = gtk_combo_box_get_active (GTK_COMBO_BOX (data->size_unit_combobox));
-  set_unit_num (data, unit_num);
-
-  resize_dialog_update (data);
-}
-
-static void
-resize_dialog_populate (ResizeDialogData *data)
-{
-
-  data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "resize-dialog.ui",
-                                                         "resize-dialog",
-                                                         &data->builder));
-
-  gtk_dialog_add_button (GTK_DIALOG (data->dialog), "gtk-cancel", GTK_RESPONSE_CANCEL);
-  data->apply = gtk_dialog_add_button (GTK_DIALOG (data->dialog), _("_Resize"), GTK_RESPONSE_APPLY);
-  gtk_style_context_add_class (gtk_widget_get_style_context (data->apply), "destructive-action");
-  gtk_widget_grab_default (data->apply);
-
-  data->size_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-spinbutton"));
-  data->size_difference_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-difference-spinbutton"));
-  data->free_following_spinbutton = GTK_WIDGET (gtk_builder_get_object (data->builder, "free-following-spinbutton"));
-  data->size_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "size-adjustment"));
-  g_signal_connect (data->size_adjustment, "notify::value", G_CALLBACK (resize_dialog_property_changed), data);
-  data->free_following_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "free-following-adjustment"));
-  data->difference_adjustment = GTK_ADJUSTMENT (gtk_builder_get_object (data->builder, "difference-adjustment"));
-  data->size_unit_combobox = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-unit-combobox"));
-  g_signal_connect (data->size_unit_combobox, "changed", G_CALLBACK (on_size_unit_combobox_changed), data);
-  data->size_unit_difference_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-unit-difference-label"));
-  data->size_unit_following_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-unit-following-label"));
-  data->difference_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "difference-label"));
-  data->explanation_label = GTK_WIDGET (gtk_builder_get_object (data->builder, "explanation"));
-  data->spinner = GTK_WIDGET (gtk_builder_get_object (data->builder, "spinner"));
-  data->resize_number_grid = GTK_WIDGET (gtk_builder_get_object (data->builder, "resize-number-grid"));;
-  data->size_scale = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-scale"));;
-  data->size_stack = GTK_WIDGET (gtk_builder_get_object (data->builder, "size-stack"));
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), data->window);
-  gtk_dialog_set_default_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_APPLY);
-  set_unit_num (data, gdu_utils_get_default_unit (data->max_size));
-}
-
-static gboolean
-free_size_binding_func (GBinding     *binding,
-                        const GValue *source_value,
-                        GValue       *target_value,
-                        gpointer      user_data)
-{
-  ResizeDialogData *data = user_data;
-  gdouble max_size_units;
-
-  max_size_units = ((gdouble) data->max_size) / unit_sizes[data->cur_unit_num];
-  g_value_set_double (target_value, max_size_units - g_value_get_double (source_value));
-
-  return TRUE;
-}
-
-static gboolean
-difference_binding_func (GBinding     *binding,
-                         const GValue *source_value,
-                         GValue       *target_value,
-                         gpointer      user_data)
-{
-  ResizeDialogData *data = user_data;
-  gdouble current_units;
-
-  current_units = ((gdouble) data->current_size) / unit_sizes[data->cur_unit_num];
-  g_value_set_double (target_value, g_value_get_double (source_value) - current_units);
-
-  return TRUE;
-}
-
-static gboolean
-difference_binding_func_back (GBinding     *binding,
-                              const GValue *source_value,
-                              GValue       *target_value,
-                              gpointer      user_data)
-{
-  ResizeDialogData *data = user_data;
-  gdouble current_units;
-
-  current_units = ((gdouble) data->current_size) / unit_sizes[data->cur_unit_num];
-  g_value_set_double (target_value, g_value_get_double (source_value) + current_units);
-
-  return TRUE;
+  gtk_label_set_label (GTK_LABEL (self->size_unit_label), unit);
+  gtk_label_set_label (GTK_LABEL (self->max_size_label),
+                       g_strdup_printf ("%ld", self->max_size / unit_sizes[self->cur_unit_num]));
+  gtk_label_set_label (GTK_LABEL (self->min_size_label),
+                       g_strdup_printf ("%ld", self->min_size / unit_sizes[self->cur_unit_num]));
+  gtk_label_set_label (GTK_LABEL (self->current_size_label),
+                       g_strdup_printf ("%ld", self->current_size / unit_sizes[self->cur_unit_num]));
 }
 
 static guint64
-get_size (ResizeDialogData *data)
+get_new_size (GduResizeVolumeDialog *self)
 {
   guint64 size;
 
-  size = gtk_adjustment_get_value (data->size_adjustment) * unit_sizes[data->cur_unit_num];
+  size = gtk_adjustment_get_value (self->size_adjustment) * unit_sizes[self->cur_unit_num];
   /* choose 0 as maximum in order to avoid errors
    * if partition is later 3 MiB smaller due to alignment etc
    */
-  if (size >= data->max_size - 3*1024*1024)
+  if (size >= self->max_size - 3 * 1024 * 1024)
     size = 0;
 
   return size;
 }
 
 static gboolean
-is_shrinking (ResizeDialogData *data)
+is_shrinking (GduResizeVolumeDialog *self)
 {
-  return get_size (data) < data->current_size && get_size (data) != 0;
+  return get_new_size (self) < self->current_size && get_new_size (self) != 0;
+}
+
+static gboolean
+free_size_binding_func (GBinding *binding,
+                        const GValue *source_value,
+                        GValue *target_value,
+                        gpointer user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+
+  g_value_set_double (target_value, (gdouble)self->max_size - g_value_get_double (source_value));
+
+  return TRUE;
+}
+
+static gboolean
+calculate_usage (gpointer user_data)
+{
+  GduResizeVolumeDialog *self = user_data;
+  gint64 unused;
+
+  /* filesystem was mounted before opening the dialog but it still can take
+   * some seconds */
+  unused = gdu_utils_get_unused_for_block (self->client, self->block);
+  if (unused == -1)
+    return G_SOURCE_CONTINUE;
+
+  self->min_size = self->current_size;
+  /* set minimal filesystem size from usage if shrinking is supported */
+  if (self->support & (ONLINE_SHRINK | OFFLINE_SHRINK))
+    self->min_size = self->current_size - unused;
+
+  self->running_id = 0;
+  return G_SOURCE_REMOVE;
 }
 
 static void
-fs_resize_cb (UDisksFilesystem *filesystem,
-              GAsyncResult     *res,
-              ResizeDialogData *data)
+resize_get_usage_mount_cb (GObject *source_object,
+                           GAsyncResult *res,
+                           gpointer user_data)
 {
-  GError *error = NULL;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (source_object);
+  g_autoptr(GError) error = NULL;
 
-  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
+  if (udisks_filesystem_call_mount_finish (filesystem, NULL, res, &error))
+    return;
+
+  if (self->running_id)
     {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing filesystem"),
-                            error);
-      g_error_free (error);
+      g_source_remove (self->running_id);
+      self->running_id = 0;
     }
 
-  resize_dialog_data_unref (data);
+  g_clear_object (&self->mount_cancellable);
+
+  gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                        _("Error mounting filesystem to calculate minimum size"),
+                        error);
+
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
-part_resize_cb (UDisksPartition  *partition,
-                GAsyncResult     *res,
-                ResizeDialogData *data)
+set_unit_num (GduResizeVolumeDialog *self, gint unit_num)
 {
-  GError *error = NULL;
+  gdouble unit_size;
+  gdouble value;
+  gdouble value_units;
+  gdouble min_size_units;
+  gdouble max_size_units;
+  gdouble current_units;
+
+  g_assert (unit_num < NUM_UNITS);
+
+  gtk_drop_down_set_selected (GTK_DROP_DOWN (self->size_unit_dropdown),
+                              unit_num);
+
+  value = self->cur_unit_num == -1 
+              ? self->current_size
+              : gtk_adjustment_get_value (self->size_adjustment) * unit_sizes[self->cur_unit_num];
+
+  unit_size = unit_sizes[unit_num];
+  value_units = value / unit_size;
+  min_size_units = ((gdouble)self->min_size) / unit_size;
+  max_size_units = ((gdouble)self->max_size) / unit_size;
+  current_units = ((gdouble)self->current_size) / unit_size;
+
+  self->cur_unit_num = unit_num;
+
+  gtk_adjustment_configure (self->size_adjustment,
+                            value_units,
+                            min_size_units, /* lower */
+                            max_size_units, /* upper */
+                            1,              /* step increment */
+                            100,            /* page increment */
+                            0.0);           /* page_size */
+  gtk_adjustment_configure (self->free_size_adjustment,
+                            max_size_units - value_units,
+                            0.0,                               /* lower */
+                            max_size_units - min_size_units,   /* upper */
+                            1,                                 /* step increment */
+                            100,                               /* page increment */
+                            0.0);                              /* page_size */
+
+  gtk_adjustment_set_value (self->size_adjustment, value_units);
+
+  gtk_scale_clear_marks (GTK_SCALE (self->size_scale));
+  gtk_scale_add_mark (GTK_SCALE (self->size_scale), current_units, GTK_POS_BOTTOM, _("Current Size"));
+
+  if (self->min_size > 1)
+    gtk_scale_add_mark (GTK_SCALE (self->size_scale), min_size_units, GTK_POS_BOTTOM, _("Minimum Size"));
+}
+
+static void
+on_size_unit_changed_cb (GduResizeVolumeDialog *self)
+{
+  gint unit_num;
+
+  unit_num = gtk_drop_down_get_selected (GTK_DROP_DOWN (self->size_unit_dropdown));
+  set_unit_num (self, unit_num);
+
+  gdu_resize_volume_dialog_update (self);
+}
+
+static void
+part_resize_cb (GObject       *object,
+                GAsyncResult  *res,
+                gpointer       user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksPartition *partition = UDISKS_PARTITION (object);
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_partition_call_resize_finish (partition, res, &error))
     {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing partition"),
-                            error);
-      g_error_free (error);
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing partition"), error);
     }
 
-  resize_dialog_data_unref (data);
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
-fs_repair_cb_next_part_resize (UDisksFilesystem *filesystem,
-                               GAsyncResult     *res,
-                               ResizeDialogData *data)
+fs_resize_cb (GObject       *object,
+              GAsyncResult  *res,
+              gpointer       user_data)
 {
-  GError *error = NULL;
-  gboolean success = FALSE;
-
-  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error repairing filesystem after resize"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      udisks_partition_call_resize (data->partition, get_size (data),
-                                    g_variant_new ("a{sv}", NULL), NULL,
-                                    (GAsyncReadyCallback) part_resize_cb, data);
-    }
-}
-
-static void
-fs_repair_cb (UDisksFilesystem *filesystem,
-              GAsyncResult     *res,
-              ResizeDialogData *data)
-{
-  GError *error = NULL;
-  gboolean success = FALSE;
-
-  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error repairing filesystem after resize"),
-                            error);
-      g_error_free (error);
-    }
-
-  resize_dialog_data_unref (data);
-}
-
-static void
-fs_resize_cb_offline_next_repair (UDisksFilesystem *filesystem,
-                                  GAsyncResult     *res,
-                                  ResizeDialogData *data)
-{
-  GError *error = NULL;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
     {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing filesystem"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing filesystem"), error);
     }
-  else
-    {
-      udisks_filesystem_call_repair (data->filesystem,
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_repair_cb, data);
-    }
+
+  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
-response_cb (GtkDialog *dialog,
-             gint       response)
+fs_repair_cb (GObject       *object,
+              GAsyncResult  *res,
+              gpointer       user_data)
 {
-  gtk_window_close (GTK_WINDOW (dialog));
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+  gboolean success = FALSE;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error repairing filesystem after resize"),
+                            error);
+    }
+
+  gtk_window_close (GTK_WINDOW (self));
+}
+
+static void
+fs_resize_cb_offline_next_repair (GObject       *object,
+                                  GAsyncResult  *res,
+                                  gpointer       user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  udisks_filesystem_call_repair (self->filesystem,
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_repair_cb, self);
+}
+
+static void
+fs_repair_cb_offline_next_grow (GObject       *object,
+                                GAsyncResult  *res,
+                                gpointer       user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+  gboolean success = FALSE;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error repairing filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  /* growing: next is to resize filesystem, then run repair again */
+  udisks_filesystem_call_resize (self->filesystem, get_new_size (self),
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_resize_cb_offline_next_repair, self);
+}
+
+static void
+ensure_unused_cb_offline_next_repair (GObject *source_object,
+                                      GAsyncResult *res,
+                                      gpointer user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+
+  if (!gdu_utils_ensure_unused_finish (self->client, res, NULL))
+    {
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  udisks_filesystem_call_repair (self->filesystem,
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_repair_cb_offline_next_grow, self);
+}
+
+static void
+part_resize_cb_offline_next_fs_unmount (GObject *source_object,
+                                        GAsyncResult *res,
+                                        gpointer user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksPartition *partition = UDISKS_PARTITION (source_object);
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_partition_call_resize_finish (partition, res, &error))
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing partition"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  gdu_utils_ensure_unused (self->client,
+                           gdu_resize_volume_dialog_get_window (self),
+                           self->object,
+                           ensure_unused_cb_offline_next_repair,
+                           NULL,
+                           self);
+}
+
+static void
+fs_repair_cb_next_part_resize (GObject *object,
+                               GAsyncResult *res,
+                               gpointer user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+  gboolean success = FALSE;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error repairing filesystem after resize"),
+                            error);
+
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  udisks_partition_call_resize (self->partition, get_new_size (self),
+                                g_variant_new ("a{sv}", NULL), NULL,
+                                (GAsyncReadyCallback)part_resize_cb, self);
+}
+
+static void
+fs_resize_cb_offline_next_fs_repair (GObject *object,
+                                     GAsyncResult *res,
+                                     gpointer user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  udisks_filesystem_call_repair (self->filesystem,
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_repair_cb_next_part_resize, self);
+}
+
+static void
+fs_repair_cb_offline_next_shrink (GObject      *object,
+                                  GAsyncResult *res,
+                                  gpointer      user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+  gboolean success = FALSE;
+
+  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error repairing filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  /* shrinking: next is to resize filesystem, run repair again, then resize
+   * partition */
+  udisks_filesystem_call_resize (self->filesystem, get_new_size (self),
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_resize_cb_offline_next_fs_repair, self);
+}
+
+static void
+fs_resize_cb_online_next_part_resize (GObject      *object,
+                                      GAsyncResult *res,
+                                      gpointer      user_data)
+{
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
+    {
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+  udisks_partition_call_resize (self->partition, get_new_size (self),
+                                g_variant_new ("a{sv}", NULL), NULL,
+                                part_resize_cb, self);
 }
 
 static gboolean
 resize_filesystem_waiter (gpointer user_data)
 {
-  ResizeDialogData *data = user_data;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  GtkWidget *dialog;
 
-  if (data->wait_for_filesystem < FILESYSTEM_WAIT_SEC * (1000 / FILESYSTEM_WAIT_STEP_MS)
-      && udisks_object_peek_filesystem (data->object) == NULL)
+  if (self->wait_for_filesystem < FILESYSTEM_WAIT_SEC * (1000 / FILESYSTEM_WAIT_STEP_MS)
+      && udisks_object_peek_filesystem (self->object) == NULL)
     {
-      data->wait_for_filesystem++;
+      self->wait_for_filesystem += 1;
       return G_SOURCE_CONTINUE;
     }
-  else if (udisks_object_peek_filesystem (data->object) == NULL)
-    {
-      GtkWidget *dialog;
 
-      dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (data->dialog),
-                                                   GTK_DIALOG_MODAL,
-                                                   GTK_MESSAGE_ERROR,
-                                                   GTK_BUTTONS_CLOSE,
-                                                   "<big><b>%s</b></big>",
-                                                   _("Resizing not ready"));
-      gtk_message_dialog_format_secondary_markup (GTK_MESSAGE_DIALOG (dialog),
-                                                  _("Waited too long for the filesystem"));
-      g_signal_connect (dialog, "response", G_CALLBACK (response_cb), NULL);
+  if (udisks_object_peek_filesystem (self->object) == NULL)
+    {
+      dialog = adw_message_dialog_new (gdu_resize_volume_dialog_get_window (self),
+                                       _("Resizing not ready"),
+                                       _("Waited too long for the filesystem"));
+      adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+                                        "close", _("_Close"),
+                                        NULL);
+      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog), "close");
+
       gtk_window_present (GTK_WINDOW (dialog));
 
-      resize_dialog_data_unref (data);
-
+      gtk_window_close (GTK_WINDOW (self));
       return G_SOURCE_REMOVE;
     }
-  else
-    {
-      udisks_filesystem_call_resize (data->filesystem, get_size (data),
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_resize_cb, data);
-      return G_SOURCE_REMOVE;
-    }
+
+  udisks_filesystem_call_resize (self->filesystem, get_new_size (self),
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_resize_cb, self);
+
+  return G_SOURCE_REMOVE;
 }
 
 static void
-part_resize_cb_online_next_fs_resize (UDisksPartition  *partition,
-                                      GAsyncResult     *res,
-                                      ResizeDialogData *data)
-{
-  GError *error = NULL;
-
-  if (!udisks_partition_call_resize_finish (partition, res, &error))
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing partition"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      /* After the partition is resized the filesystem interface might still
-       * take some time to show up again. UDisks would have to open the partition
-       * block device, issue the ioctl BLKSIZE64 and wait for the size property
-       * of the partition interface to be the same and then wait for the filesystem
-       * interface to show up (only if it was there before). This depends on inclusion
-       * of https://github.com/storaged-project/libblockdev/pull/264
-       */
-      udisks_client_settle (data->client);
-      if (resize_filesystem_waiter (data) == G_SOURCE_CONTINUE)
-        {
-          g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, data);
-        }
-    }
-}
-
-static void
-fs_repair_cb_offline_next_grow (UDisksFilesystem *filesystem,
-                                GAsyncResult     *res,
-                                ResizeDialogData *data)
-{
-  GError *error = NULL;
-  gboolean success = FALSE;
-
-  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error repairing filesystem"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      /* growing: next is to resize filesystem, then run repair again */
-      udisks_filesystem_call_resize (data->filesystem, get_size (data),
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_resize_cb_offline_next_repair, data);
-    }
-}
-
-static void
-ensure_unused_cb_offline_next_repair (GObject      *source_object,
+part_resize_cb_online_next_fs_resize (GObject      *object,
                                       GAsyncResult *res,
                                       gpointer      user_data)
 {
-  ResizeDialogData *data = user_data;
-
-  if (!gdu_utils_ensure_unused_finish (data->client, res, NULL))
-    {
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      udisks_filesystem_call_repair (data->filesystem,
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_repair_cb_offline_next_grow, data);
-    }
-}
-
-static void
-part_resize_cb_offline_next_fs_unmount (UDisksPartition  *partition,
-                                        GAsyncResult     *res,
-                                        ResizeDialogData *data)
-{
-  GError *error = NULL;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksPartition *partition = UDISKS_PARTITION (object);
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_partition_call_resize_finish (partition, res, &error))
     {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing partition"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error resizing partition"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
     }
-  else
+
+  /* After the partition is resized the filesystem interface might still
+   * take some time to show up again. UDisks would have to open the partition
+   * block device, issue the ioctl BLKSIZE64 and wait for the size property
+   * of the partition interface to be the same and then wait for the filesystem
+   * interface to show up (only if it was there before). This depends on
+   * inclusion of https://github.com/storaged-project/libblockdev/pull/264
+   */
+  udisks_client_settle (self->client);
+  if (resize_filesystem_waiter (self) == G_SOURCE_CONTINUE)
     {
-      gdu_utils_ensure_unused (data->client,
-                               data->window,
-                               data->object,
-                               ensure_unused_cb_offline_next_repair,
-                               NULL,
-                               data);
+      g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, self);
     }
 }
 
 static void
-fs_resize_cb_online_next_part_resize (UDisksFilesystem *filesystem,
-                                      GAsyncResult     *res,
-                                      ResizeDialogData *data)
+online_resize_no_repair (GduResizeVolumeDialog *self)
 {
-  GError *error = NULL;
-
-  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing filesystem"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      udisks_partition_call_resize (data->partition, get_size (data),
-                                    g_variant_new ("a{sv}", NULL), NULL,
-                                    (GAsyncReadyCallback) part_resize_cb, data);
-    }
-}
-
-static void
-fs_resize_cb_offline_next_fs_repair (UDisksFilesystem *filesystem,
-                                       GAsyncResult     *res,
-                                       ResizeDialogData *data)
-{
-  GError *error = NULL;
-
-  if (!udisks_filesystem_call_resize_finish (filesystem, res, &error))
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error resizing filesystem"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      udisks_filesystem_call_repair (data->filesystem,
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_repair_cb_next_part_resize, data);
-    }
-}
-
-static void
-fs_repair_cb_offline_next_shrink (UDisksFilesystem *filesystem,
-                                  GAsyncResult     *res,
-                                  ResizeDialogData *data)
-{
-  GError *error = NULL;
-  gboolean success = FALSE;
-
-  if (!udisks_filesystem_call_repair_finish (filesystem, &success, res, &error) || !success)
-    {
-      gdu_utils_show_error (data->window,
-                            _("Error repairing filesystem"),
-                            error);
-      g_error_free (error);
-      resize_dialog_data_unref (data);
-    }
-  else
-    {
-      /* shrinking: next is to resize filesystem, run repair again, then resize partition */
-      udisks_filesystem_call_resize (data->filesystem, get_size (data),
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_resize_cb_offline_next_fs_repair, data);
-    }
-}
-
-static void
-online_resize_no_repair (ResizeDialogData *data)
-{
-  if (is_shrinking (data))
+if (is_shrinking (self))
     {
       /* shrinking: resize filesystem first, then partition: fs-resize, part-resize */
-      udisks_filesystem_call_resize (data->filesystem, get_size (data),
+      udisks_filesystem_call_resize (self->filesystem, get_new_size (self),
                                      g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_resize_cb_online_next_part_resize, data);
+                                     fs_resize_cb_online_next_part_resize, self);
     }
   else
     {
       /* growing: resize partition first, then filesystem: part-resize, fs-resize */
-      udisks_partition_call_resize (data->partition, get_size (data),
+      udisks_partition_call_resize (self->partition, get_new_size (self),
                                     g_variant_new ("a{sv}", NULL), NULL,
-                                    (GAsyncReadyCallback) part_resize_cb_online_next_fs_resize, data);
+                                    part_resize_cb_online_next_fs_resize, self);
     }
 }
+
 
 static void
 unmount_cb (GObject      *source_object,
             GAsyncResult *res,
             gpointer      user_data)
 {
-  ResizeDialogData *data = user_data;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
 
-  if (!gdu_utils_ensure_unused_finish (data->client, res, NULL))
+  if (!gdu_utils_ensure_unused_finish (self->client, res, NULL))
     {
-      resize_dialog_data_unref (data);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
     }
-  else
-    {
-      /* shrinking partition and filesystem:
-       * fs-repair, fs-resize, fs-repair, part-resize
-       */
-      udisks_filesystem_call_repair (data->filesystem,
-                                     g_variant_new ("a{sv}", NULL), NULL,
-                                     (GAsyncReadyCallback) fs_repair_cb_offline_next_shrink, data);
-    }
+
+  /* shrinking partition and filesystem:
+   * fs-repair, fs-resize, fs-repair, part-resize
+   */
+  udisks_filesystem_call_repair (self->filesystem,
+                                 g_variant_new ("a{sv}", NULL), NULL,
+                                 fs_repair_cb_offline_next_shrink, self);
 }
 
 static void
-resize (ResizeDialogData *data)
+resize (GduResizeVolumeDialog *self)
 {
   gboolean shrinking;
 
-  shrinking = is_shrinking (data);
+  shrinking = is_shrinking (self);
 
-  if ((!(data->support & ONLINE_SHRINK) && shrinking) ||
-      (!(data->support & ONLINE_GROW) && !shrinking))
+  if ((self->support & ONLINE_SHRINK && shrinking)
+      || (self->support & ONLINE_GROW && !shrinking))
     {
-      if (shrinking)
-        {
-          gdu_utils_ensure_unused (data->client,
-                                   data->window,
-                                   data->object,
-                                   unmount_cb,
-                                   NULL,
-                                   data);
-        }
-      else
-        {
-          /* The offline grow case still needs the FS to be mounted during
-           * the partition resize to prevent any race conditions with GVFs
-           * automount but will unmount as soon as FS repair and resize take place:
-           * part-resize, fs-repair, fs-resize, fs-repair
-           */
-          udisks_partition_call_resize (data->partition, get_size (data),
-                                        g_variant_new ("a{sv}", NULL), NULL,
-                                        (GAsyncReadyCallback) part_resize_cb_offline_next_fs_unmount, data);
-        }
+      online_resize_no_repair (self);
+      return;
     }
-  else
+
+  if (shrinking)
     {
-      online_resize_no_repair (data);
+      gdu_utils_ensure_unused (self->client,
+                               gdu_resize_volume_dialog_get_window (self),
+                               self->object, unmount_cb, NULL, self);
+      return;
     }
+
+  /* The offline grow case still needs the FS to be mounted during
+   * the partition resize to prevent any race conditions with GVFs
+   * automount but will unmount as soon as FS repair and resize take place:
+   * part-resize, fs-repair, fs-resize, fs-repair
+   */
+  udisks_partition_call_resize (self->partition, get_new_size (self),
+                                g_variant_new ("a{sv}", NULL), NULL,
+                                part_resize_cb_offline_next_fs_unmount, self);
 }
 
 static void
-mount_cb (UDisksFilesystem *filesystem,
-          GAsyncResult     *res,
-          gpointer          user_data)
+mount_cb (GObject      *object,
+          GAsyncResult *res,
+          gpointer      user_data)
 {
-  ResizeDialogData *data = (ResizeDialogData *) user_data;
-  GError *error = NULL;
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (object);
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_filesystem_call_mount_finish (filesystem,
                                             NULL, /* out_mount_path */
-                                            res,
-                                            &error))
+                                            res, &error))
     {
-      gdu_utils_show_error (data->window,
-                            _("Error mounting the filesystem"),
-                            error);
-
-      g_error_free (error);
-      resize_dialog_data_unref (data);
+      gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
+                            _("Error mounting the filesystem"), error);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
     }
-  else
-    {
-      resize (data);
-    }
-}
 
-static gboolean
-calc_usage (gpointer user_data)
-{
-  ResizeDialogData *data = user_data;
-  gint64 unused;
-
-  /* filesystem was mounted before opening the dialog but it still can take some seconds */
-  unused = gdu_utils_get_unused_for_block (data->client, data->block);
-
-  if (unused == -1)
-    {
-      return G_SOURCE_CONTINUE;
-    }
-  else
-    {
-      data->running_id = 0;
-
-      if (data->support & ONLINE_SHRINK || data->support & OFFLINE_SHRINK)
-        {
-          /* set minimal filesystem size from usage if shrinking is supported */
-          data->min_size = data->current_size - unused;
-        }
-      else
-        {
-          data->min_size = data->current_size; /* do not allow shrinking */
-        }
-
-      gtk_spinner_stop (GTK_SPINNER (data->spinner));
-      gtk_stack_set_visible_child (GTK_STACK (data->size_stack), data->resize_number_grid);
-      if (data->min_size == data->max_size)
-        gtk_button_set_label (GTK_BUTTON (data->apply), _("Fit to size"));
-
-      gtk_widget_set_sensitive (data->apply, TRUE);
-      set_unit_num (data, data->cur_unit_num);
-      resize_dialog_update (data);
-
-      return G_SOURCE_REMOVE;
-    }
+  resize (self);
 }
 
 static void
-resize_get_usage_mount_cb (UDisksFilesystem *filesystem,
-                           GAsyncResult     *res,
-                           gpointer          user_data)
+on_resize_clicked_cb (GduResizeVolumeDialog *self)
 {
-  ResizeDialogData *data = (ResizeDialogData *) user_data;
-  GError *error = NULL;
+  gboolean offline_shrink;
+  const char *const *mount_points;
 
-  if (!udisks_filesystem_call_mount_finish (filesystem,
-                                            NULL, /* out_mount_path */
-                                            res,
-                                            &error))
+  if (self->filesystem == NULL)
     {
-      if (data->dialog != NULL)
-        {
-          /* close dialog if still open */
-          if (data->running_id)
-            {
-              g_source_remove (data->running_id);
-              data->running_id = 0;
-            }
-
-          g_clear_object (&data->mount_cancellable);
-          gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
-          gdu_utils_show_error (data->window,
-                                _("Error mounting filesystem to calculate minimum size"),
-                                error);
-        }
-
-      g_error_free (error);
+      /* no filesystem present, just resize partition */
+      udisks_partition_call_resize (self->partition, get_new_size (self),
+                                    g_variant_new ("a{sv}", NULL), NULL,
+                                    part_resize_cb, self);
+      return;
     }
 
-  resize_dialog_data_unref (data);
+  mount_points = udisks_filesystem_get_mount_points (self->filesystem);
+  /* prevent the case of mounting when directly unmount would follow */
+  offline_shrink = !(self->support & ONLINE_SHRINK) && is_shrinking (self);
+  if (g_strv_length ((gchar **)mount_points) == 0 && !offline_shrink)
+    {
+      /* FS was unmounted by the user while the dialog stayed open */
+      udisks_filesystem_call_mount (self->filesystem,
+                                    g_variant_new ("a{sv}", NULL), NULL,
+                                    mount_cb, self);
+      return;
+    }
+
+  resize (self);
+}
+
+static void
+gdu_resize_volume_dialog_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (gdu_resize_volume_dialog_parent_class)->finalize (object);
+}
+
+void
+gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize = gdu_resize_volume_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-resize-volume-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_scale);
+
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_adjustment);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,free_size_adjustment);
+
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,max_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,min_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,current_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_dropdown);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_label);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
+}
+
+void
+gdu_resize_volume_dialog_init (GduResizeVolumeDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
+
+  self->cur_unit_num = -1;
+  g_object_bind_property_full (self->size_adjustment, "value",
+                               self->free_size_adjustment, "value",
+                               G_BINDING_BIDIRECTIONAL,
+                               free_size_binding_func,
+                               free_size_binding_func,
+                               self,
+                               NULL);
 }
 
 void
@@ -844,163 +703,83 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                         UDisksObject *object,
                         UDisksClient *client)
 {
-  const gchar *const *mount_points;
-  ResizeDialogData *data;
+  GduResizeVolumeDialog *self;
+  const char *const *mount_points;
 
-  data = g_new0 (ResizeDialogData, 1);
-  data->ref_count = 1;
-  data->cur_unit_num = -1;
-  data->window = g_object_ref (parent_window);
-  data->support = 0;
-  data->client = client;
-  data->object = g_object_ref (object);
-  data->block = udisks_object_get_block (object);
-  g_assert (data->block != NULL);
-  data->partition = udisks_object_get_partition (object);
-  data->filesystem = udisks_object_get_filesystem (object);
-  data->table = NULL;
-  data->running_id = 0;
-  data->mount_cancellable = NULL;
-  data->wait_for_filesystem = 0;
-  data->css_provider = NULL;
+  self = g_object_new (GDU_TYPE_RESIZE_VOLUME_DIALOG,
+                       "transient-for", parent_window,
+                       NULL);
 
+  self->support = 0;
+  self->client = client;
+  self->object = g_object_ref (object);
+  self->block = udisks_object_get_block (object);
+  g_assert (self->block != NULL);
+
+  self->partition = udisks_object_get_partition (object);
+  g_assert (self->partition != NULL);
+
+  self->filesystem = udisks_object_get_filesystem (object);
+  self->table = udisks_client_get_partition_table (self->client, self->partition);
   /* In general no way to find the real filesystem size, just use the partition
    * size. That is ok unless the filesystem was not fitted to the underlaying
-   * block size which would just harm the calculation of the minimum shrink size.
-   * A workaround then is to resize it first to the partition size.
-   * The more serious implication of not detecting the filesystem size is:
-   * Resizing just the filesystem without resizing the underlying block device/
+   * block size which would just harm the calculation of the minimum shrink
+   * size. A workaround then is to resize it first to the partition size. The
+   * more serious implication of not detecting the filesystem size is: Resizing
+   * just the filesystem without resizing the underlying block device/
    * partition would work but is confusing because the only thing that changes
    * is the free space (since Disks can't show the filesystem size). Therefore
    * this option is not available now. We'll have to add cases like resizing
    * the LUKS, LVM partition or the mounted loop device file.
    */
-  g_assert (data->partition != NULL);
-  data->current_size = udisks_partition_get_size (data->partition);
-  data->table = udisks_client_get_partition_table (data->client, data->partition);
-  data->min_size = 1;
-  if (data->partition != NULL && udisks_partition_get_is_container (data->partition))
+  self->current_size = udisks_partition_get_size (self->partition);
+
+  self->min_size = 1;
+  if (self->partition != NULL && udisks_partition_get_is_container (self->partition))
     {
-      data->min_size = gdu_utils_calc_space_to_shrink_extended (data->client, data->table, data->partition);
+      self->min_size = gdu_utils_calc_space_to_shrink_extended (self->client,
+                                                                self->table,
+                                                                self->partition);
     }
 
-  if (data->filesystem != NULL)
+  self->max_size = self->partition == NULL
+                       ? self->current_size
+                       : gdu_utils_calc_space_to_grow (self->client,
+                                                       self->table,
+                                                       self->partition);
+
+  if (self->filesystem != NULL)
     {
       gboolean available;
 
-      available = gdu_utils_can_resize (data->client, udisks_block_get_id_type (data->block), FALSE,
-                                        &data->support, NULL);
+      available = gdu_utils_can_resize (self->client,
+                                        udisks_block_get_id_type (self->block),
+                                        FALSE, &self->support, NULL);
       g_assert (available);
-    }
 
-  data->max_size = data->current_size;
-  if (data->partition != NULL)
-    {
-      data->max_size = gdu_utils_calc_space_to_grow (data->client, data->table, data->partition);
-    }
-
-  resize_dialog_populate (data);
-  resize_dialog_update (data);
-
-  if (data->filesystem == NULL)
-    {
-      gtk_spinner_stop (GTK_SPINNER (data->spinner));
-      gtk_stack_set_visible_child (GTK_STACK (data->size_stack), data->resize_number_grid);
-      gtk_widget_set_visible (data->explanation_label, FALSE);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (data->apply, FALSE);
-      if (calc_usage (data) == G_SOURCE_CONTINUE)
+      if (calculate_usage (self) == G_SOURCE_CONTINUE)
         {
-          data->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calc_usage, data);
+          self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calculate_usage, self);
         }
     }
 
-  g_object_bind_property_full (data->size_adjustment,
-                               "value",
-                               data->free_following_adjustment,
-                               "value",
-                               G_BINDING_BIDIRECTIONAL,
-                               free_size_binding_func,
-                               free_size_binding_func,
-                               data,
-                               NULL);
-  g_object_bind_property_full (data->size_adjustment,
-                               "value",
-                               data->difference_adjustment,
-                               "value",
-                               G_BINDING_BIDIRECTIONAL,
-                               difference_binding_func,
-                               difference_binding_func_back,
-                               data,
-                               NULL);
+  set_unit_num (self, gdu_utils_get_default_unit (self->current_size));
 
-  set_unit_num (data, data->cur_unit_num);
+  mount_points = self->filesystem != NULL
+                     ? udisks_filesystem_get_mount_points (self->filesystem)
+                     : NULL;
 
-  if (data->filesystem != NULL)
-    mount_points = udisks_filesystem_get_mount_points (data->filesystem);
-
-  if (data->filesystem != NULL && g_strv_length ((gchar **) mount_points) == 0)
+  if (self->filesystem != NULL && g_strv_length ((gchar **)mount_points) == 0)
     {
       /* mount FS to aquire fill level */
-      data->mount_cancellable = g_cancellable_new ();
-      udisks_filesystem_call_mount (data->filesystem,
+      self->mount_cancellable = g_cancellable_new ();
+      udisks_filesystem_call_mount (self->filesystem,
                                     g_variant_new ("a{sv}", NULL), /* options */
-                                    data->mount_cancellable,
-                                    (GAsyncReadyCallback) resize_get_usage_mount_cb,
-                                    resize_dialog_data_ref (data));
+                                    self->mount_cancellable,
+                                    resize_get_usage_mount_cb, self);
     }
 
-  // if (gtk_dialog_run (GTK_DIALOG (data->dialog)) == GTK_RESPONSE_APPLY)
-  if (FALSE)
-    {
-      gtk_widget_set_visible (data->dialog, FALSE);
-      g_clear_pointer (&data->dialog, gtk_window_close);
+  gdu_resize_volume_dialog_update (self);
 
-      if (data->filesystem != NULL)
-        {
-          gboolean offline_shrink;
-
-          mount_points = udisks_filesystem_get_mount_points (data->filesystem);
-          /* prevent the case of mounting when directly unmount would follow */
-          offline_shrink = !(data->support & ONLINE_SHRINK) && is_shrinking (data);
-
-          if (g_strv_length ((gchar **) mount_points) == 0 && !offline_shrink)
-            {
-              /* FS was unmounted by the user while the dialog stayed open */
-              udisks_filesystem_call_mount (data->filesystem,
-                                            g_variant_new ("a{sv}", NULL), NULL,
-                                            (GAsyncReadyCallback) mount_cb, data);
-            }
-          else
-            {
-              resize (data);
-            }
-        }
-      else
-        {
-          /* no filesystem present, just resize partition */
-          udisks_partition_call_resize (data->partition, get_size (data),
-                                        g_variant_new ("a{sv}", NULL), NULL,
-                                        (GAsyncReadyCallback) part_resize_cb, data);
-        }
-    }
-  else
-    {
-      /* close dialog now, does not need to be closed anymore through the mount error handler */
-      if (data->running_id)
-        {
-          g_source_remove (data->running_id);
-          data->running_id = 0;
-        }
-
-      gtk_widget_set_visible (data->dialog, FALSE);
-      g_clear_pointer (&data->dialog, gtk_window_close);
-      if (data->mount_cancellable)
-        g_cancellable_cancel (data->mount_cancellable);
-
-      resize_dialog_data_unref (data);
-    }
+  gtk_window_present (GTK_WINDOW (self));
 }
-

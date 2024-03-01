@@ -6,18 +6,18 @@
  * Author: Kai Lüke <kailueke@riseup.net>
  */
 
-#ifndef __GDU_RESIZE_DIALOG_H_H__
-#define __GDU_RESIZE_DIALOG_H_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
+#define GDU_TYPE_RESIZE_VOLUME_DIALOG (gdu_resize_volume_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, GDU, RESIZE_VOLUME_DIALOG, AdwWindow)
+
 void gdu_resize_dialog_show (GtkWindow    *parent_window,
                              UDisksObject *object,
                              UDisksClient *client);
 
 G_END_DECLS
-
-#endif /* __GDU_RESIZE_DIALOG_H__ */

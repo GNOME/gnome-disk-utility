@@ -261,7 +261,8 @@ gdu_block_get_features (GduItem *item)
         {
           features |= GDU_FEATURE_FORMAT;
         }
-      else if (self->partition != NULL)
+
+      if (self->partition != NULL)
         {
           features |= GDU_FEATURE_DELETE_PARTITION;
           features |= GDU_FEATURE_EDIT_PARTITION;

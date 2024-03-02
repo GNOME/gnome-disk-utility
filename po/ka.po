@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-02-12 13:40+0000\n"
-"PO-Revision-Date: 2024-02-13 09:59+0100\n"
+"POT-Creation-Date: 2024-02-13 09:01+0000\n"
+"PO-Revision-Date: 2024-03-02 09:46+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -514,6 +514,11 @@ msgid ""
 "decreased and the sector is not remapped. Read errors on the sector will not "
 "remap the sector, it will only be remapped on a failed write attempt"
 msgstr ""
+"თავიდან ასახვის მომლოდინე სექტორების რაოდენობა. თუ სექტორი, რომელიც ასახვას "
+"ელოდება, საბოლოოდ წარმატებით წაიკითხება და ჩაიწერება, ეს მნიშვნელობა "
+"შემცირდება და სექტორის ასახვა არ ხდება. სექტორის წაკითხვის შეცდომა სექტორის "
+"თავიდან ასახვას არ მოახდენს. ეს, მხოლოდ, ჩავარდნილი ჩაწერის მცდელობის შემდეგ "
+"მოხდება"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -528,6 +533,9 @@ msgid ""
 "rise in the value of this attribute indicates defects of the disk surface "
 "and/or problems in the mechanical subsystem"
 msgstr ""
+"შეუსწრორებადი შეცდომების სრული რაოდენობა სექტორის ჩაწერა/წაკითხვისას. ამ "
+"ატრიბუტის მნიშვნელობის გაზრდა დისკის ზედაპირზე ან/და მექანიკურ "
+"ქვესისტემასთან პრობლემებზე მიუთითებს"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -552,6 +560,8 @@ msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
+"დისკზე ჩაწერის შეცდომების რაოდენობა (ან) მრავალზონიანი შეცდომის სიხშირე (ან) "
+"ფრენის სიმაღლე"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -608,7 +618,7 @@ msgstr "გადახურებები"
 
 #: src/disks/gduatasmartdialog.c:400
 msgid "Number of Thermal Asperity Rate errors"
-msgstr ""
+msgstr "თერმული გადახურების გამო შეცდომების სიხშირის რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -641,7 +651,7 @@ msgstr "დატრიალების მცდელობები"
 
 #: src/disks/gduatasmartdialog.c:424
 msgid "Number of buzz routines to spin up the drive"
-msgstr ""
+msgstr "დისკის დაბზრიალების მცდელობების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -666,11 +676,15 @@ msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
+"დისკის წანაცვლება შესაძლებელია ძლიერი დარტყმის, ვარდნის ან გადახურება/"
+"გადაციების გამო"
 
 #: src/disks/gduatasmartdialog.c:449
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
+"შოკის სენსორის მიერ დადგენილი დარტყმის დატვირთვის შედეგად მიღებული "
+"შეცდომების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -681,7 +695,7 @@ msgstr "თავაკების მუშაობის რაოდენ�
 
 #: src/disks/gduatasmartdialog.c:457
 msgid "Number of hours in general operational state"
-msgstr ""
+msgstr "საათების რაოდენობა ზოგად მუშა მდგომარეობაში"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -695,6 +709,8 @@ msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
 msgstr ""
+"დისკზე დატვირთვა, გამოწვეული სხვადასხვა ოპერაციებით, როგორებიცაა წაკითხვა, "
+"ჩაწერა, თავაკის მდებარეობის შეცვლა და ა.შ"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -706,6 +722,7 @@ msgstr "ჩატვირთვა ხახუნით"
 #: src/disks/gduatasmartdialog.c:474
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr ""
+"მატარებლის მექანიკური ნაწილების ხახუნის გამო გამოწვეული დატვირთვა დისკზე"
 
 #: src/disks/gduatasmartdialog.c:482
 msgid "Total number of load cycles"
@@ -731,7 +748,7 @@ msgstr "მომენტის კომპენსირების მც�
 
 #: src/disks/gduatasmartdialog.c:498
 msgid "Quantity efforts of the rotating moment of a drive"
-msgstr ""
+msgstr "დისკის ტრიალის მომენტის მცდელობების რაოდენობა"
 
 #: src/disks/gduatasmartdialog.c:506
 msgid "Number of power-off retract events"
@@ -1333,6 +1350,10 @@ msgid ""
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
 msgstr ""
+"ფაილური სისტემის შეკეთება ყოველთვის შესაძლებელი არაა და შეიძლება, "
+"მონაცემების კარგვა გამოიწვიოს. სჯობს, ჯერ გააკეთოთ მარქაფი, შემდეგ კი "
+"გამოიყენოთ პროგრამები, რომლებიც აღდგენას შეეცდებიან. ოპერაციამ, შეიძლება, "
+"ძალიან დიდი დრო წაიღოს. განსაკუთრებით, თუ დანაყოფი ბევრ მონაცემებს შეიცავდა."
 
 #: src/disks/gdu-block-row.c:568
 msgid "Error while taking filesystem ownership"
@@ -1367,6 +1388,8 @@ msgid ""
 "Changing the passphrase for this device, will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
+"ამ მოწყობილობისთვის საკვანძო ფრაზის შეცვლა ასვე განაახლებს საკვანძო ფრაზის "
+"მიმართვას <i>/etc/crypttab</i> ფაილში"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
@@ -1886,21 +1909,27 @@ msgstr "ცარიელი"
 #, c-format
 msgid "Matches partition %u of the device with the given vital product data"
 msgstr ""
+"ემთხვევა დანაყოფს %u მოწყობილობაზე მითითებული ძირითადი პროდუქტის მონაცემებით"
 
 #: src/disks/gdufstabdialog.c:157
 msgid "Matches the whole disk of the device with the given vital product data"
 msgstr ""
+"ემთხვევა მთლიან დისკს მოწყობილობისა მითითებული ძირითადი პროდუქტის მონაცემებით"
 
 #: src/disks/gdufstabdialog.c:162
 #, c-format
 msgid ""
 "Matches partition %u of any device connected at the given port or address"
 msgstr ""
+"ემთხვევა დანაყოფს %u ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ პორტზე "
+"ან მისამართზეა მიერთებული"
 
 #: src/disks/gdufstabdialog.c:165
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
+"ემთხვევა სრულ დისკს ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ პორტზე ან "
+"მისამართზეა მიერთებული"
 
 #: src/disks/gdufstabdialog.c:169
 msgid "Matches any device with the given label"
@@ -1988,6 +2017,9 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
+"ალამი გამოიყენება პლატფორმის ჩამტვირთავის მიერ, რომ განსაზღვროს, საიდან "
+"ჩატვირთოს ოს-ი. ხანდახან, დანაყოფი ამ ალმით როგოც <i>აქტიური</i> დანაყოფი "
+"მოიხსენიება"
 
 #: src/disks/gdupasswordstrengthwidget.c:98
 msgctxt "Password strength"
@@ -2321,6 +2353,8 @@ msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr ""
+"მაგალითების რაოდენობა. დიდი რიცხვები უფრო გლუვ კრაფიკებს მოგცემთ, მაგრამ "
+"უფრო მეტი დროც დასჭირდება."
 
 #: src/disks/ui/benchmark-dialog.ui:413
 msgid ""
@@ -2328,6 +2362,8 @@ msgid ""
 "sizes tend to produce more accurate benchmarks at the cost of the benchmark "
 "taking more time."
 msgstr ""
+"მეგაბიტების (1048576 ბაიტი) რაოდენობა თითოეულ მაგალითში. დიდი მაგალითის "
+"ზომები უფრო ზუსტ ტესტირების შედეგებს მოგცემთ, მისი დროის გაზრდის ხარჯზე."
 
 #: src/disks/ui/benchmark-dialog.ui:442
 msgid "Access Time"
@@ -2342,6 +2378,8 @@ msgid ""
 "Number of samples. Bigger number produces a more accurate picture of access "
 "time patterns but takes more time."
 msgstr ""
+"მაგალითების რაოდენობა. დიდი რაოდენობა უფრო ზუსტ სურათს მოგცემთ წვდომის დროის "
+"ნიმუშების შესახებ, მაგრამ, უფრო მეტი დრო დასჭირდება."
 
 #: src/disks/ui/change-passphrase-dialog.ui:6
 msgid "Change Passphrase"
@@ -2460,6 +2498,8 @@ msgid ""
 "The name to use for the filesystem. This is useful if you want to refer to "
 "the device via a symlink in the /dev/disk/by-label directory."
 msgstr ""
+"სახელი ფაილური სისტემისთვის. ეს სასარგებლოა, თუ გნებავთ, მოწყობლობას "
+"სიმბმულით მიმართოთ /dev/disk/by-label საქაღალდიდან."
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
@@ -2501,6 +2541,9 @@ msgid ""
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
 msgstr ""
+"იმ შემთხვევაში, თუ ნაგულისხმევი პარამეტრები თქვენს მოთხოვნებს არ "
+"აკმაყოფილებს, აირჩიეთ ერთ-ერთი ფაილური სისტემა. გაითვალისწინეთ, რომ წინ "
+"ტექნიკური სიძნელეები გელით და მოკვლევა თვითონ მოგიწევთ."
 
 #: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
@@ -2582,6 +2625,8 @@ msgid ""
 "Data stored in the volume will only be accessible with the correct password. "
 "Be careful not to forget it."
 msgstr ""
+"ტომში დამახსოვრებული მონაცემები, მხოლოდ, სწორი პაროლის შემთხვევაში იქნება "
+"წვდომადი. ფრთხილად, არ დაგავიწყდეთ ის."
 
 #: src/disks/ui/create-password-page.ui:34
 msgid "_Password"
@@ -2616,6 +2661,8 @@ msgid ""
 "Turn on to configure Standby Timeout at startup and when the disk is "
 "connected"
 msgstr ""
+"ჩართეთ, რომ მოირგოთ უქმეობის მოლოდინის დრო გაშვებისას და როცა დისკი "
+"მიერთებულია"
 
 #: src/disks/ui/disk-settings-dialog.ui:104
 msgid "Enter Standby After"
@@ -2642,6 +2689,9 @@ msgid ""
 "Aggressive spin-down may wear out the drive faster than anticipated. Please "
 "check the “Start/Stop Count” SMART attribute from time to time"
 msgstr ""
+"აგრესიულმა გამორთვამ, შეიძლება, დისკის მოსალოდნელზე უფრო სწრაფი ცვეთა "
+"გამოიწვიოს. ხანდახან შეამოწმეთ \"გაშვება/გაჩერების რაოდენობის\" SMART "
+"ატრიბუტი"
 
 #: src/disks/ui/disk-settings-dialog.ui:308
 msgid "A_PM"
@@ -2696,6 +2746,8 @@ msgid ""
 "Performance is increased by enabling write caching, but leaves the system "
 "susceptible to data loss in the event of a power failure"
 msgstr ""
+"წარმადობა იზრდება ჩაწერის დაკეშვის ჩართვით, მაგრამ სისტემა უფრო მოწყვლადია "
+"მონაცემების კარგვისთვის კვების გათიშვის შემთხვევაში"
 
 #: src/disks/ui/disk-settings-dialog.ui:622
 msgid "Wr_ite Cache"
@@ -2925,6 +2977,8 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
+"მოწყობილობის საკვანძო ფრაზა ან ცარიელი, რომ ის მომხმარებელს მოვთხოვოთ "
+"მოწყობილობის მორგებისას"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:186
 #: src/disks/ui/unlock-device-dialog.ui:78
@@ -2977,6 +3031,8 @@ msgid ""
 "The special device file — use symlinks in the /dev/disk hierarchy to control "
 "the scope of the entry"
 msgstr ""
+"სპეციალური მოწყობილობის ფაილი — სიმბმულების გამოყენება /dev/disk იერარქიაში "
+"ან ჩანაწერის შუალედის საკონტროლოდ"
 
 #: src/disks/ui/edit-fstab-dialog.ui:121
 msgid "Mount _Point"
@@ -3002,6 +3058,8 @@ msgstr "საჩვენებელი _სახელი"
 msgid ""
 "If set, the name to use for the device in the user interface [x-gvfs-name=]"
 msgstr ""
+"თუ დაყენებულია, ეს არის სახელი, რომელიც გამოყენებული იქნება ამ "
+"მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-name=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:235
 msgid "Icon Na_me"
@@ -3012,6 +3070,8 @@ msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
+"თუ დაყენებულია, ეს არის ხატულა, რომელიც გამოყენებული იქნება ამ "
+"მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:268
 msgid "Sho_w in user interface"
@@ -3022,6 +3082,8 @@ msgid ""
 "If checked, the device is always shown in the user interface no matter what "
 "its directory is [x-gvfs-show]"
 msgstr ""
+"თუ ჩართულია, მოწყობილობა ყოველთვის ნაჩვენებია მომხმარებლის ინტერფეისში "
+"იმისგან დამოუკიდებლად, რომელი საქაღალდეა [x-gvfs-show]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:288
 msgid "Require additional authori_zation to mount"
@@ -3032,6 +3094,8 @@ msgid ""
 "If checked, additional authorization is required to mount the device [x-"
 "udisks-auth]"
 msgstr ""
+"თუ ჩართულია, დისკის მისამაგრებლად დამატებითი ავტორიზაცია იქნება საჭირო [x-"
+"udisks-auth]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:308
 msgid "Mount at system _startup"
@@ -3040,6 +3104,7 @@ msgstr "_მიმაგრება სისტემის გაშვებ
 #: src/disks/ui/edit-fstab-dialog.ui:313
 msgid "If checked, the device will be mounted at system startup [!noauto]"
 msgstr ""
+"თუ ჩართულია, მოწყობილობა მიმაგრებული იქნება სისტემის გაშვებისას [!noauto]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:330
 msgid "S_ymbolic Icon Name"
@@ -3050,6 +3115,8 @@ msgid ""
 "If set, the name of the symbolic icon to use in the device in the user "
 "interface [x-gvfs-symbolic-icon=]"
 msgstr ""
+"თუ დაყენებულია, ეს არის სიმბოლური ხატულის სახელი, რომელიც გამოყენებული "
+"იქნება ამ მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-symbolic-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:376
 msgid "Mount Opt_ions"
@@ -3098,6 +3165,8 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
+"უჩვენებს, რომ EFI მიკროკოდმა უნდა გამოტოვოს დანაყოფის შემცველობა და არ "
+"სცადოს, წაიკითხოს ის"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3234,6 +3303,12 @@ msgid ""
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
 msgstr ""
+"ფაილური სისტემის ზომის შეცვლამ, შეიძლება, მონაცემების კარგვამდე მიგიყვანოთ. "
+"სჯობს, ოპერაციამდე მარქაფი გააკეთოთ. ზომის შეცვლის ოპერაციას კიდევ უფრო მეტი "
+"დრო დასჭირდება, თუ მონაცემების დიდი რაოდენობის გადატანაა საჭირო. მინიმალური "
+"ზომა მიმდინარე შემცველობის ზომის მიხედვით გამოითვლება. დაიტოვეთ დამატებითი "
+"თავისუფალი ადგილი ფაილური სისტემისთვის, რომ მან უფრო სწრაფად და საიმედოდ "
+"იმუშაოს."
 
 #: src/disks/ui/resize-dialog.ui:189
 msgid "_Difference"
@@ -3383,7 +3458,7 @@ msgstr "თვითტესტის _გაჩერება"
 
 #: src/disks/ui/smart-dialog.ui:42
 msgid "Click to stop the SMART self-test currently in progress"
-msgstr ""
+msgstr "დააწკაპუნეთ ამჟამად გაშვებული SMART თვითტესტის გასაჩერებლად"
 
 #: src/disks/ui/smart-dialog.ui:51
 msgid "Close"
@@ -3396,6 +3471,7 @@ msgstr "განახლება"
 #: src/disks/ui/smart-dialog.ui:63
 msgid "Click to force re-reading SMART data from the hard disk"
 msgstr ""
+"დააწკაპუნეთ მყარი დისკიდან SMART მონაცემების ნაძალადევად თავიდან წასაკითხად"
 
 #: src/disks/ui/smart-dialog.ui:95
 msgid "Powered On"
@@ -3419,7 +3495,7 @@ msgstr "სრული შეფასება"
 
 #: src/disks/ui/smart-dialog.ui:270
 msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr ""
+msgstr "დააწკაპუნეთ, რომ გადართოთ, ჩართულია თუ არა SMART ამ მყარი დისკისთვის"
 
 #: src/disks/ui/smart-dialog.ui:281
 msgid "SMART _Attributes"
@@ -3435,7 +3511,7 @@ msgstr "_გაფართოებული"
 
 #: src/disks/ui/smart-dialog.ui:342
 msgid "_Conveyance"
-msgstr ""
+msgstr "_კონვეიერი"
 
 #: src/disks/ui/take-ownership-dialog.ui:4
 msgid "Confirm Taking Ownership"
@@ -3461,6 +3537,8 @@ msgstr "შეიყვანეთ განსაბლოკი საკვ�
 #: src/disks/ui/unlock-device-dialog.ui:31
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
+"ეს ტომი, შეიძლება, VeraCrypt-ის ტომია, რადგან ის შემთხვევით მონაცემებს "
+"შეიცავს."
 
 #: src/disks/ui/unlock-device-dialog.ui:62
 #: src/disks/ui/unlock-device-dialog.ui:160
@@ -3500,6 +3578,8 @@ msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr ""
+"თუ დაყენებულია, VeraCrypt PIM (პირადი იტერაციების მამრავლი) რიცხვის "
+"მნიშვნელობაა, ამ ტომისთვის."
 
 #: src/disks/ui/unlock-device-dialog.ui:174
 msgid "_Keyfiles"
@@ -3644,7 +3724,7 @@ msgstr "მოწყობილობის დაბლოკვის შე�
 
 #: src/libgdu/gduutils.c:1495
 msgid "Error disabling autoclear for loop device"
-msgstr ""
+msgstr "მარყუჟი მოწყობილობისთვის ავტოგასუფთავების გამორთვის შეცდომა"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:355

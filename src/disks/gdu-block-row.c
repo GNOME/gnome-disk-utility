@@ -716,7 +716,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   object_class->finalize = gdu_block_row_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "gdu-block-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_image);

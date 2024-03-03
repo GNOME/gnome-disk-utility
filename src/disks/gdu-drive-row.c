@@ -63,7 +63,7 @@ gdu_drive_row_class_init (GduDriveRowClass *klass)
   object_class->finalize = gdu_drive_row_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "gdu-drive-row.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduDriveRow, drive_image);

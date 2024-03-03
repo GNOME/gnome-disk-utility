@@ -123,7 +123,7 @@ gdu_create_other_page_class_init (GduCreateOtherPageClass *class)
   GObjectClass *gobject_class;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/Disks/ui/gdu-create-other-page.ui");
+                                               "/org/gnome/DiskUtility/ui/gdu-create-other-page.ui");
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateOtherPage, other_fs_box);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateOtherPage, other_encrypt_checkbutton);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateOtherPage, group_radio_button);

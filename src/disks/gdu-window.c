@@ -132,7 +132,7 @@ gdu_window_class_init (GduWindowClass *klass)
   object_class->finalize = gdu_window_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "gdu-window.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduWindow, main_leaflet);

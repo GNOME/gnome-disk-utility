@@ -416,7 +416,7 @@ gdu_create_format_dialog_class_init (GduCreateFormatDialogClass *klass)
   object_class->finalize = gdu_create_format_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "gdu-create-format.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduCreateFormatDialog, pages_stack);

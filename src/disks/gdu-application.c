@@ -460,6 +460,7 @@ gdu_application_new (void)
   return G_APPLICATION (g_object_new (GDU_TYPE_APPLICATION,
                                       "application-id", "org.gnome.DiskUtility",
                                       "flags", G_APPLICATION_HANDLES_COMMAND_LINE,
+                                      "resource-base-path", "/org/gnome/DiskUtility",
                                       NULL));
 }
 
@@ -486,7 +487,7 @@ gdu_application_new_widget (GduApplication  *application,
 
   builder = gtk_builder_new ();
 
-  path = g_strdup_printf ("/org/gnome/Disks/ui/%s", ui_file);
+  path = g_strdup_printf ("/org/gnome/DiskUtility/ui/%s", ui_file);
 
   error = NULL;
   if (gtk_builder_add_from_resource (builder, path, &error) == 0)

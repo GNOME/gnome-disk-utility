@@ -68,7 +68,7 @@ gdu_create_filesystem_page_class_init (GduCreateFilesystemPageClass *class)
   GObjectClass *gobject_class;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/Disks/ui/gdu-create-filesystem-page.ui");
+                                               "/org/gnome/DiskUtility/ui/gdu-create-filesystem-page.ui");
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, name_entry);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, erase_switch);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateFilesystemPage, internal_checkbutton);

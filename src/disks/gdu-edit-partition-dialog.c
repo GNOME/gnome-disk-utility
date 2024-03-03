@@ -201,7 +201,7 @@ gdu_partition_dialog_class_init (GduPartitionDialogClass *klass)
   object_class->finalize = gdu_partition_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "edit-partition-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduPartitionDialog, type_combobox);

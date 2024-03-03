@@ -84,7 +84,7 @@ gdu_create_partition_page_class_init (GduCreatePartitionPageClass *class)
   GObjectClass *gobject_class;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/Disks/ui/gdu-create-partition-page.ui");
+                                               "/org/gnome/DiskUtility/ui/gdu-create-partition-page.ui");
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePartitionPage, infobar_vbox);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePartitionPage, size_spinbutton);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreatePartitionPage, free_following_spinbutton);

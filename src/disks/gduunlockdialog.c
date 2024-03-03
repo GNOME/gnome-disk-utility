@@ -281,7 +281,7 @@ gdu_unlock_dialog_class_init (GduUnlockDialogClass *klass)
   object_class->finalize = gdu_unlock_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/Disks/ui/"
+                                               "/org/gnome/DiskUtility/ui/"
                                                "unlock-device-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, unknown_crypto_label);

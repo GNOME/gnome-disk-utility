@@ -70,7 +70,7 @@ gdu_create_confirm_page_class_init (GduCreateConfirmPageClass *class)
   GObjectClass *gobject_class;
 
   gtk_widget_class_set_template_from_resource (GTK_WIDGET_CLASS (class),
-                                               "/org/gnome/Disks/ui/gdu-create-confirm-page.ui");
+                                               "/org/gnome/DiskUtility/ui/gdu-create-confirm-page.ui");
   /* confirm page with information on current device usage */
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, device_name_label);
   gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (class), GduCreateConfirmPage, volume_name_label);

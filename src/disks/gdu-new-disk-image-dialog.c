@@ -52,18 +52,10 @@ struct _GduNewDiskImageDialog
   GtkAdjustment        *size_adjustment;
 
   UnitSizeIndices       size_type;
+  UDisksClient         *client;
 };
 
 G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, GTK_TYPE_DIALOG)
-
-static gpointer
-image_dialog_get_client (void)
-{
-  GduManager *manager;
-
-  manager = gdu_manager_get_default (NULL);
-  return gdu_manager_get_client (manager);
-}
 
 /* adapted from https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/3eccf2b5fec7200cb16c46dd5d047c083ac318f7/src/disks/gduwindow.c#L729 */
 static void
@@ -98,8 +90,7 @@ loop_setup_cb (UDisksManager  *manager,
       uri = g_strdup_printf ("file://%s", filename);
       gtk_recent_manager_add_item (gtk_recent_manager_get_default (), uri);
 
-      client = image_dialog_get_client ();
-      udisks_client_settle (client);
+      udisks_client_settle (self->client);
     }
 }
 
@@ -137,7 +128,7 @@ dialog_attach_disk_image_helper (GduNewDiskImageDialog *self,
   if (readonly)
     g_variant_builder_add (&options_builder, "{sv}", "read-only", g_variant_new_boolean (TRUE));
   fd_list = g_unix_fd_list_new_from_array (&fd, 1); /* adopts the fd */
-  udisks_manager_call_loop_setup (udisks_client_get_manager (image_dialog_get_client ()),
+  udisks_manager_call_loop_setup (udisks_client_get_manager (self->client),
                                   g_variant_new_handle (0),
                                   g_variant_builder_end (&options_builder),
                                   fd_list,
@@ -385,12 +376,15 @@ gdu_new_disk_image_dialog_new (void)
 }
 
 void
-gdu_new_disk_image_dialog_show (GduWindow *window)
+gdu_new_disk_image_dialog_show (UDisksClient *client, GduWindow *window)
 {
   GduNewDiskImageDialog *self;
 
   self = gdu_new_disk_image_dialog_new ();
   gtk_window_set_transient_for (GTK_WINDOW (self), GTK_WINDOW (window));
+
+  g_return_if_fail (client != NULL);
+  self->client = client;
 
   gtk_window_present (GTK_WINDOW (self));
 }

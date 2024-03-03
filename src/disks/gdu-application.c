@@ -273,7 +273,7 @@ new_disk_image_activated (GSimpleAction *action,
 {
   GduApplication *app = GDU_APPLICATION (user_data);
 
-  gdu_window_show_new_disk_image (app->window);
+  gdu_new_disk_image_dialog_show (app->client, GTK_WINDOW(app->window));
 }
 
 static void

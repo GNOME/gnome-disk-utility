@@ -26,6 +26,5 @@ G_DECLARE_FINAL_TYPE (GduWindow, gdu_window, GDU, WINDOW, AdwApplicationWindow)
 GduWindow   *gdu_window_new                        (GApplication    *application,
                                                     GduManager      *manager);
 void          gdu_window_show_attach_disk_image    (GduWindow      *self);
-void          gdu_window_show_new_disk_image       (GduWindow      *self);
 
 G_END_DECLS

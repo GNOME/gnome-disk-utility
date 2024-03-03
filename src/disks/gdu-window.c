@@ -184,16 +184,3 @@ gdu_window_show_attach_disk_image (GduWindow *self)
   gtk_window_present (GTK_WINDOW (self->loop_file_chooser));
 */
 }
-
-void
-gdu_window_show_new_disk_image (GduWindow *self)
-{
-  GtkWindow *dialog;
-
-  g_return_if_fail (GDU_IS_WINDOW (self));
-
-  dialog = g_object_new (GDU_TYPE_NEW_DISK_IMAGE_DIALOG, NULL);
-  gtk_window_set_transient_for (dialog, GTK_WINDOW (self));
-
-  gtk_window_present (dialog);
-}

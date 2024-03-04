@@ -9,7 +9,7 @@ Development location: https://gitlab.gnome.org/GNOME/gnome-disk-utility
 
 View, modify and configure disks and media
 
-Homepage: https://wiki.gnome.org/Apps/Disks
+Homepage: https://apps.gnome.org/DiskUtility/
 
 ## gnome-disk-image-mounter
 

@@ -1,210 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
-  <object class="GtkDialog" id="restore-disk-image-dialog">
-    <property name="width_request">500</property>
-    <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Restore Disk Image</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="dialog-vbox1">
-        <property name="margin_top">12</property>
-        <property name="margin_bottom">12</property>
-        <property name="margin_start">12</property>
-        <property name="margin_end">12</property>
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-        <child>
-          <object class="GtkBox" id="infobar-vbox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
+  <requires lib="gtk" version="4.0"/>
+  <template class="GduRestoreDiskImageDialog" parent="AdwWindow">
+    <property name="default-width">440</property>
+    <property name="default-height">258</property>
+    <property name="width-request">400</property>
+    <property name="modal">true</property>
+    <property name="title">Restore Disk Image</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">false</property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="true">Cancel</property>
+                <property name="action-name">window.close</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="start_restore_button">
+                <property name="label" translatable="true">Restore</property>
+                <property name="sensitive">false</property>
+                <signal name="clicked" handler="on_start_restore_button_clicked_cb" object="GduRestoreDiskImageDialog" swapped="true" />
+              </object>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox">
             <property name="orientation">vertical</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkGrid" id="grid1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="row_spacing">12</property>
-            <property name="column_spacing">12</property>
             <child>
-              <object class="GtkLabel" id="selectable-image-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Image to Restore</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">selectable-image-fcbutton</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
-              </packing>
+              <object class="AdwBanner" id="error_banner"></object>
             </child>
             <child>
-              <object class="GtkFileChooserButton" id="selectable-image-fcbutton">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="local_only">False</property>
-                <property name="title" translatable="yes">Select Disk Image to Restore</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
+              <object class="AdwBanner" id="warning_banner"></object>
             </child>
             <child>
-              <object class="GtkLabel" id="destination-key-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Destination</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="destination-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="xalign">0</property>
-                <property name="selectable">True</property>
-                <property name="ellipsize">middle</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="selectable-destination-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Destination</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">selectable-destination-combobox</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkComboBox" id="selectable-destination-combobox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="image-key-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Image to Restore</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="image-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="xalign">0</property>
-                <property name="selectable">True</property>
-                <property name="ellipsize">middle</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="image-size-key-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">Image Size</property>
-                <property name="use_underline">True</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="image-size-label">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="xalign">0</property>
-                <property name="selectable">True</property>
-                <property name="ellipsize">middle</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkButton" id="cancel-button">
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="use_underline">True</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="start-copying-button">
-                <property name="label" translatable="yes">_Start Restoring…</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
+              <object class="AdwPreferencesPage">
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="true">Image</property>
+                        <child type="suffix">
+                          <object class="GtkLabel" id="image_label">
+                            <property name="label" translatable="true">None Selected</property>
+                            <property name="wrap">true</property>
+                            <property name="ellipsize">end</property>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child type="suffix">
+                          <object class="GtkButton" id="file_chooser_button">
+                            <property name="icon-name">folder-open-symbolic</property>
+                            <property name="valign">center</property>
+                            <signal name="clicked" handler="on_file_chooser_button_clicked_cb" object="GduRestoreDiskImageDialog" swapped="true" />
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow">
+                        <property name="title" translatable="true">Image Size</property>
+                        <child type="suffix">
+                          <object class="GtkLabel" id="size_label">
+                            <property name="label">—</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="destination_row">
+                        <property name="title" translatable="true">Destination</property>
+                        <child type="suffix">
+                          <object class="GtkLabel" id="destination_label">
+                            <property name="wrap">true</property>
+                            <property name="ellipsize">end</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwComboRow">
+                        <property name="title" translatable="true">Destination</property>
+                        <property name="visible"
+                                  bind-source="destination_row"
+                                  bind-property="visible"
+                                  bind-flags="sync-create|invert-boolean"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
-    </child>
-    <action-widgets>
-      <action-widget response="-6">cancel-button</action-widget>
-      <action-widget response="-5">start-copying-button</action-widget>
-    </action-widgets>
-  </object>
+    </property>
+  </template>
 </interface>

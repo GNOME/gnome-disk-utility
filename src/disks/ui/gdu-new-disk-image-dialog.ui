@@ -73,10 +73,47 @@
                     <property name="adjustment">
                       <object class="GtkAdjustment">
                         <property name="upper">10000000000000</property>
-                        <property name="step-increment">0.1</property>
+                        <property name="step-increment">1</property>
                         <property name="page-increment">10</property>
                       </object>
                     </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="halign">end</property>
+                    <property name="spacing">6</property>
+                    <property name="margin-top">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="true">Units</property>
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkDropDown" id="size_unit_dropdown">
+                        <signal name="notify::selected" handler="on_size_unit_changed_cb" object="GduNewDiskImageDialog" swapped="true" />
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">bytes</item>
+                              <item translatable="yes">kB</item>
+                              <item translatable="yes">MB</item>
+                              <item translatable="yes">GB</item>
+                              <item translatable="yes">TB</item>
+                              <item translatable="yes">PB</item>
+                              <item translatable="yes">KiB</item>
+                              <item translatable="yes">MiB</item>
+                              <item translatable="yes">GiB</item>
+                              <item translatable="yes">TiB</item>
+                              <item translatable="yes">PiB</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

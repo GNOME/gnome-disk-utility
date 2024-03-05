@@ -38,10 +38,12 @@ struct _GduNewDiskImageDialog
   GtkWidget     *name_entry;
   GtkWidget     *location_entry;
   GtkWidget     *size_entry;
+  GtkWidget     *size_unit_dropdown;
 
   GFile         *directory;
 
   UDisksClient  *client;
+  gint           cur_unit_num;
 };
 
 G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_WINDOW)
@@ -151,8 +153,7 @@ create_new_disk (GduNewDiskImageDialog *self)
       return;
     }
 
-  /* 10e8 -> 1GB */
-  size = 10e8 * adw_spin_row_get_value (ADW_SPIN_ROW (self->size_entry));
+  size = adw_spin_row_get_value (ADW_SPIN_ROW (self->size_entry)) * unit_sizes[self->cur_unit_num];
 
   /* will result in a sparse file if supported */
   if (!g_seekable_truncate (G_SEEKABLE (out_file_stream), size, NULL, &error))
@@ -214,12 +215,19 @@ file_dialog_open_cb (GObject *source_object, GAsyncResult *res,
 static gboolean
 set_size_entry_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
 {
+  GduNewDiskImageDialog *self = GDU_NEW_DISK_IMAGE_DIALOG (user_data);
   GtkAdjustment *adjustment;
-  g_autofree char *unit = NULL;
+  GObject *object = NULL;
+  const char *unit = NULL;
+  g_autofree char *s = NULL;
 
   adjustment = adw_spin_row_get_adjustment (spin_row);
-  unit = g_strdup_printf ("%.2f GB", gtk_adjustment_get_value (adjustment));
-  gtk_editable_set_text (GTK_EDITABLE (spin_row), unit);
+
+  object = gtk_drop_down_get_selected_item (GTK_DROP_DOWN (self->size_unit_dropdown));
+  unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
+
+  s = g_strdup_printf ("%.2f %s", gtk_adjustment_get_value (adjustment), unit);
+  gtk_editable_set_text (GTK_EDITABLE (spin_row), s);
 
   return TRUE;
 }
@@ -352,6 +360,26 @@ new_disk_image_details_changed_cb (GduNewDiskImageDialog *self)
 }
 
 static void
+on_size_unit_changed_cb (GduNewDiskImageDialog *self)
+{
+  GtkAdjustment *adjustment;
+  gint unit_num;
+  gdouble value;
+  gdouble value_units;
+
+  unit_num = gtk_drop_down_get_selected (GTK_DROP_DOWN (self->size_unit_dropdown));
+  
+  adjustment = adw_spin_row_get_adjustment (ADW_SPIN_ROW (self->size_entry));
+  value = gtk_adjustment_get_value (adjustment) * ((gdouble) unit_sizes[self->cur_unit_num]);
+  value_units = value / unit_sizes[unit_num];
+
+  self->cur_unit_num = unit_num;
+
+  gtk_adjustment_set_value (adjustment, value_units);
+  set_size_entry_unit_cb (ADW_SPIN_ROW (self->size_entry), (void *)self);
+}
+
+static void
 gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
@@ -365,12 +393,14 @@ gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, name_entry);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, location_entry);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_entry);
+  gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_dropdown);
 
   gtk_widget_class_add_binding_action (widget_class,
                                        GDK_KEY_Escape, 0, "window.close",
                                        NULL);
 
   gtk_widget_class_bind_template_callback (widget_class, set_size_entry_unit_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_choose_folder_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_create_image_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, new_disk_image_details_changed_cb);
@@ -380,6 +410,9 @@ static void
 gdu_new_disk_image_dialog_init (GduNewDiskImageDialog *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  self->cur_unit_num = 3; /* GB */
+  gtk_drop_down_set_selected (GTK_DROP_DOWN (self->size_unit_dropdown), self->cur_unit_num);
 
   new_disk_image_set_default_name (self);
   new_disk_image_set_directory (self);

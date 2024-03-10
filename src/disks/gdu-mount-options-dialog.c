@@ -40,8 +40,9 @@ struct _GduMountOptionsDialog
 
   GtkWidget     *reset_settings_button;
 
-  UDisksObject  *object;
   UDisksClient  *client;
+  UDisksObject  *object;
+  UDisksBlock   *block;
   GListModel    *model;
   GVariant      *orig_fstab_entry;
 };
@@ -90,14 +91,13 @@ gdu_mount_options_dialog_is_swap (GduMountOptionsDialog *self)
 }
 
 static gboolean
-gdu_mount_options_dialog_is_removable (GduMountOptionsDialog *self,
-                                       UDisksBlock           *block)
+gdu_mount_options_dialog_is_removable (GduMountOptionsDialog *self)
 {
   g_autoptr(UDisksDrive) drive = NULL;
   g_autoptr(UDisksObject) drive_object = NULL;
 
   drive_object = (UDisksObject *) g_dbus_object_manager_get_object (udisks_client_get_object_manager (self->client),
-                                                                    udisks_block_get_drive (block));
+                                                                    udisks_block_get_drive (self->block));
   if (drive_object != NULL)
     {
       drive = udisks_object_peek_drive (drive_object);
@@ -107,15 +107,14 @@ gdu_mount_options_dialog_is_removable (GduMountOptionsDialog *self,
 }
 
 static GVariant *
-gdu_mount_options_dialog_get_fstab (GduMountOptionsDialog *self,
-                                    UDisksBlock           *block)
+gdu_mount_options_dialog_get_fstab (GduMountOptionsDialog *self)
 {
   GVariantIter iter;
   GVariant *configuration_dict;
   const gchar *configuration_type;
 
   /* there could be multiple fstab entries - we only consider the first one */
-  g_variant_iter_init (&iter, udisks_block_get_configuration (block));
+  g_variant_iter_init (&iter, udisks_block_get_configuration (self->block));
   while (g_variant_iter_next (&iter,
                               "(&s@a{sv})",
                               &configuration_type,
@@ -133,8 +132,7 @@ gdu_mount_options_dialog_get_fstab (GduMountOptionsDialog *self,
 }
 
 static void
-gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self,
-                                                    UDisksBlock            *block)
+gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self)
 {
   gchar *fstab_device = NULL;
   const gchar *item;
@@ -147,11 +145,11 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
   gint by_label = -1;
   gint selected = -1;
 
-  item = udisks_block_get_device (block);
+  item = udisks_block_get_device (self->block);
   gtk_string_list_append (GTK_STRING_LIST (self->model),
                           item);
 
-  symlinks = udisks_block_get_symlinks (block);
+  symlinks = udisks_block_get_symlinks (self->block);
   for (n = 0; symlinks != NULL && symlinks[n] != NULL; n++)
     {
       if (g_str_has_prefix (symlinks[n], "/dev/disk/by-uuid"))
@@ -167,14 +165,14 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
                               symlinks[n]);
     }
 
-  item = udisks_block_get_id_uuid (block);
+  item = udisks_block_get_id_uuid (self->block);
   if (item != NULL && strlen (item) > 0)
     {
       gtk_string_list_append (GTK_STRING_LIST (self->model),
                               g_strdup_printf ("UUID=%s", item));
     }
 
-  item = udisks_block_get_id_label (block);
+  item = udisks_block_get_id_label (self->block);
   if (item != NULL && strlen (item) > 0)
     {
       gtk_string_list_append (GTK_STRING_LIST (self->model),
@@ -204,7 +202,7 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
         {by_id, by_path, by_uuid, by_label},  /* for removable */
         {by_uuid, by_label, by_id, by_path}   /* for non-removable */
       };
-      is_removable = gdu_mount_options_dialog_is_removable(self, block) ? 0 : 1;
+      is_removable = gdu_mount_options_dialog_is_removable(self) ? 0 : 1;
 
       for (n = 0; n < G_N_ELEMENTS (order[is_removable]); n++)
         {
@@ -226,8 +224,7 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
 }
 
 static void
-gdu_mount_options_dialog_populate (GduMountOptionsDialog *self,
-                                   UDisksBlock           *block)
+gdu_mount_options_dialog_populate (GduMountOptionsDialog *self)
 {
   const gchar *mount_point;
   const gchar *filesystem;
@@ -245,7 +242,7 @@ gdu_mount_options_dialog_populate (GduMountOptionsDialog *self,
       filesystem = "auto";
       mount_options = "nosuid,nodev,nofail,x-gvfs-show";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
-      if (gdu_mount_options_dialog_is_removable (self, block))
+      if (gdu_mount_options_dialog_is_removable (self))
         {
           mount_options = "nosuid,nodev,nofail,noauto,x-gvfs-show";
         }
@@ -319,7 +316,6 @@ gdu_mount_options_dialog_show (GtkWindow    *parent_window,
                                UDisksClient *client)
 {
   GduMountOptionsDialog *self;
-  g_autoptr(UDisksBlock) block;
 
   self = g_object_new (GDU_TYPE_MOUNT_OPTIONS_DIALOG,
                        "transient-for", parent_window,
@@ -327,11 +323,10 @@ gdu_mount_options_dialog_show (GtkWindow    *parent_window,
 
   self->client = client;
   self->object = g_object_ref (object);
+  self->block = udisks_object_get_block (self->object);
+  g_assert (self->block != NULL);
 
-  block = udisks_object_peek_block (self->object);
-  g_assert (block != NULL);
-
-  self->orig_fstab_entry = gdu_mount_options_dialog_get_fstab (self, block);
+  self->orig_fstab_entry = gdu_mount_options_dialog_get_fstab (self);
 
   adw_switch_row_set_active (ADW_SWITCH_ROW (self->automount_switch_row), self->orig_fstab_entry == NULL);
 
@@ -344,9 +339,8 @@ gdu_mount_options_dialog_show (GtkWindow    *parent_window,
       gtk_widget_set_sensitive (self->symbolic_icon_row, FALSE);
     }
 
-  gdu_mount_options_dialog_populate (self, block);
-  gdu_mount_options_dialog_populate_device_combo_row (self, block);
+  gdu_mount_options_dialog_populate (self);
+  gdu_mount_options_dialog_populate_device_combo_row (self);
 
- 
   gtk_window_present (GTK_WINDOW (self));
 }

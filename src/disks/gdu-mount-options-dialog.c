@@ -84,6 +84,12 @@ check_if_system_mount (const gchar *dir)
   return FALSE;
 }
 
+static gpointer
+gdu_mount_options_dialog_get_window (GduMountOptionsDialog *self)
+{
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
+
 static gboolean
 gdu_mount_options_dialog_is_swap (GduMountOptionsDialog *self)
 {
@@ -129,6 +135,41 @@ gdu_mount_options_dialog_get_fstab (GduMountOptionsDialog *self)
     }
 
   return NULL;
+}
+
+static GVariant *
+gdu_mount_options_dialog_get_new_fstab (GduMountOptionsDialog *self)
+{
+  const gchar *fsname;
+  const gchar *mountpoint;
+  const gchar *fstype;
+  const gchar *mountopts;
+  gint freq = 0;
+  gint passno = 0;
+  GVariantBuilder variant_builder;
+  gint selected;
+
+  selected = adw_combo_row_get_selected (ADW_COMBO_ROW (self->device_combo_row));
+  fsname = gtk_string_list_get_string (GTK_STRING_LIST (self->model), selected);
+  mountpoint = gtk_editable_get_text (GTK_EDITABLE (self->mount_point_row));
+  fstype = gtk_editable_get_text (GTK_EDITABLE (self->filesystem_type_row));
+  mountopts = gtk_editable_get_text (GTK_EDITABLE (self->mount_options_row));
+
+  if (self->orig_fstab_entry != NULL)
+    {
+      g_variant_lookup (self->orig_fstab_entry, "freq", "i", &freq);
+      g_variant_lookup (self->orig_fstab_entry, "passno", "i", &passno);
+    }
+
+  g_variant_builder_init (&variant_builder, G_VARIANT_TYPE_VARDICT);
+  g_variant_builder_add (&variant_builder, "{sv}", "fsname", g_variant_new_bytestring (fsname));
+  g_variant_builder_add (&variant_builder, "{sv}", "dir", g_variant_new_bytestring (mountpoint));
+  g_variant_builder_add (&variant_builder, "{sv}", "type", g_variant_new_bytestring (fstype));
+  g_variant_builder_add (&variant_builder, "{sv}", "opts", g_variant_new_bytestring (mountopts));
+  g_variant_builder_add (&variant_builder, "{sv}", "freq", g_variant_new_int32 (freq));
+  g_variant_builder_add (&variant_builder, "{sv}", "passno", g_variant_new_int32 (passno));
+ 
+  return g_variant_new ("(sa{sv})", "fstab", &variant_builder);
 }
 
 static void
@@ -236,6 +277,12 @@ gdu_mount_options_dialog_populate (GduMountOptionsDialog *self)
       g_variant_lookup (self->orig_fstab_entry, "type", "^&ay", &filesystem);
       g_variant_lookup (self->orig_fstab_entry, "opts", "^&ay", &mount_options);
     }
+  else if (gdu_mount_options_dialog_is_swap (self))
+    {
+      mount_point = "none";
+      filesystem = "swap";
+      mount_options = "sw";
+    }
   else
     {
       mount_point = "";
@@ -248,18 +295,120 @@ gdu_mount_options_dialog_populate (GduMountOptionsDialog *self)
         }
     }
 
-  if (gdu_mount_options_dialog_is_swap (self))
-    {
-      mount_point = "none";
-      filesystem = "swap";
-      mount_options = "sw";
-    }
-
   gtk_editable_set_text (GTK_EDITABLE (self->mount_point_row), mount_point);
   gtk_editable_set_text (GTK_EDITABLE (self->mount_options_row), mount_options);
   gtk_editable_set_text (GTK_EDITABLE (self->filesystem_type_row), filesystem);
 
   adw_banner_set_revealed (ADW_BANNER (self->info_box), check_if_system_mount (mount_point));
+}
+
+static void
+on_update_configuration_item_cb (GObject      *source_object,
+                                 GAsyncResult *res,
+                                 gpointer      user_data)
+{
+  GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
+  UDisksBlock *block = UDISKS_BLOCK (source_object);
+  GError *error;
+
+  if (!udisks_block_call_update_configuration_item_finish(block, res, &error))
+    {
+      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+          return;
+
+      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                            _("Error updating /etc/fstab entry"),
+                            error);
+    }
+}
+
+static void
+on_add_configuration_item_cb (GObject      *source_object,
+                              GAsyncResult *res,
+                              gpointer      user_data)
+{
+  GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
+  UDisksBlock *block = UDISKS_BLOCK (source_object);
+  GError *error;
+
+  if (!udisks_block_call_add_configuration_item_finish(block, res, &error))
+    {
+      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+          return;
+
+      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                            _("Error adding new /etc/fstab entry"),
+                            error);
+
+    }
+}
+
+static void
+on_remove_configuration_item_cb (GObject      *source_object,
+                                 GAsyncResult *res,
+                                 gpointer      user_data)
+{
+  GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
+  UDisksBlock *block = UDISKS_BLOCK (source_object);
+  GError *error;
+
+  if (!udisks_block_call_remove_configuration_item_finish(block, res, &error))
+    {
+      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+          return;
+
+      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                            _("Error removing old /etc/fstab entry"),
+                            error);
+    }
+}
+
+static void
+on_done_clicked_cb (GduMountOptionsDialog *self)
+{
+  gboolean configured;
+  g_autoptr(GError) error = NULL;
+  g_autoptr(GVariant) old_fstab = NULL;
+  g_autoptr(GVariant) new_fstab = NULL;
+
+  configured = !adw_switch_row_get_active (ADW_SWITCH_ROW (self->automount_switch_row));
+
+  if (self->orig_fstab_entry != NULL && !configured)
+    {
+      udisks_block_call_remove_configuration_item(self->block,
+                                                  g_variant_new ("(s@a{sv})", "fstab", self->orig_fstab_entry),
+                                                  g_variant_new ("a{sv}", NULL), /* options */
+                                                  NULL, /* GCancellable */
+                                                  on_remove_configuration_item_cb,
+                                                  self);
+      gtk_window_close (GTK_WINDOW (self));
+      return;
+    }
+
+    new_fstab = gdu_mount_options_dialog_get_new_fstab (self);
+    if (self->orig_fstab_entry != NULL)
+      old_fstab = g_variant_new ("(s@a{sv})", "fstab", self->orig_fstab_entry);
+
+    if (old_fstab == NULL && new_fstab != NULL)
+      {
+        udisks_block_call_add_configuration_item(self->block,
+                                                 new_fstab,
+                                                 g_variant_new ("a{sv}", NULL), /* options */
+                                                 NULL, /* GCancellable */
+                                                 on_add_configuration_item_cb,
+                                                 self);
+        gtk_window_close (GTK_WINDOW (self));
+        return;
+      }
+    
+    udisks_block_call_update_configuration_item (self->block,
+                                                old_fstab,
+                                                new_fstab,
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* GCancellable */
+                                                on_update_configuration_item_cb,
+                                                self);
+    gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
@@ -298,6 +447,8 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, device_combo_row);
 
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, reset_settings_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_done_clicked_cb);
 }
 
 void

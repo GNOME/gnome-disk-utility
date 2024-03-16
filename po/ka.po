@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-03-09 20:10+0000\n"
-"PO-Revision-Date: 2024-03-11 22:09+0100\n"
+"POT-Creation-Date: 2024-03-15 20:15+0000\n"
+"PO-Revision-Date: 2024-03-16 04:49+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -1699,6 +1699,9 @@ msgid ""
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
+"<b>მინიშნება</b>: თუ აპირებთ, გადაამუშაოთ, გაყიდოთ ან გააჩუქოთ თქვენ ძველი "
+"კომპიუტერი ან დისკი, უნდა გამოიყენოთ უფრო გულმოდგინე წაშლის ტიპი, რომ თქვენი "
+"ინფორმაციის არასასურველ ხელებში ჩავარდნა აიცილოთ თავიდან"
 
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:124
@@ -1718,6 +1721,12 @@ msgid ""
 "href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
 "Erase</a> and make sure you understand the risks"
 msgstr ""
+"<b>გაფრთხილება</b>: უსაფრთხო წაშლის ბრძანებას ძალიან დიდი დრო შეიძლება, "
+"დასჭირდეს. მას ვერ გააუქმებთ და მან შეიძლება, ზოგიერთ აპარატურაზე არასწორად "
+"იმუშაოს. ყველაზე უარე შემთხვევაში, შეიძლება, დისკი გამოუყენებელი გახდეს, ან "
+"სისტემამ მუშაობა ავარიულად დაასრულოს ან გაიჭედოს. გაგრძელებამდე წაიკითხეთ "
+"სტატია <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA "
+"Secure Erase</a> და დარწმუნდით, რომ რისკები გაითავისეთ"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1877,6 +1886,8 @@ msgid ""
 "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
 "normally only used for GPT partitions on MBR systems"
 msgstr ""
+"ეს იგივეა, რაც Master Boot Record-ის <i>ჩატვირთვადი (bootable)</i> ალამი. "
+"ის, ჩვეულებრივ, MBR სისტემებზე GPT დანაყოფებზე გამოიყენება"
 
 #: src/disks/gdupartitiondialog.c:394
 msgid "The partition type as a 8-bit unsigned integer"
@@ -2518,6 +2529,10 @@ msgid ""
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
+"დატესტვა შეიცავს მოწყობლობის სხვადასხვა ადგილიდან მონაცემების მიმოცვლის "
+"სიჩქარეს და გაზომვას, რამდენ ხანის სჭირდება ერთი შემთხვევითი ადგილიდან "
+"მეორეზე გადახვევას. გააკეთეთ მნიშვნელოვანი მონაცემების მარქაფი, სანამ "
+"ჩაწერის ტესტირებას გაუშვებთ."
 
 #: src/disks/ui/benchmark-dialog.ui:328
 msgid "Transfer Rate"
@@ -2546,6 +2561,14 @@ msgid ""
 "other hand exclusive access to the device is not needed (e.g. the disk or "
 "device can be in use)."
 msgstr ""
+"დისკზე ჩაწერის ტესტირება დისკთან ექსკლუზიურ წვდომას მოითხოვს (მაგ: დისკ ან "
+"მისი დანაყოფები არ შეიძლება, მიმაგრებული იყოს, ან გამოიყენებოდეს) და "
+"მონაცემების წაკითხვას და მის უკან ჩაწერას შეიცავს. შედეგად, დისკის "
+"შემცველობა არ იცვლება.\n"
+"\n"
+"თუ ჩართული არაა, ტესტის ჩაწერის ნაწილი არ შესრულდება, მაგრამ სხვა მხრივ, "
+"მოწყობილობასთან ექსკლუზიური წვდომა საჭირო არაა (მაგ: დისკი ან მოწყობილობა "
+"შეიძლება, გამოიყენებოდეს)."
 
 #: src/disks/ui/benchmark-dialog.ui:398
 msgid ""
@@ -3132,6 +3155,9 @@ msgid ""
 "passphrase for the device. The options correspond to an entry in the <b>/etc/"
 "crypttab</b> file"
 msgstr ""
+"გამორთეთ <i>მომხმარებლის სესიის ნაგულიხმევი მნიშვნელობები</i>, რომ მართოთ "
+"დაშიფვრის პარამეტრები და საკვანძო ფრაზა მოწყობილობისთვის. პარამეტრები "
+"შეესაბამება ჩანაწერს ფაილში <b>/etc/crypttab</b>"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:68
 msgid "Opt_ions"
@@ -3167,6 +3193,8 @@ msgid ""
 "The name to use for the unlocked device — the device is set up as the name "
 "prefixed with <b>/dev/mapper</b>/"
 msgstr ""
+"განბლოკილი მოწყობილობისთვის გამოყენებული სახელი - მოწყობილობა გაეშვება "
+"სახელით, რომელსაც პრეფიქსად <b>/dev/mapper</b>/ აქვს მითითებული"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:157
 #: src/disks/ui/unlock-device-dialog.ui:46
@@ -3216,6 +3244,9 @@ msgid ""
 "options for the device. The options correspond to an entry in the <b>/etc/"
 "fstab</b> file"
 msgstr ""
+"გამორთეთ <i>მომხმარებლის სესიის ნაგულისხმევი მნიშვნელობები</i> რომ მართოთ "
+"მიმაგრების წერტილი და მიმაგრების პარამეტრები ამ მოწყობილობისთვის. "
+"პარამეტრები შეესაბამება ჩანაწერს ფაილში <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:71
 msgid "I_dentify As"
@@ -3226,6 +3257,8 @@ msgid ""
 "The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
 "hierarchy to control the scope of the entry"
 msgstr ""
+"<b>სპეციალური მოწყობილობის ფაილი</b> - იყენებს სიმბმულებს <b>/dev/disk</b> "
+"იერარქიაში, რომ ჩანაწერს შუალედი აკონტროლოს"
 
 #: src/disks/ui/edit-fstab-dialog.ui:91
 msgid ""
@@ -3341,6 +3374,9 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
+"დანაყოფის სახელი (36 უნიკოდის სიმბოლომდე). ეს სასარგებლოა თუ მოწყობილობას, "
+"გნებავთ, <b>/dev/disk/by-partlabel</b> საქაღალდეში არსებული სიმბმულით "
+"მიმართოთ"
 
 #: src/disks/ui/edit-partition-dialog.ui:80
 msgid "Flags"
@@ -3356,6 +3392,9 @@ msgid ""
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents"
 msgstr ""
+"გამოიყენება, რომ მიუთითოს, რომ დანაყოფი და მსი შემცველობა აუცილებელია ოს/"
+"პლატფორმის ფუნქციონირებისთვის. განსაკუთრებით ზრუნეთ, რომ არ წაშალოთ ან "
+"გადააწეროთ მათ შემცველობას"
 
 #: src/disks/ui/edit-partition-dialog.ui:120
 msgid "Hide from _Firmware"
@@ -3642,6 +3681,11 @@ msgid ""
 "structure where ownership should belong to different users (e.g., a system "
 "backup or a filesystem that is accessed by multiple users)."
 msgstr ""
+"შეცვლის ფაილური სისტემის მფლობლობას თქვენს მომხმარებელზე და ჯგუფზე. "
+"რეკურსიული რეჟიმი ქვესაქარალდეებსა და მათ ფაილებსაც შეცვლის. ამას, შეიძლება, "
+"დამანგრეველი შედეგები ჰქონდეს, თოცა ფაილური სისტემა შეიცავს საქაღალდეების "
+"სტრუქტურას, სადაც მფლობლები სხვადასხვა მომხმარებლებია (მაგ: სისტემური "
+"მარქაფის ან ფაილური სისტემა, რომელზეც წვდომა ბევრ მომხმარებელს აქვს.)."
 
 #: src/disks/ui/take-ownership-dialog.ui:13
 msgid "Enable _recursive mode"

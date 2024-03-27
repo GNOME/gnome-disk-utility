@@ -15,8 +15,6 @@
 
 #include "gdu-benchmark-dialog.h"
 
-/* ---------------------------------------------------------------------------------------------------- */
-
 typedef struct {
   guint64 offset;
   gdouble value;
@@ -28,15 +26,6 @@ typedef struct
   gdouble min;
   gdouble avg;
 } BMStats;
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-typedef enum {
-  BM_STATE_NONE,
-  BM_STATE_OPENING_DEVICE,
-  BM_STATE_TRANSFER_RATE,
-  BM_STATE_ACCESS_TIME,
-} BMState;
 
 struct _GduBenchmarkDialog
 {
@@ -61,24 +50,12 @@ struct _GduBenchmarkDialog
   GtkWidget     *write_rate_label;
   GtkWidget     *access_time_label;
 
-  /* ---- */
-
-  /* retrieved from preferences dialog */
-  gint           bm_num_samples;
-  gint           bm_sample_size_mib;
-  gboolean       bm_do_write;
-  gint           bm_num_access_samples;
-
   /* must hold bm_lock when reading/writing these */
   GCancellable  *bm_cancellable;
   gboolean       bm_in_progress;
-  BMState        bm_state;
-  GError        *bm_error; /* set by benchmark thread on termination */
   gboolean       bm_update_timeout_pending;
 
-  gint64         bm_time_benchmarked_usec; /* 0 if never benchmarked, otherwise micro-seconds since Epoch */
   guint64        bm_size;
-  guint64        bm_sample_size;
   GArray        *read_samples;
   GArray        *write_samples;
   GArray        *atime_samples;
@@ -92,10 +69,6 @@ struct _GduBenchmarkDialog
 G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_WINDOW)
 
 G_LOCK_DEFINE (bm_lock);
-
-static void update_dialog (GduBenchmarkDialog *self);
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static gpointer
 gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
@@ -216,24 +189,11 @@ format_stats (gdouble stat,
 static void
 update_dialog (GduBenchmarkDialog *self)
 {
-  g_autoptr(GError) error = NULL;
   GdkSurface *window = NULL;
   BMStats read_stats;
   BMStats write_stats;
   BMStats atime_stats;
   char *s = NULL;
-
-  G_LOCK (bm_lock);
-  if (self->bm_error != NULL)
-    {
-      error = self->bm_error;
-      self->bm_error = NULL;
-    }
-  G_UNLOCK (bm_lock);
-
-  /* present an error if something went wrong */
-  if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
-    gdu_utils_show_error (gdu_benchmark_dialog_get_window (self), "An error occurred", error);
 
   G_LOCK (bm_lock);
 
@@ -242,13 +202,6 @@ update_dialog (GduBenchmarkDialog *self)
   atime_stats = get_max_min_avg (self->atime_samples);
 
   G_UNLOCK (bm_lock);
-
-  if (self->bm_sample_size != 0)
-    {
-      s = g_format_size_full (self->bm_sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
-      gtk_label_set_markup (GTK_LABEL (self->sample_size_label), s);
-      g_free (s);
-    }
 
   if (read_stats.avg != 0.0)
     {
@@ -276,7 +229,6 @@ update_dialog (GduBenchmarkDialog *self)
   if (window != NULL)
     gdk_window_invalidate_rect (window, NULL, TRUE);
   */
-
 }
 
 /* called on main / UI thread */
@@ -307,270 +259,273 @@ bmt_schedule_update (GduBenchmarkDialog *self)
 }
 
 static gpointer
-benchmark_thread (gpointer user_data)
+end_benchmark (GduBenchmarkDialog *self,
+               GError             *error,
+               int                 fd,
+               guint               inhibit_cookie)
 {
-  GduBenchmarkDialog *self = user_data;
-  g_autoptr(GVariant) fd_index = NULL;
-  g_autoptr(GUnixFDList) fd_list = NULL;
-  g_autoptr(GError) error = NULL;
-  g_autoptr(GRand) rand = NULL;
-  g_autofree char *buffer_unaligned = NULL;
-  g_autofree char *buffer = NULL;
-  int fd = -1;
-  gint n;
-  long page_size;
-  guint64 disk_size;
-  GVariantBuilder options_builder;
-  guint inhibit_cookie;
+  if (fd != -1)
+    {
+      close (fd);
+    }
+  self->bm_in_progress = FALSE;
 
-  inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
-                                            self,
-                                            GTK_APPLICATION_INHIBIT_SUSPEND |
-                                            GTK_APPLICATION_INHIBIT_LOGOUT,
-                                            /* Translators: Reason why suspend/logout is being inhibited */
-                                            C_("create-inhibit-message", "Benchmarking device"));
+  if (inhibit_cookie != 0)
+    {
+      gtk_application_uninhibit ((gpointer) g_application_get_default (),
+                                 inhibit_cookie);
+    }
+
+  /* present an error if something went wrong */
+  if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
+    {
+      gdu_utils_show_error (gdu_benchmark_dialog_get_window (self),
+                            C_("benchmarking", "An error occurred"),
+                            error);
+    }
+
+  return NULL;
+}
+
+static GError *
+open_for_benchmark (GduBenchmarkDialog *self,
+                    int *fd)
+{
+  GVariantBuilder options_builder;
+  GError *error = NULL;
+  gboolean write_benchmark = 0;
+  g_autoptr (GVariant) fd_index = NULL;
+  g_autoptr (GUnixFDList) fd_list = NULL;
+
+  g_assert (fd != NULL);
+
+  write_benchmark = g_settings_get_boolean (self->settings, "do-write");
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-  g_variant_builder_add (&options_builder, "{sv}", "writable", g_variant_new_boolean (self->bm_do_write));
+  g_variant_builder_add (&options_builder, "{sv}", "writable",
+                         g_variant_new_boolean (write_benchmark));
 
   if (!udisks_block_call_open_for_benchmark_sync (self->block,
                                                   g_variant_builder_end (&options_builder),
                                                   NULL, /* fd_list */
-                                                  &fd_index,
-                                                  &fd_list,
-                                                  self->bm_cancellable,
-                                                  &error))
-    goto out;
-
-  fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
-
-  /* We can't use udisks_block_get_size() because the media may have
-   * changed and udisks may not have noticed. TODO: maybe have a
-   * Block.GetSize() method instead...
-   */
-  if (ioctl (fd, BLKGETSIZE64, &disk_size) != 0)
+                                                  &fd_index, &fd_list,
+                                                  self->bm_cancellable, &error))
     {
-      g_set_error (&error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   C_("benchmarking", "Error getting size of device: %m"));
-      goto out;
+      return error;
     }
 
-  page_size = sysconf (_SC_PAGESIZE);
-  if (page_size < 1)
-    {
-      g_set_error (&error,
-                   G_IO_ERROR,
-                   g_io_error_from_errno (errno),
-                   C_("benchmarking", "Error getting page size: %m\n"));
-      goto out;
-    }
+  *fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
 
-  buffer_unaligned = g_new0 (guchar, self->bm_sample_size_mib*1024*1024 + page_size);
-  buffer = (guchar*) (((gintptr) (buffer_unaligned + page_size)) & (~(page_size - 1)));
+  return NULL;
+}
 
-  /* transfer rate... */
-  G_LOCK (bm_lock);
-  self->bm_size = disk_size;
-  self->bm_sample_size = self->bm_sample_size_mib*1024*1024;
-  self->bm_state = BM_STATE_TRANSFER_RATE;
-  G_UNLOCK (bm_lock);
-  for (n = 0; n < self->bm_num_samples; n++)
+static GError *
+benchmark_transfer_rate (GduBenchmarkDialog *self,
+                         guchar *buffer,
+                         int fd,
+                         long page_size,
+                         guint64 disk_size)
+{
+  guint n;
+  guint num_samples = 0;
+  gint sample_size = 0;
+  gboolean write_benchmark = 0;
+  GError *error = NULL;
+
+  g_assert (fd != -1);
+  g_assert (buffer != NULL);
+
+  num_samples = (guint)g_settings_get_int (self->settings, "num-samples");
+  sample_size = g_settings_get_int (self->settings, "sample-size-mib");
+  sample_size = sample_size * 1024 * 1024;
+  write_benchmark = g_settings_get_boolean (self->settings, "do-write");
+
+  for (n = 0; n < num_samples; n++)
     {
-      gchar *s, *s2;
+      g_autofree char *s = NULL;
+      g_autofree char *s2 = NULL;
       gint64 begin_usec;
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      BMSample sample = {0};
+      BMSample sample = { 0 };
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
-        goto out;
+        return error;
 
       /* figure out offset and align to page-size */
-      offset = n * disk_size / self->bm_num_samples;
+      offset = n * disk_size / num_samples;
       offset &= ~(page_size - 1);
 
       if (lseek (fd, offset, SEEK_SET) != offset)
         {
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error seeking to offset %lld"),
-                       (long long int) offset);
-          goto out;
+          g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                       "Error seeking to offset %lld", (long long int)offset);
+          return error;
         }
+
       if (read (fd, buffer, page_size) != page_size)
         {
           s = g_format_size_full (page_size, G_FORMAT_SIZE_LONG_FORMAT);
           s2 = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error pre-reading %s from offset %s"),
-                       s, s2);
-          g_free (s2);
-          g_free (s);
-          goto out;
+          g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                       "Error pre-reading %s from offset %s", s, s2);
+          return error;
         }
+
       if (lseek (fd, offset, SEEK_SET) != offset)
         {
           s = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error seeking to offset %s"),
-                       s);
-          g_free (s);
-          goto out;
+          g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                       "Error seeking to offset %s", s);
+          return error;
         }
+
       begin_usec = g_get_monotonic_time ();
-      num_read = read (fd, buffer, self->bm_sample_size_mib*1024*1024);
+      num_read = read (fd, buffer, sample_size);
       if (G_UNLIKELY (num_read < 0))
         {
-          s = g_format_size_full (self->bm_sample_size_mib * 1024 * 1024, G_FORMAT_SIZE_LONG_FORMAT);
+          s = g_format_size_full (sample_size, G_FORMAT_SIZE_LONG_FORMAT);
           s2 = g_format_size_full (offset, G_FORMAT_SIZE_LONG_FORMAT);
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error reading %s from offset %s"),
-                       s, s2);
-          g_free (s2);
-          g_free (s);
-          goto out;
+          g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                       "Error reading %s from offset %s", s, s2);
+          return error;
         }
       end_usec = g_get_monotonic_time ();
 
       sample.offset = offset;
-      sample.value = ((gdouble) G_USEC_PER_SEC) * num_read / (end_usec - begin_usec);
+      sample.value = ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec);
+
       G_LOCK (bm_lock);
       g_array_append_val (self->read_samples, sample);
       G_UNLOCK (bm_lock);
 
-      bmt_schedule_update (self);
-
-      if (self->bm_do_write)
+      if (write_benchmark)
         {
           ssize_t num_written;
 
           /* and now write the same block again... */
           if (lseek (fd, offset, SEEK_SET) != offset)
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Error seeking to offset %lld"),
-                           (long long int) offset);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Error seeking to offset %lld",
+                           (long long int)offset);
+              return error;
             }
           if (read (fd, buffer, page_size) != page_size)
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Error pre-reading %lld bytes from offset %lld"),
-                           (long long int) page_size,
-                           (long long int) offset);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Error pre-reading %lld bytes from offset %lld",
+                           (long long int)page_size, (long long int)offset);
+              return error;
             }
           if (lseek (fd, offset, SEEK_SET) != offset)
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Error seeking to offset %lld"),
-                           (long long int) offset);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Error seeking to offset %lld",
+                           (long long int)offset);
+              return error;
             }
+
           begin_usec = g_get_monotonic_time ();
           num_written = write (fd, buffer, num_read);
           if (G_UNLIKELY (num_written < 0))
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Error writing %lld bytes at offset %lld: %m"),
-                           (long long int) num_read,
-                           (long long int) offset);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Error writing %lld bytes at offset %lld: %m",
+                           (long long int)num_read, (long long int)offset);
+              return error;
             }
+
           if (num_written != num_read)
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Expected to write %lld bytes, only wrote %lld: %m"),
-                           (long long int) num_read,
-                           (long long int) num_written);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Expected to write %lld bytes, only wrote %lld: %m",
+                           (long long int)num_read,
+                           (long long int)num_written);
+              return error;
             }
+
           if (fsync (fd) != 0)
             {
-              g_set_error (&error,
-                           G_IO_ERROR,
-                           g_io_error_from_errno (errno),
-                           C_("benchmarking", "Error syncing (at offset %lld): %m"),
-                           (long long int) offset);
-              goto out;
+              g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                           "Error syncing (at offset %lld): %m",
+                           (long long int)offset);
+              return error;
             }
           end_usec = g_get_monotonic_time ();
 
           sample.offset = offset;
-          sample.value = ((gdouble) G_USEC_PER_SEC) * num_written / (end_usec - begin_usec);
+          sample.value = ((gdouble)G_USEC_PER_SEC) * num_written
+                         / (end_usec - begin_usec);
+
           G_LOCK (bm_lock);
           g_array_append_val (self->write_samples, sample);
           G_UNLOCK (bm_lock);
-
-          bmt_schedule_update (self);
         }
+      bmt_schedule_update (self);
     }
 
-  /* access time... */
-  G_LOCK (bm_lock);
-  self->bm_state = BM_STATE_ACCESS_TIME;
-  G_UNLOCK (bm_lock);
+  return NULL;
+}
+
+static GError *
+benchmark_access_time (GduBenchmarkDialog *self,
+                       guchar *buffer,
+                       int fd,
+                       long page_size,
+                       guint64 disk_size)
+{
+  guint n;
+  GError *error = NULL;
+  guint num_access_samples = 0;
+  g_autoptr (GRand) rand = NULL;
+
+  g_assert (buffer != NULL);
+  g_assert (fd != -1);
+
+  num_access_samples = (guint) g_settings_get_int (self->settings, "num-access-samples");
   rand = g_rand_new_with_seed (42); /* want this to be deterministic (per size) so it's repeatable */
-  for (n = 0; n < self->bm_num_access_samples; n++)
+
+  for (n = 0; n < num_access_samples; n++)
     {
       gint64 begin_usec;
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      BMSample sample = {0};
+      BMSample sample = { 0 };
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
-        goto out;
+        {
+          return error;
+        }
 
-      offset = (guint64) g_rand_double_range (rand, 0, (gdouble) disk_size);
+      offset = (guint64)g_rand_double_range (rand, 0, (gdouble)disk_size);
       offset &= ~(page_size - 1);
 
       if (lseek (fd, offset, SEEK_SET) != offset)
         {
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error seeking to offset %lld: %m"),
-                       (long long int) offset);
-          goto out;
+          g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                       C_ ("benchmarking", "Error seeking to offset %lld: %m"),
+                       (long long int)offset);
+          return error;
         }
 
       begin_usec = g_get_monotonic_time ();
       num_read = read (fd, buffer, page_size);
       if (G_UNLIKELY (num_read < 0))
         {
-          g_set_error (&error,
-                       G_IO_ERROR,
-                       g_io_error_from_errno (errno),
-                       C_("benchmarking", "Error reading %lld bytes from offset %lld"),
-                       (long long int) page_size,
-                       (long long int) offset);
-          goto out;
+          g_set_error (
+              &error, G_IO_ERROR, g_io_error_from_errno (errno),
+              C_ ("benchmarking", "Error reading %lld bytes from offset %lld"),
+              (long long int)page_size, (long long int)offset);
+          return error;
         }
       end_usec = g_get_monotonic_time ();
 
       sample.offset = offset;
-      sample.value = (end_usec - begin_usec) / ((gdouble) G_USEC_PER_SEC);
+      sample.value = (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC);
+
       G_LOCK (bm_lock);
       g_array_append_val (self->atime_samples, sample);
       G_UNLOCK (bm_lock);
@@ -578,41 +533,80 @@ benchmark_thread (gpointer user_data)
       bmt_schedule_update (self);
     }
 
-  G_LOCK (bm_lock);
-  self->bm_time_benchmarked_usec = g_get_real_time ();
-  G_UNLOCK (bm_lock);
-
- out:
-  if (fd != -1)
-    close (fd);
-  self->bm_in_progress = FALSE;
-  self->bm_state = BM_STATE_NONE;
-
-  if (inhibit_cookie > 0)
-    {
-      gtk_application_uninhibit ((gpointer)g_application_get_default (), inhibit_cookie);
-    }
-
-  if (error != NULL)
-    {
-      G_LOCK (bm_lock);
-      self->bm_error = error;
-      g_array_set_size (self->read_samples, 0);
-      g_array_set_size (self->write_samples, 0);
-      g_array_set_size (self->atime_samples, 0);
-      self->bm_time_benchmarked_usec = 0;
-      self->bm_sample_size = 0;
-      self->bm_size = 0;
-      G_UNLOCK (bm_lock);
-    }
-
-  bmt_schedule_update (self);
-
   return NULL;
 }
 
+static gpointer
+benchmark_thread (gpointer user_data)
+{
+  GduBenchmarkDialog *self = user_data;
+  g_autoptr (GError) error = NULL;
+  guchar *buffer = NULL;
+  g_autofree guchar *buffer_unaligned = NULL;
+  int fd = -1;
+  long page_size;
+  guint64 disk_size;
+  guint inhibit_cookie;
+  gint sample_size_mib = 0;
+
+  sample_size_mib = g_settings_get_int (self->settings, "sample-size-mib");
+
+  inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
+                                            GTK_WINDOW (self),
+                                            GTK_APPLICATION_INHIBIT_SUSPEND |
+                                            GTK_APPLICATION_INHIBIT_LOGOUT,
+                                            /* Translators: Reason why suspend/logout is being inhibited */
+                                            "Benchmark in progress");
+
+  error = open_for_benchmark (self, &fd);
+  if (error != NULL)
+    {
+      return end_benchmark (self, error, fd, inhibit_cookie);
+    }
+
+  /* We can't use udisks_block_get_size() because the media may have
+   * changed and udisks may not have noticed. TODO: maybe have a
+   * Block.GetSize() method instead...
+   */
+  if (ioctl (fd, BLKGETSIZE64, &disk_size) != 0)
+    {
+      g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                   "Error getting size of device: %m");
+      return end_benchmark (self, error, fd, inhibit_cookie);
+    }
+
+  page_size = sysconf (_SC_PAGESIZE);
+  if (page_size < 1)
+    {
+      g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
+                   "Error getting page size: %m\n");
+      return end_benchmark (self, error, fd, inhibit_cookie);
+    }
+
+  buffer_unaligned = g_new0 (guchar, sample_size_mib * 1024 * 1024 + page_size);
+  buffer = (guchar *)(((gintptr)(buffer_unaligned + page_size)) & (~(page_size - 1)));
+
+  G_LOCK (bm_lock);
+  self->bm_size = disk_size;
+  G_UNLOCK (bm_lock);
+
+  error = benchmark_transfer_rate (self, buffer, fd, page_size, disk_size);
+  if (error != NULL)
+    {
+      return end_benchmark (self, error, fd, inhibit_cookie);
+    }
+
+  error = benchmark_access_time (self, buffer, fd, page_size, disk_size);
+  if (error != NULL)
+    {
+      return end_benchmark (self, error, fd, inhibit_cookie);
+    }
+
+  return end_benchmark (self, error, fd, inhibit_cookie);
+}
+
 static void
-abort_benchmark (GduBenchmarkDialog *self)
+cancel_benchmark (GduBenchmarkDialog *self)
 {
   g_cancellable_cancel (self->bm_cancellable);
 }
@@ -620,14 +614,22 @@ abort_benchmark (GduBenchmarkDialog *self)
 static void
 start_benchmark (GduBenchmarkDialog *self)
 {
+  gint sample_size = 0;
+  g_autofree char *s = NULL;
   self->bm_in_progress = TRUE;
-  self->bm_state = BM_STATE_OPENING_DEVICE;
-  g_clear_error (&self->bm_error);
   g_array_set_size (self->read_samples, 0);
   g_array_set_size (self->write_samples, 0);
   g_array_set_size (self->atime_samples, 0);
-  self->bm_time_benchmarked_usec = 0;
   g_cancellable_reset (self->bm_cancellable);
+
+  sample_size = g_settings_get_int (self->settings, "sample-size-mib");
+  sample_size = sample_size * 1024 * 1024;
+
+  if (sample_size != 0)
+  {
+    s = g_format_size_full (sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
+    gtk_label_set_markup (GTK_LABEL (self->sample_size_label), s);
+  }
 
   g_thread_new ("benchmark-thread",
                 benchmark_thread,
@@ -650,12 +652,15 @@ static void
 on_start_clicked_cb (GduBenchmarkDialog *self,
                      GtkButton          *button)
 {
+  gboolean write_benchmark;
+
   g_assert (!self->bm_in_progress);
-  g_assert_cmpint (self->bm_state, ==, BM_STATE_NONE);
 
   gdu_benchmark_dialog_save_options (self);
-
-  if (self->bm_do_write)
+  
+  write_benchmark = g_settings_get_boolean (self->settings, "do-write");
+  
+  if (write_benchmark)
     {
       /* ensure the device is unused (e.g. unmounted) before formatting it... */
       gdu_utils_ensure_unused (self->client,
@@ -669,8 +674,6 @@ on_start_clicked_cb (GduBenchmarkDialog *self,
     {
       start_benchmark (self);
     }
-
-  update_dialog (self);
 
   gtk_stack_set_visible_child_name (GTK_STACK (self->pages_stack), "results");
 }
@@ -760,8 +763,6 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
                            UDisksClient *client)
 {
   GduBenchmarkDialog *self;
-  guint timeout_id;
-  GError *error = NULL;
 
   self = g_object_new (GDU_TYPE_BENCHMARK_DIALOG,
                        "transient-for", parent_window,
@@ -770,12 +771,6 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
   self->block = udisks_object_peek_block (self->object);
   self->client = client;
 
-  /*
-  g_signal_connect (self->drawing_area,
-                    "draw",
-                    G_CALLBACK (on_drawing_area_draw),
-                    self);
-  */
   gdu_benchmark_dialog_set_title (self);
   gdu_benchmark_dialog_restore_options (self);
 
@@ -793,34 +788,6 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
     {
       adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), FALSE);
     }
-
-  // update_dialog (self);
-
-  // while (TRUE)
-  //   {
-  //     gint response;
-  //     // response = gtk_dialog_run (GTK_DIALOG (self->dialog));
-
-  //     if (response < 0)
-  //       break;
-
-  //     /* Keep in sync with .ui file */
-  //     switch (response)
-  //       {
-  //       case 0: /* start benchmark */
-  //         start_benchmark (self);
-  //         break;
-
-  //       case 1: /* abort benchmark */
-  //         abort_benchmark (self);
-  //         break;
-
-  //       default:
-  //         g_assert_not_reached ();
-  //       }
-  //   }
-
-  // g_source_remove (timeout_id);
 
   gtk_window_present (GTK_WINDOW (self));
 }

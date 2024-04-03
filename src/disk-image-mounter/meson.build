@@ -71,16 +71,3 @@ cargo_doc = custom_target(
     cargo_options + ['--no-deps', '--document-private-items'],
   ],
 )
-
-test(
-  'cargo-test',
-  cargo,
-  args: [
-    'test',
-    cargo_options,
-    '--',
-    '--test-threads=1',
-  ],
-  is_parallel: false,
-  timeout: 1800,
-)

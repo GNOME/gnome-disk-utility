@@ -3,6 +3,10 @@
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
+    "sdk-extensions": [
+        "org.freedesktop.Sdk.Extension.rust-stable",
+        "org.freedesktop.Sdk.Extension.llvm16"
+    ],
     "command" : "gnome-disks",
     "tags" : [
         "devel"
@@ -22,11 +26,15 @@
         "--env=G_ENABLE_DIAGNOSTIC=1"
     ],
     "build-options" : {
+        "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
         "cflags" : "-O2 -g -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED",
         "cxxflags" : "-O2 -g",
         "env" : {
             "V" : "1"
-        }
+        },
+        "build-args": [
+            "--share=network"
+        ]
     },
     "cleanup" : [
         "/include",

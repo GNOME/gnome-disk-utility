@@ -28,6 +28,13 @@ mod imp {
 
         fn open(&self, files: &[gio::File], _hint: &str) {
             for file in files {
+                if !file.query_exists(gio::Cancellable::NONE) {
+                    log::error!(
+                        "File {:?} does not exists",
+                        file.path().as_ref().map(|path| path.display())
+                    );
+                    continue;
+                }
                 let win = ImageMounterWindow::new(&self.obj(), file);
                 win.present();
             }
@@ -85,7 +92,6 @@ impl ImageMounterApplication {
 impl Default for ImageMounterApplication {
     fn default() -> Self {
         glib::Object::builder()
-            .property("resource-base-path", "/org/gnome/gnome-disk-utility/")
             .property("flags", gio::ApplicationFlags::HANDLES_OPEN)
             .build()
     }

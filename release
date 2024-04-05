@@ -70,10 +70,13 @@ else
   SEDARG=""
   PASS="grep -m 1 version"
 fi
+echo "Meson version:"
 sed ${SEDARG} -e "3,\$s/^  version: '${LAST_TAG}',\$/  version: '${ARG}',/" meson.build | ${PASS}
+echo "Appdata URLs:"
+sed ${SEDARG} -e "s,/raw/[^/]*,/raw/${BRANCH},g" data/org.gnome.DiskUtility.appdata.xml.in | grep "raw/"
 
 if [ "${DRY}" = "0" ]; then
-  git add NEWS meson.build
+  git add NEWS meson.build data/org.gnome.DiskUtility.appdata.xml.in
   git commit -m "Prepare ${ARG}"
   git tag -a -m "GNOME Disks ${ARG}" "${ARG}"
   rm -r builddir

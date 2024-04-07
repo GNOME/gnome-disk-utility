@@ -21,7 +21,7 @@ cargo_options = [ '--manifest-path', source_root / 'Cargo.toml' ]
 cargo_options += [ '--target-dir', build_root / 'src' ]
 cargo_options += [ '--bin', name ]
 
-if get_option('profile') == 'development'
+if get_option('profile') != 'release'
   rust_target = 'debug'
   message('Building in debug mode')
 else

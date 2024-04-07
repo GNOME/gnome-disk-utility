@@ -131,9 +131,9 @@ conf_rs.set_quoted('PKGDATADIR', iv_pkgdatadir)
 conf_rs.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
 # Pre-commit hook for rust formatting
-if get_option('profile') == 'development'
-  message('Setting up git pre-commit hook..')
-  run_command('cp', '-f', 'hooks/pre-commit.hook', '.git/hooks/pre-commit', check: false)
+if get_option('profile') != 'release'
+    message('Setting up git pre-commit hook..')
+    run_command('cp', '-f', 'hooks/pre-commit.hook', '.git/hooks/pre-commit', check: false)
 endif
 
 # *** gnome-settings-daemon plug-in ***

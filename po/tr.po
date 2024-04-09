@@ -10,17 +10,17 @@
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015, 2016.
 # Ahmet Elgun <ahmetelgn@gmail.com>, 2019.
 # Burhan KELEŞ <klsburhan@hotmail.com>, 2021.
-# Sabri Ünal <libreajans@gmail.com>, 2020, 2023.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2023.
+# Sabri Ünal <libreajans@gmail.com>, 2020, 2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2017-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2023-12-23 13:50+0000\n"
-"PO-Revision-Date: 2024-01-17 04:55+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2024-04-06 10:48+0000\n"
+"PO-Revision-Date: 2024-04-06 17:19+0300\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr "Her örnek için yazılacak/okunacak MiB (1048576 bytes) sayısı."
 
 #: data/org.gnome.Disks.gschema.xml:21
 msgid "To enable or disable the write test."
-msgstr "Yazım sınamasını etkinleştir ya da devre dışı bırak."
+msgstr "Yazım sınamasını etkinleştir veya devre dışı bırak."
 
 #: data/org.gnome.Disks.gschema.xml:25
 msgid "The number of samples the benchmark will do for the access time test."
@@ -102,7 +102,20 @@ msgstr ""
 "Diskler’i kullanarak; SMART verisini görebilir, aygıtları yönetebilir, "
 "fiziksel diskleri değerlendirebilir, USB bellekleri kopyalayabilirsiniz."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:46
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "Diskleri bölümle ve biçimlendir"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "Sürücü hızını ve sağlık durumunu incele"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "Depolama aygıtlarını yönet"
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.DiskUtility.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
@@ -145,7 +158,7 @@ msgstr "Bağlanacak Disk Görüntüsü Seç"
 #: src/disks/ui/restore-disk-image-dialog.ui:184
 #: src/disks/ui/unlock-device-dialog.ui:218
 msgid "_Cancel"
-msgstr "İ_ptal"
+msgstr "_Vazgeç"
 
 #: src/disk-image-mounter/main.c:92
 msgid "_Mount"
@@ -171,7 +184,7 @@ msgstr "Udisks art alan hizmetine bağlanmada hata: %s (%s, %d)"
 
 #: src/disk-image-mounter/main.c:150
 msgid "Attach and mount one or more disk image files."
-msgstr "Bir ya da daha çok disk görüntüsü ekle ve bağla."
+msgstr "Bir veya daha çok disk görüntüsü ekle ve bağla."
 
 #: src/disk-image-mounter/main.c:198
 #, c-format
@@ -190,7 +203,7 @@ msgstr "Disk görüntüsü eklemede hata: %s (%s, %d)"
 
 #: src/disks/gduapplication.c:93
 msgid "Stop running jobs?"
-msgstr "Çalışan işler durdurulsun mu?"
+msgstr "Çalışan işleri durdur?"
 
 #: src/disks/gduapplication.c:95
 msgid "Closing now stops the running jobs and leads to a corrupt result."
@@ -258,7 +271,7 @@ msgid ""
 "indicates a problem with either the disk surface or read/write heads"
 msgstr ""
 "Diskten ham veri okuma sırasındaki hata sıklığı. Sıfır olmayan bir değer "
-"disk yüzeyinde ya da okuma/yazma kafaları ile ilgili bir sorun olduğunu "
+"disk yüzeyinde veya okuma/yazma kafaları ile ilgili bir sorun olduğunu "
 "gösterir"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -453,7 +466,7 @@ msgstr "Kapanma Geri Çekilme Sayısı"
 
 #: src/disks/gduatasmartdialog.c:287
 msgid "Number of power-off or emergency retract cycles"
-msgstr "Kapanma ya da acil geri çekme döngüsü sayısı"
+msgstr "Kapanma veya acil geri çekme döngüsü sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -521,10 +534,10 @@ msgid ""
 "remap the sector, it will only be remapped on a failed write attempt"
 msgstr ""
 "Yeniden eşleşmeyi bekleyen sektörlerin sayısı. Eğer yeniden eşleşme beklenen "
-"sektör alt sıralı olarak yazılır ya da başarıyla okunursa, bu değer "
-"azaltılır ve bir sektör yeniden eşleşmiş olmaz. Sektördeki okuma hataları "
-"sektörü yeniden eşlemez, yalnızca bir yazma denemesi başarısız olduğunda "
-"yeniden eşleşmiş olacaktır"
+"sektör alt sıralı olarak yazılır veya başarıyla okunursa, bu değer azaltılır "
+"ve bir sektör yeniden eşleşmiş olmaz. Sektördeki okuma hataları sektörü "
+"yeniden eşlemez, yalnızca bir yazma denemesi başarısız olduğunda yeniden "
+"eşleşmiş olacaktır"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -591,8 +604,6 @@ msgstr "Veri Adresi İşaret Hataları"
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "Veri Adres İşaret (DAM) hataları sayısı (veya) üreticiye özgü"
 
-# Run Out Cancel S.M.A.R.T. parameter indicates that an invalid error correction checksum was found during error correction.
-# Kaynak: https://kb.acronis.com/content/9139?ckattempt=1
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
@@ -1656,8 +1667,9 @@ msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
 msgstr ""
-"Yalnızca <i>/etc/crypttab</i> dosyasınca başvurulan parola değiştirildi. "
-"Diskin parolasını değiştirmek için <i>Parola Değiştir…</i>’i kullanın"
+"Yalnızca <i>/etc/crypttab</i> dosyası tarafından başvurulan parola "
+"değiştirildi. Diskin parolasını değiştirmek için <i>Parola Değiştir…</i>’i "
+"kullanın"
 
 #: src/disks/gdudevicetreemodel.c:495
 msgid "(None)"
@@ -1824,10 +1836,9 @@ msgid ""
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
-"<b>İpucu</b>: Eğer eski bilgisayarınızı ya da diskinizi satmayı, geri "
-"dönüşüme ya da başkasına vermeyi düşünüyorsanız, kişisel verilerinizin "
-"yanlış ellere geçmesini engellemek için daha güvenli bir silme türü "
-"kullanmalısınız"
+"<b>İpucu</b>: Eğer eski bilgisayarınızı veya diskinizi satmayı, geri "
+"dönüşüme veya başkasına vermeyi düşünüyorsanız, kişisel verilerinizin yanlış "
+"ellere geçmesini engellemek için daha güvenli bir silme türü kullanmalısınız"
 
 #. Translators: warning used when overwriting data
 #: src/disks/gduformatdiskdialog.c:125
@@ -1962,7 +1973,7 @@ msgstr "Verilen aygıtla eşleşen"
 
 #: src/disks/gdufstabdialog.c:481
 msgid "The system may not work correctly if this entry is modified or removed."
-msgstr "Bu girdi silinir ya da değiştirilirse sistem doğru çalışmayabilir."
+msgstr "Bu girdi silinir veya değiştirilirse sistem doğru çalışmayabilir."
 
 #: src/disks/gdufstabdialog.c:542
 msgid "Error removing old /etc/fstab entry"
@@ -2035,9 +2046,9 @@ msgid ""
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the <i>active</i> partition"
 msgstr ""
-"Platform önyükleme yükleyicisince, işletim sisteminin nereden yüklenmesi "
-"gerektiğini belirlemek için kullanılan bayrak. Bazen bu bayrağın ayarlanmış "
-"olduğu bölüm <i>etkin</i> bölüm olarak anılır"
+"Platform önyükleme yükleyicisi tarafından, işletim sisteminin nereden "
+"yüklenmesi gerektiğini belirlemek için kullanılan bayrak. Bazen bu bayrağın "
+"ayarlanmış olduğu bölüm <i>etkin</i> bölüm olarak anılır"
 
 #: src/disks/gdupasswordstrengthwidget.c:98
 msgctxt "Password strength"
@@ -2321,7 +2332,7 @@ msgstr "Ortalama Erişim Süresi"
 
 #: src/disks/ui/benchmark-dialog.ui:201
 msgid "Disk or Device"
-msgstr "Disk ya da Aygıt"
+msgstr "Disk veya Aygıt"
 
 #: src/disks/ui/benchmark-dialog.ui:230
 msgid "Sample Size"
@@ -2374,7 +2385,7 @@ msgid ""
 "device can be in use)."
 msgstr ""
 "Yazma oranı kıyaslaması diske özel erişim gerektirir (örneğin diskin boşta "
-"ya da bağlanmamış olması gibi) ve okuduğu veriyi yeniden yazar. Sonuç olarak "
+"veya bağlanmamış olması gibi) ve okuduğu veriyi yeniden yazar. Sonuç olarak "
 "disk içeriğinde bir değişiklik olmaz.\n"
 "\n"
 "İşaretli değilse kıyaslamanın yazma kısmı gerçekleşmez ama özel erişim "
@@ -2533,7 +2544,7 @@ msgstr ""
 
 #: src/disks/ui/create-filesystem-page.ui:47
 msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "Örneğin: “İnci’nin Dosyaları” ya da “Yedek”."
+msgstr "Örneğin: “İnci’nin Dosyaları” veya “Yedek”."
 
 #: src/disks/ui/create-filesystem-page.ui:74
 #: src/disks/ui/format-disk-dialog.ui:58
@@ -2577,7 +2588,7 @@ msgstr ""
 
 #: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
-msgstr "Bölüm _Boyutu"
+msgstr "Bö_lüm Boyutu"
 
 #: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
 msgid "The size of the partition to create"
@@ -2677,7 +2688,7 @@ msgstr "Parolayı _Göster"
 #: src/disks/ui/create-password-page.ui:134
 msgid "Mix uppercase and lowercase and try to use a number or two."
 msgstr ""
-"Büyük ve küçük harfleri karıştırın ve bir ya da iki sayı kullanmayı deneyin."
+"Büyük ve küçük harfleri karıştırın ve bir veya iki sayı kullanmayı deneyin."
 
 #: src/disks/ui/disk-settings-dialog.ui:23
 msgid "Drive Settings"
@@ -2729,7 +2740,7 @@ msgstr "A_PM"
 
 #: src/disks/ui/disk-settings-dialog.ui:333
 msgid "Apply Automatic Acoustic Management Settings"
-msgstr "Kendiliğinden Akustik Yönetimi (AAM) Ayarlarını Uygula"
+msgstr "Otomatik Akustik Yönetimi (AAM) Ayarlarını Uygula"
 
 #: src/disks/ui/disk-settings-dialog.ui:350
 msgid "Turn on to configure AAM at startup and when the disk is connected"
@@ -2737,7 +2748,7 @@ msgstr "Başlangıçta ve disk bağlandığında AAM’yi yapılandırmak için 
 
 #: src/disks/ui/disk-settings-dialog.ui:384
 msgid "Vendor Recommended"
-msgstr "Üreticice Önerilen"
+msgstr "Üretici Tarafından Önerilen"
 
 #: src/disks/ui/disk-settings-dialog.ui:401
 msgid "AAM Level"
@@ -2797,11 +2808,11 @@ msgstr "Sürücü Seçenekleri"
 
 #: src/disks/ui/disks.ui:121
 msgid "Power Off Disk"
-msgstr "Disk Gücünü Kapat"
+msgstr "Diskin Gücünü Kapat"
 
 #: src/disks/ui/disks.ui:136
 msgid "Eject Disk"
-msgstr "Diski Çıkart"
+msgstr "Diski Çıkar"
 
 #: src/disks/ui/disks.ui:151
 msgid "Detach Loop Device"
@@ -2846,11 +2857,11 @@ msgstr "Boyut"
 
 #: src/disks/ui/disks.ui:542
 msgid "Auto-clear"
-msgstr "Kendiliğinden Temizle"
+msgstr "Otomatik Temizle"
 
 #: src/disks/ui/disks.ui:560
 msgid "Detach Loop Device After Unmounting"
-msgstr "Bağı Kaldırınca Döngü Aygıtını Ayır"
+msgstr "Bağı Kaldırdıktan Sonra Döngü Aygıtını Ayır"
 
 #. The filename or URI of the file that is used as backing store for the loop device.
 #: src/disks/ui/disks.ui:574
@@ -2887,7 +2898,7 @@ msgstr "Seçilen Şifreli Bölümün Kilidini Aç"
 
 #: src/disks/ui/disks.ui:760
 msgid "Lock Selected Encrypted Partition"
-msgstr "Seçilen Şifreli Bölümü Kilitle"
+msgstr "Seçilen Sifreli Bölümü Kilitle"
 
 #: src/disks/ui/disks.ui:777
 msgid "Create Partition in Unallocated Space"
@@ -3010,8 +3021,8 @@ msgid ""
 "Passphrase of the device or empty to request from user when setting up the "
 "device"
 msgstr ""
-"Aygıt parolası girin ya da aygıt kurulurken kullanıcıca girilmesi için boş "
-"bırakın"
+"Aygıt parolası girin veya aygıt kurulurken kullanıcı tarafından girilmesi "
+"için boş bırakın"
 
 #: src/disks/ui/edit-crypttab-dialog.ui:186
 #: src/disks/ui/unlock-device-dialog.ui:78
@@ -3193,8 +3204,8 @@ msgid ""
 "overwrite the contents"
 msgstr ""
 "Bölüm ve içeriğinin İS/Platformun işlerliği için gerekli olduğunu "
-"belirtmekte kullanılır. İçeriğinin silinmemesi ya da üzerine yazılmaması "
-"için azami özen gösterilmelidir"
+"belirtmekte kullanılır. İçeriğinin silinmemesi veya üzerine yazılmaması için "
+"azami özen gösterilmelidir"
 
 #: src/disks/ui/edit-partition-dialog.ui:120
 msgid "Hide from _Firmware"
@@ -3565,7 +3576,7 @@ msgid ""
 msgstr ""
 "Dosya sisteminin sahipliğini kullanıcınız ve kümesiyle değiştirir. "
 "Özyinelemeli kip tüm alt dizin ve dosyaların sahipliğini değiştirir; bu, "
-"sahipliğin başka kullanıcılara ait olduğu (örn. sistem yedeği ya da çoklu "
+"sahipliğin başka kullanıcılara ait olduğu (örn. sistem yedeği veya çoklu "
 "kullanıcılarca erişilen dosya sistemi) dizin yapısını içeren dosya "
 "sistemlerinde yıkıcı sonuçlara neden olabilir."
 
@@ -3608,7 +3619,7 @@ msgstr "Windows _sistemi"
 
 #: src/disks/ui/unlock-device-dialog.ui:128
 msgid "Unlock an encrypted Windows system partition or drive."
-msgstr "Şifreli Windows sistem bölümünün ya da sürücüsünün kilidini aç."
+msgstr "Şifreli Windows sistem bölümünün veya sürücüsünün kilidini aç."
 
 #: src/disks/ui/unlock-device-dialog.ui:144
 msgid "PI_M"
@@ -3766,8 +3777,7 @@ msgstr "Aygıt kilitlemede hata"
 #: src/libgdu/gduutils.c:1495
 msgid "Error disabling autoclear for loop device"
 msgstr ""
-"Döngü aygıtı için kendiliğinden temizle (autoclear) devre dışı bırakılırken "
-"hata"
+"Döngü aygıtı için otomatik temizle (autoclear) devre dışı bırakılırken hata"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:355
@@ -3895,7 +3905,7 @@ msgstr "İncele"
 #~ msgstr "Takas bölümü durdurmada hata"
 
 #~ msgid "Error setting autoclear flag"
-#~ msgstr "Kendiliğinden temizle (autoclear) bayrağı ayarlanırken hata"
+#~ msgstr "Otomatik temizle (autoclear) bayrağı ayarlanırken hata"
 
 #~ msgid "Error canceling job"
 #~ msgstr "İş iptal edilirken hata"

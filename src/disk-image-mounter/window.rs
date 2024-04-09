@@ -4,6 +4,7 @@ use std::fs::OpenOptions;
 use std::os::fd::AsFd;
 use std::path::PathBuf;
 
+use gettextrs::gettext;
 use gtk::prelude::FileExt;
 use gtk::prelude::GtkWindowExt;
 use gtk::subclass::prelude::*;
@@ -56,6 +57,8 @@ mod imp {
         pub(super) status_page: TemplateChild<adw::StatusPage>,
         #[template_child]
         pub(super) unmount_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        pub(super) toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[property(get, set, construct_only)]
         pub(super) file: RefCell<Option<gio::File>>,
         #[property(get, set, builder(Action::default()))]
@@ -97,9 +100,9 @@ mod imp {
                     let object = window.obj().mounted_file_object()
                         .await?;
                     let description = if object.block().await.ok()?.read_only().await.ok()? {
-                        gettextrs::gettext("Already mounted read-only")
+                        gettext("Already mounted read-only")
                     } else {
-                        gettextrs::gettext("Already mounted")
+                        gettext("Already mounted")
                     };
                     window.status_page.set_description(Some(&description));
                     window.unmount_row.set_visible(true);
@@ -132,7 +135,7 @@ impl ImageMounterWindow {
 
     #[template_callback]
     fn button_label(&self, action: Action) -> String {
-        gettextrs::gettext(match action {
+        gettext(match action {
             Action::OpenInFiles => "Open in Files",
             Action::OpenInFilesWritable => "Edit Image",
             Action::Unmount => "Unmount",
@@ -195,32 +198,31 @@ impl ImageMounterWindow {
     fn on_continue_button(&self, _button: &gtk::Button) {
         let main_context = glib::MainContext::default();
         main_context.spawn_local(glib::clone!(@weak self as window => async move {
-            let action = window.continue_action();
-            match action {
-                Action::OpenInFiles => {
-                    window.mount(true).await.expect("Failed to read-only mount");
-                }
-                Action::OpenInFilesWritable => {
-                    window.mount(false).await.expect("Failed to mount");
-                }
-                Action::Unmount => {window.unmount().await.expect("Failed to unmount");}
-                Action::Write => {window.write_image();}
-                Action::Inspect => {
-                    let device = if let Some(object) = window.mounted_file_object().await {
-                        log::debug!("File already mounted, reading device");
-                        window.read_device(object).await.expect("Failed to read device")
-                    } else {
-                        log::debug!("File not yet mounted, mounting first");
-                        window.mount(false).await.expect("Failed to mount")
-                    };
-                    window
-                        .open_in_disks(device)
-                        .await
-                        .expect("Failed to open in Disks");
-                }
+            let error = match window.continue_action() {
+                Action::OpenInFiles => window.mount(true).await.map_err(|_| gettext("Failed to mount file")).err(),
+                Action::OpenInFilesWritable => window.mount(false).await.map_err(|_| gettext("Failed to mount file")).err(),
+                Action::Unmount => window.unmount().await.map_err(|_| gettext("Failed to unmount file")).err(),
+                Action::Write => window.write_image().map_err(|_| gettext("Failed to write image")).err(),
+                Action::Inspect => window.inspect().await.map_err(|_| gettext("Failed to inspect image")).err(),
             };
-            window.close();
+
+            if let Some(error_msg) = error {
+                window.imp().toast_overlay.add_toast(adw::Toast::new(&error_msg))
+            } else {
+                window.close();
+            }
         }));
+    }
+
+    async fn inspect(&self) -> Result<(), ImageMounterError> {
+        let device = if let Some(object) = self.mounted_file_object().await {
+            log::debug!("File already mounted, reading device");
+            self.read_device(object).await?
+        } else {
+            log::debug!("File not yet mounted, mounting first");
+            self.mount(false).await?
+        };
+        self.open_in_disks(device).await
     }
 
     async fn unmount(&self) -> Result<(), ImageMounterError> {
@@ -272,16 +274,20 @@ impl ImageMounterWindow {
         Ok(device)
     }
 
-    fn write_image(&self) {
+    fn write_image(&self) -> Result<(), ImageMounterError> {
         let path = self
             .file()
             .and_then(|file| file.path())
-            .expect("Failed to get file path");
+            .ok_or(ImageMounterError::File)?;
 
-        std::process::Command::new("gnome-disks")
+        let mut child = std::process::Command::new("gnome-disks")
             .args(["--restore-disk-image", path.to_str().unwrap()])
             .spawn()
-            .expect("Failed to execute command");
+            .map_err(|_| ImageMounterError::File)?;
+        if !child.wait()?.success() {
+            return Err(ImageMounterError::File);
+        }
+        Ok(())
     }
 
     async fn open_in_disks(&self, device: String) -> Result<(), ImageMounterError> {

@@ -13,21 +13,20 @@
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-window.h"
 #include "gdu-change-passphrase-dialog.h"
 #include "gdupasswordstrengthwidget.h"
 
 struct _GduChangePassphraseDialog
 {
-  GtkDialog          parent_instance;
+  AdwWindow          parent_instance;
 
-  GtkBox            *infobar_box;
-  GtkEntry          *existing_passphrase_entry;
-  GtkEntry          *new_passphrase_entry;
-  GtkEntry          *confirm_passphrase_entry;
-  GtkWidget         *passphrase_strength_widget;
+  GtkWidget         *infobar;
+  GtkWidget         *change_pass_button;
 
-  GduWindow         *window;
+  GtkWidget         *curr_pass_row;
+  GtkWidget         *new_pass_row;
+  GtkWidget         *confirm_pass_row;
+
   UDisksObject      *udisks_object;
   UDisksBlock       *udisks_block;
   UDisksEncrypted   *udisks_encrypted;
@@ -37,61 +36,30 @@ struct _GduChangePassphraseDialog
 };
 
 
-G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_WINDOW)
+
+static gpointer
+gdu_change_passphrase_dialog_get_window (GduChangePassphraseDialog *self)
+{
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
 
 static void
-dialog_passhphrase_changed_cb (GduChangePassphraseDialog *self)
+on_dialog_entry_changed (GduChangePassphraseDialog *self)
 {
-  const char *existing_passphrase, *new_passphrase, *confirm_passphrase;
+  const char *curr_pass, *new_pass, *confirm_pass;
   gboolean can_proceed = FALSE;
 
-  g_assert (GDU_IS_CHANGE_PASSPHRASE_DIALOG (self));
+  curr_pass = gtk_editable_get_text (GTK_EDITABLE (self->curr_pass_row));
+  new_pass = gtk_editable_get_text (GTK_EDITABLE (self->new_pass_row));
+  confirm_pass = gtk_editable_get_text (GTK_EDITABLE (self->confirm_pass_row));
 
-  existing_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->existing_passphrase_entry));
-  new_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry));
-  confirm_passphrase = gtk_editable_get_text (GTK_EDITABLE (self->confirm_passphrase_entry));
-
-  gtk_entry_set_icon_from_icon_name (self->confirm_passphrase_entry,
-                                     GTK_ENTRY_ICON_SECONDARY,
-                                     NULL);
-  gtk_entry_set_icon_tooltip_text (self->confirm_passphrase_entry,
-                                   GTK_ENTRY_ICON_SECONDARY,
-                                   NULL);
-  gtk_entry_set_icon_from_icon_name (self->new_passphrase_entry,
-                                     GTK_ENTRY_ICON_SECONDARY,
-                                     NULL);
-  gtk_entry_set_icon_tooltip_text (self->new_passphrase_entry,
-                                   GTK_ENTRY_ICON_SECONDARY,
-                                   NULL);
-
-  gdu_password_strength_widget_set_password (GDU_PASSWORD_STRENGTH_WIDGET (self->passphrase_strength_widget),
-                                             new_passphrase);
-
-  if (strlen (new_passphrase) > 0 && strlen (confirm_passphrase) > 0 && g_strcmp0 (new_passphrase, confirm_passphrase) != 0)
-    {
-      gtk_entry_set_icon_from_icon_name (self->confirm_passphrase_entry,
-                                         GTK_ENTRY_ICON_SECONDARY,
-                                         "dialog-warning-symbolic");
-      gtk_entry_set_icon_tooltip_text (self->confirm_passphrase_entry,
-                                       GTK_ENTRY_ICON_SECONDARY,
-                                       _("The passphrases do not match"));
-    }
-  if (strlen (existing_passphrase) > 0 && strlen (new_passphrase) > 0 && g_strcmp0 (new_passphrase, existing_passphrase) == 0)
-    {
-      gtk_entry_set_icon_from_icon_name (self->new_passphrase_entry,
-                                         GTK_ENTRY_ICON_SECONDARY,
-                                         "dialog-warning-symbolic");
-      gtk_entry_set_icon_tooltip_text (self->new_passphrase_entry,
-                                       GTK_ENTRY_ICON_SECONDARY,
-                                       _("The passphrase matches the existing passphrase"));
-    }
-
-  if (strlen (existing_passphrase) > 0 && strlen (new_passphrase) > 0 &&
-      g_strcmp0 (new_passphrase, confirm_passphrase) == 0 &&
-      g_strcmp0 (new_passphrase, existing_passphrase) != 0)
+  if (strlen (curr_pass) > 0 && strlen (new_pass) > 0 &&
+      g_strcmp0 (new_pass, confirm_pass) == 0 &&
+      g_strcmp0 (new_pass, curr_pass) != 0)
     can_proceed = TRUE;
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (self), GTK_RESPONSE_OK, can_proceed);
+  gtk_widget_set_sensitive (GTK_WIDGET (self->change_pass_button), can_proceed);
 }
 
 static void
@@ -103,9 +71,9 @@ update_configuration_item_cb (GObject      *source_object,
   g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_update_configuration_item_finish (self->udisks_block, res, &error))
-    gdu_utils_show_error (GTK_WINDOW (self->window), _("Error updating /etc/crypttab"), error);
+    gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self),
+                          _("Error updating /etc/crypttab"), error);
 
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
   gtk_window_close (GTK_WINDOW (self));
 }
 
@@ -116,116 +84,59 @@ change_passphrase_cb (GObject      *source_object,
 {
   GduChangePassphraseDialog *self = user_data;
   g_autoptr(GError) error = NULL;
+  GVariantBuilder builder;
+  GVariantIter iter;
+  const gchar *key;
+  GVariant *value;
 
-  if (!udisks_encrypted_call_change_passphrase_finish (self->udisks_encrypted, res, &error))
-    gdu_utils_show_error (GTK_WINDOW (self->window), _("Error changing passphrase"), error);
-
-  /* Update the system-level configuration, if applicable */
-  if (self->has_passphrase_in_conf)
-    {
-      GVariantBuilder builder;
-      GVariantIter iter;
-      const gchar *key;
-      GVariant *value;
-
-      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-      g_variant_iter_init (&iter, self->crypttab_details);
-      while (g_variant_iter_next (&iter, "{sv}", &key, &value))
-        {
-          if (g_strcmp0 (key, "passphrase-contents") == 0)
-            {
-              g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                     g_variant_new_bytestring (gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry))));
-            }
-          else
-            {
-              g_variant_builder_add (&builder, "{sv}", key, value);
-            }
-          g_variant_unref (value);
-        }
-
-      udisks_block_call_update_configuration_item (self->udisks_block,
-                                                   g_variant_new ("(s@a{sv})", "crypttab", self->crypttab_details),
-                                                   g_variant_new ("(sa{sv})", "crypttab", &builder),
-                                                   g_variant_new ("a{sv}", NULL), /* options */
-                                                   NULL, /* cancellable */
-                                                   update_configuration_item_cb,
-                                                   self);
-
-    }
-  else
-    {
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-      gtk_window_close (GTK_WINDOW (self));
-    }
-}
-
-static void
-change_passphrase_dialog_response_cb (GduChangePassphraseDialog *self,
-                                      int                        response_id)
-{
   g_assert (GDU_IS_CHANGE_PASSPHRASE_DIALOG (self));
 
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+  if (!udisks_encrypted_call_change_passphrase_finish (self->udisks_encrypted, res, &error))
+    gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self),
+                          _("Error changing passphrase"), error);
 
-  if (response_id == GTK_RESPONSE_OK)
-    {
-      udisks_encrypted_call_change_passphrase (self->udisks_encrypted,
-                                               gtk_editable_get_text (GTK_EDITABLE (self->existing_passphrase_entry)),
-                                               gtk_editable_get_text (GTK_EDITABLE (self->new_passphrase_entry)),
-                                               g_variant_new ("a{sv}", NULL), /* options */
-                                               NULL, /* GCancellable */
-                                               change_passphrase_cb,
-                                               self);
-    }
-  else
+  if (!self->has_passphrase_in_conf)
     {
       gtk_window_close (GTK_WINDOW (self));
+      return;
     }
 
+  /* Update the system-level configuration, if applicable */
+  g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+  g_variant_iter_init (&iter, self->crypttab_details);
+  while (g_variant_iter_next (&iter, "{sv}", &key, &value))
+    {
+      if (g_strcmp0 (key, "passphrase-contents") == 0)
+        {
+          g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
+                                  g_variant_new_bytestring (gtk_editable_get_text (GTK_EDITABLE (self->new_pass_row))));
+        }
+      else
+        {
+          g_variant_builder_add (&builder, "{sv}", key, value);
+        }
+      g_variant_unref (value);
+    }
+
+  udisks_block_call_update_configuration_item (self->udisks_block,
+                                                g_variant_new ("(s@a{sv})", "crypttab", self->crypttab_details),
+                                                g_variant_new ("(sa{sv})", "crypttab", &builder),
+                                                g_variant_new ("a{sv}", NULL), /* options */
+                                                NULL, /* cancellable */
+                                                update_configuration_item_cb,
+                                                self);
 }
 
 static void
-gdu_change_passphrase_dialog_finalize (GObject *object)
+on_change_passphrase_clicked (GduChangePassphraseDialog *self)
 {
-  GduChangePassphraseDialog *self = (GduChangePassphraseDialog *)object;
-
-  g_clear_object (&self->udisks_object);
-  g_clear_object (&self->udisks_block);
-  g_clear_object (&self->udisks_encrypted);
-  g_clear_pointer (&self->crypttab_details, g_variant_unref);
-
-  G_OBJECT_CLASS (gdu_change_passphrase_dialog_parent_class)->finalize (object);
-}
-
-static void
-gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
-{
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  object_class->finalize = gdu_change_passphrase_dialog_finalize;
-
-  gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/DiskUtility/ui/"
-                                               "gdu-change-passphrase-dialog.ui");
-
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, infobar_box);
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, existing_passphrase_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, new_passphrase_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, confirm_passphrase_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, passphrase_strength_widget);
-
-  gtk_widget_class_bind_template_callback (widget_class, change_passphrase_dialog_response_cb);
-  gtk_widget_class_bind_template_callback (widget_class, dialog_passhphrase_changed_cb);
-}
-
-static void
-gdu_change_passphrase_dialog_init (GduChangePassphraseDialog *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
-
-  dialog_passhphrase_changed_cb (self);
+  udisks_encrypted_call_change_passphrase (self->udisks_encrypted,
+                                           gtk_editable_get_text (GTK_EDITABLE (self->curr_pass_row)),
+                                           gtk_editable_get_text (GTK_EDITABLE (self->new_pass_row)),
+                                           g_variant_new ("a{sv}", NULL), /* options */
+                                           NULL, /* GCancellable */
+                                           change_passphrase_cb,
+                                           self);
 }
 
 static gboolean
@@ -264,17 +175,17 @@ on_get_secret_configuration_cb (GObject      *source_object,
   const gchar *type;
   GVariant *details;
   g_autoptr(GVariant) configuration = NULL;
-  g_autoptr(GError) error = NULL;
+  GError *error;
 
   if (!udisks_block_call_get_secret_configuration_finish (self->udisks_block,
                                                           &configuration,
                                                           res,
                                                           &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (self->window),
+      gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self),
                             _("Error retrieving configuration data"),
                             error);
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+      
       gtk_window_close (GTK_WINDOW (self));
       return;
     }
@@ -289,20 +200,63 @@ on_get_secret_configuration_cb (GObject      *source_object,
             {
               self->crypttab_details = g_variant_ref (details);
 
-              gtk_editable_set_text (GTK_EDITABLE (self->existing_passphrase_entry), passphrase_contents);
+              gtk_editable_set_text (GTK_EDITABLE (self->curr_pass_row), passphrase_contents);
               /* Don't focus on the "Existing passphrase" entry */
-              gtk_editable_select_region (GTK_EDITABLE (self->existing_passphrase_entry), 0, 0);
-              gtk_widget_grab_focus (GTK_WIDGET (self->new_passphrase_entry));
+              gtk_editable_select_region (GTK_EDITABLE (self->curr_pass_row), 0, 0);
+              gtk_widget_grab_focus (GTK_WIDGET (self->new_pass_row));
+              
               gtk_window_present (GTK_WINDOW (self));
-
               return;
             }
         }
     }
 
-  gdu_utils_show_error (GTK_WINDOW (self->window), _("/etc/crypttab configuration data is malformed"), NULL);
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
+  gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self),
+                        _("/etc/crypttab configuration data is malformed"),
+                        NULL);
+
   gtk_window_close (GTK_WINDOW (self));
+}
+
+static void
+gdu_change_passphrase_dialog_finalize (GObject *object)
+{
+  GduChangePassphraseDialog *self = (GduChangePassphraseDialog *)object;
+
+  g_clear_object (&self->udisks_block);
+  g_clear_object (&self->udisks_encrypted);
+  g_clear_pointer (&self->crypttab_details, g_variant_unref);
+  g_clear_object (&self->udisks_object);
+
+  G_OBJECT_CLASS (gdu_change_passphrase_dialog_parent_class)->finalize (object);
+}
+
+static void
+gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->finalize = gdu_change_passphrase_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-change-passphrase-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, infobar);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, curr_pass_row);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, new_pass_row);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, confirm_pass_row);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, change_pass_button);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_change_passphrase_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_dialog_entry_changed);
+}
+
+static void
+gdu_change_passphrase_dialog_init (GduChangePassphraseDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 void
@@ -318,7 +272,6 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
                        "transient-for", window,
                        NULL);
 
-  self->window = window;
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
   self->udisks_encrypted = udisks_object_get_encrypted (object);
@@ -326,23 +279,15 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
 
   if (self->has_passphrase_in_conf)
     {
-      GtkWidget *infobar;
-
-      infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
-                                           _("Changing the passphrase for this device, will also update "
-                                             "the passphrase referenced by the <i>/etc/crypttab</i> file"),
-                                           NULL);
-      gtk_widget_set_visible (infobar, TRUE);
-      gtk_box_append (self->infobar_box, infobar);
+      adw_banner_set_revealed (ADW_BANNER (self->infobar), TRUE);
 
       udisks_block_call_get_secret_configuration (self->udisks_block,
                                                   g_variant_new ("a{sv}", NULL), /* options */
                                                   NULL, /* cancellable */
                                                   on_get_secret_configuration_cb,
                                                   self);
+      return;
     }
-  else
-    {
-      gtk_window_present (GTK_WINDOW (self));
-    }
+
+  gtk_window_present (GTK_WINDOW (self));
 }

@@ -15,7 +15,6 @@
 
 #include "gdu-application.h"
 #include "gdu-restore-disk-image-dialog.h"
-#include "gdudevicetreemodel.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 #include "gduxzdecompressor.h"
@@ -240,7 +239,9 @@ destination_combobox_sensitive_cb (GtkCellLayout   *cell_layout,
   gboolean sensitive = FALSE;
   g_autoptr(UDisksBlock) block = NULL;
 
+  /* gtk4 todo: We're probably going to drop the tree model
   gtk_tree_model_get (model, iter, GDU_DEVICE_TREE_MODEL_COLUMN_BLOCK, &block, -1);
+  */
 
   if (block == NULL || (udisks_block_get_size (block) > 0
       && !udisks_block_get_read_only (block)))
@@ -288,8 +289,10 @@ on_destination_combobox_notify_active (GObject    *gobject,
   if (gtk_combo_box_get_active_iter (combobox, &iter))
     {
       UDisksBlock *block = NULL;
+      /* gtk4 todo: We're probably going to drop the tree model
       gtk_tree_model_get (gtk_combo_box_get_model (combobox), &iter,
                           GDU_DEVICE_TREE_MODEL_COLUMN_BLOCK, &block, -1);
+      */
       if (block != NULL)
         {
           object = (UDisksObject *)g_dbus_interface_dup_object (G_DBUS_INTERFACE (block));
@@ -304,6 +307,7 @@ on_destination_combobox_notify_active (GObject    *gobject,
 static void
 populate_destination_combobox (GduRestoreDiskImageDialog *self)
 {
+  /* gtk4 todo: We're probably going to drop the tree model
   GduDeviceTreeModel *model;
   GtkComboBox *combobox;
   GtkCellRenderer *renderer;
@@ -321,11 +325,10 @@ populate_destination_combobox (GduRestoreDiskImageDialog *self)
   g_object_unref (model);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
-  /*
+
   g_object_set (G_OBJECT (renderer),
                 "stock-size", GTK_ICON_SIZE_MENU,
                 NULL);
-  */
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combobox), renderer, FALSE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combobox), renderer,
                                   "gicon", GDU_DEVICE_TREE_MODEL_COLUMN_ICON,
@@ -346,8 +349,9 @@ populate_destination_combobox (GduRestoreDiskImageDialog *self)
   g_signal_connect (combobox, "notify::active",
                     G_CALLBACK (on_destination_combobox_notify_active), self);
 
-  /* Select (None) item */
+  \/\* Select (None) item \*\/
   gtk_combo_box_set_active (combobox, 0);
+  */
 }
 
 static void

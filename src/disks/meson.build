@@ -29,7 +29,6 @@ sources = files(
   'gdu-drive-row.c',
   'gdu-drive-view.c',
   'gduatasmartdialog.c',
-  'gdudevicetreemodel.c',
   'gdudisksettingsdialog.c',
   'gdudvdsupport.c',
   'gduestimator.c',

@@ -14,7 +14,7 @@
 
 #include "gdu-application.h"
 #include "gdu-change-passphrase-dialog.h"
-#include "gdupasswordstrengthwidget.h"
+#include "gdu-create-password-page.h"
 
 struct _GduChangePassphraseDialog
 {
@@ -26,6 +26,8 @@ struct _GduChangePassphraseDialog
   GtkWidget         *curr_pass_row;
   GtkWidget         *new_pass_row;
   GtkWidget         *confirm_pass_row;
+  GtkWidget         *strength_indicator;
+  GtkWidget         *strength_hint_label;
 
   UDisksObject      *udisks_object;
   UDisksBlock       *udisks_block;
@@ -45,6 +47,21 @@ gdu_change_passphrase_dialog_get_window (GduChangePassphraseDialog *self)
 }
 
 static void
+update_password_strength (GduChangePassphraseDialog *self)
+{
+  gint strength_level;
+  const gchar *hint;
+  const gchar *password;
+
+  password = gtk_editable_get_text (GTK_EDITABLE (self->new_pass_row));
+
+  pw_strength (password, &hint, &strength_level);
+
+  gtk_level_bar_set_value (GTK_LEVEL_BAR (self->strength_indicator), strength_level);
+  gtk_label_set_label (GTK_LABEL (self->strength_hint_label), hint);
+}
+
+static void
 on_dialog_entry_changed (GduChangePassphraseDialog *self)
 {
   const char *curr_pass, *new_pass, *confirm_pass;
@@ -59,6 +76,7 @@ on_dialog_entry_changed (GduChangePassphraseDialog *self)
       g_strcmp0 (new_pass, curr_pass) != 0)
     can_proceed = TRUE;
 
+  update_password_strength (self);
   gtk_widget_set_sensitive (GTK_WIDGET (self->change_pass_button), can_proceed);
 }
 
@@ -244,10 +262,12 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
                                                "gdu-change-passphrase-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, infobar);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, change_pass_button);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, curr_pass_row);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, new_pass_row);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, confirm_pass_row);
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, change_pass_button);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, strength_indicator);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, strength_hint_label);
 
   gtk_widget_class_bind_template_callback (widget_class, on_change_passphrase_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dialog_entry_changed);

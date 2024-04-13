@@ -44,6 +44,7 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <property name="title" translatable="true">General</property>
+                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwSwitchRow" id="startup_mount_switch">
                     <property name="title" translatable="true">Mount at Startup</property>
@@ -64,6 +65,7 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <property name="title" translatable="true">Appearance</property>
+                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="name_row">
                     <property name="title" translatable="true">Display Name</property>
@@ -84,6 +86,7 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <property name="title" translatable="true">Technicnal Options</property>
+                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="mount_options_row">
                     <property name="title" translatable="true">Fstab options</property>
@@ -112,6 +115,7 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
+                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwComboRow" id="device_combo_row">
                     <property name="title" translatable="true">Identify As</property>
@@ -121,6 +125,7 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
+                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="GtkButton" id="reset_settings_button">
                     <property name="label" translatable="true">Restore Default Settings</property>

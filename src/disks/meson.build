@@ -33,7 +33,6 @@ sources = files(
   'gdudvdsupport.c',
   'gduestimator.c',
   'gdulocaljob.c',
-  'gdupasswordstrengthwidget.c',
   'gdu-resize-volume-dialog.c',
   'gduunlockdialog.c',
   'gduxzdecompressor.c',

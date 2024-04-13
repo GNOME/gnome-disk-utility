@@ -21,9 +21,6 @@ G_BEGIN_DECLS
 struct _GduCreateFilesystemWidget;
 typedef struct _GduCreateFilesystemWidget GduCreateFilesystemWidget;
 
-struct _GduPasswordStrengthWidget;
-typedef struct _GduPasswordStrengthWidget GduPasswordStrengthWidget;
-
 struct _GduEstimator;
 typedef struct _GduEstimator GduEstimator;
 

@@ -15,57 +15,113 @@
 
 #include <glib/gi18n.h>
 
-#include "gdu-application.h"
-#include "gdu-window.h"
 #include "gdu-encryption-options-dialog.h"
 
-struct _GduCrypttabDialog
+struct _GduEncryptionOptionsDialog
 {
-  GtkDialog             parent_instance;
+  AdwWindow      parent_instance;
 
-  GtkBox               *infobar_box;
-  GtkSwitch            *use_defaults_switch;
-  GtkGrid              *main_grid;
+  GtkWidget     *infobar;
+  GtkWidget     *done_button;
+  GtkWidget     *use_defaults_switch;
 
-  GtkCheckButton       *auto_unlock_check_button;
-  GtkCheckButton       *require_auth_to_unlock_check_button;
-  GtkEntry             *options_entry;
+  GtkWidget     *name_entry;
+  GtkWidget     *passphrase_entry;
 
-  GtkEntry             *name_entry;
-  GtkEntry             *passphrase_entry;
-  GtkLabel             *passphrase_path_label;
+  GtkWidget     *unlock_at_startup_switch;
+  GtkWidget     *require_auth_switch;
+  GtkWidget     *options_entry;
 
-  GtkWidget            *warning_infobar;
+  GtkWidget     *passphrase_path_label;
 
-  GtkWindow            *window;
-  UDisksObject         *udisks_object;
-  UDisksBlock          *udisks_block;
-  UDisksDrive          *udisks_drive;
-  GVariant             *crypttab_config;
+  UDisksObject  *udisks_object;
+  UDisksBlock   *udisks_block;
+  UDisksDrive   *udisks_drive;
+  GVariant      *crypttab_config;
 
-  gboolean              is_self_change;
+  gboolean       is_self_change;
 };
 
 
-G_DEFINE_TYPE (GduCrypttabDialog, gdu_crypttab_dialog, GTK_TYPE_DIALOG)
+G_DEFINE_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_WINDOW)
+
+static gpointer
+gdu_encryption_options_dialog_get_window (GduEncryptionOptionsDialog *self)
+{
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
+
+static GVariant *
+gdu_encryption_options_dialog_get_new_crypttab (GduEncryptionOptionsDialog *self)
+{
+  GVariantBuilder builder;
+  const char *name, *options, *passphrase;
+  const char *old_passphrase_path = NULL;
+  g_autofree char *s;
+
+  name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
+  options = gtk_editable_get_text (GTK_EDITABLE (self->options_entry));
+  passphrase = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
+
+  if (self->crypttab_config != NULL)
+    {
+      const char *path;
+      if (g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &path))
+        if (path && *path && !g_str_has_prefix (path, "/dev"))
+          old_passphrase_path = path;
+    }
+
+  g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
+  s = g_strdup_printf ("UUID=%s", udisks_block_get_id_uuid (self->udisks_block));
+  g_variant_builder_add (&builder, "{sv}", "device", g_variant_new_bytestring (s));
+  
+  g_variant_builder_add (&builder, "{sv}", "name", g_variant_new_bytestring (name));
+  g_variant_builder_add (&builder, "{sv}", "options", g_variant_new_bytestring (options));
+  
+  g_free (s);
+  if(strlen (passphrase) > 0)
+    s = old_passphrase_path ? g_strdup (old_passphrase_path) : g_strdup_printf ("/etc/luks-keys/%s", name);
+  else
+    s = g_strdup ("");
+
+  g_variant_builder_add (&builder, "{sv}", "passphrase-path", g_variant_new_bytestring (s));
+  g_variant_builder_add (&builder, "{sv}", "passphrase-contents", g_variant_new_bytestring (passphrase));
+
+  return g_variant_new ("(sa{sv})", "crypttab", &builder);
+}
+
+static GVariant *
+gdu_encryption_options_dialog_get_crypttab_from_config (GVariant *config)
+{
+  GVariantIter iter;
+  GVariant *conf_dict;
+  const gchar *conf_type;
+
+  /* there could be multiple fstab entries - we only consider the first one */
+  g_variant_iter_init (&iter, config);
+  while (g_variant_iter_next (&iter, "(&s@a{sv})", &conf_type, &conf_dict))
+    {
+      if (g_strcmp0 (conf_type, "crypttab") == 0)
+        return conf_dict;
+
+      g_variant_unref (conf_dict);
+    }
+
+  return NULL;
+}
 
 static void
-crypttab_dialog_response_cb (GduCrypttabDialog *self,
-                             int                response_id)
+on_done_clicked_cb (GduEncryptionOptionsDialog *self)
 {
   g_autoptr(GError) error = NULL;
-  g_autofree char *name = NULL;
-  gboolean use_modified, has_config;
+  g_autoptr(GVariant) old_crypttab = NULL;
+  g_autoptr(GVariant) new_crypttab = NULL;
+  gboolean use_defaults;
 
-  g_assert (GDU_IS_CRYPTTAB_DIALOG (self));
 
-  if (response_id != GTK_RESPONSE_OK)
-    goto end;
+  use_defaults = adw_switch_row_get_active (ADW_SWITCH_ROW (self->use_defaults_switch));
 
-  has_config = (self->crypttab_config != NULL);
-  use_modified = !gtk_switch_get_active (self->use_defaults_switch);
-
-  if (has_config && !use_modified)
+  if (self->crypttab_config != NULL && use_defaults)
     {
       if (!udisks_block_call_remove_configuration_item_sync (self->udisks_block,
                                                              g_variant_new ("(s@a{sv})", "crypttab",
@@ -74,146 +130,66 @@ crypttab_dialog_response_cb (GduCrypttabDialog *self,
                                                              NULL, /* GCancellable */
                                                              &error))
         {
-          if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-            {
-              gtk_window_present (GTK_WINDOW (self));
-              return;
-            }
-          gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-          gdu_utils_show_error (self->window,
-                                _("Error removing /etc/crypttab entry"),
-                                error);
-          goto end;
+          if (!g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+            gdu_utils_show_error (gdu_encryption_options_dialog_get_window (self),
+                              _("Error removing /etc/crypttab entry"),
+                              error);
         }
+        return;
     }
-  else
+    
+  new_crypttab = gdu_encryption_options_dialog_get_new_crypttab (self);
+  if (self->crypttab_config == NULL && new_crypttab != NULL)
     {
-      const char *new_name, *new_options, *new_passphrase_contents;
-      const char *old_passphrase_path = NULL;
-      GVariant *old_item = NULL;
-      GVariant *new_item = NULL;
-      GVariantBuilder builder;
-      char *s;
-
-      new_name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
-      new_options = gtk_editable_get_text (GTK_EDITABLE (self->options_entry));
-      new_passphrase_contents = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
-
-      if (self->crypttab_config)
+      if (!udisks_block_call_add_configuration_item_sync (self->udisks_block,
+                                                          new_crypttab,
+                                                          g_variant_new ("a{sv}", NULL), /* options */
+                                                          NULL, /* GCancellable */
+                                                          &error))
         {
-          const char *path;
-          if (g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &path))
-            {
-              if (path && *path && !g_str_has_prefix (path, "/dev"))
-                old_passphrase_path = path;
-            }
-          old_item = g_variant_new ("(s@a{sv})", "crypttab",
-                                    self->crypttab_config);
+          if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+            gdu_utils_show_error (gdu_encryption_options_dialog_get_window (self),
+                                  _("Error adding /etc/crypttab entry"),
+                                  error);
         }
+        return;
+    }
+  
+  if (self->crypttab_config != NULL)
+    old_crypttab = g_variant_new ("(s@a{sv})", "crypttab", self->crypttab_config);
 
-      g_variant_builder_init (&builder, G_VARIANT_TYPE_VARDICT);
-      s = g_strdup_printf ("UUID=%s", udisks_block_get_id_uuid (self->udisks_block));
-      g_variant_builder_add (&builder, "{sv}", "device", g_variant_new_bytestring (s));
-      g_free (s);
-      g_variant_builder_add (&builder, "{sv}", "name", g_variant_new_bytestring (new_name));
-      g_variant_builder_add (&builder, "{sv}", "options", g_variant_new_bytestring (new_options));
-      if (strlen (new_passphrase_contents) > 0)
-        {
-          /* use old/existing passphrase file, if available */
-          if (old_passphrase_path)
-            {
-              g_variant_builder_add (&builder, "{sv}", "passphrase-path",
-                                     g_variant_new_bytestring (old_passphrase_path));
-            }
-          else
-            {
-              /* otherwise fall back to the requested name */
-              s = g_strdup_printf ("/etc/luks-keys/%s", new_name);
-              g_variant_builder_add (&builder, "{sv}", "passphrase-path", g_variant_new_bytestring (s));
-              g_free (s);
-            }
-          g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                 g_variant_new_bytestring (new_passphrase_contents));
-        }
-      else
-        {
-          g_variant_builder_add (&builder, "{sv}", "passphrase-path",
-                                 g_variant_new_bytestring (""));
-          g_variant_builder_add (&builder, "{sv}", "passphrase-contents",
-                                 g_variant_new_bytestring (""));
-        }
-      new_item = g_variant_new ("(sa{sv})", "crypttab", &builder);
-
-      if (!old_item && new_item)
-        {
-          if (!udisks_block_call_add_configuration_item_sync (self->udisks_block,
-                                                              new_item,
+  if (old_crypttab != NULL && new_crypttab != NULL)
+    {
+      if (!udisks_block_call_update_configuration_item_sync (self->udisks_block,
+                                                              old_crypttab,
+                                                              new_crypttab,
                                                               g_variant_new ("a{sv}", NULL), /* options */
                                                               NULL, /* GCancellable */
                                                               &error))
-            {
-              if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-                {
-                  gtk_window_present (GTK_WINDOW (self));
-                  return;
-                }
-              gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-              gdu_utils_show_error (self->window,
-                                    _("Error adding /etc/crypttab entry"),
-                                    error);
-              goto end;
-            }
-        }
-      else if (old_item != NULL && new_item != NULL)
         {
-          if (!udisks_block_call_update_configuration_item_sync (self->udisks_block,
-                                                                 old_item,
-                                                                 new_item,
-                                                                 g_variant_new ("a{sv}", NULL), /* options */
-                                                                 NULL, /* GCancellable */
-                                                                 &error))
-            {
-              if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-                {
-                  gtk_window_present (GTK_WINDOW (self));
-                  return;
-                }
-              gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-              gdu_utils_show_error (GTK_WINDOW (self),
-                                    _("Error updating /etc/crypttab entry"),
-                                    error);
-              goto end;
-            }
+          if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+            gdu_utils_show_error (GTK_WINDOW (self),
+                                  _("Error updating /etc/crypttab entry"),
+                                  error);
         }
-      else
-        {
-          g_assert_not_reached ();
-        }
+        return;
     }
-
- end:
-  gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-  gtk_window_close (GTK_WINDOW (self));
 }
 
 static void
-crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
+on_property_changed_cb (GduEncryptionOptionsDialog *self)
 {
   const char *new_name, *new_options, *new_passphrase_contents;
   const char *old_name, *old_options, *old_passphrase_contents;
   const char *passphrase_path;
   g_autofree char *s = NULL;
-  gboolean has_conf, use_modified;
+  gboolean use_defaults;
   gboolean can_ok;
 
-  g_assert (GDU_IS_CRYPTTAB_DIALOG (self));
-
-  if (self->is_self_change)
-    return;
+  g_assert (GDU_IS_ENCRYPTION_OPTIONS_DIALOG (self));
 
   if (self->crypttab_config)
     {
-      has_conf = TRUE;
       g_variant_lookup (self->crypttab_config, "name", "^&ay", &old_name);
       g_variant_lookup (self->crypttab_config, "options", "^&ay", &old_options);
       g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &passphrase_path);
@@ -222,7 +198,6 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
     }
   else
     {
-      has_conf = FALSE;
       old_name = "";
       old_options = "";
       old_passphrase_contents = "";
@@ -232,9 +207,9 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
   new_name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   new_options = gtk_editable_get_text (GTK_EDITABLE (self->options_entry));
   new_passphrase_contents = gtk_editable_get_text (GTK_EDITABLE (self->passphrase_entry));
-  use_modified = !gtk_switch_get_active (self->use_defaults_switch);
+  use_defaults = adw_switch_row_get_active (ADW_SWITCH_ROW (self->use_defaults_switch));
 
-  if (!has_conf)
+  if (self->crypttab_config == NULL)
     {
       if (new_passphrase_contents && *new_passphrase_contents)
         s = g_strdup_printf ("<i>%s</i>", _("Will be created"));
@@ -264,24 +239,20 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
             s = g_strdup_printf ("<i>%s</i>", _("Will be deleted"));
         }
     }
+  // gtk_label_set_markup (self->passphrase_path_label, s);
 
-  gtk_label_set_markup (self->passphrase_path_label, s);
 
-  self->is_self_change = TRUE;
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "noauto",
-                                   GTK_WIDGET (self->auto_unlock_check_button),
-                                   GTK_WIDGET (self->auto_unlock_check_button), TRUE, FALSE);
+                                   GTK_WIDGET (self->unlock_at_startup_switch),
+                                   GTK_WIDGET (self->unlock_at_startup_switch), TRUE, FALSE);
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "x-udisks-auth",
-                                   GTK_WIDGET (self->require_auth_to_unlock_check_button),
-                                   GTK_WIDGET (self->require_auth_to_unlock_check_button), FALSE, FALSE);
-  self->is_self_change = FALSE;
+                                   GTK_WIDGET (self->require_auth_switch),
+                                   GTK_WIDGET (self->require_auth_switch), FALSE, FALSE);
 
   can_ok = FALSE;
-  if (has_conf != use_modified)
-    {
-      can_ok = TRUE;
-    }
-  else if (use_modified)
+  if (self->crypttab_config == NULL && !use_defaults)
+    can_ok = TRUE;
+  else if (!use_defaults)
     {
       if (g_strcmp0 (new_name, old_name) != 0 ||
           g_strcmp0 (new_options, old_options) != 0 ||
@@ -291,75 +262,19 @@ crypttab_dialog_property_changed_cb (GduCrypttabDialog *self)
         }
     }
 
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (self), GTK_RESPONSE_OK, can_ok);
-  gtk_widget_set_sensitive (GTK_WIDGET (self->main_grid), use_modified);
+  gtk_widget_set_sensitive (self->done_button, can_ok);
 }
 
 static void
-gdu_crypttab_dialog_finalize (GObject *object)
+gdu_encryption_options_dialog_update (GduEncryptionOptionsDialog *self)
 {
-  GduCrypttabDialog *self = (GduCrypttabDialog *)object;
-
-  g_clear_object (&self->udisks_object);
-  g_clear_object (&self->udisks_block);
-  g_clear_pointer (&self->crypttab_config, g_variant_unref);
-
-  G_OBJECT_CLASS (gdu_crypttab_dialog_parent_class)->finalize (object);
-}
-
-static void
-gdu_crypttab_dialog_class_init (GduCrypttabDialogClass *klass)
-{
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-  object_class->finalize = gdu_crypttab_dialog_finalize;
-
-  gtk_widget_class_set_template_from_resource (widget_class,
-                                               "/org/gnome/DiskUtility/ui/"
-                                               "gdu-encryption-options-dialog.ui");
-
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, infobar_box);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, use_defaults_switch);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, main_grid);
-
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, auto_unlock_check_button);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, require_auth_to_unlock_check_button);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, options_entry);
-
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, name_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, passphrase_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduCrypttabDialog, passphrase_path_label);
-
-  gtk_widget_class_bind_template_callback (widget_class, crypttab_dialog_response_cb);
-  gtk_widget_class_bind_template_callback (widget_class, crypttab_dialog_property_changed_cb);
-}
-
-static void
-gdu_crypttab_dialog_init (GduCrypttabDialog *self)
-{
-  gtk_widget_init_template (GTK_WIDGET (self));
-
-  self->warning_infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
-                                                     _("Only the passphrase referenced by the <i>/etc/crypttab</i> "
-                                                       "file will be changed. To change the on-disk passphrase, use "
-                                                       "<i>Change Passphrase…</i>"),
-                                                     NULL);
-  gtk_box_append (self->infobar_box, self->warning_infobar);
-}
-
-static void
-crypttab_dialog_update (GduCrypttabDialog *self)
-{
-  const char *options, *passphrase_contents;
   g_autofree char *name = NULL;
-  gboolean has_config = FALSE;
+  const char *options, *passphrase_contents;
 
-  g_assert (GDU_IS_CRYPTTAB_DIALOG (self));
+  g_assert (GDU_IS_ENCRYPTION_OPTIONS_DIALOG (self));
 
-  if (self->crypttab_config)
+  if (self->crypttab_config != NULL)
     {
-      has_config = TRUE;
       g_variant_lookup (self->crypttab_config, "name", "^ay", &name);
       g_variant_lookup (self->crypttab_config, "options", "^&ay", &options);
       if (!g_variant_lookup (self->crypttab_config, "passphrase-contents", "^&ay", &passphrase_contents))
@@ -367,130 +282,123 @@ crypttab_dialog_update (GduCrypttabDialog *self)
     }
   else
     {
-      has_config = FALSE;
       name = g_strdup_printf ("luks-%s", udisks_block_get_id_uuid (self->udisks_block));
-      options = "nofail";
       /* propose noauto if the media is removable - otherwise e.g. systemd will time out at boot */
       if (self->udisks_drive != NULL && udisks_drive_get_removable (self->udisks_drive))
         options = "nofail,noauto";
+      else
+        options = "nofail";
       passphrase_contents = "";
     }
 
-  self->is_self_change = TRUE;
   gtk_editable_set_text (GTK_EDITABLE (self->name_entry), name);
   gtk_editable_set_text (GTK_EDITABLE (self->options_entry), options);
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "noauto", NULL,
-                                   GTK_WIDGET (self->auto_unlock_check_button), TRUE, FALSE);
+                                   GTK_WIDGET (self->unlock_at_startup_switch), TRUE, FALSE);
   gdu_options_update_check_option (GTK_WIDGET (self->options_entry), "x-udisks-auth", NULL,
-                                   GTK_WIDGET (self->require_auth_to_unlock_check_button), FALSE, FALSE);
+                                   GTK_WIDGET (self->require_auth_switch), FALSE, FALSE);
   gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase_contents);
-  gtk_switch_set_active (self->use_defaults_switch, !has_config);
-  self->is_self_change = FALSE;
 
-  crypttab_dialog_property_changed_cb (self);
+  on_property_changed_cb (self);
 }
 
 static void
-crypttab_dialog_on_get_secrets_cb (UDisksBlock  *block,
-                                   GAsyncResult *res,
-                                   gpointer      user_data)
+gdu_encryption_options_dialog_finalize (GObject *object)
 {
-  GduCrypttabDialog *self = user_data;
-  g_autoptr(GVariant) config_dict = NULL;
-  g_autoptr(GVariant) config = NULL;
-  g_autoptr(GError) error = NULL;
-  GVariantIter iter;
-  const char *config_type;
+  GduEncryptionOptionsDialog *self = (GduEncryptionOptionsDialog *)object;
 
-  if (!udisks_block_call_get_secret_configuration_finish (block, &config, res, &error))
-    {
-      gdu_utils_show_error (self->window,
-                            _("Error retrieving configuration data"),
-                            error);
-      gtk_widget_set_visible (GTK_WIDGET (self), FALSE);
-      gtk_window_close (GTK_WINDOW (self));
-      return;
-    }
+  g_clear_object (&self->udisks_object);
+  g_clear_object (&self->udisks_block);
+  g_clear_pointer (&self->crypttab_config, g_variant_unref);
 
-  /* there could be multiple crypttab entries - we only consider the first one */
-  g_variant_iter_init (&iter, config);
-  while (g_variant_iter_next (&iter, "(&s@a{sv})", &config_type, &config_dict))
-    {
-      if (g_strcmp0 (config_type, "crypttab") == 0)
-        {
-          g_clear_pointer (&self->crypttab_config, g_variant_unref);
-          self->crypttab_config = g_steal_pointer (&config_dict);
-          break;
-        }
-    }
+  G_OBJECT_CLASS (gdu_encryption_options_dialog_parent_class)->finalize (object);
+}
 
-  gtk_widget_set_visible (self->warning_infobar, TRUE);
+static void
+gdu_encryption_options_dialog_class_init (GduEncryptionOptionsDialogClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  crypttab_dialog_update (self);
-  gtk_window_present (GTK_WINDOW (self));
+  object_class->finalize = gdu_encryption_options_dialog_finalize;
+
+  gtk_widget_class_set_template_from_resource (widget_class,
+                                               "/org/gnome/DiskUtility/ui/"
+                                               "gdu-encryption-options-dialog.ui");
+
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, infobar);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, done_button);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, use_defaults_switch);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, name_entry);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, passphrase_entry);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, unlock_at_startup_switch);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, require_auth_switch);
+  gtk_widget_class_bind_template_child (widget_class, GduEncryptionOptionsDialog, options_entry);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_done_clicked_cb);
+  gtk_widget_class_bind_template_callback (widget_class, on_property_changed_cb);
+}
+
+static void
+gdu_encryption_options_dialog_init (GduEncryptionOptionsDialog *self)
+{
+  gtk_widget_init_template (GTK_WIDGET (self));
 }
 
 void
-gdu_crypttab_dialog_show (GtkWindow    *parent_window,
-                          UDisksObject *object,
-                          UDisksClient *client)
+gdu_encryption_options_dialog_show (GtkWindow    *parent_window,
+                                    UDisksClient *client,
+                                    UDisksObject *object)
 {
-  GduCrypttabDialog *self;
-  g_autoptr(UDisksObject) drive = NULL;
+  GduEncryptionOptionsDialog *self;
+  g_autoptr(GError) error = NULL;
   g_autoptr(GVariant) config = NULL;
-  g_autofree char *name = NULL;
-  GVariantIter iter;
-  const char *conf_type;
-  gboolean has_conf = FALSE;
-  gboolean get_passphrase_contents = FALSE;
+  g_autoptr(UDisksObject) drive_object = NULL;
 
   g_return_if_fail (GTK_IS_WINDOW (parent_window));
+  g_return_if_fail (UDISKS_IS_CLIENT (client));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-  self = g_object_new (GDU_TYPE_CRYPTTAB_DIALOG,
+  self = g_object_new (GDU_TYPE_ENCRYPTION_OPTIONS_DIALOG,
                        "transient-for", parent_window,
                        NULL);
-  self->window = parent_window;
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
 
-  drive = (UDisksObject *)g_dbus_object_manager_get_object (udisks_client_get_object_manager (client),
-                                                            udisks_block_get_drive (self->udisks_block));
-  if (drive)
-    self->udisks_drive = udisks_object_peek_drive (drive);
+  drive_object = (UDisksObject *)g_dbus_object_manager_get_object (udisks_client_get_object_manager (client),
+                                                                   udisks_block_get_drive (self->udisks_block));
+  if (drive_object)
+    self->udisks_drive = udisks_object_peek_drive (drive_object);
 
-  /* First check if there's an existing configuration */
-  g_variant_iter_init (&iter, udisks_block_get_configuration (self->udisks_block));
-  while (g_variant_iter_next (&iter, "(&s@a{sv})", &conf_type, &config))
+  self->crypttab_config = gdu_encryption_options_dialog_get_crypttab_from_config (udisks_block_get_configuration (self->udisks_block));
+  adw_switch_row_set_active (ADW_SWITCH_ROW (self->use_defaults_switch), self->crypttab_config == NULL);
+  if (self->crypttab_config != NULL)
     {
-      if (g_strcmp0 (conf_type, "crypttab") == 0)
+      const char *passphrase_path;
+      g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &passphrase_path);
+      /* fetch contents of passphrase file, if it exists (unless special file)
+       * and get the actual passphrase as well (involves polkit dialog)
+       */
+      if (passphrase_path && *passphrase_path && !g_str_has_prefix (passphrase_path, "/dev"))
         {
-          const char *passphrase_path;
-          has_conf = TRUE;
-          g_variant_lookup (config, "passphrase-path", "^&ay", &passphrase_path);
-          /* fetch contents of passphrase file, if it exists (unless special file) */
-          if (passphrase_path && *passphrase_path && !g_str_has_prefix (passphrase_path, "/dev"))
-            get_passphrase_contents = TRUE;
-          self->crypttab_config = g_steal_pointer (&config);
-          break;
+          if(!udisks_block_call_get_secret_configuration_sync (self->udisks_block,
+                                                               g_variant_new ("a{sv}", NULL), /* Options */
+                                                               &config,
+                                                               NULL, /* GCancellable */
+                                                               &error))
+            {
+              gdu_utils_show_error (gdu_encryption_options_dialog_get_window (self),
+                                    _("Error retrieving configuration data"),
+                                    error);
+              return;
+            }
+
+          gtk_widget_set_visible (self->infobar, TRUE);
+          g_clear_pointer (&self->crypttab_config, g_variant_unref);
+          self->crypttab_config = gdu_encryption_options_dialog_get_crypttab_from_config (config);
         }
     }
 
-  /* if there is an existing configuration and it has a passphrase, get the actual passphrase
-   * as well (involves polkit dialog)
-   */
-  if (has_conf && get_passphrase_contents)
-    {
-      udisks_block_call_get_secret_configuration (self->udisks_block,
-                                                  g_variant_new ("a{sv}", NULL), /* options */
-                                                  NULL, /* cancellable */
-                                                  (GAsyncReadyCallback) crypttab_dialog_on_get_secrets_cb,
-                                                  self);
-    }
-  else
-    {
-      /* otherwise just set up the dialog */
-      crypttab_dialog_update (self);
-      gtk_window_present (GTK_WINDOW (self));
-    }
+  gdu_encryption_options_dialog_update (self);
+  gtk_window_present (GTK_WINDOW (self));
 }

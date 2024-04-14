@@ -1,261 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <template class="GduCrypttabDialog" parent="GtkDialog">
-    <property name="border_width">5</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
-    <property name="title" translatable="yes">Encryption Options</property>
-    <signal name="response" handler="crypttab_dialog_response_cb" swapped="yes" />
-
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
-            <child>
-              <object class="GtkBox" id="infobar_box">
-                <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-             </object>
-            </child>
-
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="spacing">12</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Us_er Session Defaults</property>
-                    <property name="use_underline">True</property>
-                    <property name="mnemonic_widget">use_defaults_switch</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="scale" value="1"/>
-                    </attributes>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkSwitch" id="use_defaults_switch">
-                    <property name="visible">True</property>
-                    <property name="tooltip_markup" translatable="yes">Switch off &lt;i&gt;User Session Defaults&lt;/i&gt; to manage encryption options and passphrase for the device. The options correspond to an entry in the &lt;b&gt;/etc/crypttab&lt;/b&gt; file</property>
-                    <signal name="notify::active" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                  </object>
-                </child>
+  <template class="GduEncryptionOptionsDialog" parent="AdwWindow">
+    <property name="title" translatable="true">Encryption Options</property>
+    <property name="default-width">560</property>
+    <property name="default-height">500</property>
+    <property name="modal">true</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">false</property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="true">Cancel</property>
+                <property name="action-name">window.close</property>
               </object>
             </child>
-
-            <child>
-              <object class="GtkGrid" id="main_grid">
-                <property name="visible">True</property>
-                <property name="sensitive" bind-source="use_defaults_switch" bind-property="active" bind-flags="sync-create|invert-boolean" />
-                <property name="margin_start">24</property>
-                <property name="row_spacing">6</property>
-                <property name="column_spacing">10</property>
-
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="xalign">1</property>
-                    <property name="yalign">0</property>
-                    <property name="label" translatable="yes">Opt_ions</property>
-                    <property name="use_underline">True</property>
-                    <property name="mnemonic_widget">options_entry</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="visible">True</property>
-                    <property name="spacing">6</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkCheckButton" id="auto_unlock_check_button">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Unlock at system startup</property>
-                        <property name="tooltip_markup" translatable="yes">If checked, the device will be unlocked at system startup [!noauto]</property>
-                        <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
-                        <signal name="notify::active" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkCheckButton" id="require_auth_to_unlock_check_button">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Require additional authori_zation to unlock</property>
-                        <property name="tooltip_markup" translatable="yes">If checked, additional authorization is required to unlock the device [x-udisks-auth]</property>
-                        <property name="use_underline">True</property>
-                        <property name="xalign">0</property>
-                        <signal name="notify::active" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="options_entry">
-                    <property name="visible">True</property>
-                    <property name="tooltip_markup" translatable="yes">Options to use when unlocking the device</property>
-                    <property name="hexpand">True</property>
-                    <signal name="changed" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="xalign">1</property>
-                    <property name="label" translatable="yes">_Name</property>
-                    <property name="use_underline">True</property>
-                    <property name="mnemonic_widget">name_entry</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="name_entry">
-                    <property name="visible">True</property>
-                    <property name="tooltip_markup" translatable="yes">The name to use for the unlocked device — the device is set up as the name prefixed with &lt;b&gt;/dev/mapper&lt;/b&gt;/</property>
-                    <property name="hexpand">True</property>
-                    <signal name="changed" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible" bind-source="passphrase_entry" bind-property="visible" bind-flags="sync-create" />
-                    <property name="xalign">1</property>
-                    <property name="label" translatable="yes">_Passphrase</property>
-                    <property name="use_underline">True</property>
-                    <property name="mnemonic_widget">passphrase_entry</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="passphrase_entry">
-                    <property name="visible">True</property>
-                    <property name="tooltip_markup" translatable="yes">Passphrase of the device or empty to request from user when setting up the device</property>
-                    <property name="hexpand">True</property>
-                    <property name="visibility">False</property>
-                    <signal name="changed" handler="crypttab_dialog_property_changed_cb" swapped="yes" />
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton">
-                    <property name="visible" bind-source="passphrase_entry" bind-property="visible" bind-flags="sync-create" />
-                    <property name="active" bind-source="passphrase_entry" bind-property="visibility" bind-flags="sync-create|bidirectional" />
-                    <property name="label" translatable="yes">Sho_w passphrase</property>
-                    <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="xalign">1</property>
-                    <property name="label" translatable="yes">Passphrase File</property>
-                    <property name="use_underline">True</property>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
-                  </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="passphrase_path_label">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="selectable">True</property>
-                    <property name="ellipsize">middle</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">5</property>
-                  </packing>
-                </child>
-
-              </object>
-            </child>
-          </object>
-        </child>
-
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="use_underline">True</property>
-                <property name="receives_default">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="ok_button">
-                <property name="visible">True</property>
+            <child type="end">
+              <object class="GtkButton" id="done_button">
+                <property name="label" translatable="true">Done</property>
                 <property name="sensitive">False</property>
-                <property name="can_default">True</property>
-                <property name="label" translatable="yes">_OK</property>
-                <property name="use_underline">True</property>
-                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_done_clicked_cb" object="GduEncryptionOptionsDialog" swapped="true" />
+                <style>
+                  <class name="suggested-action"/>
+                </style>
               </object>
             </child>
           </object>
         </child>
-
+        <child type="top">
+          <object class="AdwBanner" id="infobar">
+            <property name="use-markup">true</property>
+            <property name="title" translatable="true">Only the passphrase referenced by the &lt;i&gt;/etc/crypttab&lt;/i&gt; file will be changed. To change the on-disk passphrase, use &lt;i&gt;Change Passphrase…&lt;/i&gt;</property>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwSwitchRow" id="use_defaults_switch">
+                    <property name="title" translatable="true">Automatic Encryption Options</property>
+                    <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="sensitive" bind-source="use_defaults_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                <child>
+                  <object class="AdwEntryRow" id="name_entry">
+                    <property name="title" translatable="true">Name</property>
+                    <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="passphrase_entry">
+                    <property name="title" translatable="true">Passphrase</property>
+                    <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="sensitive" bind-source="use_defaults_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                <child>
+                  <object class="AdwSwitchRow" id="unlock_at_startup_switch">
+                    <property name="title" translatable="true">Unlock at System Start</property>
+                    <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="require_auth_switch">
+                    <property name="title" translatable="true">Require Additional Authorization</property>
+                    <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwEntryRow" id="options_entry">
+                    <property name="title" translatable="true">Additional Options</property>
+                    <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
-    </child>
-    <action-widgets>
-      <action-widget response="cancel">cancel_button</action-widget>
-      <action-widget response="ok" default="yes">ok_button</action-widget>
-    </action-widgets>
+    </property>
   </template>
 </interface>

@@ -13,11 +13,11 @@
 
 G_BEGIN_DECLS
 
-#define GDU_TYPE_CRYPTTAB_DIALOG (gdu_crypttab_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduCrypttabDialog, gdu_crypttab_dialog, GDU, CRYPTTAB_DIALOG, GtkDialog)
+#define GDU_TYPE_ENCRYPTION_OPTIONS_DIALOG (gdu_encryption_options_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, GDU, ENCRYPTION_OPTIONS_DIALOG, AdwWindow)
 
-void   gdu_crypttab_dialog_show (GtkWindow    *parent_window,
-                                 UDisksObject *object,
-                                 UDisksClient *client);
+void   gdu_encryption_options_dialog_show (GtkWindow    *parent_window,
+                                           UDisksClient *client,
+                                           UDisksObject *object);
 
 G_END_DECLS

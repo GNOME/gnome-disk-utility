@@ -1,93 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <template class="GduFilesystemDialog" parent="GtkDialog">
-    <property name="title" translatable="yes">Change Filesystem Label</property>
-    <property name="resizable">False</property>
+  <template class="GduEditFilesystemDialog" parent="AdwWindow">
+    <property name="title" translatable="true">Edit Filesystem</property>
     <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
-    <property name="type_hint">dialog</property>
-    <property name="border_width">12</property>
-    <signal name="response" handler="filesystem_dialog_response_cb"/>
-
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-
-        <!-- Warning label -->
-        <child>
-          <object class="GtkLabel" id="warning_label">
-            <property name="visible">True</property>
-            <property name="margin_start">6</property>
-            <property name="margin_end">6</property>
-            <property name="margin_top">10</property>
-            <property name="margin_bottom">10</property>
-            <property name="label" translatable="yes">This filesystem will be automatically unmounted prior to any changes.</property>
-            <property name="wrap">True</property>
-          </object>
-        </child>
-
-        <!-- Filesystem label entry -->
-        <child>
-          <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="spacing">6</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Label</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">filesystem_label_entry</property>
-                <style><class name="dim-label"/></style>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="show-end-title-buttons">false</property>
+            <child type="start">
+              <object class="GtkButton">
+                <property name="label" translatable="true">_Cancel</property>
+                <property name="use-underline">true</property>
+                <property name="action-name">window.close</property>
               </object>
             </child>
-            <child>
-              <object class="GtkEntry" id="filesystem_label_entry">
-                <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="activates-default">True</property>
-                <signal name="changed" handler="filesystem_label_entry_changed_cb" swapped="yes"/>
-              </object>
-            </child>
-          </object>
-        </child>
-
-        <!-- OK, Cancel buttons -->
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="visible">True</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="receives-default">True</property>
+            <child type="end">
+              <object class="GtkButton" id="change_button">
+                <property name="label" translatable="true">Ch_ange</property>
                 <property name="use-underline">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="ok_button">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="can-default">True</property>
-                <property name="receives-default">True</property>
-                <property name="label" translatable="yes">C_hange</property>
-                <property name="use_action_appearance">False</property>
-                <property name="use_underline">True</property>
+                <property name="sensitive">False</property>
+                <signal name="clicked" handler="on_change_button_clicked" object="GduEditFilesystemDialog" swapped="true"/>
               </object>
             </child>
           </object>
         </child>
-
+        <child type="top">
+          <object class="AdwBanner" id="warning_banner">
+            <property name="title" translatable="true">This filesystem will be automatically unmounted prior to any changes.</property>
+          </object>
+        </child>
+        <property name="content">
+          <object class="AdwPreferencesPage">
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwEntryRow" id="fs_label_row">
+                    <property name="title" translatable="true">Label</property>
+                    <property name="show-apply-button">True</property>
+                    <signal name="apply" handler="on_fs_label_row_changed_cb" object="GduEditFilesystemDialog" swapped="true"/>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
       </object>
-    </child>
-    <action-widgets>
-      <action-widget response="cancel">cancel_button</action-widget>
-      <action-widget response="ok">ok_button</action-widget>
-    </action-widgets>
+    </property>
   </template>
 </interface>

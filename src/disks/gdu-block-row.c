@@ -260,17 +260,18 @@ edit_partition_cb (GtkWidget  *widget,
 
 static void
 edit_filesystem_cb (GtkWidget  *widget,
-                            const char *action_name,
-                            GVariant   *parameter)
+                    const char *action_name,
+                    GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
-  gdu_filesystem_dialog_show (block_row_get_window (self),
-                             object,
-                             block_row_get_client ());
+
+  gdu_edit_filesystem_dialog_show (block_row_get_window (self),
+                                   block_row_get_client (),
+                                   object);
 }
 
 static void

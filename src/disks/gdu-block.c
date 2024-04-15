@@ -429,6 +429,7 @@ gdu_block_new (gpointer  udisk_client,
   g_set_object (&self->object, udisk_object);
   g_set_object (&self->block, udisks_object_get_block (self->object));
   g_set_object (&self->partition, udisks_object_get_partition (self->object));
+  g_set_object (&self->file_system, udisks_object_get_filesystem (self->object));
   g_set_weak_pointer (&self->parent, parent);
 
   if (self->partition)

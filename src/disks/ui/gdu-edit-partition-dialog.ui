@@ -2,6 +2,7 @@
 <interface>
   <template class="GduEditPartitionDialog" parent="AdwWindow">
     <property name="title" translatable="true">Edit Partition</property>
+    <property name="modal">True</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -34,15 +35,13 @@
                   <object class="AdwComboRow" id="type_row">
                     <property name="title" translatable="true">Partition Type</property>
                     <property name="tooltip-markup" translatable="true">The partition type represented as a 32-bit &lt;i&gt;GUID&lt;/i&gt;</property>
-                    <signal name="notify::selected-item" handler="on_property_changed_cb"
-                      swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="name_entry">
                     <property name="title" translatable="true">Name</property>
                     <property name="tooltip-markup" translatable="true">The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the &lt;b&gt;/dev/disk/by-partlabel&lt;/b&gt; directory</property>
-                    <signal name="apply" handler="on_property_changed_cb"
+                    <signal name="notify::text" handler="on_property_changed_cb"
                       swapped="True" object="GduEditPartitionDialog" />
                     <style>
                       <class name="property" />

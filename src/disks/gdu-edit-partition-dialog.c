@@ -144,8 +144,7 @@ on_confirm_button_clicked_cb (GduEditPartitionDialog *self,
 }
 
 static void
-on_property_changed_cb (GduEditPartitionDialog *self,
-                        GtkWidget              *widget)
+on_property_changed_cb (GduEditPartitionDialog *self)
 {
   g_autofree char *type = NULL;
   g_autofree char *name = NULL;
@@ -195,16 +194,20 @@ gdu_edit_partition_dialog_populate_types_row (GduEditPartitionDialog *self)
                                                                     info->type);
       gtk_string_list_append (GTK_STRING_LIST (self->model), s);
       obj = g_list_model_get_item (G_LIST_MODEL (self->model), n);
-      g_object_set_data (G_OBJECT (obj), "type", (void *) info->type);
+      g_object_set_data (G_OBJECT (obj), "type", (gpointer) info->type);
       if (g_strcmp0 (info->type, cur_type) == 0)
         adw_combo_row_set_selected (ADW_COMBO_ROW (self->type_row), n);
     }
 
   g_list_foreach (infos, (GFunc) udisks_partition_type_info_free, NULL);
+  g_signal_connect_swapped (G_OBJECT (self->type_row),
+                            "notify::selected-item",
+                            G_CALLBACK (on_property_changed_cb),
+                            self);
 }
 
 static void
-edit_partition_populate (GduEditPartitionDialog *self)
+gdu_edit_partition_dialog_populate (GduEditPartitionDialog *self)
 {
   guint64 flags;
 
@@ -304,7 +307,7 @@ gdu_edit_partition_dialog_show (GtkWindow    *parent_window,
                                      "is referred to as the <i>active</i> partition"));
     }
 
-  edit_partition_populate (self);
+  gdu_edit_partition_dialog_populate (self);
   gdu_edit_partition_dialog_populate_types_row (self);
 
   gtk_window_present (GTK_WINDOW (self));

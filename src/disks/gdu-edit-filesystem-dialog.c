@@ -72,19 +72,7 @@ on_change_button_clicked (GduEditFilesystemDialog *self)
 static void
 on_fs_label_row_changed_cb (GduEditFilesystemDialog *self)
 {
-  GString *s;
-  guint max_len;
-  const char *fs_type;
-
   g_assert (GDU_IS_EDIT_FILESYSTEM_DIALOG (self));
-
-  fs_type = gdu_block_get_fs_type (self->drive_block);
-  max_len = gdu_utils_get_max_label_length (fs_type);
-  s = g_string_new (gtk_editable_get_text (GTK_EDITABLE (self->fs_label_row)));
-
-  g_string_truncate (s, max_len);
-  gtk_editable_set_text (GTK_EDITABLE (self->fs_label_row),
-                         g_string_free_and_steal (s));
 
   if (g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->fs_label_row)),
                  gdu_block_get_fs_label (self->drive_block)) == 0)
@@ -142,7 +130,10 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
                                  UDisksObject *object)
 {
   GduEditFilesystemDialog *self;
+  guint max_len;
+  GtkText *text;
   const char *label;
+  const char *fs_type;
 
   g_return_if_fail (UDISKS_IS_CLIENT (client));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
@@ -154,7 +145,12 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
   self->drive_block = gdu_block_new (client, object, NULL);
 
   label = gdu_block_get_fs_label (self->drive_block);
+  fs_type = gdu_block_get_fs_type (self->drive_block);
+  max_len = gdu_utils_get_max_label_length (fs_type);
+
   gtk_editable_set_text (GTK_EDITABLE (self->fs_label_row), label);
+  text = GTK_TEXT (gtk_editable_get_delegate ( GTK_EDITABLE (self->fs_label_row)));
+  gtk_text_set_max_length (text, max_len);
 
   adw_banner_set_revealed (ADW_BANNER (self->warning_banner),
                            gdu_block_needs_unmount (self->drive_block));

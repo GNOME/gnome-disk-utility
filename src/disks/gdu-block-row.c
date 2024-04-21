@@ -706,8 +706,6 @@ fs_take_ownership_cb (GObject      *object,
       gdu_utils_show_error (block_row_get_window (self),
                             _("Error while taking filesystem ownership"),
                             error);
-
-      g_error_free (error);
     }
 }
 

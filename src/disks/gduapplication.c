@@ -22,6 +22,7 @@
 #include "gdunewdiskimagedialog.h"
 #include "gduwindow.h"
 #include "gdulocaljob.h"
+#include "gdu-log.h"
 
 struct _GduApplication
 {
@@ -161,9 +162,21 @@ gdu_application_object_from_block_device (GduApplication *app,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static gboolean
+cmd_verbose_cb (const char  *option_name,
+                const char  *value,
+                gpointer     data,
+                GError     **error)
+{
+  gdu_log_increase_verbosity ();
+
+  return TRUE;
+}
+
 static GOptionEntry opt_entries[] = {
     {"block-device", 0, 0, G_OPTION_ARG_STRING, NULL, N_("Select device"), "DEVICE" },
     {"format-device", 0, 0, G_OPTION_ARG_NONE, NULL, N_("Format selected device"), NULL },
+    {"verbose", 'v', G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, cmd_verbose_cb, N_("Show verbose logs, specify up to four times to increase log level"), NULL },
     {"xid", 0, 0, G_OPTION_ARG_INT, NULL, N_("Ignored, kept for compatibility"), "ID" },
     {"restore-disk-image", 0, 0, G_OPTION_ARG_FILENAME, NULL, N_("Restore disk image"), "FILE" },
     {NULL}
@@ -181,6 +194,7 @@ gdu_application_command_line (GApplication            *_app,
                               GApplicationCommandLine *command_line)
 {
   GduApplication *app = GDU_APPLICATION (_app);
+
   UDisksObject *object_to_select = NULL;
   gint ret = 1;
   const gchar *opt_block_device = NULL;
@@ -436,6 +450,7 @@ gdu_application_class_init (GduApplicationClass *klass)
   gobject_class->finalize = gdu_application_finalize;
 
   application_class = G_APPLICATION_CLASS (klass);
+
   application_class->command_line = gdu_application_command_line;
   application_class->activate     = gdu_application_activate;
   application_class->startup      = gdu_application_startup;

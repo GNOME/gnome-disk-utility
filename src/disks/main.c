@@ -10,12 +10,15 @@
 #include <glib/gi18n.h>
 
 #include "gduapplication.h"
+#include "gdu-log.h"
 
 int
 main (int argc, char *argv[])
 {
   GApplication *app;
   gint status;
+
+  gdu_log_init ();
 
   /* Initialize gettext support */
   bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);

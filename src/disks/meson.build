@@ -39,6 +39,7 @@ sources = files(
   'gduvolumegrid.c',
   'gduwindow.c',
   'gduxzdecompressor.c',
+  'gdu-log.c',
   'main.c',
 )
 

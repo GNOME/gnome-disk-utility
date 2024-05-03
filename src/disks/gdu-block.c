@@ -22,6 +22,7 @@
 #include "gdu-drive.h"
 #include "gdu-item.h"
 #include "gduutils.h"
+#include "gdu-log.h"
 #include "gdu-block.h"
 
 /**
@@ -665,10 +666,17 @@ change_fs_label_cb (GObject      *object,
 
   udisks_filesystem_call_set_label_finish (self->file_system, result, &error);
 
+  g_debug ("Changing fs label %s", gdu_log_bool_str (!error, true));
+
   if (error)
-    g_task_return_error (task, error);
+    {
+      g_debug ("Changing fs label error: %s", error->message);
+      g_task_return_error (task, error);
+    }
   else
-    g_task_return_boolean (task, TRUE);
+    {
+      g_task_return_boolean (task, TRUE);
+    }
 }
 
 static void
@@ -698,9 +706,13 @@ unmount_fs_cb (GObject      *object,
     }
   else
     {
+      g_debug ("Unmount fs error: %s", error->message);
+
       self->in_progress = false;
       g_task_return_error (task, error);
     }
+
+  g_debug ("Unmounting fs %s", gdu_log_bool_str (!error, true));
 }
 
 void
@@ -716,12 +728,17 @@ gdu_block_set_fs_label_async (GduBlock            *self,
   if (!label)
     label = "";
 
+  g_debug ("Setting fs label to '%s'", label);
+
   task = g_task_new (self, NULL, callback, user_data);
   g_task_set_task_data (task, g_strdup (label), g_free);
   return_if_progress (self, task);
 
   if (!self->file_system || !self->block)
     {
+      g_debug ("Error setting fs label, file-system: %p, block: %p",
+               self->file_system, self->block);
+
       g_task_return_new_error (task,
                                G_IO_ERROR,
                                G_IO_ERROR_NOT_SUPPORTED,

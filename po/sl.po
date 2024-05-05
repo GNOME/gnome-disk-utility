@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-04-07 08:32+0000\n"
-"PO-Revision-Date: 2024-04-07 13:31+0200\n"
+"POT-Creation-Date: 2024-05-05 14:49+0000\n"
+"PO-Revision-Date: 2024-05-05 18:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -199,45 +199,50 @@ msgstr "Napaka med odpiranjem »%s«: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Napaka med priklapljanjem odtisa diska: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:93
+#: src/disks/gduapplication.c:94
 msgid "Stop running jobs?"
 msgstr "Ali želite zaustaviti trenutna opravila?"
 
-#: src/disks/gduapplication.c:95
+#: src/disks/gduapplication.c:96
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr "Zapiranje zaustavi dejavna opravila in lahko okvari datotečni sistem."
 
-#: src/disks/gduapplication.c:136
+#: src/disks/gduapplication.c:137
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Napaka med odpiranjem %s: %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Napaka med iskanjem bločne naprave za %s"
 
-#: src/disks/gduapplication.c:165
+#: src/disks/gduapplication.c:177
 msgid "Select device"
 msgstr "Izbor naprave"
 
-#: src/disks/gduapplication.c:166
+#: src/disks/gduapplication.c:178
 msgid "Format selected device"
 msgstr "Formatiraj izbrano napravo"
 
-#: src/disks/gduapplication.c:167
+#: src/disks/gduapplication.c:179
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr ""
+"Pokaži obsežne zapisnike z določitvijo do štirikrat večjega obsega beleženja"
+
+#: src/disks/gduapplication.c:180
 msgid "Ignored, kept for compatibility"
 msgstr "Prezrto – ohranjeno zaradi združljivosti"
 
-#: src/disks/gduapplication.c:168
+#: src/disks/gduapplication.c:181
 msgid "Restore disk image"
 msgstr "Obnovi odtis diska"
 
-#: src/disks/gduapplication.c:200
+#: src/disks/gduapplication.c:214
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device je treba uporabiti skupaj z --block-device\n"
 
-#: src/disks/gduapplication.c:206
+#: src/disks/gduapplication.c:220
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device ne sme biti uporabljen skupaj z --restore-disk-image"
 
@@ -246,7 +251,7 @@ msgstr "--format-device ne sme biti uporabljen skupaj z --restore-disk-image"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:340
+#: src/disks/gduapplication.c:354
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1287,11 +1292,11 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Napaka branja %lld bajtov od odmika %lld"
 
-#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
 msgid "Free Space"
 msgstr "Nezaseden prostor"
 
-#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+#: src/disks/gdu-block.c:97 src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Razširjeni razdelek"
 
@@ -1301,7 +1306,7 @@ msgstr "Razširjeni razdelek"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:567
+#: src/disks/gdu-block.c:569
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s – %s prosto (%.1f%% full)"

@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2024-02-04 12:04+0000\n"
-"PO-Revision-Date: 2024-03-02 11:18+0100\n"
+"POT-Creation-Date: 2024-05-07 17:14+0000\n"
+"PO-Revision-Date: 2024-05-19 08:23+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -97,8 +97,20 @@ msgstr ""
 "eszközöket, teljesítménytesztet hajthat végre fizikai lemezeken, valamint "
 "lemezképet készíthet USB-meghajtókról."
 
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "Lemezek particionálása és formázása"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "Meghajtó sebességének és egészségi állapotának ellenőrzése"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "Tárolóeszközök kezelése"
+
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:47
+#: data/org.gnome.DiskUtility.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "A GNOME projekt"
 
@@ -184,48 +196,54 @@ msgstr "Hiba „%s” megnyitásakor: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Hiba a lemezkép csatolásakor: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:93
+#: src/disks/gduapplication.c:94
 msgid "Stop running jobs?"
 msgstr "Leállítja a futó feladatokat?"
 
-#: src/disks/gduapplication.c:95
+#: src/disks/gduapplication.c:96
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr ""
 "Az azonnali bezárás leállítja a futó feladatokat, és hibás eredményt okoz."
 
-#: src/disks/gduapplication.c:136
+#: src/disks/gduapplication.c:137
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Hiba %s megnyitásakor: %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Hiba a blokkeszköz kikeresésekor ehhez: %s"
 
-#: src/disks/gduapplication.c:165
+#: src/disks/gduapplication.c:177
 msgid "Select device"
 msgstr "Válasszon egy eszközt"
 
-#: src/disks/gduapplication.c:166
+#: src/disks/gduapplication.c:178
 msgid "Format selected device"
 msgstr "A kijelölt eszköz formázása"
 
-#: src/disks/gduapplication.c:167
+#: src/disks/gduapplication.c:179
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr ""
+"Részletes naplók megjelenítése, adja meg legfeljebb négyszer a naplózási"
+" szint növeléséhez"
+
+#: src/disks/gduapplication.c:180
 msgid "Ignored, kept for compatibility"
 msgstr "Figyelmen kívül hagyva, kompatibilitási okból lett meghagyva"
 
-#: src/disks/gduapplication.c:168
+#: src/disks/gduapplication.c:181
 msgid "Restore disk image"
 msgstr "Lemezkép visszaállítása"
 
-#: src/disks/gduapplication.c:200
+#: src/disks/gduapplication.c:214
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 "A --format-device kapcsolót a --block-device kapcsolóval együtt kell "
 "használni\n"
 
-#: src/disks/gduapplication.c:206
+#: src/disks/gduapplication.c:220
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 "A --format-device kapcsolót tilos a --restore-disk-image kapcsolóval együtt "
@@ -236,7 +254,7 @@ msgstr ""
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:340
+#: src/disks/gduapplication.c:354
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1269,13 +1287,11 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "Hiba %lld bájt olvasásakor a következő eltolásból: %lld"
 
-#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
-#| msgctxt "volume-grid"
-#| msgid "Free Space"
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
 msgid "Free Space"
 msgstr "Szabad hely"
 
-#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+#: src/disks/gdu-block.c:97 src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Kiterjesztett partíció"
 
@@ -1285,7 +1301,7 @@ msgstr "Kiterjesztett partíció"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:567
+#: src/disks/gdu-block.c:569
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s szabad (%.1f%% használt)"
@@ -2807,7 +2823,6 @@ msgid "Wr_ite Cache"
 msgstr "Í_rási gyorsítótár"
 
 #: src/disks/ui/disks.ui:34
-#| msgid "Application Menu"
 msgid "Main Menu"
 msgstr "Főmenü"
 
@@ -2821,17 +2836,14 @@ msgid "Drive Options"
 msgstr "Meghajtóbeállítások"
 
 #: src/disks/ui/disks.ui:121
-#| msgid "_Power Off"
 msgid "Power Off Disk"
 msgstr "Lemez kikapcsolása"
 
 #: src/disks/ui/disks.ui:136
-#| msgid "Eject this disk"
 msgid "Eject Disk"
 msgstr "Lemez kiadása"
 
 #: src/disks/ui/disks.ui:151
-#| msgid "Detach this loop device"
 msgid "Detach Loop Device"
 msgstr "Hurokeszköz leválasztása"
 
@@ -2877,7 +2889,6 @@ msgid "Auto-clear"
 msgstr "Automatikus törlés"
 
 #: src/disks/ui/disks.ui:560
-#| msgid "Detach loop device after unmount action"
 msgid "Detach Loop Device After Unmounting"
 msgstr "Hurokeszköz leválasztása a leválasztás után"
 
@@ -2895,47 +2906,38 @@ msgid "_Volumes"
 msgstr "_Kötetek"
 
 #: src/disks/ui/disks.ui:675
-#| msgid "Mount selected partition"
 msgid "Mount Selected Partition"
 msgstr "Kiválasztott partíció csatolása"
 
 #: src/disks/ui/disks.ui:692
-#| msgid "Unmount selected partition"
 msgid "Unmount Selected Partition"
 msgstr "Kiválasztott partíció leválasztása"
 
 #: src/disks/ui/disks.ui:709
-#| msgid "Activate selected swap partition"
 msgid "Activate Selected Swap Partition"
 msgstr "Kiválasztott cserehely bekapcsolása"
 
 #: src/disks/ui/disks.ui:726
-#| msgid "Deactivate selected swap partition"
 msgid "Deactivate Selected Swap Partition"
 msgstr "Kiválasztott cserehely kikapcsolása"
 
 #: src/disks/ui/disks.ui:743
-#| msgid "Unlock selected encrypted partition"
 msgid "Unlock Selected Encrypted Partition"
 msgstr "Kiválasztott titkosított partíció feloldása"
 
 #: src/disks/ui/disks.ui:760
-#| msgid "Lock selected encrypted partition"
 msgid "Lock Selected Encrypted Partition"
 msgstr "Kiválasztott titkosított partíció zárolása"
 
 #: src/disks/ui/disks.ui:777
-#| msgid "Create partition in unallocated space"
 msgid "Create Partition in Unallocated Space"
 msgstr "Partíció létrehozása a lefoglalatlan területen"
 
 #: src/disks/ui/disks.ui:794
-#| msgid "Additional partition options"
 msgid "Additional Partition Options"
 msgstr "További particionálási lehetőségek"
 
 #: src/disks/ui/disks.ui:821
-#| msgid "Delete selected partition"
 msgid "Delete Selected Partition"
 msgstr "Kiválasztott partíció törlése"
 
@@ -3279,7 +3281,6 @@ msgid "_Format…"
 msgstr "_Formázás…"
 
 #: src/disks/ui/gdu-block-row.ui:95
-#| msgid "Device"
 msgid "Device ID"
 msgstr "Eszközazonosító"
 
@@ -3336,12 +3337,10 @@ msgid "_Benchmark Partition…"
 msgstr "Partíció _teljesítménytesztje…"
 
 #: src/disks/ui/gdu-drive-view.ui:122
-#| msgid "_Volumes"
 msgid "Volumes"
 msgstr "Kötetek"
 
 #: src/disks/ui/gdu-drive-view.ui:204
-#| msgid "Serial Number"
 msgid "Serial"
 msgstr "Sorozatszám"
 
@@ -3350,8 +3349,6 @@ msgid "Application Menu"
 msgstr "Alkalmazásmenü"
 
 #: src/disks/ui/gdu-window.ui:89
-#| msgctxt "shortcut window"
-#| msgid "Drive"
 msgid "Drives"
 msgstr "Meghajtók"
 

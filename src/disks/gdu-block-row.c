@@ -126,6 +126,7 @@ gdu_block_row_update_features (GduBlockRow *self)
 
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
+  ENABLE ("row.mount", GDU_FEATURE_CAN_MOUNT);
   ENABLE ("row.unmount", GDU_FEATURE_CAN_UNMOUNT);
   ENABLE ("row.resize", GDU_FEATURE_RESIZE_PARTITION);
   ENABLE ("row.edit_partition", GDU_FEATURE_EDIT_PARTITION);
@@ -303,8 +304,8 @@ create_partition_cb (GtkWidget  *widget,
 
 static void
 unmount_cb (GtkWidget  *widget,
-                    const char *action_name,
-                    GVariant   *parameter)
+            const char *action_name,
+            GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
@@ -317,6 +318,46 @@ unmount_cb (GtkWidget  *widget,
                            NULL,
                            NULL,
                            NULL);
+}
+
+static void
+mount_complete_cb (GObject *source_object,
+          GAsyncResult     *res,
+          gpointer          user_data)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (user_data);
+  UDisksFilesystem *filesystem = UDISKS_FILESYSTEM (source_object);
+  g_autoptr(GError) error = NULL;
+
+  if (!udisks_filesystem_call_mount_finish (filesystem,
+                                            NULL, /* out_mount_path */
+                                            res,
+                                            &error))
+    {
+      gdu_utils_show_error (block_row_get_window (self),
+                            _("Error mounting filesystem"),
+                            error);
+    }
+}
+
+
+static void
+mount_cb (GtkWidget  *widget,
+          const char *action_name,
+          GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  UDisksObject *object;
+  UDisksFilesystem *filesystem;
+
+  object = gdu_block_get_object (self->block);
+  filesystem = udisks_object_peek_filesystem (object);
+
+  udisks_filesystem_call_mount (filesystem,
+                                g_variant_new ("a{sv}", NULL), /* options */
+                                NULL, /* cancellable */
+                                (GAsyncReadyCallback) mount_complete_cb,
+                                self);
 }
 
 static void
@@ -921,6 +962,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
     void (*cb) (GtkWidget *widget, const char *action_name, GVariant *parameter);
   } actions[] = {
     { "row.create_partition", create_partition_cb },
+    { "row.mount", mount_cb },
     { "row.unmount", unmount_cb },
     { "row.resize", resize_cb },
     { "row.edit_partition", edit_partition_cb },

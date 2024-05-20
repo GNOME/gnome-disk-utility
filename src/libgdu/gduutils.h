@@ -27,10 +27,6 @@ void gdu_utils_configure_file_dialog_for_disk_images (GtkFileDialog  *file_dialo
 
 void gdu_utils_file_chooser_for_disk_images_set_default_folder (GFile *folder);
 
-GtkWidget *gdu_utils_create_info_bar (GtkMessageType  message_type,
-                                      const gchar    *markup,
-                                      GtkWidget     **out_label);
-
 gchar *gdu_utils_unfuse_path (const gchar *path);
 
 void gdu_options_update_check_option (GtkWidget       *options_entry,

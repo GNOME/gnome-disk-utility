@@ -77,6 +77,7 @@ luks_find_passphrase_cb (GObject      *source,
   passphrase = secret_password_lookup_finish (result, NULL);
   if (passphrase)
     {
+      /* gtk4 todo: use AdwBanner
       GtkWidget *infobar;
 
       infobar = gdu_utils_create_info_bar (GTK_MESSAGE_INFO,
@@ -85,6 +86,7 @@ luks_find_passphrase_cb (GObject      *source,
       gtk_box_append (self->infobar_box, infobar);
       gtk_widget_set_visible (GTK_WIDGET (self->infobar_box), TRUE);
       gtk_editable_set_text (GTK_EDITABLE (self->passphrase_entry), passphrase);
+      */
     }
 
   gtk_window_present (GTK_WINDOW (self));

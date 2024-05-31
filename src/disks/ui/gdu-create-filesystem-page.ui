@@ -11,7 +11,8 @@
           <object class="AdwPreferencesGroup">
             <child>
               <object class="AdwEntryRow" id="name_entry">
-                <property name="title" translatable="true">Volume Name</property>
+                <property name="title" translatable="true">_Volume Name</property>
+                <property name="use-underline">True</property>
                 <signal name="apply" handler="on_fs_name_changed" object="GduCreateFilesystemPage" swapped="yes" />
               </object>
             </child>
@@ -21,7 +22,8 @@
           <object class="AdwPreferencesGroup">
             <child>
               <object class="AdwActionRow">
-                <property name="title" translatable="true">Overwrite Existing Data</property>
+                <property name="title" translatable="true">_Overwrite Existing Data</property>
+                <property name="use-underline">True</property>
                 <property name="activatable-widget">erase_switch</property>
                 <child type="suffix">
                   <object class="GtkMenuButton">
@@ -48,8 +50,9 @@
             <property name="title" translatable="true">Type</property>
             <child>
               <object class="AdwActionRow">
-                <property name="title">Ext4</property>
+                <property name="title">E_xt4</property>
                 <property name="subtitle" translatable="true">For use only with Linux systems</property>
+                <property name="use-underline">True</property>
                 <property name="activatable-widget">ext4_checkbutton</property>
                 <child type="prefix">
                   <object class="GtkCheckButton" id="ext4_checkbutton">
@@ -61,8 +64,9 @@
             </child>
             <child>
               <object class="AdwActionRow">
-                <property name="title">NTFS</property>
+                <property name="title">N_TFS</property>
                 <property name="subtitle" translatable="true">For use with Windows</property>
+                <property name="use-underline">True</property>
                 <property name="activatable-widget">ntfs_checkbutton</property>
                 <child type="prefix">
                   <object class="GtkCheckButton" id="ntfs_checkbutton">
@@ -74,8 +78,9 @@
             </child>
             <child>
               <object class="AdwActionRow">
-                <property name="title">FAT</property>
+                <property name="title">_FAT</property>
                 <property name="subtitle" translatable="true">For use with all systems and devices</property>
+                <property name="use-underline">True</property>
                 <property name="activatable-widget">fat_checkbutton</property>
                 <child type="prefix">
                   <object class="GtkCheckButton" id="fat_checkbutton">
@@ -87,7 +92,8 @@
             </child>
             <child>
               <object class="AdwActionRow">
-                <property name="title">Other</property>
+                <property name="title">Ot_her</property>
+                <property name="use-underline">True</property>
                 <property name="activatable-widget">other_checkbutton</property>
                 <child type="prefix">
                   <object class="GtkCheckButton" id="other_checkbutton">
@@ -103,8 +109,9 @@
           <object class="AdwPreferencesGroup">
             <child>
               <object class="AdwSwitchRow" id="encrypt_switch">
-                <property name="title" translatable="true">Password Protect Volume</property>
+                <property name="title" translatable="true">_Password Protect Volume</property>
                 <property name="subtitle" translatable="true">Encrypts the volume using LUKS</property>
+                <property name="use-underline">True</property>
                 <signal name="notify::active" handler="on_fs_type_changed" object="GduCreateFilesystemPage" swapped="yes" />
                 <property name="sensitive"
                       bind-source="ext4_checkbutton"

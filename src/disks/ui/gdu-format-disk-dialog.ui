@@ -11,13 +11,15 @@
             <property name="show-end-title-buttons">false</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="true">_Cancel</property>
                 <property name="action-name">window.close</property>
+                <property name="use-underline">True</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="true">Format</property>
+                <property name="label" translatable="true">_Format</property>
+                <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_format_clicked_cb"
                 swapped="True" object="GduFormatDiskDialog" />
                 <style>
@@ -33,8 +35,9 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSwitchRow" id="erase_row">
-                    <property name="title" translatable="true">Erase Existing Data</property>
+                    <property name="title" translatable="true">_Erase Existing Data</property>
                     <property name="subtitle" translatable="true">Slows down formatting</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -44,9 +47,10 @@
                 <property name="title" translatable="true">Partitioning</property>
                 <child>
                   <object class="AdwActionRow" id="partitioning_gpt_row">
-                    <property name="title" translatable="true">GPT</property>
+                    <property name="title" translatable="true">_GPT</property>
                     <property name="subtitle" translatable="true">Compatible with UEFI and disks over 2 TB</property>
                     <property name="activatable-widget">gpt_checkbox</property>
+                    <property name="use-underline">True</property>
                     <child type="prefix">
                       <object class="GtkCheckButton" id="gpt_checkbox">
                         <property name="action-name">format.update_part_type</property>
@@ -57,9 +61,10 @@
                 </child>
                 <child>
                   <object class="AdwActionRow" id="partitioning_mbr_row">
-                    <property name="title" translatable="true">MBR</property>
+                    <property name="title" translatable="true">_MBR</property>
                     <property name="subtitle" translatable="true">Legacy option with wide hardware compatibility</property>
                     <property name="activatable-widget">mbr_checkbox</property>
+                    <property name="use-underline">True</property>
                     <child type="prefix">
                       <object class="GtkCheckButton" id="mbr_checkbox">
                         <property name="action-name">format.update_part_type</property>
@@ -70,9 +75,10 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="true">No partitioning</property>
+                    <property name="title" translatable="true">_No partitioning</property>
                     <property name="subtitle" translatable="true">Disk will be empty</property>
                     <property name="activatable-widget">none_checkbox</property>
+                    <property name="use-underline">True</property>
                     <child type="prefix">
                       <object class="GtkCheckButton" id="none_checkbox">
                         <property name="action-name">format.update_part_type</property>

@@ -351,6 +351,10 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_row);
 
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
+
   gtk_widget_class_bind_template_callback (widget_class, on_format_clicked_cb);
 
   properties[PROP_PARTITIONING_TYPE] =

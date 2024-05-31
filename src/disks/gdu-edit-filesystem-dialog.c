@@ -114,6 +114,10 @@ gdu_edit_filesystem_dialog_class_init (GduEditFilesystemDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduEditFilesystemDialog, warning_banner);
   gtk_widget_class_bind_template_child (widget_class, GduEditFilesystemDialog, fs_label_row);
 
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
+
   gtk_widget_class_bind_template_callback (widget_class, on_change_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_fs_label_row_changed_cb);
 }

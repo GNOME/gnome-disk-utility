@@ -3,7 +3,7 @@
   <template class="GduFormatDiskDialog" parent="AdwWindow">
     <property name="default-width">400</property>
     <property name="modal">true</property>
-    <property name="title" translatable="true">Format Disk</property>
+    <property name="title" translatable="yes">Format Disk</property>
     <property name="content">
       <object class="AdwToolbarView">
         <child type="top">
@@ -12,14 +12,14 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">_Cancel</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="action-name">window.close</property>
                 <property name="use-underline">True</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="true">_Format</property>
+                <property name="label" translatable="yes">_Format</property>
                 <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_format_clicked_cb"
                 swapped="True" object="GduFormatDiskDialog" />
@@ -36,8 +36,8 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSwitchRow" id="erase_row">
-                    <property name="title" translatable="true">_Erase Existing Data</property>
-                    <property name="subtitle" translatable="true">Slows down formatting</property>
+                    <property name="title" translatable="yes">_Erase Existing Data</property>
+                    <property name="subtitle" translatable="yes">Slows down formatting</property>
                     <property name="use-underline">True</property>
                   </object>
                 </child>
@@ -45,11 +45,11 @@
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="true">Partitioning</property>
+                <property name="title" translatable="yes">Partitioning</property>
                 <child>
                   <object class="AdwActionRow" id="partitioning_gpt_row">
-                    <property name="title" translatable="true">_GPT</property>
-                    <property name="subtitle" translatable="true">Compatible with UEFI and disks over 2 TB</property>
+                    <property name="title" translatable="yes">_GPT</property>
+                    <property name="subtitle" translatable="yes">Compatible with UEFI and disks over 2 TB</property>
                     <property name="activatable-widget">gpt_checkbox</property>
                     <property name="use-underline">True</property>
                     <child type="prefix">
@@ -62,8 +62,8 @@
                 </child>
                 <child>
                   <object class="AdwActionRow" id="partitioning_mbr_row">
-                    <property name="title" translatable="true">_MBR</property>
-                    <property name="subtitle" translatable="true">Legacy option with wide hardware compatibility</property>
+                    <property name="title" translatable="yes">_MBR</property>
+                    <property name="subtitle" translatable="yes">Legacy option with wide hardware compatibility</property>
                     <property name="activatable-widget">mbr_checkbox</property>
                     <property name="use-underline">True</property>
                     <child type="prefix">
@@ -76,8 +76,8 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="true">_No partitioning</property>
-                    <property name="subtitle" translatable="true">Disk will be empty</property>
+                    <property name="title" translatable="yes">_No partitioning</property>
+                    <property name="subtitle" translatable="yes">Disk will be empty</property>
                     <property name="activatable-widget">none_checkbox</property>
                     <property name="use-underline">True</property>
                     <child type="prefix">

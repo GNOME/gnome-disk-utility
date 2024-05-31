@@ -15,13 +15,15 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="true">_Cancel</property>
+                <property name="use-underline">True</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="start_restore_button">
-                <property name="label" translatable="true">Restore</property>
+                <property name="label" translatable="true">_Restore</property>
+                <property name="use-underline">True</property>
                 <property name="sensitive">false</property>
                 <signal name="clicked" handler="on_start_restore_button_clicked_cb" object="GduRestoreDiskImageDialog" swapped="true" />
               </object>

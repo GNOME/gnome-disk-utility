@@ -80,7 +80,7 @@ gdu_create_filesystem_page_is_encrypted (GduCreateFilesystemPage *self)
 const gchar *
 gdu_create_filesystem_page_get_erase (GduCreateFilesystemPage *self)
 {
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->erase_switch)))
+  if (gtk_switch_get_active (GTK_SWITCH (self->erase_switch)))
     return "zero";
   /* TODO: "ata-secure-erase", "ata-secure-erase-enhanced" */
 

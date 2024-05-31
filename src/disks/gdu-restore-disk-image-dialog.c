@@ -36,10 +36,9 @@ struct _GduRestoreDiskImageDialog
   GtkWidget     *warning_banner;
   GtkWidget     *error_banner;
 
-  GtkWidget     *image_label;
+  GtkWidget     *image_row;
   GtkWidget     *file_chooser_button;
-  GtkWidget     *size_label;
-  GtkWidget     *destination_label;
+  GtkWidget     *size_row;
   GtkWidget     *destination_row;
 
   GtkWidget     *selectable_image_fcbutton;
@@ -223,9 +222,9 @@ gdu_restore_disk_image_dialog_update (GduRestoreDiskImageDialog *self)
   adw_banner_set_revealed (ADW_BANNER (self->warning_banner), restore_warning != NULL);
 
   gtk_widget_set_sensitive (self->start_restore_button, restore_error == NULL);
-  gtk_label_set_text (GTK_LABEL (self->image_label), name);
-  gtk_label_set_label (GTK_LABEL (self->size_label),
-                       size_str != NULL ? size_str : "—");
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->image_row), name);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->size_row),
+                               size_str != NULL ? size_str : "—");
 }
 
 static void
@@ -883,12 +882,11 @@ gdu_restore_disk_image_dialog_class_init (GduRestoreDiskImageDialogClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-restore-disk-image-dialog.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, size_row);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, start_restore_button);
-  gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, image_label);
+  gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, image_row);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, file_chooser_button);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, destination_row);
-  gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, destination_label);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, error_banner);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, warning_banner);
 
@@ -934,7 +932,7 @@ gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
     {
       g_autofree char *s;
       s = gdu_utils_unfuse_path (disk_image_filename);
-      gtk_label_set_text (GTK_LABEL (self->image_label), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->image_row), s);
       gtk_widget_set_visible (self->file_chooser_button, FALSE);
     }
 
@@ -943,8 +941,9 @@ gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
     {
       g_autoptr (UDisksObjectInfo) info;
       info = udisks_client_get_object_info (self->client, self->object);
-      gtk_label_set_text (GTK_LABEL (self->destination_label),
-                          udisks_object_info_get_one_liner (info));
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->destination_row),
+                                   udisks_object_info_get_one_liner (info));
+
     }
   else
     {

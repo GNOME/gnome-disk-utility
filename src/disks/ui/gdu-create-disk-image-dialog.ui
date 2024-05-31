@@ -16,13 +16,15 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="true">_Cancel</property>
+                <property name="use-underline">True</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="create_image_button">
-                <property name="label" translatable="true">Create</property>
+                <property name="label" translatable="true">C_reate</property>
+                <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_create_image_button_clicked_cb"
                   swapped="True" object="GduCreateDiskImageDialog" />
                 <style>
@@ -40,7 +42,8 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwEntryRow" id="name_entry">
-                    <property name="title" translatable="true">Name</property>
+                    <property name="title" translatable="true">_Name</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>

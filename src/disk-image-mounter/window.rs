@@ -195,23 +195,41 @@ impl ImageMounterWindow {
     }
 
     #[template_callback]
-    fn on_continue_button(&self, _button: &gtk::Button) {
-        let main_context = glib::MainContext::default();
-        main_context.spawn_local(glib::clone!(@weak self as window => async move {
-            let error = match window.continue_action() {
-                Action::OpenInFiles => window.mount(true).await.map_err(|_| gettext("Failed to mount file")).err(),
-                Action::OpenInFilesWritable => window.mount(false).await.map_err(|_| gettext("Failed to mount file")).err(),
-                Action::Unmount => window.unmount().await.map_err(|_| gettext("Failed to unmount file")).err(),
-                Action::Write => window.write_image().map_err(|_| gettext("Failed to write image")).err(),
-                Action::Inspect => window.inspect().await.map_err(|_| gettext("Failed to inspect image")).err(),
-            };
+    async fn on_continue_button(&self, _button: &gtk::Button) {
+        let error = match self.continue_action() {
+            Action::OpenInFiles => self
+                .mount(true)
+                .await
+                .map_err(|_| gettext("Failed to mount file"))
+                .err(),
+            Action::OpenInFilesWritable => self
+                .mount(false)
+                .await
+                .map_err(|_| gettext("Failed to mount file"))
+                .err(),
+            Action::Unmount => self
+                .unmount()
+                .await
+                .map_err(|_| gettext("Failed to unmount file"))
+                .err(),
+            Action::Write => self
+                .write_image()
+                .map_err(|_| gettext("Failed to write image"))
+                .err(),
+            Action::Inspect => self
+                .inspect()
+                .await
+                .map_err(|_| gettext("Failed to inspect image"))
+                .err(),
+        };
 
-            if let Some(error_msg) = error {
-                window.imp().toast_overlay.add_toast(adw::Toast::new(&error_msg))
-            } else {
-                window.close();
-            }
-        }));
+        if let Some(error_msg) = error {
+            self.imp()
+                .toast_overlay
+                .add_toast(adw::Toast::new(&error_msg))
+        } else if config::PROFILE != "Devel" {
+            self.close();
+        }
     }
 
     async fn inspect(&self) -> Result<(), ImageMounterError> {

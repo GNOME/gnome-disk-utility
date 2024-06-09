@@ -99,7 +99,8 @@ gdu_block_row_update_information (GduBlockRow *self)
   device_id = gdu_block_get_device_id (self->block);
   size_str = gdu_block_get_size_str (self->block);
 
-  gtk_label_set_label (GTK_LABEL (self->partition_type_label), partition);
+  gtk_label_set_label (GTK_LABEL (self->partition_type_label),
+                       partition != NULL ? partition : "—");
   gtk_label_set_label (GTK_LABEL (self->uuid_label), uuid);
   gtk_label_set_label (GTK_LABEL (self->device_id_label), device_id);
   gtk_label_set_label (GTK_LABEL (self->size_label), size_str);

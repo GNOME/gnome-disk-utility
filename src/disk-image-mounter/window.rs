@@ -62,6 +62,8 @@ mod imp {
         #[template_child]
         pub(super) unmount_row: TemplateChild<adw::ActionRow>,
         #[template_child]
+        pub(super) open_files_edit_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
         pub(super) toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[property(get, set, construct_only)]
         pub(super) file: RefCell<Option<gio::File>>,
@@ -103,14 +105,17 @@ mod imp {
                 glib::clone!(@weak self as window => @default-return None, async move {
                     let object = window.obj().mounted_file_object()
                         .await?;
-                    let description = if object.block().await.ok()?.read_only().await.ok()? {
-                        gettext("Already mounted read-only")
-                    } else {
-                        gettext("Already mounted")
-                    };
-                    window.status_page.set_description(Some(&description));
                     window.unmount_row.set_visible(true);
                     window.open_files_row.set_subtitle(&gettext("Open the mounted image"));
+
+                    if object.block().await.ok()?.read_only().await.ok()? {
+                        window.status_page.set_description(Some(&gettext("Already mounted read-only")));
+                        window.open_files_edit_row.set_sensitive(false);
+                    } else {
+                        window.status_page.set_description(Some(&gettext("Already mounted")));
+                        window.obj().set_continue_action(Action::Unmount);
+                        window.open_files_row.set_sensitive(false);
+                    }
                     None::<()>
                 }),
             );

@@ -44,7 +44,7 @@ pub enum Action {
 mod imp {
     use std::cell::{Cell, RefCell};
 
-    use adw::subclass::prelude::AdwApplicationWindowImpl;
+    use adw::{prelude::ActionRowExt, subclass::prelude::AdwApplicationWindowImpl};
     use gtk::{prelude::ObjectExt, prelude::WidgetExt};
 
     use crate::config;
@@ -57,6 +57,8 @@ mod imp {
     pub struct ImageMounterWindow {
         #[template_child]
         pub(super) status_page: TemplateChild<adw::StatusPage>,
+        #[template_child]
+        pub(super) open_files_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub(super) unmount_row: TemplateChild<adw::ActionRow>,
         #[template_child]
@@ -108,6 +110,7 @@ mod imp {
                     };
                     window.status_page.set_description(Some(&description));
                     window.unmount_row.set_visible(true);
+                    window.open_files_row.set_subtitle(&gettext("Open the mounted image"));
                     None::<()>
                 }),
             );

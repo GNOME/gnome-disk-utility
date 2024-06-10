@@ -176,9 +176,9 @@ dependencies = [
 
 [[package]]
 name = "async-recursion"
-version = "1.1.0"
+version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "30c5ef0ede93efbf733c1a727f3b6b5a1060bbedd5600183e66f6e4be4af0ec5"
+checksum = "3b43422f69d8ff38f95f1b2bb76517c91589a924d1559a0e935d7c8ce0274c11"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -784,6 +784,7 @@ dependencies = [
 name = "gnome-disk-utilities"
 version = "0.1.0"
 dependencies = [
+ "async-recursion",
  "env_logger",
  "gettext-rs",
  "glib-build-tools",
@@ -1576,9 +1577,11 @@ checksum = "42ff0bf0c66b8238c6f3b578df37d0b7848e55df8577b3f74f92a69acceeb825"
 [[package]]
 name = "udisks2"
 version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b190689595fd29b4c34c79f8efed201b588cecd916879fde4934d6c96a4ee0a0"
+source = "git+https://github.com/FineFindus/udisks-rs.git?rev=893c26d5944bf587b209707d6607566d1bfc0fc7#893c26d5944bf587b209707d6607566d1bfc0fc7"
 dependencies = [
+ "enumflags2",
+ "serde",
+ "serde_repr",
  "zbus",
 ]
 

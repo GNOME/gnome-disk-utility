@@ -13,7 +13,9 @@ use udisks::zbus;
 use udisks::zbus::zvariant::{OwnedObjectPath, Value};
 
 use crate::application::ImageMounterApplication;
+use crate::config;
 use crate::error::ImageMounterError;
+use crate::unmount;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
@@ -249,20 +251,12 @@ impl ImageMounterWindow {
             .await
             .ok_or(ImageMounterError::File)?;
 
-        let partition_table = mounted_object.partition_table().await?;
-        let partitions = partition_table.partitions().await?;
-        let block_dev_path = partitions
-            .iter()
-            // object path that can be used to unmount always end in 1
-            .find(|part| part.ends_with('1'))
-            .ok_or(ImageMounterError::File)?;
-
         let client = udisks::Client::new().await?;
-        let object = client.object(block_dev_path.to_owned()).unwrap();
-
-        let fs_proxy = object.filesystem().await?;
-        fs_proxy.unmount(HashMap::new()).await?;
-        log::info!("Succesfully unmounted {}", block_dev_path);
+        if let Err(err) = unmount::unuse_data_iterate(&client, &mounted_object).await {
+            log::error!("Failed to unmount: {}", err);
+            return Err(ImageMounterError::Zbus(err));
+        }
+        log::info!("Succesfully unmounted");
 
         Ok(())
     }

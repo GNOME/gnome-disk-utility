@@ -192,7 +192,7 @@ impl ImageMounterWindow {
         None
     }
 
-    async fn read_device(&self, object: udisks::Object) -> Result<String, ImageMounterError> {
+    async fn read_device(&self, object: &udisks::Object) -> Result<String, ImageMounterError> {
         let block = object.block().await?;
         Ok(CString::from_vec_with_nul(block.device().await?)?
             .to_str()?
@@ -203,12 +203,12 @@ impl ImageMounterWindow {
     async fn on_continue_button(&self, _button: &gtk::Button) {
         let error = match self.continue_action() {
             Action::OpenInFiles => self
-                .mount(true)
+                .open_in_files(true)
                 .await
                 .map_err(|_| gettext("Failed to mount file"))
                 .err(),
             Action::OpenInFilesWritable => self
-                .mount(false)
+                .open_in_files(false)
                 .await
                 .map_err(|_| gettext("Failed to mount file"))
                 .err(),
@@ -237,14 +237,52 @@ impl ImageMounterWindow {
         }
     }
 
+    async fn open_in_files(&self, read_only: bool) -> Result<(), ImageMounterError> {
+        let object = if let Some(object) = self.mounted_file_object().await {
+            object
+        } else {
+            log::debug!("File not yet mounted, mounting first");
+            self.mount(read_only).await?
+        };
+
+        let client = udisks::Client::new().await?;
+        let (Some(filesystem), _encrypted, _last) =
+            unmount::is_in_full_use(&client, &object, false).await?
+        else {
+            return Err(ImageMounterError::File);
+        };
+
+        for mount_point in filesystem
+            .mount_points()
+            .await?
+            .into_iter()
+            .filter_map(|mount_point| CString::from_vec_with_nul(mount_point).ok())
+            .filter_map(|mount_point| mount_point.to_str().map(|p| p.to_string()).ok())
+        {
+            log::debug!("Opening Files at {}", mount_point);
+            let file = gio::File::for_path(&mount_point);
+            let file_launcher = gtk::FileLauncher::new(Some(&file));
+            if file_launcher
+                .launch_future(gtk::Window::NONE)
+                .await
+                .is_err()
+            {
+                log::error!("Failed to open Files at {}", mount_point);
+                continue;
+            }
+        }
+
+        Ok(())
+    }
+
     async fn inspect(&self) -> Result<(), ImageMounterError> {
-        let device = if let Some(object) = self.mounted_file_object().await {
-            log::debug!("File already mounted, reading device");
-            self.read_device(object).await?
+        let object = if let Some(object) = self.mounted_file_object().await {
+            object
         } else {
             log::debug!("File not yet mounted, mounting first");
             self.mount(false).await?
         };
+        let device = self.read_device(&object).await?;
         self.open_in_disks(device).await
     }
 
@@ -264,7 +302,7 @@ impl ImageMounterWindow {
         Ok(())
     }
 
-    async fn mount(&self, read_only: bool) -> Result<String, ImageMounterError> {
+    async fn mount(&self, read_only: bool) -> Result<udisks::Object, ImageMounterError> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
 
@@ -284,9 +322,7 @@ impl ImageMounterWindow {
 
         //safe to unwrap, since the given path is
         //already an oject path
-        let object = client.object(object_path).unwrap();
-        let device = self.read_device(object).await?;
-        Ok(device)
+        Ok(client.object(object_path).unwrap())
     }
 
     fn write_image(&self) -> Result<(), ImageMounterError> {

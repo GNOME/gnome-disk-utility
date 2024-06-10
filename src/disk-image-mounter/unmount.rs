@@ -39,7 +39,7 @@ pub async fn unuse_data_iterate(
     Ok(())
 }
 
-async fn is_in_full_use(
+pub async fn is_in_full_use(
     client: &udisks::Client,
     object: &udisks::Object,
     last_out: bool,

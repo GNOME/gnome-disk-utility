@@ -237,7 +237,8 @@ gdu_drive_changed (GduItem *item)
 
   g_assert (GDU_IS_DRIVE (self));
 
-  g_set_object (&self->info, udisks_client_get_object_info (self->client, self->object));
+  g_clear_object (&self->info);
+  self->info = udisks_client_get_object_info (self->client, self->object);
   g_clear_object (&self->partition_table);
 
   if (self->drive)
@@ -250,12 +251,18 @@ gdu_drive_changed (GduItem *item)
       g_set_object (&self->partition_table, g_object_ref (object));
     }
 
-  g_set_object (&self->block, udisks_object_get_block (self->object));
+  g_set_object (&self->block, udisks_object_peek_block (self->object));
   if (self->block)
-    g_set_object (&self->drive, udisks_client_get_drive_for_block (self->client, self->block));
+    {
+      g_clear_object (&self->drive);
+      self->drive = udisks_client_get_drive_for_block (self->client, self->block);
+    }
   else
-    g_set_object (&self->drive, udisks_object_get_drive (self->object));
-  g_set_object (&self->file_system, udisks_object_get_filesystem (self->object));
+    {
+      g_set_object (&self->drive, udisks_object_peek_drive (self->object));
+    }
+
+  g_set_object (&self->file_system, udisks_object_peek_filesystem (self->object));
 
   if (udisks_object_peek_partition_table (self->object))
     gdu_drive_set_child (self, self->object);
@@ -336,8 +343,8 @@ gdu_drive_new (gpointer  udisk_client,
   self->object = g_object_ref (udisk_object);
   g_set_weak_pointer (&self->parent, parent);
 
-  g_set_object (&self->block, udisks_object_get_block (self->object));
-  g_set_object (&self->drive, udisks_object_get_drive (self->object));
+  g_set_object (&self->block, udisks_object_peek_block (self->object));
+  g_set_object (&self->drive, udisks_object_peek_drive (self->object));
 
   if (self->block == NULL && self->drive != NULL)
     self->block = udisks_client_get_block_for_drive (self->client,

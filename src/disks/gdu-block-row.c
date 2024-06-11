@@ -366,7 +366,7 @@ partition_delete_cb (GObject         *object,
                      GAsyncResult    *res,
                      gpointer         user_data)
 {
-  GduBlockRow *self = user_data;
+  g_autoptr(GduBlockRow) self = user_data;
   UDisksPartition *partition = UDISKS_PARTITION (object);
   g_autoptr(GError) error = NULL;
 
@@ -385,7 +385,7 @@ delete_ensure_unused_cb (GObject      *obj,
                          GAsyncResult *result,
                          gpointer      user_data)
 {
-  GduBlockRow *self = user_data;
+  g_autoptr(GduBlockRow) self = user_data;
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
@@ -397,7 +397,7 @@ delete_ensure_unused_cb (GObject      *obj,
                                     g_variant_new ("a{sv}", NULL), /* options */
                                     NULL, /* cancellable */
                                     partition_delete_cb,
-                                    self);
+                                    g_object_ref (self));
     }
 }
 
@@ -421,7 +421,7 @@ delete_response_cb (GObject      *source_object,
                            object,
                            delete_ensure_unused_cb,
                            NULL, /* GCancellable */
-                           self);
+                           g_object_ref (self));
 }
 
 static void

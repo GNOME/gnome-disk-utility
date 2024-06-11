@@ -302,7 +302,7 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                               GtkWidget             *widget)
 {
   guint64 size;
-  const gchar *partition_type;
+  const char *partition_type = "";
   GVariantBuilder options_builder;
 
   /* step to next page */

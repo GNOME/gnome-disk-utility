@@ -125,7 +125,7 @@ gdu_block_get_partition_type (GduItem *item)
 {
   GduBlock *self = (GduBlock *)item;
   g_autoptr(UDisksPartitionTable) table = NULL;
-  UDisksPartition *partition;
+  g_autoptr(UDisksPartition) partition = NULL;
   const char *type, *table_type;
 
   g_assert (GDU_IS_BLOCK (self));
@@ -429,9 +429,9 @@ gdu_block_new (gpointer  udisk_client,
   self = g_object_new (GDU_TYPE_BLOCK, NULL);
   g_set_object (&self->client, udisk_client);
   g_set_object (&self->object, udisk_object);
-  g_set_object (&self->block, udisks_object_get_block (self->object));
-  g_set_object (&self->partition, udisks_object_get_partition (self->object));
-  g_set_object (&self->file_system, udisks_object_get_filesystem (self->object));
+  g_set_object (&self->block, udisks_object_peek_block (self->object));
+  g_set_object (&self->partition, udisks_object_peek_partition (self->object));
+  g_set_object (&self->file_system, udisks_object_peek_filesystem (self->object));
   g_set_weak_pointer (&self->parent, parent);
 
   if (self->partition)
@@ -488,7 +488,7 @@ gdu_block_get_number (GduBlock *self)
 
   g_return_val_if_fail (GDU_IS_BLOCK (self), 0);
 
-  block = udisks_object_get_block (self->object);
+  block = udisks_object_peek_block (self->object);
   if (block)
     return udisks_block_get_device_number (block);
 
@@ -516,7 +516,7 @@ gdu_block_is_extended (GduBlock *self)
   if (!self->block)
     return false;
 
-  partition = udisks_object_get_partition (self->object);
+  partition = udisks_object_peek_partition (self->object);
 
   return partition && udisks_partition_get_is_container (partition);
 }
@@ -615,7 +615,7 @@ gdu_block_get_mount_points (GduBlock *self)
   if (!self->object)
     return NULL;
 
-  file_system = udisks_object_get_filesystem (self->object);
+  file_system = udisks_object_peek_filesystem (self->object);
 
   if (file_system)
     return udisks_filesystem_get_mount_points (file_system);

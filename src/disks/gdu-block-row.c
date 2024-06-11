@@ -386,7 +386,7 @@ delete_ensure_unused_cb (GObject      *obj,
                          gpointer      user_data)
 {
   GduBlockRow *self = user_data;
-  g_autoptr(UDisksObject) object;
+  UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
   if (gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))

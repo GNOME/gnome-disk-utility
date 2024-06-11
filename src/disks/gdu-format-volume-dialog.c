@@ -376,7 +376,7 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                                                 g_variant_builder_end (&options_builder),
                                                 NULL,           /* GCancellable */
                                                 create_partition_cb,
-                                                self);
+                                                g_object_ref (self));
 
   gtk_window_close (GTK_WINDOW (self));
 }
@@ -386,7 +386,7 @@ create_partition_cb (GObject      *source_object,
                      GAsyncResult *res,
                      gpointer      user_data)
 {
-  GduFormatVolumeDialog *self = user_data;
+  g_autoptr(GduFormatVolumeDialog) self = user_data;
   g_autoptr(GError) error = NULL;
   g_autofree char *created_partition_object_path = NULL;
   UDisksObject *partition_object = NULL;

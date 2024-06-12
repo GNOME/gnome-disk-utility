@@ -591,9 +591,9 @@ check_fs_cb (GtkWidget  *widget,
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
 
   gdu_utils_show_confirmation (block_row_get_window (self),
-                               _("Confirm Check"),
+                               _("Check Filesystem?"),
                                _("The check may take a long time, especially if the partition contains a lot of data."),
-                               _("Ok"),
+                               _("_Start Check"),
                                NULL,
                                NULL,
                                NULL,

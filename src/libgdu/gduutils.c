@@ -111,7 +111,7 @@ gdu_utils_configure_file_dialog_for_disk_images (GtkFileDialog   *file_dialog,
       gtk_file_filter_add_mime_type (filter, "application/x-cd-image");
       g_list_store_append(filters, filter);
       gtk_file_dialog_set_filters (file_dialog, G_LIST_MODEL (filters));
-      
+
       gtk_file_dialog_set_default_filter (file_dialog, filter);
     }
 }
@@ -685,29 +685,19 @@ gdu_utils_show_error (GtkWindow   *parent_window,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static GtkWidget *
-get_widget_for_object (UDisksClient *client,
-                       UDisksObject *object)
+widget_for_object (UDisksClient *client,
+                   UDisksObject *object)
 {
+  GtkWidget *row;
   UDisksObjectInfo *info;
-  GtkWidget *hbox;
-  GtkWidget *image;
-  GtkWidget *label;
 
+  row = adw_action_row_new ();
   info = udisks_client_get_object_info (client, object);
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  adw_preferences_row_set_title(ADW_PREFERENCES_ROW (row), udisks_object_info_get_description (info));
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (row), udisks_object_info_get_name (info));
 
-  image = gtk_image_new_from_gicon (udisks_object_info_get_icon (info));
-  gtk_box_append (GTK_BOX (hbox), image);
-
-  label = gtk_label_new (udisks_object_info_get_one_liner (info));
-  gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
-  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-  gtk_box_append (GTK_BOX (hbox), label);
-
-  g_object_unref (info);
-
-  return hbox;
+  return GTK_WIDGET (row);
 }
 
 void
@@ -739,46 +729,34 @@ gdu_utils_show_confirmation (GtkWindow              *parent_window,
                                          "cancel");
 
   adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                           appearance == ADW_RESPONSE_SUGGESTED ? 
+                                           appearance == ADW_RESPONSE_SUGGESTED ?
                                            "confirm" : "cancel");
 
   adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm", 
+                                              "confirm",
                                               appearance);
 
   if (objects != NULL)
     {
-      GtkWidget *label;
-      GtkWidget *vbox;
-      GtkWidget *scrolled_window;
+      GtkWidget *page;
+      GtkWidget *group;
       GList *l;
-      PangoAttrList *attrs;
 
-      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      group = adw_preferences_group_new ();
+      adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (group), _("Affected devices"));
+
       for (l = objects; l != NULL; l = l->next)
         {
           UDisksObject *object = UDISKS_OBJECT (l->data);
-          gtk_box_append (GTK_BOX (vbox),
-                          get_widget_for_object (client, object));
+          adw_preferences_group_add (ADW_PREFERENCES_GROUP (group),
+                                      widget_for_object (client, object));
         }
 
-      label = gtk_label_new (NULL);
-      gtk_label_set_xalign (GTK_LABEL (label), 0.0);
-      /* Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action */
-      gtk_label_set_markup (GTK_LABEL (label), C_("confirmation-list-of-devices", "Affected Devices"));
-      attrs = pango_attr_list_new ();
-      pango_attr_list_insert (attrs, pango_attr_weight_new (PANGO_WEIGHT_BOLD));
-      gtk_label_set_attributes (GTK_LABEL (label), attrs);
-      pango_attr_list_unref (attrs);
+      page = adw_preferences_page_new ();
+      adw_preferences_page_add (ADW_PREFERENCES_PAGE (page),
+                                ADW_PREFERENCES_GROUP (group));
 
-      scrolled_window = gtk_scrolled_window_new ();
-      gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-      gtk_scrolled_window_set_has_frame (GTK_SCROLLED_WINDOW (scrolled_window), TRUE);
-      gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW (scrolled_window), vbox);
-      gtk_scrolled_window_set_min_content_height (GTK_SCROLLED_WINDOW (scrolled_window), 125);
-
-      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), label);
-      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), scrolled_window);
+      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), GTK_WIDGET(page));
     }
 
 
@@ -1717,4 +1695,3 @@ gdu_utils_get_default_unit (guint64 size)
       return Byte;
     }
 }
-

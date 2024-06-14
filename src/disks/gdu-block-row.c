@@ -182,7 +182,7 @@ gdu_block_row_update_mount_point_label (GduBlockRow *self)
   const char *const *mount_points;
 
   mount_points = gdu_block_get_mount_points (self->block);
-  
+
   if (mount_points == NULL || *mount_points == NULL)
     {
       adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), ("—"));
@@ -426,8 +426,8 @@ delete_response_cb (GObject      *source_object,
 
 static void
 delete_cb (GtkWidget  *widget,
-                    const char *action_name,
-                    GVariant   *parameter)
+           const char *action_name,
+           GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
@@ -437,7 +437,7 @@ delete_cb (GtkWidget  *widget,
   objects = g_list_append (NULL, object);
 
   gdu_utils_show_confirmation (block_row_get_window (self),
-                               _("Are you sure you want to delete the partition?"),
+                               _("Delete Partition?"),
                                _("All data on the partition will be lost"),
                                _("_Delete"),
                                NULL,
@@ -523,14 +523,14 @@ fs_check_cb (GObject      *obj,
                                              consistent ? _("Filesystem %s on %s is undamaged.")
                                               : _("Filesystem %s on %s needs repairing."),
                                               name, udisks_object_info_get_name (info));
-      
+
       adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
                                        "close",
                                        _("Close"));
 
       adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
                                              "close");
-      
+
       gtk_window_present (GTK_WINDOW (dialog));
     }
 }
@@ -574,7 +574,7 @@ on_check_message_dialog_response (GObject          *obj,
 
   if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
-  
+
   gdu_utils_ensure_unused (block_row_get_client (),
                            block_row_get_window (self),
                            object,
@@ -646,17 +646,17 @@ fs_repair_cb (GObject      *obj,
                                        NULL);
 
       adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
-                                            success ? _("Filesystem %s on %s has been repaired.") 
+                                            success ? _("Filesystem %s on %s has been repaired.")
                                             : _("Filesystem %s on %s could not be repaired."),
                                             name, udisks_object_info_get_name (info));
-      
+
       adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
                                        "close",
                                        _("Close"));
 
       adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
                                              "close");
-      
+
       gtk_window_present (GTK_WINDOW (dialog));
     }
 }
@@ -759,9 +759,9 @@ on_recursive_checkbutton (GtkCheckButton  *togglebutton,
   gboolean active;
 
   active = gtk_check_button_get_active (togglebutton);
-  
+
   adw_message_dialog_set_response_appearance (dialog,
-                                              "confirm", 
+                                              "confirm",
                                               active ?
                                               ADW_RESPONSE_DESTRUCTIVE :
                                               ADW_RESPONSE_SUGGESTED);
@@ -798,7 +798,7 @@ on_take_ownership_dialog_response_cb (GObject       *source_object,
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
   filesystem = udisks_object_peek_filesystem (object);
-  
+
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
   if (gtk_check_button_get_active (recursive_checkbutton))
@@ -820,7 +820,7 @@ take_ownership_cb (GtkWidget  *widget,
   GtkWidget *dialog;
   TakeOwnershipDialogData *data;
   GtkWidget *recursive_checkbutton;
-  
+
   dialog = adw_message_dialog_new (block_row_get_window (self),
                                    _("Confirm Taking Ownership"),
                                    _("Changes ownership of the filesystem to your user and group."
@@ -839,7 +839,7 @@ take_ownership_cb (GtkWidget  *widget,
                                          "cancel");
 
   adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm", 
+                                              "confirm",
                                               ADW_RESPONSE_SUGGESTED);
 
   adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
@@ -957,7 +957,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
- 
+
   static struct {
     const char *name;
     void (*cb) (GtkWidget *widget, const char *action_name, GVariant *parameter);
@@ -980,7 +980,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
     { "row.create_partition_image", create_partition_image_cb },
     { "row.restore_partition_image", restore_partition_image_cb },
   };
-  
+
   object_class->finalize = gdu_block_row_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,

@@ -59,6 +59,7 @@ resource_data = files(
   'ui/erase-multiple-disks-dialog.ui',
   'ui/gdu-format-disk-dialog.ui',
   'ui/style.css',
+  'ui/take-ownership.ui',
   'ui/gdu-new-disk-image-dialog.ui',
   'ui/gdu-resize-volume-dialog.ui',
   'ui/gdu-restore-disk-image-dialog.ui',

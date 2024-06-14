@@ -756,30 +756,31 @@ fs_take_ownership_cb (GObject      *object,
     }
 }
 
-static void
-on_recursive_checkbutton (GtkCheckButton  *togglebutton,
-                          gpointer         user_data)
+void
+on_recursive_switch_cb (GObject     *source_object,
+                        GParamSpec  *pspec,
+                        gpointer     user_data)
 {
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (user_data);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (source_object);
   gboolean active;
 
-  active = gtk_check_button_get_active (togglebutton);
+  g_assert (GTK_IS_SWITCH (user_data));
+  g_assert (ADW_IS_ALERT_DIALOG (dialog));
 
-  adw_message_dialog_set_response_appearance (dialog,
-                                              "confirm",
-                                              active ?
-                                              ADW_RESPONSE_DESTRUCTIVE :
-                                              ADW_RESPONSE_SUGGESTED);
-  adw_message_dialog_set_default_response (dialog,
-                                           active ?
-                                           "cancel" :
-                                           "confirm");
+  active = gtk_switch_get_active (GTK_SWITCH(user_data));
+
+  adw_alert_dialog_set_response_appearance (dialog,
+                                            "confirm",
+                                            active ? ADW_RESPONSE_DESTRUCTIVE : ADW_RESPONSE_SUGGESTED);
+
+  adw_alert_dialog_set_default_response (dialog,
+                                         active ? "cancel" : "confirm");
 }
 
 typedef struct
 {
-  GduBlockRow    *self;
-  GtkCheckButton *recursive_checkbutton;
+  GduBlockRow *self;
+  GtkWidget   *recursive;
 } TakeOwnershipDialogData;
 
 static void
@@ -787,26 +788,31 @@ on_take_ownership_dialog_response_cb (GObject       *source_object,
                                       GAsyncResult  *response,
                                       gpointer       user_data)
 {
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
-  TakeOwnershipDialogData *data = user_data;
   GduBlockRow *self;
-  GtkCheckButton *recursive_checkbutton;
+  AdwAlertDialog *dialog;
+  GtkSwitch *recursive_switch;
   UDisksObject *object;
   UDisksFilesystem *filesystem;
   GVariantBuilder options_builder;
-
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
-    return;
+  TakeOwnershipDialogData *data = user_data;
 
   self = data->self;
-  recursive_checkbutton = data->recursive_checkbutton;
+  recursive_switch = GTK_SWITCH (data->recursive);
+  dialog = ADW_ALERT_DIALOG (source_object);
+
+  g_return_if_fail (GDU_IS_BLOCK_ROW (self));
+  g_return_if_fail (ADW_IS_ALERT_DIALOG (dialog));
+
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
+
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
   filesystem = udisks_object_peek_filesystem (object);
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
-  if (gtk_check_button_get_active (recursive_checkbutton))
+  if (gtk_switch_get_active (GTK_SWITCH (recursive_switch)))
     g_variant_builder_add (&options_builder, "{sv}", "recursive", g_variant_new_boolean (TRUE));
 
   udisks_filesystem_call_take_ownership (filesystem,
@@ -822,51 +828,29 @@ take_ownership_cb (GtkWidget  *widget,
                    GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
-  GtkWidget *dialog;
+  GtkBuilder *builder;
+  AdwAlertDialog *dialog;
+  GtkWidget *recursive_switch;
   TakeOwnershipDialogData *data;
-  GtkWidget *recursive_checkbutton;
 
-  dialog = adw_message_dialog_new (block_row_get_window (self),
-                                   _("Confirm Taking Ownership"),
-                                   _("Changes ownership of the filesystem to your user and group."
-                                     "The recursive mode does also change the ownership of all "
-                                     "subdirectories and files, this can lead to destructive "
-                                     "results when the filesystem contains a directory structure "
-                                     "where ownership should belong to different users (e.g., a "
-                                     "system backup or a filesystem that is accessed by multiple users)."));
+  builder = gtk_builder_new_from_resource ("/org/gnome/DiskUtility/ui/"
+                                           "take-ownership.ui");
+  dialog = ADW_ALERT_DIALOG (gtk_builder_get_object (builder, "ownership-dialog"));
+  recursive_switch = GTK_WIDGET (gtk_builder_get_object (builder, "recursive_switch"));
 
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                    "cancel",  _("_Cancel"),
-                                    "confirm", _("_Ok"),
-                                    NULL);
-
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                         "cancel");
-
-  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm",
-                                              ADW_RESPONSE_SUGGESTED);
-
-  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                           "confirm");
-
-  recursive_checkbutton = gtk_check_button_new_with_label (_("Enable _recursive mode"));
-  gtk_check_button_set_use_underline (GTK_CHECK_BUTTON (recursive_checkbutton), TRUE);
-  g_signal_connect (recursive_checkbutton,
-                    "toggled",
-                    G_CALLBACK (on_recursive_checkbutton),
-                    dialog);
-
-  adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), recursive_checkbutton);
+  adw_alert_dialog_format_body (dialog,
+                                _("Make your user and group the owner of \"%s\""),
+                                gdu_item_get_description (GDU_ITEM (self->block)));
 
   data = g_new0 (TakeOwnershipDialogData, 1);
   data->self = self;
-  data->recursive_checkbutton = GTK_CHECK_BUTTON (recursive_checkbutton);
+  data->recursive = recursive_switch;
 
-  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
-                             NULL,
-                             on_take_ownership_dialog_response_cb,
-                             data);
+  adw_alert_dialog_choose (dialog,
+                           block_row_get_window (self),
+                           NULL, /* GCancellable */
+                           on_take_ownership_dialog_response_cb,
+                           data);
 }
 
 static void

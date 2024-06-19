@@ -168,7 +168,7 @@ on_format_clicked_cb (GduFormatDiskDialog *self,
     {
       g_string_append (str, "\n\n");
       g_string_append (str, _("<b>WARNING</b>: The Secure Erase command may take a very long time "
-                              "to complete, can’t be canceled and may not work properly with some "
+                              "to complete, can’t be cancelled and may not work properly with some "
                               "hardware. In the worst case, your drive may be rendered unusable or "
                                "your system may crash or lock up. Before proceeding, please read the "
                                "article about <a href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure Erase</a> "

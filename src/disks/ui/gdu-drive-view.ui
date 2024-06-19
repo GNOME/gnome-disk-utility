@@ -72,10 +72,10 @@
 
                         <!-- DriveInfoButton -->
                         <child>
-                          <object class="GtkMenuButton">
+                          <object class="GtkButton">
                             <property name="tooltip-text" translatable="yes">Drive Information</property>
-                            <property name="popover">drive_info_popover</property>
                             <property name="icon-name">help-about-symbolic</property>
+                            <signal name="clicked" handler="adw_dialog_present" object="drive_info_dialog"/>
                           </object>
                         </child>
 
@@ -120,105 +120,86 @@
 
   </template>
 
-  <object class="GtkPopover" id="drive_info_popover">
-    <child>
-      <object class="GtkGrid">
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="margin-top">12</property>
-        <property name="margin-bottom">12</property>
-        <property name="row-spacing">6</property>
-        <property name="column-spacing">12</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Model</property>
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">0</property>
-            </layout>
-            <style>
-              <class name="dim-label" />
-            </style>
-          </object>
+  <object class="AdwDialog" id="drive_info_dialog">
+    <property name="title" translatable="yes">Drive Information</property>
+    <property name="content-width">480</property>
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
         </child>
-        <child>
-          <object class="GtkLabel" id="drive_model_label">
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">1</property>
-              <property name="row">0</property>
-            </layout>
+        <property name="content">
+          <object class="AdwToastOverlay" id="drive_info_dialog_toast_overlay">
+            <property name="child">
+              <object class="AdwPreferencesPage">
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwActionRow" id="drive_model_row">
+                        <property name="title" translatable="yes">Model</property>
+                        <property name="subtitle-selectable">True</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="tooltip-text" translatable="yes">Copy</property>
+                            <property name="icon-name">edit-copy-symbolic</property>
+                            <property name="valign">center</property>
+                            <signal name="clicked" handler="on_copy_drive_model_clicked" object="GduDriveView" swapped="yes"/>
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="drive_serial_row">
+                        <property name="title" translatable="yes">Serial</property>
+                        <property name="subtitle-selectable">True</property>
+                        <child type="suffix">
+                          <object class="GtkButton">
+                            <property name="tooltip-text" translatable="yes">Copy</property>
+                            <property name="icon-name">edit-copy-symbolic</property>
+                            <property name="valign">center</property>
+                            <signal name="clicked" handler="on_copy_drive_serial_clicked" object="GduDriveView" swapped="yes"/>
+                            <style>
+                              <class name="flat"/>
+                            </style>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="drive_part_type_row">
+                        <property name="title" translatable="yes">Partitioning</property>
+                        <property name="subtitle-selectable">True</property>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="drive_size_row">
+                        <property name="title" translatable="yes">Size</property>
+                        <property name="subtitle-selectable">True</property>
+                        <style>
+                          <class name="property"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
           </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Serial</property>
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">1</property>
-            </layout>
-            <style>
-              <class name="dim-label" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="drive_serial_label">
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">1</property>
-              <property name="row">1</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Partitioning</property>
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">2</property>
-            </layout>
-            <style>
-              <class name="dim-label" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="drive_part_type_label">
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">1</property>
-              <property name="row">2</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Size</property>
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">3</property>
-            </layout>
-            <style>
-              <class name="dim-label" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="drive_size_label">
-            <property name="halign">start</property>
-            <layout>
-              <property name="column">1</property>
-              <property name="row">3</property>
-            </layout>
-          </object>
-        </child>
+        </property>
       </object>
-    </child>
+    </property>
   </object>
 
   <menu id="drive_menu">

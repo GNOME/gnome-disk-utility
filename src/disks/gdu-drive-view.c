@@ -37,10 +37,12 @@ struct _GduDriveView
   GtkLabel      *drive_name_label;
   GtkLabel      *drive_path_label;
 
-  GtkLabel      *drive_model_label;
-  GtkLabel      *drive_serial_label;
-  GtkLabel      *drive_part_type_label;
-  GtkLabel      *drive_size_label;
+  AdwDialog     *drive_info_dialog;
+  AdwToastOverlay *drive_info_dialog_toast_overlay;
+  AdwActionRow  *drive_model_row;
+  AdwActionRow  *drive_serial_row;
+  AdwActionRow  *drive_part_type_row;
+  AdwActionRow  *drive_size_row;
 
   GtkListBox    *drive_partitions_listbox;
 
@@ -91,10 +93,10 @@ update_drive_view (GduDriveView *self)
   size = gdu_item_get_size (GDU_ITEM (self->drive));
   size_str = g_format_size_full (size, G_FORMAT_SIZE_LONG_FORMAT);
 
-  gtk_label_set_label (self->drive_part_type_label, partition);
-  gtk_label_set_label (self->drive_model_label, model);
-  gtk_label_set_label (self->drive_serial_label, serial);
-  gtk_label_set_label (self->drive_size_label, size ? size_str : "—");
+  adw_action_row_set_subtitle (self->drive_part_type_row, partition);
+  adw_action_row_set_subtitle (self->drive_model_row, model);
+  adw_action_row_set_subtitle (self->drive_serial_row, serial);
+  adw_action_row_set_subtitle (self->drive_size_row, size ? size_str : "—");
 
   partitions = gdu_item_get_partitions (GDU_ITEM (self->drive));
   gtk_list_box_bind_model (self->drive_partitions_listbox,
@@ -116,6 +118,24 @@ update_drive_view (GduDriveView *self)
   ENABLE ("view.poweroff", GDU_FEATURE_POWEROFF);
 
   #undef ENABLE
+}
+
+static void
+on_copy_drive_model_clicked (GduDriveView *self)
+{
+  gdk_clipboard_set_text (gtk_widget_get_clipboard (GTK_WIDGET (self)),
+                          adw_action_row_get_subtitle (self->drive_model_row));
+
+  adw_toast_overlay_add_toast (self->drive_info_dialog_toast_overlay, adw_toast_new (_("Copied drive model to clipboard")));
+}
+
+static void
+on_copy_drive_serial_clicked (GduDriveView *self)
+{
+  gdk_clipboard_set_text (gtk_widget_get_clipboard (GTK_WIDGET (self)),
+                          adw_action_row_get_subtitle (self->drive_serial_row));
+
+  adw_toast_overlay_add_toast (self->drive_info_dialog_toast_overlay, adw_toast_new (_("Copied drive serial to clipboard")));
 }
 
 static void
@@ -416,10 +436,12 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_name_label);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_path_label);
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_model_label);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_serial_label);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_part_type_label);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_info_dialog_toast_overlay);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_info_dialog);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_model_row);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_serial_row);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_part_type_row);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_size_row);
 
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_partitions_listbox);
 
@@ -434,6 +456,9 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
   gtk_widget_class_install_action (widget_class, "view.standby", NULL, standby_drive_clicked_cb);
   gtk_widget_class_install_action (widget_class, "view.wakeup", NULL, wakeup_drive_clicked_cb);
   gtk_widget_class_install_action (widget_class, "view.poweroff", NULL, poweroff_drive_clicked_cb);
+
+  gtk_widget_class_bind_template_callback (widget_class, on_copy_drive_model_clicked);
+  gtk_widget_class_bind_template_callback (widget_class, on_copy_drive_serial_clicked);
 }
 
 static void

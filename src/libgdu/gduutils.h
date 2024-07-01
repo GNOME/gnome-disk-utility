@@ -62,19 +62,23 @@ void            gdu_utils_show_error      (GtkWindow      *parent_window,
                                            const gchar    *message,
                                            GError         *error);
 
-void
-gdu_utils_show_confirmation (GtkWindow              *parent_window,
-                             const gchar            *message,
-                             const gchar            *secondary_message,
-                             const gchar            *affirmative_verb,
-                             const gchar            *checkbox_mnemonic,
-                             gboolean               *inout_checkbox_value,
-                             UDisksClient           *client,
-                             GList                  *objects,
-                             GAsyncReadyCallback     callback,
-                             gpointer                user_data,
-                             AdwResponseAppearance   appearance);
+typedef struct {
+  const char            *message;
+  const char            *description;
+  const char            *response_verb;
+  AdwResponseAppearance  response_appearance;
+  GAsyncReadyCallback    callback;
+  gpointer               user_data;
+} ConfirmationDialogData;
 
+GtkWidget *
+gdu_util_create_widget_from_objects (UDisksClient *client,
+                                     GList        *objects);
+
+void
+gdu_utils_show_confirmation (GtkWidget                *parent_window,
+                             ConfirmationDialogData   *data,
+                             GtkWidget                *extra_widget);
 
 /* Defined by libblockdev/UDisks */
 typedef enum {

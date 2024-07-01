@@ -682,8 +682,6 @@ gdu_utils_show_error (GtkWindow   *parent_window,
   gtk_window_present (GTK_WINDOW (dialog));
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
-
 static GtkWidget *
 widget_for_object (UDisksClient *client,
                    UDisksObject *object)
@@ -700,85 +698,54 @@ widget_for_object (UDisksClient *client,
   return GTK_WIDGET (row);
 }
 
-void
-gdu_utils_show_confirmation (GtkWindow              *parent_window,
-                             const gchar            *message,
-                             const gchar            *secondary_message,
-                             const gchar            *affirmative_verb,
-                             const gchar            *checkbox_mnemonic,
-                             gboolean               *inout_checkbox_value,
-                             UDisksClient           *client,
-                             GList                  *objects,
-                             GAsyncReadyCallback               callback,
-                             gpointer                user_data,
-                             AdwResponseAppearance   appearance)
+GtkWidget *
+gdu_util_create_widget_from_objects (UDisksClient *client,
+                                     GList        *objects)
 {
-  GtkWidget *dialog;
-  GtkWidget *check_button = NULL;
+  GtkWidget *group;
 
-  dialog = adw_message_dialog_new (parent_window,
-                                   message,
-                                   secondary_message);
+  group = adw_preferences_group_new ();
 
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                  "cancel",  _("_Cancel"),
-                                  "confirm", affirmative_verb,
-                                  NULL);
-
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                         "cancel");
-
-  adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog),
-                                           appearance == ADW_RESPONSE_SUGGESTED ?
-                                           "confirm" : "cancel");
-
-  adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                              "confirm",
-                                              appearance);
-
-  if (objects != NULL)
+  for (GList *l = objects; l != NULL; l = l->next)
     {
-      GtkWidget *page;
-      GtkWidget *group;
-      GList *l;
-
-      group = adw_preferences_group_new ();
-      adw_preferences_group_set_title (ADW_PREFERENCES_GROUP (group), _("Affected devices"));
-
-      for (l = objects; l != NULL; l = l->next)
-        {
-          UDisksObject *object = UDISKS_OBJECT (l->data);
-          adw_preferences_group_add (ADW_PREFERENCES_GROUP (group),
-                                      widget_for_object (client, object));
-        }
-
-      page = adw_preferences_page_new ();
-      adw_preferences_page_add (ADW_PREFERENCES_PAGE (page),
-                                ADW_PREFERENCES_GROUP (group));
-
-      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), GTK_WIDGET(page));
+      GtkWidget *widget = widget_for_object (client, UDISKS_OBJECT (l->data));
+      adw_preferences_group_add (ADW_PREFERENCES_GROUP (group), widget);
     }
 
-
-  if (checkbox_mnemonic != NULL)
-    {
-      check_button = gtk_check_button_new_with_mnemonic (checkbox_mnemonic);
-      if (inout_checkbox_value != NULL)
-        gtk_check_button_set_active (GTK_CHECK_BUTTON (check_button), *inout_checkbox_value);
-      adw_message_dialog_set_extra_child (ADW_MESSAGE_DIALOG (dialog), check_button);
-    }
-
-  if (inout_checkbox_value != NULL && check_button != NULL)
-    *inout_checkbox_value = gtk_check_button_get_active (GTK_CHECK_BUTTON (check_button));
-
-  adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
-                             NULL,
-                             callback,
-                             user_data);
+  return group;
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
+void
+gdu_utils_show_confirmation (GtkWidget                *parent_window,
+                             ConfirmationDialogData   *data,
+                             GtkWidget                *extra_child)
+{
+  AdwAlertDialog *dialog;
 
+  dialog = ADW_ALERT_DIALOG (adw_alert_dialog_new (data->message,
+                                                   data->description));
+
+  adw_alert_dialog_add_responses (dialog,
+                                  "cancel",  _("_Cancel"),
+                                  "confirm", data->response_verb,
+                                  NULL);
+
+  adw_alert_dialog_set_close_response (dialog, "cancel");
+  adw_alert_dialog_set_response_appearance (dialog, "confirm", data->response_appearance);
+
+  adw_alert_dialog_set_default_response (dialog,
+                                         data->response_appearance == ADW_RESPONSE_SUGGESTED ?
+                                         "confirm" : "cancel");
+
+  if (extra_child)
+    adw_alert_dialog_set_extra_child (dialog, extra_child);
+
+  adw_alert_dialog_choose (dialog,
+                           parent_window,
+                           NULL, /* GCancellable */
+                           data->callback,
+                           data->user_data);
+}
 
 typedef struct
 {

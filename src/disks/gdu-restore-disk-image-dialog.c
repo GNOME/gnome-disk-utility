@@ -190,7 +190,7 @@ gdu_restore_disk_image_dialog_update (GduRestoreDiskImageDialog *self)
       is_xz_compressed ? _ ("%s when compressed") : _ ("%s"),
       udisks_client_get_size_for_display (self->client, size, FALSE, TRUE));
 
-  if (size == 0 && restore_error == NULL) 
+  if (size == 0 && restore_error == NULL)
     {
       /* if size is 0, error may be set already.. */
       restore_error = g_strdup (_ ("Cannot restore image of size 0"));
@@ -795,9 +795,9 @@ on_confirmation_response_cb (GObject        *object,
                              gpointer        user_data)
 {
   GduRestoreDiskImageDialog *self = user_data;
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish (dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
     {
       return;
     }
@@ -814,18 +814,25 @@ static void
 on_start_restore_button_clicked_cb (GduRestoreDiskImageDialog *self)
 {
   GList *objects = NULL;
+  ConfirmationDialogData *data;
+  GtkWidget *affected_devices_widget;
 
   objects = g_list_append (NULL, self->object);
 
-  gdu_utils_show_confirmation (GTK_WINDOW (self),
-                               _("Are you sure you want to write the disk image to the device?"),
-                               _("All existing data will be lost"),
-                               _("_Restore"),
-                               NULL, NULL,
-                               self->client, objects,
-                               on_confirmation_response_cb,
-                               self,
-                               ADW_RESPONSE_DESTRUCTIVE);
+  affected_devices_widget = gdu_util_create_widget_from_objects (self->client,
+                                                                 objects);
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Are you sure you want to write the disk image to the device?");
+  data->description = _("All existing data will be lost");
+  data->response_verb = _("Restore");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = on_confirmation_response_cb;
+  data->user_data = g_object_ref (self);
+
+  gdu_utils_show_confirmation (GTK_WIDGET (self),
+                               data,
+                               affected_devices_widget);
 }
 
 static void

@@ -51,6 +51,12 @@ G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type,
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_DOS, "dos"),
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_EMPTY, "empty"));
 
+static gpointer
+gdu_format_disk_dialog_get_window (GduFormatDiskDialog *self)
+{
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
+
 static const gchar *
 gdu_format_disk_dialog_get_partitioning_type (GduFormatDiskDialog *self)
 {
@@ -75,7 +81,7 @@ format_cb (GObject      *source_object,
 
   if (!udisks_block_call_format_finish (self->udisks_block, res, &error))
     {
-      gdu_utils_show_error (self->parent_window,
+      gdu_utils_show_error (gdu_format_disk_dialog_get_window (self),
                             _("Error formatting disk"),
                             error);
     }
@@ -124,7 +130,7 @@ on_confirmation_response_cb (GObject                     *object,
 
   /* ensure the volume is unused (e.g. unmounted) before formatting it... */
   gdu_utils_ensure_unused(self->udisks_client,
-                          self->parent_window,
+                          gdu_format_disk_dialog_get_window (self),
                           self->udisks_object,
                           (GAsyncReadyCallback) ensure_unused_cb,
                           NULL, /* GCancellable */
@@ -138,11 +144,16 @@ on_format_clicked_cb (GduFormatDiskDialog *self,
   gboolean erase_data;
   g_autoptr(GList) objects = NULL;
   g_autoptr(GString) str = NULL;
+  ConfirmationDialogData *data;
+  GtkWidget *affected_devices_widget;
 
   g_assert (GDU_IS_FORMAT_DISK_DIALOG (self));
 
   erase_data = adw_switch_row_get_active (ADW_SWITCH_ROW (self->erase_row));
   objects = g_list_append (NULL, self->udisks_object);
+
+  affected_devices_widget = gdu_util_create_widget_from_objects (self->udisks_client,
+                                                                 objects);
 
   if (erase_data)
     {
@@ -176,17 +187,17 @@ on_format_clicked_cb (GduFormatDiskDialog *self,
     }
   */
 
-  gdu_utils_show_confirmation (self->parent_window,
-                               _("Are you sure you want to format the disk?"),
-                               str->str,
-                               _("_Format"),
-                               NULL,
-                               NULL,
-                               self->udisks_client,
-                               objects,
-                               on_confirmation_response_cb,
-                               self,
-                               ADW_RESPONSE_DESTRUCTIVE);
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Format Disk?");
+  data->description = str->str;
+  data->response_verb = _("_Format");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = on_confirmation_response_cb;
+  data->user_data = self;
+
+  gdu_utils_show_confirmation (gdu_format_disk_dialog_get_window (self),
+                               data,
+                               affected_devices_widget);
 }
 
 enum
@@ -386,7 +397,6 @@ gdu_format_disk_dialog_show (GtkWindow    *parent,
                        "transient-for", parent,
                        NULL);
 
-  g_set_weak_pointer (&self->parent_window, parent);
   self->udisks_client = client;
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);

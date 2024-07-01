@@ -407,13 +407,13 @@ delete_response_cb (GObject      *source_object,
                     gpointer      user_data)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (source_object);
   UDisksObject *object;
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gdu_utils_ensure_unused (block_row_get_client (),
@@ -432,21 +432,26 @@ delete_cb (GtkWidget  *widget,
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
   g_autoptr(GList) objects;
+  ConfirmationDialogData *data;
+  GtkWidget *affected_devices_widget;
 
   object = gdu_block_get_object (self->block);
   objects = g_list_append (NULL, object);
 
+  affected_devices_widget = gdu_util_create_widget_from_objects (block_row_get_client (),
+                                                                 objects);
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Delete Partition?");
+  data->description = _("All data on the partition will be lost");
+  data->response_verb = _("Delete");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = delete_response_cb;
+  data->user_data = g_object_ref (self);
+
   gdu_utils_show_confirmation (block_row_get_window (self),
-                               _("Delete Partition?"),
-                               _("All data on the partition will be lost"),
-                               _("_Delete"),
-                               NULL,
-                               NULL,
-                               block_row_get_client (),
-                               objects,
-                               delete_response_cb,
-                               self,
-                               ADW_RESPONSE_DESTRUCTIVE);
+                               data,
+                               affected_devices_widget);
 }
 
 static void
@@ -565,14 +570,14 @@ on_check_message_dialog_response (GObject          *obj,
                                   gpointer          user_data)
 {
   GduBlockRow *self = user_data;
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (obj);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (obj);
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gdu_utils_ensure_unused (block_row_get_client (),
@@ -589,18 +594,18 @@ check_fs_cb (GtkWidget  *widget,
              GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  ConfirmationDialogData *data;
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Confirm Check?");
+  data->description = _("The check may take a long time, especially if the partition contains a lot of data.");
+  data->response_verb = _("Check");
+  data->response_appearance = ADW_RESPONSE_SUGGESTED;
+  data->callback = on_check_message_dialog_response;
+  data->user_data = self;
 
   gdu_utils_show_confirmation (block_row_get_window (self),
-                               _("Check Filesystem?"),
-                               _("The check may take a long time, especially if the partition contains a lot of data."),
-                               _("_Start Check"),
-                               NULL,
-                               NULL,
-                               NULL,
-                               NULL,
-                               on_check_message_dialog_response,
-                               self,
-                               ADW_RESPONSE_SUGGESTED);
+                               data, NULL);
 }
 
 static void
@@ -692,14 +697,14 @@ on_repair_message_dialog_response (GObject        *source_object,
                                    gpointer        user_data)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (source_object);
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gdu_utils_ensure_unused (block_row_get_client (),
@@ -716,21 +721,21 @@ repair_fs_cb (GtkWidget  *widget,
               GVariant   *parameter)
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  ConfirmationDialogData *data;
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Repair Filesystem?");
+  data->description = _("A filesystem repair is not always possible and can "
+                        "cause data loss. Consider backing it up first in order "
+                        "to use forensic recovery tools that retrieve lost files. "
+                        "The operation may take a long time, especially if the partition contains a lot of data.");
+  data->response_verb = _("Repair");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = on_repair_message_dialog_response;
+  data->user_data = self;
 
   gdu_utils_show_confirmation (block_row_get_window (self),
-                               _("Confirm Repair"),
-                               _("A filesystem repair is not always possible and can cause data loss. "
-                                 "Consider backing it up first in order to use forensic recovery tools "
-                                 "that retrieve lost files. "
-                                 "The operation may take a long time, especially if the partition contains a lot of data."),
-                               _("Ok"),
-                               NULL,
-                               NULL,
-                               NULL,
-                               NULL,
-                               on_repair_message_dialog_response,
-                               self,
-                               ADW_RESPONSE_DESTRUCTIVE);
+                               data, NULL);
 }
 
 static void

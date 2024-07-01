@@ -79,9 +79,9 @@ application_quit_response_cb (GObject           *source_object,
                               gpointer           user_data)
 {
   GduApplication *self = GDU_APPLICATION (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (source_object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (source_object);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gtk_window_close (GTK_WINDOW (self->window));
@@ -188,7 +188,7 @@ gdu_application_command_line (GApplication            *_app,
   g_variant_dict_lookup (options, "block-device", "&s", &opt_block_device);
   g_variant_dict_lookup (options, "format-device", "b", &opt_format);
   g_variant_dict_lookup (options, "restore-disk-image", "^&ay", &opt_restore_disk_image);
- 
+
   if (opt_format && opt_block_device == NULL)
     {
       g_application_command_line_printerr (command_line, _("--format-device must be used together with --block-device\n"));
@@ -319,25 +319,21 @@ gdu_application_quit (GSimpleAction *action,
                       gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
+  ConfirmationDialogData *data;
 
-  if (app->local_jobs != NULL && g_hash_table_size (app->local_jobs) != 0)
-    {
-      gdu_utils_show_confirmation (GTK_WINDOW (app->window),
-                                    _("Stop running jobs?"),
-                                    _("Closing now stops the running jobs and leads to a corrupt result."),
-                                    _("Ok"),
-                                    NULL,
-                                    NULL,
-                                    NULL,
-                                    NULL,
-                                    application_quit_response_cb,
-                                    app,
-                                    ADW_RESPONSE_DESTRUCTIVE);
-    }
-  else
-    {
-      gtk_window_close (GTK_WINDOW (app->window));
-    }
+  if (app->local_jobs == NULL || g_hash_table_size (app->local_jobs) == 0)
+    gtk_window_close (GTK_WINDOW (app->window));
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Stop running jobs?");
+  data->description = _("Closing now stops the running jobs and leads to a corrupt result.");
+  data->response_verb = _("Stop");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = application_quit_response_cb;
+  data->user_data = app;
+
+  gdu_utils_show_confirmation (GTK_WIDGET (app->window),
+                               data, NULL);
 }
 
 static void
@@ -633,4 +629,3 @@ gdu_application_has_running_job (GduApplication *application,
 
   return ret;
 }
-

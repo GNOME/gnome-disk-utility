@@ -265,9 +265,9 @@ new_disk_image_confirm_response_cb (GObject      *object,
                                     gpointer      user_data)
 {
   GduNewDiskImageDialog *self = GDU_NEW_DISK_IMAGE_DIALOG (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish (dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
     return;
 
   create_new_disk (self);
@@ -277,9 +277,8 @@ static void
 on_create_image_button_clicked_cb (GduNewDiskImageDialog *self)
 {
   const char *filename = NULL;
-  g_autofree char *heading = NULL;
-  g_autofree char *body = NULL;
   g_autoptr(GFile) file = NULL;
+  ConfirmationDialogData *data;
 
   filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   file = g_file_get_child (self->directory, filename);
@@ -290,19 +289,16 @@ on_create_image_button_clicked_cb (GduNewDiskImageDialog *self)
       return;
     }
 
-  heading = g_strdup_printf (_("A file named “%s” already exists. Do you want to replace it?"),
-                             filename);
-  body = g_strdup_printf (_("The file already exists in “%s”. Replacing it will overwrite its contents."),
-                          g_file_get_path (self->directory));
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Replace File?");
+  data->description = g_strdup_printf (_("A file named “%s” already exists in %s"), filename, gdu_utils_unfuse_path (g_file_get_path (self->directory)));
+  data->response_verb = _("Replace");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = new_disk_image_confirm_response_cb;
+  data->user_data = self;
 
-  gdu_utils_show_confirmation (GTK_WINDOW (self),
-                               heading,
-                               body,
-                               _("Replace"),
-                               NULL, NULL, NULL, NULL,
-                               new_disk_image_confirm_response_cb,
-                               self,
-                               ADW_RESPONSE_DESTRUCTIVE);
+  gdu_utils_show_confirmation (GTK_WIDGET (self),
+                               data, NULL);
 }
 
 static void
@@ -369,7 +365,7 @@ on_size_unit_changed_cb (GduNewDiskImageDialog *self)
   gdouble value_units;
 
   unit_num = gtk_drop_down_get_selected (GTK_DROP_DOWN (self->size_unit_dropdown));
-  
+
   adjustment = adw_spin_row_get_adjustment (ADW_SPIN_ROW (self->size_entry));
   value = gtk_adjustment_get_value (adjustment) * ((gdouble) unit_sizes[self->cur_unit_num]);
   value_units = value / unit_sizes[unit_num];
@@ -427,7 +423,7 @@ gdu_new_disk_image_dialog_show (UDisksClient *client, GtkWindow *parent_window)
   self = g_object_new (GDU_TYPE_NEW_DISK_IMAGE_DIALOG,
                        "transient-for", parent_window,
                        NULL);
-  
+
   g_return_if_fail (client != NULL);
   self->client = client;
 

@@ -348,7 +348,7 @@ on_success (gpointer user_data)
 
       adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog), "cancel");
       adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                                  "confirm", 
+                                                  "confirm",
                                                   ADW_RESPONSE_DESTRUCTIVE);
 
       adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
@@ -838,9 +838,9 @@ overwrite_response_cb (GObject          *object,
                        gpointer          user_data)
 {
   GduCreateDiskImageDialog *self = GDU_CREATE_DISK_IMAGE_DIALOG (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   create_disk_image (self);
@@ -853,13 +853,12 @@ on_create_image_button_clicked_cb (GduCreateDiskImageDialog *self,
                                    GtkButton                *button)
 {
   const gchar *name;
-  g_autofree char *title = NULL;
-  g_autofree char *body = NULL;
   g_autoptr(GFile) file = NULL;
+  ConfirmationDialogData *data;
 
   name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   file = g_file_get_child(self->directory, name);
-  
+
   if (!g_file_query_exists (file, NULL))
     {
       create_disk_image (self);
@@ -867,21 +866,16 @@ on_create_image_button_clicked_cb (GduCreateDiskImageDialog *self,
       return;
     }
 
-  title = g_strdup_printf (_("A file named “%s” already exists"), name);
-  body = g_strdup_printf(_("The file already exists in “%s”.  Do you want to replace it?"),
-                              gdu_utils_unfuse_path (g_file_get_path (self->directory)));
+  data = g_new0 (ConfirmationDialogData, 1);
+  data->message = _("Replace File?");
+  data->description = g_strdup_printf (_("A file named “%s” already exists in %s"), name, gdu_utils_unfuse_path (g_file_get_path (self->directory)));
+  data->response_verb = _("Replace");
+  data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+  data->callback = overwrite_response_cb;
+  data->user_data = self;
 
   gdu_utils_show_confirmation (create_disk_dialog_get_window (self),
-                                title,
-                                body,
-                                _("Replace"),
-                                NULL,
-                                NULL,
-                                NULL,
-                                NULL,
-                                overwrite_response_cb,
-                                self,
-                                ADW_RESPONSE_DESTRUCTIVE);
+                               data, NULL);
 }
 
 static void
@@ -890,7 +884,7 @@ create_disk_image_dialog_update_directory (GduCreateDiskImageDialog *self)
   g_autofree char *path = NULL;
 
   path = gdu_utils_unfuse_path (g_file_get_path (self->directory));
-  
+
   adw_action_row_set_subtitle (ADW_ACTION_ROW (self->location_entry), path);
 }
 
@@ -997,7 +991,7 @@ gdu_create_disk_image_dialog_class_init (GduCreateDiskImageDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
- 
+
   object_class->finalize = gdu_create_disk_image_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,

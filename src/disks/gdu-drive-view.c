@@ -104,7 +104,7 @@ update_drive_view (GduDriveView *self)
 
 
   features = gdu_item_get_features (GDU_ITEM (self->drive));
-  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0) 
+  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("view.format", GDU_FEATURE_FORMAT);
   ENABLE ("view.create-image", GDU_FEATURE_CREATE_IMAGE);
   ENABLE ("view.restore-image", GDU_FEATURE_RESTORE_IMAGE);
@@ -332,9 +332,9 @@ poweroff_confirmation_response_cb (GObject      *object,
                                    gpointer      user_data)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (user_data);
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
 
   gdu_drive_power_off_async (self->drive,
@@ -351,8 +351,9 @@ poweroff_drive_clicked_cb (GtkWidget  *widget,
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
   GList *siblings;
-  UDisksClient *client;
   g_autoptr(GList) objects = NULL;
+  ConfirmationDialogData *data;
+  GtkWidget *affected_devices_widget;
 
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
@@ -365,26 +366,28 @@ poweroff_drive_clicked_cb (GtkWidget  *widget,
                                NULL,
                                drive_view_power_off_cb,
                                g_object_ref (self));
-    return;  
+    return;
   }
 
-  client = drive_view_get_client ();
   objects = g_list_append (NULL, gdu_drive_get_object (self->drive));
   objects = g_list_concat (objects, siblings);
 
+  affected_devices_widget = gdu_util_create_widget_from_objects (drive_view_get_client (),
+                                                                 objects);
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  /* Translators: Heading for powering off a device with multiple drives */
+  data->message = _("Are you sure you want to power off the drives?");
+  /* Translators: Message for powering off a device with multiple drives */
+  data->description = _("This operation will prepare the system for the following drives to be powered down and removed.");
+  data->response_verb = _("_Power Off");
+  data->response_appearance = ADW_RESPONSE_DEFAULT;
+  data->callback = poweroff_confirmation_response_cb;
+  data->user_data = self;
+
   gdu_utils_show_confirmation (drive_view_get_window (self),
-                               /* Translators: Heading for powering off a device with multiple drives */
-                               _("Are you sure you want to power off the drives?"),
-                               /* Translators: Message for powering off a device with multiple drives */
-                               _("This operation will prepare the system for the following drives to be powered down and removed."),
-                              _("_Power Off"),
-                              NULL,
-                              NULL,
-                              client,
-                              objects,
-                              poweroff_confirmation_response_cb,
-                              self,
-                              ADW_RESPONSE_DEFAULT);
+                               data,
+                               affected_devices_widget);
 }
 
 static void

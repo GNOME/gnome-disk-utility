@@ -23,7 +23,7 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSpinRow" id="size_row">
-                    <property name="title" translatable="true">Partition Size</property>
+                    <property name="title" translatable="yes">Partition Size</property>
                     <signal name="output" handler="set_size_entry_unit_cb" />
                     <property name="adjustment">
                       <object class="GtkAdjustment" id="size_adjustment">
@@ -37,8 +37,8 @@
                 </child>
                 <child>
                   <object class="AdwSpinRow" id="free_space_row">
-                    <property name="title" translatable="true">Free Space</property>
-                    <property name="subtitle" translatable="true">Space following new partition</property>
+                    <property name="title" translatable="yes">Free Space</property>
+                    <property name="subtitle" translatable="yes">Space following new partition</property>
                     <signal name="output" handler="set_size_entry_unit_cb" />
                     <property name="adjustment">
                       <object class="GtkAdjustment" id="free_following_adjustment">
@@ -62,8 +62,8 @@
                   bind-flags="sync-create" />
                 <child>
                   <object class="AdwSwitchRow" id="dos_extended_row">
-                    <property name="title" translatable="true">Extended Partition</property>
-                    <property name="subtitle" translatable="true">Extended Partitions can contain Logical Partitions</property>
+                    <property name="title" translatable="yes">Extended Partition</property>
+                    <property name="subtitle" translatable="yes">Extended Partitions can contain Logical Partitions</property>
                     <property name="visible">False</property>
                     <signal name="notify::active" handler="on_part_type_changed"
                       object="GduCreatePartitionPage" swapped="true" />
@@ -78,7 +78,7 @@
                     <property name="halign">end</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="true">Units</property>
+                        <property name="label" translatable="yes">Units</property>
                         <style>
                           <class name="dim-label" />
                         </style>

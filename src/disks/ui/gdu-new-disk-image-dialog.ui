@@ -15,14 +15,14 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">_Cancel</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="action-name">window.close</property>
                 <property name="use-underline">True</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="create_image_button">
-                <property name="label" translatable="true">C_reate</property>
+                <property name="label" translatable="yes">C_reate</property>
                 <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_create_image_button_clicked_cb" swapped="True"
                   object="GduNewDiskImageDialog" />
@@ -41,7 +41,7 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwEntryRow" id="name_entry">
-                    <property name="title" translatable="true">_Name</property>
+                    <property name="title" translatable="yes">_Name</property>
                     <property name="use-underline">True</property>
                     <signal name="changed" handler="new_disk_image_details_changed_cb"
                       swapped="True" object="GduNewDiskImageDialog" />
@@ -49,7 +49,7 @@
                 </child>
                 <child>
                   <object class="AdwActionRow" id="location_entry">
-                    <property name="title" translatable="true">Location</property>
+                    <property name="title" translatable="yes">Location</property>
                     <child type="suffix">
                       <object class="GtkButton">
                         <property name="tooltip-text" translatable="yes">Select Location</property>
@@ -69,7 +69,7 @@
                 </child>
                 <child>
                   <object class="AdwSpinRow" id="size_entry">
-                    <property name="title" translatable="true">_Size</property>
+                    <property name="title" translatable="yes">_Size</property>
                     <property name="use-underline">True</property>
                     <signal name="output" handler="set_size_entry_unit_cb" />
                     <signal name="changed" handler="new_disk_image_details_changed_cb"
@@ -90,7 +90,7 @@
                     <property name="margin-top">6</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="true">Units</property>
+                        <property name="label" translatable="yes">Units</property>
                         <style>
                           <class name="dim-label"/>
                         </style>

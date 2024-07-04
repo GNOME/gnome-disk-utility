@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GduEncryptionOptionsDialog" parent="AdwWindow">
-    <property name="title" translatable="true">Encryption Options</property>
+    <property name="title" translatable="yes">Encryption Options</property>
     <property name="default-width">560</property>
     <property name="default-height">500</property>
     <property name="modal">true</property>
@@ -12,13 +12,13 @@
             <property name="show-end-title-buttons">false</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="done_button">
-                <property name="label" translatable="true">Done</property>
+                <property name="label" translatable="yes">Done</property>
                 <property name="sensitive">False</property>
                 <signal name="clicked" handler="on_done_clicked_cb" object="GduEncryptionOptionsDialog" swapped="true" />
                 <style>
@@ -31,7 +31,7 @@
         <child type="top">
           <object class="AdwBanner" id="infobar">
             <property name="use-markup">true</property>
-            <property name="title" translatable="true">Only the passphrase referenced by the &lt;i&gt;/etc/crypttab&lt;/i&gt; file will be changed. To change the on-disk passphrase, use &lt;i&gt;Change Passphrase…&lt;/i&gt;</property>
+            <property name="title" translatable="yes">Only the passphrase referenced by the &lt;i&gt;/etc/crypttab&lt;/i&gt; file will be changed. To change the on-disk passphrase, use &lt;i&gt;Change Passphrase…&lt;/i&gt;</property>
           </object>
         </child>
         <property name="content">
@@ -40,7 +40,7 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSwitchRow" id="use_defaults_switch">
-                    <property name="title" translatable="true">Automatic Encryption Options</property>
+                    <property name="title" translatable="yes">Automatic Encryption Options</property>
                     <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>
@@ -51,13 +51,13 @@
                 <property name="sensitive" bind-source="use_defaults_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="name_entry">
-                    <property name="title" translatable="true">Name</property>
+                    <property name="title" translatable="yes">Name</property>
                     <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="passphrase_entry">
-                    <property name="title" translatable="true">Passphrase</property>
+                    <property name="title" translatable="yes">Passphrase</property>
                     <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>
@@ -68,19 +68,19 @@
                 <property name="sensitive" bind-source="use_defaults_switch" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwSwitchRow" id="unlock_at_startup_switch">
-                    <property name="title" translatable="true">Unlock at System Start</property>
+                    <property name="title" translatable="yes">Unlock at System Start</property>
                     <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="require_auth_switch">
-                    <property name="title" translatable="true">Require Additional Authorization</property>
+                    <property name="title" translatable="yes">Require Additional Authorization</property>
                     <signal name="notify::active" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="options_entry">
-                    <property name="title" translatable="true">Additional Options</property>
+                    <property name="title" translatable="yes">Additional Options</property>
                     <signal name="apply" handler="on_property_changed_cb" object="GduEncryptionOptionsDialog" swapped="true"/>
                   </object>
                 </child>

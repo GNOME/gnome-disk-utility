@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GduMountOptionsDialog" parent="AdwWindow">
-    <property name="title" translatable="true">Mount Options</property>
+    <property name="title" translatable="yes">Mount Options</property>
     <property name="modal">true</property>
     <property name="content">
       <object class="AdwToolbarView">
@@ -10,13 +10,13 @@
             <property name="show-end-title-buttons">false</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="true">Done</property>
+                <property name="label" translatable="yes">Done</property>
                 <signal name="clicked" handler="on_done_clicked_cb" object="GduMountOptionsDialog" swapped="true" />
                 <style>
                   <class name="suggested-action" />
@@ -27,7 +27,7 @@
         </child>
         <child type="top">
           <object class="AdwBanner" id="info_box">
-            <property name="title" translatable="true">The system may not work correctly if this entry is modified or removed.</property>
+            <property name="title" translatable="yes">The system may not work correctly if this entry is modified or removed.</property>
           </object>
         </child>
         <property name="content">
@@ -36,60 +36,60 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSwitchRow" id="automount_switch_row">
-                    <property name="title" translatable="true">Automatic Mount Options</property>
+                    <property name="title" translatable="yes">Automatic Mount Options</property>
                   </object>
                 </child>
               </object>
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="true">General</property>
+                <property name="title" translatable="yes">General</property>
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwSwitchRow" id="startup_mount_switch">
-                    <property name="title" translatable="true">Mount at Startup</property>
+                    <property name="title" translatable="yes">Mount at Startup</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="show_in_files_switch">
-                    <property name="title" translatable="true">Show in Files</property>
+                    <property name="title" translatable="yes">Show in Files</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="require_auth_switch">
-                    <property name="title" translatable="true">Require Authorization</property>
+                    <property name="title" translatable="yes">Require Authorization</property>
                   </object>
                 </child>
               </object>
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="true">Appearance</property>
+                <property name="title" translatable="yes">Appearance</property>
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="name_row">
-                    <property name="title" translatable="true">Display Name</property>
+                    <property name="title" translatable="yes">Display Name</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="icon_row">
-                    <property name="title" translatable="true">Color Icon</property>
+                    <property name="title" translatable="yes">Color Icon</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="symbolic_icon_row">
-                    <property name="title" translatable="true">Symbolic Icon</property>
+                    <property name="title" translatable="yes">Symbolic Icon</property>
                   </object>
                 </child>
               </object>
             </child>
             <child>
               <object class="AdwPreferencesGroup">
-                <property name="title" translatable="true">Technical Options</property>
+                <property name="title" translatable="yes">Technical Options</property>
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="mount_options_row">
-                    <property name="title" translatable="true">fstab Options</property>
+                    <property name="title" translatable="yes">fstab Options</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -97,7 +97,7 @@
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="mount_point_row">
-                    <property name="title" translatable="true">Mount Point</property>
+                    <property name="title" translatable="yes">Mount Point</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -105,7 +105,7 @@
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="filesystem_type_row">
-                    <property name="title" translatable="true">Filesystem Type</property>
+                    <property name="title" translatable="yes">Filesystem Type</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -118,7 +118,7 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwComboRow" id="device_combo_row">
-                    <property name="title" translatable="true">Identify As</property>
+                    <property name="title" translatable="yes">Identify As</property>
                   </object>
                 </child>
               </object>
@@ -128,7 +128,7 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="GtkButton" id="reset_settings_button">
-                    <property name="label" translatable="true">Restore Default Settings</property>
+                    <property name="label" translatable="yes">Restore Default Settings</property>
                     <style>
                       <class name="destructive-action" />
                     </style>

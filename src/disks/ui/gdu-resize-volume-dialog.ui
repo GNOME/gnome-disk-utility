@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GduResizeVolumeDialog" parent="AdwWindow">
-    <property name="title" translatable="true">Resize Volume</property>
+    <property name="title" translatable="yes">Resize Volume</property>
     <property name="modal">true</property>
     <property name="content">
       <object class="AdwToolbarView">
@@ -10,13 +10,13 @@
             <property name="show-end-title-buttons">false</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="true">Cancel</property>
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="true">Resize</property>
+                <property name="label" translatable="yes">Resize</property>
                 <signal name="clicked" handler="on_resize_clicked_cb"
                   object="GduResizeVolumeDialog" swapped="true" />
                 <style>
@@ -32,7 +32,7 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="GtkLabel">
-                    <property name="label" translatable="true">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing</property>
+                    <property name="label" translatable="yes">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing</property>
                     <property name="halign">start</property>
                     <property name="wrap">true</property>
                     <property name="natural-wrap-mode">1</property>
@@ -56,7 +56,7 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="true">Available Space</property>
+                    <property name="title" translatable="yes">Available Space</property>
                     <property name="selectable">false</property>
                     <child type="suffix">
                       <object class="GtkLabel" id="max_size_label"></object>
@@ -72,7 +72,7 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="true">Current Size</property>
+                    <property name="title" translatable="yes">Current Size</property>
                     <property name="selectable">false</property>
                     <child type="suffix">
                       <object class="GtkLabel" id="current_size_label"></object>
@@ -92,8 +92,8 @@
                 </child>
                 <child>
                   <object class="AdwActionRow">
-                    <property name="title" translatable="true">Minimum Size</property>
-                    <property name="subtitle" translatable="true">Size of current content</property>
+                    <property name="title" translatable="yes">Minimum Size</property>
+                    <property name="subtitle" translatable="yes">Size of current content</property>
                     <property name="selectable">false</property>
                     <child type="suffix">
                       <object class="GtkLabel" id="min_size_label"></object>
@@ -117,13 +117,13 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSpinRow">
-                    <property name="title" translatable="true">New Size</property>
+                    <property name="title" translatable="yes">New Size</property>
                     <property name="adjustment">size_adjustment</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSpinRow">
-                    <property name="title" translatable="true">Free After Resize</property>
+                    <property name="title" translatable="yes">Free After Resize</property>
                     <property name="adjustment">
                       <object class="GtkAdjustment" id="free_size_adjustment">
                         <property name="upper">100</property>
@@ -140,7 +140,7 @@
                     <property name="margin-top">6</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="true">Units</property>
+                        <property name="label" translatable="yes">Units</property>
                         <style>
                           <class name="dim-label"/>
                         </style>

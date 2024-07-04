@@ -5,15 +5,15 @@
       <object class="AdwPreferencesPage">
         <child>
           <object class="AdwPreferencesGroup" id="fs_types_group">
-            <property name="title" translatable="true">Type</property>
+            <property name="title" translatable="yes">Type</property>
           </object>
         </child>
         <child>
           <object class="AdwPreferencesGroup">
             <child>
               <object class="AdwSwitchRow" id="encrypt_switch">
-                <property name="title" translatable="true">Password Protect Volume</property>
-                <property name="subtitle" translatable="true">Encrypts the volume using LUKS</property>
+                <property name="title" translatable="yes">Password Protect Volume</property>
+                <property name="subtitle" translatable="yes">Encrypts the volume using LUKS</property>
                 <signal name="notify::active" handler="on_fs_type_changed" object="GduCreateOtherPage" swapped="yes" />
               </object>
             </child>

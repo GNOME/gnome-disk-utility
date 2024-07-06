@@ -83,41 +83,31 @@
                     </property>
                   </object>
                 </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="GtkBox">
-                    <property name="halign">end</property>
-                    <property name="spacing">6</property>
-                    <property name="margin-top">6</property>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Units</property>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
+                  <object class="AdwComboRow"  id="size_unit_combo">
+                    <property name="title" translatable="yes">Units</property>
+                    <signal name="notify::selected" handler="on_size_unit_changed_cb" object="GduNewDiskImageDialog" swapped="true" />
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">bytes</item>
+                          <item translatable="yes">kB</item>
+                          <item translatable="yes">MB</item>
+                          <item translatable="yes">GB</item>
+                          <item translatable="yes">TB</item>
+                          <item translatable="yes">PB</item>
+                          <item translatable="yes">KiB</item>
+                          <item translatable="yes">MiB</item>
+                          <item translatable="yes">GiB</item>
+                          <item translatable="yes">TiB</item>
+                          <item translatable="yes">PiB</item>
+                        </items>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkDropDown" id="size_unit_dropdown">
-                        <signal name="notify::selected" handler="on_size_unit_changed_cb" object="GduNewDiskImageDialog" swapped="true" />
-                        <property name="model">
-                          <object class="GtkStringList">
-                            <items>
-                              <item translatable="yes">bytes</item>
-                              <item translatable="yes">kB</item>
-                              <item translatable="yes">MB</item>
-                              <item translatable="yes">GB</item>
-                              <item translatable="yes">TB</item>
-                              <item translatable="yes">PB</item>
-                              <item translatable="yes">KiB</item>
-                              <item translatable="yes">MiB</item>
-                              <item translatable="yes">GiB</item>
-                              <item translatable="yes">TiB</item>
-                              <item translatable="yes">PiB</item>
-                            </items>
-                          </object>
-                        </property>
-                      </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>

@@ -38,7 +38,7 @@ struct _GduNewDiskImageDialog
   GtkWidget     *name_entry;
   GtkWidget     *location_entry;
   GtkWidget     *size_entry;
-  GtkWidget     *size_unit_dropdown;
+  GtkWidget     *size_unit_combo;
 
   GFile         *directory;
 
@@ -223,7 +223,7 @@ set_size_entry_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
 
   adjustment = adw_spin_row_get_adjustment (spin_row);
 
-  object = gtk_drop_down_get_selected_item (GTK_DROP_DOWN (self->size_unit_dropdown));
+  object = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->size_unit_combo));
   unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
 
   s = g_strdup_printf ("%.2f %s", gtk_adjustment_get_value (adjustment), unit);
@@ -364,7 +364,7 @@ on_size_unit_changed_cb (GduNewDiskImageDialog *self)
   gdouble value;
   gdouble value_units;
 
-  unit_num = gtk_drop_down_get_selected (GTK_DROP_DOWN (self->size_unit_dropdown));
+  unit_num = adw_combo_row_get_selected (ADW_COMBO_ROW (self->size_unit_combo));
 
   adjustment = adw_spin_row_get_adjustment (ADW_SPIN_ROW (self->size_entry));
   value = gtk_adjustment_get_value (adjustment) * ((gdouble) unit_sizes[self->cur_unit_num]);
@@ -390,7 +390,7 @@ gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, name_entry);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, location_entry);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_entry);
-  gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_dropdown);
+  gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_combo);
 
   gtk_widget_class_add_binding_action (widget_class,
                                        GDK_KEY_Escape, 0, "window.close",
@@ -409,7 +409,7 @@ gdu_new_disk_image_dialog_init (GduNewDiskImageDialog *self)
   gtk_widget_init_template (GTK_WIDGET (self));
 
   self->cur_unit_num = 3; /* GB */
-  gtk_drop_down_set_selected (GTK_DROP_DOWN (self->size_unit_dropdown), self->cur_unit_num);
+  adw_combo_row_set_selected (ADW_COMBO_ROW (self->size_unit_combo), self->cur_unit_num);
 
   new_disk_image_set_default_name (self);
   new_disk_image_set_directory (self);

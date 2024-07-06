@@ -38,7 +38,7 @@ struct _GduResizeVolumeDialog
   GtkWidget             *min_size_label;
   GtkWidget             *current_size_label;
   GtkWidget             *size_unit_label;
-  GtkWidget             *size_unit_dropdown;
+  GtkWidget             *size_unit_combo;
 
   GtkAdjustment         *size_adjustment;
   GtkAdjustment         *free_size_adjustment;
@@ -63,7 +63,7 @@ gdu_resize_volume_dialog_update (GduResizeVolumeDialog *self)
   GObject *object;
   const char *unit;
 
-  object = gtk_drop_down_get_selected_item (GTK_DROP_DOWN (self->size_unit_dropdown));
+  object = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->size_unit_combo));
   unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
 
   gtk_label_set_label (GTK_LABEL (self->size_unit_label), unit);
@@ -169,7 +169,7 @@ set_unit_num (GduResizeVolumeDialog *self, gint unit_num)
 
   g_assert (unit_num < NUM_UNITS);
 
-  gtk_drop_down_set_selected (GTK_DROP_DOWN (self->size_unit_dropdown),
+  adw_combo_row_set_selected (ADW_COMBO_ROW (self->size_unit_combo),
                               unit_num);
 
   value = self->cur_unit_num == -1 
@@ -213,7 +213,7 @@ on_size_unit_changed_cb (GduResizeVolumeDialog *self)
 {
   gint unit_num;
 
-  unit_num = gtk_drop_down_get_selected (GTK_DROP_DOWN (self->size_unit_dropdown));
+  unit_num = adw_combo_row_get_selected (ADW_COMBO_ROW (self->size_unit_combo));
   set_unit_num (self, unit_num);
 
   gdu_resize_volume_dialog_update (self);
@@ -676,7 +676,7 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,max_size_label);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,min_size_label);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,current_size_label);
-  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_dropdown);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_combo);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_label);
 
   gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);

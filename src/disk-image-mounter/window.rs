@@ -4,6 +4,8 @@ use std::fs::OpenOptions;
 use std::os::fd::AsFd;
 use std::path::PathBuf;
 
+use anyhow::anyhow;
+use anyhow::Context;
 use gettextrs::gettext;
 use gtk::prelude::FileExt;
 use gtk::prelude::GtkWindowExt;
@@ -14,7 +16,6 @@ use udisks::zbus::zvariant::{OwnedObjectPath, Value};
 
 use crate::application::ImageMounterApplication;
 use crate::config;
-use crate::error::ImageMounterError;
 use crate::unmount;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
@@ -197,7 +198,7 @@ impl ImageMounterWindow {
         None
     }
 
-    async fn read_device(&self, object: &udisks::Object) -> Result<String, ImageMounterError> {
+    async fn read_device(&self, object: &udisks::Object) -> anyhow::Result<String> {
         let block = object.block().await?;
         Ok(CString::from_vec_with_nul(block.device().await?)?
             .to_str()?
@@ -242,7 +243,7 @@ impl ImageMounterWindow {
         }
     }
 
-    async fn open_in_files(&self, read_only: bool) -> Result<(), ImageMounterError> {
+    async fn open_in_files(&self, read_only: bool) -> anyhow::Result<()> {
         let object = if let Some(object) = self.mounted_file_object().await {
             object
         } else {
@@ -254,7 +255,7 @@ impl ImageMounterWindow {
         let (Some(filesystem), _encrypted, _last) =
             unmount::is_in_full_use(&client, &object, false).await?
         else {
-            return Err(ImageMounterError::File);
+            return Err(anyhow!("Failed to find filesystem"));
         };
 
         for mount_point in filesystem
@@ -280,7 +281,7 @@ impl ImageMounterWindow {
         Ok(())
     }
 
-    async fn inspect(&self) -> Result<(), ImageMounterError> {
+    async fn inspect(&self) -> anyhow::Result<()> {
         let object = if let Some(object) = self.mounted_file_object().await {
             object
         } else {
@@ -291,30 +292,30 @@ impl ImageMounterWindow {
         self.open_in_disks(device).await
     }
 
-    async fn unmount(&self) -> Result<(), ImageMounterError> {
+    async fn unmount(&self) -> anyhow::Result<()> {
         let mounted_object = self
             .mounted_file_object()
             .await
-            .ok_or(ImageMounterError::File)?;
+            .context("Failed to find mounted_object")?;
 
         let client = udisks::Client::new().await?;
         if let Err(err) = unmount::unuse_data_iterate(&client, &mounted_object).await {
             log::error!("Failed to unmount: {}", err);
-            return Err(ImageMounterError::Zbus(err));
+            return Err(err.into());
         }
         log::info!("Succesfully unmounted");
 
         Ok(())
     }
 
-    async fn mount(&self, read_only: bool) -> Result<udisks::Object, ImageMounterError> {
+    async fn mount(&self, read_only: bool) -> anyhow::Result<udisks::Object> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
 
         let path = self
             .file()
             .and_then(|file| file.path())
-            .ok_or(ImageMounterError::File)?;
+            .context("Failed to find file path")?;
 
         let file = OpenOptions::new()
             .read(true)
@@ -330,23 +331,22 @@ impl ImageMounterWindow {
         Ok(client.object(object_path).unwrap())
     }
 
-    fn write_image(&self) -> Result<(), ImageMounterError> {
+    fn write_image(&self) -> anyhow::Result<()> {
         let path = self
             .file()
             .and_then(|file| file.path())
-            .ok_or(ImageMounterError::File)?;
+            .context("Failed to find file path")?;
 
         let mut child = std::process::Command::new("gnome-disks")
             .args(["--restore-disk-image", path.to_str().unwrap()])
-            .spawn()
-            .map_err(|_| ImageMounterError::File)?;
+            .spawn()?;
         if !child.wait()?.success() {
-            return Err(ImageMounterError::File);
+            return Err(anyhow!("Failed to spawn gnome-disks"));
         }
         Ok(())
     }
 
-    async fn open_in_disks(&self, device: String) -> Result<(), ImageMounterError> {
+    async fn open_in_disks(&self, device: String) -> anyhow::Result<()> {
         let connection = zbus::Connection::session().await?;
 
         const EMPTY_ARR: &[&[u8]] = &[];

@@ -5,7 +5,6 @@ use gtk::glib;
 
 pub mod application;
 mod config;
-pub mod error;
 pub mod unmount;
 pub mod window;
 

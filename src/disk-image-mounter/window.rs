@@ -205,39 +205,31 @@ impl ImageMounterWindow {
             .to_owned())
     }
 
+    /// Returns a user-visible error message based on the action.
+    fn user_visible_error_msg(&self) -> String {
+        gettext(match self.continue_action() {
+            Action::OpenInFiles | Action::OpenInFilesWritable => "Failed to mount file",
+            Action::Unmount => "Failed to unmount file",
+            Action::Write => "Failed to write image",
+            Action::Inspect => "Failed to inspect image",
+        })
+    }
+
     #[template_callback]
     async fn on_continue_button(&self, _button: &gtk::Button) {
-        let error = match self.continue_action() {
-            Action::OpenInFiles => self
-                .open_in_files(true)
-                .await
-                .map_err(|_| gettext("Failed to mount file"))
-                .err(),
-            Action::OpenInFilesWritable => self
-                .open_in_files(false)
-                .await
-                .map_err(|_| gettext("Failed to mount file"))
-                .err(),
-            Action::Unmount => self
-                .unmount()
-                .await
-                .map_err(|_| gettext("Failed to unmount file"))
-                .err(),
-            Action::Write => self
-                .write_image()
-                .map_err(|_| gettext("Failed to write image"))
-                .err(),
-            Action::Inspect => self
-                .inspect()
-                .await
-                .map_err(|_| gettext("Failed to inspect image"))
-                .err(),
+        let success = match self.continue_action() {
+            Action::OpenInFiles => self.open_in_files(true).await,
+            Action::OpenInFilesWritable => self.open_in_files(false).await,
+            Action::Unmount => self.unmount().await,
+            Action::Write => self.write_image(),
+            Action::Inspect => self.inspect().await,
         };
 
-        if let Some(error_msg) = error {
+        if let Some(err) = success.err() {
+            log::error!("{}", err);
             self.imp()
                 .toast_overlay
-                .add_toast(adw::Toast::new(&error_msg))
+                .add_toast(adw::Toast::new(&self.user_visible_error_msg()))
         } else if config::PROFILE != "Devel" {
             self.close();
         }

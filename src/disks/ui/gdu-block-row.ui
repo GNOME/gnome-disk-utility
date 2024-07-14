@@ -71,104 +71,99 @@
     </child>
 
     <child>
-      <object class="AdwPreferencesRow">
-        <property name="activatable">False</property>
+      <object class="GtkGrid">
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
+        <property name="row-spacing">6</property>
+        <property name="column-spacing">12</property>
         <child>
-          <object class="GtkGrid">
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
-            <property name="margin-top">12</property>
-            <property name="margin-bottom">12</property>
-            <property name="row-spacing">6</property>
-            <property name="column-spacing">12</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Size</property>
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">0</property>
-                </layout>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="size_label">
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Device ID</property>
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">1</property>
-                </layout>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="device_id_label">
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">1</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">UUID</property>
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">2</property>
-                </layout>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="uuid_label">
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">2</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="label" translatable="yes">Partition Type</property>
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">0</property>
-                  <property name="row">3</property>
-                </layout>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkLabel" id="partition_type_label">
-                <property name="xalign">0</property>
-                <layout>
-                  <property name="column">1</property>
-                  <property name="row">3</property>
-                </layout>
-              </object>
-            </child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Size</property>
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+            <style>
+              <class name="dim-label" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="size_label">
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Device ID</property>
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
+            <style>
+              <class name="dim-label" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="device_id_label">
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">UUID</property>
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">2</property>
+            </layout>
+            <style>
+              <class name="dim-label" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="uuid_label">
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Partition Type</property>
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">3</property>
+            </layout>
+            <style>
+              <class name="dim-label" />
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="partition_type_label">
+            <property name="xalign">0</property>
+            <layout>
+              <property name="column">1</property>
+              <property name="row">3</property>
+            </layout>
           </object>
         </child>
       </object>

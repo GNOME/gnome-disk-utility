@@ -230,7 +230,7 @@ impl ImageMounterWindow {
             self.imp()
                 .toast_overlay
                 .add_toast(adw::Toast::new(&self.user_visible_error_msg()))
-        } else if config::PROFILE != "Devel" {
+        } else {
             self.close();
         }
     }

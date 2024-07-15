@@ -13,9 +13,9 @@ use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use udisks::zbus;
 use udisks::zbus::zvariant::{OwnedObjectPath, Value};
+use zbus::export::futures_util::StreamExt;
 
 use crate::application::ImageMounterApplication;
-use crate::config;
 use crate::unmount;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
@@ -236,12 +236,25 @@ impl ImageMounterWindow {
     }
 
     async fn open_in_files(&self, read_only: bool) -> anyhow::Result<()> {
-        let object = if let Some(object) = self.mounted_file_object().await {
+        let mut object = if let Some(object) = self.mounted_file_object().await {
             object
         } else {
             log::debug!("File not yet mounted, mounting first");
             self.mount(read_only).await?
         };
+
+        if let Ok(encrypted) = object.encrypted().await {
+            if encrypted.cleartext_device().await?.to_string().eq("/") {
+                // the encrypted file is already mounted, but not unlocked,
+                // so we unmount to prompt the system to show the unlock dialog again
+                log::debug!(
+                    "{} is already mounted, but not unlocked",
+                    object.object_path()
+                );
+                self.unmount().await?;
+                object = self.mount(read_only).await?;
+            }
+        }
 
         let client = udisks::Client::new().await?;
         let (Some(filesystem), _encrypted, _last) =
@@ -297,6 +310,11 @@ impl ImageMounterWindow {
         }
         log::info!("Succesfully unmounted");
 
+        if let Ok(encrypted) = mounted_object.encrypted().await {
+            encrypted.lock(udisks::standard_options(true)).await?;
+            log::debug!("Successfully locked {}", encrypted.inner().path());
+        }
+
         Ok(())
     }
 
@@ -320,7 +338,23 @@ impl ImageMounterWindow {
 
         //safe to unwrap, since the given path is
         //already an oject path
-        Ok(client.object(object_path).unwrap())
+        let object = client.object(object_path).unwrap();
+
+        if let Ok(encrypted) = object.encrypted().await {
+            // wait until encrypted block has been unlocked, i.e. there is an cleartext device
+            let mut cleartext_dev_changes = encrypted.receive_cleartext_device_changed().await;
+            while let Some(dev) = cleartext_dev_changes.next().await {
+                if dev
+                    .get()
+                    .await
+                    .is_ok_and(|clear| !clear.to_string().eq("/"))
+                {
+                    log::debug!("Encrypted device has been unlocked");
+                    break;
+                }
+            }
+        }
+        Ok(object)
     }
 
     fn write_image(&self) -> anyhow::Result<()> {

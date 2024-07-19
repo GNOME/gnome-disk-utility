@@ -678,6 +678,10 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
+
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
 }
 
 void

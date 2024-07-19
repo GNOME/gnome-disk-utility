@@ -767,6 +767,10 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, set_sample_size_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_start_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_cancel_clicked_cb);
+
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
 }
 
 void

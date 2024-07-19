@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-02-04 12:04+0000\n"
-"PO-Revision-Date: 2024-02-16 23:39+0200\n"
+"POT-Creation-Date: 2024-05-19 06:25+0000\n"
+"PO-Revision-Date: 2024-07-19 23:43+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <>\n"
 "Language: he\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? 2 : "
 "3);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
 msgid "Disk Image Mounter"
@@ -90,8 +90,20 @@ msgstr ""
 "בשימוש בכוננים, נתן לצפות בנתוני SMART, לנהל התקנים, לבצע בדיקת נתונים פיזית "
 "לכוננים, ויצירת דמויות כונן ל־USB."
 
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "חלוקה למחיצה ופירמוט כוננים"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "חקירת מהירות הכונן מצב בריאותו"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "ניהול התקני האחסון שלך"
+
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:47
+#: data/org.gnome.DiskUtility.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "מיזם GNOME"
 
@@ -177,45 +189,49 @@ msgstr "שגיאה בפתיחת „%s”:‏ %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "שגיאה בהצמדת דמות הכונן: %s‎‏ (%s,‏ %d)"
 
-#: src/disks/gduapplication.c:93
+#: src/disks/gduapplication.c:94
 msgid "Stop running jobs?"
 msgstr "עצירת הרצת העבודות?"
 
-#: src/disks/gduapplication.c:95
+#: src/disks/gduapplication.c:96
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr "סגירה עכשיו תעצור את העבודות שפועלות ותוביל לתוצאה גרועה."
 
-#: src/disks/gduapplication.c:136
+#: src/disks/gduapplication.c:137
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Error opening %s: %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Error looking up block device for %s"
 
-#: src/disks/gduapplication.c:165
+#: src/disks/gduapplication.c:177
 msgid "Select device"
 msgstr "Select device"
 
-#: src/disks/gduapplication.c:166
+#: src/disks/gduapplication.c:178
 msgid "Format selected device"
 msgstr "Format selected device"
 
-#: src/disks/gduapplication.c:167
+#: src/disks/gduapplication.c:179
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr "הצגת יומנים מפורטים, אפשר לציין עד ארבע פעמים להגברת הפירוט"
+
+#: src/disks/gduapplication.c:180
 msgid "Ignored, kept for compatibility"
 msgstr "Ignored, kept for compatibility"
 
-#: src/disks/gduapplication.c:168
+#: src/disks/gduapplication.c:181
 msgid "Restore disk image"
 msgstr "Restore disk image"
 
-#: src/disks/gduapplication.c:200
+#: src/disks/gduapplication.c:214
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device must be used together with --block-device\n"
 
-#: src/disks/gduapplication.c:206
+#: src/disks/gduapplication.c:220
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device must not be used together with --restore-disk-image"
 
@@ -224,7 +240,7 @@ msgstr "--format-device must not be used together with --restore-disk-image"
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:340
+#: src/disks/gduapplication.c:354
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1255,11 +1271,11 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "אירעה שגיאה בעת קריאת %lld בתים מהיסט %lld"
 
-#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
 msgid "Free Space"
 msgstr "מקום פנוי"
 
-#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+#: src/disks/gdu-block.c:97 src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "מחיצה מורחבת"
 
@@ -1269,7 +1285,7 @@ msgstr "מחיצה מורחבת"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:567
+#: src/disks/gdu-block.c:569
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "‏%s - ‏%s פנוי (%.1f%% מלא)"
@@ -4775,8 +4791,8 @@ msgstr "בחינה"
 #~ msgstr "הרחבת %s"
 
 #~ msgid ""
-#~ "Select one or more devices to use %s on for expanding the RAID Array "
-#~ "\"%s\" (%s)"
+#~ "Select one or more devices to use %s on for expanding the RAID Array \"%s\" "
+#~ "(%s)"
 #~ msgstr "יש לבחור בהתקן אחד או יותר שישתמש ב־%s להרחבת מערך ה־RAID‏ \"%s\"‏ (%s)"
 
 #~ msgid "_Expand"
@@ -6479,9 +6495,6 @@ msgstr "בחינה"
 #~ msgid "%s Partition"
 #~ msgstr "מחיצה %s"
 
-#~ msgid "Partition %d of %s"
-#~ msgstr "מחיצה %d של %s"
-
 #~ msgid "Whole-disk volume on %s"
 #~ msgstr "כרך על כל הכונן ב־%s"
 
@@ -6937,9 +6950,6 @@ msgstr "בחינה"
 
 #~ msgid "Connect to _Server..."
 #~ msgstr "ה_תחברות לשרת..."
-
-#~ msgid "Manage storage devices on another machine"
-#~ msgstr "ניהול התקני אחסון במחשב אחר"
 
 #~ msgid "_Create"
 #~ msgstr "י_צירה"

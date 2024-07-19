@@ -12,13 +12,15 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="yes">Cancel</property>
+                <property name="label" translatable="yes">_Cancel</property>
+                <property name="use-underline">True</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="confirm_button">
-                <property name="label" translatable="yes">Done</property>
+                <property name="label" translatable="yes">_Done</property>
+                <property name="use-underline">True</property>
                 <property name="sensitive">false</property>
                 <signal name="clicked" handler="on_confirm_button_clicked_cb"
                   swapped="True" object="GduEditPartitionDialog" />
@@ -35,13 +37,15 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwComboRow" id="type_row">
-                    <property name="title" translatable="yes">Partition Type</property>
+                    <property name="title" translatable="yes">_Partition Type</property>
+                    <property name="use-underline">True</property>
                     <property name="tooltip-markup" translatable="yes">The partition type represented as a 32-bit &lt;i&gt;GUID&lt;/i&gt;</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="name_entry">
-                    <property name="title" translatable="yes">Name</property>
+                    <property name="title" translatable="yes">_Name</property>
+                    <property name="use-underline">True</property>
                     <property name="tooltip-markup" translatable="yes">The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the &lt;b&gt;/dev/disk/by-partlabel&lt;/b&gt; directory</property>
                     <signal name="notify::text" handler="on_property_changed_cb"
                       swapped="True" object="GduEditPartitionDialog" />
@@ -57,7 +61,8 @@
                 <property name="title" translatable="yes">Flags</property>
                 <child>
                   <object class="AdwSwitchRow" id="bootable_switch">
-                    <property name="title" translatable="yes">Legacy BIOS Bootable</property>
+                    <property name="title" translatable="yes">_Legacy BIOS Bootable</property>
+                    <property name="use-underline">True</property>
                     <property name="subtitle" translatable="yes">This is equivalent to Master Boot Record &lt;i&gt;bootable&lt;/i&gt; flag. It is normally only used for GPT partitions on MBR systems</property>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />
@@ -65,7 +70,8 @@
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="system_partition_switch">
-                    <property name="title" translatable="yes">System Partition</property>
+                    <property name="title" translatable="yes">_System Partition</property>
+                    <property name="use-underline">True</property>
                     <property name="subtitle" translatable="yes">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents</property>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />
@@ -73,7 +79,8 @@
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="firmware_hide_switch">
-                    <property name="title" translatable="yes">Hide from Firmware</property>
+                    <property name="title" translatable="yes">_Hide from Firmware</property>
+                    <property name="use-underline">True</property>
                     <property name="subtitle" translatable="yes">Indicates that EFI firmware should ignore the content of the partition and not try to read from it</property>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />

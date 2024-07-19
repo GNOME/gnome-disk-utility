@@ -127,7 +127,10 @@ on_confirmation_response_cb (GObject                     *object,
                              gpointer                     user_data)
 {
   GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (user_data);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
 
+  if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
+    return;
   /* ensure the volume is unused (e.g. unmounted) before formatting it... */
   gdu_utils_ensure_unused(self->udisks_client,
                           gdu_format_disk_dialog_get_window (self),

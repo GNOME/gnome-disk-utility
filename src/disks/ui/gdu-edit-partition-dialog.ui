@@ -60,28 +60,124 @@
               <object class="AdwPreferencesGroup">
                 <property name="title" translatable="yes">Flags</property>
                 <child>
-                  <object class="AdwSwitchRow" id="bootable_switch">
+                  <object class="AdwActionRow" id="bootable_row">
                     <property name="title" translatable="yes">_Legacy BIOS Bootable</property>
                     <property name="use-underline">True</property>
-                    <property name="subtitle" translatable="yes">This is equivalent to Master Boot Record &lt;i&gt;bootable&lt;/i&gt; flag. It is normally only used for GPT partitions on MBR systems</property>
+                    <property name="activatable-widget">bootable_switch</property>
+                    <child type="suffix">
+                      <object class="GtkMenuButton">
+                        <property name="tooltip-text" translatable="yes">More Information</property>
+                        <property name="icon-name">help-about-symbolic</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                        <property name="popover">
+                          <object class="GtkPopover">
+                            <child>
+                              <object class="GtkLabel" id="bootable_info_label">
+                                <property name="label" translatable="yes">This is equivalent to Master Boot Record “bootable” flag. It is normally only used for GPT partitions on MBR systems.</property>
+                                <property name="halign">center</property>
+                                <property name="margin-bottom">6</property>
+                                <property name="margin-end">6</property>
+                                <property name="margin-start">6</property>
+                                <property name="margin-top">6</property>
+                                <property name="max-width-chars">50</property>
+                                <property name="valign">center</property>
+                                <property name="wrap">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child type="suffix">
+                      <object class="GtkSwitch" id="bootable_switch">
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
                 <child>
-                  <object class="AdwSwitchRow" id="system_partition_switch">
+                  <object class="AdwActionRow" id="system_partition_row">
                     <property name="title" translatable="yes">_System Partition</property>
                     <property name="use-underline">True</property>
-                    <property name="subtitle" translatable="yes">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents</property>
+                    <property name="activatable-widget">system_partition_switch</property>
+                    <child type="suffix">
+                      <object class="GtkMenuButton">
+                        <property name="tooltip-text" translatable="yes">More Information</property>
+                        <property name="icon-name">help-about-symbolic</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                        <property name="popover">
+                          <object class="GtkPopover">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents.</property>
+                                <property name="halign">center</property>
+                                <property name="margin-bottom">6</property>
+                                <property name="margin-end">6</property>
+                                <property name="margin-start">6</property>
+                                <property name="margin-top">6</property>
+                                <property name="max-width-chars">50</property>
+                                <property name="valign">center</property>
+                                <property name="wrap">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child type="suffix">
+                      <object class="GtkSwitch" id="system_partition_switch">
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
                 <child>
-                  <object class="AdwSwitchRow" id="firmware_hide_switch">
+                  <object class="AdwActionRow" id="firmware_hide_row">
                     <property name="title" translatable="yes">_Hide from Firmware</property>
                     <property name="use-underline">True</property>
-                    <property name="subtitle" translatable="yes">Indicates that EFI firmware should ignore the content of the partition and not try to read from it</property>
+                    <property name="activatable-widget">firmware_hide_switch</property>
+                    <child type="suffix">
+                      <object class="GtkMenuButton">
+                        <property name="tooltip-text" translatable="yes">More Information</property>
+                        <property name="icon-name">help-about-symbolic</property>
+                        <property name="valign">center</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                        <property name="popover">
+                          <object class="GtkPopover">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Indicates that EFI firmware should ignore the content of the partition and not try to read from it</property>
+                                <property name="halign">center</property>
+                                <property name="margin-bottom">6</property>
+                                <property name="margin-end">6</property>
+                                <property name="margin-start">6</property>
+                                <property name="margin-top">6</property>
+                                <property name="max-width-chars">50</property>
+                                <property name="valign">center</property>
+                                <property name="wrap">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child type="suffix">
+                      <object class="GtkSwitch" id="firmware_hide_switch">
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
                     <signal name="notify::active" handler="on_property_changed_cb"
                     swapped="True" object="GduEditPartitionDialog" />
                   </object>

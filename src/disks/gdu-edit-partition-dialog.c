@@ -27,8 +27,12 @@ struct _GduEditPartitionDialog
   GtkWidget            *type_row;
   GtkWidget            *name_entry;
 
+  GtkWidget            *bootable_info_label;
+  GtkWidget            *bootable_row;
   GtkWidget            *bootable_switch;
+  GtkWidget            *system_partition_row;
   GtkWidget            *system_partition_switch;
+  GtkWidget            *firmware_hide_row;
   GtkWidget            *firmware_hide_switch;
 
   GtkWindow            *window;
@@ -66,7 +70,7 @@ gdu_edit_partition_dialog_get_new_flags (GduEditPartitionDialog *self)
       return flags | (1UL << 7);
     }
 
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->system_partition_switch)))
+  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->system_partition_row)))
     flags |= (1UL << 0);
   if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->firmware_hide_switch)))
     flags |= (1UL << 1);
@@ -220,9 +224,9 @@ gdu_edit_partition_dialog_populate (GduEditPartitionDialog *self)
     }
 
   gtk_editable_set_text (GTK_EDITABLE (self->name_entry), udisks_partition_get_name (self->udisks_partition));
-  adw_switch_row_set_active (ADW_SWITCH_ROW (self->system_partition_switch), (flags & (1UL << 0)) != 0);
-  adw_switch_row_set_active (ADW_SWITCH_ROW (self->firmware_hide_switch), (flags & (1UL << 1)) != 0);
-  adw_switch_row_set_active (ADW_SWITCH_ROW (self->bootable_switch), (flags & (1UL << 2)) != 0);
+  gtk_switch_set_active (GTK_SWITCH (self->system_partition_switch), (flags & (1UL << 0)) != 0);
+  gtk_switch_set_active (GTK_SWITCH (self->firmware_hide_switch), (flags & (1UL << 1)) != 0);
+  gtk_switch_set_active (GTK_SWITCH (self->bootable_switch), (flags & (1UL << 2)) != 0);
 }
 
 static void
@@ -255,7 +259,11 @@ gdu_edit_partition_dialog_class_init (GduEditPartitionDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, type_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, name_entry);
 
+  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, bootable_info_label);
+  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, bootable_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, bootable_switch);
+  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_row);
+  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_switch);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, firmware_hide_switch);
 
@@ -300,15 +308,15 @@ gdu_edit_partition_dialog_show (GtkWindow    *parent_window,
   if (g_strcmp0 (self->partition_table_type, "dos") == 0)
     {
       gtk_widget_set_visible (GTK_WIDGET (self->name_entry), FALSE);
-      gtk_widget_set_visible (GTK_WIDGET (self->system_partition_switch), FALSE);
-      gtk_widget_set_visible (GTK_WIDGET (self->firmware_hide_switch), FALSE);
-      gtk_widget_set_tooltip_markup (GTK_WIDGET (self->type_row),
-                                     _("The partition type as a 8-bit unsigned integer"));
-      adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self->bootable_switch), _("_Bootable"));
-      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->bootable_switch),
-                                   _("A flag used by the Platform bootloader to determine where the OS "
-                                     "should be loaded from. Sometimes the partition with this flag set "
-                                     "is referred to as the <i>active</i> partition"));
+      gtk_widget_set_visible (GTK_WIDGET (self->system_partition_row), FALSE);
+      gtk_widget_set_visible (GTK_WIDGET (self->firmware_hide_row), FALSE);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->type_row),
+                                   _("The partition type as a 8-bit unsigned integer"));
+      adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self->bootable_row), _("_Bootable"));
+      gtk_label_set_label (GTK_LABEL (self->bootable_info_label),
+                           _("A flag used by the Platform bootloader to determine where the OS "
+                            "should be loaded from. Sometimes the partition with this flag set "
+                            "is referred to as the “active” partition"));
     }
 
   gdu_edit_partition_dialog_populate (self);

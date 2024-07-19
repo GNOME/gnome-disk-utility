@@ -29,16 +29,9 @@
         </child>
         <property name="content">
           <object class="AdwPreferencesPage">
+            <property name="description" translatable="yes">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing.</property>
             <child>
               <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing</property>
-                    <property name="halign">start</property>
-                    <property name="wrap">true</property>
-                    <property name="natural-wrap-mode">1</property>
-                  </object>
-                </child>
                 <child>
                   <object class="GtkScale" id="size_scale">
                     <property name="adjustment">

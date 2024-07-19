@@ -51,60 +51,27 @@
             <child>
               <object class="AdwPreferencesGroup">
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwActionRow" id="max_size_row">
                     <property name="title" translatable="yes">Available Space</property>
-                    <property name="selectable">false</property>
-                    <child type="suffix">
-                      <object class="GtkLabel" id="max_size_label"></object>
-                    </child>
-                    <child type="suffix">
-                      <object class="GtkLabel" id="size_unit_label">
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
+                    <style>
+                      <class name="property"/>
+                    </style>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwActionRow" id="current_size_row">
                     <property name="title" translatable="yes">Current Size</property>
-                    <property name="selectable">false</property>
-                    <child type="suffix">
-                      <object class="GtkLabel" id="current_size_label"></object>
-                    </child>
-                    <child type="suffix">
-                      <object class="GtkLabel">
-                        <property name="label"
-                                  bind-source="size_unit_label"
-                                  bind-property="label"
-                                  bind-flags="sync-create" />
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
+                    <style>
+                      <class name="property"/>
+                    </style>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwActionRow">
+                  <object class="AdwActionRow" id="min_size_row">
                     <property name="title" translatable="yes">Minimum Size</property>
-                    <property name="subtitle" translatable="yes">Size of current content</property>
-                    <property name="selectable">false</property>
-                    <child type="suffix">
-                      <object class="GtkLabel" id="min_size_label"></object>
-                    </child>
-                    <child type="suffix">
-                      <object class="GtkLabel">
-                        <property name="label"
-                                  bind-source="size_unit_label"
-                                  bind-property="label"
-                                  bind-flags="sync-create" />
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
+                    <style>
+                      <class name="property"/>
+                    </style>
                   </object>
                 </child>
               </object>

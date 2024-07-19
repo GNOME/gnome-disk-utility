@@ -34,10 +34,9 @@ struct _GduResizeVolumeDialog
 
   GtkWidget             *size_scale;
 
-  GtkWidget             *max_size_label;
-  GtkWidget             *min_size_label;
-  GtkWidget             *current_size_label;
-  GtkWidget             *size_unit_label;
+  GtkWidget             *max_size_row;
+  GtkWidget             *min_size_row;
+  GtkWidget             *current_size_row;
   GtkWidget             *size_unit_combo;
 
   GtkAdjustment         *size_adjustment;
@@ -66,13 +65,12 @@ gdu_resize_volume_dialog_update (GduResizeVolumeDialog *self)
   object = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->size_unit_combo));
   unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
 
-  gtk_label_set_label (GTK_LABEL (self->size_unit_label), unit);
-  gtk_label_set_label (GTK_LABEL (self->max_size_label),
-                       g_strdup_printf ("%ld", self->max_size / unit_sizes[self->cur_unit_num]));
-  gtk_label_set_label (GTK_LABEL (self->min_size_label),
-                       g_strdup_printf ("%ld", self->min_size / unit_sizes[self->cur_unit_num]));
-  gtk_label_set_label (GTK_LABEL (self->current_size_label),
-                       g_strdup_printf ("%ld", self->current_size / unit_sizes[self->cur_unit_num]));
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->max_size_row),
+                               g_strdup_printf ("%ld %s", self->max_size / unit_sizes[self->cur_unit_num], unit));
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->min_size_row),
+                               g_strdup_printf ("%ld %s", self->min_size / unit_sizes[self->cur_unit_num], unit));
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->current_size_row),
+                               g_strdup_printf ("%ld %s", self->current_size / unit_sizes[self->cur_unit_num], unit));
 }
 
 static guint64
@@ -673,11 +671,10 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_adjustment);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,free_size_adjustment);
 
-  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,max_size_label);
-  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,min_size_label);
-  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,current_size_label);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,max_size_row);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,min_size_row);
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,current_size_row);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_combo);
-  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_label);
 
   gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);

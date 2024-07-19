@@ -13,14 +13,14 @@
                       bind-flags="sync-create|invert-boolean" />
             <child type="start">
               <object class="GtkButton" id="close_button">
-                <property name="label" translatable="yes">Ca_ncel</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="use-underline">true</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="start">
               <object class="GtkButton" id="cancel_button">
-                <property name="label" translatable="yes">Ca_ncel</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="use-underline">true</property>
                 <property name="visible"
                           bind-source="close_button"
@@ -31,7 +31,7 @@
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="yes">St_art</property>
+                <property name="label" translatable="yes">_Start</property>
                 <property name="use-underline">true</property>
                 <signal name="clicked" handler="on_start_clicked_cb" swapped="true" />
                 <property name="visible"
@@ -63,7 +63,8 @@
                       <object class="AdwPreferencesGroup">
                         <child>
                           <object class="AdwSpinRow" id="sample_row">
-                            <property name="title" translatable="yes">Transfer Samples</property>
+                            <property name="title" translatable="yes">Transfer S_amples</property>
+                            <property name="use-underline">True</property>
                             <property name="adjustment">
                               <object class="GtkAdjustment">
                                 <property name="lower">2</property>
@@ -77,7 +78,8 @@
                         </child>
                         <child>
                           <object class="AdwSpinRow" id="sample_size_row">
-                            <property name="title" translatable="yes">Transfer Sample Size</property>
+                            <property name="title" translatable="yes">Transfer Sample S_ize</property>
+                            <property name="use-underline">True</property>
                             <signal name="output" handler="set_sample_size_unit_cb" />
                             <property name="adjustment">
                               <object class="GtkAdjustment">
@@ -92,7 +94,8 @@
                         </child>
                         <child>
                           <object class="AdwSpinRow" id="access_samples_row">
-                            <property name="title" translatable="yes">Access Time Samples</property>
+                            <property name="title" translatable="yes">_Access Time Samples</property>
+                            <property name="use-underline">True</property>
                             <property name="adjustment">
                               <object class="GtkAdjustment">
                                 <property name="lower">2</property>
@@ -110,7 +113,8 @@
                       <object class="AdwPreferencesGroup">
                         <child>
                           <object class="AdwSwitchRow" id="write_bench_switch">
-                            <property name="title" translatable="yes">Write Benchmark</property>
+                            <property name="title" translatable="yes">_Write Benchmark</property>
+                            <property name="use-underline">True</property>
                             <property name="subtitle" translatable="yes">Data should be backed up before using this feature</property>
                           </object>
                         </child>

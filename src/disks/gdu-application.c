@@ -296,21 +296,18 @@ about_activated (GSimpleAction *action,
                  gpointer       user_data)
 {
   GduApplication *app = GDU_APPLICATION (user_data);
-  AdwAboutWindow *dialog;
 
-  dialog = ADW_ABOUT_WINDOW (gdu_application_new_widget (app,
-                                                         "about-dialog.ui",
-                                                         "about-dialog",
-                                                         NULL));
-  /* Translators: Shown in the About dialog to convey version numbers.
-   *              The first %s is the version of Disks (for example "3.6").
-   *              The second %s is the version of the running udisks daemon (for example "2.0.90").
-   *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
-   */
-  adw_about_window_set_version (dialog , PACKAGE_VERSION);
-
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (app->window));
-  gtk_window_present (GTK_WINDOW (dialog));
+  adw_show_about_dialog (GTK_WIDGET (app->window),
+                         "application-name", _("Disks"),
+                         "application-icon", "org.gnome.DiskUtility",
+                         "developer-name", _("The GNOME Project"),
+                         "version", PACKAGE_VERSION,
+                         "copyright", _("© 2009 The GNOME Project\n© 2008-2013 Red Hat, Inc.\n© 2008-2013 David Zeuthen"),
+                         "website", "https://apps.gnome.org/DiskUtility/",
+                         "issue-url", "https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/issues/",
+                         "license-type", GTK_LICENSE_GPL_2_0,
+                         "translator-credits", _("translator-credits"),
+                         NULL);
 }
 
 static void

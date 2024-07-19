@@ -41,7 +41,6 @@ sources = files(
 )
 
 resource_data = files(
-  'ui/about-dialog.ui',
   'ui/gdu-benchmark-dialog.ui',
   'ui/gdu-change-passphrase-dialog.ui',
   'ui/gdu-create-confirm-page.ui',

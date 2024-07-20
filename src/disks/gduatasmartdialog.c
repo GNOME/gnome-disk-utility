@@ -105,8 +105,7 @@ dialog_data_unref (DialogData *data)
     {
       if (data->dialog != NULL)
         {
-          gtk_widget_set_visible (data->dialog, FALSE);
-          gtk_window_close (GTK_WINDOW (data->dialog));
+          adw_dialog_close (ADW_DIALOG (data->dialog));
         }
       if (data->object != NULL)
         g_object_unref (data->object);
@@ -1475,31 +1474,28 @@ on_enabled_switch_notify_active (GObject    *object,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
-on_dialog_response (GtkDialog *dialog,
-                    gint       response,
+on_refresh_clicked (GtkButton *button,
                     gpointer   user_data)
 {
   DialogData *data = user_data;
+  refresh_do (data);
+}
 
-  /* Keep in sync with .ui file */
-  if (response > 0) {
-    switch (response)
-      {
-      case 0:
-        /* handled by GtkMenuButton */
-        break;
-      case 1:
-        selftest_do (data, "abort");
-        return;
-      case 2:
-        refresh_do (data);
-        return;
-      default:
-        g_assert_not_reached ();
-      }
-  }
+static void
+on_stop_clicked (GtkButton *button,
+                 gpointer   user_data)
+{
+  DialogData *data = user_data;
+  selftest_do (data, "abort");
+}
 
-  gtk_window_close (GTK_WINDOW (dialog));
+static void
+on_dialog_closed (AdwDialog *dialog,
+                  gpointer   user_data)
+{
+  DialogData *data = user_data;
+
+  adw_dialog_close (dialog);
 
   if (data->timeout_id) {
     g_source_remove (data->timeout_id);
@@ -1533,7 +1529,7 @@ gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "smart-dialog.ui",
-                                                         "dialog1",
+                                                         "smart-dialog",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)
     {
@@ -1678,8 +1674,6 @@ gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
                     G_CALLBACK (on_tree_selection_changed),
                     data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), parent_window);
-
   data->notify_id = g_signal_connect (data->ata, "notify", G_CALLBACK (on_ata_notify), data);
   data->timeout_id = g_timeout_add_seconds (1, on_timeout, data);
 
@@ -1703,7 +1697,10 @@ gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
   gtk_widget_grab_focus (data->attributes_treeview);
 
   g_signal_connect (data->enabled_switch, "notify::active", G_CALLBACK (on_enabled_switch_notify_active), data);
-  g_signal_connect (data->dialog, "response", G_CALLBACK (on_dialog_response), data);
 
-  gtk_window_present (GTK_WINDOW (data->dialog));
+  g_signal_connect (data->stop_selftest_button, "clicked", G_CALLBACK (on_stop_clicked), data);
+  g_signal_connect (data->refresh_button, "clicked", G_CALLBACK (on_refresh_clicked), data);
+  g_signal_connect (data->dialog, "closed", G_CALLBACK (on_dialog_closed), data);
+
+  adw_dialog_present (ADW_DIALOG (data->dialog), GTK_WIDGET (parent_window));
 }

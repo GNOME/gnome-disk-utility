@@ -33,6 +33,8 @@ typedef struct
 
   GtkWidget *dialog;
 
+  GtkWidget *ok_button;
+
   GVariant *orig_drive_configuration;
 
   /* Standby */
@@ -102,6 +104,8 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, write_cache_switch), "write-cache-switch"},
   {G_STRUCT_OFFSET (DialogData, write_cache_widgets_box), "write-cache-widgets-box"},
   {G_STRUCT_OFFSET (DialogData, write_cache_comboboxtext), "write-cache-comboboxtext"},
+
+  {G_STRUCT_OFFSET (DialogData, ok_button), "ok-button"},
 
   {0, NULL}
 };
@@ -255,7 +259,7 @@ update_dialog (DialogData *data)
   if (!_g_variant_equal0 (new_drive_configuration, data->orig_drive_configuration))
     changed = TRUE;
   g_variant_unref (new_drive_configuration);
-  adw_alert_dialog_set_response_enabled (ADW_ALERT_DIALOG (data->dialog), "ok", changed);
+  gtk_widget_set_sensitive (data->ok_button, changed);
 
   /* update labels */
   update_standby_label (data);
@@ -402,20 +406,24 @@ typedef struct
 } Mark;
 
 static void
-on_dialog_response (AdwAlertDialog *dialog,
-                    gchar *response,
-                    gpointer user_data)
+on_ok_clicked (AdwAlertDialog *dialog,
+               gpointer user_data)
 {
   DialogData *data = user_data;
 
-  if (response == "ok")
-    udisks_drive_call_set_configuration (data->drive,
-                                         compute_configuration (data),  /* consumes floating */
-                                         g_variant_new ("a{sv}", NULL), /* options */
-                                         NULL, /* cancellable */
-                                         on_set_configuration_cb,
-                                         dialog_data_ref (data));
+  udisks_drive_call_set_configuration (data->drive,
+                                       compute_configuration (data),  /* consumes floating */
+                                       g_variant_new ("a{sv}", NULL), /* options */
+                                       NULL, /* cancellable */
+                                       on_set_configuration_cb,
+                                       dialog_data_ref (data));
+}
 
+static void
+on_dialog_closed (AdwDialog *dialog,
+                  gpointer user_data)
+{
+  DialogData *data = user_data;
   dialog_data_unref (data);
 }
 
@@ -619,9 +627,14 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
 
 
   g_signal_connect (data->dialog,
-                    "response",
-                    G_CALLBACK (on_dialog_response),
+                    "closed",
+                    G_CALLBACK (on_dialog_closed),
                     data);
+  g_signal_connect (data->ok_button,
+                    "clicked",
+                    G_CALLBACK (on_ok_clicked),
+                    data);
+
   adw_dialog_present (ADW_DIALOG (data->dialog), GTK_WIDGET (window));
 }
 

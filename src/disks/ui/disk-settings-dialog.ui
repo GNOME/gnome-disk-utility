@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="GtkAdjustment" id="aam-adjustment">
-    <property name="lower">127</property>
-    <property name="upper">254</property>
-    <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="apm-adjustment">
-    <property name="lower">1</property>
-    <property name="upper">255</property>
-    <property name="value">127</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-  </object>
   <object class="AdwAlertDialog" id="disk-settings-dialog">
     <property name="title" translatable="yes">Drive Settings</property>
     <property name="extra-child">
@@ -69,7 +55,14 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="standby-scale">
-                    <property name="adjustment">standby-adjustment</property>
+                    <property name="adjustment">
+                      <object class="GtkAdjustment" id="standby-adjustment">
+                        <property name="upper">255</property>
+                        <property name="value">60</property>
+                        <property name="step_increment">1</property>
+                        <property name="page_increment">10</property>
+                      </object>
+                    </property>
                     <property name="draw_value">False</property>
                   </object>
                 </child>
@@ -134,7 +127,15 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="apm-scale">
-                    <property name="adjustment">apm-adjustment</property>
+                    <property name="adjustment">
+                      <object class="GtkAdjustment" id="apm-adjustment">
+                        <property name="lower">1</property>
+                        <property name="upper">255</property>
+                        <property name="value">127</property>
+                        <property name="step_increment">1</property>
+                        <property name="page_increment">10</property>
+                      </object>
+                    </property>
                     <property name="draw_value">False</property>
                   </object>
                 </child>
@@ -225,7 +226,15 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="aam-scale">
-                    <property name="adjustment">aam-adjustment</property>
+                    <property name="adjustment">
+                      <object class="GtkAdjustment" id="aam-adjustment">
+                        <property name="lower">127</property>
+                        <property name="upper">254</property>
+                        <property name="value">128</property>
+                        <property name="step_increment">1</property>
+                        <property name="page_increment">10</property>
+                      </object>
+                    </property>
                     <property name="draw_value">False</property>
                   </object>
                 </child>
@@ -326,11 +335,5 @@
       <response id="cancel" translatable="yes">_Cancel</response>
       <response id="ok" translatable="yes">_Ok</response>
     </responses>
-  </object>
-  <object class="GtkAdjustment" id="standby-adjustment">
-    <property name="upper">255</property>
-    <property name="value">60</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
   </object>
 </interface>

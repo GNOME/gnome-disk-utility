@@ -7,10 +7,10 @@
         <property name="extra-child">
             <object class="AdwPreferencesGroup">
                 <child>
-                    <object class="AdwActionRow">
+                    <object class="AdwSwitchRow" id="recursive_switch">
                         <property name="title" translatable="yes">_Recursive Mode</property>
                         <property name="use-underline">true</property>
-                        <property name="activatable-widget">recursive_switch</property>
+                        <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership-dialog" />
                         <child type="suffix">
                             <object class="GtkMenuButton">
                                 <property name="valign">center</property>
@@ -20,12 +20,6 @@
                                 <style>
                                     <class name="flat" />
                                 </style>
-                            </object>
-                        </child>
-                        <child type="suffix">
-                            <object class="GtkSwitch" id="recursive_switch">
-                                <property name="valign">center</property>
-                                <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership-dialog" />
                             </object>
                         </child>
                     </object>

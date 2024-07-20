@@ -129,8 +129,7 @@ dialog_data_unref (DialogData *data)
     {
       if (data->dialog != NULL)
         {
-          gtk_widget_set_visible (data->dialog, FALSE);
-          gtk_window_close (GTK_WINDOW (data->dialog));
+          adw_dialog_close (ADW_DIALOG (data->dialog));
           data->dialog = NULL;
         }
 
@@ -148,7 +147,7 @@ dialog_data_unref (DialogData *data)
 static void
 dialog_data_close (DialogData *data)
 {
-  gtk_dialog_response (GTK_DIALOG (data->dialog), GTK_RESPONSE_CANCEL);
+  adw_dialog_close (ADW_DIALOG (data->dialog));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -256,7 +255,7 @@ update_dialog (DialogData *data)
   if (!_g_variant_equal0 (new_drive_configuration, data->orig_drive_configuration))
     changed = TRUE;
   g_variant_unref (new_drive_configuration);
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (data->dialog), GTK_RESPONSE_OK, changed);
+  adw_alert_dialog_set_response_enabled (ADW_ALERT_DIALOG (data->dialog), "ok", changed);
 
   /* update labels */
   update_standby_label (data);
@@ -402,6 +401,24 @@ typedef struct
   const gchar *str;
 } Mark;
 
+static void
+on_dialog_response (AdwAlertDialog *dialog,
+                    gchar *response,
+                    gpointer user_data)
+{
+  DialogData *data = user_data;
+
+  if (response == "ok")
+    udisks_drive_call_set_configuration (data->drive,
+                                         compute_configuration (data),  /* consumes floating */
+                                         g_variant_new ("a{sv}", NULL), /* options */
+                                         NULL, /* cancellable */
+                                         on_set_configuration_cb,
+                                         dialog_data_ref (data));
+
+  dialog_data_unref (data);
+}
+
 void
 gdu_disk_settings_dialog_show (GtkWindow    *window,
                                UDisksObject *object,
@@ -446,7 +463,7 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
                                                          "disk-settings-dialog.ui",
-                                                         "dialog1",
+                                                         "disk-settings-dialog",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)
     {
@@ -482,8 +499,6 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
   g_signal_connect (data->apm_scale, "format-value", G_CALLBACK (on_apm_scale_format_value), data);
   g_signal_connect (data->aam_scale, "format-value", G_CALLBACK (on_aam_scale_format_value), data);
 #endif
-
-  gtk_window_set_transient_for (GTK_WINDOW (data->dialog), GTK_WINDOW (window));
 
   disable_unused_widgets (data);
 
@@ -602,29 +617,12 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
 
   update_dialog (data);
 
-  while (TRUE)
-    {
-      gint response;
-      // response = gtk_dialog_run (GTK_DIALOG (data->dialog));
-      /* Keep in sync with .ui file */
-      switch (response)
-        {
-        case GTK_RESPONSE_OK: /* OK */
-          udisks_drive_call_set_configuration (data->drive,
-                                               compute_configuration (data),  /* consumes floating */
-                                               g_variant_new ("a{sv}", NULL), /* options */
-                                               NULL, /* cancellable */
-                                               on_set_configuration_cb,
-                                               dialog_data_ref (data));
-          break;
 
-        default:
-          goto out;
-        }
-    }
- out:
-  dialog_data_close (data);
-  dialog_data_unref (data);
+  g_signal_connect (data->dialog,
+                    "response",
+                    G_CALLBACK (on_dialog_response),
+                    data);
+  adw_dialog_present (ADW_DIALOG (data->dialog), GTK_WIDGET (window));
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

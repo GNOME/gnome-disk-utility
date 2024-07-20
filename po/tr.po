@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-04-06 10:48+0000\n"
-"PO-Revision-Date: 2024-04-06 17:19+0300\n"
+"POT-Creation-Date: 2024-05-06 22:15+0000\n"
+"PO-Revision-Date: 2024-05-07 12:29+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -123,15 +123,17 @@ msgstr "GNOME Projesi"
 msgid "Manage Drives and Media"
 msgstr "Sürücüleri ve Ortamı Yönet"
 
+# https://gitlab.gnome.org/GNOME/glib/-/issues/443 hatası sebebiyle uygulama adı dahil ingilizce hallerini de koruyalım.
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.DiskUtility.desktop.in:6
 msgid ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"disk;sürücü;birim;sabit disk;hdd;disk;cdrom;dvd;bölüm;iso;görüntü;kalıp;"
-"yedekle;geri yükle;kıyaslama;karşılaştırmalı değerlendirme;raid;luks;"
-"şifreleme;S.M.A.R.T.;smart;"
+"Disks;disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;"
+"backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;disk;sürücü;"
+"birim;sabit disk;disk;bölüm;görüntü;kalıp;yedekle;geri yükle;kıyaslama;"
+"karşılaştırmalı değerlendirme;şifreleme;"
 
 #: src/disk-image-mounter/main.c:52
 msgid "An error occurred"
@@ -201,45 +203,51 @@ msgstr "“%s” açılırken hata: %m"
 msgid "Error attaching disk image: %s (%s, %d)"
 msgstr "Disk görüntüsü eklemede hata: %s (%s, %d)"
 
-#: src/disks/gduapplication.c:93
+#: src/disks/gduapplication.c:94
 msgid "Stop running jobs?"
 msgstr "Çalışan işleri durdur?"
 
-#: src/disks/gduapplication.c:95
+#: src/disks/gduapplication.c:96
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr "Şimdi kapatmak çalışan işleri durdurur ve bozuk sonuca yol açar."
 
-#: src/disks/gduapplication.c:136
+#: src/disks/gduapplication.c:137
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "%s açılırken hata: %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gduapplication.c:144
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "%s için blok aygıtı ararken hata"
 
-#: src/disks/gduapplication.c:165
+#: src/disks/gduapplication.c:177
 msgid "Select device"
 msgstr "Aygıt seç"
 
-#: src/disks/gduapplication.c:166
+#: src/disks/gduapplication.c:178
 msgid "Format selected device"
 msgstr "Seçilen aygıtı biçimlendir"
 
-#: src/disks/gduapplication.c:167
+#: src/disks/gduapplication.c:179
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr ""
+"Ayrıntılı günlükleri göster, günlük düzeyini artırmak için en çok dört olarak "
+"belirleyin"
+
+#: src/disks/gduapplication.c:180
 msgid "Ignored, kept for compatibility"
 msgstr "Görmezden gelindi, uyumluluk için saklandı"
 
-#: src/disks/gduapplication.c:168
+#: src/disks/gduapplication.c:181
 msgid "Restore disk image"
 msgstr "Disk görüntüsü geri yükle"
 
-#: src/disks/gduapplication.c:200
+#: src/disks/gduapplication.c:214
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device seçeneği --block-device ile birlikte kullanılmalıdır\n"
 
-#: src/disks/gduapplication.c:206
+#: src/disks/gduapplication.c:220
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 "--format-device seçeneği --restore-disk-image ile birlikte kullanılmamalıdır"
@@ -249,7 +257,7 @@ msgstr ""
 #. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
 #. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
 #.
-#: src/disks/gduapplication.c:340
+#: src/disks/gduapplication.c:354
 #, c-format
 msgid ""
 "gnome-disk-utility %s\n"
@@ -1277,11 +1285,11 @@ msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "%lld baytlık veri %lld bağıl konumundan okunurken hata"
 
-#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
 msgid "Free Space"
 msgstr "Boş Alan"
 
-#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+#: src/disks/gdu-block.c:97 src/disks/ui/create-partition-page.ui:165
 msgid "Extended Partition"
 msgstr "Genişletilmiş Bölüm"
 
@@ -1291,7 +1299,7 @@ msgstr "Genişletilmiş Bölüm"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:567
+#: src/disks/gdu-block.c:569
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s boş (%%%.1f dolu)"

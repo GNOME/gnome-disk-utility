@@ -258,9 +258,9 @@ drive_settings_clicked_cb (GtkWidget  *widget,
   manager = gdu_manager_get_default (NULL);
   g_assert (object != NULL);
 
-  gdu_ata_smart_dialog_show (drive_view_get_window (self),
-                             object,
-                             gdu_manager_get_client (manager));
+  gdu_disk_settings_dialog_show (drive_view_get_window (self),
+                                 object,
+                                 gdu_manager_get_client (manager));
 }
 
 static void

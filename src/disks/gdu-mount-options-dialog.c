@@ -20,7 +20,7 @@ struct _GduMountOptionsDialog
 {
   AdwWindow      parent_instance;
 
-  GtkWidget     *info_box;
+  GtkWidget     *info_banner;
 
   GtkWidget     *automount_switch_row;
 
@@ -299,7 +299,7 @@ gdu_mount_options_dialog_populate (GduMountOptionsDialog *self)
   gtk_editable_set_text (GTK_EDITABLE (self->mount_options_row), mount_options);
   gtk_editable_set_text (GTK_EDITABLE (self->filesystem_type_row), filesystem);
 
-  adw_banner_set_revealed (ADW_BANNER (self->info_box), check_if_system_mount (mount_point));
+  adw_banner_set_revealed (ADW_BANNER (self->info_banner), check_if_system_mount (mount_point));
 }
 
 static void
@@ -429,7 +429,7 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-mount-options-dialog.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, info_box);
+  gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, info_banner);
   
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, automount_switch_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, startup_mount_switch);

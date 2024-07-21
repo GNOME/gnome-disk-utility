@@ -29,125 +29,130 @@
             </child>
           </object>
         </child>
-        <child type="top">
-          <object class="AdwBanner" id="info_box">
-            <property name="title" translatable="yes">The system may not work correctly if this entry is modified or removed.</property>
-          </object>
-        </child>
         <property name="content">
-          <object class="AdwPreferencesPage">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
             <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwSwitchRow" id="automount_switch_row">
-                    <property name="title" translatable="yes">_Automatic Mount Options</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
+              <object class="AdwBanner" id="info_banner">
+                <property name="title" translatable="yes">The system may not work correctly if this entry is modified or removed</property>
               </object>
             </child>
             <child>
-              <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">General</property>
-                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+              <object class="AdwPreferencesPage">
                 <child>
-                  <object class="AdwSwitchRow" id="startup_mount_switch">
-                    <property name="title" translatable="yes">_Mount at Startup</property>
-                    <property name="use-underline">True</property>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwSwitchRow" id="automount_switch_row">
+                        <property name="title" translatable="yes">_Automatic Mount Options</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwSwitchRow" id="show_in_files_switch">
-                    <property name="title" translatable="yes">_Show in Files</property>
-                    <property name="use-underline">True</property>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">General</property>
+                    <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                    <child>
+                      <object class="AdwSwitchRow" id="startup_mount_switch">
+                        <property name="title" translatable="yes">_Mount at Startup</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwSwitchRow" id="show_in_files_switch">
+                        <property name="title" translatable="yes">_Show in Files</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwSwitchRow" id="require_auth_switch">
+                        <property name="title" translatable="yes">_Require Authorization</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwSwitchRow" id="require_auth_switch">
-                    <property name="title" translatable="yes">_Require Authorization</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Appearance</property>
-                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
-                <child>
-                  <object class="AdwEntryRow" id="name_row">
-                    <property name="title" translatable="yes">D_isplay Name</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="icon_row">
-                    <property name="title" translatable="yes">C_olor Icon</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwEntryRow" id="symbolic_icon_row">
-                    <property name="title" translatable="yes">S_ymbolic Icon</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="title" translatable="yes">Technical Options</property>
-                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
-                <child>
-                  <object class="AdwEntryRow" id="mount_options_row">
-                    <property name="title" translatable="yes">_fstab Options</property>
-                    <property name="use-underline">True</property>
-                    <style>
-                      <class name="property" />
-                    </style>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Appearance</property>
+                    <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                    <child>
+                      <object class="AdwEntryRow" id="name_row">
+                        <property name="title" translatable="yes">D_isplay Name</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="icon_row">
+                        <property name="title" translatable="yes">C_olor Icon</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="symbolic_icon_row">
+                        <property name="title" translatable="yes">S_ymbolic Icon</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="mount_point_row">
-                    <property name="title" translatable="yes">Mount _Point</property>
-                    <property name="use-underline">True</property>
-                    <style>
-                      <class name="property" />
-                    </style>
+                  <object class="AdwPreferencesGroup">
+                    <property name="title" translatable="yes">Technical Options</property>
+                    <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                    <child>
+                      <object class="AdwEntryRow" id="mount_options_row">
+                        <property name="title" translatable="yes">_fstab Options</property>
+                        <property name="use-underline">True</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="mount_point_row">
+                        <property name="title" translatable="yes">Mount _Point</property>
+                        <property name="use-underline">True</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwEntryRow" id="filesystem_type_row">
+                        <property name="title" translatable="yes">Filesystem _Type</property>
+                        <property name="use-underline">True</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwEntryRow" id="filesystem_type_row">
-                    <property name="title" translatable="yes">Filesystem _Type</property>
-                    <property name="use-underline">True</property>
-                    <style>
-                      <class name="property" />
-                    </style>
+                  <object class="AdwPreferencesGroup">
+                    <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                    <child>
+                      <object class="AdwComboRow" id="device_combo_row">
+                        <property name="title" translatable="yes">Ide_ntify As</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
-                  <object class="AdwComboRow" id="device_combo_row">
-                    <property name="title" translatable="yes">Ide_ntify As</property>
-                    <property name="use-underline">True</property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
-                <child>
-                  <object class="AdwButtonRow" id="reset_settings_button">
-                    <property name="title" translatable="yes">R_estore Default Settings</property>
-                    <property name="use-underline">True</property>
-                    <style>
-                      <class name="destructive-action" />
-                    </style>
+                  <object class="AdwPreferencesGroup">
+                    <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
+                    <child>
+                      <object class="AdwButtonRow" id="reset_settings_button">
+                        <property name="title" translatable="yes">R_estore Default Settings</property>
+                        <property name="use-underline">True</property>
+                        <style>
+                          <class name="destructive-action" />
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>

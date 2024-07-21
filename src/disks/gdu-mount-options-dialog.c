@@ -449,6 +449,10 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, reset_settings_button);
 
   gtk_widget_class_bind_template_callback (widget_class, on_done_clicked_cb);
+
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
 }
 
 void

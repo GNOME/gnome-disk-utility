@@ -12,13 +12,15 @@
             <property name="show-end-title-buttons">False</property>
             <child type="start">
               <object class="GtkButton">
-                <property name="label" translatable="yes">Cancel</property>
+                <property name="label" translatable="yes">_Cancel</property>
+                <property name="use-underline">True</property>
                 <property name="action-name">window.close</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton">
-                <property name="label" translatable="yes">Done</property>
+                <property name="label" translatable="yes">_Done</property>
+                <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_done_clicked_cb" object="GduMountOptionsDialog" swapped="true" />
                 <style>
                   <class name="suggested-action" />
@@ -38,7 +40,8 @@
               <object class="AdwPreferencesGroup">
                 <child>
                   <object class="AdwSwitchRow" id="automount_switch_row">
-                    <property name="title" translatable="yes">Automatic Mount Options</property>
+                    <property name="title" translatable="yes">_Automatic Mount Options</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -49,17 +52,20 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwSwitchRow" id="startup_mount_switch">
-                    <property name="title" translatable="yes">Mount at Startup</property>
+                    <property name="title" translatable="yes">_Mount at Startup</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="show_in_files_switch">
-                    <property name="title" translatable="yes">Show in Files</property>
+                    <property name="title" translatable="yes">_Show in Files</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwSwitchRow" id="require_auth_switch">
-                    <property name="title" translatable="yes">Require Authorization</property>
+                    <property name="title" translatable="yes">_Require Authorization</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -70,17 +76,20 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="name_row">
-                    <property name="title" translatable="yes">Display Name</property>
+                    <property name="title" translatable="yes">D_isplay Name</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="icon_row">
-                    <property name="title" translatable="yes">Color Icon</property>
+                    <property name="title" translatable="yes">C_olor Icon</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="symbolic_icon_row">
-                    <property name="title" translatable="yes">Symbolic Icon</property>
+                    <property name="title" translatable="yes">S_ymbolic Icon</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -91,7 +100,8 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwEntryRow" id="mount_options_row">
-                    <property name="title" translatable="yes">fstab Options</property>
+                    <property name="title" translatable="yes">_fstab Options</property>
+                    <property name="use-underline">True</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -99,7 +109,8 @@
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="mount_point_row">
-                    <property name="title" translatable="yes">Mount Point</property>
+                    <property name="title" translatable="yes">Mount _Point</property>
+                    <property name="use-underline">True</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -107,7 +118,8 @@
                 </child>
                 <child>
                   <object class="AdwEntryRow" id="filesystem_type_row">
-                    <property name="title" translatable="yes">Filesystem Type</property>
+                    <property name="title" translatable="yes">Filesystem _Type</property>
+                    <property name="use-underline">True</property>
                     <style>
                       <class name="property" />
                     </style>
@@ -120,7 +132,8 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="AdwComboRow" id="device_combo_row">
-                    <property name="title" translatable="yes">Identify As</property>
+                    <property name="title" translatable="yes">Ide_ntify As</property>
+                    <property name="use-underline">True</property>
                   </object>
                 </child>
               </object>
@@ -130,7 +143,8 @@
                 <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                 <child>
                   <object class="GtkButton" id="reset_settings_button">
-                    <property name="label" translatable="yes">Restore Default Settings</property>
+                    <property name="label" translatable="yes">R_estore Default Settings</property>
+                    <property name="use-underline">True</property>
                     <style>
                       <class name="destructive-action" />
                     </style>

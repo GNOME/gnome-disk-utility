@@ -271,6 +271,10 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_change_passphrase_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dialog_entry_changed);
+
+  gtk_widget_class_add_binding_action (widget_class,
+                                       GDK_KEY_Escape, 0, "window.close",
+                                       NULL);
 }
 
 static void

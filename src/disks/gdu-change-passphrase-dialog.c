@@ -20,7 +20,7 @@ struct _GduChangePassphraseDialog
 {
   AdwWindow          parent_instance;
 
-  GtkWidget         *infobar;
+  GtkWidget         *banner;
   GtkWidget         *change_pass_button;
 
   GtkWidget         *curr_pass_row;
@@ -261,7 +261,7 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-change-passphrase-dialog.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, infobar);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, banner);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, change_pass_button);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, curr_pass_row);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, new_pass_row);
@@ -299,7 +299,7 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
 
   if (self->has_passphrase_in_conf)
     {
-      adw_banner_set_revealed (ADW_BANNER (self->infobar), TRUE);
+      adw_banner_set_revealed (ADW_BANNER (self->banner), TRUE);
 
       udisks_block_call_get_secret_configuration (self->udisks_block,
                                                   g_variant_new ("a{sv}", NULL), /* options */

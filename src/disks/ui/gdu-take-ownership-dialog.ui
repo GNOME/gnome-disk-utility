@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="AdwAlertDialog" id="ownership-dialog">
+  <object class="AdwAlertDialog" id="ownership_dialog">
     <property name="heading" translatable="yes">Take Ownership?</property>
     <property name="default-response">cancel</property>
     <property name="close-response">cancel</property>
@@ -25,7 +25,7 @@
             <child type="suffix">
               <object class="GtkSwitch" id="recursive_switch">
                 <property name="valign">center</property>
-                <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership-dialog"/>
+                <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership_dialog"/>
               </object>
             </child>
           </object>

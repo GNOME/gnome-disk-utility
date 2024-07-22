@@ -834,7 +834,7 @@ take_ownership_cb (GtkWidget  *widget,
   TakeOwnershipDialogData *data;
 
   builder = gtk_builder_new_from_resource ("/org/gnome/DiskUtility/ui/"
-                                           "take-ownership.ui");
+                                           "gdu-take-ownership-dialog.ui");
   dialog = ADW_ALERT_DIALOG (gtk_builder_get_object (builder, "ownership-dialog"));
   recursive_switch = GTK_WIDGET (gtk_builder_get_object (builder, "recursive_switch"));
 

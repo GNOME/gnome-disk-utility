@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <object class="AdwAlertDialog" id="ownership-dialog">
-        <property name="heading" translatable="yes">Take Ownership?</property>
-        <property name="default-response">cancel</property>
-        <property name="close-response">cancel</property>
-        <property name="extra-child">
-            <object class="AdwPreferencesGroup">
-                <child>
-                    <object class="AdwActionRow">
-                        <property name="title" translatable="yes">_Recursive Mode</property>
-                        <property name="use-underline">true</property>
-                        <property name="activatable-widget">recursive_switch</property>
-                        <child type="suffix">
-                            <object class="GtkMenuButton">
-                                <property name="valign">center</property>
-                                <property name="tooltip-text" translatable="yes">More Information</property>
-                                <property name="icon-name">help-about-symbolic</property>
-                                <property name="popover">info_popover</property>
-                                <style>
-                                    <class name="flat" />
-                                </style>
-                            </object>
-                        </child>
-                        <child type="suffix">
-                            <object class="GtkSwitch" id="recursive_switch">
-                                <property name="valign">center</property>
-                                <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership-dialog" />
-                            </object>
-                        </child>
-                    </object>
-                </child>
-            </object>
-        </property>
-        <responses>
-            <response id="cancel" translatable="yes">_Cancel</response>
-            <response id="confirm" translatable="yes" appearance="suggested">_Take Ownership</response>
-        </responses>
-    </object>
-
-    <object class="GtkPopover" id="info_popover">
-        <property name="child">
-            <object class="GtkLabel">
-                <property name="margin-top">6</property>
-                <property name="margin-bottom">6</property>
-                <property name="margin-start">6</property>
-                <property name="margin-end">6</property>
-                <property name="wrap">true</property>
-                <property name="max-width-chars">50</property>
-                <property name="justify">left</property>
-                <property name="label" translatable="yes">Recursive mode changes the ownership of subdirectories and files. This can cause problems if files are owned by other users.</property>
-                <property name="xalign">0</property>
-            </object>
-        </property>
-    </object>
+  <object class="AdwAlertDialog" id="ownership-dialog">
+    <property name="heading" translatable="yes">Take Ownership?</property>
+    <property name="default-response">cancel</property>
+    <property name="close-response">cancel</property>
+    <property name="extra-child">
+      <object class="AdwPreferencesGroup">
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">_Recursive Mode</property>
+            <property name="use-underline">true</property>
+            <property name="activatable-widget">recursive_switch</property>
+            <child type="suffix">
+              <object class="GtkMenuButton">
+                <property name="valign">center</property>
+                <property name="tooltip-text" translatable="yes">More Information</property>
+                <property name="icon-name">help-about-symbolic</property>
+                <property name="popover">info_popover</property>
+                <style>
+                  <class name="flat"/>
+                </style>
+              </object>
+            </child>
+            <child type="suffix">
+              <object class="GtkSwitch" id="recursive_switch">
+                <property name="valign">center</property>
+                <signal name="notify::active" handler="on_recursive_switch_cb" object="ownership-dialog"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+    <responses>
+      <response id="cancel" translatable="yes">_Cancel</response>
+      <response id="confirm" translatable="yes" appearance="suggested">_Take Ownership</response>
+    </responses>
+  </object>
+  <object class="GtkPopover" id="info_popover">
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="wrap">true</property>
+        <property name="max-width-chars">50</property>
+        <property name="justify">left</property>
+        <property name="label" translatable="yes">Recursive mode changes the ownership of subdirectories and files. This can cause problems if files are owned by other users.</property>
+        <property name="xalign">0</property>
+      </object>
+    </property>
+  </object>
 </interface>

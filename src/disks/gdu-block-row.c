@@ -764,10 +764,10 @@ on_recursive_switch_cb (GObject     *source_object,
   AdwAlertDialog *dialog = ADW_ALERT_DIALOG (source_object);
   gboolean active;
 
-  g_assert (ADW_IS_SWITCH_ROW (user_data));
+  g_assert (GTK_IS_SWITCH (user_data));
   g_assert (ADW_IS_ALERT_DIALOG (dialog));
 
-  active = adw_switch_row_get_active (ADW_SWITCH_ROW (user_data));
+  active = gtk_switch_get_active (GTK_SWITCH(user_data));
 
   adw_alert_dialog_set_response_appearance (dialog,
                                             "confirm",
@@ -790,14 +790,14 @@ on_take_ownership_dialog_response_cb (GObject       *source_object,
 {
   GduBlockRow *self;
   AdwAlertDialog *dialog;
-  AdwSwitchRow *recursive_switch;
+  GtkSwitch *recursive_switch;
   UDisksObject *object;
   UDisksFilesystem *filesystem;
   GVariantBuilder options_builder;
   TakeOwnershipDialogData *data = user_data;
 
   self = data->self;
-  recursive_switch = ADW_SWITCH_ROW (data->recursive);
+  recursive_switch = GTK_SWITCH (data->recursive);
   dialog = ADW_ALERT_DIALOG (source_object);
 
   g_return_if_fail (GDU_IS_BLOCK_ROW (self));
@@ -812,7 +812,7 @@ on_take_ownership_dialog_response_cb (GObject       *source_object,
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
 
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (recursive_switch)))
+  if (gtk_switch_get_active (GTK_SWITCH (recursive_switch)))
     g_variant_builder_add (&options_builder, "{sv}", "recursive", g_variant_new_boolean (TRUE));
 
   udisks_filesystem_call_take_ownership (filesystem,

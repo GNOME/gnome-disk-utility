@@ -28,6 +28,7 @@
 #include "gdu-format-disk-dialog.h"
 #include "gdu-restore-disk-image-dialog.h"
 #include "gdu-drive-view.h"
+#include "gdu-space-allocation-bar.h"
 
 struct _GduDriveView
 {
@@ -44,6 +45,7 @@ struct _GduDriveView
   AdwActionRow  *drive_part_type_row;
   AdwActionRow  *drive_size_row;
 
+  GtkWidget     *space_allocation_bar;
   GtkListBox    *drive_partitions_listbox;
 
   GduDrive      *drive;
@@ -104,6 +106,8 @@ update_drive_view (GduDriveView *self)
                            (GtkListBoxCreateWidgetFunc)gdu_block_row_new,
                            NULL, NULL);
 
+  gdu_space_allocation_bar_set_drive(GDU_SPACE_ALLOCATION_BAR (self->space_allocation_bar),
+                                     self->drive);
 
   features = gdu_item_get_features (GDU_ITEM (self->drive));
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
@@ -443,6 +447,7 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_part_type_row);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_size_row);
 
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, space_allocation_bar);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_partitions_listbox);
 
   gtk_widget_class_install_action (widget_class, "view.format", NULL, format_disk_clicked_cb);

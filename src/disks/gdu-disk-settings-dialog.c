@@ -13,8 +13,8 @@
 #include <math.h>
 
 #include "gdu-application.h"
+#include "gdu-disk-settings-dialog.h"
 #include "gdu-window.h"
-#include "gdudisksettingsdialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -470,7 +470,7 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
   data->orig_drive_configuration = udisks_drive_dup_configuration (data->drive);
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "disk-settings-dialog.ui",
+                                                         "gdu-disk-settings-dialog.ui",
                                                          "disk-settings-dialog",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)

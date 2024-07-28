@@ -24,7 +24,7 @@
 #include "gduatasmartdialog.h"
 #include "gdu-benchmark-dialog.h"
 #include "gdu-create-disk-image-dialog.h"
-#include "gdudisksettingsdialog.h"
+#include "gdu-disk-settings-dialog.h"
 #include "gdu-format-disk-dialog.h"
 #include "gdu-restore-disk-image-dialog.h"
 #include "gdu-drive-view.h"

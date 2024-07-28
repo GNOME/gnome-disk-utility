@@ -20,8 +20,8 @@
 #include <udisks/udisks.h>
 #include <glib/gi18n.h>
 
-#include "gdudisksettingsdialog.h"
 #include "gduatasmartdialog.h"
+#include "gdu-disk-settings-dialog.h"
 #include "gdu-item.h"
 #include "gduutils.h"
 #include "gdu-block.h"

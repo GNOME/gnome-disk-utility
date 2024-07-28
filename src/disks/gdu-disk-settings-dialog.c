@@ -23,12 +23,14 @@ typedef struct
   volatile gint ref_count;
 
   UDisksObject *object;
+  UDisksClient *client;
   UDisksDrive *drive;
   UDisksDriveAta *ata;
 
   GCancellable *cancellable;
 
   GtkWindow  *window;
+  GtkWidget  *window_title;
   GtkBuilder *builder;
 
   GtkWidget *dialog;
@@ -106,6 +108,7 @@ static const struct {
   {G_STRUCT_OFFSET (DialogData, write_cache_comboboxtext), "write-cache-comboboxtext"},
 
   {G_STRUCT_OFFSET (DialogData, ok_button), "ok-button"},
+  {G_STRUCT_OFFSET (DialogData, window_title), "window_title"},
 
   {0, NULL}
 };
@@ -368,6 +371,15 @@ update_aam_label (DialogData *data)
   g_free (s);
 }
 
+static void
+gdu_disk_settings_dialog_set_title (DialogData *data)
+{
+  g_autoptr(UDisksObjectInfo) info = NULL;
+
+  info = udisks_client_get_object_info (data->client, data->object);
+  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (data->window_title), udisks_object_info_get_one_liner (info));
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 static void
@@ -464,6 +476,7 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
   data = g_new0 (DialogData, 1);
   data->ref_count = 1;
   data->object = g_object_ref (object);
+  data->client = client;
   data->drive = udisks_object_peek_drive (data->object);
   data->ata = udisks_object_peek_drive_ata (data->object);
   data->window = g_object_ref (window);
@@ -624,6 +637,7 @@ gdu_disk_settings_dialog_show (GtkWindow    *window,
                           G_BINDING_SYNC_CREATE);
 
   update_dialog (data);
+  gdu_disk_settings_dialog_set_title (data);
 
 
   g_signal_connect (data->dialog,

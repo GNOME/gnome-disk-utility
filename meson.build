@@ -1,6 +1,6 @@
 project(
   'gnome-disk-utility', 'c',
-  version: '44.0',
+  version: '47.alpha',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
   meson_version: '>= 0.59.0',

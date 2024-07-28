@@ -13,27 +13,25 @@ pub async fn unuse_data_iterate(
     let (filesystem_to_unmount, encrypted_to_lock, _last) =
         is_in_full_use(client, object, false).await?;
 
-    // This code is an attempt for porting the gduuitls function but since the full scope is not needed now, this is commented out as it currently makes unmounting fail.
-    // let block = object.block().await;
-    //
-    // if block.is_ok() && (filesystem_to_unmount.is_some() || encrypted_to_lock.is_some()) {
-    //     let block = block.unwrap();
-    //     if let Ok(loop_) = client.loop_for_block(&block).await {
-    //         if loop_.autoclear().await.is_ok_and(|res| res) {
-    //             let loop_object = client.object(loop_.inner().path().clone())?;
-    //             let (_fs, _block, last) = is_in_full_use(client, &loop_object, true).await?;
-    //             dbg!(last);
-    //             if last {
-    //                 loop_.set_autoclear(false, HashMap::new()).await?;
-    //                 unuse_data_iterate(client, object).await?;
-    //                 return Ok(());
-    //             }
-    //         }
-    //     }
-    // }
+    let block = object.block().await;
+
+    if block.is_ok() && (filesystem_to_unmount.is_some() || encrypted_to_lock.is_some()) {
+        if let Ok(loop_) = client.loop_for_block(&block.unwrap()).await {
+            if loop_.autoclear().await.is_ok_and(|res| res) {
+                let loop_object = client.object(loop_.inner().path().clone())?;
+                let (_fs, _enc, last) = is_in_full_use(client, &loop_object, true).await?;
+                if last {
+                    loop_.set_autoclear(false, HashMap::new()).await?;
+                    unuse_data_iterate(client, object).await?;
+                    return Ok(());
+                }
+            }
+        }
+    }
 
     if let Some(filesystem_to_unmount) = filesystem_to_unmount {
         filesystem_to_unmount.unmount(HashMap::new()).await?;
+        unuse_data_iterate(client, object).await?;
     } else if let Some(encrypted_to_lock) = encrypted_to_lock {
         encrypted_to_lock.lock(HashMap::new()).await?;
         unuse_data_iterate(client, object).await?;

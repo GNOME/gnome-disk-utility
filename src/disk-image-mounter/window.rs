@@ -310,10 +310,12 @@ impl ImageMounterWindow {
         }
         log::info!("Succesfully unmounted");
 
-        if let Ok(encrypted) = mounted_object.encrypted().await {
-            encrypted.lock(udisks::standard_options(true)).await?;
-            log::debug!("Successfully locked {}", encrypted.inner().path());
-        }
+        mounted_object
+            .r#loop()
+            .await?
+            .delete(udisks::standard_options(false))
+            .await?;
+        log::info!("Succesfully deleted loop device");
 
         Ok(())
     }

@@ -461,9 +461,11 @@ change_passphrase_cb (GtkWidget  *widget,
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
+  UDisksClient *client;
 
   object = gdu_block_get_object (self->block);
-  gdu_change_passphrase_dialog_show (block_row_get_window (self), object);
+  client = block_row_get_client ();
+  gdu_change_passphrase_dialog_show (block_row_get_window (self), object, client);
 }
 
 static void

@@ -28,9 +28,11 @@ struct _GduChangePassphraseDialog
   GtkWidget         *confirm_pass_row;
   GtkWidget         *strength_indicator;
   GtkWidget         *strength_hint_label;
+  GtkWidget         *window_title;
 
   UDisksObject      *udisks_object;
   UDisksBlock       *udisks_block;
+  UDisksClient      *udisks_client;
   UDisksEncrypted   *udisks_encrypted;
 
   GVariant          *crypttab_details;
@@ -59,6 +61,15 @@ update_password_strength (GduChangePassphraseDialog *self)
 
   gtk_level_bar_set_value (GTK_LEVEL_BAR (self->strength_indicator), strength_level);
   gtk_label_set_label (GTK_LABEL (self->strength_hint_label), hint);
+}
+
+static void
+gdu_change_passphrase_dialog_set_title (GduChangePassphraseDialog *self)
+{
+  g_autoptr(UDisksObjectInfo) info = NULL;
+
+  info = udisks_client_get_object_info (self->udisks_client, self->udisks_object);
+  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (self->window_title), udisks_object_info_get_one_liner (info));
 }
 
 static void
@@ -268,6 +279,7 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, confirm_pass_row);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, strength_indicator);
   gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, strength_hint_label);
+  gtk_widget_class_bind_template_child (widget_class, GduChangePassphraseDialog, window_title);
 
   gtk_widget_class_bind_template_callback (widget_class, on_change_passphrase_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dialog_entry_changed);
@@ -285,7 +297,8 @@ gdu_change_passphrase_dialog_init (GduChangePassphraseDialog *self)
 
 void
 gdu_change_passphrase_dialog_show (GtkWindow    *window,
-                                   UDisksObject *object)
+                                   UDisksObject *object,
+                                   UDisksClient *client)
 {
   GduChangePassphraseDialog *self;
 
@@ -298,8 +311,11 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
 
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
+  self->udisks_client = client;
   self->udisks_encrypted = udisks_object_get_encrypted (object);
   self->has_passphrase_in_conf = has_passphrase_in_configuration (self);
+
+  gdu_change_passphrase_dialog_set_title (self);
 
   if (self->has_passphrase_in_conf)
     {

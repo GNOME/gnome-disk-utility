@@ -17,6 +17,7 @@ G_BEGIN_DECLS
 G_DECLARE_FINAL_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, GDU, CHANGE_PASSPHRASE_DIALOG, AdwWindow)
 
 void     gdu_change_passphrase_dialog_show (GtkWindow    *window,
-                                            UDisksObject *object);
+                                            UDisksObject *object,
+                                            UDisksClient *client);
 
 G_END_DECLS

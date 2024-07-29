@@ -34,6 +34,7 @@ struct _GduFormatDiskDialog
   AdwWindow              parent_instance;
 
   GtkWidget             *erase_row;
+  GtkWidget             *window_title;
 
   GtkWindow             *parent_window;
   UDisksClient          *udisks_client;
@@ -50,6 +51,15 @@ G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type,
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_GPT, "gpt"),
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_DOS, "dos"),
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_EMPTY, "empty"));
+
+static void
+gdu_format_disk_dialog_set_title (GduFormatDiskDialog *self)
+{
+  g_autoptr(UDisksObjectInfo) info = NULL;
+
+  info = udisks_client_get_object_info (self->udisks_client, self->udisks_object);
+  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (self->window_title), udisks_object_info_get_one_liner (info));
+}
 
 static gpointer
 gdu_format_disk_dialog_get_window (GduFormatDiskDialog *self)
@@ -364,6 +374,7 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
                                                "gdu-format-disk-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_row);
+  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, window_title);
 
   gtk_widget_class_add_binding_action (widget_class,
                                        GDK_KEY_Escape, 0, "window.close",
@@ -404,6 +415,8 @@ gdu_format_disk_dialog_show (GtkWindow    *parent,
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
   self->udisks_drive = udisks_client_get_drive_for_block (client, self->udisks_block);
+
+  gdu_format_disk_dialog_set_title (self);
 
   if (self->udisks_drive)
     {

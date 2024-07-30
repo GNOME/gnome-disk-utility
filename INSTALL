@@ -46,6 +46,9 @@ replacing the system daemon:
 Using Flatpak to build and run GNOME Disks and UDisks (both from web sources):
   # (skip these two steps if you already installed the nightly GNOME runtime)
   flatpak --user remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+  flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+  flatpak install --user org.freedesktop.Sdk.Extension.rust-stable/x86_64/24.08beta
+  flatpak install --user org.freedesktop.Sdk.Extension.llvm18/x86_64/24.08beta
   flatpak --user install gnome-nightly org.gnome.Platform//master org.gnome.Sdk//master
   # build GNOME Disks and all dependencies
   flatpak-builder app flatpak/org.gnome.DiskUtility.json
@@ -79,8 +82,8 @@ an old distribution.
 
 Build a Flatpak app with your local source code changes:
   flatpak-builder --force-clean --stop-at=gnome-disk-utility app flatpak/org.gnome.DiskUtility.json gnome-disks
-  flatpak build app meson --prefix=/app _build
-  flatpak build app ninja -C _build install
+  flatpak build --env=PATH=/app/bin:/usr/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin app meson --prefix=/app _build
+  flatpak build --share=network --env=PATH=/app/bin:/usr/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm18/bin --env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang --env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold" app ninja -C _build install
   flatpak-builder --finish-only --repo=repo app flatpak/org.gnome.DiskUtility.json
   # Now you can already run it the same way as above (flatpak-builder --run app …, and restart UDisks through bwrap)
   # or you can continue to do the following step to create a Flatpak bundle.

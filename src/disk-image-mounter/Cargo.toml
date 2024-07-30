@@ -1,0 +1,20 @@
+[package]
+name = "gnome-disk-image-mounter"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+license = "GPL-2.0-or-later"
+
+[[bin]]
+name = 'gnome-disk-image-mounter'
+path = "main.rs"
+
+[dependencies]
+log.workspace = true
+env_logger.workspace = true
+udisks.workspace = true
+gtk.workspace = true
+gettext-rs.workspace = true
+adw = { package = "libadwaita", version = "0.6", features = ["v1_5"] }
+async-recursion = "1.1.1"
+anyhow = "1.0.86"

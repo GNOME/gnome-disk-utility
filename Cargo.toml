@@ -1,27 +1,19 @@
-[package]
-name = "gnome-disk-utilities"
-version = "0.1.0"
-edition = "2021"
-rust-version = "1.70"
-license = "GPL-2.0-or-later"
+[workspace]
+resolver = "2"
+members = [
+    "src/disk-image-mounter",
+]
 
 [profile.release]
 lto = true
 codegen-units = 1
 
-[[bin]]
-name = 'gnome-disk-image-mounter'
-path = "src/disk-image-mounter/main.rs"
-
-[dependencies]
-gettext-rs = { version = "0.7", features = ["gettext-system"] }
+[workspace.dependencies]
+log = "0.4"
+env_logger = "0.11.2"
+udisks = { package = "udisks2", git = "https://github.com/FineFindus/udisks-rs.git", rev = "893c26d5944bf587b209707d6607566d1bfc0fc7"}
 gtk = { version = "0.8", package = "gtk4", features = [
     "v4_12",
     "xml_validation",
-] }
-log = "0.4"
-env_logger = "0.11.2"
-adw = { package = "libadwaita", version = "0.6", features = ["v1_5"] }
-udisks = { package = "udisks2", git = "https://github.com/FineFindus/udisks-rs.git", rev = "893c26d5944bf587b209707d6607566d1bfc0fc7"}
-async-recursion = "1.1.1"
-anyhow = "1.0.86"
+]}
+gettext-rs = { version = "0.7", features = ["gettext-system"] }

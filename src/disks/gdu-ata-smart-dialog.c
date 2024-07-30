@@ -12,7 +12,7 @@
 
 #include "gdu-application.h"
 #include "gdu-window.h"
-#include "gduatasmartdialog.h"
+#include "gdu-ata-smart-dialog.h"
 
 enum
 {
@@ -1528,7 +1528,7 @@ gdu_ata_smart_dialog_show (GtkWindow    *parent_window,
   data->client = client;
 
   data->dialog = GTK_WIDGET (gdu_application_new_widget ((gpointer)g_application_get_default (),
-                                                         "smart-dialog.ui",
+                                                         "gdu-ata-smart-dialog.ui",
                                                          "smart-dialog",
                                                          &data->builder));
   for (n = 0; widget_mapping[n].name != NULL; n++)

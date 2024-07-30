@@ -4,6 +4,7 @@ enum_headers = files('gduenums.h')
 
 sources = files(
   'gdu-application.c',
+  'gdu-ata-smart-dialog.c',
   'gdu-benchmark-dialog.c',
   'gdu-change-passphrase-dialog.c',
   'gdu-create-confirm-page.c',
@@ -29,7 +30,6 @@ sources = files(
   'gdu-disk-settings-dialog.c',
   'gdu-drive-row.c',
   'gdu-drive-view.c',
-  'gduatasmartdialog.c',
   'gdudvdsupport.c',
   'gduestimator.c',
   'gdulocaljob.c',
@@ -41,6 +41,7 @@ sources = files(
 )
 
 resource_data = files(
+  'ui/gdu-ata-smart-dialog.ui',
   'ui/gdu-benchmark-dialog.ui',
   'ui/gdu-change-passphrase-dialog.ui',
   'ui/gdu-create-confirm-page.ui',
@@ -62,7 +63,6 @@ resource_data = files(
   'ui/gdu-resize-volume-dialog.ui',
   'ui/gdu-restore-disk-image-dialog.ui',
   'ui/gdu-take-ownership-dialog.ui',
-  'ui/smart-dialog.ui',
   'ui/unlock-device-dialog.ui',
 )
 

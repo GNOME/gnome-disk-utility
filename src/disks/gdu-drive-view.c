@@ -18,10 +18,10 @@
 #include <udisks/udisks.h>
 #include <glib/gi18n.h>
 
+#include "gdu-ata-smart-dialog.h"
 #include "gdu-block-row.h"
 #include "gdu-item.h"
 #include "gdu-manager.h"
-#include "gduatasmartdialog.h"
 #include "gdu-benchmark-dialog.h"
 #include "gdu-create-disk-image-dialog.h"
 #include "gdu-disk-settings-dialog.h"

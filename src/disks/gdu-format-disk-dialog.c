@@ -33,7 +33,7 @@ struct _GduFormatDiskDialog
 {
   AdwWindow              parent_instance;
 
-  GtkWidget             *erase_row;
+  GtkWidget             *erase_switch;
   GtkWidget             *window_title;
 
   GtkWindow             *parent_window;
@@ -162,7 +162,7 @@ on_format_clicked_cb (GduFormatDiskDialog *self,
 
   g_assert (GDU_IS_FORMAT_DISK_DIALOG (self));
 
-  erase_data = adw_switch_row_get_active (ADW_SWITCH_ROW (self->erase_row));
+  erase_data = gtk_switch_get_active (GTK_SWITCH (self->erase_switch));
   objects = g_list_append (NULL, self->udisks_object);
 
   affected_devices_widget = gdu_util_create_widget_from_objects (self->udisks_client,
@@ -373,7 +373,7 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-format-disk-dialog.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_row);
+  gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_switch);
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, window_title);
 
   gtk_widget_class_add_binding_action (widget_class,

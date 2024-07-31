@@ -365,12 +365,9 @@ impl ImageMounterWindow {
             .and_then(|file| file.path())
             .context("Failed to find file path")?;
 
-        let mut child = std::process::Command::new("gnome-disks")
+        std::process::Command::new("gnome-disks")
             .args(["--restore-disk-image", path.to_str().unwrap()])
             .spawn()?;
-        if !child.wait()?.success() {
-            return Err(anyhow!("Failed to spawn gnome-disks"));
-        }
         Ok(())
     }
 

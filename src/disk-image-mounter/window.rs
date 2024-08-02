@@ -104,6 +104,12 @@ mod imp {
             let main_context = glib::MainContext::default();
             main_context.spawn_local(
                 glib::clone!(@weak self as window => @default-return None, async move {
+                    if !window.obj().mountable(window.file.borrow().as_ref()) {
+                        window.status_page.set_description(Some(&gettext("Compressed image files are not mountable")));
+                        window.obj().set_continue_action(Action::Write);
+                        return None;
+                    }
+
                     let object = window.obj().mounted_file_object()
                         .await?;
                     window.unmount_row.set_visible(true);
@@ -165,6 +171,16 @@ impl ImageMounterWindow {
             )
             .ok()?;
         Some(info.display_name().to_string())
+    }
+
+    #[template_callback]
+    fn mountable(&self, file: Option<&gio::File>) -> bool {
+        let Some(file) = file else { return false };
+        // may return wrong type, see https://github.com/gtk-rs/gtk-rs-core/issues/1257
+        let (content_type, _uncertain) = gio::content_type_guess(file.path().as_ref(), &[]);
+        // explicitly deny mime types, rather than allowing them, as some may be reported wrong
+        // and we want to allow mounting obfuscated VeraCrypt images
+        content_type.as_str() != "application/x-raw-disk-image-xz-compressed"
     }
 
     async fn mounted_file_object(&self) -> Option<udisks::Object> {

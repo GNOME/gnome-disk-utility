@@ -6,7 +6,6 @@ install_subdir(
 desktops = [
   'org.gnome.DiskUtility.desktop',
   'gnome-disk-image-mounter.desktop',
-  'gnome-disk-image-writer.desktop',
 ]
 
 foreach desktop: desktops

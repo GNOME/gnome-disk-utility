@@ -38,6 +38,11 @@
                                 <property name="activatable_widget">radio_button_open_files</property>
                                 <property name="title" translatable="yes">Open in Files</property>
                                 <property name="subtitle" translatable="yes">Mount the image read-only</property>
+                                <binding name="sensitive">
+                                    <closure type="gboolean" function="mountable">
+                                        <lookup type="ImageMounterWindow" name="file"/>
+                                    </closure>
+                                </binding>
                                 <child type="prefix">
                                   <object class="GtkCheckButton" id="radio_button_open_files">
                                     <property name="valign">center</property>
@@ -69,6 +74,11 @@
                                 <property name="activatable_widget">radio_button_open_files_edit</property>
                                 <property name="title" translatable="yes">Edit Contents in Files</property>
                                 <property name="subtitle" translatable="yes">Mount the image and allow editing</property>
+                                <binding name="sensitive">
+                                    <closure type="gboolean" function="mountable">
+                                        <lookup type="ImageMounterWindow" name="file"/>
+                                    </closure>
+                                </binding>
                                 <child type="prefix">
                                   <object class="GtkCheckButton" id="radio_button_open_files_edit">
                                     <property name="group">radio_button_open_files</property>
@@ -99,6 +109,11 @@
                                 <property name="title" translatable="yes">Inspect in Disks</property>
                                 <property name="subtitle" translatable="yes">Mount the image and open in Disks</property>
                                 <property name="activatable_widget">radio_button_inspect</property>
+                                <binding name="sensitive">
+                                    <closure type="gboolean" function="mountable">
+                                        <lookup type="ImageMounterWindow" name="file"/>
+                                    </closure>
+                                </binding>
                                 <child type="prefix">
                                   <object class="GtkCheckButton" id="radio_button_inspect">
                                     <property name="group">radio_button_open_files</property>

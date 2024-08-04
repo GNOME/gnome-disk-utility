@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2023-10-29 10:37+0000\n"
-"PO-Revision-Date: 2023-10-29 12:59+0200\n"
+"POT-Creation-Date: 2024-05-17 08:03+0000\n"
+"PO-Revision-Date: 2024-08-04 12:55+0300\n"
 "Last-Translator: Florentina Mușat <florentina [dot] musat [dot] 28 [at] "
 "gmail [dot] com>\n"
 "Language-Team: Română <>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
 msgid "Disk Image Mounter"
@@ -99,7 +99,20 @@ msgstr ""
 "efectua teste de performanță pe discuri fizice, și instala imagini pe "
 "stickuri USB."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:45
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "Partiționează și formatează discurile"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "Inspectează viteza unității și starea de sănătate"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "Administrează dispozitivele de stocare"
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.DiskUtility.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Proiectul GNOME"
 
@@ -130,7 +143,7 @@ msgstr "Permite scrierea pe imagine"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Selectați imaginile de disc ce urmează a fi montate"
 
-#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:935
+#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:172 src/disks/gducreateformatdialog.c:473
 #: src/disks/gdunewdiskimagedialog.c:170 src/disks/gduwindow.c:817
 #: src/disks/ui/benchmark-dialog.ui:287
@@ -1373,7 +1386,7 @@ msgid "Error creating disk image"
 msgstr "Eroare la crearea imaginii de disc"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:497
+#: src/disks/gducreatediskimagedialog.c:498
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Erori la citire iremediabile în timpul creării imaginii de disc"
 
@@ -1382,7 +1395,7 @@ msgstr "Erori la citire iremediabile în timpul creării imaginii de disc"
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:506
+#: src/disks/gducreatediskimagedialog.c:507
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1395,36 +1408,36 @@ msgstr ""
 "dispozitiv"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:512
+#: src/disks/gducreatediskimagedialog.c:513
 msgid "_Delete Disk Image File"
 msgstr "Șterge fișierul imaginii de _disc"
 
-#: src/disks/gducreatediskimagedialog.c:514 src/disks/ui/benchmark-dialog.ui:49
+#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
 msgid "_Close"
 msgstr "În_chide"
 
-#: src/disks/gducreatediskimagedialog.c:730
+#: src/disks/gducreatediskimagedialog.c:731
 #: src/disks/gdurestorediskimagedialog.c:730
 msgid "Error determining size of device: "
 msgstr "Eroare la determinarea dimensiunii dispozitivului: "
 
-#: src/disks/gducreatediskimagedialog.c:737
+#: src/disks/gducreatediskimagedialog.c:738
 #: src/disks/gdurestorediskimagedialog.c:737
 #, c-format
 msgid "Device is size 0"
 msgstr "Dispozitivul are dimensiunea 0"
 
-#: src/disks/gducreatediskimagedialog.c:770
+#: src/disks/gducreatediskimagedialog.c:771
 msgid "Error allocating space for disk image file: "
 msgstr "Eroare la alocarea spațiului pentru fișierul de imagine de disc: "
 
-#: src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gducreatediskimagedialog.c:931
 #: src/disks/gdunewdiskimagedialog.c:165
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Un fișier cu numele „%s” există edja.  Doriți să-l înlocuiți?"
 
-#: src/disks/gducreatediskimagedialog.c:933
+#: src/disks/gducreatediskimagedialog.c:934
 #: src/disks/gdunewdiskimagedialog.c:168
 #, c-format
 msgid ""
@@ -1433,24 +1446,24 @@ msgstr ""
 "Fișierul există deja în „%s”. Înlocuirea acestuia va suprascrie "
 "conținuturile."
 
-#: src/disks/gducreatediskimagedialog.c:936
+#: src/disks/gducreatediskimagedialog.c:937
 #: src/disks/gdunewdiskimagedialog.c:171
 msgid "_Replace"
 msgstr "În_locuiește"
 
-#: src/disks/gducreatediskimagedialog.c:986
+#: src/disks/gducreatediskimagedialog.c:987
 #: src/disks/gdunewdiskimagedialog.c:83
 msgid "Error opening file for writing"
 msgstr "Eroare la deschiderea fișierului pentru scriere"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:1002
+#: src/disks/gducreatediskimagedialog.c:1003
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Se copiază dispozitivul la imaginea de disc"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1008
+#: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Se creează imaginea de disc"
 
@@ -2494,7 +2507,7 @@ msgstr ""
 "Lucian Adrian Grijincu <lucian.grijincu at gmail.com>\n"
 "Bogdan Mințoi <mintoi.bogdan at gmail.com>, 2014\n"
 "Florentina Mușat <florentina [dot] musat [dot] 28 [at] gmail [dot] com>, "
-"2018-2020, 2023"
+"2018-2020, 2023-2024"
 
 #: src/disks/ui/app-menu.ui:6
 msgid "_New Disk Image…"
@@ -4991,9 +5004,6 @@ msgstr "Examinează"
 #~ msgid "pid: %d  program: %s"
 #~ msgstr "pid: %d  program: %s"
 
-#~ msgid "Partition %d on %s"
-#~ msgstr "Partiția %d pe %s"
-
 #~ msgid "Cannot unmount volume"
 #~ msgstr "Nu pot demonta volumul"
 
@@ -6731,9 +6741,6 @@ msgstr "Examinează"
 
 #~ msgid "Connect to _Server..."
 #~ msgstr "Conectare la _server..."
-
-#~ msgid "Manage storage devices on another machine"
-#~ msgstr "Administrează dispozitive de stocare pe o altă mașină"
 
 #~ msgid "_Create"
 #~ msgstr "_Creează"

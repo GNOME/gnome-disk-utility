@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-07-30 02:55+0000\n"
-"PO-Revision-Date: 2024-07-30 12:06+0530\n"
+"POT-Creation-Date: 2024-08-04 11:53+0000\n"
+"PO-Revision-Date: 2024-08-05 10:19+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
@@ -21,21 +21,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
+#: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Disk Image Mounter"
 msgstr "डिस्क छवि माउन्टर"
 
 #: data/gnome-disk-image-mounter.desktop.in:4
-msgid "Mount Disk Images"
-msgstr "डिस्क छवियों को माउंट करें"
-
-#: data/gnome-disk-image-writer.desktop.in:3
-msgid "Disk Image Writer"
-msgstr "डिस्क छवि लेखक"
-
-#: data/gnome-disk-image-writer.desktop.in:4
-msgid "Write Disk Images to Devices"
-msgstr "उपकरण में डिस्क छवि लिखें"
+msgid "Mount/Write Disk Images"
+msgstr "डिस्क छवियां माउंट करें/लिखें"
 
 #: data/org.gnome.Disks.gschema.xml:6
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -122,37 +114,69 @@ msgstr ""
 "डिस्क;ड्राइव;वॉल्यूम;हार्डडिस्क;hdd;डिस्क;cdrom;डीवीडी;विभाजन;आईएसओ;छवि;बैकअप;बहाल;"
 "बेंचमार्क;RAID;luks;कूटलेखन;S.M.A.R.T.;स्मार्ट;"
 
-#: src/disk-image-mounter/main.c:52
-msgid "An error occurred"
-msgstr "एक त्रुटि हुई"
+#: src/disk-image-mounter/main.rs:21
+msgid "GNOME Disk Image Mounter"
+msgstr "गनोम डिस्क इमेज माउंटर"
 
-#: src/disk-image-mounter/main.c:73
-msgid "Allow writing to the image"
-msgstr "छवि के लिए लेखन करने की अनुमति दें"
+#: src/disk-image-mounter/window.rs:108
+msgid "Compressed image files are not mountable"
+msgstr "संपीड़ित छवि फाइलें माउंट करने योग्य नहीं हैं"
 
-#: src/disk-image-mounter/main.c:142
-#, c-format
-msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr "udisks डेमॉन से कनेक्ट करने में त्रुटि: %s (%s, %d)"
+#: src/disk-image-mounter/window.rs:116
+msgid "Open the mounted image"
+msgstr "माउंट की गई छवि खोलें"
 
-#: src/disk-image-mounter/main.c:150
-msgid "Attach and mount one or more disk image files."
-msgstr "एक या अधिक डिस्क छवि फाइलें संलग्न और माउंट करें।"
+#: src/disk-image-mounter/window.rs:119
+msgid "Already mounted read-only"
+msgstr "पहले से ही केवल-पढ़ने के लिए माउंट किया गया है"
 
-#: src/disk-image-mounter/main.c:198
-#, c-format
-msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
-msgstr "“%s” नहीं खुल सकता - शायद वॉल्यूम माउंट नहीं है?"
+#: src/disk-image-mounter/window.rs:122
+msgid "Already mounted"
+msgstr "पहले से ही माउंट किया गया"
 
-#: src/disk-image-mounter/main.c:205
-#, c-format
-msgid "Error opening “%s”: %m"
-msgstr "“%s” खोलने में त्रुटि: %m"
+#: src/disk-image-mounter/window.rs:156 src/disk-image-mounter/window.ui:39
+msgid "Open in Files"
+msgstr "फाइल्स में खोलें"
 
-#: src/disk-image-mounter/main.c:226
-#, c-format
-msgid "Error attaching disk image: %s (%s, %d)"
-msgstr "डिस्क छवि संलग्न करने में त्रुटि: %s (%s, %d)"
+#: src/disk-image-mounter/window.rs:227
+msgid "Failed to mount file"
+msgstr "फाइल माउंट करने में विफल"
+
+#: src/disk-image-mounter/window.ui:40
+msgid "Mount the image read-only"
+msgstr "छवि को केवल-पढ़ने योग्य माउंट करें"
+
+#: src/disk-image-mounter/window.ui:60
+msgid "Unmount Disk Image"
+msgstr "डिस्क छवि अनमाउंट करें"
+
+#: src/disk-image-mounter/window.ui:61
+msgid "Unmount the mounted image"
+msgstr "माउंट की गई छवि को अनमाउंट करें"
+
+#: src/disk-image-mounter/window.ui:75
+msgid "Edit Contents in Files"
+msgstr "फाइल्स में सामग्री संपादित करें"
+
+#: src/disk-image-mounter/window.ui:76
+msgid "Mount the image and allow editing"
+msgstr "छवि माउंट करें और संपादन की अनुमति दें"
+
+#: src/disk-image-mounter/window.ui:95
+msgid "Write to Drive"
+msgstr "ड्राइव पर लिखें"
+
+#: src/disk-image-mounter/window.ui:96
+msgid "Open in Disks to write the image to a drive"
+msgstr "छवि को ड्राइव में लिखने के लिए डिस्क में खोलें"
+
+#: src/disk-image-mounter/window.ui:109
+msgid "Inspect in Disks"
+msgstr "डिस्क में निरीक्षण करें"
+
+#: src/disk-image-mounter/window.ui:110
+msgid "Mount the image and open in Disks"
+msgstr "छवि को माउंट करें और डिस्क में खोलें"
 
 #: src/disks/gdu-application.c:117
 #, c-format
@@ -225,11 +249,11 @@ msgstr "रोकें"
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:144
+#: src/disks/gdu-ata-smart-dialog.c:144
 msgid "Read Error Rate"
 msgstr "पठन त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:145
+#: src/disks/gdu-ata-smart-dialog.c:145
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -240,44 +264,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:154
+#: src/disks/gdu-ata-smart-dialog.c:154
 msgid "Throughput Performance"
 msgstr "कार्यक्षमता प्रदर्शन"
 
-#: src/disks/gduatasmartdialog.c:155
+#: src/disks/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
 msgstr "डिस्क का औसत दक्षता"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:162
+#: src/disks/gdu-ata-smart-dialog.c:162
 msgid "Spinup Time"
 msgstr "स्पिनअप समय"
 
-#: src/disks/gduatasmartdialog.c:163
+#: src/disks/gdu-ata-smart-dialog.c:163
 msgid "Time needed to spin up the disk"
 msgstr "डिस्क स्पिनअप करने के लिए जरूरी समय"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:170
+#: src/disks/gdu-ata-smart-dialog.c:170
 msgid "Start/Stop Count"
 msgstr "गिनती आरंभ करें/रोकें"
 
-#: src/disks/gduatasmartdialog.c:171
+#: src/disks/gdu-ata-smart-dialog.c:171
 msgid "Number of spindle start/stop cycles"
 msgstr "स्पिनडल आरंभ/रोकें चक्र"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:178
+#: src/disks/gdu-ata-smart-dialog.c:178
 msgid "Reallocated Sector Count"
 msgstr "फिर आबंटित खंड गिनती"
 
-#: src/disks/gduatasmartdialog.c:179
+#: src/disks/gdu-ata-smart-dialog.c:179
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -290,110 +314,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:188
+#: src/disks/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
 msgstr "चैनल हाशिया पढ़ें"
 
-#: src/disks/gduatasmartdialog.c:189
+#: src/disks/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
 msgstr "चैनल का हाशिया जब आंकड़ा पढ़ा जा रहा हो।"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:196
+#: src/disks/gdu-ata-smart-dialog.c:196
 msgid "Seek Error Rate"
 msgstr "प्राप्ति त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:197
+#: src/disks/gdu-ata-smart-dialog.c:197
 msgid "Frequency of errors while positioning"
 msgstr "स्थिति लेने के दौरान त्रुटि की आवृत्ति"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:204
+#: src/disks/gdu-ata-smart-dialog.c:204
 msgid "Seek Timer Performance"
 msgstr "प्राप्ति टाइमर प्रदर्शन"
 
-#: src/disks/gduatasmartdialog.c:205
+#: src/disks/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operations while positioning"
 msgstr "स्थिति लेने के दौरान ऑपरेटिंग का औसत दक्षता"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:212 src/disks/gduatasmartdialog.c:537
+#: src/disks/gdu-ata-smart-dialog.c:212 src/disks/gdu-ata-smart-dialog.c:537
 msgid "Power-On Hours"
 msgstr "पावर आरंभ घंटे"
 
-#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
+#: src/disks/gdu-ata-smart-dialog.c:213 src/disks/gdu-ata-smart-dialog.c:538
 msgid "Number of hours elapsed in the power-on state"
 msgstr "चाल बिजली स्थिति में बीते घंटे की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:220
+#: src/disks/gdu-ata-smart-dialog.c:220
 msgid "Spinup Retry Count"
 msgstr "स्पिनअप फिर कोशिश गिनती"
 
-#: src/disks/gduatasmartdialog.c:221
+#: src/disks/gdu-ata-smart-dialog.c:221
 msgid "Number of retry attempts to spin up"
 msgstr "स्पिन अप में फिर कोशिश करने की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:228
+#: src/disks/gdu-ata-smart-dialog.c:228
 msgid "Calibration Retry Count"
 msgstr "केलिब्रेशन पुनः कोशिश गिनती"
 
-#: src/disks/gduatasmartdialog.c:229
+#: src/disks/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
 msgstr "उपकरण कैलिब्रेट करने की प्रयास संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:236
+#: src/disks/gdu-ata-smart-dialog.c:236
 msgid "Power Cycle Count"
 msgstr "पावर चक्र गिनती"
 
-#: src/disks/gduatasmartdialog.c:237
+#: src/disks/gdu-ata-smart-dialog.c:237
 msgid "Number of power-on events"
 msgstr "चालू बिजली रहने की घटना संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:244
+#: src/disks/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
 msgstr "सॉफ्ट पठन त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:246
+#: src/disks/gdu-ata-smart-dialog.c:246
 msgid "Frequency of errors while reading from the disk"
 msgstr "डिस्क से पढ़ने के दौरान त्रुटियों की आवृत्ति"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:253
+#: src/disks/gdu-ata-smart-dialog.c:253
 msgid "Reported Uncorrectable Errors"
 msgstr "नहीं सुधारी जा सकने वाली त्रुटियों की संख्या"
 
-#: src/disks/gduatasmartdialog.c:254
+#: src/disks/gdu-ata-smart-dialog.c:254
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "त्रुटियों की संख्या जिसे ECC हार्डवेयर के प्रयोग से वापस ठीक नहीं किया जा सकता है"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:261
+#: src/disks/gdu-ata-smart-dialog.c:261
 msgid "High Fly Writes"
 msgstr "हाइ फ्लाइ राइट"
 
-#: src/disks/gduatasmartdialog.c:262
+#: src/disks/gdu-ata-smart-dialog.c:262
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr "इसके सामान्य ऑपरेटिंग सीमा के बार रिकार्डिंग शीर्ष की संख्या"
@@ -401,78 +425,78 @@ msgstr "इसके सामान्य ऑपरेटिंग सीमा
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:269
+#: src/disks/gdu-ata-smart-dialog.c:269
 msgid "Airflow Temperature"
 msgstr "हवामान तापक्रम"
 
-#: src/disks/gduatasmartdialog.c:270
+#: src/disks/gdu-ata-smart-dialog.c:270
 msgid "Airflow temperature of the drive"
 msgstr "ड्राइव का हवामान तापमान"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:277 src/disks/gduatasmartdialog.c:447
+#: src/disks/gdu-ata-smart-dialog.c:277 src/disks/gdu-ata-smart-dialog.c:447
 msgid "G-sense Error Rate"
 msgstr "G-sense त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:278
+#: src/disks/gdu-ata-smart-dialog.c:278
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "प्रभाव लोड के परिणाम स्वरूप गलती की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:285 src/disks/gduatasmartdialog.c:504
+#: src/disks/gdu-ata-smart-dialog.c:285 src/disks/gdu-ata-smart-dialog.c:504
 msgid "Power-off Retract Count"
 msgstr "पावर बंद गिनती फिर ट्रैक करें"
 
-#: src/disks/gduatasmartdialog.c:286
+#: src/disks/gdu-ata-smart-dialog.c:286
 msgid "Number of power-off or emergency retract cycles"
 msgstr "बिजली बंद या आपात फिर ट्रैक करने के चक्र की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:293 src/disks/gduatasmartdialog.c:480
+#: src/disks/gdu-ata-smart-dialog.c:293 src/disks/gdu-ata-smart-dialog.c:480
 msgid "Load/Unload Cycle Count"
 msgstr "चक्र गिनती लोड/अनलोड करें"
 
-#: src/disks/gduatasmartdialog.c:294
+#: src/disks/gdu-ata-smart-dialog.c:294
 msgid "Number of cycles into landing zone position"
 msgstr "लैंडिंग क्षेत्र स्थिति में चक्र की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:301 src/disks/gduatasmartdialog.c:520
-#: src/disks/ui/smart-dialog.ui:83
+#: src/disks/gdu-ata-smart-dialog.c:301 src/disks/gdu-ata-smart-dialog.c:520
+#: src/disks/ui/gdu-ata-smart-dialog.ui:83
 msgid "Temperature"
 msgstr "तापक्रम"
 
-#: src/disks/gduatasmartdialog.c:302
+#: src/disks/gdu-ata-smart-dialog.c:302
 msgid "Current internal temperature of the drive"
 msgstr "ड्राइव का मौजूदा आंतरिक तापमान"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:309
+#: src/disks/gdu-ata-smart-dialog.c:309
 msgid "Hardware ECC Recovered"
 msgstr "हार्डवेयर ECC वापस"
 
-#: src/disks/gduatasmartdialog.c:310
+#: src/disks/gdu-ata-smart-dialog.c:310
 msgid "Number of ECC on-the-fly errors"
 msgstr "ECC गतिशील त्रुटि की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:317
+#: src/disks/gdu-ata-smart-dialog.c:317
 msgid "Reallocation Count"
 msgstr "पुनःआबंटन गिनती"
 
-#: src/disks/gduatasmartdialog.c:318
+#: src/disks/gdu-ata-smart-dialog.c:318
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -484,11 +508,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:328
+#: src/disks/gdu-ata-smart-dialog.c:328
 msgid "Current Pending Sector Count"
 msgstr "मौज़ूदा स्थगित खंड गिनती"
 
-#: src/disks/gduatasmartdialog.c:329
+#: src/disks/gdu-ata-smart-dialog.c:329
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -503,11 +527,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:340
+#: src/disks/gdu-ata-smart-dialog.c:340
 msgid "Uncorrectable Sector Count"
 msgstr "न सही करने योग्य खंड गिनती"
 
-#: src/disks/gduatasmartdialog.c:341
+#: src/disks/gdu-ata-smart-dialog.c:341
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -519,22 +543,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:350
+#: src/disks/gdu-ata-smart-dialog.c:350
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:351
+#: src/disks/gdu-ata-smart-dialog.c:351
 msgid "Number of CRC errors during UDMA mode"
 msgstr "UDMA मोड के दौरान CRC त्रुटि की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:358
+#: src/disks/gdu-ata-smart-dialog.c:358
 msgid "Write Error Rate"
 msgstr "लेखन त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:359
+#: src/disks/gdu-ata-smart-dialog.c:359
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -543,117 +567,117 @@ msgstr "त्रुटि की संख्या जब डिस्क ब�
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:366
+#: src/disks/gdu-ata-smart-dialog.c:366
 msgid "Soft Read Error Rate"
 msgstr "सॉफ्ट पठन त्रुटि दर"
 
-#: src/disks/gduatasmartdialog.c:367
+#: src/disks/gdu-ata-smart-dialog.c:367
 msgid "Number of off-track errors"
 msgstr "ऑफ ट्रैक त्रुटि की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:374
+#: src/disks/gdu-ata-smart-dialog.c:374
 msgid "Data Address Mark Errors"
 msgstr "डाटा पता चिह्नित त्रुटियां"
 
-#: src/disks/gduatasmartdialog.c:375
+#: src/disks/gdu-ata-smart-dialog.c:375
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "डेटा एड्रैस मार्क (DAM) त्रुटि (या) विक्रेता विशेष की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:382
+#: src/disks/gdu-ata-smart-dialog.c:382
 msgid "Run Out Cancel"
 msgstr "रद्द करें चलाएं"
 
-#: src/disks/gduatasmartdialog.c:383
+#: src/disks/gdu-ata-smart-dialog.c:383
 msgid "Number of ECC errors"
 msgstr "ECC त्रुटि की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:390
+#: src/disks/gdu-ata-smart-dialog.c:390
 msgid "Soft ECC correction"
 msgstr "सॉफ्ट ECC सुधार"
 
-#: src/disks/gduatasmartdialog.c:391
+#: src/disks/gdu-ata-smart-dialog.c:391
 msgid "Number of errors corrected by software ECC"
 msgstr "सॉफ्टवेयर ECC के द्वारा सही की गई त्रुटियों की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:398
+#: src/disks/gdu-ata-smart-dialog.c:398
 msgid "Thermal Asperity Rate"
 msgstr "थर्मल एसपेरिटी दर"
 
-#: src/disks/gduatasmartdialog.c:399
+#: src/disks/gdu-ata-smart-dialog.c:399
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "थर्मल एसपेरिटी दर त्रुटि की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:406
+#: src/disks/gdu-ata-smart-dialog.c:406
 msgid "Flying Height"
 msgstr "फ्लाइंग हाइट"
 
-#: src/disks/gduatasmartdialog.c:407
+#: src/disks/gdu-ata-smart-dialog.c:407
 msgid "Height of heads above the disk surface"
 msgstr "डिस्क सतह के ऊपर शीर्ष की ऊँचाई"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:414
+#: src/disks/gdu-ata-smart-dialog.c:414
 msgid "Spin High Current"
 msgstr "उच्च धारा स्पिन करें"
 
-#: src/disks/gduatasmartdialog.c:415
+#: src/disks/gdu-ata-smart-dialog.c:415
 msgid "Amount of high current used to spin up the drive"
 msgstr "ड्राइव स्पिन करने के लिए उच्च धारा की मात्रा प्रयुक्त"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:422
+#: src/disks/gdu-ata-smart-dialog.c:422
 msgid "Spin Buzz"
 msgstr "स्पिन बज़"
 
-#: src/disks/gduatasmartdialog.c:423
+#: src/disks/gdu-ata-smart-dialog.c:423
 msgid "Number of buzz routines to spin up the drive"
 msgstr "ड्राइव स्पिन अप करने के लिए बज की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:430
+#: src/disks/gdu-ata-smart-dialog.c:430
 msgid "Offline Seek Performance"
 msgstr "ऑफ़लाइन प्राप्ति प्रदर्शन"
 
-#: src/disks/gduatasmartdialog.c:431
+#: src/disks/gdu-ata-smart-dialog.c:431
 msgid "Drive’s seek performance during offline operations"
 msgstr "ऑफलाइन संक्रिया के दौरान ड्राइव प्राप्ति प्रदर्शन"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:438
+#: src/disks/gdu-ata-smart-dialog.c:438
 msgid "Disk Shift"
 msgstr "डिस्क शिफ्ट"
 
-#: src/disks/gduatasmartdialog.c:439
+#: src/disks/gdu-ata-smart-dialog.c:439
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
 "डिस्क का शिफ्ट संभव है स्टोर में मजबूत शॉक लोडिंग के कारण, गिरते (or) तापमान के कारण"
 
-#: src/disks/gduatasmartdialog.c:448
+#: src/disks/gdu-ata-smart-dialog.c:448
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr "शॉक सेंसर के द्वारा पता किया गया प्रभाव का परिणाम बतौर त्रुटि संख्या"
@@ -661,22 +685,22 @@ msgstr "शॉक सेंसर के द्वारा पता किय�
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:455
+#: src/disks/gdu-ata-smart-dialog.c:455
 msgid "Loaded Hours"
 msgstr "लोड किया घंटे"
 
-#: src/disks/gduatasmartdialog.c:456
+#: src/disks/gdu-ata-smart-dialog.c:456
 msgid "Number of hours in general operational state"
 msgstr "सामान्य ऑपरेशनल स्थिति घंटा की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:463
+#: src/disks/gdu-ata-smart-dialog.c:463
 msgid "Load/Unload Retry Count"
 msgstr "पुनर्कोशिश गणना लोड/अनलोड"
 
-#: src/disks/gduatasmartdialog.c:464
+#: src/disks/gdu-ata-smart-dialog.c:464
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -687,67 +711,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:472
+#: src/disks/gdu-ata-smart-dialog.c:472
 msgid "Load Friction"
 msgstr "लोड घर्षण"
 
-#: src/disks/gduatasmartdialog.c:473
+#: src/disks/gdu-ata-smart-dialog.c:473
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "स्टोर के यांत्रिक हिस्से में घर्षण के कारण ड्राइव पर लोड"
 
-#: src/disks/gduatasmartdialog.c:481
+#: src/disks/gdu-ata-smart-dialog.c:481
 msgid "Total number of load cycles"
 msgstr "लोड चक्र की कुल संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:488
+#: src/disks/gdu-ata-smart-dialog.c:488
 msgid "Load-in Time"
 msgstr "लोड इन समय"
 
-#: src/disks/gduatasmartdialog.c:489
+#: src/disks/gdu-ata-smart-dialog.c:489
 msgid "General time for loading in a drive"
 msgstr "ड्राइव में लोडिंग के लिए सामान्य समय"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:496
+#: src/disks/gdu-ata-smart-dialog.c:496
 msgid "Torque Amplification Count"
 msgstr "गिनती आवर्द्धन गिनती"
 
-#: src/disks/gduatasmartdialog.c:497
+#: src/disks/gdu-ata-smart-dialog.c:497
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "किसी  ड्राइव के घुमावदार गति का मात्रात्मक प्रयास"
 
-#: src/disks/gduatasmartdialog.c:505
+#: src/disks/gdu-ata-smart-dialog.c:505
 msgid "Number of power-off retract events"
 msgstr "बिजली बंद रिट्रेक्ट घटना की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:512
+#: src/disks/gdu-ata-smart-dialog.c:512
 msgid "GMR Head Amplitude"
 msgstr "GMR शीर्ष आयाम"
 
-#: src/disks/gduatasmartdialog.c:513
+#: src/disks/gdu-ata-smart-dialog.c:513
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "कार्यशील मोड (GMR-head) में शीर्ष आयाम"
 
-#: src/disks/gduatasmartdialog.c:521
+#: src/disks/gdu-ata-smart-dialog.c:521
 msgid "Temperature of the drive"
 msgstr "ड्राइव का तापक्रम"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:528
+#: src/disks/gdu-ata-smart-dialog.c:528
 msgid "Endurance Remaining"
 msgstr "शेष क्षमता"
 
-#: src/disks/gduatasmartdialog.c:529
+#: src/disks/gdu-ata-smart-dialog.c:529
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -758,22 +782,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:545
+#: src/disks/gdu-ata-smart-dialog.c:545
 msgid "Uncorrectable ECC Count"
 msgstr "न सुधारने योग्य ECC गिनती"
 
-#: src/disks/gduatasmartdialog.c:546
+#: src/disks/gdu-ata-smart-dialog.c:546
 msgid "Number of uncorrectable ECC errors"
 msgstr "न सुधारने योग्य ECC गिनती की संख्या"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:553
+#: src/disks/gdu-ata-smart-dialog.c:553
 msgid "Good Block Rate"
 msgstr "अच्छा खंड दर"
 
-#: src/disks/gduatasmartdialog.c:554
+#: src/disks/gdu-ata-smart-dialog.c:554
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -782,69 +806,69 @@ msgstr "उपलब्ध आरक्षित खंड की संख्�
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:562
+#: src/disks/gdu-ata-smart-dialog.c:562
 msgid "Head Flying Hours"
 msgstr "शीर्ष फ्लाइंग घंटे"
 
-#: src/disks/gduatasmartdialog.c:563
+#: src/disks/gdu-ata-smart-dialog.c:563
 msgid "Time while head is positioning"
 msgstr "समय जब शीर्ष स्थिति ले रहा है"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:570
+#: src/disks/gdu-ata-smart-dialog.c:570
 msgid "Read Error Retry Rate"
 msgstr "पठन त्रुटि पुनर्कोकोशिदर द"
 
-#: src/disks/gduatasmartdialog.c:571
+#: src/disks/gdu-ata-smart-dialog.c:571
 msgid "Number of errors while reading from a disk"
 msgstr "डिस्क से पढ़ने के दौरान त्रुटियों की संख्या"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:578
+#: src/disks/gdu-ata-smart-dialog.c:578
 msgid "Total LBAs Written"
 msgstr "कुल लिखित LBA"
 
-#: src/disks/gduatasmartdialog.c:579
+#: src/disks/gdu-ata-smart-dialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
 msgstr "डिस्क के जीवनकाल के दौरान लिखे गए डेटा की मात्रा"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:586
+#: src/disks/gdu-ata-smart-dialog.c:586
 msgid "Total LBAs Read"
 msgstr "कुल पढ़े गये LBA"
 
-#: src/disks/gduatasmartdialog.c:587
+#: src/disks/gdu-ata-smart-dialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
 msgstr "डिस्क के जीवनकाल के दौरान पढ़े गए डेटा की मात्रा"
 
-#: src/disks/gduatasmartdialog.c:646
+#: src/disks/gdu-ata-smart-dialog.c:646
 #, c-format
 msgid "No description for attribute %d"
 msgstr "विशेषता %d के लिए कोई विवरण नहीं"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:693
+#: src/disks/gdu-ata-smart-dialog.c:693
 msgid "FAILING"
 msgstr "विफल"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:702
+#: src/disks/gdu-ata-smart-dialog.c:702
 msgid "Failed in the past"
 msgstr "अतीत में विफल"
 
-#: src/disks/gduatasmartdialog.c:706
+#: src/disks/gdu-ata-smart-dialog.c:706
 msgid "OK"
 msgstr "ठीक है"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:733
+#: src/disks/gdu-ata-smart-dialog.c:733
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -858,7 +882,7 @@ msgstr[1] "%d खंड"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:745 src/disks/gduatasmartdialog.c:878
+#: src/disks/gdu-ata-smart-dialog.c:745 src/disks/gdu-ata-smart-dialog.c:878
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -869,113 +893,113 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:756 src/disks/gduatasmartdialog.c:1127
+#: src/disks/gdu-ata-smart-dialog.c:756 src/disks/gdu-ata-smart-dialog.c:1127
 msgid "N/A"
 msgstr "लागू नहीं"
 
-#: src/disks/gduatasmartdialog.c:776
+#: src/disks/gdu-ata-smart-dialog.c:776
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "अंतिम स्वयं परीक्षण सफलतापूर्वक पूरा किया गया"
 
-#: src/disks/gduatasmartdialog.c:780
+#: src/disks/gdu-ata-smart-dialog.c:780
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "अंतिम आत्म परीक्षण निरस्त किया गया"
 
-#: src/disks/gduatasmartdialog.c:784
+#: src/disks/gdu-ata-smart-dialog.c:784
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "अंतिम स्वयं परीक्षण बाधित किया गया"
 
-#: src/disks/gduatasmartdialog.c:788
+#: src/disks/gdu-ata-smart-dialog.c:788
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "अंतिम आत्म परीक्षण पूरा नहीं किया गया"
 
-#: src/disks/gduatasmartdialog.c:792
+#: src/disks/gdu-ata-smart-dialog.c:792
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "पिछले स्वयं परीक्षण असफल"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:797
+#: src/disks/gdu-ata-smart-dialog.c:797
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "पिछले स्वयं परीक्षण असफल(विद्युत)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:802
+#: src/disks/gdu-ata-smart-dialog.c:802
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "पिछले स्वयं परीक्षण असफल(सहायक)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:807
+#: src/disks/gdu-ata-smart-dialog.c:807
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "पिछले स्वयं परीक्षण असफल(पढ़ें)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:812
+#: src/disks/gdu-ata-smart-dialog.c:812
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "पिछले स्वयं परीक्षण असफल(हैंडलिंग)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:817
+#: src/disks/gdu-ata-smart-dialog.c:817
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "प्रगति में स्वयं परीक्षण — %d%% शेष"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:824
+#: src/disks/gdu-ata-smart-dialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "अज्ञात (%s)"
 
-#: src/disks/gduatasmartdialog.c:849
+#: src/disks/gdu-ata-smart-dialog.c:849
 #, c-format
 msgid "%s ago"
 msgstr "%s पहले"
 
-#: src/disks/gduatasmartdialog.c:912
+#: src/disks/gdu-ata-smart-dialog.c:912
 msgid "SMART is not supported"
 msgstr "स्मार्ट समर्थित नहीं है"
 
-#: src/disks/gduatasmartdialog.c:920
+#: src/disks/gdu-ata-smart-dialog.c:920
 msgid "SMART is not enabled"
 msgstr "स्मार्ट सक्षम नहीं किया गया है"
 
-#: src/disks/gduatasmartdialog.c:930
+#: src/disks/gdu-ata-smart-dialog.c:930
 msgid "Self-test in progress"
 msgstr "स्वयं परीक्षण प्रगति पर है"
 
-#: src/disks/gduatasmartdialog.c:943 src/disks/gduatasmartdialog.c:952
+#: src/disks/gdu-ata-smart-dialog.c:943 src/disks/gdu-ata-smart-dialog.c:952
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "डिस्क के जल्दी ही विफल होने की संभावना है"
 
-#: src/disks/gduatasmartdialog.c:975
+#: src/disks/gdu-ata-smart-dialog.c:975
 msgid "SELF-TEST FAILED"
 msgstr "पिछले स्वयं परीक्षण असफल"
 
-#: src/disks/gduatasmartdialog.c:984
+#: src/disks/gdu-ata-smart-dialog.c:984
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "डिस्क ठीक है, एक असफल विशेषता में विफल रही है"
 msgstr[1] "डिस्क ठीक है, %d विशेषता में विफल रही है"
 
-#: src/disks/gduatasmartdialog.c:995
+#: src/disks/gdu-ata-smart-dialog.c:995
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "डिस्क ठीक है ,कुछ खराब खंड है"
 msgstr[1] "डिस्क ठीक है ,%d खराब खंड है"
 
-#: src/disks/gduatasmartdialog.c:1006
+#: src/disks/gdu-ata-smart-dialog.c:1006
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -983,7 +1007,7 @@ msgstr[0] "डिस्क ठीक है, एक विशेषता अत
 msgstr[1] "डिस्क ठीक है, %d विशेषता अतीत में विफल रहा"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1015
+#: src/disks/gdu-ata-smart-dialog.c:1015
 msgid "Disk is OK"
 msgstr "डिस्क ठीक है"
 
@@ -991,97 +1015,97 @@ msgstr "डिस्क ठीक है"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1029
+#: src/disks/gdu-ata-smart-dialog.c:1029
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1115
+#: src/disks/gdu-ata-smart-dialog.c:1115
 msgid "Pre-Fail"
 msgstr "पूर्व विफल"
 
-#: src/disks/gduatasmartdialog.c:1117
+#: src/disks/gdu-ata-smart-dialog.c:1117
 msgid "Old-Age"
 msgstr "वृद्धावस्था"
 
-#: src/disks/gduatasmartdialog.c:1120
+#: src/disks/gdu-ata-smart-dialog.c:1120
 msgid "Online"
 msgstr "ऑनलाइन"
 
-#: src/disks/gduatasmartdialog.c:1122
+#: src/disks/gdu-ata-smart-dialog.c:1122
 msgid "Offline"
 msgstr "ऑफलाइन"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1231
+#: src/disks/gdu-ata-smart-dialog.c:1231
 msgid "Threshold exceeded"
 msgstr "थ्रेसहोल्ड पार हो गई"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1236
+#: src/disks/gdu-ata-smart-dialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "थ्रेसहोल्ड पार नहीं हो गई"
 
-#: src/disks/gduatasmartdialog.c:1312
+#: src/disks/gdu-ata-smart-dialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "स्मार्ट डेटा को ताज़ा करने में त्रुटि"
 
-#: src/disks/gduatasmartdialog.c:1344
+#: src/disks/gdu-ata-smart-dialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "स्मार्ट स्वयं परीक्षण निरस्त में करते समय त्रुटि"
 
-#: src/disks/gduatasmartdialog.c:1363
+#: src/disks/gdu-ata-smart-dialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "स्मार्ट स्वयं परीक्षण शुरू करते समय त्रुटि"
 
-#: src/disks/gduatasmartdialog.c:1445
+#: src/disks/gdu-ata-smart-dialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "त्रुटि उत्पन्न हुई जब टॉगल करने की कोशिश करते समय की स्मार्ट सक्षम है"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1564
+#: src/disks/gdu-ata-smart-dialog.c:1564
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1576
+#: src/disks/gdu-ata-smart-dialog.c:1576
 msgid "Attribute"
 msgstr "विशेषता"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1590
+#: src/disks/gdu-ata-smart-dialog.c:1590
 msgid "Value"
 msgstr "मान"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1602
+#: src/disks/gdu-ata-smart-dialog.c:1602
 msgid "Normalized"
 msgstr "सामान्यीकृत"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1614
+#: src/disks/gdu-ata-smart-dialog.c:1614
 msgid "Threshold"
 msgstr "देहलीज"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1626
+#: src/disks/gdu-ata-smart-dialog.c:1626
 msgid "Worst"
 msgstr "सब से बुरा"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1638
-#: src/disks/ui/gdu-create-filesystem-page.ui:50
+#: src/disks/gdu-ata-smart-dialog.c:1638
+#: src/disks/ui/gdu-create-filesystem-page.ui:66
 #: src/disks/ui/gdu-create-other-page.ui:8
 msgid "Type"
 msgstr "क़िस्म"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1650
+#: src/disks/gdu-ata-smart-dialog.c:1650
 msgid "Updates"
 msgstr "अद्यतनीकृत"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1662
+#: src/disks/gdu-ata-smart-dialog.c:1662
 msgid "Assessment"
 msgstr "मूल्यांकन"
 
@@ -1167,7 +1191,7 @@ msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s पर फाइलप्रणाली %1$s को मरम्मत की आवश्यकता है।"
 
 #: src/disks/gdu-block-row.c:536 src/disks/gdu-block-row.c:662
-#: src/disks/ui/smart-dialog.ui:260
+#: src/disks/ui/gdu-ata-smart-dialog.ui:260
 msgid "Close"
 msgstr "बंद करें"
 
@@ -1330,14 +1354,15 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:345
 #: src/disks/gdu-format-volume-dialog.c:197
-#: src/disks/ui/disk-settings-dialog.ui:387
 #: src/disks/ui/gdu-benchmark-dialog.ui:16
 #: src/disks/ui/gdu-benchmark-dialog.ui:23
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:18
 #: src/disks/ui/gdu-create-disk-image-dialog.ui:18
+#: src/disks/ui/gdu-disk-settings-dialog.ui:15
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:14
 #: src/disks/ui/gdu-edit-partition-dialog.ui:15
 #: src/disks/ui/gdu-format-disk-dialog.ui:15
+#: src/disks/ui/gdu-mount-options-dialog.ui:15
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:18
 #: src/disks/ui/gdu-resize-volume-dialog.ui:14
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:17
@@ -1556,94 +1581,94 @@ msgid ""
 "Adding more letters, numbers and punctuation will make the password stronger."
 msgstr "अधिक अक्षर, संख्याएं और विराम चिह्न जोड़ने से पासवर्ड मजबूत हो जाएगा।"
 
-#: src/disks/gdudisksettingsdialog.c:290
+#: src/disks/gdu-disk-settings-dialog.c:293
 msgctxt "standby-value"
 msgid "Never"
 msgstr "कभी नहीं"
 
-#: src/disks/gdudisksettingsdialog.c:309
+#: src/disks/gdu-disk-settings-dialog.c:312
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "विक्रेता से परिभाषित"
 
-#: src/disks/gdudisksettingsdialog.c:313
+#: src/disks/gdu-disk-settings-dialog.c:316
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "सुरक्षित"
 
-#: src/disks/gdudisksettingsdialog.c:334
+#: src/disks/gdu-disk-settings-dialog.c:337
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (अक्षम)"
 
-#: src/disks/gdudisksettingsdialog.c:338
+#: src/disks/gdu-disk-settings-dialog.c:341
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr "%d (स्पिन-डाउन अनुमति दी गई)"
 
-#: src/disks/gdudisksettingsdialog.c:342
+#: src/disks/gdu-disk-settings-dialog.c:345
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr "%d (स्पिन-डाउन अनुमति नहीं दी गई)"
 
-#: src/disks/gdudisksettingsdialog.c:357
+#: src/disks/gdu-disk-settings-dialog.c:360
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (अक्षम)"
 
-#: src/disks/gdudisksettingsdialog.c:386
+#: src/disks/gdu-disk-settings-dialog.c:398
 msgid "Error setting configuration"
 msgstr "सेटिंग विन्यास में त्रुटि"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:439
+#: src/disks/gdu-disk-settings-dialog.c:451
 msgid "Never"
 msgstr "कभी नहीं"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:441
+#: src/disks/gdu-disk-settings-dialog.c:453
 msgid "5 minutes"
 msgstr "5 मिनट"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:443
+#: src/disks/gdu-disk-settings-dialog.c:455
 msgid "10 minutes"
 msgstr "10 मिनट"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:445
+#: src/disks/gdu-disk-settings-dialog.c:457
 msgid "15 minutes"
 msgstr "15 मिनट"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:447
+#: src/disks/gdu-disk-settings-dialog.c:459
 msgid "3 hours"
 msgstr "3 घंटे"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:451
+#: src/disks/gdu-disk-settings-dialog.c:463
 msgid "Save Power"
 msgstr "ऊर्जा बचाएं"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
-#: src/disks/gdudisksettingsdialog.c:453
+#: src/disks/gdu-disk-settings-dialog.c:465
 msgid "← Spindown"
 msgstr "← नीचे स्पिन"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:455
+#: src/disks/gdu-disk-settings-dialog.c:467
 msgid "Perform Better"
 msgstr "बेहतर प्रदर्शन"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:459
+#: src/disks/gdu-disk-settings-dialog.c:471
 msgid "Quiet (Slow)"
 msgstr "शांत (धीमा)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:461
+#: src/disks/gdu-disk-settings-dialog.c:473
 msgid "Loud (Fast)"
 msgstr "जोर ( तेज)"
 
@@ -2026,111 +2051,6 @@ msgstr "आंतरिक त्रुटि"
 msgid "Need more input"
 msgstr "अधिक इनपुट की जरूरत है"
 
-#: src/disks/ui/disk-settings-dialog.ui:4
-msgid "Drive Settings"
-msgstr "ड्राइव सेटिंग"
-
-#: src/disks/ui/disk-settings-dialog.ui:34
-msgid "Apply Standby Timeout Settings"
-msgstr "स्टैंडबाय समयबाह्य सेटिंग्स लागू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:46
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr "स्टार्टअप पर और डिस्क कनेक्ट होने पर स्टैंडबाय टाइमआउट विन्यस्त करने के लिए चालू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:61
-msgid "Enter Standby After"
-msgstr "इसके बाद स्टैंडबाय में प्रवेश करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:94
-msgid "_Standby"
-msgstr "स्टैंडबाय (_S)"
-
-#: src/disks/ui/disk-settings-dialog.ui:111
-msgid "Apply Advanced Power Management Settings"
-msgstr "उन्नत पावर प्रबंधन सेटिंग्स लागू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:123
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "स्टार्टअप पर APM को कॉन्फ़िगर करने के लिए चालू करें और जब डिस्क जुड़ा हुआ है"
-
-#: src/disks/ui/disk-settings-dialog.ui:138
-msgid "APM Level"
-msgstr "APM स्तर"
-
-#: src/disks/ui/disk-settings-dialog.ui:169
-msgid ""
-"Aggressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-"आक्रामक स्पिन-डाउन ड्राइव को अनुमान से अधिक तेजी से ख़राब कर सकता है। कृपया समय-समय पर "
-"\"स्टार्ट/स्टॉप काउंट\" स्मार्ट विशेषता की जांच करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:182
-msgid "A_PM"
-msgstr "A_PM"
-
-#: src/disks/ui/disk-settings-dialog.ui:200
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr "स्वचालित ध्वनिक प्रबंधन सेटिंग्स लागू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:212
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "स्टार्टअप पर और डिस्क कनेक्ट होने पर AAM को विन्यस्त करने के लिए चालू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:228
-msgid "Vendor Recommended"
-msgstr "विक्रेता अनुशंसित"
-
-#: src/disks/ui/disk-settings-dialog.ui:241
-msgid "AAM Level"
-msgstr "AAM स्तर"
-
-#: src/disks/ui/disk-settings-dialog.ui:291
-msgid "_AAM"
-msgstr "_AAM"
-
-#: src/disks/ui/disk-settings-dialog.ui:309
-msgid "Apply Write Cache Settings"
-msgstr "कैश सेटिंग्स लिखें लागू करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:321
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-"स्टार्टअप पर कैश सेटिंग्स लिखें को कॉन्फ़िगर करने के लिए चालू करें और जब डिस्क जुड़ा हुआ है"
-
-#: src/disks/ui/disk-settings-dialog.ui:336
-msgid "S_etting"
-msgstr "सेटिंग (_e)"
-
-#: src/disks/ui/disk-settings-dialog.ui:350
-msgid "Enable Write Cache"
-msgstr "लेखन कैश सक्षम करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:351
-msgid "Disable Write Cache"
-msgstr "लेखन कैश निष्क्रिय करें"
-
-#: src/disks/ui/disk-settings-dialog.ui:360
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-"कैश लेखन को सक्रिय करने के द्वारा प्रदर्शन बढ़ जाती है, लेकिन एक बिजली की विफलता की "
-"स्थिति में डेटा हानि के लिए अतिसंवेदनशील प्रणाली छोड़ देता है"
-
-#: src/disks/ui/disk-settings-dialog.ui:373
-msgid "Wr_ite Cache"
-msgstr "लेखन कैशे (_i)"
-
-#: src/disks/ui/disk-settings-dialog.ui:396
-msgid "_Ok"
-msgstr "ठीक है (_O)"
-
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
 msgstr "कई डिस्क मिटाएं"
@@ -2142,6 +2062,74 @@ msgstr "मिटाएं (_E)…"
 #: src/disks/ui/erase-multiple-disks-dialog.ui:52
 msgid "Erase _Type"
 msgstr "प्रकार मिटाएं (_T)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:4
+msgid "SMART Data & Self-Tests"
+msgstr "स्मार्ट डेटा और स्व-परीक्षण"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:33
+msgid "Powered On"
+msgstr "चालू"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:58
+msgid "Updated"
+msgstr "अद्यतित"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:108
+msgid "Self-test Result"
+msgstr "स्व-परीक्षण परिणाम"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:121
+msgid "Self-assessment"
+msgstr "आत्म-मूल्यांकन"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:134
+msgid "Overall Assessment"
+msgstr "समग्र-मूल्यांकन"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:184
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr "स्मार्ट हार्ड डिस्क के लिए सक्षम है को टॉगल करने के लिए क्लिक करें"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:193
+msgid "SMART _Attributes"
+msgstr "स्मार्ट विशेषता (_A)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:235
+msgid "_Start Self-test"
+msgstr "स्व-परीक्षण प्रारंभ करें (_S)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:236
+msgid "Click to start a SMART self-test"
+msgstr "स्मार्ट स्व-परीक्षण शुरू करने के लिए क्लिक करें"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:245
+msgid "_Stop Self-test"
+msgstr "स्व-परीक्षण रोकें (_S)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:246
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr "वर्तमान में चल रहे स्मार्ट स्व-परीक्षण को रोकने के लिए क्लिक करें"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:252
+msgid "Refresh"
+msgstr "ताज़ा करें"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:253
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr "हार्ड डिस्क फिर से पढ़ने स्मार्ट डाटा को मजबूर करने के लिए क्लिक करें"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:272
+msgid "_Short"
+msgstr "छोटा (_S)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:276
+msgid "_Extended"
+msgstr "विस्तारित (_E)"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:280
+msgid "_Conveyance"
+msgstr "संप्रेषण (_C)"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:4
 #: src/disks/ui/gdu-benchmark-dialog.ui:48
@@ -2372,6 +2360,7 @@ msgid "_Volume Name"
 msgstr "वॉल्यूम नाम (_V)"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:25
+#: src/disks/ui/gdu-format-disk-dialog.ui:44
 msgid "_Overwrite Existing Data"
 msgstr "मौजूदा डेटा को अधिलेखित करें (_O)"
 
@@ -2379,38 +2368,40 @@ msgstr "मौजूदा डेटा को अधिलेखित कर�
 #: src/disks/ui/gdu-edit-partition-dialog.ui:69
 #: src/disks/ui/gdu-edit-partition-dialog.ui:110
 #: src/disks/ui/gdu-edit-partition-dialog.ui:151
+#: src/disks/ui/gdu-format-disk-dialog.ui:49
 #: src/disks/ui/gdu-take-ownership-dialog.ui:17
 msgid "More Information"
 msgstr "अधिक जानकारी"
 
-#: src/disks/ui/gdu-create-filesystem-page.ui:54
-msgid "For use only with Linux systems"
-msgstr "केवल लिनक्स सिस्टम के साथ उपयोग के लिए"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:68
-msgid "For use with Windows"
-msgstr "विंडोज़ के साथ उपयोग के लिए"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:82
-msgid "For use with all systems and devices"
-msgstr "सभी प्रणालियों और उपकरणों के साथ प्रयोग के लिए"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:112
-msgid "_Password Protect Volume"
-msgstr "पासवर्ड सुरक्षा वॉल्यूम (_P)"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:113
-#: src/disks/ui/gdu-create-other-page.ui:16
-msgid "Encrypts the volume using LUKS"
-msgstr "LUKS का उपयोग करके वॉल्यूम को कूटलेखित करता है"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:135
+#: src/disks/ui/gdu-create-filesystem-page.ui:42
+#: src/disks/ui/gdu-format-disk-dialog.ui:61
 msgid ""
 "Ensures that existing data cannot be recovered. This option slows down "
 "formatting."
 msgstr ""
 "यह सुनिश्चित करता है कि मौजूदा डेटा को पुनर्प्राप्त नहीं किया जा सकता। यह विकल्प प्रारूपण "
 "को धीमा करता है।"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:70
+msgid "For use only with Linux systems"
+msgstr "केवल लिनक्स सिस्टम के साथ उपयोग के लिए"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:84
+msgid "For use with Windows"
+msgstr "विंडोज़ के साथ उपयोग के लिए"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:98
+msgid "For use with all systems and devices"
+msgstr "सभी प्रणालियों और उपकरणों के साथ प्रयोग के लिए"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:128
+msgid "_Password Protect Volume"
+msgstr "पासवर्ड सुरक्षा वॉल्यूम (_P)"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:129
+#: src/disks/ui/gdu-create-other-page.ui:16
+msgid "Encrypts the volume using LUKS"
+msgstr "LUKS का उपयोग करके वॉल्यूम को कूटलेखित करता है"
 
 #: src/disks/ui/gdu-create-other-page.ui:15
 msgid "Password Protect Volume"
@@ -2518,6 +2509,112 @@ msgstr "पासवर्ड की पुष्टि करें"
 msgid "The passwords do not match."
 msgstr "पासवर्ड मेल नहीं खाते।"
 
+#: src/disks/ui/gdu-disk-settings-dialog.ui:4
+#: src/disks/ui/gdu-disk-settings-dialog.ui:24
+msgid "Drive Settings"
+msgstr "ड्राइव सेटिंग"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:29
+msgid "Sa_ve"
+msgstr "सहेजें (_v)"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:57
+msgid "Apply Standby Timeout Settings"
+msgstr "स्टैंडबाय समयबाह्य सेटिंग्स लागू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:69
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr "स्टार्टअप पर और डिस्क कनेक्ट होने पर स्टैंडबाय टाइमआउट विन्यस्त करने के लिए चालू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:84
+msgid "Enter Standby After"
+msgstr "इसके बाद स्टैंडबाय में प्रवेश करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:117
+msgid "_Standby"
+msgstr "स्टैंडबाय (_S)"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:134
+msgid "Apply Advanced Power Management Settings"
+msgstr "उन्नत पावर प्रबंधन सेटिंग्स लागू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:146
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr "स्टार्टअप पर APM को कॉन्फ़िगर करने के लिए चालू करें और जब डिस्क जुड़ा हुआ है"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:161
+msgid "APM Level"
+msgstr "APM स्तर"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:192
+msgid ""
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+"आक्रामक स्पिन-डाउन ड्राइव को अनुमान से अधिक तेजी से ख़राब कर सकता है। कृपया समय-समय पर "
+"\"स्टार्ट/स्टॉप काउंट\" स्मार्ट विशेषता की जांच करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:205
+msgid "A_PM"
+msgstr "A_PM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:223
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr "स्वचालित ध्वनिक प्रबंधन सेटिंग्स लागू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:235
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr "स्टार्टअप पर और डिस्क कनेक्ट होने पर AAM को विन्यस्त करने के लिए चालू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:251
+msgid "Vendor Recommended"
+msgstr "विक्रेता अनुशंसित"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:264
+msgid "AAM Level"
+msgstr "AAM स्तर"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:314
+msgid "_AAM"
+msgstr "_AAM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:332
+msgid "Apply Write Cache Settings"
+msgstr "कैश सेटिंग्स लिखें लागू करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:344
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+"स्टार्टअप पर कैश सेटिंग्स लिखें को कॉन्फ़िगर करने के लिए चालू करें और जब डिस्क जुड़ा हुआ है"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:359
+msgid "S_etting"
+msgstr "सेटिंग (_e)"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:373
+msgid "Enable Write Cache"
+msgstr "लेखन कैश सक्षम करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:374
+msgid "Disable Write Cache"
+msgstr "लेखन कैश निष्क्रिय करें"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:383
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+"कैश लेखन को सक्रिय करने के द्वारा प्रदर्शन बढ़ जाती है, लेकिन एक बिजली की विफलता की "
+"स्थिति में डेटा हानि के लिए अतिसंवेदनशील प्रणाली छोड़ देता है"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:396
+msgid "Wr_ite Cache"
+msgstr "लेखन कैशे (_i)"
+
 #: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:124
 msgid "Drive Information"
 msgstr "ड्राइव जानकारी"
@@ -2542,7 +2639,7 @@ msgstr "कॉपी करें"
 msgid "Serial"
 msgstr "क्रम"
 
-#: src/disks/ui/gdu-drive-view.ui:179 src/disks/ui/gdu-format-disk-dialog.ui:53
+#: src/disks/ui/gdu-drive-view.ui:179 src/disks/ui/gdu-format-disk-dialog.ui:85
 msgid "Partitioning"
 msgstr "विभाजन हो रहा हैं"
 
@@ -2599,6 +2696,7 @@ msgid "Edit Partition"
 msgstr "विभाजन संपादित करें"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:22
+#: src/disks/ui/gdu-mount-options-dialog.ui:22
 msgid "_Done"
 msgstr "संपन्न (_D)"
 
@@ -2666,12 +2764,10 @@ msgid "Encryption Options"
 msgstr "कूटलेखन विकल्प"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:15
-#: src/disks/ui/gdu-mount-options-dialog.ui:13
 msgid "Cancel"
 msgstr "रद्द करें"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:21
-#: src/disks/ui/gdu-mount-options-dialog.ui:19
 msgid "Done"
 msgstr "संपन्न"
 
@@ -2712,35 +2808,27 @@ msgstr "अतिरिक्त विकल्प"
 msgid "Format Disk"
 msgstr "डिस्क प्रारूपित करें"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:44
-msgid "_Erase Existing Data"
-msgstr "मौजूदा डेटा मिटाएं (_E)"
-
-#: src/disks/ui/gdu-format-disk-dialog.ui:45
-msgid "Slows down formatting"
-msgstr "प्रारूपण धीमा करता है"
-
-#: src/disks/ui/gdu-format-disk-dialog.ui:56
+#: src/disks/ui/gdu-format-disk-dialog.ui:88
 msgid "_GUID Partition Table (GPT)"
 msgstr "_GUID विभाजन तालिका (GPT)"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:57
+#: src/disks/ui/gdu-format-disk-dialog.ui:89
 msgid "Compatible with UEFI and disks over 2 TB"
 msgstr "UEFI और 2 TB से अधिक डिस्क के साथ संगत"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:70
+#: src/disks/ui/gdu-format-disk-dialog.ui:102
 msgid "_Master Boot Record (MBR)"
 msgstr "मास्टर बूट रिकॉर्ड (_MBR)"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:71
+#: src/disks/ui/gdu-format-disk-dialog.ui:103
 msgid "Legacy option with wide hardware compatibility"
 msgstr "व्यापक हार्डवेयर संगतता के साथ लिगेसी विकल्प"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:84
+#: src/disks/ui/gdu-format-disk-dialog.ui:116
 msgid "_No Partitioning"
 msgstr "कोई विभाजन नहीं (_N)"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:85
+#: src/disks/ui/gdu-format-disk-dialog.ui:117
 msgid "Disk will be empty"
 msgstr "डिस्क खाली रहेगी"
 
@@ -2748,70 +2836,70 @@ msgstr "डिस्क खाली रहेगी"
 msgid "Mount Options"
 msgstr "माउंट विकल्प"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:30
-msgid "The system may not work correctly if this entry is modified or removed."
+#: src/disks/ui/gdu-mount-options-dialog.ui:37
+msgid "The system may not work correctly if this entry is modified or removed"
 msgstr ""
-"सिस्टम सही ढंग से काम नहीं कर सकता है अगर इस प्रविष्टि को संशोधित या हटा दिया गया है।"
-
-#: src/disks/ui/gdu-mount-options-dialog.ui:39
-msgid "Automatic Mount Options"
-msgstr "स्वचालित माउंट विकल्प"
+"सिस्टम सही ढंग से काम नहीं कर सकता है अगर इस प्रविष्टि को संशोधित या हटा दिया गया है"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:46
+msgid "_Automatic Mount Options"
+msgstr "स्वचालित माउंट विकल्प (_A)"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:54
 msgid "General"
 msgstr "सामान्य"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:50
-msgid "Mount at Startup"
-msgstr "स्टार्टअप पर माउंट"
+#: src/disks/ui/gdu-mount-options-dialog.ui:58
+msgid "_Mount at Startup"
+msgstr "स्टार्टअप पर माउंट (_M)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:55
-msgid "Show in Files"
-msgstr "फाइल्स में दिखाएं"
+#: src/disks/ui/gdu-mount-options-dialog.ui:64
+msgid "_Show in Files"
+msgstr "फाइल्स में दिखाएं (_S)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:60
-msgid "Require Authorization"
-msgstr "प्राधिकरण आवश्यक"
+#: src/disks/ui/gdu-mount-options-dialog.ui:70
+msgid "_Require Authorization"
+msgstr "प्राधिकरण आवश्यक (_R)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:67
+#: src/disks/ui/gdu-mount-options-dialog.ui:78
 msgid "Appearance"
 msgstr "दिखावट"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:71
-msgid "Display Name"
-msgstr "प्रदर्शन नाम"
-
-#: src/disks/ui/gdu-mount-options-dialog.ui:76
-msgid "Color Icon"
-msgstr "रंग चिह्न"
-
-#: src/disks/ui/gdu-mount-options-dialog.ui:81
-msgid "Symbolic Icon"
-msgstr "प्रतीकात्मक चिह्न"
+#: src/disks/ui/gdu-mount-options-dialog.ui:82
+msgid "D_isplay Name"
+msgstr "प्रदर्शन नाम (_i)"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:88
+msgid "C_olor Icon"
+msgstr "रंग चिह्न (_o)"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:94
+msgid "S_ymbolic Icon"
+msgstr "प्रतीकात्मक चिह्न (_y)"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:102
 msgid "Technical Options"
 msgstr "तकनीकी विकल्प"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:92
-msgid "fstab Options"
-msgstr "fstab विकल्प"
+#: src/disks/ui/gdu-mount-options-dialog.ui:106
+msgid "_fstab Options"
+msgstr "_fstab विकल्प"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:100
-msgid "Mount Point"
-msgstr "माउंट प्वाइंट"
+#: src/disks/ui/gdu-mount-options-dialog.ui:115
+msgid "Mount _Point"
+msgstr "माउंट प्वाइंट (_P)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:108
-msgid "Filesystem Type"
-msgstr "फाइलप्रणाली प्रकार"
+#: src/disks/ui/gdu-mount-options-dialog.ui:124
+msgid "Filesystem _Type"
+msgstr "फाइलप्रणाली प्रकार (_T)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:121
-msgid "Identify As"
-msgstr "ऐसे पहचानें"
+#: src/disks/ui/gdu-mount-options-dialog.ui:138
+msgid "Ide_ntify As"
+msgstr "ऐसे पहचानें (_n)"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:131
-msgid "Restore Default Settings"
-msgstr "तयशुदा सेटिंग पुनर्स्थापित करें"
+#: src/disks/ui/gdu-mount-options-dialog.ui:149
+msgid "R_estore Default Settings"
+msgstr "तयशुदा सेटिंग पुनर्स्थापित करें (_e)"
 
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:72
 msgid "_Size"
@@ -3019,74 +3107,6 @@ msgstr "वॉल्यूम मेनू खोलें"
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "चयनित वॉल्यूम प्रारूपित करें"
-
-#: src/disks/ui/smart-dialog.ui:4
-msgid "SMART Data & Self-Tests"
-msgstr "स्मार्ट डेटा और स्व-परीक्षण"
-
-#: src/disks/ui/smart-dialog.ui:33
-msgid "Powered On"
-msgstr "चालू"
-
-#: src/disks/ui/smart-dialog.ui:58
-msgid "Updated"
-msgstr "अद्यतित"
-
-#: src/disks/ui/smart-dialog.ui:108
-msgid "Self-test Result"
-msgstr "स्व-परीक्षण परिणाम"
-
-#: src/disks/ui/smart-dialog.ui:121
-msgid "Self-assessment"
-msgstr "आत्म-मूल्यांकन"
-
-#: src/disks/ui/smart-dialog.ui:134
-msgid "Overall Assessment"
-msgstr "समग्र-मूल्यांकन"
-
-#: src/disks/ui/smart-dialog.ui:184
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "स्मार्ट हार्ड डिस्क के लिए सक्षम है को टॉगल करने के लिए क्लिक करें"
-
-#: src/disks/ui/smart-dialog.ui:193
-msgid "SMART _Attributes"
-msgstr "स्मार्ट विशेषता (_A)"
-
-#: src/disks/ui/smart-dialog.ui:235
-msgid "_Start Self-test"
-msgstr "स्व-परीक्षण प्रारंभ करें (_S)"
-
-#: src/disks/ui/smart-dialog.ui:236
-msgid "Click to start a SMART self-test"
-msgstr "स्मार्ट स्व-परीक्षण शुरू करने के लिए क्लिक करें"
-
-#: src/disks/ui/smart-dialog.ui:245
-msgid "_Stop Self-test"
-msgstr "स्व-परीक्षण रोकें (_S)"
-
-#: src/disks/ui/smart-dialog.ui:246
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr "वर्तमान में चल रहे स्मार्ट स्व-परीक्षण को रोकने के लिए क्लिक करें"
-
-#: src/disks/ui/smart-dialog.ui:252
-msgid "Refresh"
-msgstr "ताज़ा करें"
-
-#: src/disks/ui/smart-dialog.ui:253
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "हार्ड डिस्क फिर से पढ़ने स्मार्ट डाटा को मजबूर करने के लिए क्लिक करें"
-
-#: src/disks/ui/smart-dialog.ui:272
-msgid "_Short"
-msgstr "छोटा (_S)"
-
-#: src/disks/ui/smart-dialog.ui:276
-msgid "_Extended"
-msgstr "विस्तारित (_E)"
-
-#: src/disks/ui/smart-dialog.ui:280
-msgid "_Conveyance"
-msgstr "संप्रेषण (_C)"
 
 #: src/disks/ui/unlock-device-dialog.ui:6
 msgid "Enter passphrase to unlock"

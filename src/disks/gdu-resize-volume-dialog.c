@@ -170,7 +170,7 @@ set_unit_num (GduResizeVolumeDialog *self, gint unit_num)
   adw_combo_row_set_selected (ADW_COMBO_ROW (self->size_unit_combo),
                               unit_num);
 
-  value = self->cur_unit_num == -1 
+  value = self->cur_unit_num == -1
               ? self->current_size
               : gtk_adjustment_get_value (self->size_adjustment) * unit_sizes[self->cur_unit_num];
 
@@ -460,7 +460,6 @@ static gboolean
 resize_filesystem_waiter (gpointer user_data)
 {
   GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
-  GtkWidget *dialog;
 
   if (self->wait_for_filesystem < FILESYSTEM_WAIT_SEC * (1000 / FILESYSTEM_WAIT_STEP_MS)
       && udisks_object_peek_filesystem (self->object) == NULL)
@@ -471,16 +470,9 @@ resize_filesystem_waiter (gpointer user_data)
 
   if (udisks_object_peek_filesystem (self->object) == NULL)
     {
-      dialog = adw_message_dialog_new (gdu_resize_volume_dialog_get_window (self),
-                                       _("Resizing not ready"),
-                                       _("Waited too long for the filesystem"));
-      adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                        "close", _("_Close"),
-                                        NULL);
-      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog), "close");
-
-      gtk_window_present (GTK_WINDOW (dialog));
-
+      gdu_utils_show_message (_("Resizing not ready"),
+                              _("Waited too long for the filesystem"),
+                              gdu_resize_volume_dialog_get_window (self));
       gtk_window_close (GTK_WINDOW (self));
       return G_SOURCE_REMOVE;
     }

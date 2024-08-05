@@ -490,9 +490,12 @@ fs_check_cb (GObject      *obj,
 {
   GduBlockRow *self = user_data;
   g_autoptr(GError) error = NULL;
-  UDisksFilesystem *filesystem;
+  UDisksBlock *block;
   UDisksObject *object;
+  UDisksObjectInfo *info;
+  UDisksFilesystem *filesystem;
   gboolean consistent;
+  const char *name;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
 
@@ -500,46 +503,26 @@ fs_check_cb (GObject      *obj,
   filesystem = udisks_object_peek_filesystem (object);
 
   if (!udisks_filesystem_call_check_finish (filesystem, &consistent, result, &error))
-    {
-      gdu_utils_show_error (block_row_get_window (self),
-                            _("Error while checking filesystem"),
-                            error);
-    }
-  else
-    {
-      GtkWidget *dialog;
-      UDisksObjectInfo *info;
-      UDisksBlock *block;
-      const char *name;
+      return gdu_utils_show_error (block_row_get_window (self),
+                                   _("Error while checking filesystem"),
+                                   error);
 
-      object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
-      block = udisks_object_peek_block (object);
-      g_assert (block != NULL);
+  object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
+  block = udisks_object_peek_block (object);
+  g_assert (block != NULL);
 
-      info = udisks_client_get_object_info (block_row_get_client (), object);
-      name = udisks_block_get_id_label (block);
+  info = udisks_client_get_object_info (block_row_get_client (), object);
+  name = udisks_block_get_id_label (block);
 
-      if (name == NULL || *name == '\0')
-        name = udisks_block_get_id_type (block);
+  if (name == NULL || *name == '\0')
+    name = udisks_block_get_id_type (block);
 
-      dialog = adw_message_dialog_new (block_row_get_window (self),
-                                       consistent ? _("Filesystem intact") : _("Filesystem damaged"),
-                                      NULL);
-
-      adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
-                                             consistent ? _("Filesystem %s on %s is undamaged.")
-                                              : _("Filesystem %s on %s needs repairing."),
-                                              name, udisks_object_info_get_name (info));
-
-      adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
-                                       "close",
-                                       _("Close"));
-
-      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                             "close");
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  gdu_utils_show_message (consistent ? _ ("Filesystem intact") : _ ("Filesystem damaged"),
+                          g_strdup_printf (consistent
+                           ? _ ("Filesystem %s on %s is undamaged.")
+                           : _ ("Filesystem %s on %s needs repairing."),
+                           name, udisks_object_info_get_name (info)),
+                          block_row_get_window (self));
 }
 
 static void
@@ -617,8 +600,11 @@ fs_repair_cb (GObject      *obj,
 {
   GduBlockRow *self = user_data;
   g_autoptr(GError) error = NULL;
-  UDisksFilesystem *filesystem;
+  UDisksBlock *block;
   UDisksObject *object;
+  UDisksObjectInfo *info;
+  UDisksFilesystem *filesystem;
+  const char *name;
   gboolean success;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
@@ -627,45 +613,25 @@ fs_repair_cb (GObject      *obj,
   filesystem = udisks_object_peek_filesystem (object);
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, result, &error))
-    {
-      gdu_utils_show_error (block_row_get_window (self),
-                            _("Error while repairing filesystem"),
-                            error);
-    }
-  else
-    {
-      GtkWidget *dialog;
-      UDisksObjectInfo *info;
-      UDisksBlock *block;
-      const char *name;
+      return gdu_utils_show_error (block_row_get_window (self),
+                                   _("Error while repairing filesystem"),
+                                   error);
 
-      object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
-      block = udisks_object_peek_block (object);
-      g_assert (block != NULL);
-      info = udisks_client_get_object_info (block_row_get_client (), object);
-      name = udisks_block_get_id_label (block);
+  object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
+  block = udisks_object_peek_block (object);
+  g_assert (block != NULL);
+  info = udisks_client_get_object_info (block_row_get_client (), object);
+  name = udisks_block_get_id_label (block);
 
-      if (name == NULL || *name == '\0')
-        name = udisks_block_get_id_type (block);
+  if (name == NULL || *name == '\0')
+    name = udisks_block_get_id_type (block);
 
-      dialog = adw_message_dialog_new (block_row_get_window (self),
-                                       success ? _("Repair successful") : _("Repair failed"),
-                                       NULL);
-
-      adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
-                                            success ? _("Filesystem %s on %s has been repaired.")
-                                            : _("Filesystem %s on %s could not be repaired."),
-                                            name, udisks_object_info_get_name (info));
-
-      adw_message_dialog_add_response (ADW_MESSAGE_DIALOG (dialog),
-                                       "close",
-                                       _("Close"));
-
-      adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                             "close");
-
-      gtk_window_present (GTK_WINDOW (dialog));
-    }
+  gdu_utils_show_message (success ? _("Repair successful") : _("Repair failed"),
+                          g_strdup_printf (success
+                           ? _("Filesystem %s on %s has been repaired.")
+                           : _("Filesystem %s on %s could not be repaired."),
+                           name, udisks_object_info_get_name (info)),
+                          block_row_get_window (self));
 }
 
 static void

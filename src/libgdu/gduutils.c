@@ -663,12 +663,11 @@ gdu_utils_show_message (const char *title,
 
 void
 gdu_utils_show_error (GtkWindow   *parent_window,
-                      const gchar *message,
+                      const gchar *title,
                       GError      *error)
 {
-  GtkWidget *dialog;
   g_autoptr(GError) fixed_up_error = NULL;
-
+  const char *message;
   /* Never show an error if it's because the user dismissed the
    * authentication dialog himself
    *
@@ -682,27 +681,14 @@ gdu_utils_show_error (GtkWindow   *parent_window,
   if (g_dbus_error_is_remote_error (fixed_up_error))
     g_dbus_error_strip_remote_error (fixed_up_error);
 
+  message = g_strdup_printf("%s (%s, %d)",
+                            fixed_up_error->message,
+                            g_quark_to_string (error->domain),
+                            error->code);
   /* TODO: probably provide the error-domain / error-code / D-Bus error name
    * in a GtkExpander.
    */
-  dialog = adw_message_dialog_new (parent_window,
-                                   message,
-                                   NULL);
-
-  adw_message_dialog_format_body_markup (ADW_MESSAGE_DIALOG (dialog),
-                                         "%s (%s, %d)",
-                                         fixed_up_error->message,
-                                         g_quark_to_string (error->domain),
-                                         error->code);
-
-  adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                    "close",  _("_Close"),
-                                    NULL);
-
-  adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog),
-                                         "close");
-
-  gtk_window_present (GTK_WINDOW (dialog));
+  gdu_utils_show_message (title, message, GTK_WIDGET (parent_window));
 }
 
 static GtkWidget *

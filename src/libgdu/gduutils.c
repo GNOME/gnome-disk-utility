@@ -639,6 +639,29 @@ response_cb (AdwMessageDialog *dialog,
 }
 
 void
+gdu_utils_show_message (const char *title,
+                        const char *message,
+                        GtkWidget  *parent_window)
+{
+
+  AdwDialog *dialog;
+
+  dialog = adw_alert_dialog_new (title, message);
+
+  adw_alert_dialog_add_responses (ADW_ALERT_DIALOG (dialog),
+                                  "close",  _("_Close"),
+                                  NULL);
+
+  adw_alert_dialog_set_close_response (ADW_ALERT_DIALOG (dialog),
+                                       "close");
+
+  adw_alert_dialog_set_default_response (ADW_ALERT_DIALOG (dialog),
+                                         "close");
+
+  adw_dialog_present (dialog, parent_window);
+}
+
+void
 gdu_utils_show_error (GtkWindow   *parent_window,
                       const gchar *message,
                       GError      *error)

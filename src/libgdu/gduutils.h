@@ -58,9 +58,15 @@ gboolean gdu_utils_is_inside_dos_extended    (UDisksClient         *client,
                                               UDisksPartitionTable *table,
                                               guint64               offset);
 
+void            gdu_utils_show_message    (const char *title,
+                                           const char *message,
+                                           GtkWidget  *parent_window);
+
 void            gdu_utils_show_error      (GtkWindow      *parent_window,
                                            const gchar    *message,
                                            GError         *error);
+
+
 
 typedef struct {
   const char            *message;

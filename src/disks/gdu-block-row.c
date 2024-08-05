@@ -523,6 +523,8 @@ fs_check_cb (GObject      *obj,
                            : _ ("Filesystem %s on %s needs repairing."),
                            name, udisks_object_info_get_name (info)),
                           block_row_get_window (self));
+
+  g_object_unref (self);
 }
 
 static void
@@ -531,22 +533,24 @@ fs_check_unmount_cb (GObject      *obj,
                      gpointer      user_data)
 {
   GduBlockRow *self = user_data;
+  UDisksObject *object;
+  UDisksFilesystem *filesystem;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
 
-  if (gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))
+  if (!gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))
     {
-      UDisksFilesystem *filesystem;
-      UDisksObject *object;
-
-      object = gdu_block_get_object (self->block);
-      filesystem = udisks_object_peek_filesystem (object);
-      udisks_filesystem_call_check (filesystem,
-                                    g_variant_new ("a{sv}", NULL),
-                                    NULL,
-                                    fs_check_cb,
-                                    self);
+      g_object_unref (self);
+      return;
     }
+
+  object = gdu_block_get_object (self->block);
+  filesystem = udisks_object_peek_filesystem (object);
+  udisks_filesystem_call_check (filesystem,
+                                g_variant_new ("a{sv}", NULL),
+                                NULL,
+                                fs_check_cb,
+                                self);
 }
 
 static void
@@ -559,18 +563,19 @@ on_check_message_dialog_response (GObject          *obj,
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
-  object = gdu_block_get_object (self->block);
-  g_assert (object != NULL);
 
   if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
+
+  object = gdu_block_get_object (self->block);
+  g_assert (object != NULL);
 
   gdu_utils_ensure_unused (block_row_get_client (),
                            block_row_get_window (self),
                            object,
                            fs_check_unmount_cb,
                            NULL,
-                           self);
+                           g_object_ref (self));
 }
 
 static void
@@ -613,9 +618,14 @@ fs_repair_cb (GObject      *obj,
   filesystem = udisks_object_peek_filesystem (object);
 
   if (!udisks_filesystem_call_repair_finish (filesystem, &success, result, &error))
-      return gdu_utils_show_error (block_row_get_window (self),
-                                   _("Error while repairing filesystem"),
-                                   error);
+    {
+      gdu_utils_show_error (block_row_get_window (self),
+                            _("Error while repairing filesystem"),
+                            error);
+      g_object_unref (self);
+      return;
+    }
+
 
   object = UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (filesystem)));
   block = udisks_object_peek_block (object);
@@ -632,6 +642,8 @@ fs_repair_cb (GObject      *obj,
                            : _("Filesystem %s on %s could not be repaired."),
                            name, udisks_object_info_get_name (info)),
                           block_row_get_window (self));
+
+  g_object_unref (self);
 }
 
 static void
@@ -641,22 +653,24 @@ fs_repair_unmount_cb (GObject      *obj,
 {
   GduBlockRow *self = user_data;
   UDisksObject *object;
+  UDisksFilesystem *filesystem;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
   object = gdu_block_get_object (self->block);
 
-  if (gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))
+  if (!gdu_utils_ensure_unused_finish (block_row_get_client (), result, NULL))
     {
-      UDisksFilesystem *filesystem;
-
-      filesystem = udisks_object_peek_filesystem (object);
-      g_assert (filesystem != NULL);
-      udisks_filesystem_call_repair (filesystem,
-                                     g_variant_new ("a{sv}", NULL),
-                                     NULL,
-                                     fs_repair_cb,
-                                     self);
+      g_object_unref (self);
+      return;
     }
+
+  filesystem = udisks_object_peek_filesystem (object);
+  g_assert (filesystem != NULL);
+  udisks_filesystem_call_repair (filesystem,
+                                 g_variant_new ("a{sv}", NULL),
+                                 NULL,
+                                 fs_repair_cb,
+                                 self);
 }
 
 static void
@@ -669,18 +683,19 @@ on_repair_message_dialog_response (GObject        *source_object,
   UDisksObject *object;
 
   g_assert (GDU_IS_BLOCK_ROW (self));
-  object = gdu_block_get_object (self->block);
-  g_assert (object != NULL);
 
   if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
+
+  object = gdu_block_get_object (self->block);
+  g_assert (object != NULL);
 
   gdu_utils_ensure_unused (block_row_get_client (),
                            block_row_get_window (self),
                            object,
                            fs_repair_unmount_cb,
                            NULL,
-                           self);
+                           g_object_ref (self));
 }
 
 static void

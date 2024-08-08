@@ -313,12 +313,14 @@ on_update_configuration_item_cb (GObject      *source_object,
 
   if (!udisks_block_call_update_configuration_item_finish(block, res, &error))
     {
-      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-          return;
-
-      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
-                            _("Error updating /etc/fstab entry"),
-                            error);
+      if (!g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+        gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                              _("Error updating /etc/fstab entry"),
+                              error);
+    }
+  else
+    {
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 
@@ -333,13 +335,14 @@ on_add_configuration_item_cb (GObject      *source_object,
 
   if (!udisks_block_call_add_configuration_item_finish(block, res, &error))
     {
-      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-          return;
-
-      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
-                            _("Error adding new /etc/fstab entry"),
-                            error);
-
+      if (!g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+        gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                              _("Error adding new /etc/fstab entry"),
+                              error);
+    }
+  else
+    {
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 
@@ -354,12 +357,14 @@ on_remove_configuration_item_cb (GObject      *source_object,
 
   if (!udisks_block_call_remove_configuration_item_finish(block, res, &error))
     {
-      if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-          return;
-
-      gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
-                            _("Error removing old /etc/fstab entry"),
-                            error);
+      if (!g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
+        gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
+                              _("Error removing old /etc/fstab entry"),
+                              error);
+    }
+  else
+    {
+      gtk_window_close (GTK_WINDOW (self));
     }
 }
 
@@ -381,7 +386,6 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
                                                   NULL, /* GCancellable */
                                                   on_remove_configuration_item_cb,
                                                   self);
-      gtk_window_close (GTK_WINDOW (self));
       return;
     }
 
@@ -397,7 +401,6 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
                                                  NULL, /* GCancellable */
                                                  on_add_configuration_item_cb,
                                                  self);
-        gtk_window_close (GTK_WINDOW (self));
         return;
       }
     
@@ -408,7 +411,6 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
                                                 NULL, /* GCancellable */
                                                 on_update_configuration_item_cb,
                                                 self);
-    gtk_window_close (GTK_WINDOW (self));
 }
 
 static void

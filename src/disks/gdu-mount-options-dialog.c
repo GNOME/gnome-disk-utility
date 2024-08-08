@@ -309,7 +309,7 @@ on_update_configuration_item_cb (GObject      *source_object,
 {
   GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
   UDisksBlock *block = UDISKS_BLOCK (source_object);
-  GError *error;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_update_configuration_item_finish(block, res, &error))
     {
@@ -329,7 +329,7 @@ on_add_configuration_item_cb (GObject      *source_object,
 {
   GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
   UDisksBlock *block = UDISKS_BLOCK (source_object);
-  GError *error;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_add_configuration_item_finish(block, res, &error))
     {
@@ -350,7 +350,7 @@ on_remove_configuration_item_cb (GObject      *source_object,
 {
   GduMountOptionsDialog *self = GDU_MOUNT_OPTIONS_DIALOG (user_data);
   UDisksBlock *block = UDISKS_BLOCK (source_object);
-  GError *error;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_remove_configuration_item_finish(block, res, &error))
     {

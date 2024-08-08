@@ -18,7 +18,7 @@
               </object>
             </child>
             <child type="end">
-              <object class="GtkButton">
+              <object class="GtkButton" id="save_button">
                 <property name="label" translatable="yes">_Done</property>
                 <property name="use-underline">True</property>
                 <signal name="clicked" handler="on_done_clicked_cb" object="GduMountOptionsDialog" swapped="true" />
@@ -47,6 +47,7 @@
                             <object class="AdwSwitchRow" id="automount_switch_row">
                               <property name="title" translatable="yes">_Automatic Mount Options</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::active" handler="on_property_changed" />
                             </object>
                           </child>
                         </object>
@@ -59,18 +60,21 @@
                             <object class="AdwSwitchRow" id="startup_mount_switch">
                               <property name="title" translatable="yes">_Mount at Startup</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::active" handler="on_property_changed" />
                             </object>
                           </child>
                           <child>
                             <object class="AdwSwitchRow" id="show_in_files_switch">
                               <property name="title" translatable="yes">_Show in Files</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::active" handler="on_property_changed" />
                             </object>
                           </child>
                           <child>
                             <object class="AdwSwitchRow" id="require_auth_switch">
                               <property name="title" translatable="yes">_Require Authorization</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::active" handler="on_property_changed" />
                             </object>
                           </child>
                         </object>
@@ -83,18 +87,21 @@
                             <object class="AdwEntryRow" id="name_row">
                               <property name="title" translatable="yes">D_isplay Name</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                             </object>
                           </child>
                           <child>
                             <object class="AdwEntryRow" id="icon_row">
                               <property name="title" translatable="yes">C_olor Icon</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                             </object>
                           </child>
                           <child>
                             <object class="AdwEntryRow" id="symbolic_icon_row">
                               <property name="title" translatable="yes">S_ymbolic Icon</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                             </object>
                           </child>
                         </object>
@@ -107,6 +114,7 @@
                             <object class="AdwEntryRow" id="mount_options_row">
                               <property name="title" translatable="yes">_fstab Options</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                               <style>
                                 <class name="property" />
                               </style>
@@ -116,6 +124,7 @@
                             <object class="AdwEntryRow" id="mount_point_row">
                               <property name="title" translatable="yes">Mount _Point</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                               <style>
                                 <class name="property" />
                               </style>
@@ -125,6 +134,7 @@
                             <object class="AdwEntryRow" id="filesystem_type_row">
                               <property name="title" translatable="yes">Filesystem _Type</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::text" handler="on_property_changed" />
                               <style>
                                 <class name="property" />
                               </style>
@@ -139,6 +149,7 @@
                             <object class="AdwComboRow" id="device_combo_row">
                               <property name="title" translatable="yes">Ide_ntify As</property>
                               <property name="use-underline">True</property>
+                              <signal name="notify::selected" handler="fstab_on_device_combo_row_changed" />
                             </object>
                           </child>
                         </object>

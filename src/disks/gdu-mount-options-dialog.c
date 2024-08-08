@@ -429,6 +429,24 @@ on_restore_default_clicked_cb (GduMountOptionsDialog *self)
   adw_switch_row_set_active (ADW_SWITCH_ROW (self->automount_switch_row), TRUE);
 }
 
+static gboolean
+update_warning_css (GtkWidget *widget)
+{
+  AdwEntryRow *row = ADW_ENTRY_ROW (widget);
+
+  if (adw_entry_row_get_text_length (row) == 0)
+    {
+      gtk_widget_add_css_class (widget, "warning");
+      return FALSE;
+    }
+  else
+    {
+      gtk_widget_remove_css_class (widget, "warning");
+    }
+
+  return TRUE;
+}
+
 static void
 on_property_changed (GtkWidget   *widget,
                      GParamSpec  *pspec,
@@ -455,9 +473,9 @@ on_property_changed (GtkWidget   *widget,
   g_object_thaw_notify (G_OBJECT (self->mount_options_row));
 
   /* These three rows are required fields */
-  can_ok &= (adw_entry_row_get_text_length (ADW_ENTRY_ROW(self->mount_options_row)) != 0);
-  can_ok &= (adw_entry_row_get_text_length (ADW_ENTRY_ROW(self->mount_point_row)) != 0);
-  can_ok &= (adw_entry_row_get_text_length (ADW_ENTRY_ROW(self->filesystem_type_row)) != 0);
+  can_ok &= update_warning_css (self->mount_options_row);
+  can_ok &= update_warning_css (self->mount_point_row);
+  can_ok &= update_warning_css (self->filesystem_type_row);
 
   /* The combo row might not be loaded yet */
   can_ok &= (adw_combo_row_get_selected_item (ADW_COMBO_ROW(self->device_combo_row)) != NULL);

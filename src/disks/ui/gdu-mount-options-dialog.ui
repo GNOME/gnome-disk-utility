@@ -158,9 +158,10 @@
                         <object class="AdwPreferencesGroup">
                           <property name="sensitive" bind-source="automount_switch_row" bind-property="active" bind-flags="sync-create|invert-boolean"/>
                           <child>
-                            <object class="AdwButtonRow" id="reset_settings_button">
+                            <object class="AdwButtonRow">
                               <property name="title" translatable="yes">R_estore Default Settings</property>
                               <property name="use-underline">True</property>
+                              <signal name="activated" handler="on_restore_default_clicked_cb" swapped="yes" />
                               <style>
                                 <class name="destructive-action" />
                               </style>

@@ -424,6 +424,12 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
 }
 
 static void
+on_restore_default_clicked_cb (GduMountOptionsDialog *self)
+{
+  adw_switch_row_set_active (ADW_SWITCH_ROW (self->automount_switch_row), TRUE);
+}
+
+static void
 on_property_changed (GtkWidget   *widget,
                      GParamSpec  *pspec,
                      gpointer     user_data)
@@ -537,10 +543,9 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
   
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, device_combo_row);
 
-  gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, reset_settings_button);
-
   gtk_widget_class_bind_template_callback (widget_class, on_done_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_property_changed);
+  gtk_widget_class_bind_template_callback (widget_class, on_restore_default_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, fstab_on_device_combo_row_changed);
 
   gtk_widget_class_add_binding_action (widget_class,

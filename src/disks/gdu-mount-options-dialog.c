@@ -21,6 +21,8 @@ struct _GduMountOptionsDialog
   AdwWindow      parent_instance;
 
   GtkWidget     *info_banner;
+  GtkWidget     *overlay;
+  GtkWidget     *spinner;
 
   GtkWidget     *automount_switch_row;
 
@@ -317,6 +319,7 @@ on_update_configuration_item_cb (GObject      *source_object,
         gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
                               _("Error updating /etc/fstab entry"),
                               error);
+      gtk_widget_set_visible (self->spinner, FALSE);
     }
   else
     {
@@ -339,6 +342,7 @@ on_add_configuration_item_cb (GObject      *source_object,
         gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
                               _("Error adding new /etc/fstab entry"),
                               error);
+      gtk_widget_set_visible (self->spinner, FALSE);
     }
   else
     {
@@ -361,6 +365,7 @@ on_remove_configuration_item_cb (GObject      *source_object,
         gdu_utils_show_error (gdu_mount_options_dialog_get_window (self),
                               _("Error removing old /etc/fstab entry"),
                               error);
+      gtk_widget_set_visible (self->spinner, FALSE);
     }
   else
     {
@@ -377,6 +382,7 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
   g_autoptr(GVariant) new_fstab = NULL;
 
   configured = !adw_switch_row_get_active (ADW_SWITCH_ROW (self->automount_switch_row));
+  gtk_widget_set_visible (self->spinner, TRUE);
 
   if (self->orig_fstab_entry != NULL && !configured)
     {
@@ -433,6 +439,8 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
 
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, info_banner);
   
+  gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, overlay);
+  gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, spinner);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, automount_switch_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, startup_mount_switch);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, show_in_files_switch);

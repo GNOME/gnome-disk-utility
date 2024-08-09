@@ -1,7 +1,6 @@
 use async_recursion::async_recursion;
 use std::{collections::HashMap, vec};
 
-use udisks::zbus;
 //TODO: these functions belong to gduutils, they should be moved there when it is rewritten in
 //Rust
 
@@ -9,7 +8,7 @@ use udisks::zbus;
 pub async fn unuse_data_iterate(
     client: &udisks::Client,
     object: &udisks::Object,
-) -> zbus::Result<()> {
+) -> udisks::Result<()> {
     let (filesystem_to_unmount, encrypted_to_lock, _last) =
         is_in_full_use(client, object, false).await?;
 
@@ -43,7 +42,7 @@ pub async fn is_in_full_use(
     client: &udisks::Client,
     object: &udisks::Object,
     last_out: bool,
-) -> zbus::Result<(
+) -> udisks::Result<(
     Option<udisks::filesystem::FilesystemProxy<'static>>,
     Option<udisks::encrypted::EncryptedProxy<'static>>,
     bool,

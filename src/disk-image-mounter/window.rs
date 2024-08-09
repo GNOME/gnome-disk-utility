@@ -16,7 +16,6 @@ use udisks::zbus::zvariant::{OwnedObjectPath, Value};
 use zbus::export::futures_util::StreamExt;
 
 use crate::application::ImageMounterApplication;
-use crate::unmount;
 
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
@@ -274,7 +273,7 @@ impl ImageMounterWindow {
 
         let client = udisks::Client::new().await?;
         let (Some(filesystem), _encrypted, _last) =
-            unmount::is_in_full_use(&client, &object, false).await?
+            libgdu::is_in_full_use(&client, &object, false).await?
         else {
             return Err(anyhow!("Failed to find filesystem"));
         };
@@ -320,7 +319,8 @@ impl ImageMounterWindow {
             .context("Failed to find mounted_object")?;
 
         let client = udisks::Client::new().await?;
-        if let Err(err) = unmount::unuse_data_iterate(&client, &mounted_object).await {
+
+        if let Err((err, _msg)) = libgdu::unuse_data_iterate(&client, &mounted_object).await {
             log::error!("Failed to unmount: {}", err);
             return Err(err.into());
         }

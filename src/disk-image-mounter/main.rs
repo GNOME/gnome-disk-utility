@@ -5,7 +5,6 @@ use gtk::glib;
 
 pub mod application;
 mod config;
-pub mod unmount;
 pub mod window;
 
 fn main() -> glib::ExitCode {

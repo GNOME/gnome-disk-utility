@@ -1,0 +1,26 @@
+[package]
+name = "libgdu"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+license = "GPL-2.0-or-later"
+
+[lib]
+path = "lib.rs"
+
+[features]
+# enabled via meson with `HAVE_LOGIND`
+logind = ["dep:systemd"]
+
+[dependencies]
+log.workspace = true
+env_logger.workspace = true
+udisks.workspace = true
+gtk.workspace = true
+gettext-rs.workspace = true
+adw = { package = "libadwaita", version = "0.6", features = ["v1_5"] }
+#TODO: currently only used for async Mutex, maybe replace?
+tokio = { version = "1.39.2", features = ["full"] }
+systemd = { version = "0.10.0", optional = true }
+async-recursion = "1.1.1"
+libc = "0.2.155"

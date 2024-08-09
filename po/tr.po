@@ -10,7 +10,7 @@
 # Muhammet Kara <muhammetk@gmail.com>, 2011, 2013, 2014, 2015, 2016.
 # Ahmet Elgun <ahmetelgn@gmail.com>, 2019.
 # Burhan KELEŞ <klsburhan@hotmail.com>, 2021.
-# Sabri Ünal <libreajans@gmail.com>, 2020, 2024.
+# Sabri Ünal <yakushabb@gmail.com>, 2020, 2024.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2017-2024.
 #
 msgid ""
@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-07-30 10:06+0000\n"
-"PO-Revision-Date: 2024-07-29 14:01+0300\n"
+"POT-Creation-Date: 2024-08-05 11:25+0000\n"
+"PO-Revision-Date: 2024-08-06 02:04+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -29,21 +29,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.4.3\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
+#: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Disk Image Mounter"
 msgstr "Disk Görüntüsü Bağlayıcı"
 
 #: data/gnome-disk-image-mounter.desktop.in:4
-msgid "Mount Disk Images"
-msgstr "Disk Görüntülerini Bağla"
-
-#: data/gnome-disk-image-writer.desktop.in:3
-msgid "Disk Image Writer"
-msgstr "Disk Görüntüsü Yazıcı"
-
-#: data/gnome-disk-image-writer.desktop.in:4
-msgid "Write Disk Images to Devices"
-msgstr "Aygıtlara Disk Görüntüsü Yaz"
+msgid "Mount/Write Disk Images"
+msgstr "Disk Görüntülerini Bağla/Yaz"
 
 #: data/org.gnome.Disks.gschema.xml:6
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -135,37 +127,69 @@ msgstr ""
 "disk;bölüm;görüntü;kalıp;yedekle;geri yükle;kıyaslama;karşılaştırmalı "
 "değerlendirme;şifreleme;"
 
-#: src/disk-image-mounter/main.c:52
-msgid "An error occurred"
-msgstr "Hata oluştu"
+#: src/disk-image-mounter/main.rs:21
+msgid "GNOME Disk Image Mounter"
+msgstr "GNOME Disk Görüntüsü Bağlayıcı"
 
-#: src/disk-image-mounter/main.c:73
-msgid "Allow writing to the image"
-msgstr "Görüntüye yazmaya izin ver"
+#: src/disk-image-mounter/window.rs:108
+msgid "Compressed image files are not mountable"
+msgstr "Sıkıştırılmış görüntü dosyaları bağlanamaz"
 
-#: src/disk-image-mounter/main.c:142
-#, c-format
-msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr "Udisks art alan hizmetine bağlanmada hata: %s (%s, %d)"
+#: src/disk-image-mounter/window.rs:116
+msgid "Open the mounted image"
+msgstr "Bağlı görüntüyü aç"
 
-#: src/disk-image-mounter/main.c:150
-msgid "Attach and mount one or more disk image files."
-msgstr "Bir veya daha çok disk görüntüsü ekle ve bağla."
+#: src/disk-image-mounter/window.rs:119
+msgid "Already mounted read-only"
+msgstr "Zaten salt-okunur bağlı"
 
-#: src/disk-image-mounter/main.c:198
-#, c-format
-msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
-msgstr "“%s” açılamıyor — bölüm bağlanmamış olabilir mi?"
+#: src/disk-image-mounter/window.rs:122
+msgid "Already mounted"
+msgstr "Zaten bağlı"
 
-#: src/disk-image-mounter/main.c:205
-#, c-format
-msgid "Error opening “%s”: %m"
-msgstr "“%s” açılırken hata: %m"
+#: src/disk-image-mounter/window.rs:156 src/disk-image-mounter/window.ui:39
+msgid "Open in Files"
+msgstr "Dosyalarʼda Aç"
 
-#: src/disk-image-mounter/main.c:226
-#, c-format
-msgid "Error attaching disk image: %s (%s, %d)"
-msgstr "Disk görüntüsü eklemede hata: %s (%s, %d)"
+#: src/disk-image-mounter/window.rs:227
+msgid "Failed to mount file"
+msgstr "Dosya bağlanamadı"
+
+#: src/disk-image-mounter/window.ui:40
+msgid "Mount the image read-only"
+msgstr "Görüntüyü salt-okunur bağla"
+
+#: src/disk-image-mounter/window.ui:60
+msgid "Unmount Disk Image"
+msgstr "Disk Görüntüsünü Ayır"
+
+#: src/disk-image-mounter/window.ui:61
+msgid "Unmount the mounted image"
+msgstr "Bağlı görüntüyü ayır"
+
+#: src/disk-image-mounter/window.ui:75
+msgid "Edit Contents in Files"
+msgstr "İçerikleri Dosyalarʼda Düzenle"
+
+#: src/disk-image-mounter/window.ui:76
+msgid "Mount the image and allow editing"
+msgstr "Görüntüyü bağla ve düzenlemeye izin ver"
+
+#: src/disk-image-mounter/window.ui:95
+msgid "Write to Drive"
+msgstr "Sürücüye Yaz"
+
+#: src/disk-image-mounter/window.ui:96
+msgid "Open in Disks to write the image to a drive"
+msgstr "Görüntüyü sürücüye yazmak için Disklerʼde aç"
+
+#: src/disk-image-mounter/window.ui:109
+msgid "Inspect in Disks"
+msgstr "Disklerʼde İncele"
+
+#: src/disk-image-mounter/window.ui:110
+msgid "Mount the image and open in Disks"
+msgstr "Görüntüyü bağla ve Disklerʼde aç"
 
 #: src/disks/gdu-application.c:117
 #, c-format
@@ -242,11 +266,11 @@ msgstr "Durdur"
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:144
+#: src/disks/gdu-ata-smart-dialog.c:144
 msgid "Read Error Rate"
 msgstr "Okuma Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:145
+#: src/disks/gdu-ata-smart-dialog.c:145
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -258,44 +282,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:154
+#: src/disks/gdu-ata-smart-dialog.c:154
 msgid "Throughput Performance"
 msgstr "Throughput Performansı"
 
-#: src/disks/gduatasmartdialog.c:155
+#: src/disks/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
 msgstr "Diskin ortalama verimliliği"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:162
+#: src/disks/gdu-ata-smart-dialog.c:162
 msgid "Spinup Time"
 msgstr "Dönme Zamanı"
 
-#: src/disks/gduatasmartdialog.c:163
+#: src/disks/gdu-ata-smart-dialog.c:163
 msgid "Time needed to spin up the disk"
 msgstr "Diskin dönmeye başlaması için gereken zaman"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:170
+#: src/disks/gdu-ata-smart-dialog.c:170
 msgid "Start/Stop Count"
 msgstr "Başlama/Durma Sayımı"
 
-#: src/disks/gduatasmartdialog.c:171
+#: src/disks/gdu-ata-smart-dialog.c:171
 msgid "Number of spindle start/stop cycles"
 msgstr "İğne başlama/bitme döngüsü sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:178
+#: src/disks/gdu-ata-smart-dialog.c:178
 msgid "Reallocated Sector Count"
 msgstr "Yeniden Ayrılan Sektör Sayısı"
 
-#: src/disks/gduatasmartdialog.c:179
+#: src/disks/gdu-ata-smart-dialog.c:179
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -308,110 +332,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:188
+#: src/disks/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
 msgstr "Okuma Kanalı Marjı"
 
-#: src/disks/gduatasmartdialog.c:189
+#: src/disks/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
 msgstr "Veri okunurken kanalın marjı."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:196
+#: src/disks/gdu-ata-smart-dialog.c:196
 msgid "Seek Error Rate"
 msgstr "Atlama Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:197
+#: src/disks/gdu-ata-smart-dialog.c:197
 msgid "Frequency of errors while positioning"
 msgstr "Konumlandırma sırasında hataların sıklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:204
+#: src/disks/gdu-ata-smart-dialog.c:204
 msgid "Seek Timer Performance"
 msgstr "Atlama Zamanlayıcısı Performansı"
 
-#: src/disks/gduatasmartdialog.c:205
+#: src/disks/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operations while positioning"
 msgstr "Konumlandırma sırasındaki işlemlerin ortalama verimliliği"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:212 src/disks/gduatasmartdialog.c:537
+#: src/disks/gdu-ata-smart-dialog.c:212 src/disks/gdu-ata-smart-dialog.c:537
 msgid "Power-On Hours"
 msgstr "Güce Bağlı Saatler"
 
-#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
+#: src/disks/gdu-ata-smart-dialog.c:213 src/disks/gdu-ata-smart-dialog.c:538
 msgid "Number of hours elapsed in the power-on state"
 msgstr "Güç bağlandığı zamanlarda geçen saat miktarı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:220
+#: src/disks/gdu-ata-smart-dialog.c:220
 msgid "Spinup Retry Count"
 msgstr "Dönme Yineleme Sayısı"
 
-#: src/disks/gduatasmartdialog.c:221
+#: src/disks/gdu-ata-smart-dialog.c:221
 msgid "Number of retry attempts to spin up"
 msgstr "Dönmeye başlayana kadar yeniden deneme sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:228
+#: src/disks/gdu-ata-smart-dialog.c:228
 msgid "Calibration Retry Count"
 msgstr "Kalibrasyon Yineleme Sayısı"
 
-#: src/disks/gduatasmartdialog.c:229
+#: src/disks/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
 msgstr "Aygıtı kalibre etmek için deneme sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:236
+#: src/disks/gdu-ata-smart-dialog.c:236
 msgid "Power Cycle Count"
 msgstr "Güç Döngü Sayısı"
 
-#: src/disks/gduatasmartdialog.c:237
+#: src/disks/gdu-ata-smart-dialog.c:237
 msgid "Number of power-on events"
 msgstr "Güç bağlama olayları sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:244
+#: src/disks/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
 msgstr "Yazılım okuma hata oranı"
 
-#: src/disks/gduatasmartdialog.c:246
+#: src/disks/gdu-ata-smart-dialog.c:246
 msgid "Frequency of errors while reading from the disk"
 msgstr "Diskten okuma sırasında hatalarının sıklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:253
+#: src/disks/gdu-ata-smart-dialog.c:253
 msgid "Reported Uncorrectable Errors"
 msgstr "Bildirilen Düzeltilemeyen Hatalar"
 
-#: src/disks/gduatasmartdialog.c:254
+#: src/disks/gdu-ata-smart-dialog.c:254
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "Donanım ECC kullanarak düzeltilemeyen hatarın sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:261
+#: src/disks/gdu-ata-smart-dialog.c:261
 msgid "High Fly Writes"
 msgstr "Yüksek Uçuş Yazmaları"
 
-#: src/disks/gduatasmartdialog.c:262
+#: src/disks/gdu-ata-smart-dialog.c:262
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr "Kayıt kafasının olağan çalışma aralığı dışında uçma sayısı"
@@ -419,78 +443,78 @@ msgstr "Kayıt kafasının olağan çalışma aralığı dışında uçma sayıs
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:269
+#: src/disks/gdu-ata-smart-dialog.c:269
 msgid "Airflow Temperature"
 msgstr "Hava Akımı Sıcaklığı"
 
-#: src/disks/gduatasmartdialog.c:270
+#: src/disks/gdu-ata-smart-dialog.c:270
 msgid "Airflow temperature of the drive"
 msgstr "Sürücünün hava besleme sıcaklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:277 src/disks/gduatasmartdialog.c:447
+#: src/disks/gdu-ata-smart-dialog.c:277 src/disks/gdu-ata-smart-dialog.c:447
 msgid "G-sense Error Rate"
 msgstr "G-sense Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:278
+#: src/disks/gdu-ata-smart-dialog.c:278
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "Darbe yükleri sonucunda hataların sıklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:285 src/disks/gduatasmartdialog.c:504
+#: src/disks/gdu-ata-smart-dialog.c:285 src/disks/gdu-ata-smart-dialog.c:504
 msgid "Power-off Retract Count"
 msgstr "Kapanma Geri Çekilme Sayısı"
 
-#: src/disks/gduatasmartdialog.c:286
+#: src/disks/gdu-ata-smart-dialog.c:286
 msgid "Number of power-off or emergency retract cycles"
 msgstr "Kapanma veya acil geri çekme döngüsü sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:293 src/disks/gduatasmartdialog.c:480
+#: src/disks/gdu-ata-smart-dialog.c:293 src/disks/gdu-ata-smart-dialog.c:480
 msgid "Load/Unload Cycle Count"
 msgstr "Yükleme/Geri Yükleme Döngü Sayısı"
 
-#: src/disks/gduatasmartdialog.c:294
+#: src/disks/gdu-ata-smart-dialog.c:294
 msgid "Number of cycles into landing zone position"
 msgstr "İniş bölgesi konumu içinde devir sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:301 src/disks/gduatasmartdialog.c:520
-#: src/disks/ui/smart-dialog.ui:83
+#: src/disks/gdu-ata-smart-dialog.c:301 src/disks/gdu-ata-smart-dialog.c:520
+#: src/disks/ui/gdu-ata-smart-dialog.ui:83
 msgid "Temperature"
 msgstr "Sıcaklık"
 
-#: src/disks/gduatasmartdialog.c:302
+#: src/disks/gdu-ata-smart-dialog.c:302
 msgid "Current internal temperature of the drive"
 msgstr "Şu anki sürücünün iç sıcaklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:309
+#: src/disks/gdu-ata-smart-dialog.c:309
 msgid "Hardware ECC Recovered"
 msgstr "Donanım ECC Kurtarıldı"
 
-#: src/disks/gduatasmartdialog.c:310
+#: src/disks/gdu-ata-smart-dialog.c:310
 msgid "Number of ECC on-the-fly errors"
 msgstr "ECC anlık gerçekleşen hata sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:317
+#: src/disks/gdu-ata-smart-dialog.c:317
 msgid "Reallocation Count"
 msgstr "Yeniden Ayırma Sayısı"
 
-#: src/disks/gduatasmartdialog.c:318
+#: src/disks/gdu-ata-smart-dialog.c:318
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -503,11 +527,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:328
+#: src/disks/gdu-ata-smart-dialog.c:328
 msgid "Current Pending Sector Count"
 msgstr "Geçerli Bekleyen Sektör Sayısı"
 
-#: src/disks/gduatasmartdialog.c:329
+#: src/disks/gdu-ata-smart-dialog.c:329
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -523,11 +547,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:340
+#: src/disks/gdu-ata-smart-dialog.c:340
 msgid "Uncorrectable Sector Count"
 msgstr "Düzeltilemeyen Sektör Sayısı"
 
-#: src/disks/gduatasmartdialog.c:341
+#: src/disks/gdu-ata-smart-dialog.c:341
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -540,22 +564,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:350
+#: src/disks/gdu-ata-smart-dialog.c:350
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:351
+#: src/disks/gdu-ata-smart-dialog.c:351
 msgid "Number of CRC errors during UDMA mode"
 msgstr "UDMA kipinde CRC hataları sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:358
+#: src/disks/gdu-ata-smart-dialog.c:358
 msgid "Write Error Rate"
 msgstr "Yazma Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:359
+#: src/disks/gdu-ata-smart-dialog.c:359
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -566,110 +590,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:366
+#: src/disks/gdu-ata-smart-dialog.c:366
 msgid "Soft Read Error Rate"
 msgstr "Yazılım Okuma Hata Oranı"
 
-#: src/disks/gduatasmartdialog.c:367
+#: src/disks/gdu-ata-smart-dialog.c:367
 msgid "Number of off-track errors"
 msgstr "İz dışı hata sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:374
+#: src/disks/gdu-ata-smart-dialog.c:374
 msgid "Data Address Mark Errors"
 msgstr "Veri Adresi İşaret Hataları"
 
-#: src/disks/gduatasmartdialog.c:375
+#: src/disks/gdu-ata-smart-dialog.c:375
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr "Veri Adres İşaret (DAM) hataları sayısı (veya) üreticiye özgü"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:382
+#: src/disks/gdu-ata-smart-dialog.c:382
 msgid "Run Out Cancel"
 msgstr "Run Out Cancel"
 
-#: src/disks/gduatasmartdialog.c:383
+#: src/disks/gdu-ata-smart-dialog.c:383
 msgid "Number of ECC errors"
 msgstr "ECC hataları sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:390
+#: src/disks/gdu-ata-smart-dialog.c:390
 msgid "Soft ECC correction"
 msgstr "Yazılım ECC düzeltme"
 
-#: src/disks/gduatasmartdialog.c:391
+#: src/disks/gdu-ata-smart-dialog.c:391
 msgid "Number of errors corrected by software ECC"
 msgstr "Yazılım ECC tarafından düzeltilmiş hata sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:398
+#: src/disks/gdu-ata-smart-dialog.c:398
 msgid "Thermal Asperity Rate"
 msgstr "Termal Sertlik Oranı"
 
-#: src/disks/gduatasmartdialog.c:399
+#: src/disks/gdu-ata-smart-dialog.c:399
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "Termal Sertlik Oranı hataları sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:406
+#: src/disks/gdu-ata-smart-dialog.c:406
 msgid "Flying Height"
 msgstr "Uçma Yüksekliği"
 
-#: src/disks/gduatasmartdialog.c:407
+#: src/disks/gdu-ata-smart-dialog.c:407
 msgid "Height of heads above the disk surface"
 msgstr "Disk yüzeyi üzerinde kafaların yüksekliği"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:414
+#: src/disks/gdu-ata-smart-dialog.c:414
 msgid "Spin High Current"
 msgstr "Dönme Yüksek Akımı"
 
-#: src/disks/gduatasmartdialog.c:415
+#: src/disks/gdu-ata-smart-dialog.c:415
 msgid "Amount of high current used to spin up the drive"
 msgstr "Sürücü dönüşünü sağlamak için kullanılan yüksek akım miktarı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:422
+#: src/disks/gdu-ata-smart-dialog.c:422
 msgid "Spin Buzz"
 msgstr "Dönme Buzz"
 
-#: src/disks/gduatasmartdialog.c:423
+#: src/disks/gdu-ata-smart-dialog.c:423
 msgid "Number of buzz routines to spin up the drive"
 msgstr "Sürücü dönüşü için buzz yordam sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:430
+#: src/disks/gdu-ata-smart-dialog.c:430
 msgid "Offline Seek Performance"
 msgstr "Çevrim Dışı Atlama Başarımı"
 
-#: src/disks/gduatasmartdialog.c:431
+#: src/disks/gdu-ata-smart-dialog.c:431
 msgid "Drive’s seek performance during offline operations"
 msgstr "Çevrim dışı işlemler sırasında sürücünün atlama başarımı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:438
+#: src/disks/gdu-ata-smart-dialog.c:438
 msgid "Disk Shift"
 msgstr "Disk Kayması"
 
-#: src/disks/gduatasmartdialog.c:439
+#: src/disks/gdu-ata-smart-dialog.c:439
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -677,7 +701,7 @@ msgstr ""
 "Disk kayması; depolamada güçlü şok yükleme sonucu, sıcaklık (veya) düşme "
 "sonucu olarak mümkündür"
 
-#: src/disks/gduatasmartdialog.c:448
+#: src/disks/gdu-ata-smart-dialog.c:448
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
@@ -686,22 +710,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:455
+#: src/disks/gdu-ata-smart-dialog.c:455
 msgid "Loaded Hours"
 msgstr "Yüklenme Saatleri"
 
-#: src/disks/gduatasmartdialog.c:456
+#: src/disks/gdu-ata-smart-dialog.c:456
 msgid "Number of hours in general operational state"
 msgstr "Genel işlem durumunda saatlerin sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:463
+#: src/disks/gdu-ata-smart-dialog.c:463
 msgid "Load/Unload Retry Count"
 msgstr "Yükleme/Kaldırma Yineleme Sayısı"
 
-#: src/disks/gduatasmartdialog.c:464
+#: src/disks/gdu-ata-smart-dialog.c:464
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -712,67 +736,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:472
+#: src/disks/gdu-ata-smart-dialog.c:472
 msgid "Load Friction"
 msgstr "Yük Sürtünmesi"
 
-#: src/disks/gduatasmartdialog.c:473
+#: src/disks/gdu-ata-smart-dialog.c:473
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr "Sürücü üzerinde mekanik parçaların sürtünmesinden kaynaklanan yük"
 
-#: src/disks/gduatasmartdialog.c:481
+#: src/disks/gdu-ata-smart-dialog.c:481
 msgid "Total number of load cycles"
 msgstr "Yük döngüsünün toplam sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:488
+#: src/disks/gdu-ata-smart-dialog.c:488
 msgid "Load-in Time"
 msgstr "Yük Görme Zamanı"
 
-#: src/disks/gduatasmartdialog.c:489
+#: src/disks/gdu-ata-smart-dialog.c:489
 msgid "General time for loading in a drive"
 msgstr "Sürücü yük oluşturulan genel zaman"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:496
+#: src/disks/gdu-ata-smart-dialog.c:496
 msgid "Torque Amplification Count"
 msgstr "Tork Amplifikasyon Sayısı"
 
-#: src/disks/gduatasmartdialog.c:497
+#: src/disks/gdu-ata-smart-dialog.c:497
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "Bir sürücünün dönme anında harcanan çaba"
 
-#: src/disks/gduatasmartdialog.c:505
+#: src/disks/gdu-ata-smart-dialog.c:505
 msgid "Number of power-off retract events"
 msgstr "Güç-geri alma etkinlikleri sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:512
+#: src/disks/gdu-ata-smart-dialog.c:512
 msgid "GMR Head Amplitude"
 msgstr "GMR Kafa Büyüklüğü"
 
-#: src/disks/gduatasmartdialog.c:513
+#: src/disks/gdu-ata-smart-dialog.c:513
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "Çalışma kipinde kafaların titreme (GMR-kafası) miktarı"
 
-#: src/disks/gduatasmartdialog.c:521
+#: src/disks/gdu-ata-smart-dialog.c:521
 msgid "Temperature of the drive"
 msgstr "Sürücünün sıcaklığı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:528
+#: src/disks/gdu-ata-smart-dialog.c:528
 msgid "Endurance Remaining"
 msgstr "Kalan Dayanıklılık"
 
-#: src/disks/gduatasmartdialog.c:529
+#: src/disks/gdu-ata-smart-dialog.c:529
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -783,22 +807,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:545
+#: src/disks/gdu-ata-smart-dialog.c:545
 msgid "Uncorrectable ECC Count"
 msgstr "Düzeltilemeyen ECC Sayısı"
 
-#: src/disks/gduatasmartdialog.c:546
+#: src/disks/gdu-ata-smart-dialog.c:546
 msgid "Number of uncorrectable ECC errors"
 msgstr "Düzeltilemeyen ECC hataları sayısı"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:553
+#: src/disks/gdu-ata-smart-dialog.c:553
 msgid "Good Block Rate"
 msgstr "İyi Blok Oranı"
 
-#: src/disks/gduatasmartdialog.c:554
+#: src/disks/gdu-ata-smart-dialog.c:554
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -809,69 +833,69 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:562
+#: src/disks/gdu-ata-smart-dialog.c:562
 msgid "Head Flying Hours"
 msgstr "Kafa Uçma Saati"
 
-#: src/disks/gduatasmartdialog.c:563
+#: src/disks/gdu-ata-smart-dialog.c:563
 msgid "Time while head is positioning"
 msgstr "Kafa konumlandırma esnasında zaman"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:570
+#: src/disks/gdu-ata-smart-dialog.c:570
 msgid "Read Error Retry Rate"
 msgstr "Okuma Hatası Yineleme Oranı"
 
-#: src/disks/gduatasmartdialog.c:571
+#: src/disks/gdu-ata-smart-dialog.c:571
 msgid "Number of errors while reading from a disk"
 msgstr "Diskten okuma sırasındaki hata miktarı"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:578
+#: src/disks/gdu-ata-smart-dialog.c:578
 msgid "Total LBAs Written"
 msgstr "Toplam Yazılan LBA"
 
-#: src/disks/gduatasmartdialog.c:579
+#: src/disks/gdu-ata-smart-dialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
 msgstr "Diskin kullanım ömrü boyunca yazılan veri miktarı"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:586
+#: src/disks/gdu-ata-smart-dialog.c:586
 msgid "Total LBAs Read"
 msgstr "Toplam Okunan LBA"
 
-#: src/disks/gduatasmartdialog.c:587
+#: src/disks/gdu-ata-smart-dialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
 msgstr "Diskin kullanım ömrü boyunca okunan veri miktarı"
 
-#: src/disks/gduatasmartdialog.c:646
+#: src/disks/gdu-ata-smart-dialog.c:646
 #, c-format
 msgid "No description for attribute %d"
 msgstr "Öznitelik %d için hiçbir açıklama yok"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:693
+#: src/disks/gdu-ata-smart-dialog.c:693
 msgid "FAILING"
 msgstr "BAŞARISIZ"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:702
+#: src/disks/gdu-ata-smart-dialog.c:702
 msgid "Failed in the past"
 msgstr "Geçmişte başarısız"
 
-#: src/disks/gduatasmartdialog.c:706
+#: src/disks/gdu-ata-smart-dialog.c:706
 msgid "OK"
 msgstr "TAMAM"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:733
+#: src/disks/gdu-ata-smart-dialog.c:733
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -884,7 +908,7 @@ msgstr[0] "%d sektör"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:745 src/disks/gduatasmartdialog.c:878
+#: src/disks/gdu-ata-smart-dialog.c:745 src/disks/gdu-ata-smart-dialog.c:878
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -895,118 +919,118 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:756 src/disks/gduatasmartdialog.c:1127
+#: src/disks/gdu-ata-smart-dialog.c:756 src/disks/gdu-ata-smart-dialog.c:1127
 msgid "N/A"
 msgstr "-"
 
-#: src/disks/gduatasmartdialog.c:776
+#: src/disks/gdu-ata-smart-dialog.c:776
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Son öz sınama başarıyla tamamlandı"
 
-#: src/disks/gduatasmartdialog.c:780
+#: src/disks/gdu-ata-smart-dialog.c:780
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Son öz sınama durduruldu"
 
-#: src/disks/gduatasmartdialog.c:784
+#: src/disks/gdu-ata-smart-dialog.c:784
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Son öz sınama yarım kaldı"
 
-#: src/disks/gduatasmartdialog.c:788
+#: src/disks/gdu-ata-smart-dialog.c:788
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Son öz sınama tamamlanamadı"
 
-#: src/disks/gduatasmartdialog.c:792
+#: src/disks/gdu-ata-smart-dialog.c:792
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Son öz sınama başarısız oldu"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:797
+#: src/disks/gdu-ata-smart-dialog.c:797
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Son öz sınama başarısız oldu (elektronik)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:802
+#: src/disks/gdu-ata-smart-dialog.c:802
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Son öz sınama başarısız oldu (servo)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:807
+#: src/disks/gdu-ata-smart-dialog.c:807
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Son öz sınama başarısız oldu (okuma)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:812
+#: src/disks/gdu-ata-smart-dialog.c:812
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Son öz sınama başarısız oldu (fiziksel)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:817
+#: src/disks/gdu-ata-smart-dialog.c:817
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Öz sınama sürüyor — %%%d kaldı"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:824
+#: src/disks/gdu-ata-smart-dialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Bilinmeyen (%s)"
 
-#: src/disks/gduatasmartdialog.c:849
+#: src/disks/gdu-ata-smart-dialog.c:849
 #, c-format
 msgid "%s ago"
 msgstr "%s önce"
 
-#: src/disks/gduatasmartdialog.c:912
+#: src/disks/gdu-ata-smart-dialog.c:912
 msgid "SMART is not supported"
 msgstr "SMART desteklenmiyor"
 
-#: src/disks/gduatasmartdialog.c:920
+#: src/disks/gdu-ata-smart-dialog.c:920
 msgid "SMART is not enabled"
 msgstr "SMART etkin değil"
 
-#: src/disks/gduatasmartdialog.c:930
+#: src/disks/gdu-ata-smart-dialog.c:930
 msgid "Self-test in progress"
 msgstr "Öz sınama sürüyor"
 
-#: src/disks/gduatasmartdialog.c:943 src/disks/gduatasmartdialog.c:952
+#: src/disks/gdu-ata-smart-dialog.c:943 src/disks/gdu-ata-smart-dialog.c:952
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "DİSK YAKINDA BOZULABİLİR"
 
-#: src/disks/gduatasmartdialog.c:975
+#: src/disks/gdu-ata-smart-dialog.c:975
 msgid "SELF-TEST FAILED"
 msgstr "ÖZ SINAMA BAŞARISIZ"
 
-#: src/disks/gduatasmartdialog.c:984
+#: src/disks/gdu-ata-smart-dialog.c:984
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "Disk sağlıklı, %d nitelik başarısız"
 
-#: src/disks/gduatasmartdialog.c:995
+#: src/disks/gdu-ata-smart-dialog.c:995
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "Disk sağlıklı ama %d kötü sektör var"
 
-#: src/disks/gduatasmartdialog.c:1006
+#: src/disks/gdu-ata-smart-dialog.c:1006
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "Disk sağlıklı, %d nitelik daha önce başarısız oldu"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1015
+#: src/disks/gdu-ata-smart-dialog.c:1015
 msgid "Disk is OK"
 msgstr "Disk sağlıklı"
 
@@ -1014,97 +1038,97 @@ msgstr "Disk sağlıklı"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1029
+#: src/disks/gdu-ata-smart-dialog.c:1029
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1115
+#: src/disks/gdu-ata-smart-dialog.c:1115
 msgid "Pre-Fail"
 msgstr "Ön-Başarısız"
 
-#: src/disks/gduatasmartdialog.c:1117
+#: src/disks/gdu-ata-smart-dialog.c:1117
 msgid "Old-Age"
 msgstr "Çok Eski"
 
-#: src/disks/gduatasmartdialog.c:1120
+#: src/disks/gdu-ata-smart-dialog.c:1120
 msgid "Online"
 msgstr "Çevrim içi"
 
-#: src/disks/gduatasmartdialog.c:1122
+#: src/disks/gdu-ata-smart-dialog.c:1122
 msgid "Offline"
 msgstr "Çevrim dışı"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1231
+#: src/disks/gdu-ata-smart-dialog.c:1231
 msgid "Threshold exceeded"
 msgstr "Eşik aşıldı"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1236
+#: src/disks/gdu-ata-smart-dialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "Eşik aşılmadı"
 
-#: src/disks/gduatasmartdialog.c:1312
+#: src/disks/gdu-ata-smart-dialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "SMART verisi okunurken hata"
 
-#: src/disks/gduatasmartdialog.c:1344
+#: src/disks/gdu-ata-smart-dialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "SMART öz sınama durduruldu"
 
-#: src/disks/gduatasmartdialog.c:1363
+#: src/disks/gdu-ata-smart-dialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "SMART öz sınama başlatılamadı"
 
-#: src/disks/gduatasmartdialog.c:1445
+#: src/disks/gdu-ata-smart-dialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "SMART’ın etkin olma durumunu değiştirme denenirken hata meydana geldi"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1564
+#: src/disks/gdu-ata-smart-dialog.c:1564
 msgid "ID"
 msgstr "Kimlik"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1576
+#: src/disks/gdu-ata-smart-dialog.c:1576
 msgid "Attribute"
 msgstr "Öznitelik"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1590
+#: src/disks/gdu-ata-smart-dialog.c:1590
 msgid "Value"
 msgstr "Değer"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1602
+#: src/disks/gdu-ata-smart-dialog.c:1602
 msgid "Normalized"
 msgstr "Normalleştirilmiş"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1614
+#: src/disks/gdu-ata-smart-dialog.c:1614
 msgid "Threshold"
 msgstr "Eşik"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1626
+#: src/disks/gdu-ata-smart-dialog.c:1626
 msgid "Worst"
 msgstr "En Kötü"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1638
-#: src/disks/ui/gdu-create-filesystem-page.ui:50
+#: src/disks/gdu-ata-smart-dialog.c:1638
+#: src/disks/ui/gdu-create-filesystem-page.ui:66
 #: src/disks/ui/gdu-create-other-page.ui:8
 msgid "Type"
 msgstr "Tür"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1650
+#: src/disks/gdu-ata-smart-dialog.c:1650
 msgid "Updates"
 msgstr "Güncellemeler"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1662
+#: src/disks/gdu-ata-smart-dialog.c:1662
 msgid "Assessment"
 msgstr "Değerlendirme"
 
@@ -1189,7 +1213,7 @@ msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarım gerektiriyor."
 
 #: src/disks/gdu-block-row.c:536 src/disks/gdu-block-row.c:662
-#: src/disks/ui/smart-dialog.ui:260
+#: src/disks/ui/gdu-ata-smart-dialog.ui:260
 msgid "Close"
 msgstr "Kapat"
 
@@ -1352,11 +1376,11 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:345
 #: src/disks/gdu-format-volume-dialog.c:197
-#: src/disks/ui/disk-settings-dialog.ui:387
 #: src/disks/ui/gdu-benchmark-dialog.ui:16
 #: src/disks/ui/gdu-benchmark-dialog.ui:23
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:18
 #: src/disks/ui/gdu-create-disk-image-dialog.ui:18
+#: src/disks/ui/gdu-disk-settings-dialog.ui:15
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:14
 #: src/disks/ui/gdu-edit-partition-dialog.ui:15
 #: src/disks/ui/gdu-format-disk-dialog.ui:15
@@ -1583,94 +1607,94 @@ msgstr ""
 "Daha çok harf, sayı ve noktalama işareti kullanmak parolanızı daha güçlü "
 "yapacaktır."
 
-#: src/disks/gdudisksettingsdialog.c:290
+#: src/disks/gdu-disk-settings-dialog.c:293
 msgctxt "standby-value"
 msgid "Never"
 msgstr "Hiçbir zaman"
 
-#: src/disks/gdudisksettingsdialog.c:309
+#: src/disks/gdu-disk-settings-dialog.c:312
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "Satıcı tanımlı"
 
-#: src/disks/gdudisksettingsdialog.c:313
+#: src/disks/gdu-disk-settings-dialog.c:316
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "Ayrılmış"
 
-#: src/disks/gdudisksettingsdialog.c:334
+#: src/disks/gdu-disk-settings-dialog.c:337
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (Devre dışı)"
 
-#: src/disks/gdudisksettingsdialog.c:338
+#: src/disks/gdu-disk-settings-dialog.c:341
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr "%d (Yavaşlatma izinli)"
 
-#: src/disks/gdudisksettingsdialog.c:342
+#: src/disks/gdu-disk-settings-dialog.c:345
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr "%d (Yavaşlatma izinsiz)"
 
-#: src/disks/gdudisksettingsdialog.c:357
+#: src/disks/gdu-disk-settings-dialog.c:360
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (Devre dışı)"
 
-#: src/disks/gdudisksettingsdialog.c:386
+#: src/disks/gdu-disk-settings-dialog.c:398
 msgid "Error setting configuration"
 msgstr "Ayar yapılandırmada hata"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:439
+#: src/disks/gdu-disk-settings-dialog.c:451
 msgid "Never"
 msgstr "Hiçbir zaman"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:441
+#: src/disks/gdu-disk-settings-dialog.c:453
 msgid "5 minutes"
 msgstr "5 dakika"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:443
+#: src/disks/gdu-disk-settings-dialog.c:455
 msgid "10 minutes"
 msgstr "10 dakika"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:445
+#: src/disks/gdu-disk-settings-dialog.c:457
 msgid "15 minutes"
 msgstr "15 dakika"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:447
+#: src/disks/gdu-disk-settings-dialog.c:459
 msgid "3 hours"
 msgstr "3 saat"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:451
+#: src/disks/gdu-disk-settings-dialog.c:463
 msgid "Save Power"
 msgstr "Güç Tutumu"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
-#: src/disks/gdudisksettingsdialog.c:453
+#: src/disks/gdu-disk-settings-dialog.c:465
 msgid "← Spindown"
 msgstr "← Yavaşlatma"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:455
+#: src/disks/gdu-disk-settings-dialog.c:467
 msgid "Perform Better"
 msgstr "İyi Başarım"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:459
+#: src/disks/gdu-disk-settings-dialog.c:471
 msgid "Quiet (Slow)"
 msgstr "Sessiz (Yavaş)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:461
+#: src/disks/gdu-disk-settings-dialog.c:473
 msgid "Loud (Fast)"
 msgstr "Sesli (Hızlı)"
 
@@ -2054,113 +2078,6 @@ msgstr "İç hata"
 msgid "Need more input"
 msgstr "Daha çok girdi gerekiyor"
 
-#: src/disks/ui/disk-settings-dialog.ui:4
-msgid "Drive Settings"
-msgstr "Sürücü Ayarları"
-
-#: src/disks/ui/disk-settings-dialog.ui:34
-msgid "Apply Standby Timeout Settings"
-msgstr "Bekleme Zaman Aşımı Ayarlarını Uygula"
-
-#: src/disks/ui/disk-settings-dialog.ui:46
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-"Başlangıçtan ve diskin bağlandığından itibaren bekleme zaman aşımı "
-"yapılandırmasını aç"
-
-#: src/disks/ui/disk-settings-dialog.ui:61
-msgid "Enter Standby After"
-msgstr "Beklemeye Alma Süresi"
-
-#: src/disks/ui/disk-settings-dialog.ui:94
-msgid "_Standby"
-msgstr "_Bekleme"
-
-#: src/disks/ui/disk-settings-dialog.ui:111
-msgid "Apply Advanced Power Management Settings"
-msgstr "Gelişmiş Güç Yönetimi (APM) Ayarlarını Uygula"
-
-#: src/disks/ui/disk-settings-dialog.ui:123
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "Başlangıçtan ve diskin bağlandığından itibaren APM yapılandırmasını aç"
-
-#: src/disks/ui/disk-settings-dialog.ui:138
-msgid "APM Level"
-msgstr "APM Düzeyi"
-
-#: src/disks/ui/disk-settings-dialog.ui:169
-msgid ""
-"Aggressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-"Agresif yavaşlatma sürücüyü öngörülenden daha çabuk aşındırabilir. Lütfen "
-"SMART özniteliklerinden “Başlama/Durma Sayımı”nı zaman zaman denetleyin"
-
-#: src/disks/ui/disk-settings-dialog.ui:182
-msgid "A_PM"
-msgstr "A_PM"
-
-#: src/disks/ui/disk-settings-dialog.ui:200
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr "Otomatik Akustik Yönetimi (AAM) Ayarlarını Uygula"
-
-#: src/disks/ui/disk-settings-dialog.ui:212
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "Başlangıçta ve disk bağlandığında AAM’yi yapılandırmak için bunu açın"
-
-#: src/disks/ui/disk-settings-dialog.ui:228
-msgid "Vendor Recommended"
-msgstr "Üretici Tarafından Önerilen"
-
-#: src/disks/ui/disk-settings-dialog.ui:241
-msgid "AAM Level"
-msgstr "AAM Düzeyi"
-
-#: src/disks/ui/disk-settings-dialog.ui:291
-msgid "_AAM"
-msgstr "_AAM"
-
-#: src/disks/ui/disk-settings-dialog.ui:309
-msgid "Apply Write Cache Settings"
-msgstr "Yazma Önbelleği Ayarlarını Uygula"
-
-#: src/disks/ui/disk-settings-dialog.ui:321
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-"Başlangıçta ve disk bağlandığında Yazma Önbelleği ayarını yapılandırmayı açın"
-
-#: src/disks/ui/disk-settings-dialog.ui:336
-msgid "S_etting"
-msgstr "A_yar"
-
-#: src/disks/ui/disk-settings-dialog.ui:350
-msgid "Enable Write Cache"
-msgstr "Yazma Önbelleğini Etkinleştir"
-
-#: src/disks/ui/disk-settings-dialog.ui:351
-msgid "Disable Write Cache"
-msgstr "Yazma Önbelleğini Devre Dışı Bırak"
-
-#: src/disks/ui/disk-settings-dialog.ui:360
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-"Yazma önbellekleme ile performans artırılabilir ama güç kesilmesi durumunda "
-"veri kaybına neden olabilir"
-
-#: src/disks/ui/disk-settings-dialog.ui:373
-msgid "Wr_ite Cache"
-msgstr "Yazma Önbelleğ_i"
-
-#: src/disks/ui/disk-settings-dialog.ui:396
-msgid "_Ok"
-msgstr "_Tamam"
-
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
 msgstr "Çoklu Diskleri Sil"
@@ -2172,6 +2089,74 @@ msgstr "_Sil…"
 #: src/disks/ui/erase-multiple-disks-dialog.ui:52
 msgid "Erase _Type"
 msgstr "Silme _Türü"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:4
+msgid "SMART Data & Self-Tests"
+msgstr "SMART Verisi & Öz Sınamalar"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:33
+msgid "Powered On"
+msgstr "Güç Açıldı"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:58
+msgid "Updated"
+msgstr "Güncellendi"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:108
+msgid "Self-test Result"
+msgstr "Öz Sınama Sonuçları"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:121
+msgid "Self-assessment"
+msgstr "Öz Değerlendirme"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:134
+msgid "Overall Assessment"
+msgstr "Genel Değerlendirme"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:184
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr "Sabit disk için SMART’ın etkin olma durumunu değiştirmek için tıkla"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:193
+msgid "SMART _Attributes"
+msgstr "SMART Ö_znitelikler"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:235
+msgid "_Start Self-test"
+msgstr "Öz Sınama _Başlat"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:236
+msgid "Click to start a SMART self-test"
+msgstr "SMART öz sınama başlatmak için tıkla"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:245
+msgid "_Stop Self-test"
+msgstr "Öz sınamayı _durdur"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:246
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr "Devam eden SMART öz sınama sürecini durdurmak için tıkla"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:252
+msgid "Refresh"
+msgstr "Yenile"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:253
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr "Sabit diskten SMART verisini yeniden okumaya zorlamak için tıkla"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:272
+msgid "_Short"
+msgstr "_Kısa"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:276
+msgid "_Extended"
+msgstr "_Genişletilmiş"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:280
+msgid "_Conveyance"
+msgstr "_Nakil"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:4
 #: src/disks/ui/gdu-benchmark-dialog.ui:48
@@ -2402,6 +2387,7 @@ msgid "_Volume Name"
 msgstr "_Birim Adı"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:25
+#: src/disks/ui/gdu-format-disk-dialog.ui:44
 msgid "_Overwrite Existing Data"
 msgstr "Var Olan Verilerin Üzerine Yaz"
 
@@ -2409,38 +2395,40 @@ msgstr "Var Olan Verilerin Üzerine Yaz"
 #: src/disks/ui/gdu-edit-partition-dialog.ui:69
 #: src/disks/ui/gdu-edit-partition-dialog.ui:110
 #: src/disks/ui/gdu-edit-partition-dialog.ui:151
+#: src/disks/ui/gdu-format-disk-dialog.ui:49
 #: src/disks/ui/gdu-take-ownership-dialog.ui:17
 msgid "More Information"
 msgstr "Daha Çok Bilgi"
 
-#: src/disks/ui/gdu-create-filesystem-page.ui:54
-msgid "For use only with Linux systems"
-msgstr "Yalnızca Linux sistemleriyle kullanım içindir"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:68
-msgid "For use with Windows"
-msgstr "Windows ile kullanmak için"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:82
-msgid "For use with all systems and devices"
-msgstr "Tüm sistem ve aygıtlarla kullanmak için"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:112
-msgid "_Password Protect Volume"
-msgstr "Birimi _Parolayla Koru"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:113
-#: src/disks/ui/gdu-create-other-page.ui:16
-msgid "Encrypts the volume using LUKS"
-msgstr "Birimi LUKS kullanarak şifreler"
-
-#: src/disks/ui/gdu-create-filesystem-page.ui:135
+#: src/disks/ui/gdu-create-filesystem-page.ui:42
+#: src/disks/ui/gdu-format-disk-dialog.ui:61
 msgid ""
 "Ensures that existing data cannot be recovered. This option slows down "
 "formatting."
 msgstr ""
 "Var olan verilerin kurtarılamasını engeller. Bu seçenek biçimlendirmeyi "
 "yavaşlatır."
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:70
+msgid "For use only with Linux systems"
+msgstr "Yalnızca Linux sistemleriyle kullanım içindir"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:84
+msgid "For use with Windows"
+msgstr "Windows ile kullanmak için"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:98
+msgid "For use with all systems and devices"
+msgstr "Tüm sistem ve aygıtlarla kullanmak için"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:128
+msgid "_Password Protect Volume"
+msgstr "Birimi _Parolayla Koru"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:129
+#: src/disks/ui/gdu-create-other-page.ui:16
+msgid "Encrypts the volume using LUKS"
+msgstr "Birimi LUKS kullanarak şifreler"
 
 #: src/disks/ui/gdu-create-other-page.ui:15
 msgid "Password Protect Volume"
@@ -2534,8 +2522,8 @@ msgid ""
 "Data stored in the Volume will only be accessible with the correct password. "
 "Be careful not to forget it"
 msgstr ""
-"Birimde saklanan veriye yalnızca doğru paroyla erişilebilecektir. "
-"Unutmamaya özen gösterin."
+"Birimde saklanan veriye yalnızca doğru paroyla erişilebilecektir. Unutmamaya "
+"özen gösterin."
 
 #: src/disks/ui/gdu-create-password-page.ui:11
 msgid "Password"
@@ -2548,6 +2536,114 @@ msgstr "Parolayı Doğrula"
 #: src/disks/ui/gdu-create-password-page.ui:24
 msgid "The passwords do not match."
 msgstr "Parolalar eşleşmiyor."
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:4
+#: src/disks/ui/gdu-disk-settings-dialog.ui:24
+msgid "Drive Settings"
+msgstr "Sürücü Ayarları"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:29
+msgid "Sa_ve"
+msgstr "Kay_det"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:57
+msgid "Apply Standby Timeout Settings"
+msgstr "Bekleme Zaman Aşımı Ayarlarını Uygula"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:69
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr ""
+"Başlangıçtan ve diskin bağlandığından itibaren bekleme zaman aşımı "
+"yapılandırmasını aç"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:84
+msgid "Enter Standby After"
+msgstr "Beklemeye Alma Süresi"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:117
+msgid "_Standby"
+msgstr "_Bekleme"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:134
+msgid "Apply Advanced Power Management Settings"
+msgstr "Gelişmiş Güç Yönetimi (APM) Ayarlarını Uygula"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:146
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr "Başlangıçtan ve diskin bağlandığından itibaren APM yapılandırmasını aç"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:161
+msgid "APM Level"
+msgstr "APM Düzeyi"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:192
+msgid ""
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+"Agresif yavaşlatma sürücüyü öngörülenden daha çabuk aşındırabilir. Lütfen "
+"SMART özniteliklerinden “Başlama/Durma Sayımı”nı zaman zaman denetleyin"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:205
+msgid "A_PM"
+msgstr "A_PM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:223
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr "Otomatik Akustik Yönetimi (AAM) Ayarlarını Uygula"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:235
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr "Başlangıçta ve disk bağlandığında AAM’yi yapılandırmak için bunu açın"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:251
+msgid "Vendor Recommended"
+msgstr "Üretici Tarafından Önerilen"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:264
+msgid "AAM Level"
+msgstr "AAM Düzeyi"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:314
+msgid "_AAM"
+msgstr "_AAM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:332
+msgid "Apply Write Cache Settings"
+msgstr "Yazma Önbelleği Ayarlarını Uygula"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:344
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+"Başlangıçta ve disk bağlandığında Yazma Önbelleği ayarını yapılandırmayı açın"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:359
+msgid "S_etting"
+msgstr "A_yar"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:373
+msgid "Enable Write Cache"
+msgstr "Yazma Önbelleğini Etkinleştir"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:374
+msgid "Disable Write Cache"
+msgstr "Yazma Önbelleğini Devre Dışı Bırak"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:383
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+"Yazma önbellekleme ile performans artırılabilir ama güç kesilmesi durumunda "
+"veri kaybına neden olabilir"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:396
+msgid "Wr_ite Cache"
+msgstr "Yazma Önbelleğ_i"
 
 #: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:124
 msgid "Drive Information"
@@ -2573,7 +2669,7 @@ msgstr "Kopyala"
 msgid "Serial"
 msgstr "Seri Numarası"
 
-#: src/disks/ui/gdu-drive-view.ui:179 src/disks/ui/gdu-format-disk-dialog.ui:53
+#: src/disks/ui/gdu-drive-view.ui:179 src/disks/ui/gdu-format-disk-dialog.ui:85
 msgid "Partitioning"
 msgstr "Bölümlendirme"
 
@@ -2665,8 +2761,8 @@ msgid ""
 "This is equivalent to Master Boot Record “bootable” flag. It is normally "
 "only used for GPT partitions on MBR systems."
 msgstr ""
-"Bu, Ana Önyükleme Kaydı (MBR) “bootable” bayrağıyla eşdeğerdir. Bu "
-"normalde yalnızca MBR sistemlerdeki GPT bölümlerinde kullanılır."
+"Bu, Ana Önyükleme Kaydı (MBR) “bootable” bayrağıyla eşdeğerdir. Bu normalde "
+"yalnızca MBR sistemlerdeki GPT bölümlerinde kullanılır."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:105
 msgid "_System Partition"
@@ -2679,8 +2775,8 @@ msgid ""
 "overwrite the contents."
 msgstr ""
 "Bölüm ve içeriğinin İS/Platformun işlerliği için gerektiğini belirtmede "
-"kullanılır. İçeriğinin silinmemesi ya da üzerine yazılmaması için "
-"yüksek özen gösterilmelidir."
+"kullanılır. İçeriğinin silinmemesi ya da üzerine yazılmaması için yüksek "
+"özen gösterilmelidir."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:146
 msgid "_Hide from Firmware"
@@ -2744,35 +2840,27 @@ msgstr "Ek Seçenekler"
 msgid "Format Disk"
 msgstr "Diski Biçimlendir"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:44
-msgid "_Erase Existing Data"
-msgstr "Var Olan Veriyi _Sil"
-
-#: src/disks/ui/gdu-format-disk-dialog.ui:45
-msgid "Slows down formatting"
-msgstr "Biçimlendirmeyi yavaşlatır"
-
-#: src/disks/ui/gdu-format-disk-dialog.ui:56
+#: src/disks/ui/gdu-format-disk-dialog.ui:88
 msgid "_GUID Partition Table (GPT)"
 msgstr "_GUID Bölümleme Tablosu (GPT)"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:57
+#: src/disks/ui/gdu-format-disk-dialog.ui:89
 msgid "Compatible with UEFI and disks over 2 TB"
 msgstr "UEFI ve 2TB’tan büyük disklerle uyumlu"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:70
+#: src/disks/ui/gdu-format-disk-dialog.ui:102
 msgid "_Master Boot Record (MBR)"
 msgstr "_Ana Önyükleme Kaydı (MBR)"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:71
+#: src/disks/ui/gdu-format-disk-dialog.ui:103
 msgid "Legacy option with wide hardware compatibility"
 msgstr "Geniş donanım uyumluluğu ile eski seçenek"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:84
+#: src/disks/ui/gdu-format-disk-dialog.ui:116
 msgid "_No Partitioning"
 msgstr "Bölümleme _Yok"
 
-#: src/disks/ui/gdu-format-disk-dialog.ui:85
+#: src/disks/ui/gdu-format-disk-dialog.ui:117
 msgid "Disk will be empty"
 msgstr "Disk boş olacak"
 
@@ -2861,8 +2949,8 @@ msgid ""
 "Resizing a filesystem can result in data loss. It is recommended to backup "
 "any data before continuing."
 msgstr ""
-"Dosya sistemini yeniden boyutlandırmak veri yitimiyle sonuçlanabilir. Sürdürmeden "
-"önce verinin yedeklenmesi önerilir."
+"Dosya sistemini yeniden boyutlandırmak veri yitimiyle sonuçlanabilir. "
+"Sürdürmeden önce verinin yedeklenmesi önerilir."
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:55
 msgid "Available Space"
@@ -2922,8 +3010,8 @@ msgid ""
 "Recursive mode changes the ownership of subdirectories and files. This can "
 "cause problems if files are owned by other users."
 msgstr ""
-"Özyinelemeli kip alt dizinlerin ve dosyaların sahipliğini değiştirir. Bu, dosyalar "
-"başka kullanıcılarca sahipliyse sorunlara neden olabilir."
+"Özyinelemeli kip alt dizinlerin ve dosyaların sahipliğini değiştirir. Bu, "
+"dosyalar başka kullanıcılarca sahipliyse sorunlara neden olabilir."
 
 #: src/disks/ui/gdu-window.ui:32
 msgid "Main Menu"
@@ -3050,74 +3138,6 @@ msgstr "Bölüm menüsünü aç"
 msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "Seçilen bölümü biçimlendir"
-
-#: src/disks/ui/smart-dialog.ui:4
-msgid "SMART Data & Self-Tests"
-msgstr "SMART Verisi & Öz Sınamalar"
-
-#: src/disks/ui/smart-dialog.ui:33
-msgid "Powered On"
-msgstr "Güç Açıldı"
-
-#: src/disks/ui/smart-dialog.ui:58
-msgid "Updated"
-msgstr "Güncellendi"
-
-#: src/disks/ui/smart-dialog.ui:108
-msgid "Self-test Result"
-msgstr "Öz Sınama Sonuçları"
-
-#: src/disks/ui/smart-dialog.ui:121
-msgid "Self-assessment"
-msgstr "Öz Değerlendirme"
-
-#: src/disks/ui/smart-dialog.ui:134
-msgid "Overall Assessment"
-msgstr "Genel Değerlendirme"
-
-#: src/disks/ui/smart-dialog.ui:184
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "Sabit disk için SMART’ın etkin olma durumunu değiştirmek için tıkla"
-
-#: src/disks/ui/smart-dialog.ui:193
-msgid "SMART _Attributes"
-msgstr "SMART Ö_znitelikler"
-
-#: src/disks/ui/smart-dialog.ui:235
-msgid "_Start Self-test"
-msgstr "Öz Sınama _Başlat"
-
-#: src/disks/ui/smart-dialog.ui:236
-msgid "Click to start a SMART self-test"
-msgstr "SMART öz sınama başlatmak için tıkla"
-
-#: src/disks/ui/smart-dialog.ui:245
-msgid "_Stop Self-test"
-msgstr "Öz sınamayı _durdur"
-
-#: src/disks/ui/smart-dialog.ui:246
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr "Devam eden SMART öz sınama sürecini durdurmak için tıkla"
-
-#: src/disks/ui/smart-dialog.ui:252
-msgid "Refresh"
-msgstr "Yenile"
-
-#: src/disks/ui/smart-dialog.ui:253
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Sabit diskten SMART verisini yeniden okumaya zorlamak için tıkla"
-
-#: src/disks/ui/smart-dialog.ui:272
-msgid "_Short"
-msgstr "_Kısa"
-
-#: src/disks/ui/smart-dialog.ui:276
-msgid "_Extended"
-msgstr "_Genişletilmiş"
-
-#: src/disks/ui/smart-dialog.ui:280
-msgid "_Conveyance"
-msgstr "_Nakil"
 
 #: src/disks/ui/unlock-device-dialog.ui:6
 msgid "Enter passphrase to unlock"
@@ -3335,6 +3355,3 @@ msgstr "Sabit disk yakında bozulabilir."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "İncele"
-
-#~ msgid "Format Disks"
-#~ msgstr "Diskleri Biçimlendir"

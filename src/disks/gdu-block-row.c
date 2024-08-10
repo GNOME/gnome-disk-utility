@@ -978,6 +978,8 @@ gdu_block_row_new (GduBlock *block)
   self = g_object_new (GDU_TYPE_BLOCK_ROW, NULL);
   self->block = g_object_ref (block);
 
+  gtk_widget_add_css_class (GTK_WIDGET (self), g_object_get_data (G_OBJECT (block), "color"));
+
   g_signal_connect_object (self->block,
                            "changed",
                            G_CALLBACK (gdu_block_row_update),

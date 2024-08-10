@@ -23,6 +23,7 @@
 #include "gdu-block.h"
 #include "gdu-drive.h"
 #include "gdu-space-allocation-bar.h"
+#include "gduutils.h"
 
 struct _GduSpaceAllocationBar
 {
@@ -53,6 +54,7 @@ update_space_allocation_bar (GduSpaceAllocationBar *self) {
 
       partition_bin = adw_bin_new();
 
+      gtk_widget_add_css_class (partition_bin, "partition-bin");
       gtk_widget_set_parent (partition_bin, GTK_WIDGET (self));
     }
 }
@@ -67,8 +69,6 @@ gdu_space_allocation_bar_measure (GtkWidget *widget,
                                   int *natural_baseline)
 {
   GtkWidget *child;
-
-  *natural = 50;
 
   for (child = gtk_widget_get_first_child (widget); child;
        child = gtk_widget_get_next_sibling (child))
@@ -96,26 +96,26 @@ gdu_space_allocation_bar_size_allocate (GtkWidget *widget,
 
   total_size = gdu_item_get_size (GDU_ITEM (GDU_SPACE_ALLOCATION_BAR (widget)->drive));
   partitions = gdu_item_get_partitions (GDU_ITEM (GDU_SPACE_ALLOCATION_BAR (widget)->drive));
-  int pos = 0;
 
   for (i = 0, child = gtk_widget_get_first_child (widget);
        child && i < g_list_model_get_n_items (partitions);
        child = gtk_widget_get_next_sibling (child), i++)
     {
       GduBlock *block;
-      guint64 block_size;
-      gdouble fraction;
+      int size;
+      int position_offset;
 
       block = g_list_model_get_item (partitions, i);
-      block_size = gdu_item_get_size (GDU_ITEM (block));
-      fraction = (gdouble) block_size / (gdouble) total_size;
+      /* Add 128KB to the size to account for floating point errors */
+      size = width * (gdouble) (gdu_item_get_size (GDU_ITEM (block)) + 128 * 1024) / (gdouble) total_size;
+      position_offset = width * (gdouble) gdu_block_get_offset (block) / (gdouble) total_size;
 
       gtk_widget_allocate (child,
-                           width * fraction,
+                           size,
                            height,
                            baseline,
-                           gsk_transform_translate (NULL, &GRAPHENE_POINT_INIT(pos, 0)));
-      pos += width * fraction;
+                           gsk_transform_translate (NULL, &GRAPHENE_POINT_INIT(position_offset, 0)));
+      gtk_widget_add_css_class (child, g_object_get_data (G_OBJECT (block), "color"));
     }
 }
 
@@ -154,6 +154,7 @@ gdu_space_allocation_bar_init (GduSpaceAllocationBar *self)
 {
   gtk_widget_set_size_request (GTK_WIDGET (self), -1, 25);
   gtk_widget_set_overflow (GTK_WIDGET (self), GTK_OVERFLOW_HIDDEN);
+  gtk_widget_add_css_class (GTK_WIDGET (self), "space-allocation-bar");
 }
 
 void

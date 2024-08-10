@@ -165,6 +165,17 @@ guint64 gdu_utils_calc_space_to_shrink_extended (UDisksClient *client,
 gint64 gdu_utils_get_unused_for_block (UDisksClient *client,
                                        UDisksBlock  *block);
 
+#define NUM_PARTITION_COLORS 7
+
+static const char * partition_colors[NUM_PARTITION_COLORS] = {
+  "blue",
+  "green",
+  "yellow",
+  "orange",
+  "red",
+  "purple",
+  "brown",
+};
 
 #define NUM_UNITS 11
 

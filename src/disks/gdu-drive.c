@@ -46,6 +46,7 @@ struct _GduDrive
   UDisksFilesystem     *file_system;
   GString              *model;
 
+  int                   partition_color_index;
   GListStore           *partitions;
 
   GduFeature            features;
@@ -54,6 +55,19 @@ struct _GduDrive
 
 
 G_DEFINE_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
+
+static void
+gdu_drive_set_block_color(GduDrive *self,
+                          GduBlock *block)
+{
+  GduFeature features;
+
+  features = gdu_item_get_features (GDU_ITEM (block));
+  if (features & GDU_FEATURE_CREATE_PARTITION)
+    g_object_set_data (G_OBJECT (block), "color", g_strdup ("grey"));
+  else
+    g_object_set_data (G_OBJECT (block), "color", g_strdup (partition_colors[self->partition_color_index++ % NUM_PARTITION_COLORS]));
+}
 
 static void
 gdu_drive_add_decrypted (GduDrive     *self,
@@ -73,6 +87,8 @@ gdu_drive_add_decrypted (GduDrive     *self,
       g_autoptr(GduBlock) partition = NULL;
 
       partition = gdu_block_new (self->client, object, parent);
+      gdu_drive_set_block_color (self, partition);
+
       g_list_store_append (self->partitions, partition);
     }
 }
@@ -339,6 +355,7 @@ gdu_drive_new (gpointer  udisk_client,
 
   self = g_object_new (GDU_TYPE_DRIVE, NULL);
 
+  self->partition_color_index = 0;
   self->client = g_object_ref (udisk_client);
   self->object = g_object_ref (udisk_object);
   g_set_weak_pointer (&self->parent, parent);
@@ -364,6 +381,7 @@ gdu_drive_new (gpointer  udisk_client,
       g_autoptr(GduBlock) block = NULL;
 
       block = gdu_block_sized_new (udisk_client, 0, size, GDU_ITEM (self));
+      gdu_drive_set_block_color (self, block);
       g_list_store_append (self->partitions, block);
     }
 
@@ -376,6 +394,7 @@ gdu_drive_new (gpointer  udisk_client,
       g_list_store_remove_all (self->partitions);
 
       partition = gdu_block_new (self->client, udisk_object, GDU_ITEM (self));
+      gdu_drive_set_block_color (self, partition);
       g_list_store_append (self->partitions, partition);
 
       if (udisks_object_peek_encrypted (udisk_object))
@@ -594,6 +613,7 @@ gdu_drive_set_child (GduDrive *self,
 
   g_set_object (&self->block, udisks_object_get_block (self->object));
   g_set_object (&self->drive, udisks_object_get_drive (self->object));
+  self->partition_color_index = 0;
 
   if (self->block == NULL && self->drive != NULL)
     self->block = udisks_client_get_block_for_drive (self->client,
@@ -641,6 +661,7 @@ gdu_drive_set_child (GduDrive *self,
               begin - prev_end > free_space_slack)
             {
               partition = gdu_block_sized_new (self->client, prev_end, begin - prev_end, parent);
+              gdu_drive_set_block_color (self, partition);
 
               g_list_store_append (self->partitions, partition);
               g_clear_object (&partition);
@@ -651,6 +672,7 @@ gdu_drive_set_child (GduDrive *self,
 
           object = (gpointer)g_dbus_interface_get_object (part->data);
           partition = gdu_block_new (self->client, object, parent);
+          gdu_drive_set_block_color (self, partition);
           g_list_store_append (self->partitions, partition);
 
           if (udisks_object_peek_encrypted (object))
@@ -674,6 +696,7 @@ gdu_drive_set_child (GduDrive *self,
 
             parent = block_get_parent (self, prev_end, disk_end_offset);
             partition = gdu_block_sized_new (self->client, prev_end, disk_end_offset - prev_end, parent);
+            gdu_drive_set_block_color (self, partition);
             g_list_store_append (self->partitions, partition);
           }
       }

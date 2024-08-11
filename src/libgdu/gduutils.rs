@@ -897,7 +897,7 @@ pub async fn ensure_unused(
     let _ = ensure_unused_list(client, parent_window, &[object.clone()]).await;
 }
 
-pub async fn cacl_space_to_grow(
+pub async fn calc_space_to_grow(
     client: &udisks::Client,
     table: &udisks::partitiontable::PartitionTableProxy<'static>,
     partition: &udisks::partition::PartitionProxy<'static>,

@@ -4,6 +4,13 @@
     <child type="prefix">
       <object class="GtkBox" id="button">
 
+        <!-- Partition prefix used for subvolumes to visualize the depth -->
+        <child>
+            <object class="GtkLabel" id="partition_depth_label">
+            <property name="visible">False</property>
+            </object>
+        </child>
+
         <child>
           <object class="GtkImage" id="partition_image">
             <property name="halign">center</property>
@@ -15,13 +22,6 @@
             <style>
                 <class name="partition-row"></class>
             </style>
-          </object>
-        </child>
-
-        <!-- Partition prefix used for subvolumes to visualize the depth -->
-        <child>
-          <object class="GtkLabel" id="partition_depth_label">
-            <property name="visible">False</property>
           </object>
         </child>
 

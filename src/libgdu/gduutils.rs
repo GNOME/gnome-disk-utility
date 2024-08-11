@@ -173,10 +173,10 @@ pub fn remove_option(options_entry: &impl IsA<gtk::Editable>, option: &str, chec
 pub fn update_check_option(
     options_entry: &impl IsA<gtk::Editable>,
     option: &str,
-    widget: &impl IsA<gtk::Widget>,
+    _widget: &impl IsA<gtk::Widget>,
     check_button: &impl IsA<gtk::ToggleButton>,
     negate: bool,
-    add_to_front: bool,
+    _add_to_front: bool,
 ) {
     let (opts, _) = has_option(options_entry, option, false);
     let ui = check_button.as_ref().is_active();
@@ -185,7 +185,7 @@ pub fn update_check_option(
         // if widget == check_button {
         if todo!("implement equality check") {
             if (!negate && ui) || (negate && !ui) {
-                add_option(options_entry, "", option, add_to_front);
+                add_option(options_entry, "", option, _add_to_front);
             } else {
                 remove_option(options_entry, option, false);
             }

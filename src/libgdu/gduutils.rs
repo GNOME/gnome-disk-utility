@@ -411,14 +411,18 @@ pub fn show_message_dialog(title: &str, message: &str, parent_window: &impl IsA<
     dialog.present(parent_window);
 }
 
-pub fn show_error(parent_window: &impl IsA<gtk::Widget>, title: &str, error: &udisks::Error) {
+pub fn show_error(
+    parent_window: &impl IsA<gtk::Widget>,
+    title: &str,
+    error: Box<dyn std::error::Error>,
+) {
     // Never show an error if it's because the user dismissed the
     // authentication dialog himself
     //
     // ... or if the user cancelled the operation
     if matches!(
-        error,
-        udisks::Error::NotAuthorizedDismissed | udisks::Error::Cancelled
+        error.downcast_ref::<udisks::Error>(),
+        Some(udisks::Error::NotAuthorizedDismissed) | Some(udisks::Error::Cancelled)
     ) {
         return;
     }
@@ -878,7 +882,7 @@ pub async fn ensure_unused_list(
 ) -> udisks::Result<()> {
     for object in objects {
         if let Err((err, err_msg)) = unuse_data_iterate(client, object).await {
-            show_error(parent_window, &err_msg, &err);
+            show_error(parent_window, &err_msg, Box::new(err.clone()));
             return Err(err);
         }
     }

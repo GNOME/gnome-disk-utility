@@ -893,8 +893,8 @@ pub async fn ensure_unused(
     client: &udisks::Client,
     parent_window: &impl IsA<gtk::Widget>,
     object: &udisks::Object,
-) {
-    let _ = ensure_unused_list(client, parent_window, &[object.clone()]).await;
+) -> udisks::Result<()> {
+    ensure_unused_list(client, parent_window, &[object.clone()]).await
 }
 
 pub async fn calc_space_to_grow(

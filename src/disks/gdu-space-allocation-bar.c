@@ -169,5 +169,9 @@ gdu_space_allocation_bar_set_drive (GduSpaceAllocationBar *self,
 
   g_set_object (&self->drive, drive);
 
+  g_signal_connect_swapped (gdu_item_get_partitions (GDU_ITEM (self->drive)),
+                            "items-changed",
+                            G_CALLBACK (update_space_allocation_bar),
+                            self);
   update_space_allocation_bar (self);
 }

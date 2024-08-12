@@ -106,9 +106,6 @@ update_drive_view (GduDriveView *self)
                            (GtkListBoxCreateWidgetFunc)gdu_block_row_new,
                            NULL, NULL);
 
-  gdu_space_allocation_bar_set_drive(GDU_SPACE_ALLOCATION_BAR (self->space_allocation_bar),
-                                     self->drive);
-
   features = gdu_item_get_features (GDU_ITEM (self->drive));
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("view.format", GDU_FEATURE_FORMAT);
@@ -483,6 +480,8 @@ gdu_drive_view_set_drive (GduDriveView *self,
     return;
 
   g_set_object (&self->drive, drive);
+  gdu_space_allocation_bar_set_drive(GDU_SPACE_ALLOCATION_BAR (self->space_allocation_bar),
+                                     self->drive);
 
   if (drive)
     update_drive_view (self);

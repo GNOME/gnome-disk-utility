@@ -20,6 +20,10 @@ use crate::config::GETTEXT_PACKAGE;
 use crate::enums::{GduFormatDurationFlags, ResizeFlags, UnitSize};
 use crate::gettext::pgettext_f;
 
+pub const PARTITION_COLORS: [&str; 7] = [
+    "blue", "green", "yellow", "orange", "red", "purple", "brown",
+];
+
 pub async fn has_configuration(
     block: &udisks::block::BlockProxy<'static>,
     config_type: &str,

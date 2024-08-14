@@ -38,10 +38,9 @@ pub async fn has_configuration(
 
         if config_type == "crypttab" {
             has_passphrase = config_details.get("passphrase-path").is_some_and(|value| {
-                let Some(path) = string_from_array(value) else {
-                    return false;
-                };
-                !path.is_empty() && path.starts_with("/dev")
+                string_from_array(value).is_some_and(|path| 
+                //TODO: is the empty check even necessary)
+                !path.is_empty() && !path.starts_with("/dev"))
             });
         }
         return Ok((true, has_passphrase));
@@ -367,7 +366,7 @@ pub async fn count_primary_dos_partitions(
 ) -> u32 {
     let mut count = 0;
     for partition in client.partitions(table).await {
-        if partition.is_contained().await.is_ok_and(|v| v) {
+        if partition.is_contained().await.is_ok_and(|v| !v) {
             count += 1;
         }
     }

@@ -178,7 +178,7 @@ pub fn update_check_option(
     options_entry: &impl IsA<gtk::Editable>,
     option: &str,
     _widget: &impl IsA<gtk::Widget>,
-    check_button: &impl IsA<gtk::ToggleButton>,
+    check_button: &impl IsA<adw::SwitchRow>,
     negate: bool,
     _add_to_front: bool,
 ) {
@@ -194,9 +194,9 @@ pub fn update_check_option(
                 remove_option(options_entry, option, false);
             }
         } else if negate {
-            check_button.set_active(!opts);
+            check_button.as_ref().set_active(!opts);
         } else {
-            check_button.set_active(opts);
+            check_button.as_ref().set_active(opts);
         }
     }
 }

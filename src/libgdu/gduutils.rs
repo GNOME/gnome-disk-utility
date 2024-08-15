@@ -38,7 +38,7 @@ pub async fn has_configuration(
 
         if config_type == "crypttab" {
             has_passphrase = config_details.get("passphrase-path").is_some_and(|value| {
-                string_from_array(value).is_some_and(|path| 
+                string_from_array(value).is_some_and(|path|
                 //TODO: is the empty check even necessary)
                 !path.is_empty() && !path.starts_with("/dev"))
             });
@@ -196,6 +196,33 @@ pub fn update_check_option(
             check_button.as_ref().set_active(!opts);
         } else {
             check_button.as_ref().set_active(opts);
+        }
+    }
+}
+
+pub fn update_entry_option(
+    options_entry: &impl IsA<gtk::Editable>,
+    option: &str,
+    _widget: &impl IsA<gtk::Widget>,
+    entry: &impl IsA<gtk::Editable>,
+) {
+    let opts = has_option(options_entry, option, true)
+        .1
+        .unwrap_or_default();
+    let ui = entry.text();
+    let ui_escaped = glib::Uri::escape_string(&ui, None, true);
+
+    if opts != ui_escaped {
+        if todo!("widget == entry") {
+            if !ui_escaped.is_empty() {
+                remove_option(options_entry, option, true);
+                add_option(options_entry, option, &ui, false)
+            } else {
+                remove_option(options_entry, option, true);
+            }
+        } else {
+            let opts_unescaped = glib::Uri::unescape_string(&opts, None).unwrap_or_default();
+            entry.set_text(&opts_unescaped);
         }
     }
 }

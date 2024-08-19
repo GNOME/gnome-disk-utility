@@ -272,8 +272,7 @@ edit_filesystem_cb (GtkWidget  *widget,
   g_assert (object != NULL);
 
   gdu_edit_filesystem_dialog_show (block_row_get_window (self),
-                                   block_row_get_client (),
-                                   object);
+                                   self->block);
 }
 
 static void

@@ -14,7 +14,6 @@
 #include <glib/gi18n.h>
 
 #include "gduutils.h"
-#include "gdu-block.h"
 #include "gdu-edit-filesystem-dialog.h"
 
 struct _GduEditFilesystemDialog
@@ -130,8 +129,7 @@ gdu_edit_filesystem_dialog_init (GduEditFilesystemDialog *self)
 
 void
 gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
-                                 UDisksClient *client,
-                                 UDisksObject *object)
+                                 GduBlock     *block)
 {
   GduEditFilesystemDialog *self;
   guint max_len;
@@ -139,14 +137,13 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
   const char *label;
   const char *fs_type;
 
-  g_return_if_fail (UDISKS_IS_CLIENT (client));
-  g_return_if_fail (UDISKS_IS_OBJECT (object));
+  g_return_if_fail (GDU_IS_BLOCK (block));
 
   self = g_object_new (GDU_TYPE_EDIT_FILESYSTEM_DIALOG,
                        "transient-for", parent_window,
                        NULL);
 
-  self->drive_block = gdu_block_new (client, object, NULL);
+  self->drive_block = block;
 
   label = gdu_block_get_fs_label (self->drive_block);
   fs_type = gdu_block_get_fs_type (self->drive_block);

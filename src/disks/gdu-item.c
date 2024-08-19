@@ -75,7 +75,7 @@ gdu_item_real_get_features (GduItem *self)
 static void
 gdu_item_real_changed (GduItem *self)
 {
-  g_assert_not_reached ();
+  g_signal_emit_by_name (self, "changed", 0);
 }
 
 static void

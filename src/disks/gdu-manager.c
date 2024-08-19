@@ -23,6 +23,7 @@
 #include <fcntl.h>
 
 #include "gduutils.h"
+#include "gdu-block.h"
 #include "gdu-drive.h"
 #include "gdu-manager.h"
 
@@ -224,17 +225,29 @@ object_added_cb (GduManager   *self,
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
 
-  g_debug ("UDisksObject %p added, GduDrive: %p", object,
-           g_object_get_data (G_OBJECT (object), "gdu-drive"));
+  g_debug ("UDisksObject %p added, GduDrive: %p, GduBlock: %p", object,
+           g_object_get_data (G_OBJECT (object), "gdu-drive"),
+           g_object_get_data (G_OBJECT (object), "gdu-block"));
 
-  /* If we are already managing it, update partitions */
-  if (g_object_get_data (G_OBJECT(object), "gdu-drive"))
+  /* If it's a block, update every parent as some changes (like partition size changes)
+     also affects its parents */
+  if (g_object_get_data (G_OBJECT (object), "gdu-block"))
     {
-      manager_update_partition (self, object);
-      return;
+      GduItem *item = g_object_get_data (G_OBJECT (object), "gdu-block");
+
+      gdu_block_emit_updated (GDU_BLOCK (item));
+      item = (GduItem *)gdu_item_get_parent (item);
+
+      if (GDU_IS_DRIVE (item))
+        gdu_drive_block_changed(GDU_DRIVE(item), g_object_get_data (G_OBJECT (object), "gdu-block"));
     }
 
-  manager_add_drive (self, object);
+  if (g_object_get_data (G_OBJECT (object), "gdu-drive"))
+    manager_update_partition (self, object);
+
+  if (!g_object_get_data (G_OBJECT (object), "gdu-block") &&
+      !g_object_get_data (G_OBJECT (object), "gdu-drive"))
+    manager_add_drive (self, object);
 }
 
 static void

@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2023-08-19 07:59+0000\n"
-"PO-Revision-Date: 2023-08-21 20:11+0300\n"
+"POT-Creation-Date: 2024-08-11 14:46+0000\n"
+"PO-Revision-Date: 2024-08-21 04:08+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian\n"
 "Language: be\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
 msgid "Disk Image Mounter"
@@ -98,7 +98,20 @@ msgstr ""
 "З дапамогай праграмы «Дыскі» вы можаце праглядаць даныя SMART, кіраваць "
 "прыладамі, тэставаць фізічныя дыскі, ствараць вобразы USB дыскаў."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:45
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "Стварэнне раздзелаў і фарматаванне дыскаў"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "Праверка хуткасці дыска і стану здароўя"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "Кіраванне прыладамі захоўвання даных"
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.DiskUtility.appdata.xml.in:44
 msgid "The GNOME Project"
 msgstr "Праект GNOME"
 
@@ -128,7 +141,7 @@ msgstr "Дазволіць запіс у вобраз дыска"
 msgid "Select Disk Image(s) to Mount"
 msgstr "Выбраць вобраза(ы) дыска(ў) для мантавання"
 
-#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:935
+#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:936
 #: src/disks/gducreateformatdialog.c:172 src/disks/gducreateformatdialog.c:473
 #: src/disks/gdunewdiskimagedialog.c:170 src/disks/gduwindow.c:817
 #: src/disks/ui/benchmark-dialog.ui:287
@@ -503,7 +516,7 @@ msgid ""
 msgstr ""
 "Колькасць аперацый переразмекавання сектараў. Значэнне гэтага атрыбута "
 "паказвае агульную колькасць паспяховых і непаспяховых спроб пераносу даных з "
-"хібных сектараў у запасны абшар"
+"пераразмеркаваных сектараў у запасную вобласць"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -539,7 +552,7 @@ msgid ""
 "and/or problems in the mechanical subsystem"
 msgstr ""
 "Агульная колькасць непапраўных памылак запісу ці чытання сектараў. "
-"Павелічэнне значэння гэтага атрыбута паказвае на хібу паверхні дыска ці "
+"Павелічэнне значэння гэтага атрыбута паказвае на дэфекты паверхні дыска ці "
 "праблемы з яго механічнай сістэмай"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -565,7 +578,7 @@ msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
 msgstr ""
-"Колькасць памылак падчас запісу на дыску, ці чашчыня памылак запісу ў "
+"Колькасць памылак падчас запісу на дыск, ці чашчыня памылак запісу ў "
 "некалькіх зонах, ці вышыня галоўкі"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
@@ -1367,7 +1380,7 @@ msgid "Error creating disk image"
 msgstr "Падчас стварэння вобраза дыска адбылася памылка"
 
 #. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:497
+#: src/disks/gducreatediskimagedialog.c:498
 msgid "Unrecoverable read errors while creating disk image"
 msgstr "Падчас стварэння вобраза дыска адбыліся непапраўныя памылкі чытання"
 
@@ -1376,7 +1389,7 @@ msgstr "Падчас стварэння вобраза дыска адбыліс
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:506
+#: src/disks/gducreatediskimagedialog.c:507
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1388,36 +1401,36 @@ msgstr ""
 "або дыск пашкоджаны"
 
 #. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:512
+#: src/disks/gducreatediskimagedialog.c:513
 msgid "_Delete Disk Image File"
 msgstr "_Выдаліць файл вобраза дыска"
 
-#: src/disks/gducreatediskimagedialog.c:514 src/disks/ui/benchmark-dialog.ui:49
+#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
 msgid "_Close"
 msgstr "_Закрыць"
 
-#: src/disks/gducreatediskimagedialog.c:730
+#: src/disks/gducreatediskimagedialog.c:731
 #: src/disks/gdurestorediskimagedialog.c:730
 msgid "Error determining size of device: "
 msgstr "Падчас вызначэння памеру прылады адбылася памылка: "
 
-#: src/disks/gducreatediskimagedialog.c:737
+#: src/disks/gducreatediskimagedialog.c:738
 #: src/disks/gdurestorediskimagedialog.c:737
 #, c-format
 msgid "Device is size 0"
 msgstr "У прылады нулявы памер"
 
-#: src/disks/gducreatediskimagedialog.c:770
+#: src/disks/gducreatediskimagedialog.c:771
 msgid "Error allocating space for disk image file: "
 msgstr "Падчас адвядзення прасторы для файла вобраза дыска адбылася памылка: "
 
-#: src/disks/gducreatediskimagedialog.c:930
+#: src/disks/gducreatediskimagedialog.c:931
 #: src/disks/gdunewdiskimagedialog.c:165
 #, c-format
 msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgstr "Файл «%s» ужо існуе. Хочаце яго замяніць?"
 
-#: src/disks/gducreatediskimagedialog.c:933
+#: src/disks/gducreatediskimagedialog.c:934
 #: src/disks/gdunewdiskimagedialog.c:168
 #, c-format
 msgid ""
@@ -1425,24 +1438,24 @@ msgid ""
 msgstr ""
 "Такі файл ужо існуе ў «%s». Каля яго замяніць, то перазапішацца яго змесціва."
 
-#: src/disks/gducreatediskimagedialog.c:936
+#: src/disks/gducreatediskimagedialog.c:937
 #: src/disks/gdunewdiskimagedialog.c:171
 msgid "_Replace"
 msgstr "_Замяніць"
 
-#: src/disks/gducreatediskimagedialog.c:986
+#: src/disks/gducreatediskimagedialog.c:987
 #: src/disks/gdunewdiskimagedialog.c:83
 msgid "Error opening file for writing"
 msgstr "Падчас адкрыцця файла для запісу адбылася памылка"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:1002
+#: src/disks/gducreatediskimagedialog.c:1003
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Капіяванне прылады ў вобраз дыска"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1008
+#: src/disks/gducreatediskimagedialog.c:1009
 msgid "Creating Disk Image"
 msgstr "Стварэнне вобраза дыска"
 
@@ -1826,7 +1839,7 @@ msgstr ""
 msgid ""
 "Matches the whole disk of any device connected at the given port or address"
 msgstr ""
-"Адпавядае ўсяму дыску любой падлучанай прылалы з пэўным портам ці адрасам"
+"Адпавядае ўсяму дыску любой падлучанай прылады з пэўным портам ці адрасам"
 
 #: src/disks/gdufstabdialog.c:169
 msgid "Matches any device with the given label"
@@ -1883,7 +1896,7 @@ msgstr "Падчас наладкі сцягоў раздзела адбылас
 
 #: src/disks/gdupartitiondialog.c:385
 msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Тып раздела пададзены як 32-бітны <i>GUID</i>"
+msgstr "Тып раздзела пададзены як 32-бітны <i>GUID</i>"
 
 #: src/disks/gdupartitiondialog.c:386
 msgid "Legacy BIOS _Bootable"
@@ -1899,7 +1912,7 @@ msgstr ""
 
 #: src/disks/gdupartitiondialog.c:394
 msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Тып  (8-бітны бяззнакавы цэлы лік)"
+msgstr "Тып раздзела (8-бітны бяззнакавы цэлы лік)"
 
 #: src/disks/gdupartitiondialog.c:395
 msgid "_Bootable"
@@ -2590,7 +2603,7 @@ msgid ""
 "Number of samples. Bigger number produces more smooth graphs but the "
 "benchmark will take more time."
 msgstr ""
-"Колькасць фрагментаў. Чым больш іх будзе, тым больш роўнамернымі будуць "
+"Колькасць фрагментаў. Чым больш іх будзе, тым больш раўнамернымі будуць "
 "графікі, але тэставанне зойме больш часу."
 
 #: src/disks/ui/benchmark-dialog.ui:413
@@ -2649,7 +2662,7 @@ msgstr "_Пацвердзіць парольную фразу"
 #: src/disks/ui/change-passphrase-dialog.ui:119
 #: src/disks/ui/create-password-page.ui:81
 msgid "Confirm passphrase entered above"
-msgstr "Пацвердзіце парольную фразу, ўведзеную вышэй"
+msgstr "Пацвердзіце парольную фразу, уведзеную вышэй"
 
 #: src/disks/ui/change-passphrase-dialog.ui:134
 msgid "The strength of the passphrase"
@@ -3322,7 +3335,7 @@ msgid ""
 "If set, the name of the icon to use in the device in the user interface [x-"
 "gvfs-icon=]"
 msgstr ""
-"Калі вызначана, ў інтэрфейсе карыстальніка ў прыладзе будзе паказвацца назва "
+"Калі вызначана, у інтэрфейсе карыстальніка ў прыладзе будзе паказвацца назва "
 "значка [x-gvfs-icon=]"
 
 #: src/disks/ui/edit-fstab-dialog.ui:268
@@ -3392,7 +3405,7 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
-"Назва раздзела (да 36 сімвалаў Унікода). Можа спатрэбіцца, калі вы хочаце "
+"Назва раздзела (да 36 сімвалаў Юнікода). Можа спатрэбіцца, калі вы хочаце "
 "спасылацца на прыладу пры дапамозе сімвалічнай спасылкі ў каталозе <b>/dev/"
 "disk/by-partlabel</b>"
 
@@ -3753,7 +3766,7 @@ msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
 msgstr ""
-"Калі прызначана, лічбавае значэнне VeraCrypt PIM будзк выкарыстоўвацца для "
+"Калі прызначана, лічбавае значэнне VeraCrypt PIM будзе выкарыстоўвацца для "
 "гэтага тома."
 
 #: src/disks/ui/unlock-device-dialog.ui:174

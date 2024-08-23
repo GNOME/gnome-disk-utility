@@ -946,3 +946,34 @@ gdu_drive_get_object_for_format (GduDrive *self)
 
   return self->object;
 }
+
+void
+gdu_drive_block_changed (GduDrive *self,
+                         gpointer block)
+{
+  g_autoptr(GduBlock) before = NULL;
+  g_autoptr(GduBlock) after = NULL;
+  guint position;
+
+  g_return_if_fail (GDU_IS_DRIVE (self));
+  g_return_if_fail (GDU_IS_BLOCK (block));
+
+  if (!g_list_store_find (self->partitions, block, &position))
+    g_return_if_reached ();
+
+  gdu_block_emit_updated (block);
+
+  /* Update siblings as some changes (like partition size changes)
+     also affects siblings */
+  /* fixme: This won't work if the siblings is just freespace without any block associated */
+  if (position > 0)
+    {
+      before = g_list_model_get_item (G_LIST_MODEL (self->partitions), position - 1);
+      gdu_block_emit_updated (before);
+    }
+
+  after = g_list_model_get_item (G_LIST_MODEL (self->partitions), position + 1);
+
+  if (after)
+    gdu_block_emit_updated (after);
+}

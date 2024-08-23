@@ -53,6 +53,8 @@ void          gdu_drive_power_off_async               (GduDrive              *se
 gboolean      gdu_drive_power_off_finish              (GduDrive              *self,
                                                        GAsyncResult          *result,
                                                        GError               **error);
+void          gdu_drive_block_changed                 (GduDrive              *self,
+                                                       gpointer               block);
 
 /* xxx: to be removed once the dust settles */
 gpointer      gdu_drive_get_object                    (GduDrive              *self);

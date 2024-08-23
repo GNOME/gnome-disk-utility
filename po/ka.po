@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-02-13 09:01+0000\n"
-"PO-Revision-Date: 2024-03-02 09:46+0100\n"
+"POT-Creation-Date: 2024-08-21 08:57+0000\n"
+"PO-Revision-Date: 2024-08-23 09:47+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -20,21 +20,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.3.2\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:54
+#: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Disk Image Mounter"
 msgstr "დისკის ასლის მიმმაგრებელი"
 
 #: data/gnome-disk-image-mounter.desktop.in:4
-msgid "Mount Disk Images"
-msgstr "დისკის ასლების მიმაგრება"
-
-#: data/gnome-disk-image-writer.desktop.in:3
-msgid "Disk Image Writer"
-msgstr "დისკის ასლის ჩამწერი"
-
-#: data/gnome-disk-image-writer.desktop.in:4
-msgid "Write Disk Images to Devices"
-msgstr "დისკის ასლის მოწყობილობაზე ჩაწერა"
+msgid "Mount/Write Disk Images"
+msgstr "დისკის ასლის ფაილების მიმაგრება/ჩაწერა"
 
 #: data/org.gnome.Disks.gschema.xml:6
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -70,8 +62,8 @@ msgstr ""
 "სემპლების რაოდენობა, რომელსაც ტესტი გამოიყენებს წვდომის დროის გასაზომად."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/ui/about-dialog.ui:10
-#: src/disks/ui/disks.ui:28
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:301
+#: src/disks/ui/gdu-window.ui:23
 msgid "Disks"
 msgstr "დისკები"
 
@@ -95,8 +87,20 @@ msgstr ""
 "თუ იყენებთ დისკებს, შეგიძლიათ, იხილოთ SMART მონაცემები, მართოთ "
 "მოწყობილობები, დატესტოთ ფიზიკური დისკები და შექმნათ USB დისკის ასლები."
 
+#: data/org.gnome.DiskUtility.appdata.xml.in:22
+msgid "Partition and format disks"
+msgstr "დისკების დაყოფა და დაფორმატება"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr "დისკის სიჩქარისა და აპარატურის სტატუსის შემოწმება"
+
+#: data/org.gnome.DiskUtility.appdata.xml.in:30
+msgid "Manage your storage devices"
+msgstr "მართეთ თქვენი საცავის მოწყობილობები"
+
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:47
+#: data/org.gnome.DiskUtility.appdata.xml.in:44 src/disks/gdu-application.c:303
 msgid "The GNOME Project"
 msgstr "პროექტი „GNOME“"
 
@@ -113,139 +117,145 @@ msgstr ""
 "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 
-#: src/disk-image-mounter/main.c:52
-msgid "An error occurred"
-msgstr "შეცდომა"
+#: src/disk-image-mounter/main.rs:21
+msgid "GNOME Disk Image Mounter"
+msgstr "GNOME-ის დისკის ასლის ფაილების მიმმაგრებელი"
 
-#: src/disk-image-mounter/main.c:73
-msgid "Allow writing to the image"
-msgstr "გამოსახულებაში ჩაწერის დაშვება"
+#: src/disk-image-mounter/window.rs:108
+msgid "Compressed image files are not mountable"
+msgstr "შეკუმშული დისკის ასლის ფაილები მიმაგრებადი არაა"
 
-#: src/disk-image-mounter/main.c:88
-msgid "Select Disk Image(s) to Mount"
-msgstr "აირჩიეთ მისამაგრებელი დისკის ასლი"
+#: src/disk-image-mounter/window.rs:116
+msgid "Open the mounted image"
+msgstr "მიმაგრებული დისკის ასლის ფაილის გახსნა"
 
-#: src/disk-image-mounter/main.c:91 src/disks/gducreatediskimagedialog.c:936
-#: src/disks/gducreateformatdialog.c:166 src/disks/gdunewdiskimagedialog.c:260
-#: src/disks/ui/benchmark-dialog.ui:287
-#: src/disks/ui/change-passphrase-dialog.ui:169
-#: src/disks/ui/create-disk-image-dialog.ui:123
-#: src/disks/ui/edit-crypttab-dialog.ui:236
-#: src/disks/ui/edit-filesystem-dialog.ui:67
-#: src/disks/ui/edit-partition-dialog.ui:142
-#: src/disks/ui/format-disk-dialog.ui:90 src/disks/ui/gdu-window.ui:159
-#: src/disks/ui/new-disk-image-dialog.ui:161
-#: src/disks/ui/restore-disk-image-dialog.ui:184
-#: src/disks/ui/unlock-device-dialog.ui:218
-msgid "_Cancel"
-msgstr "_გაუქმება"
+#: src/disk-image-mounter/window.rs:119
+msgid "Already mounted read-only"
+msgstr "უკვე მიმაგრებულია მხოლოდ-წასაკითხად"
 
-#: src/disk-image-mounter/main.c:92
-msgid "_Mount"
-msgstr "_მიმაგრება"
+#: src/disk-image-mounter/window.rs:122
+msgid "Already mounted"
+msgstr "უკვე მიმაგრებულია"
 
-#. Add a RO check button that defaults to RO
-#: src/disk-image-mounter/main.c:100
-msgid "Set up _read-only mount"
-msgstr "მხოლოდ კითხვადი მიმაგრება"
+#: src/disk-image-mounter/window.rs:156 src/disk-image-mounter/window.ui:39
+msgid "Open in Files"
+msgstr "გახსნა Files-ში"
 
-#: src/disk-image-mounter/main.c:101
-msgid ""
-"If checked, the mount will be read-only. This is useful if you don’t want "
-"the underlying disk image to be modified"
-msgstr ""
-"თუ ჩართულია, ეს მიმაგრება მხოლოდ-კითხვადი იქნება. გამოგადგებათ, თუ გნებავთ, "
-"რომ დისკის ასლი არ შეიცვალოს"
+#: src/disk-image-mounter/window.rs:227
+msgid "Failed to mount file"
+msgstr "ფაილის მიმაგრების შეცდომა"
 
-#: src/disk-image-mounter/main.c:142
-#, c-format
-msgid "Error connecting to udisks daemon: %s (%s, %d)"
-msgstr "შეცდომა udisks დემონთან მიერთებისას: %s (%s, %d)"
+#: src/disk-image-mounter/window.ui:40
+msgid "Mount the image read-only"
+msgstr "დისკის ასლის ფაილის მიმაგრება მხოლოდ-წასაკითხად"
 
-#: src/disk-image-mounter/main.c:150
-msgid "Attach and mount one or more disk image files."
-msgstr "მიმაგრეთ ერთი ან მეტი დისკის ასლის ფაილი."
+#: src/disk-image-mounter/window.ui:60
+msgid "Unmount Disk Image"
+msgstr "დისკის ასლის ფაილის მოხსნა"
 
-#: src/disk-image-mounter/main.c:198
-#, c-format
-msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
-msgstr "%s-ის გახსნის შეცდომა - ტომი მიმაგრებულია?"
+#: src/disk-image-mounter/window.ui:61
+msgid "Unmount the mounted image"
+msgstr "მიმაგრებული დისკის ასლის ფაილის მოხსნა"
 
-#: src/disk-image-mounter/main.c:205
-#, c-format
-msgid "Error opening “%s”: %m"
-msgstr "%s-ის გახსნის შეცდომა: %m"
+#: src/disk-image-mounter/window.ui:75
+msgid "Edit Contents in Files"
+msgstr "შემცველობი ჩასწორება Files-ში"
 
-#: src/disk-image-mounter/main.c:226
-#, c-format
-msgid "Error attaching disk image: %s (%s, %d)"
-msgstr "დისკის ასლის მიმაგრების შეცდომა: %s (%s, %d)"
+#: src/disk-image-mounter/window.ui:76
+msgid "Mount the image and allow editing"
+msgstr "დისკის ასლის ფაილის მიმაგრება და ჩასწორების ჩართვა"
 
-#: src/disks/gduapplication.c:93
-msgid "Stop running jobs?"
-msgstr "გავაჩერო გაშვებული დავალებები?"
+#: src/disk-image-mounter/window.ui:95
+msgid "Write to Drive"
+msgstr "დისკზე ჩაწერა"
 
-#: src/disks/gduapplication.c:95
-msgid "Closing now stops the running jobs and leads to a corrupt result."
-msgstr ""
-"ახლა დახურვა შეაჩერებს გაშვებულ დავალებებს და დაზიანებულ შედეგამდე მიგიყვანთ."
+#: src/disk-image-mounter/window.ui:96
+msgid "Open in Disks to write the image to a drive"
+msgstr "გახსენით Disk-ში, რომ დისკის ასლის ფაილი დისკზე ჩაწეროთ"
 
-#: src/disks/gduapplication.c:136
+#: src/disk-image-mounter/window.ui:109
+msgid "Inspect in Disks"
+msgstr "შემოწმება Disks-ში"
+
+#: src/disk-image-mounter/window.ui:110
+msgid "Mount the image and open in Disks"
+msgstr "დისკის ასლის ფაილის მიმაგრება და Disks-ში გახსნა"
+
+#: src/disks/gdu-application.c:117
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "%s-ის გახსნის შეცდომა: %s"
 
-#: src/disks/gduapplication.c:143
+#: src/disks/gdu-application.c:124
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "%s-სთვს ბლოკური მოწყობილობის მოძებნის შეცდომა"
 
-#: src/disks/gduapplication.c:165
+#: src/disks/gdu-application.c:157
 msgid "Select device"
 msgstr "აირჩიეთ მოწყობილობა"
 
-#: src/disks/gduapplication.c:166
+#: src/disks/gdu-application.c:158
 msgid "Format selected device"
 msgstr "მონიშნული მოწყობილობის დაფორმატება"
 
-#: src/disks/gduapplication.c:167
+#: src/disks/gdu-application.c:159
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr ""
+"დამატებითი შეტყობინებების ჩართვა. ჟურნალის დონის ასაწევად ოთხამდე ჯერად "
+"შეგიძლიათ, მიუთითოთ"
+
+#: src/disks/gdu-application.c:160
 msgid "Ignored, kept for compatibility"
 msgstr "იგნორირდება -- მხოლოდ თავსებადობისთვის"
 
-#: src/disks/gduapplication.c:168
+#: src/disks/gdu-application.c:161
 msgid "Restore disk image"
 msgstr "დისკის გამოსახულების აღდგენა"
 
-#: src/disks/gduapplication.c:200
+#: src/disks/gdu-application.c:194
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device და --block-device ერთად უნდა გამოიყენოთ\n"
 
-#: src/disks/gduapplication.c:206
+#: src/disks/gdu-application.c:200
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device და --restore-disk-image ერთად არ უნდა გამოიყენოთ"
 
-#. Translators: Shown in the About dialog to convey version numbers.
-#. *              The first %s is the version of Disks (for example "3.6").
-#. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
-#. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
-#.
-#: src/disks/gduapplication.c:340
-#, c-format
+#: src/disks/gdu-application.c:305
 msgid ""
-"gnome-disk-utility %s\n"
-"UDisks %s (built against %d.%d.%d)"
+"© 2009 The GNOME Project\n"
+"© 2008-2013 Red Hat, Inc.\n"
+"© 2008-2013 David Zeuthen"
 msgstr ""
-"gnome-disk-utility %s\n"
-"UDisks %s (აგებულია ბიბლიოთეკით %d.%d.%d)"
+"© 2009 პროექტი GNOME\n"
+"© 2008-2013 Red Hat, Inc.\n"
+"© 2008-2013 David Zeuthen"
+
+#: src/disks/gdu-application.c:309
+msgid "translator-credits"
+msgstr "თემური დოღონაძე"
+
+#: src/disks/gdu-application.c:325
+msgid "Stop running jobs?"
+msgstr "გავაჩერო გაშვებული დავალებები?"
+
+#: src/disks/gdu-application.c:326
+msgid "Closing now stops the running jobs and leads to a corrupt result."
+msgstr ""
+"ახლა დახურვა შეაჩერებს გაშვებულ დავალებებს და დაზიანებულ შედეგამდე მიგიყვანთ."
+
+#: src/disks/gdu-application.c:327
+msgid "Stop"
+msgstr "გაჩერება"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:145
+#: src/disks/gdu-ata-smart-dialog.c:144
 msgid "Read Error Rate"
 msgstr "კითხვის შეცდომების სიჩქარე"
 
-#: src/disks/gduatasmartdialog.c:146
+#: src/disks/gdu-ata-smart-dialog.c:145
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -257,44 +267,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:155
+#: src/disks/gdu-ata-smart-dialog.c:154
 msgid "Throughput Performance"
 msgstr "გამტარუნარიანობის წარმადობა"
 
-#: src/disks/gduatasmartdialog.c:156
+#: src/disks/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
 msgstr "დისკის საშუალო ეფექტურობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:163
+#: src/disks/gdu-ata-smart-dialog.c:162
 msgid "Spinup Time"
 msgstr "დისკის შპინდელების ტრიალის დაწყების დრო"
 
-#: src/disks/gduatasmartdialog.c:164
+#: src/disks/gdu-ata-smart-dialog.c:163
 msgid "Time needed to spin up the disk"
 msgstr "დისკის შპინდელების ტრიალის დაწყების დრო"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:171
+#: src/disks/gdu-ata-smart-dialog.c:170
 msgid "Start/Stop Count"
 msgstr "გაშვების/შეჩერების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:172
+#: src/disks/gdu-ata-smart-dialog.c:171
 msgid "Number of spindle start/stop cycles"
 msgstr "შპინდელის გაშვება/გაჩერების ციკლების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:179
+#: src/disks/gdu-ata-smart-dialog.c:178
 msgid "Reallocated Sector Count"
 msgstr "გადაადგილებული სექტორების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:180
+#: src/disks/gdu-ata-smart-dialog.c:179
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -307,110 +317,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:189
+#: src/disks/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
 msgstr "არხის ზღვარის წაკითხვა"
 
-#: src/disks/gduatasmartdialog.c:190
+#: src/disks/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
 msgstr "არხის ზღვარი მონაცემების კითხვისას."
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:197
+#: src/disks/gdu-ata-smart-dialog.c:196
 msgid "Seek Error Rate"
 msgstr "გადახვევის შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:198
+#: src/disks/gdu-ata-smart-dialog.c:197
 msgid "Frequency of errors while positioning"
 msgstr "შეცდომების სიხშირე პოზიცირებისას"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:205
+#: src/disks/gdu-ata-smart-dialog.c:204
 msgid "Seek Timer Performance"
 msgstr "ძებნის დროის წარმადობა"
 
-#: src/disks/gduatasmartdialog.c:206
+#: src/disks/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operations while positioning"
 msgstr "ოპერაციების საშუალო ეფექტურობა პოზიცირებისას"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
+#: src/disks/gdu-ata-smart-dialog.c:212 src/disks/gdu-ata-smart-dialog.c:537
 msgid "Power-On Hours"
 msgstr "ჩართულობის საათები"
 
-#: src/disks/gduatasmartdialog.c:214 src/disks/gduatasmartdialog.c:539
+#: src/disks/gdu-ata-smart-dialog.c:213 src/disks/gdu-ata-smart-dialog.c:538
 msgid "Number of hours elapsed in the power-on state"
 msgstr "ჩართული მდგომარეობის ხანგრძლივობა, საათებში"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:221
+#: src/disks/gdu-ata-smart-dialog.c:220
 msgid "Spinup Retry Count"
 msgstr "დაქოქვის თავიდან ცდის რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:222
+#: src/disks/gdu-ata-smart-dialog.c:221
 msgid "Number of retry attempts to spin up"
 msgstr "დისკის ტრიალის დაწყების ცდების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:229
+#: src/disks/gdu-ata-smart-dialog.c:228
 msgid "Calibration Retry Count"
 msgstr "კალიბრაციის თავდან ჩართვის რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:230
+#: src/disks/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
 msgstr "ამ მოწყობილობის კალიბრაციის ცდების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:237
+#: src/disks/gdu-ata-smart-dialog.c:236
 msgid "Power Cycle Count"
 msgstr "ჩართვების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:238
+#: src/disks/gdu-ata-smart-dialog.c:237
 msgid "Number of power-on events"
 msgstr "ჩართვის მოვლენების რიცხვი"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:245
+#: src/disks/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
 msgstr "რბილი წაკითხვის შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:247
+#: src/disks/gdu-ata-smart-dialog.c:246
 msgid "Frequency of errors while reading from the disk"
 msgstr "შეცდომების სიხშირე დისკიდან წაკითხვისას"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:254
+#: src/disks/gdu-ata-smart-dialog.c:253
 msgid "Reported Uncorrectable Errors"
 msgstr "გამოუსწორებელი შეცდომები"
 
-#: src/disks/gduatasmartdialog.c:255
+#: src/disks/gdu-ata-smart-dialog.c:254
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr "შეცდომების რაოდენობა, რომლებიც აპარატურულმა ECC-მა ვერ აღადგინა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:262
+#: src/disks/gdu-ata-smart-dialog.c:261
 msgid "High Fly Writes"
 msgstr "ჩაწერისას თავაკის აცდენები"
 
-#: src/disks/gduatasmartdialog.c:263
+#: src/disks/gdu-ata-smart-dialog.c:262
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
@@ -419,78 +429,78 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:270
+#: src/disks/gdu-ata-smart-dialog.c:269
 msgid "Airflow Temperature"
 msgstr "მდინარე ჰაერის ტემპერატურა"
 
-#: src/disks/gduatasmartdialog.c:271
+#: src/disks/gdu-ata-smart-dialog.c:270
 msgid "Airflow temperature of the drive"
 msgstr "დისკის მდინარე ჰაერის ტემპერატურა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:278 src/disks/gduatasmartdialog.c:448
+#: src/disks/gdu-ata-smart-dialog.c:277 src/disks/gdu-ata-smart-dialog.c:447
 msgid "G-sense Error Rate"
 msgstr "G-sense -ის შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:279
+#: src/disks/gdu-ata-smart-dialog.c:278
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr "შეცდომების სიხშირე დატვირთვის შედეგად"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:286 src/disks/gduatasmartdialog.c:505
+#: src/disks/gdu-ata-smart-dialog.c:285 src/disks/gdu-ata-smart-dialog.c:504
 msgid "Power-off Retract Count"
 msgstr "გამორთვების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:287
+#: src/disks/gdu-ata-smart-dialog.c:286
 msgid "Number of power-off or emergency retract cycles"
 msgstr "გამორთვის ან ავარიული გაწევის ციკლების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:294 src/disks/gduatasmartdialog.c:481
+#: src/disks/gdu-ata-smart-dialog.c:293 src/disks/gdu-ata-smart-dialog.c:480
 msgid "Load/Unload Cycle Count"
 msgstr "ჩატვირთვა /გამოტვირთვის ციკლების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:295
+#: src/disks/gdu-ata-smart-dialog.c:294
 msgid "Number of cycles into landing zone position"
 msgstr "დაშვების ზომის მდებარეობაში ციკლების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:302 src/disks/gduatasmartdialog.c:521
-#: src/disks/ui/smart-dialog.ui:153
+#: src/disks/gdu-ata-smart-dialog.c:301 src/disks/gdu-ata-smart-dialog.c:520
+#: src/disks/ui/gdu-ata-smart-dialog.ui:83
 msgid "Temperature"
 msgstr "ტემპერატურა"
 
-#: src/disks/gduatasmartdialog.c:303
+#: src/disks/gdu-ata-smart-dialog.c:302
 msgid "Current internal temperature of the drive"
 msgstr "დისკის მიმდინარე შიდა ტემპერატურა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:310
+#: src/disks/gdu-ata-smart-dialog.c:309
 msgid "Hardware ECC Recovered"
 msgstr "აპარატურული ECC აღდგენა"
 
-#: src/disks/gduatasmartdialog.c:311
+#: src/disks/gdu-ata-smart-dialog.c:310
 msgid "Number of ECC on-the-fly errors"
 msgstr "ECC შეცდომების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:318
+#: src/disks/gdu-ata-smart-dialog.c:317
 msgid "Reallocation Count"
 msgstr "თავიდან გამოყოფების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:319
+#: src/disks/gdu-ata-smart-dialog.c:318
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -503,11 +513,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:329
+#: src/disks/gdu-ata-smart-dialog.c:328
 msgid "Current Pending Sector Count"
 msgstr "მიმდინარე მომლოდინე სექტორის რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:330
+#: src/disks/gdu-ata-smart-dialog.c:329
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -523,11 +533,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:341
+#: src/disks/gdu-ata-smart-dialog.c:340
 msgid "Uncorrectable Sector Count"
 msgstr "შეუკეთებადი სექტორების რიცხვი"
 
-#: src/disks/gduatasmartdialog.c:342
+#: src/disks/gdu-ata-smart-dialog.c:341
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -540,22 +550,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:351
+#: src/disks/gdu-ata-smart-dialog.c:350
 msgid "UDMA CRC Error Rate"
 msgstr "UDMA CRC შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:352
+#: src/disks/gdu-ata-smart-dialog.c:351
 msgid "Number of CRC errors during UDMA mode"
 msgstr "CRC შეცდომების რაოდენობა UDMA რეჟიმისას"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:359
+#: src/disks/gdu-ata-smart-dialog.c:358
 msgid "Write Error Rate"
 msgstr "ჩაწერის შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:360
+#: src/disks/gdu-ata-smart-dialog.c:359
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -566,22 +576,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:367
+#: src/disks/gdu-ata-smart-dialog.c:366
 msgid "Soft Read Error Rate"
 msgstr "რბილი წაკითხვის შეცდომების სიხშირე"
 
-#: src/disks/gduatasmartdialog.c:368
+#: src/disks/gdu-ata-smart-dialog.c:367
 msgid "Number of off-track errors"
 msgstr "ჩაწერის ზონიდან გასვლის შეცდომების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:375
+#: src/disks/gdu-ata-smart-dialog.c:374
 msgid "Data Address Mark Errors"
 msgstr "მონაცემების მისამართის ნიშნის შეცდომების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:376
+#: src/disks/gdu-ata-smart-dialog.c:375
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr ""
 "მონაცემის მისამართის ნიშნულის (DAM) შეცდომების რაოდენობა (ან მომწოდებლის "
@@ -590,88 +600,88 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:383
+#: src/disks/gdu-ata-smart-dialog.c:382
 msgid "Run Out Cancel"
 msgstr "ECC შეცდომების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:384
+#: src/disks/gdu-ata-smart-dialog.c:383
 msgid "Number of ECC errors"
 msgstr "ECC შეცდომების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:391
+#: src/disks/gdu-ata-smart-dialog.c:390
 msgid "Soft ECC correction"
-msgstr "პროგრამული ECC Casworeba"
+msgstr "პროგრამული ECC-ის ჩასწორება"
 
-#: src/disks/gduatasmartdialog.c:392
+#: src/disks/gdu-ata-smart-dialog.c:391
 msgid "Number of errors corrected by software ECC"
 msgstr "პროგრამული ECC-ის მიერ ჩასწორებული შეცდომები"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:399
+#: src/disks/gdu-ata-smart-dialog.c:398
 msgid "Thermal Asperity Rate"
 msgstr "გადახურებები"
 
-#: src/disks/gduatasmartdialog.c:400
+#: src/disks/gdu-ata-smart-dialog.c:399
 msgid "Number of Thermal Asperity Rate errors"
 msgstr "თერმული გადახურების გამო შეცდომების სიხშირის რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:407
+#: src/disks/gdu-ata-smart-dialog.c:406
 msgid "Flying Height"
 msgstr "თავაკის სიმაღლე"
 
-#: src/disks/gduatasmartdialog.c:408
+#: src/disks/gdu-ata-smart-dialog.c:407
 msgid "Height of heads above the disk surface"
 msgstr "თავაკების სიმაღლე დისკის ზედაპირიდან"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:415
+#: src/disks/gdu-ata-smart-dialog.c:414
 msgid "Spin High Current"
 msgstr "დატრიალების მაღალი ძაბვა"
 
-#: src/disks/gduatasmartdialog.c:416
+#: src/disks/gdu-ata-smart-dialog.c:415
 msgid "Amount of high current used to spin up the drive"
 msgstr "დისკის ტრიალის დასაწყებად საჭირო მაღალი ძაბვა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:423
+#: src/disks/gdu-ata-smart-dialog.c:422
 msgid "Spin Buzz"
 msgstr "დატრიალების მცდელობები"
 
-#: src/disks/gduatasmartdialog.c:424
+#: src/disks/gdu-ata-smart-dialog.c:423
 msgid "Number of buzz routines to spin up the drive"
 msgstr "დისკის დაბზრიალების მცდელობების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:431
+#: src/disks/gdu-ata-smart-dialog.c:430
 msgid "Offline Seek Performance"
 msgstr "ავტონომური პოზიცირება"
 
-#: src/disks/gduatasmartdialog.c:432
+#: src/disks/gdu-ata-smart-dialog.c:431
 msgid "Drive’s seek performance during offline operations"
 msgstr "დისკის გადახვევის წარმადობა გათიშული ოპერაციებისას"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:439
+#: src/disks/gdu-ata-smart-dialog.c:438
 msgid "Disk Shift"
 msgstr "დისკის წანაცვლება"
 
-#: src/disks/gduatasmartdialog.c:440
+#: src/disks/gdu-ata-smart-dialog.c:439
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
@@ -679,7 +689,7 @@ msgstr ""
 "დისკის წანაცვლება შესაძლებელია ძლიერი დარტყმის, ვარდნის ან გადახურება/"
 "გადაციების გამო"
 
-#: src/disks/gduatasmartdialog.c:449
+#: src/disks/gdu-ata-smart-dialog.c:448
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
@@ -689,22 +699,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:456
+#: src/disks/gdu-ata-smart-dialog.c:455
 msgid "Loaded Hours"
 msgstr "თავაკების მუშაობის რაოდენობა, საათებში"
 
-#: src/disks/gduatasmartdialog.c:457
+#: src/disks/gdu-ata-smart-dialog.c:456
 msgid "Number of hours in general operational state"
 msgstr "საათების რაოდენობა ზოგად მუშა მდგომარეობაში"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:464
+#: src/disks/gdu-ata-smart-dialog.c:463
 msgid "Load/Unload Retry Count"
 msgstr "ჩატვირთვა/გამოტვირთვის ცდებს რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:465
+#: src/disks/gdu-ata-smart-dialog.c:464
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -715,68 +725,68 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:473
+#: src/disks/gdu-ata-smart-dialog.c:472
 msgid "Load Friction"
 msgstr "ჩატვირთვა ხახუნით"
 
-#: src/disks/gduatasmartdialog.c:474
+#: src/disks/gdu-ata-smart-dialog.c:473
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr ""
 "მატარებლის მექანიკური ნაწილების ხახუნის გამო გამოწვეული დატვირთვა დისკზე"
 
-#: src/disks/gduatasmartdialog.c:482
+#: src/disks/gdu-ata-smart-dialog.c:481
 msgid "Total number of load cycles"
 msgstr "ჩატვირთვის ციკლების სრული რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:489
+#: src/disks/gdu-ata-smart-dialog.c:488
 msgid "Load-in Time"
 msgstr "შეტვირთვის დრო"
 
-#: src/disks/gduatasmartdialog.c:490
+#: src/disks/gdu-ata-smart-dialog.c:489
 msgid "General time for loading in a drive"
 msgstr "დისკის შეტვირთვის საშუალო დრო"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:497
+#: src/disks/gdu-ata-smart-dialog.c:496
 msgid "Torque Amplification Count"
 msgstr "მომენტის კომპენსირების მცდელობები"
 
-#: src/disks/gduatasmartdialog.c:498
+#: src/disks/gdu-ata-smart-dialog.c:497
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr "დისკის ტრიალის მომენტის მცდელობების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:506
+#: src/disks/gdu-ata-smart-dialog.c:505
 msgid "Number of power-off retract events"
 msgstr "გამორთვა-გაწევის მოვლენების რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:513
+#: src/disks/gdu-ata-smart-dialog.c:512
 msgid "GMR Head Amplitude"
 msgstr "თავაკების კანკალის ამპლიტუდა"
 
-#: src/disks/gduatasmartdialog.c:514
+#: src/disks/gdu-ata-smart-dialog.c:513
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr "მოკანკალე თავაკების ამპლიტუდა (GMR-თავაკი) გაშვებულ რეჟიმში"
 
-#: src/disks/gduatasmartdialog.c:522
+#: src/disks/gdu-ata-smart-dialog.c:521
 msgid "Temperature of the drive"
 msgstr "დისკის ტემპერატურა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:529
+#: src/disks/gdu-ata-smart-dialog.c:528
 msgid "Endurance Remaining"
 msgstr "დარჩენილი გამძლეობა"
 
-#: src/disks/gduatasmartdialog.c:530
+#: src/disks/gdu-ata-smart-dialog.c:529
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -787,22 +797,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:546
+#: src/disks/gdu-ata-smart-dialog.c:545
 msgid "Uncorrectable ECC Count"
 msgstr "შეუკეთებადი ECC რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:547
+#: src/disks/gdu-ata-smart-dialog.c:546
 msgid "Number of uncorrectable ECC errors"
 msgstr "შეუკეთებადი ECC რაოდენობა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:554
+#: src/disks/gdu-ata-smart-dialog.c:553
 msgid "Good Block Rate"
 msgstr "კარგი ბლოკების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:555
+#: src/disks/gdu-ata-smart-dialog.c:554
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -813,69 +823,69 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:563
+#: src/disks/gdu-ata-smart-dialog.c:562
 msgid "Head Flying Hours"
 msgstr "დრო, როცა თავაკი აწეული იყო, საათებაში"
 
-#: src/disks/gduatasmartdialog.c:564
+#: src/disks/gdu-ata-smart-dialog.c:563
 msgid "Time while head is positioning"
 msgstr "დრო, სანამ თავაკის პოზიცირება ხდებოდა"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:571
+#: src/disks/gdu-ata-smart-dialog.c:570
 msgid "Read Error Retry Rate"
 msgstr "განმეორებადი წაკითხვების მცდელობები"
 
-#: src/disks/gduatasmartdialog.c:572
+#: src/disks/gdu-ata-smart-dialog.c:571
 msgid "Number of errors while reading from a disk"
 msgstr "შეცდომების რაოდენობა დისკიდან წაკითხვისას"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:579
+#: src/disks/gdu-ata-smart-dialog.c:578
 msgid "Total LBAs Written"
 msgstr "ჩაწერილი LBA ჯამში"
 
-#: src/disks/gduatasmartdialog.c:580
+#: src/disks/gdu-ata-smart-dialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
 msgstr "დისკის ცხოვრებისას ჩაწერილი მონაცემების რაოდენობა"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:587
+#: src/disks/gdu-ata-smart-dialog.c:586
 msgid "Total LBAs Read"
 msgstr "წაკითხული LBA ჯამში"
 
-#: src/disks/gduatasmartdialog.c:588
+#: src/disks/gdu-ata-smart-dialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
 msgstr "დისკის ცხოვრებისას წაკითხული მონაცემების რაოდენობა"
 
-#: src/disks/gduatasmartdialog.c:647
+#: src/disks/gdu-ata-smart-dialog.c:646
 #, c-format
 msgid "No description for attribute %d"
 msgstr "აღწერის გარეშე ატრიბუტისთვის %d"
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:694
+#: src/disks/gdu-ata-smart-dialog.c:693
 msgid "FAILING"
 msgstr "ჩავარდება"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:703
+#: src/disks/gdu-ata-smart-dialog.c:702
 msgid "Failed in the past"
 msgstr "ჩავარდა წარსულში"
 
-#: src/disks/gduatasmartdialog.c:707
+#: src/disks/gdu-ata-smart-dialog.c:706
 msgid "OK"
 msgstr "დიახ"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:734
+#: src/disks/gdu-ata-smart-dialog.c:733
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -888,7 +898,7 @@ msgstr[0] "%d სექტორი"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:746 src/disks/gduatasmartdialog.c:879
+#: src/disks/gdu-ata-smart-dialog.c:745 src/disks/gdu-ata-smart-dialog.c:878
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -899,118 +909,118 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1128
+#: src/disks/gdu-ata-smart-dialog.c:756 src/disks/gdu-ata-smart-dialog.c:1127
 msgid "N/A"
 msgstr "არარსებული"
 
-#: src/disks/gduatasmartdialog.c:777
+#: src/disks/gdu-ata-smart-dialog.c:776
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "ბოლო თვითშემოწმება წარმატებით დასრულდა"
 
-#: src/disks/gduatasmartdialog.c:781
+#: src/disks/gdu-ata-smart-dialog.c:780
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "ბოლო თვითშემოწმება გაუქმდა"
 
-#: src/disks/gduatasmartdialog.c:785
+#: src/disks/gdu-ata-smart-dialog.c:784
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "ბოლო თვითშემოწმება შეწყდა"
 
-#: src/disks/gduatasmartdialog.c:789
+#: src/disks/gdu-ata-smart-dialog.c:788
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "ბოლო თვითშემოწმება არ დასრულებულა"
 
-#: src/disks/gduatasmartdialog.c:793
+#: src/disks/gdu-ata-smart-dialog.c:792
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "ბოლო თვითშემოწმება ჩავარდა"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:798
+#: src/disks/gdu-ata-smart-dialog.c:797
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "ბოლო თვითშემოწმება ჩავარდა (ელექტრული)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:803
+#: src/disks/gdu-ata-smart-dialog.c:802
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "ბოლო თვითშემოწმება ჩავარდა (სერვო)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:808
+#: src/disks/gdu-ata-smart-dialog.c:807
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "ბოლო თვითშემოწმება ჩავარდა (წაკითხვა)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:813
+#: src/disks/gdu-ata-smart-dialog.c:812
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "ბოლო თვითშემოწმება ჩავარდა (დამუშავება)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:818
+#: src/disks/gdu-ata-smart-dialog.c:817
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "მიმდინარეობს თვითშემოწმება — დარჩენილია %d%%"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:825
+#: src/disks/gdu-ata-smart-dialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "უცნობი (%s)"
 
-#: src/disks/gduatasmartdialog.c:850
+#: src/disks/gdu-ata-smart-dialog.c:849
 #, c-format
 msgid "%s ago"
 msgstr "%s-ის წინ"
 
-#: src/disks/gduatasmartdialog.c:913
+#: src/disks/gdu-ata-smart-dialog.c:912
 msgid "SMART is not supported"
 msgstr "SMART მხარდაუჭერელია"
 
-#: src/disks/gduatasmartdialog.c:921
+#: src/disks/gdu-ata-smart-dialog.c:920
 msgid "SMART is not enabled"
 msgstr "SMART ჩართული არაა"
 
-#: src/disks/gduatasmartdialog.c:931
+#: src/disks/gdu-ata-smart-dialog.c:930
 msgid "Self-test in progress"
 msgstr "მიმდინარეობს თვითტესტი"
 
-#: src/disks/gduatasmartdialog.c:944 src/disks/gduatasmartdialog.c:953
+#: src/disks/gdu-ata-smart-dialog.c:943 src/disks/gdu-ata-smart-dialog.c:952
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "დისკი ალბათ ფეხებს მალე გაფშეკს"
 
-#: src/disks/gduatasmartdialog.c:976
+#: src/disks/gdu-ata-smart-dialog.c:975
 msgid "SELF-TEST FAILED"
 msgstr "თვითტესტის შეცდომა"
 
-#: src/disks/gduatasmartdialog.c:985
+#: src/disks/gdu-ata-smart-dialog.c:984
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "დისკი კარგადაა, %d ატრიბუტი ჩავარდა"
 
-#: src/disks/gduatasmartdialog.c:996
+#: src/disks/gdu-ata-smart-dialog.c:995
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "დისკი კარგადაა, %d ცუდი სექტორი"
 
-#: src/disks/gduatasmartdialog.c:1007
+#: src/disks/gdu-ata-smart-dialog.c:1006
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
 msgstr[0] "დისკი კარგადაა, წარსულში %d ატრიბუტი ჩავარდა"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1016
+#: src/disks/gdu-ata-smart-dialog.c:1015
 msgid "Disk is OK"
 msgstr "დისკი კარგად გამოიყურება"
 
@@ -1018,255 +1028,124 @@ msgstr "დისკი კარგად გამოიყურება"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1030
+#: src/disks/gdu-ata-smart-dialog.c:1029
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1116
+#: src/disks/gdu-ata-smart-dialog.c:1115
 msgid "Pre-Fail"
 msgstr "ჩავარდნის-წინა"
 
-#: src/disks/gduatasmartdialog.c:1118
+#: src/disks/gdu-ata-smart-dialog.c:1117
 msgid "Old-Age"
 msgstr "ბებერი"
 
-#: src/disks/gduatasmartdialog.c:1121
+#: src/disks/gdu-ata-smart-dialog.c:1120
 msgid "Online"
 msgstr "ონლაინ"
 
-#: src/disks/gduatasmartdialog.c:1123
+#: src/disks/gdu-ata-smart-dialog.c:1122
 msgid "Offline"
 msgstr "გათიშული"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1232
+#: src/disks/gdu-ata-smart-dialog.c:1231
 msgid "Threshold exceeded"
 msgstr "ზღვარი გადაცილებულია"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1237
+#: src/disks/gdu-ata-smart-dialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "ზღვარი გადაცილებული არაა"
 
-#: src/disks/gduatasmartdialog.c:1313
+#: src/disks/gdu-ata-smart-dialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "შეცდომა SMART-ის მონაცემების განახლებისას"
 
-#: src/disks/gduatasmartdialog.c:1345
+#: src/disks/gdu-ata-smart-dialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "შეცდომა SMART-ის თვითშემოწმების გაუქმებისას"
 
-#: src/disks/gduatasmartdialog.c:1364
+#: src/disks/gdu-ata-smart-dialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "შეცდომა SMART-ის თვითშემოწმების გაშვებისას"
 
-#: src/disks/gduatasmartdialog.c:1446
+#: src/disks/gdu-ata-smart-dialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "შეცდომა SMART-ის ჩართულობის გადართვის მცდელობისას"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1568
+#: src/disks/gdu-ata-smart-dialog.c:1564
 msgid "ID"
 msgstr "ID"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1580
+#: src/disks/gdu-ata-smart-dialog.c:1576
 msgid "Attribute"
 msgstr "ატრიბუტი"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1594
+#: src/disks/gdu-ata-smart-dialog.c:1590
 msgid "Value"
 msgstr "მნიშვნელობა"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1606
+#: src/disks/gdu-ata-smart-dialog.c:1602
 msgid "Normalized"
 msgstr "ნორმალიზებულია"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1618
+#: src/disks/gdu-ata-smart-dialog.c:1614
 msgid "Threshold"
 msgstr "ზღვარი"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1630
+#: src/disks/gdu-ata-smart-dialog.c:1626
 msgid "Worst"
 msgstr "უარესი"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1642
-#: src/disks/ui/create-filesystem-page.ui:105
+#: src/disks/gdu-ata-smart-dialog.c:1638
+#: src/disks/ui/gdu-create-filesystem-page.ui:66
+#: src/disks/ui/gdu-create-other-page.ui:8
 msgid "Type"
 msgstr "ტიპი"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1654
+#: src/disks/gdu-ata-smart-dialog.c:1650
 msgid "Updates"
 msgstr "განახლებები"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1666 src/disks/ui/disks.ui:355
+#: src/disks/gdu-ata-smart-dialog.c:1662
 msgid "Assessment"
 msgstr "შეფასება"
 
-#. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:332
-#, c-format
-msgctxt "benchmark-graph"
-msgid "%d MB/s"
-msgstr "%d მბ/წმ"
-
-#. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:337
-#, c-format
-msgctxt "benchmark-graph"
-msgid "%3g ms"
-msgstr "%3g მწმ"
-
-#. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:661
-#, c-format
-msgctxt "benchmark-transfer-rate"
-msgid "%s/s"
-msgstr "%s/წმ"
-
-#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
+#: src/disks/gdu-benchmark-dialog.c:184
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
 msgstr[0] "%u სინჯი"
 
-#. Translators: The first %s is the date and time the benchmark took place in the preferred
-#. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
-#. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
-#. * now, for example "3 days" or "2 hours" or "12 minutes".
-#.
-#: src/disks/gdubenchmarkdialog.c:717
-#, c-format
-msgctxt "benchmark-updated"
-msgid "%s (%s ago)"
-msgstr "%s (%s-ის წინ)"
-
-#: src/disks/gdubenchmarkdialog.c:729
-msgctxt "benchmark-updated"
-msgid "No benchmark data available"
-msgstr "ტესტის მონაცემები ხელმისაწვდომი არაა"
-
-#: src/disks/gdubenchmarkdialog.c:734
-msgctxt "benchmark-updated"
-msgid "Opening Device…"
-msgstr "მოწყობილობის გახსნა…"
-
-#: src/disks/gdubenchmarkdialog.c:738
-#, c-format
-msgctxt "benchmark-updated"
-msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "გადაცემის სიჩქარის გაზომვა (%2.1f%% დასრულდა)…"
-
-#: src/disks/gdubenchmarkdialog.c:745
-#, c-format
-msgctxt "benchmark-updated"
-msgid "Measuring access time (%2.1f%% complete)…"
-msgstr "წვდომის სიჩქარის გაზომვა (%2.1f%% დასრულდა)…"
-
-#: src/disks/gdubenchmarkdialog.c:811
-msgctxt "benchmarking"
-msgid "An error occurred"
-msgstr "შეცდომა"
-
-#. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:886
-#, c-format
-msgctxt "benchmark-access-time"
-msgid "%.2f msec"
-msgstr "%.2f მწმ"
-
-#. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdubenchmarkdialog.c:1180
-msgctxt "create-inhibit-message"
-msgid "Benchmarking device"
-msgstr "მოწყობილობის ტესტირება"
-
-#: src/disks/gdubenchmarkdialog.c:1206
-#, c-format
-msgctxt "benchmarking"
-msgid "Error getting size of device: %m"
-msgstr "მოწყობილობის ზომის მიღების შეცდომა: %m"
-
-#: src/disks/gdubenchmarkdialog.c:1216
-#, c-format
-msgctxt "benchmarking"
-msgid "Error getting page size: %m\n"
-msgstr "გვერდის ზომის მიღებს შეცდომა: %m\n"
-
-#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
-#: src/disks/gdubenchmarkdialog.c:1332
-#, c-format
-msgctxt "benchmarking"
-msgid "Error seeking to offset %lld"
-msgstr "შეცდომა წანაცვლებაზე (%lld) გადახვევისას"
-
-#: src/disks/gdubenchmarkdialog.c:1261
-#, c-format
-msgctxt "benchmarking"
-msgid "Error pre-reading %s from offset %s"
-msgstr "%s-ის წინასწარი წაკითხვის შეცდომა წანაცვლებიდან %s"
-
-#: src/disks/gdubenchmarkdialog.c:1273
-#, c-format
-msgctxt "benchmarking"
-msgid "Error seeking to offset %s"
-msgstr "გადახვევის შეცდომა წანაცვლებაზე %s"
-
-#: src/disks/gdubenchmarkdialog.c:1287
-#, c-format
-msgctxt "benchmarking"
-msgid "Error reading %s from offset %s"
-msgstr "%s-ის წაკითხვის შეცდომა წანაცვლებიდან %s"
-
-#: src/disks/gdubenchmarkdialog.c:1322
-#, c-format
-msgctxt "benchmarking"
-msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr "%lld ბაიტის წინასწარი წაკითხვის შეცდომა წანაცვლებიდან %lld"
-
-#: src/disks/gdubenchmarkdialog.c:1343
-#, c-format
-msgctxt "benchmarking"
-msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr "%lld ბაიტის ჩაწერის შეცდომა წანაცვლებაზე %lld: %m"
-
-#: src/disks/gdubenchmarkdialog.c:1353
-#, c-format
-msgctxt "benchmarking"
-msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr "ველოდებოდი %lld ბაიტის ჩაწერას. ჩაწერილია, მხოლოდ %lld: %m"
-
-#: src/disks/gdubenchmarkdialog.c:1363
-#, c-format
-msgctxt "benchmarking"
-msgid "Error syncing (at offset %lld): %m"
-msgstr "სინქრონიზაციის შეცდომა (წანაცვლებაზე %lld): %m"
-
-#: src/disks/gdubenchmarkdialog.c:1403
+#: src/disks/gdu-benchmark-dialog.c:536
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "შეცდომა გადახვევისას წანაცვლებამდე %lld: %m"
 
-#: src/disks/gdubenchmarkdialog.c:1415
+#: src/disks/gdu-benchmark-dialog.c:547
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr "შეცდომა %lld ბაიტის წაკითხვისას წანაცვლებიდან %lld"
 
-#: src/disks/gdu-block.c:83 src/disks/gdu-block.c:136
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
+#: src/disks/ui/gdu-create-partition-page.ui:40
 msgid "Free Space"
 msgstr "თავისუფალი ადგილი"
 
-#: src/disks/gdu-block.c:96 src/disks/ui/create-partition-page.ui:165
+#: src/disks/gdu-block.c:97 src/disks/ui/gdu-create-partition-page.ui:65
 msgid "Extended Partition"
 msgstr "გაფართოებული დანაყოფი"
 
@@ -1276,39 +1155,58 @@ msgstr "გაფართოებული დანაყოფი"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:567
+#: src/disks/gdu-block.c:570
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s თავისუფალი (%.1f%% გამოყენებული)"
 
-#: src/disks/gdu-block-row.c:288
+#: src/disks/gdu-block-row.c:338
+msgid "Error mounting filesystem"
+msgstr "ფაილური სისტემის მიმაგრების შეცდომა"
+
+#: src/disks/gdu-block-row.c:377
+msgid "Error deleting partition"
+msgstr "დანაყოფის წაშლის შეცდომა"
+
+#: src/disks/gdu-block-row.c:444
+msgid "Delete Partition?"
+msgstr "წავშალო დანაყოფი?"
+
+#: src/disks/gdu-block-row.c:445
+msgid "All data on the partition will be lost"
+msgstr "დანაყოფზე არსებული ინფორმაცია სრულიად დაიკარგება"
+
+#: src/disks/gdu-block-row.c:446
+msgid "Delete"
+msgstr "წაშლა"
+
+#: src/disks/gdu-block-row.c:506
 msgid "Error while checking filesystem"
 msgstr "ფაილური სისტემის შემოწმების შეცდომა"
 
-#: src/disks/gdu-block-row.c:314
+#: src/disks/gdu-block-row.c:519
 msgid "Filesystem intact"
 msgstr "ფაილური სისტემა შეცდომების გარეშეა"
 
-#: src/disks/gdu-block-row.c:314
+#: src/disks/gdu-block-row.c:519
 msgid "Filesystem damaged"
 msgstr "ფაილური სისტემა დაზიანრებულია"
 
-#: src/disks/gdu-block-row.c:317
+#: src/disks/gdu-block-row.c:521
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "ფაილური სისტემა %s %s-ზე დაზიანებული არაა."
 
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gdu-block-row.c:323
+#: src/disks/gdu-block-row.c:522
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "ფაილურის სისტემა %s %s-ზე შეკეთებას საჭიროებს."
 
-#: src/disks/gdu-block-row.c:392
-msgid "Confirm Check"
-msgstr "შემოწმების დადასტურება"
+#: src/disks/gdu-block-row.c:589
+msgid "Confirm Check?"
+msgstr "ადასტურებთ შემოწმებას?"
 
-#: src/disks/gdu-block-row.c:395
+#: src/disks/gdu-block-row.c:590
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -1316,34 +1214,37 @@ msgstr ""
 "შემოწმებას დიდი დრო შეიძლება დასჭირდეს. განსაკუთრებით, თუ დანაყოფი ბევრ "
 "მონაცემებს შეიცავს."
 
-#: src/disks/gdu-block-row.c:431
+#: src/disks/gdu-block-row.c:591
+msgid "Check"
+msgstr "შემოწმება"
+
+#: src/disks/gdu-block-row.c:622
 msgid "Error while repairing filesystem"
 msgstr "შეცდომა ფაილური სისტემის გასწორებისას"
 
-#: src/disks/gdu-block-row.c:457
+#: src/disks/gdu-block-row.c:638
 msgid "Repair successful"
 msgstr "გასწორება წარმატებული"
 
-#: src/disks/gdu-block-row.c:457
+#: src/disks/gdu-block-row.c:638
 msgid "Repair failed"
 msgstr "შეკეთების შეცდომა"
 
-#: src/disks/gdu-block-row.c:460
+#: src/disks/gdu-block-row.c:640
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "ფაილური სისტემა %s %s-ზე გასწორდა."
 
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gdu-block-row.c:466
+#: src/disks/gdu-block-row.c:641
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "ფაილური სისტემის %s, რომელიც %s-ზე დევს, გასწორება შეუძლებელია."
 
-#: src/disks/gdu-block-row.c:540
-msgid "Confirm Repair"
-msgstr "შეკეთების დადასტურება"
+#: src/disks/gdu-block-row.c:709
+msgid "Repair Filesystem?"
+msgstr "შევაკეთო ფაილური სისტემა?"
 
-#: src/disks/gdu-block-row.c:543
+#: src/disks/gdu-block-row.c:710
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -1355,453 +1256,536 @@ msgstr ""
 "გამოიყენოთ პროგრამები, რომლებიც აღდგენას შეეცდებიან. ოპერაციამ, შეიძლება, "
 "ძალიან დიდი დრო წაიღოს. განსაკუთრებით, თუ დანაყოფი ბევრ მონაცემებს შეიცავდა."
 
-#: src/disks/gdu-block-row.c:568
+#: src/disks/gdu-block-row.c:714
+msgid "Repair"
+msgstr "შეკეთება"
+
+#: src/disks/gdu-block-row.c:736
 msgid "Error while taking filesystem ownership"
 msgstr "ფაილური სისტემის მფლობელის როლის მიღების შეცდომა"
 
-#: src/disks/gduchangepassphrasedialog.c:77
-msgid "The passphrases do not match"
-msgstr "საკვანძო ფრაზები არ ემთხვევა"
+#: src/disks/gdu-block-row.c:824
+#, c-format
+msgid "Make your user and group the owner of \"%s\""
+msgstr "თქვენი მომხმარებლისა და ჯგუფის \"%s\"-ის მფლობელად დანიშვნა"
 
-#: src/disks/gduchangepassphrasedialog.c:86
-msgid "The passphrase matches the existing passphrase"
-msgstr "საკვანძო სიტყვა არსებულს ემთხვევა"
-
-#: src/disks/gduchangepassphrasedialog.c:106
+#: src/disks/gdu-change-passphrase-dialog.c:104
 msgid "Error updating /etc/crypttab"
 msgstr "შეცდომა /etc/crypttab -ში ჩანაწერის განახლებისას"
 
-#: src/disks/gduchangepassphrasedialog.c:121
+#: src/disks/gdu-change-passphrase-dialog.c:125
 msgid "Error changing passphrase"
 msgstr "საკვანძო ფრაზის შეცვლის შეცდომა"
 
-#: src/disks/gduchangepassphrasedialog.c:275 src/disks/gducrypttabdialog.c:409
+#: src/disks/gdu-change-passphrase-dialog.c:215
+#: src/disks/gdu-encryption-options-dialog.c:391
 msgid "Error retrieving configuration data"
 msgstr "კონფიგურაციის მონაცემების მიღების შეცდომა"
 
-#: src/disks/gduchangepassphrasedialog.c:303
+#: src/disks/gdu-change-passphrase-dialog.c:244
 msgid "/etc/crypttab configuration data is malformed"
 msgstr "/etc/crypttab კონფიგურაციის მონაცემები არასწორია"
-
-#: src/disks/gduchangepassphrasedialog.c:332
-msgid ""
-"Changing the passphrase for this device, will also update the passphrase "
-"referenced by the <i>/etc/crypttab</i> file"
-msgstr ""
-"ამ მოწყობილობისთვის საკვანძო ფრაზის შეცვლა ასვე განაახლებს საკვანძო ფრაზის "
-"მიმართვას <i>/etc/crypttab</i> ფაილში"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
 #. *              from UDisks, first is description, second the name:
 #. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
 #.
-#: src/disks/gducreateconfirmpage.c:110
+#: src/disks/gdu-create-confirm-page.c:50
 #, c-format
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes
+#. * from UDisks.
 #.
-#: src/disks/gducreateconfirmpage.c:128
+#: src/disks/gdu-create-confirm-page.c:98
 #, c-format
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
-
-#. Translators: The suggested name for the disk image to create.
-#. *              The first %s is a name for the disk (e.g. 'sdb').
-#. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
-#.
-#: src/disks/gducreatediskimagedialog.c:273
-#, c-format
-msgid "Disk Image of %s (%s).img"
-msgstr "დისკის ასლი %s (%s).img"
 
 #. Translators: A descriptive string for the sound played when
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:306
+#: src/disks/gdu-create-disk-image-dialog.c:135
 msgid "Disk image read error"
 msgstr "დისკის ასლის წაკითხვის შეცდომა"
 
-#: src/disks/gducreatediskimagedialog.c:342
+#: src/disks/gdu-create-disk-image-dialog.c:173
 msgid "Allocating Disk Image"
 msgstr "დისკის ასლის გამოყოფა"
 
-#: src/disks/gducreatediskimagedialog.c:346
+#: src/disks/gdu-create-disk-image-dialog.c:177
 msgid "Retrieving DVD keys"
 msgstr "DVD-ის გასაღებების მიღება"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:355
+#: src/disks/gdu-create-disk-image-dialog.c:186
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s ვერ წავიკითხე (ჩანაცვლდა ნულებით)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:409
-#: src/disks/gdurestorediskimagedialog.c:613
+#. Translators: A descriptive string for the 'complete' sound, see
+#. * CA_PROP_EVENT_DESCRIPTION
+#: src/disks/gdu-create-disk-image-dialog.c:240
+#: src/disks/gdu-restore-disk-image-dialog.c:410
 msgid "Disk image copying complete"
 msgstr "დისკის ასლის კოპირება დასრულდა"
 
-#: src/disks/gducreatediskimagedialog.c:438
+#: src/disks/gdu-create-disk-image-dialog.c:270
 msgid "Error creating disk image"
 msgstr "დისკის ასლის შექმნის შეცდომა"
 
-#. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:498
-msgid "Unrecoverable read errors while creating disk image"
-msgstr "გამოუსწრებელი წაკითხვის შეცდომები დისკის ასლის ფაილის შექმნისას"
+#. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
+#: src/disks/gdu-create-disk-image-dialog.c:328
+msgid "<big><b>Unrecoverable read errors</b></big>"
+msgstr "<big><b>არააღდგენადი წაკითხვის შეცდომები</b></big>"
 
-#. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
+#. Translators: Body in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:507
+#: src/disks/gdu-create-disk-image-dialog.c:339
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive"
 msgstr ""
+"%2.1f%% (%s) მონაცემები მოწყობილობაზე \"%s\" ვერ წავიკითხე და შექმნილ დისკის "
+"ასლის ფაილში ისინი ნულებით ჩანაცვლდა. ეს ჩვეულებრივ მაშინ ხდება, როცა დისკი "
+"დაფხაჭნილია, ან ფიზიკური დაზიანება გააჩნია"
 
-#. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:513
+#: src/disks/gdu-create-disk-image-dialog.c:345
+#: src/disks/gdu-format-volume-dialog.c:197
+#: src/disks/ui/gdu-benchmark-dialog.ui:16
+#: src/disks/ui/gdu-benchmark-dialog.ui:23
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:18
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:18
+#: src/disks/ui/gdu-disk-settings-dialog.ui:15
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:14
+#: src/disks/ui/gdu-edit-partition-dialog.ui:15
+#: src/disks/ui/gdu-format-disk-dialog.ui:15
+#: src/disks/ui/gdu-mount-options-dialog.ui:15
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:18
+#: src/disks/ui/gdu-resize-volume-dialog.ui:14
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:17
+#: src/disks/ui/gdu-take-ownership-dialog.ui:36
+#: src/disks/ui/unlock-device-dialog.ui:218 src/libgdu/gduutils.c:738
+msgid "_Cancel"
+msgstr "_გაუქმება"
+
+#: src/disks/gdu-create-disk-image-dialog.c:346
 msgid "_Delete Disk Image File"
 msgstr "დისკის ასლის ფაილის _წაშლა"
 
-#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
-msgid "_Close"
-msgstr "_დახურვა"
-
-#: src/disks/gducreatediskimagedialog.c:731
-#: src/disks/gdurestorediskimagedialog.c:731
+#: src/disks/gdu-create-disk-image-dialog.c:567
+#: src/disks/gdu-restore-disk-image-dialog.c:521
 msgid "Error determining size of device: "
 msgstr "მოწყობილობის ზომის დადგენს შეცდომა: "
 
-#: src/disks/gducreatediskimagedialog.c:738
-#: src/disks/gdurestorediskimagedialog.c:738
+#: src/disks/gdu-create-disk-image-dialog.c:574
+#: src/disks/gdu-restore-disk-image-dialog.c:528
 #, c-format
 msgid "Device is size 0"
 msgstr "მოწყობილობის ნულოვანი ზომა"
 
-#: src/disks/gducreatediskimagedialog.c:771
+#: src/disks/gdu-create-disk-image-dialog.c:607
 msgid "Error allocating space for disk image file: "
 msgstr "დისკის ასლის ფაილისთვის ადგილის გამოყოფის შეცდომა: "
 
-#: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:255
-#, c-format
-msgid "A file named “%s” already exists.  Do you want to replace it?"
-msgstr "ფაილი %s უკვე არსებობს. გნებავთ გადავაწერო?"
-
-#: src/disks/gducreatediskimagedialog.c:934
-#: src/disks/gdunewdiskimagedialog.c:258
-#, c-format
-msgid ""
-"The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr ""
-"ფაილი \"%s\"-ში უკვე არსებობს.  მისი ჩანაცვლება არსებულ შემცველობას წაშლის."
-
-#: src/disks/gducreatediskimagedialog.c:937
-#: src/disks/gdunewdiskimagedialog.c:261
-msgid "_Replace"
-msgstr "_შეცვლა"
-
-#: src/disks/gducreatediskimagedialog.c:987
-#: src/disks/gdunewdiskimagedialog.c:175
+#: src/disks/gdu-create-disk-image-dialog.c:766
+#: src/disks/gdu-new-disk-image-dialog.c:152
 msgid "Error opening file for writing"
 msgstr "ფაილის ჩასაწერად გახსნის შეცდომა"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:1003
+#: src/disks/gdu-create-disk-image-dialog.c:779
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "მიმდინარეობს მოწყობილობის კოპირება დისკის ასლში"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1009
+#: src/disks/gdu-create-disk-image-dialog.c:785
 msgid "Creating Disk Image"
 msgstr "დისკის ასლის შექნა"
 
-#: src/disks/gducreatefilesystempage.c:217
-#: src/disks/gducreatefilesystempage.c:229 src/disks/gducreateotherpage.c:90
+#: src/disks/gdu-create-disk-image-dialog.c:870
+#: src/disks/gdu-new-disk-image-dialog.c:293
+msgid "Replace File?"
+msgstr "ჩავანაცვლო ფაილი?"
+
+#: src/disks/gdu-create-disk-image-dialog.c:871
+#: src/disks/gdu-new-disk-image-dialog.c:294
+#, c-format
+msgid "A file named “%s” already exists in %s"
+msgstr "ფაილი სახელით \"%s\" უკვე არსებობს %s-ში"
+
+#: src/disks/gdu-create-disk-image-dialog.c:872
+#: src/disks/gdu-new-disk-image-dialog.c:295
+msgid "Replace"
+msgstr "ჩანაცვლება"
+
+#: src/disks/gdu-create-disk-image-dialog.c:924
+#: src/disks/gdu-new-disk-image-dialog.c:250
+msgid "Choose a location to save the disk image."
+msgstr "აირჩიეთ მდებარეობა დისკის ასლის ფაილის შესანახად."
+
+#. Translators: The suggested name for the disk image to create.
+#. *              The first %s is a name for the disk (e.g. 'sdb').
+#. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
+#.
+#: src/disks/gdu-create-disk-image-dialog.c:966
+#, c-format
+msgid "Disk Image of %s (%s).img"
+msgstr "დისკის ასლი %s (%s).img"
+
+#: src/disks/gdu-create-filesystem-page.c:234
+#: src/disks/gdu-create-filesystem-page.c:244
+#: src/disks/gdu-create-other-page.c:67
 #, c-format
 msgid "The utility %s is missing."
 msgstr "პროგრამა %s დაყენებული არაა."
 
-#: src/disks/gducreateformatdialog.c:168
-msgid "_Previous"
-msgstr "_წინა"
+#: src/disks/gdu-create-other-page.c:181
+msgid "XFS"
+msgstr "XFS"
 
-#: src/disks/gducreateformatdialog.c:174
-msgid "Cre_ate"
-msgstr "_შექმნა"
+#: src/disks/gdu-create-other-page.c:181
+msgid "Linux Filesystem"
+msgstr "Linux -ის ფაილური სისტემა"
 
-#: src/disks/gducreateformatdialog.c:180
-msgid "Form_at"
-msgstr "_ფორმატირება"
-
-#: src/disks/gducreateformatdialog.c:187
-msgid "N_ext"
-msgstr "_შემდეგი"
-
-#: src/disks/gducreateformatdialog.c:206
-msgid "Error formatting volume"
-msgstr "ტომის დაფორმატების შეცდომა"
-
-#: src/disks/gducreateformatdialog.c:272
-msgid "Error creating partition"
-msgstr "დანაყოფს შექმნის შეცდომა"
-
-#: src/disks/gducreateformatdialog.c:469
-msgid "Create Partition"
-msgstr "დანაყოფის შექმნა"
-
-#: src/disks/gducreateformatdialog.c:474
-msgid "Format Volume"
-msgstr "დანაყოფის ფორმატირება"
-
-#: src/disks/gducreateformatdialog.c:477
-msgid "Custom Format"
-msgstr "განსხვავებული ფორმატი"
-
-#: src/disks/gducreateformatdialog.c:480
-msgid "Set Password"
-msgstr "პაროლის დაყენება"
-
-#: src/disks/gducreateformatdialog.c:483
-msgid "Confirm Details"
-msgstr "დეტალების დადასტურება"
-
-#: src/disks/gducreateotherpage.c:16
-msgid "XFS — Linux Filesystem"
-msgstr "XFS — Linux -ის ფაილური სისტემა"
-
-#: src/disks/gducreateotherpage.c:17
+#: src/disks/gdu-create-other-page.c:182
 msgid "Linux Swap Partition"
 msgstr "Linux -ის სვაპის დანაყოფი"
 
-#: src/disks/gducreateotherpage.c:18
-msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
-msgstr ""
-"Btrfs — კოპირება-ჩაწერისას ტიპის Lunux-ის ფაილური სისტემა, სწრაფი ასლებისთვის"
+#: src/disks/gdu-create-other-page.c:183
+msgid "Btrfs"
+msgstr "Btrfs"
 
-#: src/disks/gducreateotherpage.c:19
-msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr "F2FS — Flash Storage Linux Filesystem"
+#: src/disks/gdu-create-other-page.c:183
+msgid "Copy-on-write Linux Filesystem, for snapshots"
+msgstr "კოპირება-ჩაწერისას ტიპის Lunux-ის ფაილური სისტემა, სწრაფი ასლებისთვის"
 
-#: src/disks/gducreateotherpage.c:20
-msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
-msgstr "exFAT — Flash Storage Windows Filesystem, გამოიყენება SDXC ბარათებზე"
+#: src/disks/gdu-create-other-page.c:184
+msgid "F2FS"
+msgstr "F2FS"
 
-#: src/disks/gducreateotherpage.c:21
-msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr "UDF — Universal Disk Format, მოხსნადი მოწყობილობებისტვს ბევრ სისტემაზე"
+#: src/disks/gdu-create-other-page.c:184
+msgid "Flash Storage Linux Filesystem"
+msgstr "Flash Storage Linux Filesystem"
 
-#: src/disks/gducreateotherpage.c:22
+#: src/disks/gdu-create-other-page.c:185
+msgid "exFAT"
+msgstr "exFAT"
+
+#: src/disks/gdu-create-other-page.c:185
+msgid "Flash Storage Windows Filesystem, used on SDXC cards"
+msgstr "Flash Storage Windows Filesystem, გამოიყენება SDXC ბარათებზე"
+
+#: src/disks/gdu-create-other-page.c:186
+msgid "UDF"
+msgstr "UDF"
+
+#: src/disks/gdu-create-other-page.c:186
+msgid "Universal Disk Format, for removable devices on many systems"
+msgstr "Universal Disk Format, მოხსნადი მოწყობილობებისთვის ბევრ სისტემაზე"
+
+#: src/disks/gdu-create-other-page.c:187
 msgid "No Filesystem"
 msgstr "ფაილური სისტემის გარეშე"
 
-#: src/disks/gducreatepartitionpage.c:319
+#: src/disks/gdu-create-partition-page.c:84
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 "ახალი დანაყოფის შექმნა შეუძლებელია. უკვე არსებობს ოთხი ძირითადი დანაყოფი."
 
-#: src/disks/gducreatepartitionpage.c:323
+#: src/disks/gdu-create-partition-page.c:90
 msgid "This is the last primary partition that can be created."
 msgstr "ეს ბოლო ძირითადი დანაყოფია, რომლის შექმნაც შეგიძლიათ."
 
-#: src/disks/gducreatepasswordpage.c:124
-msgid "The passwords do not match"
-msgstr "პაროლები არ ემთხვევა"
+#: src/disks/gdu-create-password-page.h:33
+msgctxt "Password hint"
+msgid "Try changing some letters and numbers."
+msgstr "სცადეთ, ზოგიერთი სიმბოლო ან რიცხვი წაშალოთ."
 
-#: src/disks/gducrypttabdialog.c:85
-msgid "Error removing /etc/crypttab entry"
-msgstr "შეცდომა /etc/crypttab -დან ჩანაწერის წაშლისას"
+#: src/disks/gdu-create-password-page.h:35
+#: src/disks/gdu-create-password-page.h:39
+msgctxt "Password hint"
+msgid "Try changing the password a bit more."
+msgstr "სცადეთ კიდევ ოდნავ შეცვალოთ პაროლი."
 
-#: src/disks/gducrypttabdialog.c:163
-msgid "Error adding /etc/crypttab entry"
-msgstr "შეცდომა /etc/crypttab -ში ჩანაწერის დამატებისას"
+#: src/disks/gdu-create-password-page.h:37
+msgctxt "Password hint"
+msgid "Try to avoid some of the words included in the password."
+msgstr "მოერიდეთ ზოგიერთ სიტყვას, რომელსაც პაროლი შეიცავს."
 
-#: src/disks/gducrypttabdialog.c:184
-msgid "Error updating /etc/crypttab entry"
-msgstr "შეცდომა /etc/crypttab -ში ჩანაწერის განახლებისას"
+#: src/disks/gdu-create-password-page.h:41
+msgctxt "Password hint"
+msgid "Try to avoid common words."
+msgstr "მოერიდეთ საერთო სიტყვებს."
 
-#: src/disks/gducrypttabdialog.c:241 src/disks/gducrypttabdialog.c:256
-msgid "Will be created"
-msgstr "შეიქმნება"
+#: src/disks/gdu-create-password-page.h:43
+msgctxt "Password hint"
+msgid "Try to avoid reordering existing words."
+msgstr "შეეცადეთ, თავიდან აირიდოთ არსებული სიტყვების გადაადგილება."
 
-#: src/disks/gducrypttabdialog.c:243 src/disks/gducrypttabdialog.c:263
-msgid "None"
-msgstr "არც_ერთი"
+#: src/disks/gdu-create-password-page.h:45
+msgctxt "Password hint"
+msgid "Try to use more numbers."
+msgstr "გამოიყენეთ მეტი ციფრი."
 
-#: src/disks/gducrypttabdialog.c:265
-msgid "Will be deleted"
-msgstr "წაიშლება"
+#: src/disks/gdu-create-password-page.h:47
+msgctxt "Password hint"
+msgid "Try to use more uppercase letters."
+msgstr "გამოიყენეთ მეტი დიდი სიმბოლო."
 
-#: src/disks/gducrypttabdialog.c:345
-msgid ""
-"Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
-"changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
+#: src/disks/gdu-create-password-page.h:49
+msgctxt "Password hint"
+msgid "Try to use more lowercase letters."
+msgstr "გამოიყენეთ მეტი პატარა სიმბოლო."
+
+#: src/disks/gdu-create-password-page.h:51
+msgctxt "Password hint"
+msgid "Try to use more special characters, like punctuation."
+msgstr "სცადეთ, მეტი სპეციალური სიმბოლო გამოიყენოთ. მაგ: პუნქტუაცია."
+
+#: src/disks/gdu-create-password-page.h:53
+msgctxt "Password hint"
+msgid "Try to use a mixture of letters, numbers and punctuation."
 msgstr ""
+"სცადეთ, ანბანის ასოების, ციფრებისა და პუნქტუაციის ნიშნების ნაზავი გამოიყენოთ."
 
-#: src/disks/gdudevicetreemodel.c:495
-msgid "(None)"
-msgstr "(არცერთი)"
+#: src/disks/gdu-create-password-page.h:55
+msgctxt "Password hint"
+msgid "Try to avoid repeating the same character."
+msgstr "სცადეთ, სიმბოლოს გამეორებას თავი აარიდოთ."
 
-#: src/disks/gdudevicetreemodel.c:610
-msgid "Disk Drives"
-msgstr "დისკები"
+#: src/disks/gdu-create-password-page.h:57
+msgctxt "Password hint"
+msgid ""
+"Try to avoid repeating the same type of character: you need to mix up "
+"letters, numbers and punctuation."
+msgstr ""
+"თავი აარიდეთ ერთი და იგივე ტიპის სიმბოლოების გამეორებას. სცადეთ აურიოთ "
+"ასოები, ციფრები და პუნქტუაციის ნიშნები."
 
-#: src/disks/gdudevicetreemodel.c:1024
-msgid "Other Devices"
-msgstr "სხვა მოწყობილობები"
+#: src/disks/gdu-create-password-page.h:59
+msgctxt "Password hint"
+msgid "Try to avoid sequences like 1234 or abcd."
+msgstr "სცადეთ, თავი აარიდოთ ისეთ მიმდევრობებს, როგორიცაა 1234 ან abcd."
 
-#: src/disks/gdudisksettingsdialog.c:287
+#: src/disks/gdu-create-password-page.h:61
+msgctxt "Password hint"
+msgid "Mix uppercase and lowercase and try to use a number or two."
+msgstr "შეურიეთ დიდი და პატარა ასოები და სცადეთ გამოიყენოთ რამდენიმე ციფრი."
+
+#: src/disks/gdu-create-password-page.h:63
+msgctxt "Password hint"
+msgid ""
+"Adding more letters, numbers and punctuation will make the password stronger."
+msgstr "მეტი ციფრები, ასოები და პუნქტუაციის ნიშნები პაროლს უფრო გააძლიერებს."
+
+#: src/disks/gdu-disk-settings-dialog.c:293
 msgctxt "standby-value"
 msgid "Never"
 msgstr "არასოდეს"
 
-#: src/disks/gdudisksettingsdialog.c:306
+#: src/disks/gdu-disk-settings-dialog.c:312
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "მომწოდებელის-მიერ-განსაზღვრული"
 
-#: src/disks/gdudisksettingsdialog.c:310
+#: src/disks/gdu-disk-settings-dialog.c:316
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "რეზერვირებული"
 
-#: src/disks/gdudisksettingsdialog.c:331
+#: src/disks/gdu-disk-settings-dialog.c:337
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (გამორთული)"
 
-#: src/disks/gdudisksettingsdialog.c:335
+#: src/disks/gdu-disk-settings-dialog.c:341
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr "%d (ტრიალის დასრულება დაშვებულია)"
 
-#: src/disks/gdudisksettingsdialog.c:339
+#: src/disks/gdu-disk-settings-dialog.c:345
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr "%d (ტრიალის დასრულება დაუშვებელია)"
 
-#: src/disks/gdudisksettingsdialog.c:354
+#: src/disks/gdu-disk-settings-dialog.c:360
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (გათიშული)"
 
-#: src/disks/gdudisksettingsdialog.c:383
+#: src/disks/gdu-disk-settings-dialog.c:398
 msgid "Error setting configuration"
 msgstr "კონფიგურაციის დაყენების შეცდომა"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:414
+#: src/disks/gdu-disk-settings-dialog.c:451
 msgid "Never"
 msgstr "არასდროს"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:416
+#: src/disks/gdu-disk-settings-dialog.c:453
 msgid "5 minutes"
 msgstr "5 წუთი"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:418
+#: src/disks/gdu-disk-settings-dialog.c:455
 msgid "10 minutes"
 msgstr "10 წუთი"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:420
+#: src/disks/gdu-disk-settings-dialog.c:457
 msgid "15 minutes"
 msgstr "15 წუთ"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:422
+#: src/disks/gdu-disk-settings-dialog.c:459
 msgid "3 hours"
 msgstr "3 საათი"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:426
+#: src/disks/gdu-disk-settings-dialog.c:463
 msgid "Save Power"
 msgstr "ენერგიის შენახვა"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
-#: src/disks/gdudisksettingsdialog.c:428
+#: src/disks/gdu-disk-settings-dialog.c:465
 msgid "← Spindown"
 msgstr "← ტრიალის დასრულება"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:430
+#: src/disks/gdu-disk-settings-dialog.c:467
 msgid "Perform Better"
 msgstr "უკეთესად"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:434
+#: src/disks/gdu-disk-settings-dialog.c:471
 msgid "Quiet (Slow)"
 msgstr "ჩუმად (ნელა)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:436
+#: src/disks/gdu-disk-settings-dialog.c:473
 msgid "Loud (Fast)"
 msgstr "ხმამაღლა (სწრაფად)"
 
-#: src/disks/gdu-drive-view.c:262
+#: src/disks/gdu-edit-filesystem-dialog.c:51
+msgid "Error setting label"
+msgstr "ჭდლის დაყენების შეცდომა"
+
+#: src/disks/gdu-edit-partition-dialog.c:115
+msgid "Error setting partition type"
+msgstr "დანაყოფის ტიპის დაყენების შეცდომა"
+
+#: src/disks/gdu-edit-partition-dialog.c:128
+msgid "Error setting partition name"
+msgstr "დანაყოფის სახელის დაყენების შეცდომა"
+
+#: src/disks/gdu-edit-partition-dialog.c:141
+msgid "Error setting partition flags"
+msgstr "დანაყოფის ალმების დაყენების შეცდომა"
+
+#: src/disks/gdu-edit-partition-dialog.c:314
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr "დანაყოფის ტიპი 8-ბიტიანი უნიშნო მთელი რიცხვის სახით"
+
+#: src/disks/gdu-edit-partition-dialog.c:315
+msgid "_Bootable"
+msgstr "ჩ_ატვირთვადი"
+
+#: src/disks/gdu-edit-partition-dialog.c:317
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the “active” partition"
+msgstr ""
+"ალამი გამოიყენება პლატფორმის ჩამტვირთავის მიერ, რომ განსაზღვროს, საიდან "
+"ჩატვირთოს ოს-ი. ხანდახან, დანაყოფი ამ ალმით, როგორც, \"აქტიური\" დანაყოფი, "
+"ისე მოიხსენიება"
+
+#: src/disks/gdu-encryption-options-dialog.c:135
+msgid "Error removing /etc/crypttab entry"
+msgstr "შეცდომა /etc/crypttab -დან ჩანაწერის წაშლისას"
+
+#: src/disks/gdu-encryption-options-dialog.c:152
+msgid "Error adding /etc/crypttab entry"
+msgstr "შეცდომა /etc/crypttab -ში ჩანაწერის დამატებისას"
+
+#: src/disks/gdu-encryption-options-dialog.c:172
+msgid "Error updating /etc/crypttab entry"
+msgstr "შეცდომა /etc/crypttab -ში ჩანაწერის განახლებისას"
+
+#: src/disks/gdu-encryption-options-dialog.c:215
+#: src/disks/gdu-encryption-options-dialog.c:230
+msgid "Will be created"
+msgstr "შეიქმნება"
+
+#: src/disks/gdu-encryption-options-dialog.c:217
+#: src/disks/gdu-encryption-options-dialog.c:237
+msgid "None"
+msgstr "არც_ერთი"
+
+#: src/disks/gdu-encryption-options-dialog.c:239
+msgid "Will be deleted"
+msgstr "წაიშლება"
+
+#: src/disks/gdu-drive-view.c:130
+msgid "Copied drive model to clipboard"
+msgstr "დისკის მოდელი დაკოპირდა გაცვლის ბუფერში"
+
+#: src/disks/gdu-drive-view.c:139
+msgid "Copied drive serial to clipboard"
+msgstr "დისკის სერიული ნომერი დაკოპირდა გაცვლის ბუფერში"
+
+#: src/disks/gdu-drive-view.c:280
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "შეცდომა დისკის მომლოდინე რეჟიმზე გადართვისას"
 
-#: src/disks/gdu-drive-view.c:291
+#: src/disks/gdu-drive-view.c:312
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "შეცდომა მძინარე დისკის გაღვიძების მცდელობისას"
 
-#: src/disks/gdu-drive-view.c:320
+#: src/disks/gdu-drive-view.c:344
 msgid "Error powering off drive"
 msgstr "დისკის გამორთვის შეცდომა"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:348
+#: src/disks/gdu-drive-view.c:401
 msgid "Are you sure you want to power off the drives?"
 msgstr "მართლა გნებავთ ამ დისკების გამორთვა?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:350
+#: src/disks/gdu-drive-view.c:403
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "ეს ოპერაცია მოამზადებს სისტემას შემდეგი დისკების გასათიშად და მოსახსნელად."
 
-#: src/disks/gdu-drive-view.c:353 src/disks/ui/drive-menu.ui:44
-#: src/disks/ui/gdu-drive-view.ui:403
+#: src/disks/gdu-drive-view.c:404
 msgid "_Power Off"
 msgstr "_გამორთვა"
 
-#: src/disks/gdufilesystemdialog.c:48
-msgid "Error setting label"
-msgstr "ჭდლის დაყენების შეცდომა"
-
-#: src/disks/gdufilesystemdialog.c:101
-msgid "The label matches the existing label"
-msgstr "ჭდე არსებულს ემთხვევა"
-
-#: src/disks/gduformatdiskdialog.c:52
+#: src/disks/gdu-format-disk-dialog.c:95
 msgid "Error formatting disk"
 msgstr "დისკის დაფორმატების შეცდომა"
 
-#: src/disks/gduformatdiskdialog.c:110
-msgid "Are you sure you want to format the disk?"
-msgstr "მართლა გნებავთ დისკის დაფორმატება?"
-
 #. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:115
+#: src/disks/gdu-format-disk-dialog.c:174
 msgid ""
 "All data on the disk will be lost but may still be recoverable by data "
 "recovery services"
@@ -1809,15 +1793,18 @@ msgstr ""
 "მონაცემები დისკზე დაიკარგება, მაგრამ შეიძლება აღდგენადი იყოს მონაცემების "
 "აღდგენის სერვისებისთვის"
 
-#: src/disks/gduformatdiskdialog.c:118
+#: src/disks/gdu-format-disk-dialog.c:177
 msgid ""
 "<b>Tip</b>: If you are planning to recycle, sell or give away your old "
 "computer or disk, you should use a more thorough erase type to keep your "
 "private information from falling into the wrong hands"
 msgstr ""
+"<b>მინიშნება</b>: თუ აპირებთ, გადაამუშაოთ, გაყიდოთ ან გააჩუქოთ თქვენ ძველი "
+"კომპიუტერი ან დისკი, უნდა გამოიყენოთ უფრო გულმოდგინე წაშლის ტიპი, რომ თქვენი "
+"ინფორმაციის არასასურველ ხელებში ჩავარდნა აიცილოთ თავიდან"
 
 #. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:125
+#: src/disks/gdu-format-disk-dialog.c:184
 msgid ""
 "All data on the disk will be overwritten and will likely not be recoverable "
 "by data recovery services"
@@ -1825,17 +1812,12 @@ msgstr ""
 "მონაცემებს დისკზე თავზე გადაეწერება. ის აღარ იქნება აღდგენადი მონაცემების "
 "აღდგენის სერვისებისთვის"
 
-#: src/disks/gduformatdiskdialog.c:134
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can’t be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
+#: src/disks/gdu-format-disk-dialog.c:204
+msgid "Format Disk?"
+msgstr "დავაფორმატო დისკი?"
 
-#: src/disks/gduformatdiskdialog.c:147
+#: src/disks/gdu-format-disk-dialog.c:206
+#: src/disks/ui/gdu-format-disk-dialog.ui:27
 msgid "_Format"
 msgstr "_ფორმატირება"
 
@@ -1843,7 +1825,7 @@ msgstr "_ფორმატირება"
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:239
+#: src/disks/gdu-format-disk-dialog.c:240
 #, c-format
 msgid "At least %s"
 msgstr "%s მაინც"
@@ -1852,367 +1834,214 @@ msgstr "%s მაინც"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:249
+#: src/disks/gdu-format-disk-dialog.c:250
 #, c-format
 msgid "Approximately %s"
 msgstr "დაახლოებით %s"
 
-#: src/disks/gduformatdiskdialog.c:283
-msgid "Don’t overwrite existing data"
-msgstr "არ გადააწერო არსებულ მონაცემებს"
+#: src/disks/gdu-format-volume-dialog.c:198
+msgid "_Previous"
+msgstr "_წინა"
 
-#: src/disks/gduformatdiskdialog.c:284
-msgid "Quick"
-msgstr "სწრაფი"
+#: src/disks/gdu-format-volume-dialog.c:203
+msgid "Cre_ate"
+msgstr "_შექმნა"
 
-#: src/disks/gduformatdiskdialog.c:294
-msgid "Overwrite existing data with zeroes"
-msgstr "არსებულ მონაცემებზე ნულების გადაწერა"
+#: src/disks/gdu-format-volume-dialog.c:204
+msgid "Form_at"
+msgstr "_ფორმატირება"
 
-#: src/disks/gduformatdiskdialog.c:295
-msgid "Slow"
-msgstr "ნელი"
+#: src/disks/gdu-format-volume-dialog.c:211
+msgid "N_ext"
+msgstr "_შემდეგი"
 
-#: src/disks/gduformatdiskdialog.c:327
-msgid "ATA Secure Erase"
-msgstr "ATA უსაფრთხო წაშლა"
+#: src/disks/gdu-format-volume-dialog.c:234
+msgid "Error formatting volume"
+msgstr "ტომის დაფორმატების შეცდომა"
 
-#: src/disks/gduformatdiskdialog.c:342
-msgid "ATA Enhanced Secure Erase"
-msgstr "ATA დამატებით უსაფრთხო წაშლა"
+#: src/disks/gdu-format-volume-dialog.c:400
+msgid "Error creating partition"
+msgstr "დანაყოფს შექმნის შეცდომა"
 
-#: src/disks/gduformatdiskdialog.c:385
-msgid "Compatible with all systems and devices"
-msgstr "თავსებადია ყველა სისტემასა და მოწყობილობასთან"
+#: src/disks/gdu-format-volume-dialog.c:526 src/disks/ui/gdu-block-row.ui:51
+msgid "Create Partition"
+msgstr "დანაყოფის შექმნა"
 
-#: src/disks/gduformatdiskdialog.c:386
-msgid "MBR / DOS"
-msgstr "MBR / DOS"
+#: src/disks/gdu-format-volume-dialog.c:533
+msgid "Format Volume"
+msgstr "დანაყოფის ფორმატირება"
 
-#: src/disks/gduformatdiskdialog.c:396
-msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr "თავსებადია თანამედროვე სისტემებთან და >2TB დისკებთან"
+#: src/disks/gdu-format-volume-dialog.c:539
+msgid "Custom Format"
+msgstr "განსხვავებული ფორმატი"
 
-#: src/disks/gduformatdiskdialog.c:397
-msgid "GPT"
-msgstr "GPT"
+#: src/disks/gdu-format-volume-dialog.c:545
+msgid "Set Password"
+msgstr "პაროლის დაყენება"
 
-#: src/disks/gduformatdiskdialog.c:414
-msgid "No partitioning"
-msgstr "დანაყოფების გარეშე"
+#: src/disks/gdu-format-volume-dialog.c:553
+msgid "Confirm Details"
+msgstr "დეტალების დადასტურება"
 
-#: src/disks/gduformatdiskdialog.c:415
-msgid "Empty"
-msgstr "ცარიელი"
-
-#: src/disks/gdufstabdialog.c:154
-#, c-format
-msgid "Matches partition %u of the device with the given vital product data"
-msgstr ""
-"ემთხვევა დანაყოფს %u მოწყობილობაზე მითითებული ძირითადი პროდუქტის მონაცემებით"
-
-#: src/disks/gdufstabdialog.c:157
-msgid "Matches the whole disk of the device with the given vital product data"
-msgstr ""
-"ემთხვევა მთლიან დისკს მოწყობილობისა მითითებული ძირითადი პროდუქტის მონაცემებით"
-
-#: src/disks/gdufstabdialog.c:162
-#, c-format
-msgid ""
-"Matches partition %u of any device connected at the given port or address"
-msgstr ""
-"ემთხვევა დანაყოფს %u ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ პორტზე "
-"ან მისამართზეა მიერთებული"
-
-#: src/disks/gdufstabdialog.c:165
-msgid ""
-"Matches the whole disk of any device connected at the given port or address"
-msgstr ""
-"ემთხვევა სრულ დისკს ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ პორტზე ან "
-"მისამართზეა მიერთებული"
-
-#: src/disks/gdufstabdialog.c:169
-msgid "Matches any device with the given label"
-msgstr "ემთხვევა მოწყობილობას მითითებული ჭდით"
-
-#: src/disks/gdufstabdialog.c:173
-msgid "Matches the device with the given UUID"
-msgstr "ემთხვევა მოწყობილობას მითითებული UUID-ით"
-
-#: src/disks/gdufstabdialog.c:177
-msgid "Matches the given device"
-msgstr "ემთხვევა მოცემულ მოწყობილობას"
-
-#: src/disks/gdufstabdialog.c:481
-msgid "The system may not work correctly if this entry is modified or removed."
-msgstr ""
-"შეიძლება, სისტემამ სწორად არ იმუშაოს, თუ ამ ჩანაწერს შეცვლით ან წაშლით."
-
-#: src/disks/gdufstabdialog.c:542
-msgid "Error removing old /etc/fstab entry"
-msgstr "შეცდომა /etc/fstab-დან ძველი ჩანაწერის წაშლისას"
-
-#: src/disks/gdufstabdialog.c:598
-msgid "Error adding new /etc/fstab entry"
-msgstr "შეცდომა /etc/fstab -ში ახალი ჩანაწერის დამატებისას"
-
-#: src/disks/gdufstabdialog.c:622
+#: src/disks/gdu-mount-options-dialog.c:324
 msgid "Error updating /etc/fstab entry"
 msgstr "შეცდომა /etc/fstab-ის ჩანაწერის განახლებისას"
 
-#: src/disks/gdunewdiskimagedialog.c:89 src/disks/gdunewdiskimagedialog.c:132
-#: src/disks/gduwindow.c:89
+#: src/disks/gdu-mount-options-dialog.c:347
+msgid "Error adding new /etc/fstab entry"
+msgstr "შეცდომა /etc/fstab -ში ახალი ჩანაწერის დამატებისას"
+
+#: src/disks/gdu-mount-options-dialog.c:370
+msgid "Error removing old /etc/fstab entry"
+msgstr "შეცდომა /etc/fstab-დან ძველი ჩანაწერის წაშლისას"
+
+#: src/disks/gdu-new-disk-image-dialog.c:72
+#: src/disks/gdu-new-disk-image-dialog.c:110 src/disks/gdu-window.c:76
 msgid "Error attaching disk image"
 msgstr "დისკის ასლის მიმაგრების შეცდომა"
 
-#: src/disks/gdunewdiskimagedialog.c:190
+#: src/disks/gdu-new-disk-image-dialog.c:166
 msgid "Error writing file"
 msgstr "შეცდომა ფაილის ჩაწერისას"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:285
+#: src/disks/gdu-new-disk-image-dialog.c:319
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "უსახელო (%s).img"
 
-#: src/disks/gdupartitiondialog.c:127
-msgid "Error setting partition type"
-msgstr "დანაყოფის ტიპის დაყენების შეცდომა"
-
-#: src/disks/gdupartitiondialog.c:139
-msgid "Error setting partition name"
-msgstr "დანაყოფის სახელის დაყენების შეცდომა"
-
-#: src/disks/gdupartitiondialog.c:151
-msgid "Error setting partition flags"
-msgstr "დანაყოფის ალმების დაყენების შეცდომა"
-
-#: src/disks/gdupartitiondialog.c:388
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "32-ბიტიანი <i>GUID</i>-ის სახით გამოხატული დანაყოფის ტიპი"
-
-#: src/disks/gdupartitiondialog.c:389
-msgid "Legacy BIOS _Bootable"
-msgstr "_მოძველებული BIOS-ით ჩატვირთვადი"
-
-#: src/disks/gdupartitiondialog.c:391 src/disks/ui/edit-partition-dialog.ui:94
-msgid ""
-"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-"normally only used for GPT partitions on MBR systems"
-msgstr ""
-
-#: src/disks/gdupartitiondialog.c:397
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr "დანაყოფის ტიპი 8-ბიტიანი უნიშნო მთელი რიცხვის სახით"
-
-#: src/disks/gdupartitiondialog.c:398
-msgid "_Bootable"
-msgstr "ჩ_ატვირთვადი"
-
-#: src/disks/gdupartitiondialog.c:400
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-"ალამი გამოიყენება პლატფორმის ჩამტვირთავის მიერ, რომ განსაზღვროს, საიდან "
-"ჩატვირთოს ოს-ი. ხანდახან, დანაყოფი ამ ალმით როგოც <i>აქტიური</i> დანაყოფი "
-"მოიხსენიება"
-
-#: src/disks/gdupasswordstrengthwidget.c:98
-msgctxt "Password strength"
-msgid "Weak"
-msgstr "სუსტი"
-
-#: src/disks/gdupasswordstrengthwidget.c:99
-msgctxt "Password strength"
-msgid "Fair"
-msgstr "საშუალო"
-
-#: src/disks/gdupasswordstrengthwidget.c:100
-msgctxt "Password strength"
-msgid "Good"
-msgstr "კარგი"
-
-#: src/disks/gdupasswordstrengthwidget.c:101
-msgctxt "Password strength"
-msgid "Strong"
-msgstr "ძლიერი"
-
-#: src/disks/gduresizedialog.c:188
-msgid "Current Size"
-msgstr "მიმდინარე ზომა"
-
-#: src/disks/gduresizedialog.c:199
-msgid "Minimal Size"
-msgstr "უმცირესი ზომა"
-
-#: src/disks/gduresizedialog.c:249
-msgid "_Resize"
-msgstr "ზომის შეცვლა"
-
-#: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:602 src/disks/gduresizedialog.c:625
-msgid "Error resizing filesystem"
-msgstr "ფაილური სისტემის ზომის შეცვლის შეცდომა"
-
-#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:500
-#: src/disks/gduresizedialog.c:576
-msgid "Error resizing partition"
-msgstr "დანაყოფის ზომის შეცვლის შეცდომა"
-
-#: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-msgid "Error repairing filesystem after resize"
-msgstr "ფაილური სისტემის გასწორების შეცდომა ზომის შეცვლის შემდეგ"
-
-#: src/disks/gduresizedialog.c:471
-msgid "Resizing not ready"
-msgstr "ზომის შეცვლა მზად არაა"
-
-#: src/disks/gduresizedialog.c:473
-msgid "Waited too long for the filesystem"
-msgstr "ფაილურ სისტემას მეტისმეტად დიდხანს ველოდე"
-
-#: src/disks/gduresizedialog.c:533 src/disks/gduresizedialog.c:649
-msgid "Error repairing filesystem"
-msgstr "ფაილური სისტემის გასწორების შეცდომა"
-
-#: src/disks/gduresizedialog.c:755
-msgid "Error mounting the filesystem"
-msgstr "ფაილური სისტემის მიმაგრების შეცდომა"
-
-#: src/disks/gduresizedialog.c:797
-msgid "Fit to size"
-msgstr "ზომაში ჩატევა"
-
-#: src/disks/gduresizedialog.c:832
+#: src/disks/gdu-resize-volume-dialog.c:152
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "მინიმალური ზომის გამოსათვლელად ფაილური სისტემის მმაგრების შეცდომა"
 
-#: src/disks/gdurestorediskimagedialog.c:277
+#: src/disks/gdu-resize-volume-dialog.c:203
+#: src/disks/ui/gdu-resize-volume-dialog.ui:63
+msgid "Current Size"
+msgstr "მიმდინარე ზომა"
+
+#: src/disks/gdu-resize-volume-dialog.c:206
+#: src/disks/ui/gdu-resize-volume-dialog.ui:71
+msgid "Minimum Size"
+msgstr "მინიმალური ზომა"
+
+#: src/disks/gdu-resize-volume-dialog.c:232
+#: src/disks/gdu-resize-volume-dialog.c:352
+#: src/disks/gdu-resize-volume-dialog.c:499
+msgid "Error resizing partition"
+msgstr "დანაყოფის ზომის შეცვლის შეცდომა"
+
+#: src/disks/gdu-resize-volume-dialog.c:250
+#: src/disks/gdu-resize-volume-dialog.c:288
+#: src/disks/gdu-resize-volume-dialog.c:402
+#: src/disks/gdu-resize-volume-dialog.c:449
+msgid "Error resizing filesystem"
+msgstr "ფაილური სისტემის ზომის შეცვლის შეცდომა"
+
+#: src/disks/gdu-resize-volume-dialog.c:269
+#: src/disks/gdu-resize-volume-dialog.c:378
+msgid "Error repairing filesystem after resize"
+msgstr "ფაილური სისტემის გასწორების შეცდომა ზომის შეცვლის შემდეგ"
+
+#: src/disks/gdu-resize-volume-dialog.c:311
+#: src/disks/gdu-resize-volume-dialog.c:425
+msgid "Error repairing filesystem"
+msgstr "ფაილური სისტემის გასწორების შეცდომა"
+
+#: src/disks/gdu-resize-volume-dialog.c:473
+msgid "Resizing not ready"
+msgstr "ზომის შეცვლა მზად არაა"
+
+#: src/disks/gdu-resize-volume-dialog.c:474
+msgid "Waited too long for the filesystem"
+msgstr "ფაილურ სისტემას მეტისმეტად დიდხანს ველოდე"
+
+#: src/disks/gdu-resize-volume-dialog.c:605
+msgid "Error mounting the filesystem"
+msgstr "ფაილური სისტემის მიმაგრების შეცდომა"
+
+#: src/disks/gdu-restore-disk-image-dialog.c:182
 msgid "File does not appear to be XZ compressed"
 msgstr "ფაილი XZ-ით შეკუმშულს არ ჰგავს"
 
-#. Translators: Shown for a compressed disk image in the "Size" field.
-#. *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
-#.
-#: src/disks/gdurestorediskimagedialog.c:286
+#: src/disks/gdu-restore-disk-image-dialog.c:190
 #, c-format
-msgid "%s when decompressed"
-msgstr "%s, როცა გაშლილია"
+msgid "%s when compressed"
+msgstr "%s, როცა შეკუმშულია"
 
-#: src/disks/gdurestorediskimagedialog.c:302
+#: src/disks/gdu-restore-disk-image-dialog.c:190
+#, c-format
+#| msgctxt "duration-second-to-minute"
+#| msgid "%s"
+msgid "%s"
+msgstr "%s"
+
+#. if size is 0, error may be set already..
+#: src/disks/gdu-restore-disk-image-dialog.c:196
 msgid "Cannot restore image of size 0"
 msgstr "ნულოვანი ზომის მქონე დისკის ასლის აღდგენა შეუძლებელია"
 
-#: src/disks/gdurestorediskimagedialog.c:311
+#: src/disks/gdu-restore-disk-image-dialog.c:203
 #, c-format
 msgid "The disk image is %s smaller than the target device"
 msgstr "დისკის ასლის ფაილი სამიზნე მოწყობილობაზე %s-ით პატარაა"
 
-#: src/disks/gdurestorediskimagedialog.c:320
+#: src/disks/gdu-restore-disk-image-dialog.c:209
 #, c-format
 msgid "The disk image is %s bigger than the target device"
 msgstr "დისკის ასლის ფაილი სამიზნე მოწყობილობაზე %s-ით დიდია"
 
-#: src/disks/gdurestorediskimagedialog.c:650
+#: src/disks/gdu-restore-disk-image-dialog.c:444
 msgid "Error restoring disk image"
 msgstr "დისკის ასლის აღდგენის შეცდომა"
 
-#: src/disks/gdurestorediskimagedialog.c:930
-msgid "Error opening file for reading"
-msgstr "ფაილის წასაკითხად გახსნის შეცდომა"
-
-#: src/disks/gdurestorediskimagedialog.c:945
+#: src/disks/gdu-restore-disk-image-dialog.c:719
 msgid "Error determining size of file"
 msgstr "ფაილის ზომის დადგენის შეცდომა"
 
+#: src/disks/gdu-restore-disk-image-dialog.c:732
+msgid "Error opening file for reading"
+msgstr "ფაილის წასაკითხად გახსნის შეცდომა"
+
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:973
+#: src/disks/gdu-restore-disk-image-dialog.c:758
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "დისკის ასლის მოწყობილობაზე კოპირება"
 
 #. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:979
+#: src/disks/gdu-restore-disk-image-dialog.c:763
 msgid "Restoring Disk Image"
 msgstr "დისკის ასლის აღდგენა"
 
-#: src/disks/gdurestorediskimagedialog.c:1036
+#: src/disks/gdu-restore-disk-image-dialog.c:826
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "მართლა გნებავთ დისკის ასლის მოწყობილობაზე ჩაწერა?"
 
-#: src/disks/gdurestorediskimagedialog.c:1037
+#: src/disks/gdu-restore-disk-image-dialog.c:827
 msgid "All existing data will be lost"
 msgstr "არსებული ინფორმაცია სრულიად დაიკარგება"
 
-#: src/disks/gdurestorediskimagedialog.c:1038
-msgid "_Restore"
-msgstr "_აღდგენა"
+#: src/disks/gdu-restore-disk-image-dialog.c:828
+msgid "Restore"
+msgstr "აღდგენა"
 
-#: src/disks/gduunlockdialog.c:84
-msgid "The encryption passphrase was retrieved from the keyring"
-msgstr "დაშიფვრის საკვანძო ფრაზა ბრელოკიდან მივიღე"
+#: src/disks/gdu-restore-disk-image-dialog.c:860
+msgid "Choose a disk image to restore."
+msgstr "აირჩიეთ აღსადგენი დისკის ასლის ფაილი."
 
-#: src/disks/gduunlockdialog.c:112
+#: src/disks/gduunlockdialog.c:113
 msgid "Error unlocking device"
 msgstr "მოწყობილობის განბლოკვის შეცდომა"
 
-#: src/disks/gduunlockdialog.c:252 src/disks/ui/unlock-device-dialog.ui:193
-msgid "Select a Keyfile"
-msgstr "აირჩიეთ გასაღების ფაილი"
-
-#: src/disks/gduunlockdialog.c:338
+#: src/disks/gduunlockdialog.c:344
 msgid "Set options to unlock"
 msgstr "გაბლოკვის პარამეტრების დაყენება"
 
-#: src/disks/gduvolumegrid.c:261
-msgid "Volumes Grid"
-msgstr "ტომების ბადე"
-
-#: src/disks/gduvolumegrid.c:565
-msgid "No Media"
-msgstr "მედიის გარეშე"
-
-#: src/disks/gduvolumegrid.c:1665
-msgctxt "volume-grid"
-msgid "Filesystem"
-msgstr "ფაილური სისტემა"
-
-#: src/disks/gduvolumegrid.c:1675
-msgctxt "volume-grid"
-msgid "Swap"
-msgstr "სვაპი"
-
-#. Translators: This is shown in the volume grid for a partition with a name/label.
-#. *              The %d is the partition number. The %s is the name
-#.
-#: src/disks/gduvolumegrid.c:1698
-#, c-format
-msgctxt "volume-grid"
-msgid "Partition %u: %s"
-msgstr "დანაყოფი %u: %s"
-
-#. Translators: This is shown in the volume grid for a partition with no name/label.
-#. *              The %d is the partition number
-#.
-#: src/disks/gduvolumegrid.c:1705
-#, c-format
-msgctxt "volume-grid"
-msgid "Partition %u"
-msgstr "დანაყოფი %u"
-
-#: src/disks/gduvolumegrid.c:1762
-msgctxt "volume-grid"
-msgid "Extended Partition"
-msgstr "გაფართოებული დანაყოფი"
-
-#: src/disks/gduvolumegrid.c:1837
-msgctxt "volume-grid"
-msgid "Free Space"
-msgstr "თავისუფალი ადგილი"
+#: src/disks/gdu-window.c:174
+msgid "Select a Disk Image to Attach"
+msgstr "აირჩიეთ მისამაგრებელი დისკის ასლის ფაილი"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -2231,943 +2060,6 @@ msgstr "შიდა შეცდომა"
 msgid "Need more input"
 msgstr "საჭიროა მეტი შეტანა"
 
-#: src/disks/ui/about-dialog.ui:11
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen\n"
-"Copyright © 2009-2017 The GNOME Project\n"
-msgstr ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen\n"
-"Copyright © 2009-2017 The GNOME Project\n"
-
-#: src/disks/ui/about-dialog.ui:15
-msgid "View, modify and configure disks and media"
-msgstr "დაათვალიერეთ, შეცვალეთ და მოირგეთ დისკები და მედა"
-
-#: src/disks/ui/about-dialog.ui:18
-msgid "translator-credits"
-msgstr "თემური დოღონაძე"
-
-#: src/disks/ui/app-menu.ui:6 src/disks/ui/gdu-window.ui:124
-msgid "_New Disk Image…"
-msgstr "_ახალი დისკის ასლი…"
-
-#: src/disks/ui/app-menu.ui:10 src/disks/ui/gdu-window.ui:128
-msgid "_Attach Disk Image… (.iso, .img)"
-msgstr "_დისკის ასლის მიმაგრება... (.iso, .img)"
-
-#: src/disks/ui/app-menu.ui:17 src/disks/ui/gdu-window.ui:135
-msgid "_Keyboard Shortcuts"
-msgstr "კლავიატურის მალსახმობები"
-
-#: src/disks/ui/app-menu.ui:21 src/disks/ui/gdu-window.ui:139
-msgid "_Help"
-msgstr "დახმარება"
-
-#: src/disks/ui/app-menu.ui:24 src/disks/ui/gdu-window.ui:142
-msgid "_About Disks"
-msgstr "Disk-ის შ_ესახებ"
-
-#: src/disks/ui/benchmark-dialog.ui:6
-msgid "Benchmark"
-msgstr "ტესტირება"
-
-#: src/disks/ui/benchmark-dialog.ui:25
-msgid "_Start Benchmark…"
-msgstr "ტესტირების _დაწყება…"
-
-#: src/disks/ui/benchmark-dialog.ui:37
-msgid "_Abort Benchmark"
-msgstr "ტესტის _შესახებ"
-
-#: src/disks/ui/benchmark-dialog.ui:85
-msgid "Last Benchmarked"
-msgstr "ბოლოს დატესტილი"
-
-#: src/disks/ui/benchmark-dialog.ui:100
-msgid "Average Read Rate"
-msgstr "საშუალო კითხვის სიჩქარე"
-
-#: src/disks/ui/benchmark-dialog.ui:115
-msgid "Average Write Rate"
-msgstr "საშუალო ჩაწერის სიჩქარე"
-
-#: src/disks/ui/benchmark-dialog.ui:130
-msgid "Average Access Time"
-msgstr "საშუალო წვდომის დრო"
-
-#: src/disks/ui/benchmark-dialog.ui:201
-msgid "Disk or Device"
-msgstr "დისკი ან მოწყობილობა"
-
-#: src/disks/ui/benchmark-dialog.ui:230
-msgid "Sample Size"
-msgstr "სემპლის ზომა"
-
-#: src/disks/ui/benchmark-dialog.ui:268
-msgid "Benchmark Settings"
-msgstr "ტესტირების მორგება"
-
-#: src/disks/ui/benchmark-dialog.ui:296
-msgid "_Start Benchmarking…"
-msgstr "ტესტირების _დაწყება…"
-
-#: src/disks/ui/benchmark-dialog.ui:317
-msgid ""
-"Benchmarking involves measuring the transfer rate on various area of the "
-"device as well as measuring how long it takes to seek from one random area "
-"to another. Please back up important data before using the write benchmark."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:328
-msgid "Transfer Rate"
-msgstr "გადაცემის სიჩქარე"
-
-#: src/disks/ui/benchmark-dialog.ui:346
-msgid "Number of S_amples"
-msgstr "_სემპლების რაოდენობა"
-
-#: src/disks/ui/benchmark-dialog.ui:363
-msgid "Sample S_ize (MiB)"
-msgstr "სემპლის _ზომა (მიბ)"
-
-#: src/disks/ui/benchmark-dialog.ui:377
-msgid "Perform _write-benchmark"
-msgstr "ჩაწერის _ტესტის შესრულება"
-
-#: src/disks/ui/benchmark-dialog.ui:381
-msgid ""
-"Benchmarking the write-rate of a disk requires exclusive access to the disk "
-"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
-"reading data and then writing it back. As a result, the contents of the disk "
-"is not changed.\n"
-"\n"
-"If not checked, the write-part of the benchmark will not be done but on the "
-"other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use)."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:398
-msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr ""
-"მაგალითების რაოდენობა. დიდი რიცხვები უფრო გლუვ კრაფიკებს მოგცემთ, მაგრამ "
-"უფრო მეტი დროც დასჭირდება."
-
-#: src/disks/ui/benchmark-dialog.ui:413
-msgid ""
-"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
-"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
-"taking more time."
-msgstr ""
-"მეგაბიტების (1048576 ბაიტი) რაოდენობა თითოეულ მაგალითში. დიდი მაგალითის "
-"ზომები უფრო ზუსტ ტესტირების შედეგებს მოგცემთ, მისი დროის გაზრდის ხარჯზე."
-
-#: src/disks/ui/benchmark-dialog.ui:442
-msgid "Access Time"
-msgstr "წვდომის დრო"
-
-#: src/disks/ui/benchmark-dialog.ui:460
-msgid "Number of Sampl_es"
-msgstr "სემპლების _რაოდენობა"
-
-#: src/disks/ui/benchmark-dialog.ui:477
-msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr ""
-"მაგალითების რაოდენობა. დიდი რაოდენობა უფრო ზუსტ სურათს მოგცემთ წვდომის დროის "
-"ნიმუშების შესახებ, მაგრამ, უფრო მეტი დრო დასჭირდება."
-
-#: src/disks/ui/change-passphrase-dialog.ui:6
-msgid "Change Passphrase"
-msgstr "საკვანძო ფრაზის შეცვლა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:34
-msgid "Curr_ent Passphrase"
-msgstr "მიმდინარე _საკვანძო ფრაზა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:51
-#: src/disks/ui/change-passphrase-dialog.ui:52
-msgid "Enter current passphrase used to protect the data"
-msgstr "შეიყვანეთ მონაცემების დასაცავად გამოყენებული საკვანძო ფრაზა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:67
-msgid "New _Passphrase"
-msgstr "ახალი _საკვანძო ფრაზა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:84
-#: src/disks/ui/change-passphrase-dialog.ui:85
-msgid "Enter new passphrase used to protect the data"
-msgstr ""
-"შეიყვანეთ ახალი საკვანძო ფრაზა, რომელიც თქვენი მონაცემების დასაცავად "
-"გამოიყენება"
-
-#: src/disks/ui/change-passphrase-dialog.ui:101
-msgid "C_onfirm Passphrase"
-msgstr "_დაადასტურეთ საკვანძო ფრაზა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:118
-#: src/disks/ui/change-passphrase-dialog.ui:119
-#: src/disks/ui/create-password-page.ui:81
-msgid "Confirm passphrase entered above"
-msgstr "გაიმეორეთ ზემოთ შეყვანილი საკვანძო ფრაზა"
-
-#: src/disks/ui/change-passphrase-dialog.ui:134
-msgid "The strength of the passphrase"
-msgstr "საკვანძო ფრაზის სიძლიერე"
-
-#: src/disks/ui/change-passphrase-dialog.ui:144
-msgid "Sho_w Passphrases"
-msgstr "საკვანძო ფრაზების ჩვე_ნება"
-
-#: src/disks/ui/change-passphrase-dialog.ui:148
-#: src/disks/ui/change-passphrase-dialog.ui:149
-#: src/disks/ui/create-password-page.ui:101
-msgid "Check this box to see the passphrases entered above"
-msgstr "ჩართეთ ეს, რომ დაინახოთ საკვანძო ფრაზა, რომელიც ზემოთ შეიყვანეთ"
-
-#: src/disks/ui/change-passphrase-dialog.ui:175
-#: src/disks/ui/edit-filesystem-dialog.ui:78
-#: src/disks/ui/edit-partition-dialog.ui:150
-msgid "C_hange"
-msgstr "_შეცვლა"
-
-#: src/disks/ui/create-confirm-page.ui:17
-msgid "Warning: all data on the volume will be lost"
-msgstr "გაფრთხილება: ტომზე ყველა ინფორმაცია წაიშლება"
-
-#: src/disks/ui/create-confirm-page.ui:33
-msgid "Confirm the details of the current volume before proceeding."
-msgstr "გაგრძელებამდე დაადასტურეთ მიმდინარე ტომის დეტალები."
-
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
-msgid "Device"
-msgstr "მოწყობილობა"
-
-#: src/disks/ui/create-confirm-page.ui:72
-msgid "Volume"
-msgstr "საცავი"
-
-#: src/disks/ui/create-confirm-page.ui:98
-msgid "Used"
-msgstr "გამოყენებული"
-
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
-msgid "Location"
-msgstr "მდებარეობა"
-
-#: src/disks/ui/create-disk-image-dialog.ui:7
-msgid "Create Disk Image"
-msgstr "დისკის ახალი გამოსახულების შექმნა"
-
-#: src/disks/ui/create-disk-image-dialog.ui:31
-#: src/disks/ui/edit-crypttab-dialog.ui:128
-#: src/disks/ui/edit-partition-dialog.ui:52
-#: src/disks/ui/new-disk-image-dialog.ui:45
-msgid "_Name"
-msgstr "_სახელი"
-
-#: src/disks/ui/create-disk-image-dialog.ui:48
-#: src/disks/ui/new-disk-image-dialog.ui:63
-msgid "Save in _Folder"
-msgstr "შენახვა _საქაღალდეში"
-
-#: src/disks/ui/create-disk-image-dialog.ui:81
-#: src/disks/ui/new-disk-image-dialog.ui:115
-msgid "Select a Folder"
-msgstr "აირჩიეთ საქაღალდე"
-
-#: src/disks/ui/create-disk-image-dialog.ui:93
-msgid "Source"
-msgstr "წყარო"
-
-#: src/disks/ui/create-disk-image-dialog.ui:132
-msgid "_Start Creating…"
-msgstr "შექმნის დაწყება…"
-
-#: src/disks/ui/create-filesystem-page.ui:19
-msgid "Volume _Name"
-msgstr "ტომის _სახელი"
-
-#: src/disks/ui/create-filesystem-page.ui:33
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory."
-msgstr ""
-"სახელი ფაილური სისტემისთვის. ეს სასარგებლოა, თუ გნებავთ, მოწყობლობას "
-"სიმბმულით მიმართოთ /dev/disk/by-label საქაღალდიდან."
-
-#: src/disks/ui/create-filesystem-page.ui:47
-msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "მაგ: 'ანჟელას ფაილები' ან 'მარქაფი'."
-
-#: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:58
-msgid "_Erase"
-msgstr "_წაშლა"
-
-#: src/disks/ui/create-filesystem-page.ui:89
-msgid "Overwrites existing data, but takes longer."
-msgstr "თავზე გადააწერს არსებულ მონაცემებს, მაგრამ მეტი დრო უნდა."
-
-#: src/disks/ui/create-filesystem-page.ui:115
-msgid "_Internal disk for use with Linux systems only (Ext4)"
-msgstr "შიდა _დისკი Linux-ის სისტემების (Ext4) გამოსაყენებლად"
-
-#: src/disks/ui/create-filesystem-page.ui:131
-#: src/disks/ui/create-other-page.ui:36
-msgid "_Password protect volume (LUKS)"
-msgstr "_ტომის პაროლით დაცვა (LUKS)"
-
-#: src/disks/ui/create-filesystem-page.ui:147
-msgid "For use with _Windows (NTFS)"
-msgstr "Windows-სთვ_ის (NTFS)"
-
-#: src/disks/ui/create-filesystem-page.ui:163
-msgid "For use with all _systems and devices (FAT)"
-msgstr "ყველა _სისტემისთვის და მოწყობილობისთვის (FAT)"
-
-#: src/disks/ui/create-filesystem-page.ui:179
-msgid "_Other"
-msgstr "_სხვა"
-
-#: src/disks/ui/create-other-page.ui:17
-msgid ""
-"In case that the default options do not fit your needs select one of the "
-"following filesystems. Be aware of the technical differences and do research "
-"about your use case."
-msgstr ""
-"იმ შემთხვევაში, თუ ნაგულისხმევი პარამეტრები თქვენს მოთხოვნებს არ "
-"აკმაყოფილებს, აირჩიეთ ერთ-ერთი ფაილური სისტემა. გაითვალისწინეთ, რომ წინ "
-"ტექნიკური სიძნელეები გელით და მოკვლევა თვითონ მოგიწევთ."
-
-#: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
-msgid "Partition _Size"
-msgstr "დანაყოფის _ზომა"
-
-#: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
-msgid "The size of the partition to create"
-msgstr "შესაქმნელი დანაყოფის ზომა"
-
-#: src/disks/ui/create-partition-page.ui:103
-#: src/disks/ui/new-disk-image-dialog.ui:129 src/disks/ui/resize-dialog.ui:119
-msgid "bytes"
-msgstr "ბაიტები"
-
-#: src/disks/ui/create-partition-page.ui:104
-#: src/disks/ui/new-disk-image-dialog.ui:130 src/disks/ui/resize-dialog.ui:120
-msgid "kB"
-msgstr "კბ"
-
-#: src/disks/ui/create-partition-page.ui:105
-#: src/disks/ui/new-disk-image-dialog.ui:131 src/disks/ui/resize-dialog.ui:121
-msgid "MB"
-msgstr "მბ"
-
-#: src/disks/ui/create-partition-page.ui:106
-#: src/disks/ui/new-disk-image-dialog.ui:132 src/disks/ui/resize-dialog.ui:122
-msgid "GB"
-msgstr "გბ"
-
-#: src/disks/ui/create-partition-page.ui:107
-#: src/disks/ui/new-disk-image-dialog.ui:133 src/disks/ui/resize-dialog.ui:123
-msgid "TB"
-msgstr "ტბ"
-
-#: src/disks/ui/create-partition-page.ui:108
-#: src/disks/ui/new-disk-image-dialog.ui:134 src/disks/ui/resize-dialog.ui:124
-msgid "PB"
-msgstr "პბ"
-
-#: src/disks/ui/create-partition-page.ui:109
-#: src/disks/ui/new-disk-image-dialog.ui:135 src/disks/ui/resize-dialog.ui:125
-msgid "KiB"
-msgstr "კიბ"
-
-#: src/disks/ui/create-partition-page.ui:110
-#: src/disks/ui/new-disk-image-dialog.ui:136 src/disks/ui/resize-dialog.ui:126
-msgid "MiB"
-msgstr "მიბ"
-
-#: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:137 src/disks/ui/resize-dialog.ui:127
-msgid "GiB"
-msgstr "გიბ"
-
-#: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:138 src/disks/ui/resize-dialog.ui:128
-msgid "TiB"
-msgstr "ტიბ"
-
-#: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:139 src/disks/ui/resize-dialog.ui:129
-msgid "PiB"
-msgstr "პიბ"
-
-#: src/disks/ui/create-partition-page.ui:127 src/disks/ui/resize-dialog.ui:143
-msgid "Free Space _Following"
-msgstr "თავისუფალი _ადგილი შემდეგ"
-
-#: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
-msgid "The free space following the partition"
-msgstr "თავისუფალი ადგილი დანაყოფის შემდეგ"
-
-#: src/disks/ui/create-partition-page.ui:169
-msgid "Extended Partitions can contain Logical Partitions"
-msgstr "გაფართოებული დანაყოფები, შეიძლება, ლოგიკურ დანაყოფებს შეიცავდნენ"
-
-#: src/disks/ui/create-password-page.ui:18
-msgid ""
-"Data stored in the volume will only be accessible with the correct password. "
-"Be careful not to forget it."
-msgstr ""
-"ტომში დამახსოვრებული მონაცემები, მხოლოდ, სწორი პაროლის შემთხვევაში იქნება "
-"წვდომადი. ფრთხილად, არ დაგავიწყდეთ ის."
-
-#: src/disks/ui/create-password-page.ui:34
-msgid "_Password"
-msgstr "_პაროლი"
-
-#: src/disks/ui/create-password-page.ui:48
-msgid "_Confirm"
-msgstr "_დადასტურება"
-
-#: src/disks/ui/create-password-page.ui:63
-msgid "Enter passphrase used to protect the data"
-msgstr "შეიყვანეთ საკვანძო ფრაზა, რომელიც მონაცემების დასაშიფრად გამოიყენება"
-
-#: src/disks/ui/create-password-page.ui:95
-msgid "Sh_ow Password"
-msgstr "_პაროლების ჩვენება"
-
-#: src/disks/ui/create-password-page.ui:134
-msgid "Mix uppercase and lowercase and try to use a number or two."
-msgstr "შეურიეთ დიდი და პატარა ასოები და სცადეთ გამოიყენოთ რამდენიმე ციფრი."
-
-#: src/disks/ui/disk-settings-dialog.ui:23
-msgid "Drive Settings"
-msgstr "დისკის პარამეტრები"
-
-#: src/disks/ui/disk-settings-dialog.ui:54
-msgid "Apply Standby Timeout Settings"
-msgstr "უქმეობის ვადის პარამეტრების გადატარება"
-
-#: src/disks/ui/disk-settings-dialog.ui:71
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-"ჩართეთ, რომ მოირგოთ უქმეობის მოლოდინის დრო გაშვებისას და როცა დისკი "
-"მიერთებულია"
-
-#: src/disks/ui/disk-settings-dialog.ui:104
-msgid "Enter Standby After"
-msgstr "უქმე რეჟიმში გადასვლის დრო"
-
-#: src/disks/ui/disk-settings-dialog.ui:159
-msgid "_Standby"
-msgstr "_უქმე"
-
-#: src/disks/ui/disk-settings-dialog.ui:182
-msgid "Apply Advanced Power Management Settings"
-msgstr "დამატებითი კვების მართვის პარამეტრების გადატარება"
-
-#: src/disks/ui/disk-settings-dialog.ui:199
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr "ჩართეთ, რათა მოირგოთ APM ჩართვისას და დისკის მიერთებისას"
-
-#: src/disks/ui/disk-settings-dialog.ui:232
-msgid "APM Level"
-msgstr "APM-ის დონე"
-
-#: src/disks/ui/disk-settings-dialog.ui:280
-msgid ""
-"Aggressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-"აგრესიულმა გამორთვამ, შეიძლება, დისკის მოსალოდნელზე უფრო სწრაფი ცვეთა "
-"გამოიწვიოს. ხანდახან შეამოწმეთ \"გაშვება/გაჩერების რაოდენობის\" SMART "
-"ატრიბუტი"
-
-#: src/disks/ui/disk-settings-dialog.ui:308
-msgid "A_PM"
-msgstr "A_PM"
-
-#: src/disks/ui/disk-settings-dialog.ui:333
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr "ავტომატური აკუსტიკის მართვის პარამეტრების გადატარება"
-
-#: src/disks/ui/disk-settings-dialog.ui:350
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr "ჩართეთ, რათა მოირგოთ AAM ჩართვისას და დისკის მიერთებისას"
-
-#: src/disks/ui/disk-settings-dialog.ui:384
-msgid "Vendor Recommended"
-msgstr "მომწოდებლის მიერ რეკომენებული"
-
-#: src/disks/ui/disk-settings-dialog.ui:401
-msgid "AAM Level"
-msgstr "AAM დონე"
-
-#: src/disks/ui/disk-settings-dialog.ui:473
-msgid "_AAM"
-msgstr "_AAM"
-
-#: src/disks/ui/disk-settings-dialog.ui:498
-msgid "Apply Write Cache Settings"
-msgstr "ჩაწერის კეშის პარამეტრების გადატარება"
-
-#: src/disks/ui/disk-settings-dialog.ui:515
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-"ჩართეთ, რომ მოირგოთ ჩაწერის კეშის პარამეტრი გაშვებისას და როცა დისკი "
-"მიერთდება"
-
-#: src/disks/ui/disk-settings-dialog.ui:549
-msgid "S_etting"
-msgstr "_პარამეტრი"
-
-#: src/disks/ui/disk-settings-dialog.ui:570
-msgid "Enable Write Cache"
-msgstr "ჩაწერის კეშის ჩართვა"
-
-#: src/disks/ui/disk-settings-dialog.ui:571
-msgid "Disable Write Cache"
-msgstr "ჩაწერის კეშის გამორთვა"
-
-#: src/disks/ui/disk-settings-dialog.ui:594
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-"წარმადობა იზრდება ჩაწერის დაკეშვის ჩართვით, მაგრამ სისტემა უფრო მოწყვლადია "
-"მონაცემების კარგვისთვის კვების გათიშვის შემთხვევაში"
-
-#: src/disks/ui/disk-settings-dialog.ui:622
-msgid "Wr_ite Cache"
-msgstr "ჩაწერის _კეში"
-
-#: src/disks/ui/disks.ui:34
-msgid "Main Menu"
-msgstr "მთავარი მენიუ"
-
-#. <property name="action-name">win.go-back</property>
-#: src/disks/ui/disks.ui:94 src/disks/ui/gdu-window.ui:95
-msgid "Back"
-msgstr "უკან"
-
-#: src/disks/ui/disks.ui:106
-msgid "Drive Options"
-msgstr "დისკის პარამეტრები"
-
-#: src/disks/ui/disks.ui:121
-msgid "Power Off Disk"
-msgstr "დისკის კვების გამორთვა"
-
-#: src/disks/ui/disks.ui:136
-msgid "Eject Disk"
-msgstr "დისკის გამოღება"
-
-#: src/disks/ui/disks.ui:151
-msgid "Detach Loop Device"
-msgstr "მარყუჟი მოწყობილობის მოხსნა"
-
-#: src/disks/ui/disks.ui:174 src/disks/ui/gdu-drive-view.ui:14
-msgid "No Device Selected"
-msgstr "მოწყობილობა არჩეული არაა"
-
-#: src/disks/ui/disks.ui:175
-msgid "Select a device to manage."
-msgstr "აირჩიეთ სამართავი მოწყობილობა."
-
-#: src/disks/ui/disks.ui:210 src/disks/ui/gdu-drive-view.ui:177
-msgid "Model"
-msgstr "მოდელი"
-
-#: src/disks/ui/disks.ui:239
-msgid "Serial Number"
-msgstr "სერიული ნომერი"
-
-#: src/disks/ui/disks.ui:268
-msgid "World Wide Name"
-msgstr "WWN სახელი"
-
-#: src/disks/ui/disks.ui:326
-msgid "Media"
-msgstr "მედია"
-
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
-msgid "Job"
-msgstr "დავალება"
-
-#: src/disks/ui/disks.ui:484
-msgid "Name"
-msgstr "სახელი"
-
-#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
-#: src/disks/ui/gdu-block-row.ui:68 src/disks/ui/gdu-drive-view.ui:258
-msgid "Size"
-msgstr "ზომა"
-
-#: src/disks/ui/disks.ui:542
-msgid "Auto-clear"
-msgstr "ავტომატური-გასუფთავება"
-
-#: src/disks/ui/disks.ui:560
-msgid "Detach Loop Device After Unmounting"
-msgstr "მარყუჟის მოწყობილობის გაუქმება მოხსნის ოპერაციის შემდეგ"
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:574
-msgid "Backing File"
-msgstr "ფაილი უკანაბოლო"
-
-#: src/disks/ui/disks.ui:603 src/disks/ui/gdu-drive-view.ui:231
-msgid "Partitioning"
-msgstr "დაყოფა"
-
-#: src/disks/ui/disks.ui:634
-msgid "_Volumes"
-msgstr "_ტომები"
-
-#: src/disks/ui/disks.ui:675
-msgid "Mount Selected Partition"
-msgstr "მონიშნული დანაყოფის მიმაგრება"
-
-#: src/disks/ui/disks.ui:692
-msgid "Unmount Selected Partition"
-msgstr "მონიშნული დანაყოფის მოხსნა"
-
-#: src/disks/ui/disks.ui:709
-msgid "Activate Selected Swap Partition"
-msgstr "არჩეული სვოპის დანაყოფის აქტივაცია"
-
-#: src/disks/ui/disks.ui:726
-msgid "Deactivate Selected Swap Partition"
-msgstr "არჩეული სვოპის დანაყოფის დეაქტივაცია"
-
-#: src/disks/ui/disks.ui:743
-msgid "Unlock Selected Encrypted Partition"
-msgstr "მონიშნული დაშიფრული დანაყოფის განბლოკვა"
-
-#: src/disks/ui/disks.ui:760
-msgid "Lock Selected Encrypted Partition"
-msgstr "მონიშნული დაშიფრული დანაყოფის დაბლოკვა"
-
-#: src/disks/ui/disks.ui:777
-msgid "Create Partition in Unallocated Space"
-msgstr "დანაყოფის შექმნა გამოუყოფელ ადგილას"
-
-#: src/disks/ui/disks.ui:794
-msgid "Additional Partition Options"
-msgstr "დამატებით დანაყოფის პარამეტრები"
-
-#: src/disks/ui/disks.ui:821
-msgid "Delete Selected Partition"
-msgstr "მონიშნული დანაყოფის წაშლა"
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:881
-msgid "Contents"
-msgstr "შიგთავსი"
-
-#: src/disks/ui/disks.ui:939 src/disks/ui/gdu-block-row.ui:122
-msgid "UUID"
-msgstr "UUID"
-
-#: src/disks/ui/disks.ui:968 src/disks/ui/gdu-block-row.ui:149
-msgid "Partition Type"
-msgstr "დანაყოფის ტიპი"
-
-#: src/disks/ui/drive-menu.ui:6 src/disks/ui/gdu-drive-view.ui:297
-msgid "Format _Disk…"
-msgstr "დისკის _დაფორმატება…"
-
-#: src/disks/ui/drive-menu.ui:12 src/disks/ui/gdu-drive-view.ui:314
-msgid "_Create Disk Image…"
-msgstr "_დისკის ასლის შექმნა…"
-
-#: src/disks/ui/drive-menu.ui:16 src/disks/ui/gdu-drive-view.ui:325
-msgid "_Restore Disk Image…"
-msgstr "დისკის ასლის _აღდგენა…"
-
-#: src/disks/ui/drive-menu.ui:22 src/disks/ui/gdu-drive-view.ui:342
-msgid "_Benchmark Disk…"
-msgstr "დ_ისკის წარმადობის ტესტირება…"
-
-#: src/disks/ui/drive-menu.ui:26 src/disks/ui/gdu-drive-view.ui:353
-msgid "_SMART Data & Self-Tests…"
-msgstr "_SMART მონაცემები & თვითტესტები…"
-
-#: src/disks/ui/drive-menu.ui:30 src/disks/ui/gdu-drive-view.ui:364
-msgid "Drive S_ettings…"
-msgstr "_დისკის პარამეტრები…"
-
-#: src/disks/ui/drive-menu.ui:36 src/disks/ui/gdu-drive-view.ui:381
-msgid "S_tandby Now"
-msgstr "_ახლა დაძინება"
-
-#: src/disks/ui/drive-menu.ui:40 src/disks/ui/gdu-drive-view.ui:392
-msgid "_Wake-Up from Standby"
-msgstr "ძილიდან _გაღვიძება"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:9
-msgid "Encryption Options"
-msgstr "დაშიფვრის მორგება"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:36 src/disks/ui/edit-fstab-dialog.ui:41
-msgid "Us_er Session Defaults"
-msgstr "_მომხმარებლის სესიის ნაგულისხმევი პარამეტრები"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:48
-msgid ""
-"Switch off <i>User Session Defaults</i> to manage encryption options and "
-"passphrase for the device. The options correspond to an entry in the <b>/etc/"
-"crypttab</b> file"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:68
-msgid "Opt_ions"
-msgstr "_მორგება"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:88
-msgid "_Unlock at system startup"
-msgstr "_განბლოკვა სისტემის გაშვებისას"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:89
-msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr ""
-"თუ ჩართულია, მოწყობილობის განბლოკვა სისტემის ჩართვისას მოხდება [!noauto]"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:98
-msgid "Require additional authori_zation to unlock"
-msgstr "_განბლოკვისთვის დამატებითი პრივილეგიები გჭირდებათ"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:99
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-"თუ ჩართულია, დისკის განბლოკვისთვის დამატებითი ავტორიზაციაა საჭირო [x-udisks-"
-"auth]"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:114
-msgid "Options to use when unlocking the device"
-msgstr "მოწყობილობის განბლოკვისას გამოყენებული პარამეტრები"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:143
-msgid ""
-"The name to use for the unlocked device — the device is set up as the name "
-"prefixed with <b>/dev/mapper</b>/"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:157
-#: src/disks/ui/unlock-device-dialog.ui:46
-msgid "_Passphrase"
-msgstr "­_საკვანძო ფრაზა"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:172
-msgid ""
-"Passphrase of the device or empty to request from user when setting up the "
-"device"
-msgstr ""
-"მოწყობილობის საკვანძო ფრაზა ან ცარიელი, რომ ის მომხმარებელს მოვთხოვოთ "
-"მოწყობილობის მორგებისას"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:186
-#: src/disks/ui/unlock-device-dialog.ui:78
-msgid "Sho_w passphrase"
-msgstr "საკვანძო ფრაზის ჩვე_ნება"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:200
-msgid "Passphrase File"
-msgstr "საკვანძო ფრაზის ფაილი"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:246
-msgid "_OK"
-msgstr "_დიახ"
-
-#: src/disks/ui/edit-filesystem-dialog.ui:5
-msgid "Change Filesystem Label"
-msgstr "ფაილური სისტემის ჭდის შეცვლა"
-
-#: src/disks/ui/edit-filesystem-dialog.ui:27
-msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr "ცვლილებების შეტანამდე ფაილური სისტემა ავტომატურად მოიხსნება."
-
-#: src/disks/ui/edit-filesystem-dialog.ui:41
-msgid "_Label"
-msgstr "_ჭდე"
-
-#: src/disks/ui/edit-fstab-dialog.ui:7
-msgid "Mount Options"
-msgstr "მიმაგრების მორგება"
-
-#: src/disks/ui/edit-fstab-dialog.ui:54
-msgid ""
-"Switch off <i>User Session Defaults</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the <b>/etc/"
-"fstab</b> file"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:71
-msgid "I_dentify As"
-msgstr "_იდენტიფიკაცია, როგორც"
-
-#: src/disks/ui/edit-fstab-dialog.ui:90
-msgid ""
-"The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
-"hierarchy to control the scope of the entry"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:91
-msgid ""
-"The special device file — use symlinks in the /dev/disk hierarchy to control "
-"the scope of the entry"
-msgstr ""
-"სპეციალური მოწყობილობის ფაილი — სიმბმულების გამოყენება /dev/disk იერარქიაში "
-"ან ჩანაწერის შუალედის საკონტროლოდ"
-
-#: src/disks/ui/edit-fstab-dialog.ui:121
-msgid "Mount _Point"
-msgstr ")მიმაგრების წერტილი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:140
-msgid "Filesystem _Type"
-msgstr "ფაილური სისტემის _ტიპი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:159 src/disks/ui/edit-fstab-dialog.ui:160
-msgid "The directory to mount the device in"
-msgstr "საქაღალდე, სადაც მოწყობილობის მიმაგრება მოხდება"
-
-#: src/disks/ui/edit-fstab-dialog.ui:176 src/disks/ui/edit-fstab-dialog.ui:177
-msgid "The filesystem type to use"
-msgstr "ფაილური სისტემის ტიპი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:199
-msgid "Display _Name"
-msgstr "საჩვენებელი _სახელი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:218
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
-msgstr ""
-"თუ დაყენებულია, ეს არის სახელი, რომელიც გამოყენებული იქნება ამ "
-"მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-name=]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:235
-msgid "Icon Na_me"
-msgstr "ხატულის _სახელი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:254
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr ""
-"თუ დაყენებულია, ეს არის ხატულა, რომელიც გამოყენებული იქნება ამ "
-"მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-icon=]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:268
-msgid "Sho_w in user interface"
-msgstr "მომხმარებლის _ინტერფეისის ჩვენება"
-
-#: src/disks/ui/edit-fstab-dialog.ui:273 src/disks/ui/edit-fstab-dialog.ui:274
-msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [x-gvfs-show]"
-msgstr ""
-"თუ ჩართულია, მოწყობილობა ყოველთვის ნაჩვენებია მომხმარებლის ინტერფეისში "
-"იმისგან დამოუკიდებლად, რომელი საქაღალდეა [x-gvfs-show]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:288
-msgid "Require additional authori_zation to mount"
-msgstr "_მისამაგრებლად დამატებითი პრივილეგიები გჭირდებათ"
-
-#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
-msgstr ""
-"თუ ჩართულია, დისკის მისამაგრებლად დამატებითი ავტორიზაცია იქნება საჭირო [x-"
-"udisks-auth]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:308
-msgid "Mount at system _startup"
-msgstr "_მიმაგრება სისტემის გაშვებისას"
-
-#: src/disks/ui/edit-fstab-dialog.ui:313
-msgid "If checked, the device will be mounted at system startup [!noauto]"
-msgstr ""
-"თუ ჩართულია, მოწყობილობა მიმაგრებული იქნება სისტემის გაშვებისას [!noauto]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:330
-msgid "S_ymbolic Icon Name"
-msgstr "_სიმბოლური ხატულის სახელი"
-
-#: src/disks/ui/edit-fstab-dialog.ui:349 src/disks/ui/edit-fstab-dialog.ui:350
-msgid ""
-"If set, the name of the symbolic icon to use in the device in the user "
-"interface [x-gvfs-symbolic-icon=]"
-msgstr ""
-"თუ დაყენებულია, ეს არის სიმბოლური ხატულის სახელი, რომელიც გამოყენებული "
-"იქნება ამ მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-symbolic-icon=]"
-
-#: src/disks/ui/edit-fstab-dialog.ui:376
-msgid "Mount Opt_ions"
-msgstr "მიმაგრების მორგება"
-
-#: src/disks/ui/edit-fstab-dialog.ui:395
-msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr "მიმაგრების პარამეტრები დამახსოვრებულია ფაილში <b>/etc/fstab</b>"
-
-#: src/disks/ui/edit-partition-dialog.ui:6
-msgid "Edit Partition"
-msgstr "დანაყოფის ჩასწორება"
-
-#: src/disks/ui/edit-partition-dialog.ui:27
-msgid "_Type"
-msgstr "_ტიპი"
-
-#: src/disks/ui/edit-partition-dialog.ui:66
-msgid ""
-"The partition name (up to 36 unicode characters). This is useful if you want "
-"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
-"directory"
-msgstr ""
-
-#: src/disks/ui/edit-partition-dialog.ui:80
-msgid "Flags"
-msgstr "ალმები"
-
-#: src/disks/ui/edit-partition-dialog.ui:106
-msgid "_System Partition"
-msgstr "_სისტემური დანაყოფი"
-
-#: src/disks/ui/edit-partition-dialog.ui:108
-msgid ""
-"Used to indicate that the partition and its contents are required for the OS/"
-"Platform to function. Special care should be taken to not delete or "
-"overwrite the contents"
-msgstr ""
-
-#: src/disks/ui/edit-partition-dialog.ui:120
-msgid "Hide from _Firmware"
-msgstr "_მიკროკოდიდან დამალვა"
-
-#: src/disks/ui/edit-partition-dialog.ui:121
-msgid ""
-"Indicates that EFI firmware should ignore the content of the partition and "
-"not try to read from it"
-msgstr ""
-"უჩვენებს, რომ EFI მიკროკოდმა უნდა გამოტოვოს დანაყოფის შემცველობა და არ "
-"სცადოს, წაიკითხოს ის"
-
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
 msgstr "ერთზე მეტი დისკის წაშლა"
@@ -3180,175 +2072,976 @@ msgstr "_წაშლა…"
 msgid "Erase _Type"
 msgstr "წაშლის _ტიპი"
 
-#: src/disks/ui/format-disk-dialog.ui:5
-msgid "Format Disk"
-msgstr "დისკის დაფორმატება"
+#: src/disks/ui/gdu-ata-smart-dialog.ui:4
+msgid "SMART Data & Self-Tests"
+msgstr "SMART მონაცემები & თვითტესტები"
 
-#: src/disks/ui/format-disk-dialog.ui:42
-msgid "_Partitioning"
-msgstr "_დაყოფა"
+#: src/disks/ui/gdu-ata-smart-dialog.ui:33
+msgid "Powered On"
+msgstr "ჩართულია"
 
-#: src/disks/ui/format-disk-dialog.ui:97
-msgid "_Format…"
-msgstr "_ფორმატი…"
+#: src/disks/ui/gdu-ata-smart-dialog.ui:58
+msgid "Updated"
+msgstr "განახლდა"
 
-#: src/disks/ui/gdu-block-row.ui:95
+#: src/disks/ui/gdu-ata-smart-dialog.ui:108
+msgid "Self-test Result"
+msgstr "თვითტესტის შედეგები"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:121
+msgid "Self-assessment"
+msgstr "თვით-შეფასება"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:134
+msgid "Overall Assessment"
+msgstr "სრული შეფასება"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:184
+msgid "Click to toggle whether SMART is enabled for the hard disk"
+msgstr "დააწკაპუნეთ, რომ გადართოთ, ჩართულია თუ არა SMART ამ მყარი დისკისთვის"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:193
+msgid "SMART _Attributes"
+msgstr "SMART _ატრიბუტები"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:235
+msgid "_Start Self-test"
+msgstr "თვ_ითტესტების გაშვება"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:236
+msgid "Click to start a SMART self-test"
+msgstr "დააწკაპუნეთ SMART თვით-ტესტის გასაშვებად"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:245
+msgid "_Stop Self-test"
+msgstr "თვითტესტის _გაჩერება"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:246
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr "დააწკაპუნეთ ამჟამად გაშვებული SMART თვითტესტის გასაჩერებლად"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:252
+msgid "Refresh"
+msgstr "განახლება"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:253
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr ""
+"დააწკაპუნეთ მყარი დისკიდან SMART მონაცემების ნაძალადევად თავიდან წასაკითხად"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:260
+msgid "Close"
+msgstr "დახურვა"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:272
+msgid "_Short"
+msgstr "_მოკლე"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:276
+msgid "_Extended"
+msgstr "_გაფართოებული"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:280
+msgid "_Conveyance"
+msgstr "_კონვეიერი"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:4
+#: src/disks/ui/gdu-benchmark-dialog.ui:48
+msgid "Benchmark"
+msgstr "ტესტირება"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:34
+msgid "_Start…"
+msgstr "_დაწყება…"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:61
+msgid ""
+"Benchmarking measures the transfer rate for different areas of the disk. It "
+"also measures seek times from one area to another."
+msgstr ""
+"წარმადობის შემოწმება ზომავს წაკითხვისა და ჩაწერის სიჩქარეს დისკის სხვადასხვა "
+"ადგილას. ასევე მოწმდება გადახვევის დროც."
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:66
+msgid "Transfer S_amples"
+msgstr "_სინჯების გადაცემა"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:81
+msgid "Transfer Sample S_ize"
+msgstr "გადაცემის სემპლ_ის ზომა"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:97
+msgid "_Access Time Samples"
+msgstr "წვდომის დრ_ოის ნიმუშები"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:116
+msgid "_Write Benchmark"
+msgstr "ჩა_წერის წარმადობის შემოწმება"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:118
+msgid "Data should be backed up before using this feature"
+msgstr "ამ ფუნქციის გამოყენებამდე მონაცემების მარქაფის აღება სასურველია"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:159
+msgid "Sample Size"
+msgstr "სემპლის ზომა"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:169
+#: src/disks/ui/gdu-benchmark-dialog.ui:189
+#: src/disks/ui/gdu-benchmark-dialog.ui:209
+#: src/disks/ui/gdu-benchmark-dialog.ui:229
+msgid "—"
+msgstr "—"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:179
+msgid "Average Read Rate"
+msgstr "საშუალო კითხვის სიჩქარე"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:199
+msgid "Average Write Rate"
+msgstr "საშუალო ჩაწერის სიჩქარე"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:219
+msgid "Average Access Time"
+msgstr "საშუალო წვდომის დრო"
+
+#: src/disks/ui/gdu-block-row.ui:64
+msgid "Partition Options"
+msgstr "დანაყოფის პარამეტრები"
+
+#: src/disks/ui/gdu-block-row.ui:91 src/disks/ui/gdu-drive-view.ui:197
+msgid "Size"
+msgstr "ზომა"
+
+#: src/disks/ui/gdu-block-row.ui:113
 msgid "Device ID"
 msgstr "მოწყობილობის ID"
 
-#: src/disks/ui/gdu-block-row.ui:189 src/disks/ui/volume-menu.ui:6
-msgid "Format _Partition…"
-msgstr "დანაყოფის _დაფორმატება…"
+#: src/disks/ui/gdu-block-row.ui:135
+msgid "UUID"
+msgstr "UUID"
 
-#: src/disks/ui/gdu-block-row.ui:206 src/disks/ui/volume-menu.ui:12
-msgid "_Edit Partition…"
-msgstr "_დანაყოფის ჩასწორება…"
+#: src/disks/ui/gdu-block-row.ui:157
+msgid "Partition Type"
+msgstr "დანაყოფის ტიპი"
 
-#: src/disks/ui/gdu-block-row.ui:217 src/disks/ui/volume-menu.ui:16
-msgid "Edit _Filesystem…"
-msgstr "ფ_აილური სისტემის ჩასწორება…"
+#: src/disks/ui/gdu-block-row.ui:185
+msgid "Unmount"
+msgstr "მოხსნა"
 
-#: src/disks/ui/gdu-block-row.ui:228 src/disks/ui/volume-menu.ui:20
-msgid "Change Pa_ssphrase…"
-msgstr "საკვანძო _ფრაზის შეცვლა…"
+#: src/disks/ui/gdu-block-row.ui:189
+msgid "Mount"
+msgstr "მიმაგრება"
 
-#: src/disks/ui/gdu-block-row.ui:245 src/disks/ui/volume-menu.ui:26
-msgid "Resi_ze…"
-msgstr "ზომ_ის შეცვლა…"
+#: src/disks/ui/gdu-block-row.ui:193
+msgid "Resize…"
+msgstr "ზომის შეცვლა…"
 
-#: src/disks/ui/gdu-block-row.ui:256 src/disks/ui/volume-menu.ui:30
-msgid "C_heck Filesystem…"
-msgstr "ფაილური სისტემის _შემოწმება…"
+#: src/disks/ui/gdu-block-row.ui:197
+msgid "Edit"
+msgstr "ჩასწორება"
 
-#: src/disks/ui/gdu-block-row.ui:267 src/disks/ui/volume-menu.ui:34
-msgid "Rep_air Filesystem…"
-msgstr "ფაილური სისტემის შ_ეკეთება…"
+#: src/disks/ui/gdu-block-row.ui:199
+msgid "Partition…"
+msgstr "დანაყოფი…"
 
-#: src/disks/ui/gdu-block-row.ui:278 src/disks/ui/volume-menu.ui:38
-msgid "_Take Ownership…"
-msgstr "_მფლობელობის აღება…"
+#: src/disks/ui/gdu-block-row.ui:203
+msgid "Filesystem…"
+msgstr "ფაილური სისტემა…"
 
-#: src/disks/ui/gdu-block-row.ui:295 src/disks/ui/volume-menu.ui:44
-msgid "Edit _Mount Options…"
-msgstr "_მიმაგრების პარამეტრების ჩასწორება…"
+#: src/disks/ui/gdu-block-row.ui:207
+msgid "Change Passphrase…"
+msgstr "საკვანძო ფრაზის შეცვლა…"
 
-#: src/disks/ui/gdu-block-row.ui:306 src/disks/ui/volume-menu.ui:48
-msgid "Edit Encr_yption Options…"
-msgstr "_დაშიფვრის პარამეტრების ჩასწორება…"
+#: src/disks/ui/gdu-block-row.ui:211
+msgid "Mount Options…"
+msgstr "მიმაგრების პარამეტრები…"
 
-#: src/disks/ui/gdu-block-row.ui:323 src/disks/ui/volume-menu.ui:54
-msgid "_Create Partition Image…"
-msgstr "დანაყოფის _ასლის შექმნა…"
+#: src/disks/ui/gdu-block-row.ui:215
+msgid "Encryption Options…"
+msgstr "დაშიფვრის მორგება…"
 
-#: src/disks/ui/gdu-block-row.ui:334 src/disks/ui/volume-menu.ui:58
-msgid "_Restore Partition Image…"
-msgstr "დანაყოფის ასლის აღდ_გენა…"
+#: src/disks/ui/gdu-block-row.ui:219
+msgid "Take Ownership…"
+msgstr "მფლობელობის აღება…"
 
-#: src/disks/ui/gdu-block-row.ui:345 src/disks/ui/volume-menu.ui:62
-msgid "_Benchmark Partition…"
+#: src/disks/ui/gdu-block-row.ui:224
+msgid "Format Partition…"
+msgstr "დანაყოფის დაფორმატება…"
+
+#: src/disks/ui/gdu-block-row.ui:228
+msgid "Delete…"
+msgstr "წაშლა…"
+
+#: src/disks/ui/gdu-block-row.ui:234
+msgid "Check Filesystem…"
+msgstr "ფაილური სისტემის შემოწმება…"
+
+#: src/disks/ui/gdu-block-row.ui:238
+msgid "Repair Filesystem…"
+msgstr "ფაილური სისტემის შეკეთება…"
+
+#: src/disks/ui/gdu-block-row.ui:242
+msgid "Benchmark Partition…"
 msgstr "დანაყოფის დატესტვა…"
 
-#: src/disks/ui/gdu-drive-view.ui:122
+#: src/disks/ui/gdu-block-row.ui:248
+msgid "Create Partition Image…"
+msgstr "დანაყოფის დისკის ასლის ფაილის შექმნა…"
+
+#: src/disks/ui/gdu-block-row.ui:252
+msgid "Restore Partition Image…"
+msgstr "დანაყოფის დისკის ასლის ფაილის აღდგენა…"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:4
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:24
+msgid "Change Passphrase"
+msgstr "საკვანძო ფრაზის შეცვლა"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:31
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:21
+msgid "Ch_ange"
+msgstr "_შეცვლა"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:45
+msgid ""
+"Changing the passphrase for this device will also update the passphrase "
+"referenced by the <i>/etc/crypttab</i> file"
+msgstr ""
+"ამ მოწყობილობისთვის საკვანძო ფრაზის შეცვლა ასვე განაახლებს საკვანძო ფრაზის "
+"მიმართვას <i>/etc/crypttab</i> ფაილში"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:55
+msgid "C_urrent Password"
+msgstr "მიმდინარე _პაროლი"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:62
+msgid "_New Password"
+msgstr "_ახალი პაროლი"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:69
+msgid "C_onfirm Password"
+msgstr "_დაადასტურეთ პაროლი"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:11
+msgid "Warning: All the data on the volume will be lost"
+msgstr "გაფრთხილება: ტომზე ყველა ინფორმაცია დაიკარგება"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:17
+msgid "Confirm the details of the current volume before proceeding."
+msgstr "გაგრძელებამდე დაადასტურეთ მიმდინარე ტომის დეტალები."
+
+#: src/disks/ui/gdu-create-confirm-page.ui:27
+msgid "Device"
+msgstr "მოწყობილობა"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:35
+msgid "Volume"
+msgstr "საცავი"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:43
+msgid "Used"
+msgstr "გამოყენებული"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:52
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:50
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:52
+msgid "Location"
+msgstr "მდებარეობა"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:25
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:25
+msgid "C_reate"
+msgstr "_შექმნა"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:44
+#: src/disks/ui/gdu-edit-partition-dialog.ui:47
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:44
+msgid "_Name"
+msgstr "_სახელი"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:53
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:55
+msgid "Select Location"
+msgstr "აირჩიეთ მდებარეობა"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:70
+msgid "Source"
+msgstr "წყარო"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:14
+msgid "_Volume Name"
+msgstr "ტომის _სახელი"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:25
+#: src/disks/ui/gdu-format-disk-dialog.ui:44
+msgid "_Overwrite Existing Data"
+msgstr "არსებული მ_ონაცემების თავზე გადაწერა"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:30
+#: src/disks/ui/gdu-edit-partition-dialog.ui:69
+#: src/disks/ui/gdu-edit-partition-dialog.ui:110
+#: src/disks/ui/gdu-edit-partition-dialog.ui:151
+#: src/disks/ui/gdu-format-disk-dialog.ui:49
+#: src/disks/ui/gdu-take-ownership-dialog.ui:17
+msgid "More Information"
+msgstr "მეტი ინფორმაცია"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:42
+#: src/disks/ui/gdu-format-disk-dialog.ui:61
+msgid ""
+"Ensures that existing data cannot be recovered. This option slows down "
+"formatting."
+msgstr ""
+"დარწმუნება, რომ არსებული მონაცემების აღდგენა შეუძლებელია. ეს პარამეტრი "
+"დაფორმატებას ძალიან ანელებს."
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:70
+msgid "For use only with Linux systems"
+msgstr "მხოლოდ, Linux-ის სისტემებისთვის"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:84
+msgid "For use with Windows"
+msgstr "Windows-სთვის"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:98
+msgid "For use with all systems and devices"
+msgstr "ყველა სისტემისთვის და მოწყობილობისთვის"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:128
+msgid "_Password Protect Volume"
+msgstr "_ტომის პაროლით დაცვა"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:129
+#: src/disks/ui/gdu-create-other-page.ui:16
+msgid "Encrypts the volume using LUKS"
+msgstr "დაშიფრავს ტომს LUKS-ით"
+
+#: src/disks/ui/gdu-create-other-page.ui:15
+msgid "Password Protect Volume"
+msgstr "ტომის პაროლით დაცვა"
+
+#: src/disks/ui/gdu-create-partition-page.ui:26
+msgid "Partition Size"
+msgstr "დანაყოფის ზომა"
+
+#: src/disks/ui/gdu-create-partition-page.ui:41
+msgid "Space following new partition"
+msgstr "თავისუფალი ადგილი დანაყოფის შემდეგ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:66
+msgid "Extended Partitions can contain Logical Partitions"
+msgstr "გაფართოებული დანაყოფები, შეიძლება, ლოგიკურ დანაყოფებს შეიცავდნენ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:78
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:92
+msgid "Units"
+msgstr "საზომი ერთეულები"
+
+#: src/disks/ui/gdu-create-partition-page.ui:84
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:97
+#: src/disks/ui/gdu-resize-volume-dialog.ui:114
+msgid "bytes"
+msgstr "ბაიტები"
+
+#: src/disks/ui/gdu-create-partition-page.ui:85
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:98
+#: src/disks/ui/gdu-resize-volume-dialog.ui:115
+msgid "kB"
+msgstr "კბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:86
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:99
+#: src/disks/ui/gdu-resize-volume-dialog.ui:116
+msgid "MB"
+msgstr "მბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:87
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:100
+#: src/disks/ui/gdu-resize-volume-dialog.ui:117
+msgid "GB"
+msgstr "გბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:88
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:101
+#: src/disks/ui/gdu-resize-volume-dialog.ui:118
+msgid "TB"
+msgstr "ტბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:89
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:102
+#: src/disks/ui/gdu-resize-volume-dialog.ui:119
+msgid "PB"
+msgstr "პბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:90
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:103
+#: src/disks/ui/gdu-resize-volume-dialog.ui:120
+msgid "KiB"
+msgstr "კიბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:91
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:104
+#: src/disks/ui/gdu-resize-volume-dialog.ui:121
+msgid "MiB"
+msgstr "მიბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:92
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:105
+#: src/disks/ui/gdu-resize-volume-dialog.ui:122
+msgid "GiB"
+msgstr "გიბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:93
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:106
+#: src/disks/ui/gdu-resize-volume-dialog.ui:123
+msgid "TiB"
+msgstr "ტიბ"
+
+#: src/disks/ui/gdu-create-partition-page.ui:94
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:107
+#: src/disks/ui/gdu-resize-volume-dialog.ui:124
+msgid "PiB"
+msgstr "პიბ"
+
+#: src/disks/ui/gdu-create-password-page.ui:8
+msgid ""
+"Data stored in the Volume will only be accessible with the correct password. "
+"Be careful not to forget it"
+msgstr ""
+"ტომში დამახსოვრებული მონაცემები, მხოლოდ, სწორი პაროლის შემთხვევაში იქნება "
+"წვდომადი. ფრთხილად, არ დაგავიწყდეთ ის"
+
+#: src/disks/ui/gdu-create-password-page.ui:11
+msgid "Password"
+msgstr "პაროლი"
+
+#: src/disks/ui/gdu-create-password-page.ui:17
+msgid "Confirm Password"
+msgstr "პაროლის დადასტურება"
+
+#: src/disks/ui/gdu-create-password-page.ui:24
+msgid "The passwords do not match."
+msgstr "პაროლები არ ემთხვევა."
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:4
+#: src/disks/ui/gdu-disk-settings-dialog.ui:24
+msgid "Drive Settings"
+msgstr "დისკის პარამეტრები"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:29
+msgid "Sa_ve"
+msgstr "_შენახვა"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:57
+msgid "Apply Standby Timeout Settings"
+msgstr "უქმეობის ვადის პარამეტრების გადატარება"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:69
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr ""
+"ჩართეთ, რომ მოირგოთ უქმეობის მოლოდინის დრო გაშვებისას და როცა დისკი "
+"მიერთებულია"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:84
+msgid "Enter Standby After"
+msgstr "უქმე რეჟიმში გადასვლის დრო"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:117
+msgid "_Standby"
+msgstr "_უქმე"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:134
+msgid "Apply Advanced Power Management Settings"
+msgstr "დამატებითი კვების მართვის პარამეტრების გადატარება"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:146
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr "ჩართეთ, რათა მოირგოთ APM ჩართვისას და დისკის მიერთებისას"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:161
+msgid "APM Level"
+msgstr "APM-ის დონე"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:192
+msgid ""
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+"აგრესიულმა გამორთვამ, შეიძლება, დისკის მოსალოდნელზე უფრო სწრაფი ცვეთა "
+"გამოიწვიოს. ხანდახან შეამოწმეთ \"გაშვება/გაჩერების რაოდენობის\" SMART "
+"ატრიბუტი"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:205
+msgid "A_PM"
+msgstr "A_PM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:223
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr "ავტომატური აკუსტიკის მართვის პარამეტრების გადატარება"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:235
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr "ჩართეთ, რათა მოირგოთ AAM ჩართვისას და დისკის მიერთებისას"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:251
+msgid "Vendor Recommended"
+msgstr "მომწოდებლის მიერ რეკომენებული"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:264
+msgid "AAM Level"
+msgstr "AAM დონე"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:314
+msgid "_AAM"
+msgstr "_AAM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:332
+msgid "Apply Write Cache Settings"
+msgstr "ჩაწერის კეშის პარამეტრების გადატარება"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:344
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+"ჩართეთ, რომ მოირგოთ ჩაწერის კეშის პარამეტრი გაშვებისას და როცა დისკი "
+"მიერთდება"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:359
+msgid "S_etting"
+msgstr "_პარამეტრი"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:373
+msgid "Enable Write Cache"
+msgstr "ჩაწერის კეშის ჩართვა"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:374
+msgid "Disable Write Cache"
+msgstr "ჩაწერის კეშის გამორთვა"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:383
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+"წარმადობა იზრდება ჩაწერის დაკეშვის ჩართვით, მაგრამ სისტემა უფრო მოწყვლადია "
+"მონაცემების კარგვისთვის კვების გათიშვის შემთხვევაში"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:396
+msgid "Wr_ite Cache"
+msgstr "ჩაწერის _კეში"
+
+#: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:133
+msgid "Drive Information"
+msgstr "დისკის ინფორმაცია"
+
+#: src/disks/ui/gdu-drive-view.ui:85
+msgid "Drive Options"
+msgstr "დისკის პარამეტრები"
+
+#: src/disks/ui/gdu-drive-view.ui:102
+msgid "Space Allocation"
+msgstr "სივრცის გამოყოფა"
+
+#: src/disks/ui/gdu-drive-view.ui:111
 msgid "Volumes"
 msgstr "ტომები"
 
-#: src/disks/ui/gdu-drive-view.ui:204
+#: src/disks/ui/gdu-drive-view.ui:148
+msgid "Model"
+msgstr "მოდელი"
+
+#: src/disks/ui/gdu-drive-view.ui:152 src/disks/ui/gdu-drive-view.ui:172
+msgid "Copy"
+msgstr "კოპირება"
+
+#: src/disks/ui/gdu-drive-view.ui:168
 msgid "Serial"
 msgstr "სერიული ნომერი"
 
-#: src/disks/ui/gdu-window.ui:28
-msgid "Application Menu"
-msgstr "აპლიკაციების მენიუ"
+#: src/disks/ui/gdu-drive-view.ui:188 src/disks/ui/gdu-format-disk-dialog.ui:85
+msgid "Partitioning"
+msgstr "დაყოფა"
 
-#: src/disks/ui/gdu-window.ui:89
-msgid "Drives"
-msgstr "დისკები"
+#: src/disks/ui/gdu-drive-view.ui:217
+msgid "Format Disk…"
+msgstr "დისკის დაფორმატება…"
 
-#: src/disks/ui/gdu-window.ui:149
-msgid "Select Disk Image to Attach"
-msgstr "აირჩიეთ მისამაგრებელი დისკის ასლი"
+#: src/disks/ui/gdu-drive-view.ui:221
+msgid "Create Disk Image…"
+msgstr "დისკის ასლის ფაილის შექმნა…"
 
-#: src/disks/ui/gdu-window.ui:169
-msgid "_Attach"
-msgstr "_მიმაგრება"
+#: src/disks/ui/gdu-drive-view.ui:225
+msgid "Restore Disk Image…"
+msgstr "დისკის ასლის ფაილის აღდგენა…"
 
-#: src/disks/ui/gdu-window.ui:181
-msgid "Set up _read-only loop device"
-msgstr "_მხოლოდ კითხვადი მარყუჟის მოწყობილობის მორგება"
+#: src/disks/ui/gdu-drive-view.ui:231
+msgid "Benchmark Disk…"
+msgstr "დისკის წარმადობის შემოწმება…"
 
-#: src/disks/ui/new-disk-image-dialog.ui:7
-msgid "New Disk Image"
-msgstr "ახალი დისკის ასლი"
+#: src/disks/ui/gdu-drive-view.ui:235
+msgid "SMART Data & Self-Tests…"
+msgstr "_SMART მონაცემები & თვითტესტები…"
 
-#: src/disks/ui/new-disk-image-dialog.ui:27
-msgid "Image _Size"
-msgstr "დისკის ასლის _ზომა"
+#: src/disks/ui/gdu-drive-view.ui:239
+msgid "Drive Settings…"
+msgstr "დისკის პარამეტრები…"
 
-#: src/disks/ui/new-disk-image-dialog.ui:80
-msgid "The size of the image to create"
-msgstr "შესაქმნელი დისკის ასლის ზომა"
+#: src/disks/ui/gdu-drive-view.ui:245
+msgid "Standby"
+msgstr "უქმე"
 
-#: src/disks/ui/new-disk-image-dialog.ui:172
-msgid "Attach new _Image…"
-msgstr "ახალი _ასლის მიმაგრება…"
+#: src/disks/ui/gdu-drive-view.ui:249
+msgid "Wake Up"
+msgstr "გაღვიძება"
 
-#: src/disks/ui/resize-dialog.ui:19
+#: src/disks/ui/gdu-drive-view.ui:253
+msgid "Power Off"
+msgstr "გამორთვა"
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:4
+msgid "Edit Filesystem"
+msgstr "ფაილური სისტემის ჩასწორება"
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:34
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr "ცვლილებების შეტანამდე ფაილური სისტემა ავტომატურად მოიხსნება."
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:43
+msgid "Label"
+msgstr "ჭდე"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:4
+msgid "Edit Partition"
+msgstr "დანაყოფის ჩასწორება"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:22
+#: src/disks/ui/gdu-mount-options-dialog.ui:22
+msgid "_Done"
+msgstr "_დასრულებულია"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:40
+msgid "_Partition Type"
+msgstr "დანაყოფის ტი_პი"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:42
+msgid "The partition type represented as a 32-bit <i>GUID</i>"
+msgstr "32-ბიტიანი <i>GUID</i>-ის სახით გამოხატული დანაყოფის ტიპი"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:49
+msgid ""
+"The partition name (up to 36 unicode characters). This is useful if you want "
+"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
+"directory"
+msgstr ""
+"დანაყოფის სახელი (36 უნიკოდის სიმბოლომდე). ეს სასარგებლოა თუ მოწყობილობას, "
+"გნებავთ, <b>/dev/disk/by-partlabel</b> საქაღალდეში არსებული სიმბმულით "
+"მიმართოთ"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:61
+msgid "Flags"
+msgstr "ალმები"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:64
+msgid "_Legacy BIOS Bootable"
+msgstr "_მოძველებული BIOS-ით ჩატვირთვადი"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:79
+msgid ""
+"This is equivalent to Master Boot Record “bootable” flag. It is normally "
+"only used for GPT partitions on MBR systems."
+msgstr ""
+"ეს იგივეა, რაც Master Boot Record-ის ჩატვირთვადი (bootable) ალამი. ის, "
+"ჩვეულებრივ, MBR სისტემებზე GPT დანაყოფებზე გამოიყენება."
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:105
+msgid "_System Partition"
+msgstr "_სისტემური დანაყოფი"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:120
+msgid ""
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
+"overwrite the contents."
+msgstr ""
+"გამოიყენება, რომ მიუთითოს, რომ დანაყოფი და მსი შემცველობა აუცილებელია ოს/"
+"პლატფორმის ფუნქციონირებისთვის. განსაკუთრებით იზრუნეთ, რომ არ წაშალოთ ან "
+"გადააწეროთ მათ შემცველობას."
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:146
+msgid "_Hide from Firmware"
+msgstr "_მიკროკოდიდან დამალვა"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:161
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+"უჩვენებს, რომ EFI მიკროკოდმა უნდა გამოტოვოს დანაყოფის შემცველობა და არ "
+"სცადოს, წაიკითხოს ის"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:4
+msgid "Encryption Options"
+msgstr "დაშიფვრის მორგება"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:15
+msgid "Cancel"
+msgstr "გაუქმება"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:21
+msgid "Done"
+msgstr "დასრულება"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:34
+msgid ""
+"Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
+"changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
+msgstr ""
+"მხოლოდ, შეიცვლება საკვანძო ფრაზა, რომელსაც მიმართავს ფაილი <i>/etc/crypttab</"
+"i>. დისკზე არსებული საკვანძო ფრაზის შესაცვლელად გამოიყენეთ <i>საკვანძო "
+"ფრაზის შეცვლა…</i>"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:43
+msgid "Automatic Encryption Options"
+msgstr "ავტომატური დაშიფვრის მორგება"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:54
+msgid "Name"
+msgstr "სახელი"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:60
+msgid "Passphrase"
+msgstr "საკვანძო ფრაზა"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:71
+msgid "Unlock at System Start"
+msgstr "განბლოკვა სისტემის გაშვებისას"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:77
+msgid "Require Additional Authorization"
+msgstr "დამატებითი ავტორიზაციის მოთხოვნა"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:83
+msgid "Additional Options"
+msgstr "დამატებითი პარამეტრები"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:6
+#: src/disks/ui/gdu-format-disk-dialog.ui:22
+msgid "Format Disk"
+msgstr "დისკის დაფორმატება"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:88
+msgid "_GUID Partition Table (GPT)"
+msgstr "_GUID დანაყოფების ცხრილი (GPT)"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:89
+msgid "Compatible with UEFI and disks over 2 TB"
+msgstr "თავსებადია UEFI-სთან და >2TB დისკებთან"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:102
+msgid "_Master Boot Record (MBR)"
+msgstr "_მთავარი ჩატვირთვის ჩანაწერი (MBR)"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:103
+msgid "Legacy option with wide hardware compatibility"
+msgstr "მოძველებული არჩევანი უფრო დიდი თავსებადობით აპარატურასთან"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:116
+msgid "_No Partitioning"
+msgstr "_დანაყოფების გარეშე"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:117
+msgid "Disk will be empty"
+msgstr "დისკი ცარიელი იქნება"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:4
+msgid "Mount Options"
+msgstr "მიმაგრების პარამეტრები"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:37
+msgid "The system may not work correctly if this entry is modified or removed"
+msgstr ""
+"შეიძლება, სისტემამ სწორად არ იმუშაოს, თუ ამ ჩანაწერს შეცვლით, ან წაშლით"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:48
+msgid "_Automatic Mount Options"
+msgstr "_ავტომატური მიმაგრების მორგება"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:57
+msgid "General"
+msgstr "ზოგადი"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:61
+msgid "_Mount at Startup"
+msgstr "_მიმაგრება სისტემის გაშვებისას"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:68
+msgid "_Show in Files"
+msgstr "Files-ში ჩვენებ_ა"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:75
+msgid "_Require Authorization"
+msgstr "ავტო_რიზაციის მოთხოვნა"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:84
+msgid "Appearance"
+msgstr "გარეგნობა"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:88
+msgid "D_isplay Name"
+msgstr "საჩვენებელი _სახელი"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:95
+msgid "C_olor Icon"
+msgstr "ფერა_დი ხატულა"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:102
+msgid "S_ymbolic Icon"
+msgstr "_სიმბოლური ხატულა"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:111
+msgid "Technical Options"
+msgstr "ტექნიკური პარამეტრები"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:115
+msgid "_fstab Options"
+msgstr "_fstab-ის პარამეტრები"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:125
+msgid "Mount _Point"
+msgstr ")მიმაგრების წერტილი"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:135
+msgid "Filesystem _Type"
+msgstr "ფაილური სისტემის _ტიპი"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:150
+msgid "Ide_ntify As"
+msgstr "_იდენტიფიკაცია, როგორც"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:162
+msgid "R_estore Default Settings"
+msgstr "ნაგულისხმევი პარამეტრ_ების აღდგენა"
+
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:72
+msgid "_Size"
+msgstr "_ზომა"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:4
 msgid "Resize Volume"
 msgstr "ტომის ზომის შეცვლა"
 
-#: src/disks/ui/resize-dialog.ui:48
+#: src/disks/ui/gdu-resize-volume-dialog.ui:21
+msgid "_Resize"
+msgstr "ზომის შეცვლა"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:34
 msgid ""
-"Resizing a filesystem can lead to data loss. You are advised to backup your "
-"data before. The resize operation will take longer if a lot of data has to "
-"be moved. The minimal size is calculated according to the current content. "
-"Keep additional free space for the filesystem to work fast and reliably."
+"Resizing a filesystem can result in data loss. It is recommended to backup "
+"any data before continuing."
 msgstr ""
-"ფაილური სისტემის ზომის შეცვლამ, შეიძლება, მონაცემების კარგვამდე მიგიყვანოთ. "
-"სჯობს, ოპერაციამდე მარქაფი გააკეთოთ. ზომის შეცვლის ოპერაციას კიდევ უფრო მეტი "
-"დრო დასჭირდება, თუ მონაცემების დიდი რაოდენობის გადატანაა საჭირო. მინიმალური "
-"ზომა მიმდინარე შემცველობის ზომის მიხედვით გამოითვლება. დაიტოვეთ დამატებითი "
-"თავისუფალი ადგილი ფაილური სისტემისთვის, რომ მან უფრო სწრაფად და საიმედოდ "
-"იმუშაოს."
+"ფაილური სისტემის ზომის შეცვლამ, შეიძლება, მონაცემების კარგვა გამოიწვიოს. "
+"გაგრძელებამდე რეკომენდებულია მონაცემების მარქაფის აღება."
 
-#: src/disks/ui/resize-dialog.ui:189
-msgid "_Difference"
-msgstr "_სხვაობა"
+#: src/disks/ui/gdu-resize-volume-dialog.ui:55
+msgid "Available Space"
+msgstr "ხელმისაწვდომი სივრცე"
 
-#: src/disks/ui/resize-dialog.ui:206
-msgid "The difference to the previous partition size"
-msgstr "სხვაობა ძველ დანაყოფის ზომასთან შედარებით"
+#: src/disks/ui/gdu-resize-volume-dialog.ui:83
+msgid "_New Size"
+msgstr "ახალი _ზომა"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:8
-msgid "Restore Disk Image"
-msgstr "დისკის ასლის აღდგენა"
+#: src/disks/ui/gdu-resize-volume-dialog.ui:90
+msgid "_Free After Resize"
+msgstr "_გათავისუფლება ზომის შეცვლის შემდეგ"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:38
-msgid "_Image to Restore"
-msgstr "_აღსადგენი ასლი"
+#: src/disks/ui/gdu-resize-volume-dialog.ui:107
+msgid "_Units"
+msgstr "ერთე_ულები"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:55
-msgid "Select Disk Image to Restore"
-msgstr "აირჩიეთ აღსადგენი დისკის ასლი"
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:24
+msgid "_Restore"
+msgstr "_აღდგენა"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:67
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:50
+msgid "Image"
+msgstr "დისკის ასლის ფაილი"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:51
+msgid "None Selected"
+msgstr "არაფერია მონიშნული"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:57
+msgid "Select Image"
+msgstr "აირჩიეთ დისკის ასლის ფაილი"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:70
+msgid "Image Size"
+msgstr "დისკის ასლის ფაილის ზომა"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:79
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:87
 msgid "Destination"
 msgstr "დანიშნულება"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:96
-msgid "_Destination"
-msgstr "_დანიშნულება"
+#: src/disks/ui/gdu-take-ownership-dialog.ui:4
+msgid "Take Ownership?"
+msgstr "ავიღო მფლობელობა?"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:123
-msgid "Image to Restore"
-msgstr "აღსადგენი ასლი"
+#: src/disks/ui/gdu-take-ownership-dialog.ui:11
+msgid "_Recursive Mode"
+msgstr "_რეკურსიული რეჟიმი"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:152
-msgid "Image Size"
-msgstr "გამოსახულების ზომა"
+#: src/disks/ui/gdu-take-ownership-dialog.ui:37
+msgid "_Take Ownership"
+msgstr "მ_ფლობელობის აღება"
 
-#: src/disks/ui/restore-disk-image-dialog.ui:193
-msgid "_Start Restoring…"
-msgstr "_აღდგენის დაწყება…"
+#: src/disks/ui/gdu-take-ownership-dialog.ui:50
+msgid ""
+"Recursive mode changes the ownership of subdirectories and files. This can "
+"cause problems if files are owned by other users."
+msgstr ""
+"რეკურსიული რეჟიმი ქვესაქაღალდეების და ფალების ზომებსაც შეცვლის. ამან, "
+"შეიძლება, სხვა მომხმარებლების ფაილებთან პრობლემები გამოიწვიოს."
+
+#: src/disks/ui/gdu-window.ui:32
+msgid "Main Menu"
+msgstr "მთავარი მენიუ"
+
+#: src/disks/ui/gdu-window.ui:70
+msgid "Show Sidebar"
+msgstr "გვერდითი ზოლის ჩვენება"
+
+#: src/disks/ui/gdu-window.ui:83
+msgid "No Device Selected"
+msgstr "მოწყობილობა არჩეული არაა"
+
+#: src/disks/ui/gdu-window.ui:112
+msgid "_New Disk Image…"
+msgstr "_ახალი დისკის ასლი…"
+
+#: src/disks/ui/gdu-window.ui:116
+msgid "_Attach Disk Image…"
+msgstr "დისკის _ასლის ფაილის მიმაგრება…"
+
+#: src/disks/ui/gdu-window.ui:123
+msgid "_Keyboard Shortcuts"
+msgstr "კლავიატურის მალსახმობები"
+
+#: src/disks/ui/gdu-window.ui:127
+msgid "_Help"
+msgstr "დახმარება"
+
+#: src/disks/ui/gdu-window.ui:130
+msgid "_About Disks"
+msgstr "Disk-ის შ_ესახებ"
+
+#: src/disks/ui/gdu-window.ui:137
+msgid "Set up _read-only loop device"
+msgstr "_მხოლოდ კითხვადი მარყუჟის მოწყობილობის მორგება"
 
 #: src/disks/ui/shortcuts.ui:12
 msgctxt "shortcut window"
@@ -3440,96 +3133,6 @@ msgctxt "shortcut window"
 msgid "Format the selected volume"
 msgstr "მონიშნული ტომის ფორმატირებაფორმატი ხმის სიმაღლე"
 
-#: src/disks/ui/smart-dialog.ui:6
-msgid "SMART Data & Self-Tests"
-msgstr "SMART მონაცემები & თვითტესტები"
-
-#: src/disks/ui/smart-dialog.ui:25
-msgid "_Start Self-test"
-msgstr "თვ_ითტესტების გაშვება"
-
-#: src/disks/ui/smart-dialog.ui:29
-msgid "Click to start a SMART self-test"
-msgstr "დააწკაპუნეთ SMART თვით-ტესტის გასაშვებად"
-
-#: src/disks/ui/smart-dialog.ui:38
-msgid "_Stop Self-test"
-msgstr "თვითტესტის _გაჩერება"
-
-#: src/disks/ui/smart-dialog.ui:42
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr "დააწკაპუნეთ ამჟამად გაშვებული SMART თვითტესტის გასაჩერებლად"
-
-#: src/disks/ui/smart-dialog.ui:51
-msgid "Close"
-msgstr "დახურვა"
-
-#: src/disks/ui/smart-dialog.ui:59
-msgid "Refresh"
-msgstr "განახლება"
-
-#: src/disks/ui/smart-dialog.ui:63
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr ""
-"დააწკაპუნეთ მყარი დისკიდან SMART მონაცემების ნაძალადევად თავიდან წასაკითხად"
-
-#: src/disks/ui/smart-dialog.ui:95
-msgid "Powered On"
-msgstr "ჩართულია"
-
-#: src/disks/ui/smart-dialog.ui:124
-msgid "Updated"
-msgstr "განახლდა"
-
-#: src/disks/ui/smart-dialog.ui:182
-msgid "Self-test Result"
-msgstr "თვითტესტის შედეგები"
-
-#: src/disks/ui/smart-dialog.ui:197
-msgid "Self-assessment"
-msgstr "თვით-შეფასება"
-
-#: src/disks/ui/smart-dialog.ui:212
-msgid "Overall Assessment"
-msgstr "სრული შეფასება"
-
-#: src/disks/ui/smart-dialog.ui:270
-msgid "Click to toggle whether SMART is enabled for the hard disk"
-msgstr "დააწკაპუნეთ, რომ გადართოთ, ჩართულია თუ არა SMART ამ მყარი დისკისთვის"
-
-#: src/disks/ui/smart-dialog.ui:281
-msgid "SMART _Attributes"
-msgstr "SMART _ატრიბუტები"
-
-#: src/disks/ui/smart-dialog.ui:334
-msgid "_Short"
-msgstr "_მოკლე"
-
-#: src/disks/ui/smart-dialog.ui:338
-msgid "_Extended"
-msgstr "_გაფართოებული"
-
-#: src/disks/ui/smart-dialog.ui:342
-msgid "_Conveyance"
-msgstr "_კონვეიერი"
-
-#: src/disks/ui/take-ownership-dialog.ui:4
-msgid "Confirm Taking Ownership"
-msgstr "მფლობელობის აღების დადასტურება"
-
-#: src/disks/ui/take-ownership-dialog.ui:5
-msgid ""
-"Changes ownership of the filesystem to your user and group. The recursive "
-"mode does also change the ownership of all subdirectories and files, this "
-"can lead to destructive results when the filesystem contains a directory "
-"structure where ownership should belong to different users (e.g., a system "
-"backup or a filesystem that is accessed by multiple users)."
-msgstr ""
-
-#: src/disks/ui/take-ownership-dialog.ui:13
-msgid "Enable _recursive mode"
-msgstr "_რეკურსიული რეჟიმის ჩართვა"
-
 #: src/disks/ui/unlock-device-dialog.ui:6
 msgid "Enter passphrase to unlock"
 msgstr "შეიყვანეთ განსაბლოკი საკვანძო ფრაზა"
@@ -3540,15 +3143,26 @@ msgstr ""
 "ეს ტომი, შეიძლება, VeraCrypt-ის ტომია, რადგან ის შემთხვევით მონაცემებს "
 "შეიცავს."
 
+#: src/disks/ui/unlock-device-dialog.ui:46
+msgid "_Passphrase"
+msgstr "­_საკვანძო ფრაზა"
+
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:62
 #: src/disks/ui/unlock-device-dialog.ui:160
 msgid "If specified"
 msgstr "თუ მითითებულია"
 
+#: src/disks/ui/unlock-device-dialog.ui:78
+msgid "Sho_w passphrase"
+msgstr "საკვანძო ფრაზის ჩვე_ნება"
+
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:95
 msgid "Volume type"
 msgstr "ტომის ტიპი"
 
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:116
 msgid "_Hidden"
 msgstr "_დამალული"
@@ -3561,6 +3175,7 @@ msgstr ""
 "ამ ტომის განბლოკვის მაგიერ, შიგნით დამალული მეორადი ტომის განბლოკვის "
 "მცდელობა."
 
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:127
 msgid "Windows _system"
 msgstr "Windows-ის _სისტემა"
@@ -3569,6 +3184,7 @@ msgstr "Windows-ის _სისტემა"
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "დაშიფრული Windows-ის სისტემური დანაყოფის ან დისკის განბლოკვა."
 
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:144
 msgid "PI_M"
 msgstr "PI_M"
@@ -3581,148 +3197,143 @@ msgstr ""
 "თუ დაყენებულია, VeraCrypt PIM (პირადი იტერაციების მამრავლი) რიცხვის "
 "მნიშვნელობაა, ამ ტომისთვის."
 
+#. <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" />
 #: src/disks/ui/unlock-device-dialog.ui:174
 msgid "_Keyfiles"
 msgstr "_გასაღების ფაილები"
-
-#: src/disks/ui/unlock-device-dialog.ui:195
-msgid "Select a keyfile to unlock this volume"
-msgstr "აირჩიეთ ამ ტომის განბლოკვისთვის საჭირო გასაღების ფაილი"
 
 #: src/disks/ui/unlock-device-dialog.ui:226
 msgid "_Unlock"
 msgstr "_განბლოკვა"
 
-#: src/libgdu/gduutils.c:106
+#: src/libgdu/gduutils.c:98
 msgid "All Files"
 msgstr "ყველა ფაილი"
 
-#: src/libgdu/gduutils.c:111
+#: src/libgdu/gduutils.c:103
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "დისკის ასლები (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:113
+#: src/libgdu/gduutils.c:105
 msgid "Disk Images (*.img, *.iso)"
 msgstr "დისკის ასლები (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:442
+#: src/libgdu/gduutils.c:371
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d წელი"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:449
+#: src/libgdu/gduutils.c:378
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d თვე"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:456
+#: src/libgdu/gduutils.c:385
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d დღე"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:463
+#: src/libgdu/gduutils.c:392
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d საათი"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:470
+#: src/libgdu/gduutils.c:399
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d წუთი"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:477
+#: src/libgdu/gduutils.c:406
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d წამი"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:484
+#: src/libgdu/gduutils.c:413
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
 msgstr[0] "%d მიწილამი"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:548
+#: src/libgdu/gduutils.c:477
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s და %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:553
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s და %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:558
+#: src/libgdu/gduutils.c:487
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s და %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:563
+#: src/libgdu/gduutils.c:492
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s და %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:574
+#: src/libgdu/gduutils.c:503
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s და %s"
 
-#: src/libgdu/gduutils.c:583
+#: src/libgdu/gduutils.c:512
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "წუთზე ნაკლები"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:588
+#: src/libgdu/gduutils.c:517
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:594
+#: src/libgdu/gduutils.c:523
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
-#. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:839
-msgctxt "confirmation-list-of-devices"
-msgid "Affected Devices"
-msgstr "შეცვლილი მოწყობილობები"
+#: src/libgdu/gduutils.c:652
+msgid "_Close"
+msgstr "_დახურვა"
 
-#: src/libgdu/gduutils.c:1442
+#: src/libgdu/gduutils.c:1316
 msgid "Error unmounting filesystem"
 msgstr "ფაილური სისტემის მოხსნის შეცდომა"
 
-#: src/libgdu/gduutils.c:1474
+#: src/libgdu/gduutils.c:1348
 msgid "Error locking device"
 msgstr "მოწყობილობის დაბლოკვის შეცდომა"
 
-#: src/libgdu/gduutils.c:1495
+#: src/libgdu/gduutils.c:1369
 msgid "Error disabling autoclear for loop device"
 msgstr "მარყუჟი მოწყობილობისთვის ავტოგასუფთავების გამორთვის შეცდომა"
 
@@ -3743,6 +3354,703 @@ msgstr "დისკი ალბათ ფეხებს მალე გა�
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "გამოცდა"
+
+#~ msgid "Disk Image Writer"
+#~ msgstr "დისკის ასლის ჩამწერი"
+
+#~ msgid "Write Disk Images to Devices"
+#~ msgstr "დისკის ასლის მოწყობილობაზე ჩაწერა"
+
+#~ msgid "An error occurred"
+#~ msgstr "შეცდომა"
+
+#~ msgid "Allow writing to the image"
+#~ msgstr "გამოსახულებაში ჩაწერის დაშვება"
+
+#~ msgid "Select Disk Image(s) to Mount"
+#~ msgstr "აირჩიეთ მისამაგრებელი დისკის ასლი"
+
+#~ msgid "Set up _read-only mount"
+#~ msgstr "მხოლოდ კითხვადი მიმაგრება"
+
+#~ msgid ""
+#~ "If checked, the mount will be read-only. This is useful if you don’t want "
+#~ "the underlying disk image to be modified"
+#~ msgstr ""
+#~ "თუ ჩართულია, ეს მიმაგრება მხოლოდ-კითხვადი იქნება. გამოგადგებათ, თუ "
+#~ "გნებავთ, რომ დისკის ასლი არ შეიცვალოს"
+
+#, c-format
+#~ msgid "Error connecting to udisks daemon: %s (%s, %d)"
+#~ msgstr "შეცდომა udisks დემონთან მიერთებისას: %s (%s, %d)"
+
+#~ msgid "Attach and mount one or more disk image files."
+#~ msgstr "მიმაგრეთ ერთი ან მეტი დისკის ასლის ფაილი."
+
+#, c-format
+#~ msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
+#~ msgstr "%s-ის გახსნის შეცდომა - ტომი მიმაგრებულია?"
+
+#, c-format
+#~ msgid "Error opening “%s”: %m"
+#~ msgstr "%s-ის გახსნის შეცდომა: %m"
+
+#, c-format
+#~ msgid "Error attaching disk image: %s (%s, %d)"
+#~ msgstr "დისკის ასლის მიმაგრების შეცდომა: %s (%s, %d)"
+
+#, c-format
+#~ msgid ""
+#~ "gnome-disk-utility %s\n"
+#~ "UDisks %s (built against %d.%d.%d)"
+#~ msgstr ""
+#~ "gnome-disk-utility %s\n"
+#~ "UDisks %s (აგებულია ბიბლიოთეკით %d.%d.%d)"
+
+#, c-format
+#~ msgctxt "benchmark-graph"
+#~ msgid "%d MB/s"
+#~ msgstr "%d მბ/წმ"
+
+#, c-format
+#~ msgctxt "benchmark-graph"
+#~ msgid "%3g ms"
+#~ msgstr "%3g მწმ"
+
+#, c-format
+#~ msgctxt "benchmark-transfer-rate"
+#~ msgid "%s/s"
+#~ msgstr "%s/წმ"
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "%s (%s ago)"
+#~ msgstr "%s (%s-ის წინ)"
+
+#~ msgctxt "benchmark-updated"
+#~ msgid "No benchmark data available"
+#~ msgstr "ტესტის მონაცემები ხელმისაწვდომი არაა"
+
+#~ msgctxt "benchmark-updated"
+#~ msgid "Opening Device…"
+#~ msgstr "მოწყობილობის გახსნა…"
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "Measuring transfer rate (%2.1f%% complete)…"
+#~ msgstr "გადაცემის სიჩქარის გაზომვა (%2.1f%% დასრულდა)…"
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "Measuring access time (%2.1f%% complete)…"
+#~ msgstr "წვდომის სიჩქარის გაზომვა (%2.1f%% დასრულდა)…"
+
+#~ msgctxt "benchmarking"
+#~ msgid "An error occurred"
+#~ msgstr "შეცდომა"
+
+#, c-format
+#~ msgctxt "benchmark-access-time"
+#~ msgid "%.2f msec"
+#~ msgstr "%.2f მწმ"
+
+#~ msgctxt "create-inhibit-message"
+#~ msgid "Benchmarking device"
+#~ msgstr "მოწყობილობის ტესტირება"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error getting size of device: %m"
+#~ msgstr "მოწყობილობის ზომის მიღების შეცდომა: %m"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error getting page size: %m\n"
+#~ msgstr "გვერდის ზომის მიღებს შეცდომა: %m\n"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error seeking to offset %lld"
+#~ msgstr "შეცდომა წანაცვლებაზე (%lld) გადახვევისას"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %s from offset %s"
+#~ msgstr "%s-ის წინასწარი წაკითხვის შეცდომა წანაცვლებიდან %s"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error seeking to offset %s"
+#~ msgstr "გადახვევის შეცდომა წანაცვლებაზე %s"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error reading %s from offset %s"
+#~ msgstr "%s-ის წაკითხვის შეცდომა წანაცვლებიდან %s"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error pre-reading %lld bytes from offset %lld"
+#~ msgstr "%lld ბაიტის წინასწარი წაკითხვის შეცდომა წანაცვლებიდან %lld"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error writing %lld bytes at offset %lld: %m"
+#~ msgstr "%lld ბაიტის ჩაწერის შეცდომა წანაცვლებაზე %lld: %m"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Expected to write %lld bytes, only wrote %lld: %m"
+#~ msgstr "ველოდებოდი %lld ბაიტის ჩაწერას. ჩაწერილია, მხოლოდ %lld: %m"
+
+#, c-format
+#~ msgctxt "benchmarking"
+#~ msgid "Error syncing (at offset %lld): %m"
+#~ msgstr "სინქრონიზაციის შეცდომა (წანაცვლებაზე %lld): %m"
+
+#~ msgid "Confirm Repair"
+#~ msgstr "შეკეთების დადასტურება"
+
+#~ msgid "The passphrases do not match"
+#~ msgstr "საკვანძო ფრაზები არ ემთხვევა"
+
+#~ msgid "The passphrase matches the existing passphrase"
+#~ msgstr "საკვანძო სიტყვა არსებულს ემთხვევა"
+
+#~ msgid "Unrecoverable read errors while creating disk image"
+#~ msgstr "გამოუსწრებელი წაკითხვის შეცდომები დისკის ასლის ფაილის შექმნისას"
+
+#, c-format
+#~ msgid ""
+#~ "The file already exists in “%s”.  Replacing it will overwrite its "
+#~ "contents."
+#~ msgstr ""
+#~ "ფაილი \"%s\"-ში უკვე არსებობს.  მისი ჩანაცვლება არსებულ შემცველობას "
+#~ "წაშლის."
+
+#~ msgid "(None)"
+#~ msgstr "(არცერთი)"
+
+#~ msgid "Disk Drives"
+#~ msgstr "დისკები"
+
+#~ msgid "Other Devices"
+#~ msgstr "სხვა მოწყობილობები"
+
+#~ msgid "The label matches the existing label"
+#~ msgstr "ჭდე არსებულს ემთხვევა"
+
+#~ msgid "Are you sure you want to format the disk?"
+#~ msgstr "მართლა გნებავთ დისკის დაფორმატება?"
+
+#~ msgid "Quick"
+#~ msgstr "სწრაფი"
+
+#~ msgid "Overwrite existing data with zeroes"
+#~ msgstr "არსებულ მონაცემებზე ნულების გადაწერა"
+
+#~ msgid "Slow"
+#~ msgstr "ნელი"
+
+#~ msgid "ATA Secure Erase"
+#~ msgstr "ATA უსაფრთხო წაშლა"
+
+#~ msgid "ATA Enhanced Secure Erase"
+#~ msgstr "ATA დამატებით უსაფრთხო წაშლა"
+
+#~ msgid "Compatible with all systems and devices"
+#~ msgstr "თავსებადია ყველა სისტემასა და მოწყობილობასთან"
+
+#~ msgid "MBR / DOS"
+#~ msgstr "MBR / DOS"
+
+#~ msgid "GPT"
+#~ msgstr "GPT"
+
+#~ msgid "Empty"
+#~ msgstr "ცარიელი"
+
+#, c-format
+#~ msgid "Matches partition %u of the device with the given vital product data"
+#~ msgstr ""
+#~ "ემთხვევა დანაყოფს %u მოწყობილობაზე მითითებული ძირითადი პროდუქტის "
+#~ "მონაცემებით"
+
+#~ msgid ""
+#~ "Matches the whole disk of the device with the given vital product data"
+#~ msgstr ""
+#~ "ემთხვევა მთლიან დისკს მოწყობილობისა მითითებული ძირითადი პროდუქტის "
+#~ "მონაცემებით"
+
+#, c-format
+#~ msgid ""
+#~ "Matches partition %u of any device connected at the given port or address"
+#~ msgstr ""
+#~ "ემთხვევა დანაყოფს %u ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ "
+#~ "პორტზე ან მისამართზეა მიერთებული"
+
+#~ msgid ""
+#~ "Matches the whole disk of any device connected at the given port or "
+#~ "address"
+#~ msgstr ""
+#~ "ემთხვევა სრულ დისკს ნებისმიერი მოწყობილობისთვის, რომელიც მითითებულ პორტზე "
+#~ "ან მისამართზეა მიერთებული"
+
+#~ msgid "Matches any device with the given label"
+#~ msgstr "ემთხვევა მოწყობილობას მითითებული ჭდით"
+
+#~ msgid "Matches the device with the given UUID"
+#~ msgstr "ემთხვევა მოწყობილობას მითითებული UUID-ით"
+
+#~ msgid "Matches the given device"
+#~ msgstr "ემთხვევა მოცემულ მოწყობილობას"
+
+#~ msgctxt "Password strength"
+#~ msgid "Weak"
+#~ msgstr "სუსტი"
+
+#~ msgctxt "Password strength"
+#~ msgid "Fair"
+#~ msgstr "საშუალო"
+
+#~ msgctxt "Password strength"
+#~ msgid "Good"
+#~ msgstr "კარგი"
+
+#~ msgctxt "Password strength"
+#~ msgid "Strong"
+#~ msgstr "ძლიერი"
+
+#~ msgid "The encryption passphrase was retrieved from the keyring"
+#~ msgstr "დაშიფვრის საკვანძო ფრაზა ბრელოკიდან მივიღე"
+
+#~ msgid "Select a Keyfile"
+#~ msgstr "აირჩიეთ გასაღების ფაილი"
+
+#~ msgid "Volumes Grid"
+#~ msgstr "ტომების ბადე"
+
+#~ msgid "No Media"
+#~ msgstr "მედიის გარეშე"
+
+#~ msgctxt "volume-grid"
+#~ msgid "Swap"
+#~ msgstr "სვაპი"
+
+#, c-format
+#~ msgctxt "volume-grid"
+#~ msgid "Partition %u: %s"
+#~ msgstr "დანაყოფი %u: %s"
+
+#, c-format
+#~ msgctxt "volume-grid"
+#~ msgid "Partition %u"
+#~ msgstr "დანაყოფი %u"
+
+#~ msgctxt "volume-grid"
+#~ msgid "Extended Partition"
+#~ msgstr "გაფართოებული დანაყოფი"
+
+#~ msgctxt "volume-grid"
+#~ msgid "Free Space"
+#~ msgstr "თავისუფალი ადგილი"
+
+#~ msgid ""
+#~ "Copyright © 2008-2013 Red Hat, Inc.\n"
+#~ "Copyright © 2008-2013 David Zeuthen\n"
+#~ "Copyright © 2009-2017 The GNOME Project\n"
+#~ msgstr ""
+#~ "Copyright © 2008-2013 Red Hat, Inc.\n"
+#~ "Copyright © 2008-2013 David Zeuthen\n"
+#~ "Copyright © 2009-2017 The GNOME Project\n"
+
+#~ msgid "View, modify and configure disks and media"
+#~ msgstr "დაათვალიერეთ, შეცვალეთ და მოირგეთ დისკები და მედა"
+
+#~ msgid "_Attach Disk Image… (.iso, .img)"
+#~ msgstr "_დისკის ასლის მიმაგრება... (.iso, .img)"
+
+#~ msgid "_Start Benchmark…"
+#~ msgstr "ტესტირების _დაწყება…"
+
+#~ msgid "Last Benchmarked"
+#~ msgstr "ბოლოს დატესტილი"
+
+#~ msgid "Disk or Device"
+#~ msgstr "დისკი ან მოწყობილობა"
+
+#~ msgid "Benchmark Settings"
+#~ msgstr "ტესტირების მორგება"
+
+#~ msgid "_Start Benchmarking…"
+#~ msgstr "ტესტირების _დაწყება…"
+
+#~ msgid "Number of S_amples"
+#~ msgstr "_სემპლების რაოდენობა"
+
+#~ msgid "Sample S_ize (MiB)"
+#~ msgstr "სემპლის _ზომა (მიბ)"
+
+#~ msgid "Perform _write-benchmark"
+#~ msgstr "ჩაწერის _ტესტის შესრულება"
+
+#~ msgid ""
+#~ "Number of samples. Bigger number produces more smooth graphs but the "
+#~ "benchmark will take more time."
+#~ msgstr ""
+#~ "მაგალითების რაოდენობა. დიდი რიცხვები უფრო გლუვ კრაფიკებს მოგცემთ, მაგრამ "
+#~ "უფრო მეტი დროც დასჭირდება."
+
+#~ msgid ""
+#~ "The number of MiB (1048576 bytes) to read/write for each sample. Big "
+#~ "sample sizes tend to produce more accurate benchmarks at the cost of the "
+#~ "benchmark taking more time."
+#~ msgstr ""
+#~ "მეგაბიტების (1048576 ბაიტი) რაოდენობა თითოეულ მაგალითში. დიდი მაგალითის "
+#~ "ზომები უფრო ზუსტ ტესტირების შედეგებს მოგცემთ, მისი დროის გაზრდის ხარჯზე."
+
+#~ msgid "Number of Sampl_es"
+#~ msgstr "სემპლების _რაოდენობა"
+
+#~ msgid ""
+#~ "Number of samples. Bigger number produces a more accurate picture of "
+#~ "access time patterns but takes more time."
+#~ msgstr ""
+#~ "მაგალითების რაოდენობა. დიდი რაოდენობა უფრო ზუსტ სურათს მოგცემთ წვდომის "
+#~ "დროის ნიმუშების შესახებ, მაგრამ, უფრო მეტი დრო დასჭირდება."
+
+#~ msgid "Curr_ent Passphrase"
+#~ msgstr "მიმდინარე _საკვანძო ფრაზა"
+
+#~ msgid "Enter current passphrase used to protect the data"
+#~ msgstr "შეიყვანეთ მონაცემების დასაცავად გამოყენებული საკვანძო ფრაზა"
+
+#~ msgid "New _Passphrase"
+#~ msgstr "ახალი _საკვანძო ფრაზა"
+
+#~ msgid "Enter new passphrase used to protect the data"
+#~ msgstr ""
+#~ "შეიყვანეთ ახალი საკვანძო ფრაზა, რომელიც თქვენი მონაცემების დასაცავად "
+#~ "გამოიყენება"
+
+#~ msgid "Confirm passphrase entered above"
+#~ msgstr "გაიმეორეთ ზემოთ შეყვანილი საკვანძო ფრაზა"
+
+#~ msgid "The strength of the passphrase"
+#~ msgstr "საკვანძო ფრაზის სიძლიერე"
+
+#~ msgid "Sho_w Passphrases"
+#~ msgstr "საკვანძო ფრაზების ჩვე_ნება"
+
+#~ msgid "Check this box to see the passphrases entered above"
+#~ msgstr "ჩართეთ ეს, რომ დაინახოთ საკვანძო ფრაზა, რომელიც ზემოთ შეიყვანეთ"
+
+#~ msgid "Create Disk Image"
+#~ msgstr "დისკის ახალი გამოსახულების შექმნა"
+
+#~ msgid "Save in _Folder"
+#~ msgstr "შენახვა _საქაღალდეში"
+
+#~ msgid ""
+#~ "The name to use for the filesystem. This is useful if you want to refer "
+#~ "to the device via a symlink in the /dev/disk/by-label directory."
+#~ msgstr ""
+#~ "სახელი ფაილური სისტემისთვის. ეს სასარგებლოა, თუ გნებავთ, მოწყობლობას "
+#~ "სიმბმულით მიმართოთ /dev/disk/by-label საქაღალდიდან."
+
+#~ msgid "For example: “Angela’s Files” or “Backup”."
+#~ msgstr "მაგ: 'ანჟელას ფაილები' ან 'მარქაფი'."
+
+#~ msgid "_Erase"
+#~ msgstr "_წაშლა"
+
+#~ msgid "Overwrites existing data, but takes longer."
+#~ msgstr "თავზე გადააწერს არსებულ მონაცემებს, მაგრამ მეტი დრო უნდა."
+
+#~ msgid "_Internal disk for use with Linux systems only (Ext4)"
+#~ msgstr "შიდა _დისკი Linux-ის სისტემების (Ext4) გამოსაყენებლად"
+
+#~ msgid "_Other"
+#~ msgstr "_სხვა"
+
+#~ msgid ""
+#~ "In case that the default options do not fit your needs select one of the "
+#~ "following filesystems. Be aware of the technical differences and do "
+#~ "research about your use case."
+#~ msgstr ""
+#~ "იმ შემთხვევაში, თუ ნაგულისხმევი პარამეტრები თქვენს მოთხოვნებს არ "
+#~ "აკმაყოფილებს, აირჩიეთ ერთ-ერთი ფაილური სისტემა. გაითვალისწინეთ, რომ წინ "
+#~ "ტექნიკური სიძნელეები გელით და მოკვლევა თვითონ მოგიწევთ."
+
+#~ msgid "The size of the partition to create"
+#~ msgstr "შესაქმნელი დანაყოფის ზომა"
+
+#~ msgid "Free Space _Following"
+#~ msgstr "თავისუფალი _ადგილი შემდეგ"
+
+#~ msgid "_Confirm"
+#~ msgstr "_დადასტურება"
+
+#~ msgid "Enter passphrase used to protect the data"
+#~ msgstr ""
+#~ "შეიყვანეთ საკვანძო ფრაზა, რომელიც მონაცემების დასაშიფრად გამოიყენება"
+
+#~ msgid "Sh_ow Password"
+#~ msgstr "_პაროლების ჩვენება"
+
+#~ msgid "Back"
+#~ msgstr "უკან"
+
+#~ msgid "Power Off Disk"
+#~ msgstr "დისკის კვების გამორთვა"
+
+#~ msgid "Detach Loop Device"
+#~ msgstr "მარყუჟი მოწყობილობის მოხსნა"
+
+#~ msgid "Select a device to manage."
+#~ msgstr "აირჩიეთ სამართავი მოწყობილობა."
+
+#~ msgid "Serial Number"
+#~ msgstr "სერიული ნომერი"
+
+#~ msgid "World Wide Name"
+#~ msgstr "WWN სახელი"
+
+#~ msgid "Media"
+#~ msgstr "მედია"
+
+#~ msgid "Job"
+#~ msgstr "დავალება"
+
+#~ msgid "Auto-clear"
+#~ msgstr "ავტომატური-გასუფთავება"
+
+#~ msgid "Detach Loop Device After Unmounting"
+#~ msgstr "მარყუჟის მოწყობილობის გაუქმება მოხსნის ოპერაციის შემდეგ"
+
+#~ msgid "Backing File"
+#~ msgstr "ფაილი უკანაბოლო"
+
+#~ msgid "_Volumes"
+#~ msgstr "_ტომები"
+
+#~ msgid "Mount Selected Partition"
+#~ msgstr "მონიშნული დანაყოფის მიმაგრება"
+
+#~ msgid "Unmount Selected Partition"
+#~ msgstr "მონიშნული დანაყოფის მოხსნა"
+
+#~ msgid "Activate Selected Swap Partition"
+#~ msgstr "არჩეული სვოპის დანაყოფის აქტივაცია"
+
+#~ msgid "Deactivate Selected Swap Partition"
+#~ msgstr "არჩეული სვოპის დანაყოფის დეაქტივაცია"
+
+#~ msgid "Unlock Selected Encrypted Partition"
+#~ msgstr "მონიშნული დაშიფრული დანაყოფის განბლოკვა"
+
+#~ msgid "Lock Selected Encrypted Partition"
+#~ msgstr "მონიშნული დაშიფრული დანაყოფის დაბლოკვა"
+
+#~ msgid "Create Partition in Unallocated Space"
+#~ msgstr "დანაყოფის შექმნა გამოუყოფელ ადგილას"
+
+#~ msgid "Delete Selected Partition"
+#~ msgstr "მონიშნული დანაყოფის წაშლა"
+
+#~ msgid "Contents"
+#~ msgstr "შიგთავსი"
+
+#~ msgid "S_tandby Now"
+#~ msgstr "_ახლა დაძინება"
+
+#~ msgid "_Wake-Up from Standby"
+#~ msgstr "ძილიდან _გაღვიძება"
+
+#~ msgid "Us_er Session Defaults"
+#~ msgstr "_მომხმარებლის სესიის ნაგულისხმევი პარამეტრები"
+
+#~ msgid "Opt_ions"
+#~ msgstr "_მორგება"
+
+#~ msgid "If checked, the device will be unlocked at system startup [!noauto]"
+#~ msgstr ""
+#~ "თუ ჩართულია, მოწყობილობის განბლოკვა სისტემის ჩართვისას მოხდება [!noauto]"
+
+#~ msgid "Require additional authori_zation to unlock"
+#~ msgstr "_განბლოკვისთვის დამატებითი პრივილეგიები გჭირდებათ"
+
+#~ msgid ""
+#~ "If checked, additional authorization is required to unlock the device [x-"
+#~ "udisks-auth]"
+#~ msgstr ""
+#~ "თუ ჩართულია, დისკის განბლოკვისთვის დამატებითი ავტორიზაციაა საჭირო [x-"
+#~ "udisks-auth]"
+
+#~ msgid "Options to use when unlocking the device"
+#~ msgstr "მოწყობილობის განბლოკვისას გამოყენებული პარამეტრები"
+
+#~ msgid ""
+#~ "Passphrase of the device or empty to request from user when setting up "
+#~ "the device"
+#~ msgstr ""
+#~ "მოწყობილობის საკვანძო ფრაზა ან ცარიელი, რომ ის მომხმარებელს მოვთხოვოთ "
+#~ "მოწყობილობის მორგებისას"
+
+#~ msgid "Passphrase File"
+#~ msgstr "საკვანძო ფრაზის ფაილი"
+
+#~ msgid "_OK"
+#~ msgstr "_დიახ"
+
+#~ msgid "Change Filesystem Label"
+#~ msgstr "ფაილური სისტემის ჭდის შეცვლა"
+
+#~ msgid ""
+#~ "The special device file — use symlinks in the /dev/disk hierarchy to "
+#~ "control the scope of the entry"
+#~ msgstr ""
+#~ "სპეციალური მოწყობილობის ფაილი — სიმბმულების გამოყენება /dev/disk "
+#~ "იერარქიაში ან ჩანაწერის შუალედის საკონტროლოდ"
+
+#~ msgid "The directory to mount the device in"
+#~ msgstr "საქაღალდე, სადაც მოწყობილობის მიმაგრება მოხდება"
+
+#~ msgid "The filesystem type to use"
+#~ msgstr "ფაილური სისტემის ტიპი"
+
+#~ msgid ""
+#~ "If set, the name to use for the device in the user interface [x-gvfs-"
+#~ "name=]"
+#~ msgstr ""
+#~ "თუ დაყენებულია, ეს არის სახელი, რომელიც გამოყენებული იქნება ამ "
+#~ "მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-name=]"
+
+#~ msgid "Icon Na_me"
+#~ msgstr "ხატულის _სახელი"
+
+#~ msgid ""
+#~ "If set, the name of the icon to use in the device in the user interface "
+#~ "[x-gvfs-icon=]"
+#~ msgstr ""
+#~ "თუ დაყენებულია, ეს არის ხატულა, რომელიც გამოყენებული იქნება ამ "
+#~ "მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-icon=]"
+
+#~ msgid "Sho_w in user interface"
+#~ msgstr "მომხმარებლის _ინტერფეისის ჩვენება"
+
+#~ msgid ""
+#~ "If checked, the device is always shown in the user interface no matter "
+#~ "what its directory is [x-gvfs-show]"
+#~ msgstr ""
+#~ "თუ ჩართულია, მოწყობილობა ყოველთვის ნაჩვენებია მომხმარებლის ინტერფეისში "
+#~ "იმისგან დამოუკიდებლად, რომელი საქაღალდეა [x-gvfs-show]"
+
+#~ msgid ""
+#~ "If checked, additional authorization is required to mount the device [x-"
+#~ "udisks-auth]"
+#~ msgstr ""
+#~ "თუ ჩართულია, დისკის მისამაგრებლად დამატებითი ავტორიზაცია იქნება საჭირო [x-"
+#~ "udisks-auth]"
+
+#~ msgid "If checked, the device will be mounted at system startup [!noauto]"
+#~ msgstr ""
+#~ "თუ ჩართულია, მოწყობილობა მიმაგრებული იქნება სისტემის გაშვებისას [!noauto]"
+
+#~ msgid ""
+#~ "If set, the name of the symbolic icon to use in the device in the user "
+#~ "interface [x-gvfs-symbolic-icon=]"
+#~ msgstr ""
+#~ "თუ დაყენებულია, ეს არის სიმბოლური ხატულის სახელი, რომელიც გამოყენებული "
+#~ "იქნება ამ მოწყობილობისთვის მომხმარებლის ინტერფეისში [x-gvfs-symbolic-"
+#~ "icon=]"
+
+#~ msgid "Mount Opt_ions"
+#~ msgstr "მიმაგრების მორგება"
+
+#~ msgid "The mount options stored in the <b>/etc/fstab</b> file"
+#~ msgstr "მიმაგრების პარამეტრები დამახსოვრებულია ფაილში <b>/etc/fstab</b>"
+
+#~ msgid "_Type"
+#~ msgstr "_ტიპი"
+
+#~ msgid "_Partitioning"
+#~ msgstr "_დაყოფა"
+
+#~ msgid "_Format…"
+#~ msgstr "_ფორმატი…"
+
+#~ msgid "_Edit Partition…"
+#~ msgstr "_დანაყოფის ჩასწორება…"
+
+#~ msgid "Edit _Mount Options…"
+#~ msgstr "_მიმაგრების პარამეტრების ჩასწორება…"
+
+#~ msgid "Edit Encr_yption Options…"
+#~ msgstr "_დაშიფვრის პარამეტრების ჩასწორება…"
+
+#~ msgid "Application Menu"
+#~ msgstr "აპლიკაციების მენიუ"
+
+#~ msgid "Drives"
+#~ msgstr "დისკები"
+
+#~ msgid "_Attach"
+#~ msgstr "_მიმაგრება"
+
+#~ msgid "New Disk Image"
+#~ msgstr "ახალი დისკის ასლი"
+
+#~ msgid "Image _Size"
+#~ msgstr "დისკის ასლის _ზომა"
+
+#~ msgid "The size of the image to create"
+#~ msgstr "შესაქმნელი დისკის ასლის ზომა"
+
+#~ msgid ""
+#~ "Resizing a filesystem can lead to data loss. You are advised to backup "
+#~ "your data before. The resize operation will take longer if a lot of data "
+#~ "has to be moved. The minimal size is calculated according to the current "
+#~ "content. Keep additional free space for the filesystem to work fast and "
+#~ "reliably."
+#~ msgstr ""
+#~ "ფაილური სისტემის ზომის შეცვლამ, შეიძლება, მონაცემების კარგვამდე "
+#~ "მიგიყვანოთ. სჯობს, ოპერაციამდე მარქაფი გააკეთოთ. ზომის შეცვლის ოპერაციას "
+#~ "კიდევ უფრო მეტი დრო დასჭირდება, თუ მონაცემების დიდი რაოდენობის გადატანაა "
+#~ "საჭირო. მინიმალური ზომა მიმდინარე შემცველობის ზომის მიხედვით გამოითვლება. "
+#~ "დაიტოვეთ დამატებითი თავისუფალი ადგილი ფაილური სისტემისთვის, რომ მან უფრო "
+#~ "სწრაფად და საიმედოდ იმუშაოს."
+
+#~ msgid "_Difference"
+#~ msgstr "_სხვაობა"
+
+#~ msgid "The difference to the previous partition size"
+#~ msgstr "სხვაობა ძველ დანაყოფის ზომასთან შედარებით"
+
+#~ msgid "Restore Disk Image"
+#~ msgstr "დისკის ასლის აღდგენა"
+
+#~ msgid "_Image to Restore"
+#~ msgstr "_აღსადგენი ასლი"
+
+#~ msgid "_Destination"
+#~ msgstr "_დანიშნულება"
+
+#~ msgid "Image to Restore"
+#~ msgstr "აღსადგენი ასლი"
+
+#~ msgid "_Start Restoring…"
+#~ msgstr "_აღდგენის დაწყება…"
+
+#~ msgid "Confirm Taking Ownership"
+#~ msgstr "მფლობელობის აღების დადასტურება"
+
+#~ msgid "Select a keyfile to unlock this volume"
+#~ msgstr "აირჩიეთ ამ ტომის განბლოკვისთვის საჭირო გასაღების ფაილი"
+
+#~ msgctxt "confirmation-list-of-devices"
+#~ msgid "Affected Devices"
+#~ msgstr "შეცვლილი მოწყობილობები"
 
 #~ msgid "Error deleting loop device"
 #~ msgstr "მარყუჟი მოწყობილობის წაშლის შეცდომა"
@@ -3822,23 +4130,8 @@ msgstr "გამოცდა"
 #~ msgid "%s — %s"
 #~ msgstr "%s — %s"
 
-#~ msgid "Unallocated Space"
-#~ msgstr "გამოუყოფელი ადგილი"
-
-#~ msgid "Error mounting filesystem"
-#~ msgstr "ფაილური სისტემის მიმაგრების შეცდომა"
-
-#~ msgid "Error deleting partition"
-#~ msgstr "დანაყოფის წაშლის შეცდომა"
-
 #~ msgid "Are you sure you want to delete the partition?"
 #~ msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ, წაშალოთ დანაყოფი?"
-
-#~ msgid "All data on the partition will be lost"
-#~ msgstr "დანაყოფზე არსებული ინფორმაცია სრულიად დაიკარგება"
-
-#~ msgid "_Delete"
-#~ msgstr "წაშლა"
 
 #~ msgid "Error ejecting media"
 #~ msgstr "მედიის გამოღების შეცდომა"

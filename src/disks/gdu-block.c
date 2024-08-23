@@ -797,3 +797,31 @@ gdu_block_get_object (GduBlock *self)
 
   return self->object;
 }
+
+void
+gdu_block_emit_updated (GduBlock *self)
+{
+  g_clear_pointer (&self->description, g_free);
+  g_clear_pointer (&self->partition_type, g_free);
+
+  if (self->partition)
+    {
+      self->size = udisks_partition_get_size (self->partition);
+      self->start_offset = udisks_partition_get_offset (self->partition);
+    }
+  else if (self->block)
+    {
+      self->size = udisks_block_get_size (self->block);
+      if (GDU_IS_BLOCK (self->parent))
+        self->start_offset = gdu_block_get_offset (GDU_BLOCK (self->parent));
+      else
+        self->start_offset = 0;
+    }
+
+  /* If it's a block, update every parent as some changes (like partition size changes)
+     also affects its parents */
+  if (GDU_IS_BLOCK (self->parent))
+    gdu_block_emit_updated (GDU_BLOCK (self->parent));
+
+  gdu_item_changed (GDU_ITEM (self));
+}

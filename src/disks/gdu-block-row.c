@@ -83,6 +83,7 @@ static void
 gdu_block_row_update_label (GduBlockRow *self)
 {
   const char *label;
+
   label = gdu_item_get_description (GDU_ITEM (self->block));
 
   adw_preferences_row_set_title (ADW_PREFERENCES_ROW (self), label);
@@ -989,6 +990,7 @@ gdu_block_row_new (GduBlock *block)
 
   g_return_val_if_fail (GDU_IS_BLOCK (block), NULL);
 
+  g_warning("block: %p\n", block);
   self = g_object_new (GDU_TYPE_BLOCK_ROW, NULL);
   self->block = g_object_ref (block);
 

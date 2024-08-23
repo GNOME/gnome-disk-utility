@@ -45,6 +45,7 @@ void               gdu_block_set_fs_label_async       (GduBlock             *sel
 gboolean           gdu_block_set_fs_label_finish      (GduBlock             *self,
                                                        GAsyncResult         *result,
                                                        GError              **error);
+void               gdu_block_emit_updated             (GduBlock             *self);
 
 /* xxx: to be removed once the dust settles */
 gpointer      gdu_block_get_object                    (GduBlock              *self);

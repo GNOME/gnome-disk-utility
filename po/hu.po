@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2024-08-05 11:25+0000\n"
-"PO-Revision-Date: 2024-08-06 14:22+0200\n"
+"POT-Creation-Date: 2024-08-29 23:32+0000\n"
+"PO-Revision-Date: 2024-08-30 16:19+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -26,7 +26,6 @@ msgid "Disk Image Mounter"
 msgstr "Lemezképcsatoló"
 
 #: data/gnome-disk-image-mounter.desktop.in:4
-#| msgid "Mount Disk Images"
 msgid "Mount/Write Disk Images"
 msgstr "Lemezképek csatolása és írása"
 
@@ -122,7 +121,6 @@ msgstr ""
 "T.;smart;"
 
 #: src/disk-image-mounter/main.rs:21
-#| msgid "Disk Image Mounter"
 msgid "GNOME Disk Image Mounter"
 msgstr "GNOME Lemezképcsatoló"
 
@@ -131,8 +129,6 @@ msgid "Compressed image files are not mountable"
 msgstr "A tömörített lemezképfájlok nem csatolhatók"
 
 #: src/disk-image-mounter/window.rs:116
-#| msgctxt "shortcut window"
-#| msgid "Open the volume menu"
 msgid "Open the mounted image"
 msgstr "A csatolt lemezkép megnyitása"
 
@@ -157,7 +153,6 @@ msgid "Mount the image read-only"
 msgstr "A kép csatolása csak olvashatóként"
 
 #: src/disk-image-mounter/window.ui:60
-#| msgid "Mount Disk Images"
 msgid "Unmount Disk Image"
 msgstr "Lemezkép leválasztása"
 
@@ -174,17 +169,14 @@ msgid "Mount the image and allow editing"
 msgstr "A lemezkép csatolása és a szerkesztés engedélyezése"
 
 #: src/disk-image-mounter/window.ui:95
-#| msgid "Fit to size"
 msgid "Write to Drive"
 msgstr "Írás a meghajtóra"
 
 #: src/disk-image-mounter/window.ui:96
-#| msgid "Are you sure you want to write the disk image to the device?"
 msgid "Open in Disks to write the image to a drive"
 msgstr "Megnyitás a Lemezekben a lemezkép meghajtóra való írásához"
 
 #: src/disk-image-mounter/window.ui:109
-#| msgid "Eject Disk"
 msgid "Inspect in Disks"
 msgstr "Vizsgálat a Lemezekben"
 
@@ -1178,22 +1170,18 @@ msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s szabad (%.1f%% használt)"
 
 #: src/disks/gdu-block-row.c:339
-#| msgid "Error unmounting filesystem"
 msgid "Error mounting filesystem"
 msgstr "Hiba a fájlrendszer csatolásakor"
 
 #: src/disks/gdu-block-row.c:378
-#| msgid "Error creating partition"
 msgid "Error deleting partition"
 msgstr "Hiba a partíció törlésekor"
 
 #: src/disks/gdu-block-row.c:445
-#| msgid "Create Partition"
 msgid "Delete Partition?"
 msgstr "Törli a partíciót?"
 
 #: src/disks/gdu-block-row.c:446
-#| msgid "Warning: all data on the volume will be lost"
 msgid "All data on the partition will be lost"
 msgstr "A partíción lévő minden adat elvész"
 
@@ -1201,39 +1189,33 @@ msgstr "A partíción lévő minden adat elvész"
 msgid "Delete"
 msgstr "Törlés"
 
-#: src/disks/gdu-block-row.c:505
+#: src/disks/gdu-block-row.c:507
 msgid "Error while checking filesystem"
 msgstr "Hiba a fájlrendszer ellenőrzésekor"
 
-#: src/disks/gdu-block-row.c:526
+#: src/disks/gdu-block-row.c:520
 msgid "Filesystem intact"
 msgstr "A fájlrendszer ép"
 
-#: src/disks/gdu-block-row.c:526
+#: src/disks/gdu-block-row.c:520
 msgid "Filesystem damaged"
 msgstr "A fájlrendszer sérült"
 
-#: src/disks/gdu-block-row.c:530
+#: src/disks/gdu-block-row.c:522
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "A(z) %s fájlrendszer sértetlen ezen: %s."
 
-#: src/disks/gdu-block-row.c:531
+#: src/disks/gdu-block-row.c:523
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "A(z) %s fájlrendszer javításra szorul ezen: %s."
 
-#: src/disks/gdu-block-row.c:536 src/disks/gdu-block-row.c:662
-#: src/disks/ui/gdu-ata-smart-dialog.ui:260
-msgid "Close"
-msgstr "Bezárás"
-
-#: src/disks/gdu-block-row.c:602
-#| msgid "Confirm Check"
+#: src/disks/gdu-block-row.c:590
 msgid "Confirm Check?"
 msgstr "Megerősíti az ellenőrzést?"
 
-#: src/disks/gdu-block-row.c:603
+#: src/disks/gdu-block-row.c:591
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
@@ -1241,38 +1223,37 @@ msgstr ""
 "Az ellenőrzés sokáig is eltarthat, különösen akkor, ha a partíció nagy "
 "mennyiségű adatot tartalmaz."
 
-#: src/disks/gdu-block-row.c:604
+#: src/disks/gdu-block-row.c:592
 msgid "Check"
 msgstr "Ellenőrzés"
 
-#: src/disks/gdu-block-row.c:632
+#: src/disks/gdu-block-row.c:623
 msgid "Error while repairing filesystem"
 msgstr "Hiba a fájlrendszer javításakor"
 
-#: src/disks/gdu-block-row.c:652
+#: src/disks/gdu-block-row.c:639
 msgid "Repair successful"
 msgstr "Javítás sikeres"
 
-#: src/disks/gdu-block-row.c:652
+#: src/disks/gdu-block-row.c:639
 msgid "Repair failed"
 msgstr "Javítás sikertelen"
 
-#: src/disks/gdu-block-row.c:656
+#: src/disks/gdu-block-row.c:641
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "A(z) %s fájlrendszer javításra került ezen: %s."
 
-#: src/disks/gdu-block-row.c:657
+#: src/disks/gdu-block-row.c:642
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "A(z) %s fájlrendszert nem lehetett megjavítani ezen: %s."
 
-#: src/disks/gdu-block-row.c:729
-#| msgid "Rep_air Filesystem…"
+#: src/disks/gdu-block-row.c:710
 msgid "Repair Filesystem?"
 msgstr "Javítja a fájlrendszert?"
 
-#: src/disks/gdu-block-row.c:730
+#: src/disks/gdu-block-row.c:711
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -1284,16 +1265,15 @@ msgstr ""
 "visszanyerhesse az elvesztett fájlokat. A művelet sokáig is eltarthat, "
 "különösen akkor, ha a partíció nagy mennyiségű adatot tartalmaz."
 
-#: src/disks/gdu-block-row.c:734
-#| msgid "Repair failed"
+#: src/disks/gdu-block-row.c:715
 msgid "Repair"
 msgstr "Javítás"
 
-#: src/disks/gdu-block-row.c:756
+#: src/disks/gdu-block-row.c:737
 msgid "Error while taking filesystem ownership"
 msgstr "Hiba a fájlrendszer tulajdonjogának átvételekor"
 
-#: src/disks/gdu-block-row.c:844
+#: src/disks/gdu-block-row.c:825
 #, c-format
 msgid "Make your user and group the owner of \"%s\""
 msgstr "Tegye a felhasználóját és csoportját a(z) „%s” tulajdonosává"
@@ -1405,7 +1385,7 @@ msgstr ""
 #: src/disks/ui/gdu-resize-volume-dialog.ui:14
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:17
 #: src/disks/ui/gdu-take-ownership-dialog.ui:36
-#: src/disks/ui/unlock-device-dialog.ui:218 src/libgdu/gduutils.c:729
+#: src/disks/ui/unlock-device-dialog.ui:218 src/libgdu/gduutils.c:738
 msgid "_Cancel"
 msgstr "Mé_gse"
 
@@ -1446,26 +1426,22 @@ msgstr "Lemezkép létrehozása"
 
 #: src/disks/gdu-create-disk-image-dialog.c:870
 #: src/disks/gdu-new-disk-image-dialog.c:293
-#| msgid "_Replace"
 msgid "Replace File?"
 msgstr "Lecseréli a fájlt?"
 
 #: src/disks/gdu-create-disk-image-dialog.c:871
 #: src/disks/gdu-new-disk-image-dialog.c:294
 #, c-format
-#| msgid "A file named “%s” already exists.  Do you want to replace it?"
 msgid "A file named “%s” already exists in %s"
 msgstr "A(z) „%s” nevű fájl már létezik itt: %s"
 
 #: src/disks/gdu-create-disk-image-dialog.c:872
 #: src/disks/gdu-new-disk-image-dialog.c:295
-#| msgid "_Replace"
 msgid "Replace"
 msgstr "Csere"
 
 #: src/disks/gdu-create-disk-image-dialog.c:924
 #: src/disks/gdu-new-disk-image-dialog.c:250
-#| msgid "Error allocating space for disk image file: "
 msgid "Choose a location to save the disk image."
 msgstr "Válasszon egy helyet a lemezkép mentéséhez."
 
@@ -1490,7 +1466,6 @@ msgid "XFS"
 msgstr "XFS"
 
 #: src/disks/gdu-create-other-page.c:181
-#| msgid "XFS — Linux Filesystem"
 msgid "Linux Filesystem"
 msgstr "Linuxos fájlrendszer"
 
@@ -1503,7 +1478,6 @@ msgid "Btrfs"
 msgstr "Btrfs"
 
 #: src/disks/gdu-create-other-page.c:183
-#| msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgid "Copy-on-write Linux Filesystem, for snapshots"
 msgstr "Írás utáni másolást használó linuxos fájlrendszer, pillanatképekhez"
 
@@ -1512,7 +1486,6 @@ msgid "F2FS"
 msgstr "F2FS"
 
 #: src/disks/gdu-create-other-page.c:184
-#| msgid "F2FS — Flash Storage Linux Filesystem"
 msgid "Flash Storage Linux Filesystem"
 msgstr "Flash-tárolókhoz való linuxos fájlrendszer"
 
@@ -1521,7 +1494,6 @@ msgid "exFAT"
 msgstr "exFAT"
 
 #: src/disks/gdu-create-other-page.c:185
-#| msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgid "Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
 "Flash-tárolókhoz való windowsos fájlrendszer, SDXC kártyákon használják"
@@ -1531,7 +1503,6 @@ msgid "UDF"
 msgstr "UDF"
 
 #: src/disks/gdu-create-other-page.c:186
-#| msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgid "Universal Disk Format, for removable devices on many systems"
 msgstr "Univerzális lemezformátum, cserélhető eszközökhöz számos rendszeren"
 
@@ -1619,7 +1590,6 @@ msgid "Try to avoid sequences like 1234 or abcd."
 msgstr "Próbálja meg kerülni az 1234 vagy abcd-szerű egyszerű sorozatokat."
 
 #: src/disks/gdu-create-password-page.h:61
-#| msgid "Mix uppercase and lowercase and try to use a number or two."
 msgctxt "Password hint"
 msgid "Mix uppercase and lowercase and try to use a number or two."
 msgstr "Használjon vegyesen kis- és nagybetűket, illetve egy-két számot."
@@ -1721,7 +1691,7 @@ msgstr "Csendes (lassú)"
 msgid "Loud (Fast)"
 msgstr "Hangos (gyors)"
 
-#: src/disks/gdu-edit-filesystem-dialog.c:52
+#: src/disks/gdu-edit-filesystem-dialog.c:51
 msgid "Error setting label"
 msgstr "Hiba a címke beállításakor"
 
@@ -1746,18 +1716,14 @@ msgid "_Bootable"
 msgstr "_Indítható"
 
 #: src/disks/gdu-edit-partition-dialog.c:317
-#| msgid ""
-#| "A flag used by the Platform bootloader to determine where the OS should "
-#| "be loaded from. Sometimes the partition with this flag set is referred to "
-#| "as the <i>active</i> partition"
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the “active” partition"
 msgstr ""
-"A számítógép rendszerindítója által a betöltendő rendszer helyének"
-" meghatározására használt jelző. Néha az ezzel a jelzővel rendelkező"
-" partíciót „aktív” partíciónak nevezik."
+"A számítógép rendszerindítója által a betöltendő rendszer helyének "
+"meghatározására használt jelző. Néha az ezzel a jelzővel rendelkező "
+"partíciót „aktív” partíciónak nevezik."
 
 #: src/disks/gdu-encryption-options-dialog.c:135
 msgid "Error removing /etc/crypttab entry"
@@ -1785,35 +1751,35 @@ msgstr "Nincs"
 msgid "Will be deleted"
 msgstr "Törlésre kerül"
 
-#: src/disks/gdu-drive-view.c:129
+#: src/disks/gdu-drive-view.c:130
 msgid "Copied drive model to clipboard"
 msgstr "A meghajtó modellje a vágólapra másolva"
 
-#: src/disks/gdu-drive-view.c:138
+#: src/disks/gdu-drive-view.c:139
 msgid "Copied drive serial to clipboard"
 msgstr "A meghajtó sorozatszáma a vágólapra másolva"
 
-#: src/disks/gdu-drive-view.c:279
+#: src/disks/gdu-drive-view.c:280
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Hiba történt a meghajtó készenléti módba küldésére tett kísérlet során"
 
-#: src/disks/gdu-drive-view.c:311
+#: src/disks/gdu-drive-view.c:312
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr ""
 "Hiba történt a meghajtó készenléti állapotból való felébresztésére tett "
 "kísérlet során"
 
-#: src/disks/gdu-drive-view.c:343
+#: src/disks/gdu-drive-view.c:344
 msgid "Error powering off drive"
 msgstr "Hiba a meghajtó kikapcsolásakor"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:400
+#: src/disks/gdu-drive-view.c:401
 msgid "Are you sure you want to power off the drives?"
 msgstr "Biztosan ki szeretné kapcsolni a meghajtókat?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:402
+#: src/disks/gdu-drive-view.c:403
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
@@ -1821,7 +1787,7 @@ msgstr ""
 "Ez a művelet előkészíti a rendszert a következő meghajtók kikapcsolására és "
 "eltávolítására."
 
-#: src/disks/gdu-drive-view.c:403
+#: src/disks/gdu-drive-view.c:404
 msgid "_Power Off"
 msgstr "_Kikapcsolás"
 
@@ -1858,7 +1824,6 @@ msgstr ""
 "helyreállítható adat-visszaállító szolgáltatások által sem"
 
 #: src/disks/gdu-format-disk-dialog.c:204
-#| msgid "Format Disk"
 msgid "Format Disk?"
 msgstr "Formázza a lemezt?"
 
@@ -1909,7 +1874,7 @@ msgstr "Hiba a kötet formázásakor"
 msgid "Error creating partition"
 msgstr "Hiba a partíció létrehozásakor"
 
-#: src/disks/gdu-format-volume-dialog.c:526 src/disks/ui/gdu-block-row.ui:43
+#: src/disks/gdu-format-volume-dialog.c:526 src/disks/ui/gdu-block-row.ui:51
 msgid "Create Partition"
 msgstr "Partíció létrehozása"
 
@@ -1929,15 +1894,15 @@ msgstr "Jelszó beállítása"
 msgid "Confirm Details"
 msgstr "Részletek megerősítése"
 
-#: src/disks/gdu-mount-options-dialog.c:320
+#: src/disks/gdu-mount-options-dialog.c:324
 msgid "Error updating /etc/fstab entry"
 msgstr "Hiba az /etc/fstab bejegyzés frissítésekor"
 
-#: src/disks/gdu-mount-options-dialog.c:340
+#: src/disks/gdu-mount-options-dialog.c:347
 msgid "Error adding new /etc/fstab entry"
 msgstr "Hiba az új /etc/fstab bejegyzés hozzáadásakor"
 
-#: src/disks/gdu-mount-options-dialog.c:361
+#: src/disks/gdu-mount-options-dialog.c:370
 msgid "Error removing old /etc/fstab entry"
 msgstr "Hiba a régi /etc/fstab bejegyzés eltávolításakor"
 
@@ -1970,13 +1935,12 @@ msgstr "Jelenlegi méret"
 
 #: src/disks/gdu-resize-volume-dialog.c:206
 #: src/disks/ui/gdu-resize-volume-dialog.ui:71
-#| msgid "Minimal Size"
 msgid "Minimum Size"
 msgstr "Legkisebb méret"
 
 #: src/disks/gdu-resize-volume-dialog.c:232
 #: src/disks/gdu-resize-volume-dialog.c:352
-#: src/disks/gdu-resize-volume-dialog.c:507
+#: src/disks/gdu-resize-volume-dialog.c:499
 msgid "Error resizing partition"
 msgstr "Hiba a partíció átméretezésekor"
 
@@ -1997,19 +1961,15 @@ msgstr "Hiba a fájlrendszer javításakor az átméretezés után"
 msgid "Error repairing filesystem"
 msgstr "Hiba a fájlrendszer javításakor"
 
-#: src/disks/gdu-resize-volume-dialog.c:475
+#: src/disks/gdu-resize-volume-dialog.c:473
 msgid "Resizing not ready"
 msgstr "Az átméretezés nincs kész"
 
-#: src/disks/gdu-resize-volume-dialog.c:476
+#: src/disks/gdu-resize-volume-dialog.c:474
 msgid "Waited too long for the filesystem"
 msgstr "Túl hosszú volt a várakozás a fájlrendszerre"
 
-#: src/disks/gdu-resize-volume-dialog.c:478 src/libgdu/gduutils.c:676
-msgid "_Close"
-msgstr "_Bezárás"
-
-#: src/disks/gdu-resize-volume-dialog.c:613
+#: src/disks/gdu-resize-volume-dialog.c:605
 msgid "Error mounting the filesystem"
 msgstr "Hiba a fájlrendszer csatolásakor"
 
@@ -2019,14 +1979,11 @@ msgstr "A fájl nem tűnik XZ-vel tömörítettnek"
 
 #: src/disks/gdu-restore-disk-image-dialog.c:190
 #, c-format
-#| msgid "%s when decompressed"
 msgid "%s when compressed"
 msgstr "%s, ha tömörítve van"
 
 #: src/disks/gdu-restore-disk-image-dialog.c:190
 #, c-format
-#| msgctxt "duration-second-to-minute"
-#| msgid "%s"
 msgid "%s"
 msgstr "%s"
 
@@ -2077,12 +2034,10 @@ msgid "All existing data will be lost"
 msgstr "Minden meglévő adat elvész"
 
 #: src/disks/gdu-restore-disk-image-dialog.c:828
-#| msgid "_Restore"
 msgid "Restore"
 msgstr "Helyreállítás"
 
 #: src/disks/gdu-restore-disk-image-dialog.c:860
-#| msgid "Select Disk Image to Restore"
 msgid "Choose a disk image to restore."
 msgstr "Válasszon egy lemezképet a helyreállításhoz."
 
@@ -2095,7 +2050,6 @@ msgid "Set options to unlock"
 msgstr "Feloldási beállítások megadása"
 
 #: src/disks/gdu-window.c:174
-#| msgid "Select Disk Image to Attach"
 msgid "Select a Disk Image to Attach"
 msgstr "Válasszon egy lemezképet a csatoláshoz"
 
@@ -2185,6 +2139,10 @@ msgid "Click to force re-reading SMART data from the hard disk"
 msgstr ""
 "Kattintson a SMART adatok újraolvasásának kényszerítéséhez a merevlemezről"
 
+#: src/disks/ui/gdu-ata-smart-dialog.ui:260
+msgid "Close"
+msgstr "Bezárás"
+
 #: src/disks/ui/gdu-ata-smart-dialog.ui:272
 msgid "_Short"
 msgstr "_Rövid"
@@ -2203,7 +2161,6 @@ msgid "Benchmark"
 msgstr "Teljesítményteszt"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:34
-#| msgid "_Start Creating…"
 msgid "_Start…"
 msgstr "_Indítás…"
 
@@ -2212,34 +2169,30 @@ msgid ""
 "Benchmarking measures the transfer rate for different areas of the disk. It "
 "also measures seek times from one area to another."
 msgstr ""
-"A teljesítménytesztelés a lemez különböző területeinek átviteli sebességét"
-" méri. Emellett az egyik területről a másikra történő keresési időt is méri."
+"A teljesítménytesztelés a lemez különböző területeinek átviteli sebességét "
+"méri. Emellett az egyik területről a másikra történő keresési időt is méri."
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:66
-#| msgid "Transfer Rate"
 msgid "Transfer S_amples"
 msgstr "Átviteli _minták"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:81
-#| msgid "Sample Size"
 msgid "Transfer Sample S_ize"
 msgstr "Átviteli minta mé_rete"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:97
-#| msgid "Access Time"
 msgid "_Access Time Samples"
 msgstr "_Hozzáférési idő minták"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:116
-#| msgid "_Abort Benchmark"
 msgid "_Write Benchmark"
 msgstr "Í_rási teljesítményteszt"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:118
 msgid "Data should be backed up before using this feature"
 msgstr ""
-"Biztonsági mentést kell készíteni az adatokról, mielőtt ezt a funkciót"
-" használja."
+"Biztonsági mentést kell készíteni az adatokról, mielőtt ezt a funkciót "
+"használja."
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:159
 msgid "Sample Size"
@@ -2264,109 +2217,91 @@ msgstr "Átlagos írási sebesség"
 msgid "Average Access Time"
 msgstr "Átlagos hozzáférési idő"
 
-#: src/disks/ui/gdu-block-row.ui:56
-#| msgid "Partitioning"
+#: src/disks/ui/gdu-block-row.ui:64
 msgid "Partition Options"
 msgstr "Particionálási beállítások"
 
-#: src/disks/ui/gdu-block-row.ui:83 src/disks/ui/gdu-drive-view.ui:188
+#: src/disks/ui/gdu-block-row.ui:91 src/disks/ui/gdu-drive-view.ui:197
 msgid "Size"
 msgstr "Méret"
 
-#: src/disks/ui/gdu-block-row.ui:105
+#: src/disks/ui/gdu-block-row.ui:113
 msgid "Device ID"
 msgstr "Eszközazonosító"
 
-#: src/disks/ui/gdu-block-row.ui:127
+#: src/disks/ui/gdu-block-row.ui:135
 msgid "UUID"
 msgstr "UUID"
 
-#: src/disks/ui/gdu-block-row.ui:149
+#: src/disks/ui/gdu-block-row.ui:157
 msgid "Partition Type"
 msgstr "Partíciótípus"
 
-#: src/disks/ui/gdu-block-row.ui:177
-#| msgid "_Mount"
+#: src/disks/ui/gdu-block-row.ui:185
 msgid "Unmount"
 msgstr "Leválasztás"
 
-#: src/disks/ui/gdu-block-row.ui:181
-#| msgid "_Mount"
+#: src/disks/ui/gdu-block-row.ui:189
 msgid "Mount"
 msgstr "Csatolás"
 
-#: src/disks/ui/gdu-block-row.ui:185
-#| msgid "Resi_ze…"
+#: src/disks/ui/gdu-block-row.ui:193
 msgid "Resize…"
 msgstr "Átméretezés…"
 
-#: src/disks/ui/gdu-block-row.ui:189
+#: src/disks/ui/gdu-block-row.ui:197
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: src/disks/ui/gdu-block-row.ui:191
-#| msgctxt "shortcut window"
-#| msgid "Partition"
+#: src/disks/ui/gdu-block-row.ui:199
 msgid "Partition…"
 msgstr "Partíció…"
 
-#: src/disks/ui/gdu-block-row.ui:195
-#| msgctxt "volume-grid"
-#| msgid "Filesystem"
+#: src/disks/ui/gdu-block-row.ui:203
 msgid "Filesystem…"
 msgstr "Fájlrendszer…"
 
-#: src/disks/ui/gdu-block-row.ui:199
-#| msgid "Change Pa_ssphrase…"
+#: src/disks/ui/gdu-block-row.ui:207
 msgid "Change Passphrase…"
 msgstr "Jelmondat megváltoztatása…"
 
-#: src/disks/ui/gdu-block-row.ui:203
-#| msgid "Mount Options"
+#: src/disks/ui/gdu-block-row.ui:211
 msgid "Mount Options…"
 msgstr "Csatolási beállítások…"
 
-#: src/disks/ui/gdu-block-row.ui:207
-#| msgid "Encryption Options"
+#: src/disks/ui/gdu-block-row.ui:215
 msgid "Encryption Options…"
 msgstr "Titkosítási beállítások…"
 
-#: src/disks/ui/gdu-block-row.ui:211
-#| msgid "_Take Ownership…"
+#: src/disks/ui/gdu-block-row.ui:219
 msgid "Take Ownership…"
 msgstr "Tulajdonjog átvétele…"
 
-#: src/disks/ui/gdu-block-row.ui:216
-#| msgid "Format _Partition…"
+#: src/disks/ui/gdu-block-row.ui:224
 msgid "Format Partition…"
 msgstr "Partíció formázása…"
 
-#: src/disks/ui/gdu-block-row.ui:220
+#: src/disks/ui/gdu-block-row.ui:228
 msgid "Delete…"
 msgstr "Törlés…"
 
-#: src/disks/ui/gdu-block-row.ui:226
-#| msgid "C_heck Filesystem…"
+#: src/disks/ui/gdu-block-row.ui:234
 msgid "Check Filesystem…"
 msgstr "Fájlrendszer ellenőrzése…"
 
-#: src/disks/ui/gdu-block-row.ui:230
-#| msgid "Rep_air Filesystem…"
+#: src/disks/ui/gdu-block-row.ui:238
 msgid "Repair Filesystem…"
 msgstr "Fájlrendszer javítása…"
 
-#: src/disks/ui/gdu-block-row.ui:234
-#| msgid "_Benchmark Partition…"
+#: src/disks/ui/gdu-block-row.ui:242
 msgid "Benchmark Partition…"
 msgstr "Partíció teljesítménytesztje…"
 
-#: src/disks/ui/gdu-block-row.ui:240
-#| msgid "_Create Partition Image…"
+#: src/disks/ui/gdu-block-row.ui:248
 msgid "Create Partition Image…"
 msgstr "Partíció-lemezkép létrehozása…"
 
-#: src/disks/ui/gdu-block-row.ui:244
-#| msgid "_Restore Partition Image…"
+#: src/disks/ui/gdu-block-row.ui:252
 msgid "Restore Partition Image…"
 msgstr "Partíció-lemezkép helyreállítása…"
 
@@ -2377,38 +2312,30 @@ msgstr "Jelmondat megváltoztatása"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:31
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:21
-#| msgid "C_hange"
 msgid "Ch_ange"
 msgstr "_Változtatás"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:45
-#| msgid ""
-#| "Changing the passphrase for this device, will also update the passphrase "
-#| "referenced by the <i>/etc/crypttab</i> file"
 msgid ""
 "Changing the passphrase for this device will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
-"Az eszköz jelmondatának megváltoztatása frissíti az <i>/etc/crypttab</i>"
-" fájlban hivatkozott jelmondatot is"
+"Az eszköz jelmondatának megváltoztatása frissíti az <i>/etc/crypttab</i> "
+"fájlban hivatkozott jelmondatot is"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:55
-#| msgid "Set Password"
 msgid "C_urrent Password"
 msgstr "Jele_nlegi jelszó"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:62
-#| msgid "_Password"
 msgid "_New Password"
 msgstr "Ú_j jelszó"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:69
-#| msgid "C_onfirm Passphrase"
 msgid "C_onfirm Password"
 msgstr "Jelszó meg_erősítése"
 
 #: src/disks/ui/gdu-create-confirm-page.ui:11
-#| msgid "Warning: all data on the volume will be lost"
 msgid "Warning: All the data on the volume will be lost"
 msgstr "Figyelmeztetés: a köteten lévő minden adat elvész"
 
@@ -2447,7 +2374,6 @@ msgstr "_Név"
 
 #: src/disks/ui/gdu-create-disk-image-dialog.ui:53
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:55
-#| msgid "Location"
 msgid "Select Location"
 msgstr "Hely kiválasztása"
 
@@ -2456,13 +2382,11 @@ msgid "Source"
 msgstr "Forrás"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:14
-#| msgid "Volume _Name"
 msgid "_Volume Name"
 msgstr "_Kötet neve"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:25
 #: src/disks/ui/gdu-format-disk-dialog.ui:44
-#| msgid "Don’t overwrite existing data"
 msgid "_Overwrite Existing Data"
 msgstr "Meglévő adatok _felülírása"
 
@@ -2481,25 +2405,22 @@ msgid ""
 "Ensures that existing data cannot be recovered. This option slows down "
 "formatting."
 msgstr ""
-"Biztosítja, hogy a meglévő adatok nem állíthatók helyre. Ez az beállítás"
-" lassítja a formázást."
+"Biztosítja, hogy a meglévő adatok nem állíthatók helyre. Ez az beállítás "
+"lassítja a formázást."
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:70
 msgid "For use only with Linux systems"
 msgstr "Csak Linux rendszerekkel való használathoz"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:84
-#| msgid "For use with _Windows (NTFS)"
 msgid "For use with Windows"
 msgstr "Windowszal történő használathoz"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:98
-#| msgid "For use with all _systems and devices (FAT)"
 msgid "For use with all systems and devices"
 msgstr "Minden rendszerrel és eszközzel való használathoz"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:128
-#| msgid "_Password protect volume (LUKS)"
 msgid "_Password Protect Volume"
 msgstr "_Jelszóval védett kötet"
 
@@ -2509,17 +2430,14 @@ msgid "Encrypts the volume using LUKS"
 msgstr "Titkosítja a kötetet LUKS használatával"
 
 #: src/disks/ui/gdu-create-other-page.ui:15
-#| msgid "_Password protect volume (LUKS)"
 msgid "Password Protect Volume"
 msgstr "Jelszóval védett kötet"
 
 #: src/disks/ui/gdu-create-partition-page.ui:26
-#| msgid "Partition _Size"
 msgid "Partition Size"
 msgstr "Partíció mérete"
 
 #: src/disks/ui/gdu-create-partition-page.ui:41
-#| msgid "The free space following the partition"
 msgid "Space following new partition"
 msgstr "Az új partíciót követő hely"
 
@@ -2599,9 +2517,6 @@ msgid "PiB"
 msgstr "PiB"
 
 #: src/disks/ui/gdu-create-password-page.ui:8
-#| msgid ""
-#| "Data stored in the volume will only be accessible with the correct "
-#| "password. Be careful not to forget it."
 msgid ""
 "Data stored in the Volume will only be accessible with the correct password. "
 "Be careful not to forget it"
@@ -2610,17 +2525,14 @@ msgstr ""
 "Semmiképp se felejtse el."
 
 #: src/disks/ui/gdu-create-password-page.ui:11
-#| msgid "_Password"
 msgid "Password"
 msgstr "Jelszó"
 
 #: src/disks/ui/gdu-create-password-page.ui:17
-#| msgid "C_onfirm Passphrase"
 msgid "Confirm Password"
 msgstr "Jelszó megerősítése"
 
 #: src/disks/ui/gdu-create-password-page.ui:24
-#| msgid "The passwords do not match"
 msgid "The passwords do not match."
 msgstr "A jelszavak nem egyeznek."
 
@@ -2737,8 +2649,7 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Í_rási gyorsítótár"
 
-#: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:124
-#| msgid "Drive Options"
+#: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:133
 msgid "Drive Information"
 msgstr "Meghajtó-információk"
 
@@ -2747,71 +2658,67 @@ msgid "Drive Options"
 msgstr "Meghajtóbeállítások"
 
 #: src/disks/ui/gdu-drive-view.ui:102
+#| msgid "Select Location"
+msgid "Space Allocation"
+msgstr "Hely lefoglalása"
+
+#: src/disks/ui/gdu-drive-view.ui:111
 msgid "Volumes"
 msgstr "Kötetek"
 
-#: src/disks/ui/gdu-drive-view.ui:139
+#: src/disks/ui/gdu-drive-view.ui:148
 msgid "Model"
 msgstr "Modell"
 
-#: src/disks/ui/gdu-drive-view.ui:143 src/disks/ui/gdu-drive-view.ui:163
+#: src/disks/ui/gdu-drive-view.ui:152 src/disks/ui/gdu-drive-view.ui:172
 msgid "Copy"
 msgstr "Másolás"
 
-#: src/disks/ui/gdu-drive-view.ui:159
+#: src/disks/ui/gdu-drive-view.ui:168
 msgid "Serial"
 msgstr "Sorozatszám"
 
-#: src/disks/ui/gdu-drive-view.ui:179 src/disks/ui/gdu-format-disk-dialog.ui:85
+#: src/disks/ui/gdu-drive-view.ui:188 src/disks/ui/gdu-format-disk-dialog.ui:85
 msgid "Partitioning"
 msgstr "Particionálás"
 
-#: src/disks/ui/gdu-drive-view.ui:208
-#| msgid "Format _Disk…"
+#: src/disks/ui/gdu-drive-view.ui:217
 msgid "Format Disk…"
 msgstr "Lemez formázása…"
 
-#: src/disks/ui/gdu-drive-view.ui:212
-#| msgid "_Create Disk Image…"
+#: src/disks/ui/gdu-drive-view.ui:221
 msgid "Create Disk Image…"
 msgstr "Lemezkép létrehozása…"
 
-#: src/disks/ui/gdu-drive-view.ui:216
-#| msgid "_Restore Disk Image…"
+#: src/disks/ui/gdu-drive-view.ui:225
 msgid "Restore Disk Image…"
 msgstr "Lemezkép helyreállítása…"
 
-#: src/disks/ui/gdu-drive-view.ui:222
-#| msgid "_Benchmark Disk…"
+#: src/disks/ui/gdu-drive-view.ui:231
 msgid "Benchmark Disk…"
 msgstr "Lemez teljesítménytesztje…"
 
-#: src/disks/ui/gdu-drive-view.ui:226
-#| msgid "_SMART Data & Self-Tests…"
+#: src/disks/ui/gdu-drive-view.ui:235
 msgid "SMART Data & Self-Tests…"
 msgstr "SMART adatok és öntesztek…"
 
-#: src/disks/ui/gdu-drive-view.ui:230
-#| msgid "Drive S_ettings…"
+#: src/disks/ui/gdu-drive-view.ui:239
 msgid "Drive Settings…"
 msgstr "Meghajtó-beállítások…"
 
-#: src/disks/ui/gdu-drive-view.ui:236
-#| msgid "_Standby"
+#: src/disks/ui/gdu-drive-view.ui:245
 msgid "Standby"
 msgstr "Készenlét"
 
-#: src/disks/ui/gdu-drive-view.ui:240
+#: src/disks/ui/gdu-drive-view.ui:249
 msgid "Wake Up"
 msgstr "Ébresztés"
 
-#: src/disks/ui/gdu-drive-view.ui:244
-#| msgid "_Power Off"
+#: src/disks/ui/gdu-drive-view.ui:253
 msgid "Power Off"
 msgstr "Kikapcsolás"
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:4
-#| msgid "Edit _Filesystem…"
 msgid "Edit Filesystem"
 msgstr "Fájlrendszer szerkesztése"
 
@@ -2821,7 +2728,6 @@ msgstr ""
 "Ez a fájlrendszer automatikusan leválasztásra kerül bármely módosítás előtt."
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:43
-#| msgid "_Label"
 msgid "Label"
 msgstr "Címke"
 
@@ -2835,7 +2741,6 @@ msgid "_Done"
 msgstr "_Kész"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:40
-#| msgid "Partition Type"
 msgid "_Partition Type"
 msgstr "_Partíciótípus"
 
@@ -2858,30 +2763,22 @@ msgid "Flags"
 msgstr "Jelzők"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:64
-#| msgid "Legacy BIOS _Bootable"
 msgid "_Legacy BIOS Bootable"
 msgstr "Ö_rökölt BIOS indítható"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:79
-#| msgid ""
-#| "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-#| "normally only used for GPT partitions on MBR systems"
 msgid ""
 "This is equivalent to Master Boot Record “bootable” flag. It is normally "
 "only used for GPT partitions on MBR systems."
 msgstr ""
-"Ez megegyezik a mester indítórekord (MBR) „indítható” jelzőjével. Általában"
-" csak MBR rendszerek GPT partícióin használatos."
+"Ez megegyezik a mester indítórekord (MBR) „indítható” jelzőjével. Általában "
+"csak MBR rendszerek GPT partícióin használatos."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:105
 msgid "_System Partition"
 msgstr "_Rendszerpartíció"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:120
-#| msgid ""
-#| "Used to indicate that the partition and its contents are required for the "
-#| "OS/Platform to function. Special care should be taken to not delete or "
-#| "overwrite the contents"
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
@@ -2892,7 +2789,6 @@ msgstr ""
 "felülírásának elkerülésére."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:146
-#| msgid "Hide from _Firmware"
 msgid "_Hide from Firmware"
 msgstr "_Elrejtés a belső vezérlőprogram elől"
 
@@ -2901,15 +2797,14 @@ msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
 msgstr ""
-"Azt jelzi, hogy az EFI belső vezérlőprogramja hagyja figyelmen kívül a"
-" partíció tartalmát, és ne próbáljon olvasni róla"
+"Azt jelzi, hogy az EFI belső vezérlőprogramja hagyja figyelmen kívül a "
+"partíció tartalmát, és ne próbáljon olvasni róla"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:4
 msgid "Encryption Options"
 msgstr "Titkosítási beállítások"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:15
-#| msgid "_Cancel"
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -2927,7 +2822,6 @@ msgstr ""
 "i> menüpontot."
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:43
-#| msgid "Encryption Options"
 msgid "Automatic Encryption Options"
 msgstr "Automatikus titkosítási beállítások"
 
@@ -2936,22 +2830,18 @@ msgid "Name"
 msgstr "Név"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:60
-#| msgid "_Passphrase"
 msgid "Passphrase"
 msgstr "Jelmondat"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:71
-#| msgid "_Unlock at system startup"
 msgid "Unlock at System Start"
 msgstr "Feloldás a rendszer indításakor"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:77
-#| msgid "Require additional authori_zation to mount"
 msgid "Require Additional Authorization"
 msgstr "További hitelesítés megkövetelése"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:83
-#| msgid "Additional Partition Options"
 msgid "Additional Options"
 msgstr "További lehetőségek"
 
@@ -2965,7 +2855,6 @@ msgid "_GUID Partition Table (GPT)"
 msgstr "_GUID partíciós tábla (GPT)"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:89
-#| msgid "Compatible with modern systems and hard disks > 2TB"
 msgid "Compatible with UEFI and disks over 2 TB"
 msgstr "Kompatibilis az UEFI-vel és a 2 TB-nál nagyobb lemezekkel"
 
@@ -2978,7 +2867,6 @@ msgid "Legacy option with wide hardware compatibility"
 msgstr "Örökölt beállítás széles hardver-kompatibilitással"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:116
-#| msgid "No partitioning"
 msgid "_No Partitioning"
 msgstr "_Nincs particionálás"
 
@@ -2991,85 +2879,72 @@ msgid "Mount Options"
 msgstr "Csatolási beállítások"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:37
-#| msgid ""
-#| "The system may not work correctly if this entry is modified or removed."
 msgid "The system may not work correctly if this entry is modified or removed"
 msgstr ""
-"A rendszer nem fog megfelelően működni ezen bejegyzés módosítása vagy"
-" eltávolítása esetén"
+"A rendszer nem fog megfelelően működni ezen bejegyzés módosítása vagy "
+"eltávolítása esetén"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:46
-#| msgid "Mount Options"
+#: src/disks/ui/gdu-mount-options-dialog.ui:48
 msgid "_Automatic Mount Options"
 msgstr "_Automatikus csatolási beállítások"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:54
-#| msgctxt "shortcut window"
-#| msgid "General"
+#: src/disks/ui/gdu-mount-options-dialog.ui:57
 msgid "General"
 msgstr "Általános"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:58
-#| msgid "Mount at system _startup"
+#: src/disks/ui/gdu-mount-options-dialog.ui:61
 msgid "_Mount at Startup"
 msgstr "_Csatolás a rendszer indításakor"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:64
+#: src/disks/ui/gdu-mount-options-dialog.ui:68
 msgid "_Show in Files"
 msgstr "_Megjelenítés a Fájlokban"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:70
-#| msgid "Require additional authori_zation to mount"
+#: src/disks/ui/gdu-mount-options-dialog.ui:75
 msgid "_Require Authorization"
 msgstr "Hitelesítés meg_követelése"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:78
+#: src/disks/ui/gdu-mount-options-dialog.ui:84
 msgid "Appearance"
 msgstr "Megjelenés"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:82
-#| msgid "Display _Name"
+#: src/disks/ui/gdu-mount-options-dialog.ui:88
 msgid "D_isplay Name"
 msgstr "Megjelenített _név"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:88
+#: src/disks/ui/gdu-mount-options-dialog.ui:95
 msgid "C_olor Icon"
 msgstr "Ikon _színezése"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:94
-#| msgid "S_ymbolic Icon Name"
+#: src/disks/ui/gdu-mount-options-dialog.ui:102
 msgid "S_ymbolic Icon"
 msgstr "Sz_imbolikus ikon"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:102
-#| msgid "Drive Options"
+#: src/disks/ui/gdu-mount-options-dialog.ui:111
 msgid "Technical Options"
 msgstr "Műszaki beállítások"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:106
-#| msgid "Mount Options"
+#: src/disks/ui/gdu-mount-options-dialog.ui:115
 msgid "_fstab Options"
 msgstr "_fstab beállítások"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:115
+#: src/disks/ui/gdu-mount-options-dialog.ui:125
 msgid "Mount _Point"
 msgstr "_Csatolási pont"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:124
+#: src/disks/ui/gdu-mount-options-dialog.ui:135
 msgid "Filesystem _Type"
 msgstr "Fájl_rendszertípus"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:138
-#| msgid "I_dentify As"
+#: src/disks/ui/gdu-mount-options-dialog.ui:150
 msgid "Ide_ntify As"
 msgstr "A_zonosítás mint"
 
-#: src/disks/ui/gdu-mount-options-dialog.ui:149
+#: src/disks/ui/gdu-mount-options-dialog.ui:162
 msgid "R_estore Default Settings"
 msgstr "Alapértelmezett beállítások _helyreállítása"
 
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:72
-#| msgid "Size"
 msgid "_Size"
 msgstr "_Méret"
 
@@ -3086,15 +2961,14 @@ msgid ""
 "Resizing a filesystem can result in data loss. It is recommended to backup "
 "any data before continuing."
 msgstr ""
-"Egy fájlrendszer átméretezése adatvesztést eredményezhet. Ajánlott minden"
-" adatról biztonsági mentést készíteni, mielőtt folytatná."
+"Egy fájlrendszer átméretezése adatvesztést eredményezhet. Ajánlott minden "
+"adatról biztonsági mentést készíteni, mielőtt folytatná."
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:55
 msgid "Available Space"
 msgstr "Elérhető hely"
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:83
-#| msgid "Image Size"
 msgid "_New Size"
 msgstr "Ú_j méret"
 
@@ -3111,17 +2985,14 @@ msgid "_Restore"
 msgstr "_Helyreállítás"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:50
-#| msgid "Image Size"
 msgid "Image"
 msgstr "Lemezkép"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:51
-#| msgid "No Device Selected"
 msgid "None Selected"
 msgstr "Nincs kiválasztva"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:57
-#| msgid "Select a Folder"
 msgid "Select Image"
 msgstr "Lemezkép kiválasztása"
 
@@ -3135,17 +3006,14 @@ msgid "Destination"
 msgstr "Cél"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:4
-#| msgid "_Take Ownership…"
 msgid "Take Ownership?"
 msgstr "Átveszi a tulajdonjogot?"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:11
-#| msgid "Enable _recursive mode"
 msgid "_Recursive Mode"
 msgstr "_Rekurzív mód"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:37
-#| msgid "_Take Ownership…"
 msgid "_Take Ownership"
 msgstr "_Tulajdonjog átvétele"
 
@@ -3154,8 +3022,8 @@ msgid ""
 "Recursive mode changes the ownership of subdirectories and files. This can "
 "cause problems if files are owned by other users."
 msgstr ""
-"A rekurzív mód megváltoztatja az alkönyvtárak és fájlok tulajdonjogát. Ez"
-" problémákat okozhat, ha a fájlok más felhasználók tulajdonában vannak."
+"A rekurzív mód megváltoztatja az alkönyvtárak és fájlok tulajdonjogát. Ez "
+"problémákat okozhat, ha a fájlok más felhasználók tulajdonában vannak."
 
 #: src/disks/ui/gdu-window.ui:32
 msgid "Main Menu"
@@ -3174,7 +3042,6 @@ msgid "_New Disk Image…"
 msgstr "Ú_j lemezkép…"
 
 #: src/disks/ui/gdu-window.ui:116
-#| msgid "Attach new _Image…"
 msgid "_Attach Disk Image…"
 msgstr "Lemezkép _csatolása…"
 
@@ -3480,15 +3347,19 @@ msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
-#: src/libgdu/gduutils.c:1307
+#: src/libgdu/gduutils.c:652
+msgid "_Close"
+msgstr "_Bezárás"
+
+#: src/libgdu/gduutils.c:1316
 msgid "Error unmounting filesystem"
 msgstr "Hiba a fájlrendszer leválasztásakor"
 
-#: src/libgdu/gduutils.c:1339
+#: src/libgdu/gduutils.c:1348
 msgid "Error locking device"
 msgstr "Hiba az eszköz zárolásakor"
 
-#: src/libgdu/gduutils.c:1360
+#: src/libgdu/gduutils.c:1369
 msgid "Error disabling autoclear for loop device"
 msgstr "Hiba a hurokeszköz automatikus törlésének letiltásakor"
 
@@ -3509,3 +3380,4 @@ msgstr "Egy merevlemez valószínűleg hamarosan meghibásodik."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Vizsgálat"
+

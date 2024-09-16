@@ -94,3 +94,16 @@ cargo_build = custom_target(
     cargo_options,
   ],
 )
+
+test(
+  'cargo-test',
+  cargo,
+  args: [
+    'test',
+    cargo_options,
+    '--',
+    '--test-threads=1',
+  ],
+  is_parallel: false,
+  timeout: 1800,
+)

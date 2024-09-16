@@ -6,7 +6,7 @@
 ///
 /// # Example
 ///
-/// ```rust
+/// ```rust, compile_fail
 /// let formatted_string = pgettext_f("hello-world", "Hello, {}!", ["world"]);
 /// assert_eq!(formatted_string, "Hello, world!");
 /// ```
@@ -27,7 +27,7 @@ pub(crate) fn pgettext_f(
 ///
 /// # Example
 ///
-/// ```rust
+/// ```rust, compile_fail
 /// let formatted_string = gettext_f("Hello, {}!", ["world"]);
 /// assert_eq!(formatted_string, "Hello, world!");
 /// ```

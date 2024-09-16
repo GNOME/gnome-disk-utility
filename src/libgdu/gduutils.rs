@@ -1038,3 +1038,21 @@ fn string_from_array(data: &OwnedValue) -> Option<String> {
     let cstr = CString::from_vec_with_nul(bytes).ok()?;
     Some(cstr.to_str().ok()?.to_string())
 }
+
+#[cfg(test)]
+mod unfuse_path_tests {
+    use super::*;
+
+    #[test]
+    fn unfuse_path_home() {
+        let path = file!();
+        let home = glib::home_dir();
+        assert_eq!(path.replace(home.to_str().unwrap(), "~"), unfuse_path(path));
+    }
+
+    #[test]
+    fn unfuse_path_without_home() {
+        let path = "/root";
+        assert_eq!(path, unfuse_path(path));
+    }
+}

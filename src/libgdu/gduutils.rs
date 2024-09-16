@@ -107,7 +107,7 @@ pub fn unfuse_path(path: &str) -> String {
     let file = gio::File::for_path(path);
     let uri = file.uri();
     let mut ret = if uri.starts_with("file:") {
-        uri
+        path.into()
     } else {
         glib::Uri::unescape_string(&uri, None).unwrap()
     };

@@ -38,11 +38,19 @@
         </child>
 
         <child>
-          <object class="GtkLevelBar" id="space_level_bar">
-            <property name="visible">False</property>
-            <property name="valign">center</property>
-            <property name="width-request">160</property>
-            <property name="height-request">18</property>
+          <object class="AdwClamp">
+            <property name="halign">end</property>
+            <property name="maximum-size">160</property>
+            <property name="tightening-threshold">160</property>
+            <property name="child">
+              <object class="GtkLevelBar" id="space_level_bar">
+                <property name="visible">False</property>
+                <property name="valign">center</property>
+                <property name="hexpand">True</property>
+                <property name="width-request">80</property>
+                <property name="height-request">18</property>
+              </object>
+            </property>
           </object>
         </child>
 

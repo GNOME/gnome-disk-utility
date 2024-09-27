@@ -28,6 +28,7 @@ sources = files(
   'gdu-manager.c',
   'gdu-block-row.c',
   'gdu-disk-settings-dialog.c',
+  'gdu-drive-header.c',
   'gdu-drive-row.c',
   'gdu-drive-view.c',
   'gdudvdsupport.c',

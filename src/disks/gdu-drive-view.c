@@ -27,28 +27,38 @@
 #include "gdu-disk-settings-dialog.h"
 #include "gdu-format-disk-dialog.h"
 #include "gdu-restore-disk-image-dialog.h"
+#include "gdu-drive-header.h"
 #include "gdu-drive-view.h"
 #include "gdu-space-allocation-bar.h"
 
+enum
+{
+  PROP_0,
+  PROP_MOBILE,
+  N_PROPS
+};
+
+static GParamSpec *properties[N_PROPS];
+
 struct _GduDriveView
 {
-  AdwBin         parent_instance;
+  AdwBin           parent_instance;
 
-  GtkImage      *drive_image;
-  GtkLabel      *drive_name_label;
-  GtkLabel      *drive_path_label;
+  GduDriveHeader  *drive_header;
 
-  AdwDialog     *drive_info_dialog;
+  AdwDialog       *drive_info_dialog;
   AdwToastOverlay *drive_info_dialog_toast_overlay;
-  AdwActionRow  *drive_model_row;
-  AdwActionRow  *drive_serial_row;
-  AdwActionRow  *drive_part_type_row;
-  AdwActionRow  *drive_size_row;
+  AdwActionRow    *drive_model_row;
+  AdwActionRow    *drive_serial_row;
+  AdwActionRow    *drive_part_type_row;
+  AdwActionRow    *drive_size_row;
 
-  GtkWidget     *space_allocation_bar;
-  GtkListBox    *drive_partitions_listbox;
+  GtkWidget       *space_allocation_bar;
+  GtkListBox      *drive_partitions_listbox;
 
-  GduDrive      *drive;
+  GduDrive        *drive;
+
+  gboolean         mobile;
 };
 
 
@@ -85,9 +95,9 @@ update_drive_view (GduDriveView *self)
   name = gdu_drive_get_name (self->drive);
   icon = gdu_item_get_icon (GDU_ITEM (self->drive));
 
-  gtk_label_set_label (self->drive_name_label, description);
-  gtk_label_set_label (self->drive_path_label, name);
-  g_object_set (self->drive_image, "gicon", icon, NULL);
+  gdu_drive_header_set_drive_name (self->drive_header, description);
+  gdu_drive_header_set_drive_path (self->drive_header, name);
+  gdu_drive_header_set_icon (self->drive_header, icon);
 
   partition = gdu_item_get_partition_type (GDU_ITEM (self->drive));
   serial = gdu_drive_get_serial (self->drive);
@@ -412,6 +422,32 @@ poweroff_drive_clicked_cb (GtkWidget  *widget,
 }
 
 static void
+show_drive_dialog_clicked_cb (GtkWidget  *widget,
+                              const char *action_name,
+                              GVariant   *parameter)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
+
+  adw_dialog_present (self->drive_info_dialog, widget);
+}
+
+static void
+gdu_drive_view_set_mobile (GduDriveView *self,
+                           gboolean      mobile)
+{
+  if (self->mobile != mobile)
+  {
+    self->mobile = mobile;
+    g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_MOBILE]);
+  }
+
+  if (self->mobile)
+    gdu_drive_header_set_layout_name (self->drive_header, "vertical");
+  else
+    gdu_drive_header_set_layout_name (self->drive_header, "horizontal");
+}
+
+static void
 gdu_drive_view_finalize (GObject *object)
 {
   GduDriveView *self = (GduDriveView *)object;
@@ -422,20 +458,56 @@ gdu_drive_view_finalize (GObject *object)
 }
 
 static void
+gdu_drive_view_set_property (GObject      *object,
+                             guint         prop_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_MOBILE:
+      gdu_drive_view_set_mobile (self, g_value_get_boolean (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
+gdu_drive_view_get_property (GObject    *object,
+                             guint       prop_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (object);
+
+  switch (prop_id)
+    {
+    case PROP_MOBILE:
+      g_value_set_boolean (value, self->mobile);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+    }
+}
+
+static void
 gdu_drive_view_class_init (GduDriveViewClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->set_property = gdu_drive_view_set_property;
+  object_class->get_property = gdu_drive_view_get_property;
   object_class->finalize = gdu_drive_view_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/DiskUtility/ui/"
                                                "gdu-drive-view.ui");
 
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_image);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_name_label);
-  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_path_label);
+  gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_header);
 
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_info_dialog_toast_overlay);
   gtk_widget_class_bind_template_child (widget_class, GduDriveView, drive_info_dialog);
@@ -459,8 +531,19 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
   gtk_widget_class_install_action (widget_class, "view.wakeup", NULL, wakeup_drive_clicked_cb);
   gtk_widget_class_install_action (widget_class, "view.poweroff", NULL, poweroff_drive_clicked_cb);
 
+  gtk_widget_class_install_action (widget_class, "view.show-drive-dialog", NULL, show_drive_dialog_clicked_cb);
+
   gtk_widget_class_bind_template_callback (widget_class, on_copy_drive_model_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_copy_drive_serial_clicked);
+
+  properties [PROP_MOBILE] =
+    g_param_spec_boolean ("mobile", NULL, NULL,
+                          FALSE,
+                          (G_PARAM_READWRITE |
+                           G_PARAM_EXPLICIT_NOTIFY |
+                           G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_properties (object_class, N_PROPS, properties);
 }
 
 static void

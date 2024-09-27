@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GduDriveHeader" parent="AdwBin">
+    <property name="child">
+      <object class="AdwMultiLayoutView" id="layout_view">
+        <child>
+          <object class="AdwLayout">
+            <property name="name">horizontal</property>
+            <property name="content">
+              <object class="GtkGrid">
+                <property name="column-spacing">12</property>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">icon</property>
+                    <layout>
+                      <property name="column">0</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">labels</property>
+                    <layout>
+                      <property name="column">1</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">buttons</property>
+                    <layout>
+                      <property name="column">2</property>
+                      <property name="row">0</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwLayout">
+            <property name="name">vertical</property>
+            <property name="content">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="hexpand">True</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">icon</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">labels</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwLayoutSlot">
+                    <property name="id">buttons</property>
+                    <property name="halign">center</property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child type="icon">
+          <object class="GtkImage" id="drive_image">
+            <property name="pixel-size">96</property>
+            <style>
+              <class name="icon-dropshadow"/>
+            </style>
+          </object>
+        </child>
+        <child type="labels">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="hexpand">True</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <binding name="halign">
+                  <closure type="GtkAlign" function="get_alignment_from_layout_name">
+                    <lookup type="AdwMultiLayoutView" name="layout-name">layout_view</lookup>
+                  </closure>
+                </binding>
+                <property name="wrap">True</property>
+                <property name="label" bind-property="drive-name" bind-flags="sync-create" bind-source="GduDriveHeader"/>
+                <style>
+                  <class name="title-1" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <binding name="halign">
+                  <closure type="GtkAlign" function="get_alignment_from_layout_name">
+                    <lookup type="AdwMultiLayoutView" name="layout-name">layout_view</lookup>
+                  </closure>
+                </binding>
+                <property name="wrap">True</property>
+                <property name="label" bind-property="drive-path" bind-flags="sync-create" bind-source="GduDriveHeader"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="buttons">
+          <object class="GtkBox">
+            <property name="valign">center</property>
+            <property name="spacing">12</property>
+
+            <!-- DriveInfoButton -->
+            <child>
+              <object class="GtkButton">
+                <property name="tooltip-text" translatable="yes">Drive Information</property>
+                <property name="icon-name">help-about-symbolic</property>
+                <property name="action-name">view.show-drive-dialog</property>
+              </object>
+            </child>
+
+            <!-- DriveMenuButton -->
+            <child>
+              <object class="GtkMenuButton">
+                <property name="tooltip-text" translatable="yes">Drive Options</property>
+                <property name="menu-model">drive_menu</property>
+                <property name="icon-name">view-more-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+
+  <menu id="drive_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Format Disk…</attribute>
+        <attribute name="action">view.format</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Create Disk Image…</attribute>
+        <attribute name="action">view.create-image</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Restore Disk Image…</attribute>
+        <attribute name="action">view.restore-image</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Benchmark Disk…</attribute>
+        <attribute name="action">view.benchmark</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">SMART Data &amp; Self-Tests…</attribute>
+        <attribute name="action">view.smart</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Drive Settings…</attribute>
+        <attribute name="action">view.settings</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Standby</attribute>
+        <attribute name="action">view.standby</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Wake Up</attribute>
+        <attribute name="action">view.wakeup</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Power Off</attribute>
+        <attribute name="action">view.poweroff</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

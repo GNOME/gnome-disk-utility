@@ -52,10 +52,10 @@ struct _GduBlockRow
   GtkWidget      *create_partition_button;
   GtkWidget      *block_menu_button;
 
-  GtkWidget      *size_label;
-  GtkWidget      *device_id_label;
-  GtkWidget      *uuid_label;
-  GtkWidget      *partition_type_label;
+  GtkWidget      *size_row;
+  GtkWidget      *device_id_row;
+  GtkWidget      *uuid_row;
+  GtkWidget      *partition_type_row;
 
   UDisksClient   *client;
   GduBlock       *block;
@@ -100,11 +100,11 @@ gdu_block_row_update_information (GduBlockRow *self)
   device_id = gdu_block_get_device_id (self->block);
   size_str = gdu_block_get_size_str (self->block);
 
-  gtk_label_set_label (GTK_LABEL (self->partition_type_label),
-                       partition != NULL ? partition : "—");
-  gtk_label_set_label (GTK_LABEL (self->uuid_label), uuid);
-  gtk_label_set_label (GTK_LABEL (self->device_id_label), device_id);
-  gtk_label_set_label (GTK_LABEL (self->size_label), size_str);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->partition_type_row),
+                               partition != NULL ? partition : "—");
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->uuid_row), uuid);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->device_id_row), device_id);
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->size_row), size_str);
 }
 
 static void
@@ -966,10 +966,10 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, create_partition_button);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, block_menu_button);
 
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, size_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, device_id_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, uuid_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, size_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, device_id_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, uuid_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, partition_type_row);
 
   for (guint i = 0; i < G_N_ELEMENTS (actions); i++)
     {

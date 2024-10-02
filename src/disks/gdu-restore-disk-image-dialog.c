@@ -414,13 +414,6 @@ play_complete_sound (GduRestoreDiskImageDialog *self)
                           CA_PROP_EVENT_DESCRIPTION, sound_message,
                           NULL);
   */
-
-  if (self->inhibit_cookie > 0)
-    {
-      gtk_application_uninhibit ((gpointer)g_application_get_default (),
-                                 self->inhibit_cookie);
-      self->inhibit_cookie = 0;
-    }
 }
 
 static gboolean

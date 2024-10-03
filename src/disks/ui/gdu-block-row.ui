@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="GduBlockRow" parent="AdwExpanderRow">
+
     <child type="prefix">
       <object class="GtkBox" id="button">
-
         <!-- Partition prefix used for subvolumes to visualize the depth -->
         <child>
-            <object class="GtkLabel" id="partition_depth_label">
+          <object class="GtkLabel" id="partition_depth_label">
             <property name="visible">False</property>
-            </object>
+          </object>
         </child>
-
         <child>
           <object class="GtkImage" id="partition_image">
             <property name="halign">center</property>
@@ -20,23 +19,19 @@
             <property name="width-request">20</property>
             <property name="height-request">20</property>
             <style>
-                <class name="partition-row"></class>
+              <class name="partition-row"/>
             </style>
           </object>
         </child>
-
       </object>
     </child>
 
     <child type="suffix">
       <object class="GtkBox">
         <property name="spacing">12</property>
-
         <child>
-          <object class="GtkSpinner" id="job_indicator_spinner">
-          </object>
+          <object class="GtkSpinner" id="job_indicator_spinner"/>
         </child>
-
         <child>
           <object class="AdwClamp">
             <property name="halign">end</property>
@@ -53,36 +48,30 @@
             </property>
           </object>
         </child>
-
         <child>
           <object class="GtkButton" id="create_partition_button">
             <property name="tooltip-text" translatable="yes">Create Partition</property>
             <property name="valign">center</property>
             <property name="icon-name">list-add-symbolic</property>
             <property name="action-name">row.create_partition</property>
-            <property name="visible">false</property>
+            <property name="visible">False</property>
             <style>
-              <class name="flat"></class>
+              <class name="flat"/>
             </style>
           </object>
         </child>
-
         <child>
           <object class="GtkMenuButton" id="block_menu_button">
             <property name="tooltip-text" translatable="yes">Partition Options</property>
             <property name="valign">center</property>
             <property name="menu-model">block_menu</property>
             <property name="icon_name">view-more-symbolic</property>
-            <property name="visible"
-              bind-source="create_partition_button"
-              bind-property="visible"
-              bind-flags="sync-create|invert-boolean" />
+            <property name="visible" bind-source="create_partition_button" bind-property="visible" bind-flags="sync-create|invert-boolean"/>
             <style>
-              <class name="flat"></class>
+              <class name="flat"/>
             </style>
           </object>
         </child>
-
       </object>
     </child>
 
@@ -95,7 +84,6 @@
         </style>
       </object>
     </child>
-
     <child>
       <object class="AdwActionRow" id="device_id_row">
         <property name="title" translatable="yes">Device ID</property>
@@ -105,7 +93,6 @@
         </style>
       </object>
     </child>
-
     <child>
       <object class="AdwActionRow" id="uuid_row">
         <property name="title" translatable="yes">UUID</property>
@@ -115,7 +102,6 @@
         </style>
       </object>
     </child>
-
     <child>
       <object class="AdwActionRow" id="partition_type_row">
         <property name="title" translatable="yes">Partition Type</property>

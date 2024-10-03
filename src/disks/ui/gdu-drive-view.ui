@@ -2,56 +2,38 @@
 <interface>
   <template class="GduDriveView" parent="AdwBin">
     <child>
-      <object class="GtkScrolledWindow">
-        <property name="vexpand">1</property>
-        <property name="hscrollbar-policy">never</property>
+      <object class="AdwPreferencesPage">
         <child>
-          <object class="AdwClamp">
-            <property name="margin-start">6</property>
-            <property name="margin-end">6</property>
-            <property name="margin-top">6</property>
-            <property name="margin-bottom">6</property>
+          <object class="AdwPreferencesGroup">
             <child>
-              <object class="GtkBox">
-                <property name="spacing">12</property>
-                <property name="orientation">vertical</property>
-
-                <child>
-                  <object class="GduDriveHeader" id="drive_header"/>
-                </child>
-
-                <child>
-                    <object class="AdwPreferencesGroup">
-                        <property name="title" translatable="yes">Space Allocation</property>
-                        <child>
-                            <object class="GduSpaceAllocationBar" id="space_allocation_bar" />
-                        </child>
-                    </object>
-                </child>
-
-                <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title" translatable="yes">Volumes</property>
-                    <child>
-                      <object class="GtkListBox" id="drive_partitions_listbox">
-                        <property name="selection-mode">none</property>
-                        <style>
-                          <class name="boxed-list" />
-                        </style>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+              <object class="GduDriveHeader" id="drive_header"/>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Space Allocation</property>
+            <child>
+              <object class="GduSpaceAllocationBar" id="space_allocation_bar" />
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Volumes</property>
+            <child>
+              <object class="GtkListBox" id="drive_partitions_listbox">
+                <property name="selection-mode">none</property>
+                <style>
+                  <class name="boxed-list" />
+                </style>
               </object>
             </child>
           </object>
-        </child> <!--
-        ./AdwClamp -->
+        </child>
       </object>
     </child>
-
   </template>
-
   <object class="AdwDialog" id="drive_info_dialog">
     <property name="title" translatable="yes">Drive Information</property>
     <property name="content-width">480</property>

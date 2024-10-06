@@ -1,0 +1,26 @@
+[package]
+name = "GNOME-Disks"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.70"
+license = "GPL-2.0-or-later"
+
+# [[bin]]
+# name = 'gnome-disks'
+# path = "main.rs"
+
+#TODO: possibly remove this?
+# expose the restore dialog as a lib, so it can be used in disk-image-mounter
+[lib]
+path = "lib.rs"
+
+[dependencies]
+log.workspace = true
+env_logger.workspace = true
+udisks.workspace = true
+gtk.workspace = true
+gettext-rs.workspace = true
+adw = { package = "libadwaita", version = "0.6", features = ["v1_5"] }
+libgdu = { path = "../libgdu", version = "0.1.0" }
+libc = "0.2"
+itertools = "0.13.0"

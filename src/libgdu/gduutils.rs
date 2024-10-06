@@ -486,20 +486,22 @@ pub async fn create_widget_from_objects(
     group.upcast::<gtk::Widget>()
 }
 
+//TODO: implement new?
 pub struct ConfirmationDialogData {
-    message: String,
-    description: String,
-    reponse_verb: String,
-    reponse_appearance: adw::ResponseAppearance,
-    callback: fn(glib::GString),
+    pub message: String,
+    pub description: String,
+    pub reponse_verb: String,
+    pub reponse_appearance: adw::ResponseAppearance,
+    // pub callback: fn(glib::GString),
 }
 
 // TODO: make this an associated method
-pub fn show_confirmation(
+pub async fn show_confirmation(
     parent_window: &impl IsA<gtk::Widget>,
     data: ConfirmationDialogData,
     extra_child: Option<&impl IsA<gtk::Widget>>,
-) {
+    //TODO: use enum as return value?
+) -> glib::GString {
     // TODO: this api is so confusing
     let mut dialog_builder = adw::AlertDialog::builder()
         .heading(data.message)
@@ -521,7 +523,7 @@ pub fn show_confirmation(
     dialog.set_response_appearance("confirm", data.reponse_appearance);
     dialog.add_response("confirm", &data.reponse_verb);
     dialog.add_response("cancel", &gettext("Cancel"));
-    dialog.choose(parent_window, gio::Cancellable::NONE, data.callback);
+    dialog.choose_future(parent_window).await
 }
 
 struct CacheEntry {

@@ -445,7 +445,7 @@ pub fn show_error(
     error: Box<dyn std::error::Error>,
 ) {
     // Never show an error if it's because the user dismissed the
-    // authentication dialog himself
+    // authentication dialog themself
     //
     // ... or if the user canceled the operation
     if matches!(

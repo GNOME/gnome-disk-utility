@@ -10,7 +10,7 @@
 /// let formatted_string = pgettext_f("hello-world", "Hello, {}!", ["world"]);
 /// assert_eq!(formatted_string, "Hello, world!");
 /// ```
-pub(crate) fn pgettext_f(
+pub fn pgettext_f(
     msgctxt: &str,
     format: &str,
     args: impl IntoIterator<Item = impl AsRef<str>>,
@@ -30,7 +30,7 @@ pub(crate) fn pgettext_f(
 /// let formatted_string = gettext_f("Hello, {}!", ["world"]);
 /// assert_eq!(formatted_string, "Hello, world!");
 /// ```
-pub(crate) fn gettext_f(format: &str, args: impl IntoIterator<Item = impl AsRef<str>>) -> String {
+pub fn gettext_f(format: &str, args: impl IntoIterator<Item = impl AsRef<str>>) -> String {
     // map Rust style string formatting to C style formatting
     let s = gettextrs::gettext(format.replace("{}", "%s"));
     arg_replace(s, args)

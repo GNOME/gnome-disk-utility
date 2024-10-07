@@ -3,23 +3,6 @@
 version = 3
 
 [[package]]
-name = "GNOME-Disks"
-version = "0.1.0"
-dependencies = [
- "env_logger",
- "gettext-rs",
- "gtk4",
- "itertools",
- "libadwaita",
- "libc",
- "libgdu",
- "liblzma",
- "log",
- "memmap2",
- "udisks2",
-]
-
-[[package]]
 name = "addr2line"
 version = "0.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -842,15 +825,32 @@ dependencies = [
 name = "gnome-disk-image-mounter"
 version = "0.1.0"
 dependencies = [
- "GNOME-Disks",
  "anyhow",
  "async-recursion",
  "env_logger",
  "gettext-rs",
+ "gnome-disks",
  "gtk4",
  "libadwaita",
  "libgdu",
  "log",
+ "udisks2",
+]
+
+[[package]]
+name = "gnome-disks"
+version = "0.1.0"
+dependencies = [
+ "env_logger",
+ "gettext-rs",
+ "gtk4",
+ "itertools",
+ "libadwaita",
+ "libc",
+ "libgdu",
+ "liblzma",
+ "log",
+ "memmap2",
  "udisks2",
 ]
 

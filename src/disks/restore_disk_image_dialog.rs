@@ -441,7 +441,6 @@ impl GduRestoreDiskImageDialog {
 
         //TODO: hold mutex
         let estimator = estimator::GduEstimator::new(input_size);
-        let update_id = 0;
 
         // Read huge (e.g. 1 MiB) blocks and write it to the output device even if it was only
         // partially read
@@ -457,7 +456,6 @@ impl GduRestoreDiskImageDialog {
                 if bytes_completed > 0 {
                     estimator.add_sample(bytes_completed);
                 }
-                //TODO: check udpate  id
                 self.update_job(Some(&estimator), false)
             }
             //TODO: mutex unlock

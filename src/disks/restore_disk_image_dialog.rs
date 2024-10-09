@@ -426,18 +426,8 @@ impl GduRestoreDiskImageDialog {
 
         // default to 1 MiB blocks
         const BUFFER_SIZE: usize = 1024 * 1024;
-        //TODO: is it even necessary to align the buffer?
-        let buffer = unsafe {
-            let page_size = libc::sysconf(libc::_SC_PAGESIZE) as usize;
-            let layout = std::alloc::Layout::from_size_align(BUFFER_SIZE, page_size)
-                .expect("Failed to create layout for buffer");
-            let buffer_ptr = std::alloc::alloc_zeroed(layout);
-            assert!(!buffer_ptr.is_null(), "Failed to alloc buffer memory");
-            // SAFETY: we know that the pointer is valid, correctly aligned and has space for `BUFFER_SIZE`
-            // bytes
-            std::slice::from_raw_parts_mut(buffer_ptr, BUFFER_SIZE)
-            //TODO: dealloc buffer
-        };
+        let mut page_buffer = PageAlignedBuffer::new(BUFFER_SIZE);
+        let buffer = page_buffer.as_mut_slice();
 
         //TODO: hold mutex
         let estimator = estimator::GduEstimator::new(input_size);
@@ -518,6 +508,55 @@ impl GduRestoreDiskImageDialog {
             .build();
         if let Ok(file) = file_dialog.open_future(Some(self)).await {
             self.imp().restore_file.set(Some(file));
+        }
+    }
+}
+
+use sealed::PageAlignedBuffer;
+// hide private struct fields
+//TODO: possibly move to different file
+mod sealed {
+    /// A RAII buffer that is aligned to the page size of the system.
+    pub struct PageAlignedBuffer {
+        /// Memory layout of the buffer.
+        layout: std::alloc::Layout,
+        /// Reference to the page aligned memory.
+        buffer: &'static mut [u8],
+    }
+
+    impl PageAlignedBuffer {
+        /// Allocates a new buffer with aligned to the page size of the operating system.
+        /// The allocated memory will be zeroed.
+        #[must_use]
+        pub fn new(size: usize) -> Self {
+            unsafe {
+                let page_size = libc::sysconf(libc::_SC_PAGESIZE) as usize;
+                let layout = std::alloc::Layout::from_size_align(size, page_size)
+                    .expect("Failed to create layout for buffer");
+                let buffer_ptr = std::alloc::alloc_zeroed(layout);
+                assert!(!buffer_ptr.is_null(), "Failed to alloc buffer memory");
+                // SAFETY: we know that the pointer is valid, correctly aligned and has space for `BUFFER_SIZE`
+                // bytes
+                let buffer = std::slice::from_raw_parts_mut(buffer_ptr, size);
+                Self { layout, buffer }
+            }
+        }
+
+        /// Returns a mutable slice of the allocated buffer.
+        pub fn as_mut_slice(&mut self) -> &mut [u8] {
+            self.buffer
+        }
+    }
+
+    impl Drop for PageAlignedBuffer {
+        fn drop(&mut self) {
+            unsafe {
+                // SAFETY: as we only ever give out an exlcusive reference to the buffer and it's not
+                // possible to clone, we can be sure that there exists no other reference to the
+                // buffer.
+                // As the buffer cannot be swapped out, it was created from self.layout.
+                std::alloc::dealloc(self.buffer.as_mut_ptr(), self.layout);
+            }
         }
     }
 }

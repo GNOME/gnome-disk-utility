@@ -1,9 +1,12 @@
 name = 'gnome-disk-image-mounter'
 
+mounter_conf = configuration_data()
+mounter_conf.merge_from(conf_rs)
+mounter_conf.set_quoted('APP_ID', 'org.gnome.DiskImageMounter')
 configure_file(
     input: 'config.rs.in',
     output: 'config.rs',
-    configuration: conf_rs,
+    configuration: mounter_conf,
 )
 
 build_root = meson.project_build_root()

@@ -101,6 +101,7 @@ impl GduRestoreDiskImageDialog {
         disk_image_filename: Option<&str>,
     ) {
         let dialog: Self = glib::Object::builder()
+            .property("application", parent_window.application())
             .property("transient-for", parent_window)
             .build();
         let imp = dialog.imp();
@@ -349,7 +350,8 @@ impl GduRestoreDiskImageDialog {
         }
 
         //TODO: use wrapper to auto uninhibit
-        let inhibit_cookie = gtk::Application::default().inhibit(
+        let application = self.application().expect("`application` should be set");
+        let inhibit_cookie = application.inhibit(
             self.native().and_downcast_ref::<gtk::Window>(),
             gtk::ApplicationInhibitFlags::SUSPEND | gtk::ApplicationInhibitFlags::LOGOUT,
             // Translators: Reason why suspend/logout is being inhibited
@@ -370,7 +372,7 @@ impl GduRestoreDiskImageDialog {
             .await;
         self.play_complete_sound();
         //TODO: update job
-        gtk::Application::default().uninhibit(inhibit_cookie);
+        application.uninhibit(inhibit_cookie);
         if let Err(err) = res {
             libgdu::show_error(self, &gettext("Error restoring disk image"), err);
         } else {

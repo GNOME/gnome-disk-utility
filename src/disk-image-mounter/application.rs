@@ -2,7 +2,7 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 
-use crate::config::{PKGDATADIR, PROFILE, VERSION};
+use crate::config;
 
 mod imp {
     use super::*;
@@ -81,8 +81,8 @@ impl ImageMounterApplication {
 
     pub fn run(&self) -> glib::ExitCode {
         log::info!("Disk Image Mounter");
-        log::info!("Version: {} ({})", VERSION, PROFILE);
-        log::info!("Datadir: {}", PKGDATADIR);
+        log::info!("Version: {} ({})", config::VERSION, config::PROFILE);
+        log::info!("Datadir: {}", config::PKGDATADIR);
 
         ApplicationExtManual::run(self)
     }

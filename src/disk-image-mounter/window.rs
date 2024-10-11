@@ -248,7 +248,7 @@ impl ImageMounterWindow {
             Action::OpenInFiles => self.open_in_files(true).await,
             Action::OpenInFilesWritable => self.open_in_files(false).await,
             Action::Unmount => self.unmount().await,
-            Action::Write => self.write_image(),
+            Action::Write => self.write_image().await,
             Action::Inspect => self.inspect().await,
         };
 
@@ -396,15 +396,17 @@ impl ImageMounterWindow {
     ///
     /// Opens the restore dialog from GNOME Disks, allowing the users to restore the contents of the
     /// disk image to a disk device.
-    fn write_image(&self) -> anyhow::Result<()> {
+    async fn write_image(&self) -> anyhow::Result<()> {
         let path = self
             .file()
             .and_then(|file| file.path())
             .context("Failed to find file path")?;
+        let client = udisks::Client::new().await?;
 
-        std::process::Command::new("gnome-disks")
-            .args(["--restore-disk-image", path.to_str().unwrap()])
-            .spawn()?;
+        gnome_disks::GduRestoreDiskImageDialog::show(self, None, client, path.to_str()).await;
+        //TODO: wait until the dialog has been closed to exit
+        // spawn a never ending future, so the dialog stays open
+        std::future::pending::<()>().await;
         Ok(())
     }
 

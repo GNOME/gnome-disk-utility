@@ -520,8 +520,8 @@ pub async fn show_confirmation(
     }
     let dialog = dialog_builder.build();
 
-    dialog.set_response_appearance("confirm", data.reponse_appearance);
     dialog.add_response("confirm", &data.reponse_verb);
+    dialog.set_response_appearance("confirm", data.reponse_appearance);
     dialog.add_response("cancel", &gettext("Cancel"));
     dialog.choose_future(parent_window).await
 }

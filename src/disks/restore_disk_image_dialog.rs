@@ -107,7 +107,7 @@ impl GduRestoreDiskImageDialog {
             .build();
         let imp = dialog.imp();
         imp.client.replace(Some(client));
-        dialog.set_destination_object(object).await;
+        dialog.set_destination_object(object.cloned()).await;
         if let Some(disk_image_filename) = disk_image_filename {
             let file = gio::File::for_commandline_arg(disk_image_filename);
             imp.restore_file.set(Some(file));
@@ -131,17 +131,18 @@ impl GduRestoreDiskImageDialog {
         dialog.present();
     }
 
-    async fn set_destination_object(&self, object: Option<&udisks::Object>) {
+    async fn set_destination_object(&self, object: Option<udisks::Object>) {
         let imp = self.imp();
         //TODO: add a eq impl in udisks
-        if imp.object.borrow().as_ref().map(|v| v.object_path()) != object.map(|v| v.object_path())
+        if imp.object.borrow().as_ref().map(|v| v.object_path())
+            != object.as_ref().map(|v| v.object_path())
         {
             imp.block_size.set(0);
             //TODO: take ownership of object
             if let Some(object) = object {
-                imp.object.replace(Some(object.clone()));
                 let block = object.block().await.expect("`block` should be Ok");
                 let drive = self.client().drive_for_block(&block).await;
+                imp.object.replace(Some(object));
                 imp.drive.replace(drive.ok());
 
                 //TODO: use a method call for this so it works on e.g. floppy drives where e.g. we don't know the size
@@ -283,7 +284,7 @@ impl GduRestoreDiskImageDialog {
         combo_row: &adw::ComboRow,
     ) {
         let imp = self.imp();
-        let selected_drive = &imp.destination_drives.borrow()[combo_row.selected() as usize];
+        let selected_drive = imp.destination_drives.borrow()[combo_row.selected() as usize].clone();
         self.set_destination_object(Some(selected_drive)).await;
         self.update();
     }

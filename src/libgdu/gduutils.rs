@@ -475,7 +475,7 @@ pub async fn widget_for_object(client: &udisks::Client, object: &udisks::Object)
 
 pub async fn create_widget_from_objects(
     client: &udisks::Client,
-    objects: &[udisks::Object],
+    objects: &[&udisks::Object],
 ) -> gtk::Widget {
     let group = adw::PreferencesGroup::new();
     for object in objects {

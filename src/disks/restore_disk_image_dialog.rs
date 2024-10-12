@@ -293,10 +293,6 @@ impl GduRestoreDiskImageDialog {
         self.imp().client.borrow().clone().unwrap()
     }
 
-    fn object(&self) -> udisks::Object {
-        self.imp().object.borrow().clone().unwrap()
-    }
-
     fn play_complete_sound(&self) {
         // Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
         let sound_message = gettext("Disk image copying complete");
@@ -314,7 +310,8 @@ impl GduRestoreDiskImageDialog {
 
     #[template_callback]
     async fn on_start_restore_button_clicked_cb(&self, _button: &gtk::Button) {
-        let objects = [self.object()];
+        let object = self.imp().object.borrow().clone().unwrap();
+        let objects = [&object];
         let affected_devices_widget =
             libgdu::create_widget_from_objects(&self.client(), &objects).await;
         let data = libgdu::ConfirmationDialogData {
@@ -335,7 +332,7 @@ impl GduRestoreDiskImageDialog {
         }
 
         //TODO: should this return an error?
-        let Ok(_) = libgdu::ensure_unused(&self.client(), self, &self.object()).await else {
+        let Ok(_) = libgdu::ensure_unused(&self.client(), self, &object).await else {
             return;
         };
         self.start_copying().await;

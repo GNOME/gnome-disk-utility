@@ -319,9 +319,6 @@ impl GduRestoreDiskImageDialog {
             description: gettext("All existing data will be lost"),
             reponse_verb: gettext("Restore"),
             reponse_appearance: adw::ResponseAppearance::Destructive,
-            //TODO: implement callback
-            // callback: glib::clone!(@strong self as this => async move |response: glib::GString| {
-            // }),
         };
 
         let response = libgdu::show_confirmation(self, data, Some(&affected_devices_widget)).await;
@@ -331,7 +328,6 @@ impl GduRestoreDiskImageDialog {
             return;
         }
 
-        //TODO: should this return an error?
         let Ok(_) = libgdu::ensure_unused(&self.client(), self, &object).await else {
             return;
         };
@@ -415,7 +411,6 @@ impl GduRestoreDiskImageDialog {
             self.update_job(None, true);
         }
         //TODO: set completed
-        //TODO: hide
         self.set_visible(false);
         self.close();
         None
@@ -466,7 +461,6 @@ impl GduRestoreDiskImageDialog {
         let mut page_buffer = PageAlignedBuffer::new(BUFFER_SIZE);
         let buffer = page_buffer.as_mut_slice();
 
-        //TODO: hold mutex
         let estimator = estimator::GduEstimator::new(input_size);
 
         // Read huge (e.g. 1 MiB) blocks and write it to the output device even if it was only
@@ -478,14 +472,13 @@ impl GduRestoreDiskImageDialog {
         let mut device = std::fs::File::from(fd.as_fd().try_clone_to_owned().unwrap());
         let copy_result = loop {
             // Update GUI - but only every 200ms and if the last update isn't peding
-            //TODO: mutex lock
             if update_timer.elapsed() >= update_interval {
                 if bytes_completed > 0 {
                     estimator.add_sample(bytes_completed);
                 }
+                //TODO: add a progress bar?
                 self.update_job(Some(&estimator), false)
             }
-            //TODO: mutex unlock
 
             //TODO: check if using kernel calls like std's (file) copy does is faster
             //or using BufWriter
@@ -494,7 +487,6 @@ impl GduRestoreDiskImageDialog {
                 Ok(0) => break Ok(()),
                 Ok(n) => n,
                 Err(err) if err.kind() == ErrorKind::Interrupted => continue,
-                //TODO: handle error
                 Err(err) => break Err(Box::new(err)),
             };
 

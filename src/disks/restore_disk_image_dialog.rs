@@ -31,6 +31,7 @@ mod imp {
         pub(super) block: RefCell<Option<udisks::block::BlockProxy<'static>>>,
         pub(super) drive: RefCell<Option<udisks::drive::DriveProxy<'static>>>,
         pub(super) inhibit_cookie: Cell<Option<u32>>,
+        pub(super) destination_drives: RefCell<Vec<udisks::Object>>,
 
         #[template_child]
         pub(super) size_row: TemplateChild<adw::ActionRow>,
@@ -123,6 +124,7 @@ impl GduRestoreDiskImageDialog {
                 .set_subtitle(&info.one_liner.unwrap_or_default())
         } else {
             imp.destination_row.remove_css_class("property");
+            dialog.populate_destination_combobox().await;
         }
         dialog.update();
 
@@ -246,9 +248,44 @@ impl GduRestoreDiskImageDialog {
         Some(())
     }
 
-    fn populate_destination_combobox(&self) {
-        //TODO: https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/main/src/disks/gdu-restore-disk-image-dialog.c#L307
-        // unimplemented!()
+    async fn populate_destination_combobox(&self) {
+        let mut drives: Vec<udisks::Object> = Vec::new();
+        let drive_names = gtk::StringList::default();
+
+        let client = self.client();
+        for object in client
+            .object_manager()
+            .get_managed_objects()
+            .await
+            .unwrap_or_default()
+            .into_iter()
+            .filter_map(|(object_path, _)| client.object(object_path).ok())
+        {
+            let Ok(drive): udisks::Result<udisks::drive::DriveProxy> = object.drive().await else {
+                continue;
+            };
+            let info = client.object_info(&object).await;
+            drive_names.append(&info.one_liner.unwrap());
+            if let Some(block) = client.block_for_drive(&drive, false).await {
+                let object = client.object(block.inner().path().to_owned()).unwrap();
+                drives.push(object);
+            }
+        }
+        //TODO: names are truncated
+        self.imp().destination_row.set_model(Some(&drive_names));
+        self.imp().destination_drives.replace(drives);
+    }
+
+    #[template_callback]
+    async fn destination_row_selected_cb(
+        &self,
+        _param: &glib::ParamSpec,
+        combo_row: &adw::ComboRow,
+    ) {
+        let imp = self.imp();
+        let selected_drive = &imp.destination_drives.borrow()[combo_row.selected() as usize];
+        self.set_destination_object(Some(selected_drive)).await;
+        self.update();
     }
 
     fn client(&self) -> udisks::Client {

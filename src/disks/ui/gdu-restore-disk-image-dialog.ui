@@ -75,6 +75,7 @@
                     <child>
                       <object class="AdwComboRow" id="destination_row">
                         <property name="title" translatable="yes">Destination</property>
+                        <signal name="notify::selected" handler="destination_row_selected_cb" swapped="true"/>
                         <style>
                           <class name="property"/>
                         </style>

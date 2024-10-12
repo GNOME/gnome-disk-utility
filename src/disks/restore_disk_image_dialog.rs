@@ -41,7 +41,7 @@ mod imp {
         #[template_child]
         pub(super) file_chooser_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub(super) destination_row: TemplateChild<adw::ActionRow>,
+        pub(super) destination_row: TemplateChild<adw::ComboRow>,
         #[template_child]
         pub(super) error_banner: TemplateChild<adw::Banner>,
         #[template_child]
@@ -122,9 +122,9 @@ impl GduRestoreDiskImageDialog {
             imp.destination_row
                 .set_subtitle(&info.one_liner.unwrap_or_default())
         } else {
-            imp.destination_row.set_visible(false);
-            dialog.populate_destination_combobox();
+            imp.destination_row.remove_css_class("property");
         }
+        dialog.update();
 
         dialog.present();
     }

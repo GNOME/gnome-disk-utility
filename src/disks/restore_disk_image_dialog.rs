@@ -315,16 +315,17 @@ impl GduRestoreDiskImageDialog {
         let objects = [&object];
         let affected_devices_widget =
             libgdu::create_widget_from_objects(&self.client(), &objects).await;
-        let data = libgdu::ConfirmationDialogData {
+        let confirmation_dialog = libgdu::ConfirmationDialog {
             message: gettext("Are you sure you want to write the disk image to the device?"),
             description: gettext("All existing data will be lost"),
             reponse_verb: gettext("Restore"),
             reponse_appearance: adw::ResponseAppearance::Destructive,
         };
 
-        let response = libgdu::show_confirmation(self, data, Some(&affected_devices_widget)).await;
+        let response = confirmation_dialog
+            .show(self, Some(&affected_devices_widget))
+            .await;
 
-        //TODO: this should probable be an associated constant
         if response == ConfirmationDialogResponse::Cancel {
             return;
         }

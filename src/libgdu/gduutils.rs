@@ -496,51 +496,55 @@ pub enum ConfirmationDialogResponse {
 impl From<glib::GString> for ConfirmationDialogResponse {
     fn from(value: glib::GString) -> Self {
         match value.as_str() {
-            "cancel" => Self::Cancel,
-            "confirm" => Self::Confirm,
+            ConfirmationDialog::RESPONSE_CANCEL => Self::Cancel,
+            ConfirmationDialog::RESPONSE_CONFIRM => Self::Confirm,
             v => Self::Custom(v.to_owned()),
         }
     }
 }
 
-//TODO: implement new?
-pub struct ConfirmationDialogData {
+pub struct ConfirmationDialog {
     pub message: String,
     pub description: String,
     pub reponse_verb: String,
     pub reponse_appearance: adw::ResponseAppearance,
-    // pub callback: fn(glib::GString),
 }
 
-// TODO: make this an associated method
-pub async fn show_confirmation(
-    parent_window: &impl IsA<gtk::Widget>,
-    data: ConfirmationDialogData,
-    extra_child: Option<&impl IsA<gtk::Widget>>,
-    //TODO: use enum as return value?
-) -> ConfirmationDialogResponse {
-    // TODO: this api is so confusing
-    let mut dialog_builder = adw::AlertDialog::builder()
-        .heading(data.message)
-        .body(data.description)
-        .close_response("cancel")
-        .default_response(
-            if data.reponse_appearance == adw::ResponseAppearance::Suggested {
-                "confirm"
-            } else {
-                "cancel"
-            },
-        );
+impl ConfirmationDialog {
+    /// Reponse id when the dialog is canceled.
+    pub(super) const RESPONSE_CANCEL: &'static str = "cancel";
 
-    if let Some(widget) = extra_child {
-        dialog_builder = dialog_builder.extra_child(widget);
+    /// Reponse id when the user chooses to confirm the dialog action.
+    pub(super) const RESPONSE_CONFIRM: &'static str = "confirm";
+
+    pub async fn show(
+        self,
+        parent_window: &impl IsA<gtk::Widget>,
+        extra_child: Option<&impl IsA<gtk::Widget>>,
+    ) -> ConfirmationDialogResponse {
+        // TODO: this api is so confusing
+        let mut dialog_builder = adw::AlertDialog::builder()
+            .heading(self.message)
+            .body(self.description)
+            .close_response(Self::RESPONSE_CANCEL)
+            .default_response(
+                if self.reponse_appearance == adw::ResponseAppearance::Suggested {
+                    Self::RESPONSE_CONFIRM
+                } else {
+                    Self::RESPONSE_CANCEL
+                },
+            );
+
+        if let Some(widget) = extra_child {
+            dialog_builder = dialog_builder.extra_child(widget);
+        }
+        let dialog = dialog_builder.build();
+
+        dialog.add_response(Self::RESPONSE_CANCEL, &gettext("Cancel"));
+        dialog.add_response(Self::RESPONSE_CONFIRM, &self.reponse_verb);
+        dialog.set_response_appearance(Self::RESPONSE_CONFIRM, self.reponse_appearance);
+        dialog.choose_future(parent_window).await.into()
     }
-    let dialog = dialog_builder.build();
-
-    dialog.add_response("cancel", &gettext("Cancel"));
-    dialog.add_response("confirm", &data.reponse_verb);
-    dialog.set_response_appearance("confirm", data.reponse_appearance);
-    dialog.choose_future(parent_window).await.into()
 }
 
 struct CacheEntry {

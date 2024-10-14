@@ -1,3 +1,4 @@
+//! Rust version of [./libgdu.h]
 // NOTE: Keep this file in sync with gduutils.c
 use std::collections::HashMap;
 use std::ffi::CString;
@@ -442,6 +443,7 @@ pub fn show_message_dialog(title: &str, message: &str, parent_window: &impl IsA<
 pub fn show_error(
     parent_window: &impl IsA<gtk::Widget>,
     title: &str,
+    //TODO: potentially replace with anyhow
     error: Box<dyn std::error::Error>,
 ) {
     // Never show an error if it's because the user dismissed the

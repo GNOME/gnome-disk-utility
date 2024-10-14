@@ -99,7 +99,6 @@ impl GduRestoreDiskImageDialog {
         parent_window: &impl IsA<gtk::Window>,
         object: Option<&udisks::Object>,
         client: udisks::Client,
-        //TODO: use a path
         disk_image_filename: Option<&str>,
     ) {
         let dialog: Self = glib::Object::builder()
@@ -139,7 +138,6 @@ impl GduRestoreDiskImageDialog {
             != object.as_ref().map(|v| v.object_path())
         {
             imp.block_size.set(0);
-            //TODO: take ownership of object
             if let Some(object) = object {
                 let block = object.block().await.expect("`block` should be Ok");
                 let drive = self.client().drive_for_block(&block).await;
@@ -489,8 +487,6 @@ impl GduRestoreDiskImageDialog {
         };
 
         if copy_result.is_err() {
-            //TODO: the C version checks for udisks (we handle them above) and GIO cancelled errors, but i'm not sure how
-            //that's possible
             if let Err(err) = block.format("empty", HashMap::new()).await {
                 log::error!("Error wiping device on error path: {err}");
             }

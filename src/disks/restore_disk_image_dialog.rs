@@ -9,6 +9,7 @@ use gtk::glib::property::PropertySet;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use libgdu::gettext::gettext_f;
+use libgdu::ConfirmationDialogResponse;
 
 use crate::estimator::{self, GduEstimator};
 
@@ -324,7 +325,7 @@ impl GduRestoreDiskImageDialog {
         let response = libgdu::show_confirmation(self, data, Some(&affected_devices_widget)).await;
 
         //TODO: this should probable be an associated constant
-        if response == "cancel" {
+        if response == ConfirmationDialogResponse::Cancel {
             return;
         }
 

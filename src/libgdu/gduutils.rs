@@ -486,6 +486,23 @@ pub async fn create_widget_from_objects(
     group.upcast::<gtk::Widget>()
 }
 
+#[derive(Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub enum ConfirmationDialogResponse {
+    Cancel,
+    Confirm,
+    Custom(String),
+}
+
+impl From<glib::GString> for ConfirmationDialogResponse {
+    fn from(value: glib::GString) -> Self {
+        match value.as_str() {
+            "cancel" => Self::Cancel,
+            "confirm" => Self::Confirm,
+            v => Self::Custom(v.to_owned()),
+        }
+    }
+}
+
 //TODO: implement new?
 pub struct ConfirmationDialogData {
     pub message: String,
@@ -501,7 +518,7 @@ pub async fn show_confirmation(
     data: ConfirmationDialogData,
     extra_child: Option<&impl IsA<gtk::Widget>>,
     //TODO: use enum as return value?
-) -> glib::GString {
+) -> ConfirmationDialogResponse {
     // TODO: this api is so confusing
     let mut dialog_builder = adw::AlertDialog::builder()
         .heading(data.message)
@@ -523,7 +540,7 @@ pub async fn show_confirmation(
     dialog.add_response("cancel", &gettext("Cancel"));
     dialog.add_response("confirm", &data.reponse_verb);
     dialog.set_response_appearance("confirm", data.reponse_appearance);
-    dialog.choose_future(parent_window).await
+    dialog.choose_future(parent_window).await.into()
 }
 
 struct CacheEntry {

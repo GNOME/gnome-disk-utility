@@ -40,6 +40,9 @@ enum
 
 static GParamSpec *properties[N_PROPS];
 
+#include "gdu-rust.h"
+
+
 struct _GduDriveView
 {
   AdwBin           parent_instance;
@@ -196,6 +199,7 @@ restore_disk_image_clicked_cb (GtkWidget  *widget,
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
   GduManager *manager;
+  const gchar *object_path;
 
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
@@ -204,9 +208,9 @@ restore_disk_image_clicked_cb (GtkWidget  *widget,
   g_assert (object != NULL);
 
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (drive_view_get_window (self),
-                                      object,
-                                      gdu_manager_get_client (manager),
+  object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+  gdu_rs_restore_disk_image_dialog_show (drive_view_get_window (self),
+                                      object_path,
                                       NULL);
 }
 

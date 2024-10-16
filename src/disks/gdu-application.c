@@ -23,9 +23,7 @@
 #include "gdu-window.h"
 #include "gdulocaljob.h"
 #include "gdu-log.h"
-
-extern void gdu_rs_restore_disk_image_dialog_show( GtkWindow    *parent_window,
-                                                  const gchar  *disk_image_filename);
+#include "gdu-rust.h"
 
 struct _GduApplication
 {
@@ -241,7 +239,7 @@ gdu_application_command_line (GApplication            *_app,
 
   if (opt_restore_disk_image != NULL)
     {
-      gdu_rs_restore_disk_image_dialog_show (GTK_WINDOW (app->window), opt_restore_disk_image);
+      gdu_rs_restore_disk_image_dialog_show (GTK_WINDOW (app->window), NULL, opt_restore_disk_image);
     }
 
   ret = 0;

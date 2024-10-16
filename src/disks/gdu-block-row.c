@@ -35,6 +35,7 @@
 #include "gdu-block-row.h"
 #include "gdu-drive.h"
 #include "gdu-unlock-dialog.h"
+#include "gdu-rust.h"
 
 /**
  * GduBlockRow:
@@ -950,12 +951,13 @@ restore_partition_image_cb (GtkWidget  *widget,
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
+  const gchar *object_path;
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);
-  gdu_restore_disk_image_dialog_show (block_row_get_window (self),
-                                      object,
-                                      block_row_get_client (),
+  object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
+  gdu_rs_restore_disk_image_dialog_show (block_row_get_window (self),
+                                      object_path,
                                       NULL);
 }
 

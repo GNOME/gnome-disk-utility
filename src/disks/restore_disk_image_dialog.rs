@@ -539,6 +539,7 @@ impl GduRestoreDiskImageDialog {
             .build();
         if let Ok(file) = file_dialog.open_future(Some(self)).await {
             self.imp().restore_file.set(Some(file));
+            self.update();
         }
     }
 }

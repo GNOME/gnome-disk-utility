@@ -202,17 +202,16 @@ impl GduRestoreDiskImageDialog {
             [self.client().size_for_display(size, false, true)],
         );
 
-        //TODO: this can go negative?
         let block_left_over_size = imp.block_size.get() as i64 - size as i64;
+
+        // if size is 0, error may be set already..
         if size == 0 && restore_error.is_none() {
-            // if size is 0, error may be set already..
-            // TODO: what!?
             restore_error = Some(gettext("Cannot restore image of size 0"));
         } else if block_left_over_size > 1000 * 1000 {
             // Only complain if slack is bigger than 1MB
             let size_str =
                 self.client()
-                    .size_for_display(block_left_over_size as u64, false, false);
+                    .size_for_display(block_left_over_size.unsigned_abs(), false, false);
             restore_warning = Some(gettext_f(
                 "The disk image is {} smaller than the target device",
                 [size_str],

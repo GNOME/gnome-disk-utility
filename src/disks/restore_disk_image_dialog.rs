@@ -155,16 +155,15 @@ impl GduRestoreDiskImageDialog {
 
     fn update(&self) -> Option<()> {
         let imp = self.imp();
-        if imp.restore_file.borrow().is_none() {
+        let Some(file) = &*imp.restore_file.borrow() else {
             //TODO: figure out why this check was placed here
             //|| imp.block_size.get() == 0 {
             imp.start_restore_button.set_sensitive(false);
             return None;
-        }
+        };
         let mut restore_warning = None;
         let mut restore_error = None;
 
-        let file = imp.restore_file.borrow().clone()?;
         let info = file
             .query_info(
                 &format!(
@@ -183,7 +182,7 @@ impl GduRestoreDiskImageDialog {
             .content_type()
             .is_some_and(|ty| ty.ends_with("-xz-compressed"));
         let size = if is_xz_compressed {
-            // GduXzDecompressor::uncompressed_size(&file).unwrap_or_else(|| {
+            // GduXzDecompressor::uncompressed_size(file).unwrap_or_else(|| {
             //     restore_error = Some(gettext("File does not appear to be XY compressed"));
             //     0
             // })

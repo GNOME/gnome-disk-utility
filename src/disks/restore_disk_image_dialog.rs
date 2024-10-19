@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::io::{ErrorKind, Write};
+use std::io::{ErrorKind, Read, Write};
 use std::ops::Sub;
 use std::os::fd::{AsFd, AsRawFd};
 
@@ -372,13 +372,12 @@ impl GduRestoreDiskImageDialog {
         };
 
         let is_xz_compressed = info.content_type().unwrap().ends_with("-xz-compressed");
-        if is_xz_compressed {
-            todo!("Support xz-compressed file");
-            // let decompressor = GduXzDecompressor::default();
-            //TODO: handle None
-            // input_size = GduXzDecompressor::uncompressed_size(&file).unwrap_or(0);
-            // input_stream = decompressor.convert(&file);
-        }
+        let mut input_stream: &mut dyn Read = if is_xz_compressed {
+            input_size = liblzma::uncompressed_size(&mut input_stream).ok()?;
+            &mut liblzma::read::XzDecoder::new(input_stream)
+        } else {
+            &mut input_stream
+        };
 
         //TODO: use wrapper to auto uninhibit
         let application = self.application().expect("`application` should be set");
@@ -397,7 +396,6 @@ impl GduRestoreDiskImageDialog {
         // self.local_job =
 
         let block = self.imp().block.take().unwrap();
-        //TODO: use thread or async?
         let res = self
             .copy_thread_func(block, &mut input_stream, input_size)
             .await;

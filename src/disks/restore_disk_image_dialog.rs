@@ -178,15 +178,13 @@ impl GduRestoreDiskImageDialog {
             .ok()?;
         let name = info.display_name();
 
-        let is_xz_compressed = info
-            .content_type()
-            .is_some_and(|ty| ty.ends_with("-xz-compressed"));
+        let is_xz_compressed = info.content_type()?.ends_with("-xz-compressed");
         let size = if is_xz_compressed {
-            // GduXzDecompressor::uncompressed_size(file).unwrap_or_else(|| {
-            //     restore_error = Some(gettext("File does not appear to be XY compressed"));
-            //     0
-            // })
-            0
+            let filestream = file.read(gio::Cancellable::NONE).ok()?.into_read();
+            liblzma::uncompressed_size(filestream).unwrap_or_else(|_| {
+                restore_error = Some(gettext("File does not appear to be XY compressed"));
+                0
+            })
         } else {
             info.size() as u64
         };
@@ -195,7 +193,7 @@ impl GduRestoreDiskImageDialog {
         // The %s is the uncompressed size as a long string e.g. "4.2 MB (4,300,123 bytes)".
         let size_str = gettext_f(
             if is_xz_compressed {
-                "{} when compressed"
+                "{} when decompressed"
             } else {
                 "{}"
             },

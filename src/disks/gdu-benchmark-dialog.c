@@ -29,7 +29,7 @@ typedef struct
 
 struct _GduBenchmarkDialog
 {
-  AdwWindow      parent_instance;
+  AdwDialog      parent_instance;
 
   GCancellable  *cancellable;
 
@@ -67,16 +67,18 @@ struct _GduBenchmarkDialog
   UDisksClient  *client;
   UDisksObject  *object;
   UDisksBlock   *block;
+
+  GtkWindow     *parent_window;
 };
 
-G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_DIALOG)
 
 G_LOCK_DEFINE (bm_lock);
 
 static gpointer
 gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 {
-  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+  return self->parent_window;
 }
 
 static void
@@ -579,7 +581,7 @@ benchmark_thread (gpointer user_data)
   sample_size_mib = g_settings_get_int (self->settings, "sample-size-mib");
 
   inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
-                                            GTK_WINDOW (self),
+                                            self->parent_window,
                                             GTK_APPLICATION_INHIBIT_SUSPEND |
                                             GTK_APPLICATION_INHIBIT_LOGOUT,
                                             /* Translators: Reason why suspend/logout is being inhibited */
@@ -767,10 +769,6 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, set_sample_size_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_start_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_cancel_clicked_cb);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 void
@@ -799,10 +797,9 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
 {
   GduBenchmarkDialog *self;
 
-  self = g_object_new (GDU_TYPE_BENCHMARK_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_BENCHMARK_DIALOG, NULL);
   self->object = g_object_ref (object);
+  self->parent_window = g_object_ref (parent_window);
   self->block = udisks_object_peek_block (self->object);
   self->client = client;
 
@@ -824,5 +821,5 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
       adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), FALSE);
     }
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

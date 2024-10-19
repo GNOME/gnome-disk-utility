@@ -14,7 +14,7 @@
 G_BEGIN_DECLS
 
 #define GDU_TYPE_BENCHMARK_DIALOG (gdu_benchmark_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, GDU, BENCHMARK_DIALOG, AdwWindow)
+G_DECLARE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, GDU, BENCHMARK_DIALOG, AdwDialog)
 
 void   gdu_benchmark_dialog_show (GtkWindow    *window,
                                   UDisksObject *object,

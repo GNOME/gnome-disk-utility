@@ -417,7 +417,7 @@ impl GduRestoreDiskImageDialog {
     async fn copy_thread_func(
         &self,
         block: udisks::block::BlockProxy<'static>,
-        input_stream: &mut dyn std::io::Read,
+        input_stream: &mut impl std::io::Read,
         input_size: u64,
         // we return a boxed error so we can return different error types
         // we don't use anyhow here, as the show error function expects a box

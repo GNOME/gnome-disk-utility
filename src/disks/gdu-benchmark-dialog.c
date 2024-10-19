@@ -146,29 +146,15 @@ get_max_min_avg (GArray *array)
   return ret;
 }
 
-static gdouble
-measure_width (cairo_t     *cr,
-               const gchar *s)
-{
-  cairo_text_extents_t te;
-  cairo_text_extents (cr, s, &te);
-  return te.width;
-}
-
-static gdouble
-measure_height (cairo_t     *cr,
-                const gchar *s)
-{
-  cairo_text_extents_t te;
-  cairo_text_extents (cr, s, &te);
-  return te.height;
-}
-
 static gboolean
-on_drawing_area_draw (GtkWidget      *widget,
+on_drawing_area_draw (GtkDrawingArea *widget,
                       cairo_t        *cr,
+                      int             width,
+                      int             height,
                       gpointer        user_data)
-{}
+{
+  /* gtk4 todo fill this function */
+}
 
 /* ---------------------------------------------------------------------------------------------------- */
 
@@ -194,7 +180,6 @@ format_stats (gdouble stat,
 static void
 update_dialog (GduBenchmarkDialog *self)
 {
-  GdkSurface *window = NULL;
   g_autoptr(GError) error = NULL;
   BMStats read_stats;
   BMStats write_stats;
@@ -251,11 +236,7 @@ update_dialog (GduBenchmarkDialog *self)
       g_free (s);
     }
 
-  /* gtk4 todo
-  window = gtk_widget_get_window (self->drawing_area);
-  if (window != NULL)
-    gdk_window_invalidate_rect (window, NULL, TRUE);
-  */
+  gtk_widget_queue_draw (self->drawing_area);
 }
 
 /* called on main / UI thread */
@@ -788,6 +769,8 @@ gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
   self->atime_samples = g_array_new (FALSE, /* zero-terminated */
                                               FALSE, /* clear */
                                               sizeof (BMSample));
+
+  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (self->drawing_area), (GtkDrawingAreaDrawFunc) on_drawing_area_draw, NULL, NULL);
 }
 
 void

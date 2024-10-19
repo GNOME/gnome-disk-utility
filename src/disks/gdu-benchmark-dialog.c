@@ -47,10 +47,10 @@ struct _GduBenchmarkDialog
 
   /* Results Page */
   GtkWidget     *drawing_area;
-  GtkWidget     *sample_size_label;
-  GtkWidget     *read_rate_label;
-  GtkWidget     *write_rate_label;
-  GtkWidget     *access_time_label;
+  GtkWidget     *sample_size_action_row;
+  GtkWidget     *read_rate_row;
+  GtkWidget     *write_rate_row;
+  GtkWidget     *access_time_row;
 
   /* must hold bm_lock when reading/writing these */
   GError        *bm_error;
@@ -217,10 +217,10 @@ update_dialog (GduBenchmarkDialog *self)
 
       
       s = g_strdup ("–");
-      gtk_label_set_text (GTK_LABEL (self->sample_size_label), s);
-      gtk_label_set_text (GTK_LABEL (self->read_rate_label), s);
-      gtk_label_set_text (GTK_LABEL (self->write_rate_label), s);
-      gtk_label_set_text (GTK_LABEL (self->access_time_label), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
       return;
     }
 
@@ -233,21 +233,21 @@ update_dialog (GduBenchmarkDialog *self)
   if (read_stats.avg != 0.0)
     {
       s = format_stats (read_stats.avg, self->read_samples->len, FALSE);
-      gtk_label_set_markup (GTK_LABEL (self->read_rate_label), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
       g_free (s);
     }
 
   if (write_stats.avg != 0.0)
     {
       s = format_stats (write_stats.avg, self->write_samples->len, FALSE);
-      gtk_label_set_markup (GTK_LABEL (self->write_rate_label), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
       g_free (s);
     }
 
   if (atime_stats.avg != 0.0)
     {
       s = format_stats (atime_stats.avg, self->atime_samples->len, TRUE);
-      gtk_label_set_markup (GTK_LABEL (self->access_time_label), s);
+      adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
       g_free (s);
     }
 
@@ -657,7 +657,7 @@ start_benchmark (GduBenchmarkDialog *self)
   if (sample_size != 0)
   {
     s = g_format_size_full (sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
-    gtk_label_set_markup (GTK_LABEL (self->sample_size_label), s);
+    adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
   }
 
   g_thread_new ("benchmark-thread",
@@ -761,10 +761,10 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_bench_switch);
 
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, drawing_area);
-  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_size_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, read_rate_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_rate_label);
-  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, access_time_label);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_size_action_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, read_rate_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_rate_row);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, access_time_row);
 
   gtk_widget_class_bind_template_callback (widget_class, set_sample_size_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_start_clicked_cb);

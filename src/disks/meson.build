@@ -46,6 +46,28 @@ cargo_build = custom_target(
   ],
 )
 
+# meson expects the .so file to be in the disks build directory
+libgnome_disks = custom_target(
+  'libgnome_disks',
+  depends: cargo_build,
+  build_always_stale: true,
+  build_by_default: true,
+  output: 'libgnome_disks.so',
+  command: [
+    'cp',
+    '-a', build_root / 'src' / rust_target / 'libgnome_disks.so',
+    meson.current_build_dir() / 'libgnome_disks.so',
+  ],
+)
+
+libgnome_disks_dep = declare_dependency(
+  sources: libgnome_disks,
+  dependencies: cc.find_library(
+    'libgnome_disks',
+    dirs: join_paths(meson.project_build_root(), 'src', rust_target),
+  ),
+)
+
 # Build C version
 name = 'GNOME-Disks'
 
@@ -144,6 +166,8 @@ deps = [
   libsecret_dep,
   m_dep,
   pwquality_dep,
+  # rust version
+  libgnome_disks_dep,
 ]
 
 cflags = [
@@ -154,18 +178,11 @@ if enable_logind
   deps += logind_dep
 endif
 
-gdu_rust_dep = declare_dependency(
-  dependencies: cc.find_library(
-    'libgnome_disks',
-    dirs: join_paths(meson.project_build_root(), 'src', rust_target),
-  ),
-)
-
 executable(
   name.to_lower(),
   sources,
   include_directories: top_inc,
-  dependencies: deps + [gdu_rust_dep],
+  dependencies: deps,
   c_args: cflags,
   install: true,
 )

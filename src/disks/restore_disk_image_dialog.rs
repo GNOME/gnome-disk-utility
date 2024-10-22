@@ -329,10 +329,10 @@ impl GduRestoreDiskImageDialog {
         let Ok(_) = libgdu::ensure_unused(&self.client(), self, &object).await else {
             return;
         };
-        self.start_copying().await;
+        self.restore_disk_image().await;
     }
 
-    async fn start_copying(&self) -> Option<()> {
+    async fn restore_disk_image(&self) -> Option<()> {
         let imp = self.imp();
         let file = imp.restore_file.borrow().clone()?;
         let info = match file.query_info(
@@ -395,7 +395,7 @@ impl GduRestoreDiskImageDialog {
 
         let block = self.imp().block.take().unwrap();
         let res = self
-            .copy_thread_func(block, &mut input_stream, input_size)
+            .copy_disk_image(block, &mut input_stream, input_size)
             .await;
         self.play_complete_sound();
         //TODO: update job
@@ -412,7 +412,7 @@ impl GduRestoreDiskImageDialog {
         None
     }
 
-    async fn copy_thread_func(
+    async fn copy_disk_image(
         &self,
         block: udisks::block::BlockProxy<'static>,
         input_stream: &mut impl std::io::Read,

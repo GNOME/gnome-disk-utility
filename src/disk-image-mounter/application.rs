@@ -92,7 +92,10 @@ impl Default for ImageMounterApplication {
     fn default() -> Self {
         glib::Object::builder()
             .property("application-id", config::APP_ID)
-            .property("flags", gio::ApplicationFlags::HANDLES_OPEN)
+            .property(
+                "flags",
+                gio::ApplicationFlags::HANDLES_OPEN | gio::ApplicationFlags::NON_UNIQUE,
+            )
             .build()
     }
 }

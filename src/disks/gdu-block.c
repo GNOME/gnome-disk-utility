@@ -803,6 +803,7 @@ gdu_block_emit_updated (GduBlock *self)
 {
   g_clear_pointer (&self->description, g_free);
   g_clear_pointer (&self->partition_type, g_free);
+  self->features = 0;
 
   if (self->partition)
     {

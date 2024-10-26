@@ -161,7 +161,7 @@ impl ImageMounterWindow {
             Action::OpenInFiles => "Open in Files",
             Action::OpenInFilesWritable => "Edit Image",
             Action::Unmount => "Unmount",
-            Action::Write => "Write to Drive",
+            Action::Write => "Write to Drive…",
             Action::Inspect => "Inspect",
         })
     }

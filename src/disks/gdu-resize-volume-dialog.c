@@ -50,6 +50,8 @@ struct _GduResizeVolumeDialog
 
 G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_WINDOW)
 
+static void set_unit_num (GduResizeVolumeDialog *self, gint unit_num);
+
 static gpointer
 gdu_resize_volume_dialog_get_window (GduResizeVolumeDialog *self)
 {
@@ -125,6 +127,8 @@ calculate_usage (gpointer user_data)
     self->min_size = self->current_size - unused;
 
   self->running_id = 0;
+  set_unit_num (self, gdu_utils_get_default_unit (self->current_size));
+  gdu_resize_volume_dialog_update (self);
   return G_SOURCE_REMOVE;
 }
 
@@ -729,11 +733,9 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
 
   self->min_size = 1;
   if (self->partition != NULL && udisks_partition_get_is_container (self->partition))
-    {
-      self->min_size = gdu_utils_calc_space_to_shrink_extended (self->client,
-                                                                self->table,
-                                                                self->partition);
-    }
+    self->min_size = gdu_utils_calc_space_to_shrink_extended (self->client,
+                                                              self->table,
+                                                              self->partition);
 
   self->max_size = self->partition == NULL
                        ? self->current_size
@@ -751,12 +753,8 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
       g_assert (available);
 
       if (calculate_usage (self) == G_SOURCE_CONTINUE)
-        {
-          self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calculate_usage, self);
-        }
+        self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calculate_usage, self);
     }
-
-  set_unit_num (self, gdu_utils_get_default_unit (self->current_size));
 
   mount_points = self->filesystem != NULL
                      ? udisks_filesystem_get_mount_points (self->filesystem)
@@ -771,8 +769,6 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                                     self->mount_cancellable,
                                     resize_get_usage_mount_cb, self);
     }
-
-  gdu_resize_volume_dialog_update (self);
 
   gtk_window_present (GTK_WINDOW (self));
 }

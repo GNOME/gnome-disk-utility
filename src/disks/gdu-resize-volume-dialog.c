@@ -39,6 +39,8 @@ struct _GduResizeVolumeDialog
   GtkWidget             *current_size_row;
   GtkWidget             *size_unit_combo;
 
+  GtkWidget             *spinner;
+
   GtkAdjustment         *size_adjustment;
   GtkAdjustment         *free_size_adjustment;
 
@@ -129,6 +131,7 @@ calculate_usage (gpointer user_data)
   self->running_id = 0;
   set_unit_num (self, gdu_utils_get_default_unit (self->current_size));
   gdu_resize_volume_dialog_update (self);
+  gtk_widget_set_visible (GTK_WIDGET (self->spinner), FALSE);
   return G_SOURCE_REMOVE;
 }
 
@@ -672,6 +675,8 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,current_size_row);
   gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog,size_unit_combo);
 
+  gtk_widget_class_bind_template_child (widget_class, GduResizeVolumeDialog, spinner);
+
   gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
 
@@ -753,7 +758,10 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
       g_assert (available);
 
       if (calculate_usage (self) == G_SOURCE_CONTINUE)
-        self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calculate_usage, self);
+        {
+          gtk_widget_set_visible (GTK_WIDGET (self->spinner), TRUE);
+          self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, calculate_usage, self);
+        }
     }
 
   mount_points = self->filesystem != NULL

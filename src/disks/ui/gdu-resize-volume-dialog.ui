@@ -23,110 +23,120 @@
                 <signal name="clicked" handler="on_resize_clicked_cb"
                   object="GduResizeVolumeDialog" swapped="true" />
                 <style>
-                  <class name="destructive-action"/>
+                  <class name="destructive-action" />
                 </style>
               </object>
             </child>
           </object>
         </child>
         <property name="content">
-          <object class="AdwPreferencesPage">
-            <property name="description" translatable="yes">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing.</property>
-            <child>
-              <object class="AdwPreferencesGroup">
+          <object class="GtkOverlay">
+            <property name="child">
+              <object class="AdwPreferencesPage">
+                <property name="sensitive" bind-source="spinner" bind-property="visible" bind-flags="sync-create|invert-boolean" />
+                <property name="description" translatable="yes">Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing.</property>
                 <child>
-                  <object class="GtkScale" id="size_scale">
-                    <property name="adjustment">
-                      <object class="GtkAdjustment" id="size_adjustment">
-                        <property name="upper">100</property>
-                        <property name="step_increment">1</property>
-                        <property name="page_increment">10</property>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="GtkScale" id="size_scale">
+                        <property name="adjustment">
+                          <object class="GtkAdjustment" id="size_adjustment">
+                            <property name="upper">100</property>
+                            <property name="step_increment">1</property>
+                            <property name="page_increment">10</property>
+                          </object>
+                        </property>
+                        <property name="hexpand">true</property>
                       </object>
-                    </property>
-                    <property name="hexpand">true</property>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwActionRow" id="max_size_row">
+                        <property name="title" translatable="yes">Available Space</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="current_size_row">
+                        <property name="title" translatable="yes">Current Size</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwActionRow" id="min_size_row">
+                        <property name="title" translatable="yes">Minimum Size</property>
+                        <style>
+                          <class name="property" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwSpinRow">
+                        <property name="title" translatable="yes">_New Size</property>
+                        <property name="use-underline">True</property>
+                        <property name="adjustment">size_adjustment</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwSpinRow">
+                        <property name="title" translatable="yes">_Free After Resize</property>
+                        <property name="use-underline">True</property>
+                        <property name="adjustment">
+                          <object class="GtkAdjustment" id="free_size_adjustment">
+                            <property name="upper">100</property>
+                            <property name="step_increment">1</property>
+                            <property name="page_increment">10</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwPreferencesGroup">
+                    <child>
+                      <object class="AdwComboRow" id="size_unit_combo">
+                        <property name="title" translatable="yes">_Units</property>
+                        <property name="use-underline">True</property>
+                        <signal name="notify::selected" handler="on_size_unit_changed_cb"
+                          object="GduResizeVolumeDialog" swapped="true" />
+                        <property name="model">
+                          <object class="GtkStringList">
+                            <items>
+                              <item translatable="yes">bytes</item>
+                              <item translatable="yes">kB</item>
+                              <item translatable="yes">MB</item>
+                              <item translatable="yes">GB</item>
+                              <item translatable="yes">TB</item>
+                              <item translatable="yes">PB</item>
+                              <item translatable="yes">KiB</item>
+                              <item translatable="yes">MiB</item>
+                              <item translatable="yes">GiB</item>
+                              <item translatable="yes">TiB</item>
+                              <item translatable="yes">PiB</item>
+                            </items>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwActionRow" id="max_size_row">
-                    <property name="title" translatable="yes">Available Space</property>
-                    <style>
-                      <class name="property"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwActionRow" id="current_size_row">
-                    <property name="title" translatable="yes">Current Size</property>
-                    <style>
-                      <class name="property"/>
-                    </style>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwActionRow" id="min_size_row">
-                    <property name="title" translatable="yes">Minimum Size</property>
-                    <style>
-                      <class name="property"/>
-                    </style>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwSpinRow">
-                    <property name="title" translatable="yes">_New Size</property>
-                    <property name="use-underline">True</property>
-                    <property name="adjustment">size_adjustment</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwSpinRow">
-                    <property name="title" translatable="yes">_Free After Resize</property>
-                    <property name="use-underline">True</property>
-                    <property name="adjustment">
-                      <object class="GtkAdjustment" id="free_size_adjustment">
-                        <property name="upper">100</property>
-                        <property name="step_increment">1</property>
-                        <property name="page_increment">10</property>                    
-                      </object>
-                    </property>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup">
-                <child>
-                  <object class="AdwComboRow"  id="size_unit_combo">
-                    <property name="title" translatable="yes">_Units</property>
-                    <property name="use-underline">True</property>
-                    <signal name="notify::selected" handler="on_size_unit_changed_cb"
-                      object="GduResizeVolumeDialog" swapped="true" />
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">bytes</item>
-                          <item translatable="yes">kB</item>
-                          <item translatable="yes">MB</item>
-                          <item translatable="yes">GB</item>
-                          <item translatable="yes">TB</item>
-                          <item translatable="yes">PB</item>
-                          <item translatable="yes">KiB</item>
-                          <item translatable="yes">MiB</item>
-                          <item translatable="yes">GiB</item>
-                          <item translatable="yes">TiB</item>
-                          <item translatable="yes">PiB</item>
-                        </items>
-                      </object>
-                    </property>
-                  </object>
-                </child>
+            </property>
+            <child type="overlay">
+              <object class="AdwSpinner" id="spinner">
+                <property name="visible">false</property>
               </object>
             </child>
           </object>

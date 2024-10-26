@@ -181,17 +181,18 @@ gdu_block_row_update_mount_point_label (GduBlockRow *self)
 {
   guint64 size, free_space;
   const char *const *mount_points;
+  gboolean is_mounted;
 
   mount_points = gdu_block_get_mount_points (self->block);
+  is_mounted = mount_points != NULL &&  *mount_points != NULL;
 
-  if (mount_points == NULL || *mount_points == NULL)
+  gtk_widget_set_visible (self->space_level_bar, is_mounted);
+
+  if (!is_mounted)
     {
       adw_expander_row_set_subtitle (ADW_EXPANDER_ROW (self), ("—"));
       return;
     }
-
-
-  gtk_widget_set_visible (self->space_level_bar, TRUE);
 
   size = gdu_item_get_size (GDU_ITEM (self->block));
   free_space = gdu_block_get_unused_size (self->block);

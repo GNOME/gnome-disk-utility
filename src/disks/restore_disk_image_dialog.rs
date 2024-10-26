@@ -292,17 +292,13 @@ impl GduRestoreDiskImageDialog {
 
     fn play_complete_sound(&self) {
         // Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-        let sound_message = gettext("Disk image copying complete");
+        let _sound_message = gettext("Disk image copying complete");
         /* gtk4 todo : Find a replacement for this
         ca_gtk_play_for_widget (GTK_WIDGET (self->dialog), 0,
                                 CA_PROP_EVENT_ID, "complete",
                                 CA_PROP_EVENT_DESCRIPTION, sound_message,
                                 NULL);
         */
-
-        if let Some(cookie) = self.imp().inhibit_cookie.take() {
-            gtk::Application::default().uninhibit(cookie);
-        }
     }
 
     #[template_callback]
@@ -359,7 +355,6 @@ impl GduRestoreDiskImageDialog {
         let mut input_stream = match file.read(gio::Cancellable::NONE) {
             Ok(stream) => stream.into_read(),
             Err(err) => {
-                //TODO: check for cancel error
                 libgdu::show_error(
                     self,
                     &gettext("Error opening file for reading"),
@@ -377,7 +372,6 @@ impl GduRestoreDiskImageDialog {
             &mut input_stream
         };
 
-        //TODO: use wrapper to auto uninhibit
         let application = self.application().expect("`application` should be set");
         let inhibit_cookie = application.inhibit(
             self.native().and_downcast_ref::<gtk::Window>(),
@@ -521,8 +515,6 @@ impl GduRestoreDiskImageDialog {
             } else {
                 (0, 0, 0, 0)
             };
-        //TODO: set update id
-
         //TODO: update job
     }
 

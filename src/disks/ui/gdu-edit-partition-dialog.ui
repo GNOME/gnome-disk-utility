@@ -39,7 +39,7 @@
                   <object class="AdwComboRow" id="type_row">
                     <property name="title" translatable="yes">_Partition Type</property>
                     <property name="use-underline">True</property>
-                    <property name="tooltip-markup" translatable="yes">The partition type represented as a 32-bit &lt;i&gt;GUID&lt;/i&gt;</property>
+                    <property name="subtitle" translatable="yes">The partition type represented as a 32-bit GUID</property>
                   </object>
                 </child>
                 <child>
@@ -70,7 +70,7 @@
                         <property name="icon-name">help-about-symbolic</property>
                         <property name="valign">center</property>
                         <style>
-                          <class name="flat"/>
+                          <class name="flat" />
                         </style>
                         <property name="popover">
                           <object class="GtkPopover">
@@ -94,10 +94,10 @@
                     <child type="suffix">
                       <object class="GtkSwitch" id="bootable_switch">
                         <property name="valign">center</property>
+                        <signal name="notify::active" handler="on_property_changed_cb"
+                          swapped="True" object="GduEditPartitionDialog" />
                       </object>
                     </child>
-                    <signal name="notify::active" handler="on_property_changed_cb"
-                    swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
                 <child>
@@ -111,7 +111,7 @@
                         <property name="icon-name">help-about-symbolic</property>
                         <property name="valign">center</property>
                         <style>
-                          <class name="flat"/>
+                          <class name="flat" />
                         </style>
                         <property name="popover">
                           <object class="GtkPopover">
@@ -135,10 +135,10 @@
                     <child type="suffix">
                       <object class="GtkSwitch" id="system_partition_switch">
                         <property name="valign">center</property>
+                        <signal name="notify::active" handler="on_property_changed_cb"
+                          swapped="True" object="GduEditPartitionDialog" />
                       </object>
                     </child>
-                    <signal name="notify::active" handler="on_property_changed_cb"
-                    swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
                 <child>
@@ -152,7 +152,7 @@
                         <property name="icon-name">help-about-symbolic</property>
                         <property name="valign">center</property>
                         <style>
-                          <class name="flat"/>
+                          <class name="flat" />
                         </style>
                         <property name="popover">
                           <object class="GtkPopover">
@@ -176,10 +176,10 @@
                     <child type="suffix">
                       <object class="GtkSwitch" id="firmware_hide_switch">
                         <property name="valign">center</property>
+                        <signal name="notify::active" handler="on_property_changed_cb"
+                          swapped="True" object="GduEditPartitionDialog" />
                       </object>
                     </child>
-                    <signal name="notify::active" handler="on_property_changed_cb"
-                    swapped="True" object="GduEditPartitionDialog" />
                   </object>
                 </child>
               </object>

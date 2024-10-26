@@ -52,7 +52,7 @@ gdu_edit_partition_dialog_get_new_type (GduEditPartitionDialog  *self)
 {
   GObject *item;
   char *type;
-  
+
   item = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->type_row));
   type = g_strdup (g_object_get_data (G_OBJECT (item), "type"));
 
@@ -65,16 +65,16 @@ gdu_edit_partition_dialog_get_new_flags (GduEditPartitionDialog *self)
   guint64 flags = 0;
 
   if (g_strcmp0 (self->partition_table_type, "dos") == 0
-      && adw_switch_row_get_active (ADW_SWITCH_ROW (self->bootable_switch)))
+      && gtk_switch_get_active (GTK_SWITCH (self->bootable_switch)))
     {
       return flags | (1UL << 7);
     }
 
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->system_partition_row)))
+  if (gtk_switch_get_active (GTK_SWITCH (self->system_partition_switch)))
     flags |= (1UL << 0);
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->firmware_hide_switch)))
+  if (gtk_switch_get_active (GTK_SWITCH (self->firmware_hide_switch)))
     flags |= (1UL << 1);
-  if (adw_switch_row_get_active (ADW_SWITCH_ROW (self->bootable_switch)))
+  if (gtk_switch_get_active (GTK_SWITCH (self->bootable_switch)))
     flags |= (1UL << 2);
 
   return flags;
@@ -219,7 +219,7 @@ gdu_edit_partition_dialog_populate (GduEditPartitionDialog *self)
 
   if (g_strcmp0 (self->partition_table_type, "dos") == 0)
     {
-      adw_switch_row_set_active (ADW_SWITCH_ROW (self->bootable_switch), (flags & (1UL<< 7)) != 0);
+      gtk_switch_set_active (GTK_SWITCH (self->bootable_switch), (flags & (1UL<< 7)) != 0);
       return;
     }
 
@@ -263,8 +263,8 @@ gdu_edit_partition_dialog_class_init (GduEditPartitionDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, bootable_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, bootable_switch);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_row);
-  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, system_partition_switch);
+  gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, firmware_hide_row);
   gtk_widget_class_bind_template_child (widget_class, GduEditPartitionDialog, firmware_hide_switch);
 
   gtk_widget_class_bind_template_callback (widget_class, on_confirm_button_clicked_cb);

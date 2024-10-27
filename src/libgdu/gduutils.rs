@@ -102,12 +102,18 @@ pub fn file_chooser_for_disk_images_set_default_folder(folder: gio::File) {
     let _ = settings.set_string("image-dir-uri", &folder_uri);
 }
 
-pub fn unfuse_path(path: &str) -> String {
+pub fn unfuse_path<P>(path: &P) -> String
+where
+    P: AsRef<std::path::Path> + ?Sized,
+{
     // Map GVfs FUSE paths to GVfs URIs
     let file = gio::File::for_path(path);
     let uri = file.uri();
     let mut ret = if uri.starts_with("file:") {
-        path.into()
+        path.as_ref()
+            .to_str()
+            .expect("`path` should be valid UTF-8")
+            .into()
     } else {
         glib::Uri::unescape_string(&uri, None).unwrap()
     };

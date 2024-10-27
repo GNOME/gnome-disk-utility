@@ -51,6 +51,7 @@ struct _GduBlockRow
   GtkWidget      *space_level_bar;
   GtkWidget      *create_partition_button;
   GtkWidget      *block_menu_button;
+  GMenuModel     *volume_actions_submenu;
 
   GtkWidget      *size_row;
   GtkWidget      *device_id_row;
@@ -111,8 +112,9 @@ static void
 gdu_block_row_update_features (GduBlockRow *self)
 {
   GduFeature features;
+  g_autoptr (GVariant) menu_item_attribute = NULL;
+  g_autofree char *menu_attribute_label = NULL;
   features = gdu_item_get_features (GDU_ITEM (self->block));
-
   if (!features)
     {
       /* Hide the block menu button if there are no features
@@ -125,6 +127,18 @@ gdu_block_row_update_features (GduBlockRow *self)
     {
       gtk_widget_set_visible (self->create_partition_button, TRUE);
     }
+
+  menu_item_attribute = g_menu_model_get_item_attribute_value (self->volume_actions_submenu,
+                                                               0, "label", g_variant_type_new ("s"));
+
+  if ((g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Unmount")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Mount")) == 0))
+    g_menu_remove (G_MENU (self->volume_actions_submenu), 0);
+
+  if (features & GDU_FEATURE_CAN_MOUNT)
+    g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Mount"), "row.mount");
+  else if (features & GDU_FEATURE_CAN_UNMOUNT)
+    g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Unmount"), "row.unmount");
 
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
@@ -966,6 +980,7 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, space_level_bar);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, create_partition_button);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, block_menu_button);
+  gtk_widget_class_bind_template_child (widget_class, GduBlockRow, volume_actions_submenu);
 
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, size_row);
   gtk_widget_class_bind_template_child (widget_class, GduBlockRow, device_id_row);

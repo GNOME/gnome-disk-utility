@@ -168,10 +168,14 @@ gdu_mount_options_dialog_get_new_fstab (GduMountOptionsDialog *self)
     }
 
   g_variant_builder_init (&variant_builder, G_VARIANT_TYPE_VARDICT);
-  g_variant_builder_add (&variant_builder, "{sv}", "fsname", g_variant_new_bytestring (fsname));
-  g_variant_builder_add (&variant_builder, "{sv}", "dir", g_variant_new_bytestring (mountpoint));
-  g_variant_builder_add (&variant_builder, "{sv}", "type", g_variant_new_bytestring (fstype));
-  g_variant_builder_add (&variant_builder, "{sv}", "opts", g_variant_new_bytestring (mountopts));
+  if (fsname)
+    g_variant_builder_add (&variant_builder, "{sv}", "fsname", g_variant_new_bytestring (fsname));
+  if (mountpoint)
+    g_variant_builder_add (&variant_builder, "{sv}", "dir", g_variant_new_bytestring (mountpoint));
+  if (fstype)
+    g_variant_builder_add (&variant_builder, "{sv}", "type", g_variant_new_bytestring (fstype));
+  if (mountopts)
+    g_variant_builder_add (&variant_builder, "{sv}", "opts", g_variant_new_bytestring (mountopts));
   g_variant_builder_add (&variant_builder, "{sv}", "freq", g_variant_new_int32 (freq));
   g_variant_builder_add (&variant_builder, "{sv}", "passno", g_variant_new_int32 (passno));
 

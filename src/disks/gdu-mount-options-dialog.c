@@ -34,7 +34,7 @@ struct _GduMountOptionsDialog
   GtkWidget     *name_row;
   GtkWidget     *icon_row;
   GtkWidget     *symbolic_icon_row;
-  
+
   GtkWidget     *mount_point_row;
   GtkWidget     *mount_options_row;
   GtkWidget     *filesystem_type_row;
@@ -174,7 +174,7 @@ gdu_mount_options_dialog_get_new_fstab (GduMountOptionsDialog *self)
   g_variant_builder_add (&variant_builder, "{sv}", "opts", g_variant_new_bytestring (mountopts));
   g_variant_builder_add (&variant_builder, "{sv}", "freq", g_variant_new_int32 (freq));
   g_variant_builder_add (&variant_builder, "{sv}", "passno", g_variant_new_int32 (passno));
- 
+
   return g_variant_new ("(sa{sv})", "fstab", &variant_builder);
 }
 
@@ -244,7 +244,7 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
       /* Choose a device to default if creating a new entry */
       /* if the device is using removable media, prefer
        * by-id / by-path to by-uuid / by-label
-       */ 
+       */
       int order[2][4] = {
         {by_id, by_path, by_uuid, by_label},  /* for removable */
         {by_uuid, by_label, by_id, by_path}   /* for non-removable */
@@ -260,7 +260,7 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog  *self
             }
         }
     }
-  
+
   /* Fall back to device name as a last resort */
   if (selected == -1)
     {
@@ -413,7 +413,7 @@ on_done_clicked_cb (GduMountOptionsDialog *self)
                                                  self);
         return;
       }
-    
+
     udisks_block_call_update_configuration_item (self->block,
                                                 old_fstab,
                                                 new_fstab,
@@ -433,18 +433,15 @@ static gboolean
 update_warning_css (GtkWidget *widget)
 {
   AdwEntryRow *row = ADW_ENTRY_ROW (widget);
+  gboolean is_empty;
 
-  if (adw_entry_row_get_text_length (row) == 0)
-    {
-      gtk_widget_add_css_class (widget, "warning");
-      return FALSE;
-    }
+  is_empty = adw_entry_row_get_text_length (row) == 0;
+  if (is_empty)
+    gtk_widget_add_css_class (widget, "warning");
   else
-    {
-      gtk_widget_remove_css_class (widget, "warning");
-    }
+    gtk_widget_remove_css_class (widget, "warning");
 
-  return TRUE;
+  return !is_empty;
 }
 
 static void
@@ -453,15 +450,14 @@ on_property_changed (GtkWidget   *widget,
                      gpointer     user_data)
 {
   GduMountOptionsDialog *self = user_data;
-  gboolean ui_configured;
-  gboolean configured;
-  gboolean can_ok = TRUE;
+  gboolean use_manual_mount_options;
+  gboolean has_fstab_entry;
+  gboolean can_ok;
   g_autoptr(GVariant) new_fstab = NULL;
   g_autoptr(GVariant) new_fstab_dict = NULL;
 
-  configured = (self->orig_fstab_entry != NULL);
-
-  ui_configured = !adw_switch_row_get_active (ADW_SWITCH_ROW (self->automount_switch_row));
+  has_fstab_entry = (self->orig_fstab_entry != NULL);
+  use_manual_mount_options = !adw_switch_row_get_active (ADW_SWITCH_ROW (self->automount_switch_row));
 
   g_object_freeze_notify (G_OBJECT (self->mount_options_row));
   gdu_options_update_check_option (self->mount_options_row, "noauto", widget, self->startup_mount_switch, TRUE, FALSE);
@@ -472,23 +468,22 @@ on_property_changed (GtkWidget   *widget,
   gdu_options_update_entry_option (self->mount_options_row, "x-gvfs-symbolic-icon=", widget, self->symbolic_icon_row);
   g_object_thaw_notify (G_OBJECT (self->mount_options_row));
 
-  /* These three rows are required fields */
-  can_ok &= update_warning_css (self->mount_options_row);
-  can_ok &= update_warning_css (self->mount_point_row);
-  can_ok &= update_warning_css (self->filesystem_type_row);
+  can_ok = (has_fstab_entry && !use_manual_mount_options)
+        || (!has_fstab_entry && use_manual_mount_options);
 
-  /* The combo row might not be loaded yet */
-  can_ok &= (adw_combo_row_get_selected_item (ADW_COMBO_ROW(self->device_combo_row)) != NULL);
-
-  if (configured != ui_configured)
-    {
-      can_ok = TRUE;
-    }
-  else if (ui_configured && can_ok)
+  if (has_fstab_entry && use_manual_mount_options)
     {
       new_fstab = gdu_mount_options_dialog_get_new_fstab (self);
       new_fstab_dict = g_variant_get_child_value(new_fstab, 1);
       can_ok = !g_variant_equal (self->orig_fstab_entry, new_fstab_dict);
+    }
+
+  /* These three rows are required fields */
+  if (use_manual_mount_options)
+    {
+      can_ok &= update_warning_css (self->mount_options_row)
+             && update_warning_css (self->mount_point_row)
+             && update_warning_css (self->filesystem_type_row);
     }
 
   gtk_widget_set_sensitive (self->save_button, can_ok);
@@ -535,7 +530,7 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
- 
+
   object_class->finalize = gdu_mount_options_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
@@ -554,11 +549,11 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, name_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, icon_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, symbolic_icon_row);
-  
+
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, mount_point_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, mount_options_row);
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, filesystem_type_row);
-  
+
   gtk_widget_class_bind_template_child (widget_class, GduMountOptionsDialog, device_combo_row);
 
   gtk_widget_class_bind_template_callback (widget_class, on_done_clicked_cb);

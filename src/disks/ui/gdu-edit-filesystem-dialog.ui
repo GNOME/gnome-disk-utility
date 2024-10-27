@@ -41,8 +41,7 @@
                 <child>
                   <object class="AdwEntryRow" id="fs_label_row">
                     <property name="title" translatable="yes">Label</property>
-                    <property name="show-apply-button">True</property>
-                    <signal name="apply" handler="on_fs_label_row_changed_cb" object="GduEditFilesystemDialog" swapped="true"/>
+                    <signal name="notify::text" handler="on_fs_label_row_changed_cb" object="GduEditFilesystemDialog" swapped="true"/>
                   </object>
                 </child>
               </object>

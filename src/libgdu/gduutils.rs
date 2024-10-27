@@ -725,14 +725,6 @@ pub fn max_label_length(fstype: &str) -> u32 {
     }
 }
 
-pub fn entry_buffer_truncate_bytes(gtk_entry_buffer: gtk::EntryBuffer, max_bytes: usize) -> bool {
-    let mut max_utf8_len = max_bytes;
-    while gtk_entry_buffer.bytes() > max_bytes {
-        gtk_entry_buffer.delete_text(max_utf8_len as u16, None);
-        max_utf8_len -= 1;
-    }
-    max_utf8_len != max_bytes
-}
 
 pub async fn is_same_size(blocks: &[udisks::block::BlockProxy<'static>]) -> (bool, u64) {
     if blocks.is_empty() {

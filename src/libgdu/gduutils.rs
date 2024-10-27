@@ -898,7 +898,7 @@ pub async fn unuse_data_iterate(
 pub async fn ensure_unused_list(
     client: &udisks::Client,
     parent_window: &impl IsA<gtk::Widget>,
-    objects: &[udisks::Object],
+    objects: &[&udisks::Object],
 ) -> udisks::Result<()> {
     for object in objects {
         if let Err((err, err_msg)) = unuse_data_iterate(client, object).await {
@@ -914,7 +914,7 @@ pub async fn ensure_unused(
     parent_window: &impl IsA<gtk::Widget>,
     object: &udisks::Object,
 ) -> udisks::Result<()> {
-    ensure_unused_list(client, parent_window, &[object.clone()]).await
+    ensure_unused_list(client, parent_window, &[object]).await
 }
 
 pub async fn calc_space_to_grow(

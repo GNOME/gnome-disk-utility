@@ -5,6 +5,7 @@ use std::sync::OnceLock;
 
 use adw::prelude::*;
 use async_recursion::async_recursion;
+use futures::StreamExt;
 use gettextrs::{dngettext, gettext, pgettext};
 use gtk::{
     gio,
@@ -133,7 +134,6 @@ pub fn has_option(
     check_prefix: bool,
 ) -> (bool, Option<String>) {
     let text = options_entry.text();
-    //TODO: use filter iter
     for option_iter in text.split(',') {
         if check_prefix {
             if let Some(val) = option_iter.strip_prefix(option) {
@@ -395,26 +395,20 @@ pub async fn is_flash(drive: &udisks::drive::DriveProxy<'static>) -> bool {
 pub async fn count_primary_dos_partitions(
     client: &udisks::Client,
     table: &udisks::partitiontable::PartitionTableProxy<'static>,
-) -> u32 {
-    let mut count = 0;
-    for partition in client.partitions(table).await {
-        if partition.is_contained().await.is_ok_and(|v| !v) {
-            count += 1;
-        }
-    }
-    count
+) -> usize {
+    futures::stream::iter(client.partitions(table).await.iter())
+        .filter(|&partition| async move { partition.is_contained().await.is_ok_and(|v| !v) })
+        .count()
+        .await
 }
 
 pub async fn have_dos_extended(
     client: &udisks::Client,
     table: &udisks::partitiontable::PartitionTableProxy<'static>,
 ) -> bool {
-    for partition in client.partitions(table).await {
-        if partition.is_container().await.is_ok_and(|v| v) {
-            return true;
-        }
-    }
-    false
+    futures::stream::iter(client.partitions(table).await.iter())
+        .any(|partition| async move { partition.is_container().await.is_ok_and(|v| v) })
+        .await
 }
 
 pub async fn is_inside_dos_extended(

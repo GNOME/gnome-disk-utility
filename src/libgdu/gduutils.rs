@@ -38,11 +38,10 @@ pub async fn has_configuration(
         }
 
         if config_type == "crypttab" {
-            has_passphrase = config_details.get("passphrase-path").is_some_and(|value| {
-                string_from_array(value).is_some_and(|path|
-                //TODO: is the empty check even necessary)
-                !path.is_empty() && !path.starts_with("/dev"))
-            });
+            has_passphrase = config_details
+                .get("passphrase-path")
+                .and_then(string_from_array)
+                .is_some_and(|path| !path.is_empty() && !path.starts_with("/dev"));
         }
         return Ok((true, has_passphrase));
     }

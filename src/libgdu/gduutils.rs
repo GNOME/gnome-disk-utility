@@ -10,6 +10,7 @@ use gtk::{
     gio,
     glib::{self, object::IsA},
 };
+use itertools::Itertools;
 use tokio::sync::Mutex;
 use udisks::zbus::{
     self,
@@ -174,7 +175,6 @@ pub fn remove_option(options_entry: &impl IsA<gtk::Editable>, option: &str, chec
         .filter(|&option_iter| {
             (check_prefix && option_iter.starts_with(option)) || option_iter == option
         })
-        .collect::<Vec<&str>>()
         .join(",");
     options_entry.set_text(&str);
 }
@@ -724,7 +724,6 @@ pub fn max_label_length(fstype: &str) -> u32 {
         _ => u32::MAX,
     }
 }
-
 
 pub async fn is_same_size(blocks: &[udisks::block::BlockProxy<'static>]) -> (bool, u64) {
     if blocks.is_empty() {

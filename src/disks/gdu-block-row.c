@@ -34,6 +34,7 @@
 #include "gdu-item.h"
 #include "gdu-block-row.h"
 #include "gdu-drive.h"
+#include "gdu-unlock-dialog.h"
 
 /**
  * GduBlockRow:
@@ -132,18 +133,26 @@ gdu_block_row_update_features (GduBlockRow *self)
                                                                0, "label", g_variant_type_new ("s"));
 
   if ((g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Unmount")) == 0)
-  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Mount")) == 0))
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Mount")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Lock")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Unlock")) == 0))
     g_menu_remove (G_MENU (self->volume_actions_submenu), 0);
 
   if (features & GDU_FEATURE_CAN_MOUNT)
     g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Mount"), "row.mount");
   else if (features & GDU_FEATURE_CAN_UNMOUNT)
     g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Unmount"), "row.unmount");
+  else if (features & GDU_FEATURE_CAN_LOCK)
+    g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Lock"), "row.lock");
+  else if (features & GDU_FEATURE_CAN_UNLOCK)
+    g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Unlock"), "row.unlock");
 
   #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
   ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
   ENABLE ("row.mount", GDU_FEATURE_CAN_MOUNT);
   ENABLE ("row.unmount", GDU_FEATURE_CAN_UNMOUNT);
+  ENABLE ("row.lock", GDU_FEATURE_CAN_LOCK);
+  ENABLE ("row.unlock", GDU_FEATURE_CAN_UNLOCK);
   ENABLE ("row.resize", GDU_FEATURE_RESIZE_PARTITION);
   ENABLE ("row.edit_partition", GDU_FEATURE_EDIT_PARTITION);
   ENABLE ("row.edit_filesystem", GDU_FEATURE_EDIT_LABEL);
@@ -375,6 +384,21 @@ mount_cb (GtkWidget  *widget,
                                 (GAsyncReadyCallback) mount_complete_cb,
                                 self);
 }
+
+static void
+unlock_cb (GtkWidget  *widget,
+           const char *action_name,
+           GVariant   *parameter)
+{
+  GduBlockRow *self = GDU_BLOCK_ROW (widget);
+  UDisksObject *object;
+
+  object = gdu_block_get_object (self->block);
+
+  gdu_unlock_dialog_show (block_row_get_window (self),
+                          object);
+}
+
 
 static void
 partition_delete_cb (GObject         *object,
@@ -952,6 +976,8 @@ gdu_block_row_class_init (GduBlockRowClass *klass)
     { "row.create_partition", create_partition_cb },
     { "row.mount", mount_cb },
     { "row.unmount", unmount_cb },
+    { "row.lock", unmount_cb },
+    { "row.unlock", unlock_cb },
     { "row.resize", resize_cb },
     { "row.edit_partition", edit_partition_cb },
     { "row.edit_filesystem", edit_filesystem_cb },

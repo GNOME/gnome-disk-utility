@@ -181,7 +181,7 @@ pub fn remove_option(options_entry: &impl IsA<gtk::Editable>, option: &str, chec
 pub fn update_check_option(
     options_entry: &impl IsA<gtk::Editable>,
     option: &str,
-    _widget: &impl IsA<gtk::Widget>,
+    widget: &impl IsA<gtk::Widget>,
     check_button: &impl IsA<adw::SwitchRow>,
     negate: bool,
     _add_to_front: bool,
@@ -189,9 +189,7 @@ pub fn update_check_option(
     let (opts, _) = has_option(options_entry, option, false);
     let ui = check_button.as_ref().is_active();
     if (!negate && (opts != ui)) || (negate && (opts == ui)) {
-        //TODO: implement equality check
-        // if widget == check_button {
-        if todo!("implement equality check") {
+        if std::ptr::addr_eq(widget.to_glib_none().0, check_button.to_glib_none().0) {
             if (!negate && ui) || (negate && !ui) {
                 add_option(options_entry, "", option, _add_to_front);
             } else {
@@ -208,7 +206,7 @@ pub fn update_check_option(
 pub fn update_entry_option(
     options_entry: &impl IsA<gtk::Editable>,
     option: &str,
-    _widget: &impl IsA<gtk::Widget>,
+    widget: &impl IsA<gtk::Widget>,
     entry: &impl IsA<gtk::Editable>,
 ) {
     let opts = has_option(options_entry, option, true)
@@ -218,7 +216,7 @@ pub fn update_entry_option(
     let ui_escaped = glib::Uri::escape_string(&ui, None, true);
 
     if opts != ui_escaped {
-        if todo!("widget == entry") {
+        if std::ptr::addr_eq(entry.to_glib_none().0, widget.to_glib_none().0) {
             if !ui_escaped.is_empty() {
                 remove_option(options_entry, option, true);
                 add_option(options_entry, option, &ui, false)

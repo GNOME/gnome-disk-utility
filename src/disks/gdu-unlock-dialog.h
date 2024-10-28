@@ -14,9 +14,9 @@
 G_BEGIN_DECLS
 
 #define GDU_TYPE_UNLOCK_DIALOG (gdu_unlock_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduUnlockDialog, gdu_unlock_dialog, GDU, UNLOCK_DIALOG, GtkDialog)
+G_DECLARE_FINAL_TYPE (GduUnlockDialog, gdu_unlock_dialog, GDU, UNLOCK_DIALOG, AdwDialog)
 
-void   gdu_unlock_dialog_show (GduWindow    *window,
+void   gdu_unlock_dialog_show (GtkWindow    *parent_window,
                                UDisksObject *object);
 
 G_END_DECLS

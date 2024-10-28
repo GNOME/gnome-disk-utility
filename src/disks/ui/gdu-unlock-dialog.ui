@@ -1,244 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
-  <template class="GduUnlockDialog" parent="GtkDialog">
-    <property name="border_width">12</property>
-    <property name="title" translatable="yes">Enter passphrase to unlock</property>
-    <property name="resizable">False</property>
-    <property name="modal">True</property>
-    <property name="destroy_with_parent">True</property>
-    <property name="type_hint">dialog</property>
-    <signal name="response" handler="unlock_dialog_response_cb" swapped="yes" />
-
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <property name="spacing">12</property>
-        <property name="margin_start">20</property>
-        <property name="margin_end">20</property>
-        <child>
-          <object class="GtkBox" id="infobar_box">
-            <property name="orientation">vertical</property>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="unknown_crypto_label">
-            <property name="visible">False</property>
-            <property name="margin_bottom">5</property>
-            <property name="label" translatable="yes">This volume might be a VeraCrypt volume as it contains random data.</property>
-            <property name="wrap">True</property>
-            <property name="width_chars">30</property>
-            <property name="max_width_chars">30</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="row_spacing">6</property>
-            <property name="column_spacing">10</property>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="xalign">1</property>
-                <property name="label" translatable="yes">_Passphrase</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">passphrase_entry</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="passphrase_entry">
-                <property name="placeholder-text" translatable="yes">If specified</property>
-                <property name="visible">True</property>
-                <property name="hexpand">True</property>
-                <property name="visibility" bind-source="show_passphrase_check_button" bind-property="active" bind-flags="sync-create" />
-                <property name="activates_default">True</property>
-                <signal name="changed" handler="unlock_dialog_update_unlock_button_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkCheckButton" id="show_passphrase_check_button">
-                <property name="label" translatable="yes">Sho_w passphrase</property>
-                <property name="visible">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-                <property name="xalign">0</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="label" translatable="yes">Volume type</property>
-                <property name="use_underline">True</property>
-                <property name="xalign">1</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="volume_type_box">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="spacing">10</property>
-                <property name="margin_top">3</property>
-                <property name="margin_bottom">3</property>
-                <child>
-                  <object class="GtkCheckButton" id="tcrypt_hidden_check_button">
-                    <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                    <property name="label" translatable="yes">_Hidden</property>
-                    <property name="tooltip_markup" translatable="yes">Instead of unlocking this volume, attempt to unlock a secondary volume hidden inside.</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
-                    <property name="draw_indicator">True</property>
-                  </object>
+    <template class="GduUnlockDialog" parent="AdwDialog">
+        <property name="title" translatable="yes">Enter passphrase to unlock</property>
+        <property name="child">
+            <object class="AdwToolbarView">
+                <child type="top">
+                    <object class="AdwHeaderBar">
+                        <property name="show-end-title-buttons">false</property>
+                        <property name="show-start-title-buttons">false</property>
+                        <child type="start">
+                            <object class="GtkButton" id="close_button">
+                                <property name="label" translatable="yes">_Cancel</property>
+                                <property name="use-underline">true</property>
+                                <property name="action-name">window.close</property>
+                            </object>
+                        </child>
+                        <child type="end">
+                            <object class="GtkButton" id="unlock_button">
+                                <property name="label" translatable="yes">_Unlock</property>
+                                <property name="use-underline">true</property>
+                                <property name="sensitive">false</property>
+                                <signal name="clicked" handler="on_unlock_clicked_cb" swapped="true" />
+                                <style>
+                                    <class name="suggested-action" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
                 </child>
-                <child>
-                  <object class="GtkCheckButton" id="tcrypt_system_check_button">
-                    <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                    <property name="label" translatable="yes">Windows _system</property>
-                    <property name="tooltip_markup" translatable="yes">Unlock an encrypted Windows system partition or drive.</property>
-                    <property name="receives_default">False</property>
-                    <property name="use_underline">True</property>
-                    <property name="xalign">0</property>
-                    <property name="draw_indicator">True</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="label" translatable="yes">PI_M</property>
-                <property name="use_underline">True</property>
-                <property name="mnemonic_widget">pim_entry</property>
-                <property name="xalign">1</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="pim_entry">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="placeholder-text" translatable="yes">If specified</property>
-                <property name="tooltip_markup" translatable="yes">If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to use for this volume.</property>
-                <property name="hexpand">True</property>
-                <property name="activates_default">True</property>
-                <signal name="changed" handler="unlock_dialog_update_unlock_button_cb" swapped="yes" />
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="label" translatable="yes">_Keyfiles</property>
-                <property name="use_underline">True</property>
-                <!-- <property name="mnemonic_widget">keyfile_file_chooser_button</property> -->
-                <property name="xalign">1</property>
-                <style>
-                  <class name="dim-label" />
-                </style>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="keyfile_file_chooser_box">
-                <!-- <property name="visible" bind-source="keyfile_file_chooser_button" bind-property="visible" bind-flags="sync-create" /> -->
-                <property name="orientation">vertical</property>
-                <!-- <child>
-                  <object class="GtkFileChooserButton" id="keyfile_file_chooser_button">
-                    <property name="title" translatable="yes">Select a Keyfile</property>
-                    <property name="visible">False</property>
-                    <property name="tooltip_markup" translatable="yes">Select a keyfile to unlock this volume</property>
-                    <signal name="file-set" handler="unlock_dialog_update_unlock_button_cb" swapped="yes" after="yes"/>
-                    <signal name="file-set" handler="unlock_dialog_keyfile_set_cb" swapped="yes" after="no"/>
-                  </object>
-                </child> -->
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">4</property>
-              </packing>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-        </child>
+                <property name="content">
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="AdwBanner" id="keyring_banner">
+                                <property name="title" translatable="yes">The encryption passphrase was retrieved from the keyring</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="AdwBanner" id="veracrypt_banner">
+                                <property name="title" translatable="yes">This volume might be a VeraCrypt volume as it contains random data.</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="AdwPreferencesPage">
+                                <child>
+                                    <object class="AdwPreferencesGroup">
+                                        <child>
+                                            <object class="AdwPasswordEntryRow" id="passphrase_entry">
+                                                <property name="title">Passphrase</property>
+                                                <signal name="notify::text"
+                                                    handler="unlock_dialog_update_unlock_button_cb"
+                                                    swapped="true" />
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="AdwExpanderRow">
+                                                <property name="title">Volume Type</property>
+                                                <property name="visible"
+                                                    bind-source="keyfile_chooser"
+                                                    bind-property="visible" bind-flags="sync-create" />
+                                                <child>
+                                                    <object class="AdwSwitchRow" id="tcrypt_hidden_switch_row">
+                                                        <property name="title">Hidden</property>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="AdwSwitchRow" id="tcrypt_system_switch_row">
+                                                        <property name="title">Windows system</property>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="AdwEntryRow" id="pim_entry_row">
+                                                <property name="title">PIM</property>
+                                                <property name="visible"
+                                                    bind-source="keyfile_chooser"
+                                                    bind-property="visible" bind-flags="sync-create" />
+                                                <signal name="notify::text"
+                                                    handler="unlock_dialog_update_unlock_button_cb"
+                                                    swapped="true" />
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="AdwActionRow">
+                                                <property name="title" translatable="yes">Keyfiles</property>
+                                                <property name="subtitle" translatable="yes">None Selected</property>
+                                                <property name="visible"
+                                                    bind-source="keyfile_chooser"
+                                                    bind-property="visible" bind-flags="sync-create" />
 
-        <!-- Cancel, Unlock buttons -->
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="cancel_button">
-                <property name="label" translatable="yes">_Cancel</property>
-                <property name="visible">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkButton" id="unlock_button">
-                <property name="label" translatable="yes">_Unlock</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_underline">True</property>
-              </object>
-            </child>
-          </object>
-        </child>
-
-      </object>
-    </child>
-    <action-widgets>
-      <action-widget response="cancel">cancel_button</action-widget>
-      <action-widget response="ok" default="true">unlock_button</action-widget>
-    </action-widgets>
-  </template>
+                                                <child type="suffix">
+                                                    <object class="GtkButton" id="keyfile_chooser">
+                                                        <property name="tooltip-text" translatable="yes">Select Keyfiles</property>
+                                                        <property name="icon-name">folder-open-symbolic</property>
+                                                        <property name="valign">center</property>
+                                                        <property name="visible">false</property>
+                                                        <signal name="clicked"
+                                                            handler="on_keyfile_chooser_clicked_cb"
+                                                            swapped="True" object="GduUnlockDialog" />
+                                                        <style>
+                                                            <class name="flat" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </property>
+            </object>
+        </property>
+    </template>
 </interface>

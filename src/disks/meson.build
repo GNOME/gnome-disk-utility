@@ -36,7 +36,7 @@ sources = files(
   'gdulocaljob.c',
   'gdu-space-allocation-bar.c',
   'gdu-resize-volume-dialog.c',
-  'gduunlockdialog.c',
+  'gdu-unlock-dialog.c',
   'gduxzdecompressor.c',
   'gdu-log.c',
   'main.c',
@@ -60,13 +60,13 @@ resource_data = files(
   'ui/gdu-edit-partition-dialog.ui',
   'ui/erase-multiple-disks-dialog.ui',
   'ui/gdu-format-disk-dialog.ui',
+  'ui/gdu-unlock-dialog.ui',
   'ui/style.css',
   'ui/style-dark.css',
   'ui/gdu-new-disk-image-dialog.ui',
   'ui/gdu-resize-volume-dialog.ui',
   'ui/gdu-restore-disk-image-dialog.ui',
   'ui/gdu-take-ownership-dialog.ui',
-  'ui/unlock-device-dialog.ui',
 )
 
 sources += gnome.compile_resources(

@@ -18,7 +18,7 @@
 
 #include "gdu-application.h"
 #include "gdu-window.h"
-#include "gduunlockdialog.h"
+#include "gdu-unlock-dialog.h"
 
 /* From GVfs's monitor/udisks2/gvfsudisks2volume.c */
 static const SecretSchema luks_passphrase_schema =
@@ -288,7 +288,7 @@ gdu_unlock_dialog_class_init (GduUnlockDialogClass *klass)
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/DiskUtility/ui/"
-                                               "unlock-device-dialog.ui");
+                                               "gdu-unlock-dialog.ui");
 
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, unknown_crypto_label);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, passphrase_entry);

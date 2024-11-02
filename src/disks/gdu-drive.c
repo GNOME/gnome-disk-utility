@@ -64,9 +64,9 @@ gdu_drive_set_block_color(GduDrive *self,
 
   features = gdu_item_get_features (GDU_ITEM (block));
   if (features & GDU_FEATURE_CREATE_PARTITION)
-    g_object_set_data (G_OBJECT (block), "color", g_strdup ("grey"));
+    g_object_set_data_full (G_OBJECT (block), "color", g_strdup ("grey"), g_free);
   else
-    g_object_set_data (G_OBJECT (block), "color", g_strdup (partition_colors[self->partition_color_index++ % NUM_PARTITION_COLORS]));
+    g_object_set_data_full (G_OBJECT (block), "color", g_strdup (partition_colors[self->partition_color_index++ % NUM_PARTITION_COLORS]), g_free);
 }
 
 static void

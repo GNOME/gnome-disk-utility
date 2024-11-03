@@ -187,13 +187,13 @@ gdu_restore_disk_image_dialog_update (GduRestoreDiskImageDialog *self)
    * The %s is the uncompressed size as a long string e.g. "4.2 MB (4,300,123 bytes)".
    */
   size_str = g_strdup_printf (
-      is_xz_compressed ? _ ("%s when compressed") : "%s",
+      is_xz_compressed ? _("%s when compressed") : "%s",
       udisks_client_get_size_for_display (self->client, size, FALSE, TRUE));
 
   if (size == 0 && restore_error == NULL)
     {
       /* if size is 0, error may be set already.. */
-      restore_error = g_strdup (_ ("Cannot restore image of size 0"));
+      restore_error = g_strdup (_("Cannot restore image of size 0"));
     }
   else if (self->block_size - size > 1000L * 1000L)
     {
@@ -407,7 +407,7 @@ play_complete_sound (GduRestoreDiskImageDialog *self)
 
   /* Translators: A descriptive string for the 'complete' sound, see
    * CA_PROP_EVENT_DESCRIPTION */
-  sound_message = _ ("Disk image copying complete");
+  sound_message = _("Disk image copying complete");
   /* gtk4 todo : Find a replacement for this
   ca_gtk_play_for_widget (GTK_WIDGET (self->dialog), 0,
                           CA_PROP_EVENT_ID, "complete",
@@ -709,7 +709,7 @@ start_copying (GduRestoreDiskImageDialog *self)
   if (info == NULL)
     {
       gdu_utils_show_error (GTK_WINDOW (self),
-                            _ ("Error determining size of file"), error);
+                            _("Error determining size of file"), error);
       return;
     }
 
@@ -722,7 +722,7 @@ start_copying (GduRestoreDiskImageDialog *self)
             && error->code == G_IO_ERROR_CANCELLED))
         {
           gdu_utils_show_error (GTK_WINDOW (self),
-                                _ ("Error opening file for reading"), error);
+                                _("Error opening file for reading"), error);
         }
 
       return;

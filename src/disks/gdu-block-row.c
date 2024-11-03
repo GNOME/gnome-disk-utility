@@ -837,7 +837,7 @@ take_ownership_cb (GtkWidget  *widget,
   recursive_switch = GTK_WIDGET (gtk_builder_get_object (builder, "recursive_switch"));
 
   adw_alert_dialog_format_body (dialog,
-                                _("Make your user and group the owner of \"%s\""),
+                                _("Make your user and group the owner of ”%s”"),
                                 gdu_item_get_description (GDU_ITEM (self->block)));
 
   data = g_new0 (TakeOwnershipDialogData, 1);

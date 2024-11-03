@@ -187,7 +187,7 @@ gdu_restore_disk_image_dialog_update (GduRestoreDiskImageDialog *self)
    * The %s is the uncompressed size as a long string e.g. "4.2 MB (4,300,123 bytes)".
    */
   size_str = g_strdup_printf (
-      is_xz_compressed ? _ ("%s when compressed") : _ ("%s"),
+      is_xz_compressed ? _ ("%s when compressed") : "%s",
       udisks_client_get_size_for_display (self->client, size, FALSE, TRUE));
 
   if (size == 0 && restore_error == NULL)

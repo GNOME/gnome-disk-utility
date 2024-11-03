@@ -321,11 +321,10 @@ on_success (gpointer user_data)
    */
   if (self->num_error_bytes > 0)
     {
-      dialog = adw_message_dialog_new (NULL, NULL, NULL);
-
-      adw_message_dialog_format_heading_markup (ADW_MESSAGE_DIALOG (dialog),
-                                                /* Translators: Heading in dialog shown if some data was unreadable while creating a disk image */
-                                                _("<big><b>Unrecoverable read errors</b></big>"));
+      dialog = adw_message_dialog_new (NULL,
+                                      /* Translators: Heading in dialog shown if some data was unreadable while creating a disk image */
+                                       _("Unrecoverable Read Errors"),
+                                       NULL);
 
       s = g_format_size (self->num_error_bytes);
       percentage = 100.0 * ((gdouble) self->num_error_bytes) / ((gdouble) gdu_estimator_get_target_bytes (self->estimator));
@@ -336,7 +335,7 @@ on_success (gpointer user_data)
                                        * The first %s is the amount of unreadable data (ex. "4.2 MB").
                                        * The second %s is the name of the device (ex "/dev/").
                                        */
-                                      _("%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive"),
+                                      _("%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive."),
                                       percentage,
                                       s,
                                       gtk_label_get_text (GTK_LABEL (self->source_label)));

@@ -1,1 +1,8 @@
-i18n.gettext(gdu_name, preset: 'glib')
+i18n.gettext(
+  gdu_name,
+  args: [
+    '--keyword=gettext_f',
+    '--keyword=pgettext_f',
+  ],
+  preset: 'glib',
+)

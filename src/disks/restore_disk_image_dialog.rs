@@ -414,10 +414,11 @@ impl GduRestoreDiskImageDialog {
         // we return a boxed error so we can return different error types
         // we don't use anyhow here, as the show error function expects a box
     ) -> Result<(), Box<dyn std::error::Error>> {
-        let fd = block
+        let fd: std::os::fd::OwnedFd = block
             .open_for_restore(udisks::standard_options(false))
             .await
-            .map_err(Box::new)?;
+            .map_err(Box::new)?
+            .into();
 
         // We can't use udisks_block_get_size() because the media may have
         // changed and udisks may not have noticed. TODO: maybe have a
@@ -459,7 +460,7 @@ impl GduRestoreDiskImageDialog {
         let update_interval = std::time::Duration::from_millis(200);
         // set initial timer back by the update interval, so the UI is refreshed on the first cycle
         let update_timer = std::time::Instant::now().sub(update_interval);
-        let mut device = std::fs::File::from(fd.as_fd().try_clone_to_owned().unwrap());
+        let mut device = std::fs::File::from(fd);
         let copy_result = loop {
             // Update GUI - but only every 200ms and if the last update isn't peding
             if update_timer.elapsed() >= update_interval {

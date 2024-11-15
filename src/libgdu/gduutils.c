@@ -5,7 +5,7 @@
  *
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
-
+/* NOTE: Keep this file in sync with gduutils.rs */
 #include "config.h"
 #include <glib/gi18n.h>
 #include <math.h>

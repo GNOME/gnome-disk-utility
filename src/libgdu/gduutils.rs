@@ -1,3 +1,4 @@
+// NOTE: Keep this file in sync with gduutils.c
 use std::collections::HashMap;
 use std::ffi::CString;
 use std::mem::MaybeUninit;

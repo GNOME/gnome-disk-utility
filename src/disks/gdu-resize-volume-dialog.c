@@ -106,7 +106,8 @@ free_size_binding_func (GBinding *binding,
 {
   GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (user_data);
 
-  g_value_set_double (target_value, (gdouble)self->max_size - g_value_get_double (source_value));
+  gdouble new_val = (self->max_size / unit_sizes[self->cur_unit_num]) - g_value_get_double (source_value) ;
+  g_value_set_double (target_value, new_val);
 
   return TRUE;
 }

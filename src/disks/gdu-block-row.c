@@ -130,12 +130,12 @@ gdu_block_row_update_features (GduBlockRow *self)
     }
 
   menu_item_attribute = g_menu_model_get_item_attribute_value (self->volume_actions_submenu,
-                                                               0, "label", g_variant_type_new ("s"));
+                                                               0, "action", g_variant_type_new ("s"));
 
-  if ((g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Unmount")) == 0)
-  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Mount")) == 0)
-  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Lock")) == 0)
-  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("Unlock")) == 0))
+  if ((g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("row.unmount")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("row.mount")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("row.lock")) == 0)
+  || (g_strcmp0 (g_variant_get_string (menu_item_attribute, NULL), _("row.unlock")) == 0))
     g_menu_remove (G_MENU (self->volume_actions_submenu), 0);
 
   if (features & GDU_FEATURE_CAN_MOUNT)

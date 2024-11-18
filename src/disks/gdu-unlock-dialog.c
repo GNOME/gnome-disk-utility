@@ -42,7 +42,7 @@ struct _GduUnlockDialog
   GtkWidget            *pim_entry_row;
   GtkWidget            *keyfile_file_chooser_box;
   GtkWidget            *keyfile_chooser;
-
+  GtkWidget            *keyfile_row;
   GtkWidget            *unlock_button;
 
   UDisksObject         *udisks_object;
@@ -106,15 +106,27 @@ unlock_dialog_keyfiles_set_cb (GObject      *source_object,
   GtkFileDialog *dialog = GTK_FILE_DIALOG (source_object);
   GListModel *keyfiles;
   unsigned int n_items;
+  GFile *file;
+  g_autoptr(GString) new_label = NULL;
   g_return_if_fail (GDU_IS_UNLOCK_DIALOG (self));
   g_return_if_fail (GTK_IS_FILE_DIALOG (dialog));
 
   keyfiles = gtk_file_dialog_open_multiple_finish (dialog, res, NULL);
   n_items = g_list_model_get_n_items (G_LIST_MODEL (keyfiles));
 
+  new_label = g_string_new (NULL);
   for (unsigned int i = 0; i < n_items; i++)
-    g_list_store_append (self->key_files_store,
-                         g_list_model_get_item (G_LIST_MODEL (keyfiles), i));
+    {
+      file = g_list_model_get_item (G_LIST_MODEL (keyfiles), i);
+      if (i > 0)
+        g_string_append_c (new_label, ',');
+      g_string_append (new_label, g_file_get_basename (file));
+      g_list_store_append (self->key_files_store, file);
+    }
+
+  adw_action_row_set_subtitle (ADW_ACTION_ROW (self->keyfile_row), new_label
+                                                                   ? new_label->str
+                                                                   : _("None Selected"));
 }
 
 static void
@@ -266,6 +278,7 @@ gdu_unlock_dialog_class_init (GduUnlockDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, tcrypt_system_switch_row);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, pim_entry_row);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_chooser);
+  gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyfile_row);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, keyring_banner);
   gtk_widget_class_bind_template_child (widget_class, GduUnlockDialog, veracrypt_banner);
 

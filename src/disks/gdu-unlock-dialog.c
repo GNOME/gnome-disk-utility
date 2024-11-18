@@ -294,12 +294,6 @@ gdu_unlock_dialog_init (GduUnlockDialog *self)
   self->key_files_store = g_list_store_new (G_TYPE_FILE);
 }
 
-static GduUnlockDialog *
-gdu_unlock_dialog_new (void)
-{
-  return g_object_new (GDU_TYPE_UNLOCK_DIALOG, NULL);
-}
-
 void
 gdu_unlock_dialog_show (GtkWindow    *parent_window,
                         UDisksObject *object)

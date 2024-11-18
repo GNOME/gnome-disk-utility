@@ -313,7 +313,6 @@ gdu_unlock_dialog_show (GtkWindow    *parent_window,
   type = udisks_block_get_id_type (self->udisks_block);
   if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0)
     {
-      adw_dialog_set_title (ADW_DIALOG (self), _("Set options to unlock"));
       gtk_widget_set_visible (GTK_WIDGET (self->keyfile_chooser), TRUE);
       adw_banner_set_revealed (ADW_BANNER (self->veracrypt_banner), g_str_equal (type, "crypto_unknown"));
     }

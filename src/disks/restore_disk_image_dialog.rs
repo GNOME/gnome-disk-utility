@@ -329,7 +329,7 @@ impl GduRestoreDiskImageDialog {
 
     async fn restore_disk_image(&self) -> Option<()> {
         let imp = self.imp();
-        let file = imp.restore_file.borrow().clone()?;
+        let file = imp.restore_file.take()?;
         let info = match file.query_info(
             &format!(
                 "{},{}",

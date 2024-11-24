@@ -1,9 +1,10 @@
 use std::collections::HashMap;
-use std::io::{ErrorKind, Read, Write};
+use std::io::{ErrorKind, Read};
 use std::ops::Sub;
-use std::os::fd::{AsFd, AsRawFd};
+use std::os::fd::AsRawFd;
 
 use adw::prelude::*;
+use async_std::io::{ReadExt, WriteExt};
 use gettextrs::{gettext, pgettext};
 use gtk::glib::property::PropertySet;
 use gtk::subclass::prelude::*;
@@ -363,7 +364,7 @@ impl GduRestoreDiskImageDialog {
         };
 
         let is_xz_compressed = info.content_type().unwrap().ends_with("-xz-compressed");
-        let mut input_stream: &mut dyn Read = if is_xz_compressed {
+        let input_stream: &mut dyn Read = if is_xz_compressed {
             input_size = liblzma::uncompressed_size(&mut input_stream).ok()?;
             &mut liblzma::read::XzDecoder::new(input_stream)
         } else {
@@ -386,8 +387,13 @@ impl GduRestoreDiskImageDialog {
         // self.local_job =
 
         let block = self.imp().block.take().unwrap();
+
         let res = self
-            .copy_disk_image(block, &mut input_stream, input_size)
+            .copy_disk_image(
+                block,
+                &mut futures::io::AllowStdIo::new(input_stream),
+                input_size,
+            )
             .await;
         self.play_complete_sound();
         //TODO: update job
@@ -407,7 +413,7 @@ impl GduRestoreDiskImageDialog {
     async fn copy_disk_image(
         &self,
         block: udisks::block::BlockProxy<'static>,
-        input_stream: &mut impl std::io::Read,
+        input_stream: &mut (impl async_std::io::Read + std::marker::Unpin),
         input_size: u64,
         // we return a boxed error so we can return different error types
         // we don't use anyhow here, as the show error function expects a box
@@ -458,7 +464,7 @@ impl GduRestoreDiskImageDialog {
         let update_interval = std::time::Duration::from_millis(200);
         // set initial timer back by the update interval, so the UI is refreshed on the first cycle
         let update_timer = std::time::Instant::now().sub(update_interval);
-        let mut device = std::fs::File::from(fd);
+        let mut device = async_std::fs::File::from(std::fs::File::from(fd));
         let copy_result = loop {
             // Update GUI - but only every 200ms and if the last update isn't peding
             if update_timer.elapsed() >= update_interval {
@@ -471,7 +477,7 @@ impl GduRestoreDiskImageDialog {
 
             //TODO: check if using kernel calls like std's (file) copy does is faster
             //or using BufWriter
-            let read_bytes = match input_stream.read(buffer) {
+            let read_bytes = match input_stream.read(buffer).await {
                 // we finished reading all bytes
                 Ok(0) => break Ok(()),
                 Ok(n) => n,
@@ -479,7 +485,7 @@ impl GduRestoreDiskImageDialog {
                 Err(err) => break Err(Box::new(err)),
             };
 
-            if let Err(err) = device.write_all(&buffer[..read_bytes]) {
+            if let Err(err) = device.write_all(&buffer[..read_bytes]).await {
                 log::error!("Error writing to device: {}", err);
                 break Err(Box::new(err));
             }

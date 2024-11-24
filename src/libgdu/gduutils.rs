@@ -428,7 +428,11 @@ pub async fn is_inside_dos_extended(
     false
 }
 
-pub fn show_message_dialog(title: &str, message: &str, parent_window: &impl IsA<gtk::Widget>) {
+pub async fn show_message_dialog(
+    title: &str,
+    message: &str,
+    parent_window: &impl IsA<gtk::Widget>,
+) {
     let dialog = adw::AlertDialog::builder()
         .heading(title)
         .body(message)
@@ -437,10 +441,10 @@ pub fn show_message_dialog(title: &str, message: &str, parent_window: &impl IsA<
         .build();
     dialog.add_response("close", &gettext("_Close"));
 
-    dialog.present(parent_window);
+    dialog.choose_future(parent_window).await;
 }
 
-pub fn show_error(
+pub async fn show_error(
     parent_window: &impl IsA<gtk::Widget>,
     title: &str,
     //TODO: potentially replace with anyhow
@@ -461,7 +465,7 @@ pub fn show_error(
     // in a GtkExpander.
     let message = format!("{}", error);
 
-    show_message_dialog(title, &message, parent_window);
+    show_message_dialog(title, &message, parent_window).await;
 }
 
 pub async fn widget_for_object(client: &udisks::Client, object: &udisks::Object) -> gtk::Widget {
@@ -922,7 +926,7 @@ pub async fn ensure_unused_list(
 ) -> udisks::Result<()> {
     for object in objects {
         if let Err((err, err_msg)) = unuse_data_iterate(client, object).await {
-            show_error(parent_window, &err_msg, Box::new(err.clone()));
+            show_error(parent_window, &err_msg, Box::new(err.clone())).await;
             return Err(err);
         }
     }

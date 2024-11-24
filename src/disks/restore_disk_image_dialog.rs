@@ -345,7 +345,8 @@ impl GduRestoreDiskImageDialog {
                     self,
                     &gettext("Error determining size of file"),
                     Box::new(err),
-                );
+                )
+                .await;
                 return None;
             }
         };
@@ -358,7 +359,8 @@ impl GduRestoreDiskImageDialog {
                     self,
                     &gettext("Error opening file for reading"),
                     Box::new(err),
-                );
+                )
+                .await;
                 return None;
             }
         };
@@ -399,12 +401,12 @@ impl GduRestoreDiskImageDialog {
         //TODO: update job
         application.uninhibit(inhibit_cookie);
         if let Err(err) = res {
-            libgdu::show_error(self, &gettext("Error restoring disk image"), err);
+            libgdu::show_error(self, &gettext("Error restoring disk image"), err).await;
         } else {
             // sucessfully written image to device
             self.update_job(None, true);
         }
-        //TODO: set completed
+
         self.set_visible(false);
         self.close();
         None

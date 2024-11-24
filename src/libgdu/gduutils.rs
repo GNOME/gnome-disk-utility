@@ -430,7 +430,7 @@ pub async fn is_inside_dos_extended(
 
 pub fn show_message_dialog(title: &str, message: &str, parent_window: &impl IsA<gtk::Widget>) {
     let dialog = adw::AlertDialog::builder()
-        .title(title)
+        .heading(title)
         .body(message)
         .close_response("close")
         .default_response("close")

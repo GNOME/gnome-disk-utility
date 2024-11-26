@@ -104,24 +104,25 @@ unlock_dialog_keyfiles_set_cb (GObject      *source_object,
 {
   GduUnlockDialog *self = GDU_UNLOCK_DIALOG (user_data);
   GtkFileDialog *dialog = GTK_FILE_DIALOG (source_object);
-  GListModel *keyfiles;
+  GFile *keyfile;
   unsigned int n_items;
-  GFile *file;
   g_autoptr(GString) new_label = NULL;
   g_return_if_fail (GDU_IS_UNLOCK_DIALOG (self));
   g_return_if_fail (GTK_IS_FILE_DIALOG (dialog));
 
-  keyfiles = gtk_file_dialog_open_multiple_finish (dialog, res, NULL);
-  n_items = g_list_model_get_n_items (G_LIST_MODEL (keyfiles));
+  keyfile = gtk_file_dialog_open_finish (dialog, res, NULL);
+  if (!keyfile)
+    return;
+  g_list_store_append (self->key_files_store, keyfile);
 
   new_label = g_string_new (NULL);
+  n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
   for (unsigned int i = 0; i < n_items; i++)
     {
-      file = g_list_model_get_item (G_LIST_MODEL (keyfiles), i);
+      keyfile = g_list_model_get_item (G_LIST_MODEL (self->key_files_store), i);
       if (i > 0)
         g_string_append_c (new_label, ',');
-      g_string_append (new_label, g_file_get_basename (file));
-      g_list_store_append (self->key_files_store, file);
+      g_string_append (new_label, g_file_get_basename (keyfile));
     }
 
   adw_action_row_set_subtitle (ADW_ACTION_ROW (self->keyfile_row), new_label
@@ -137,11 +138,11 @@ on_keyfile_chooser_clicked_cb (GduUnlockDialog *self)
   file_dialog = gtk_file_dialog_new ();
   gtk_file_dialog_set_title (file_dialog, _("Select keyfiles to unlock this volume."));
 
-  gtk_file_dialog_open_multiple (file_dialog,
-                                 GTK_WINDOW (self->parent_window),
-                                 NULL,
-                                 unlock_dialog_keyfiles_set_cb,
-                                 self);
+  gtk_file_dialog_open (file_dialog,
+                        GTK_WINDOW (self->parent_window),
+                        NULL,
+                        unlock_dialog_keyfiles_set_cb,
+                        self);
 }
 
 static void

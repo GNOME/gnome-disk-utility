@@ -169,8 +169,8 @@ do_unlock (GduUnlockDialog *self)
   const char *passphrase;
   gboolean is_hidden, is_system;
 
-  is_hidden = adw_switch_row_get_active (ADW_SWITCH_ROW (self->tcrypt_hidden_switch_row));
-  is_system = adw_switch_row_get_active (ADW_SWITCH_ROW (self->tcrypt_system_switch_row));
+  is_hidden = gtk_switch_get_active (GTK_SWITCH (self->tcrypt_hidden_switch_row));
+  is_system = gtk_switch_get_active (GTK_SWITCH (self->tcrypt_system_switch_row));
 
   g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
   if (is_hidden)

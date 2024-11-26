@@ -98,13 +98,85 @@
                                             bind-source="keyfile_chooser"
                                             bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwSwitchRow" id="tcrypt_hidden_switch_row">
-                                                <property name="title">Hidden</property>
+                                            <object class="AdwActionRow">
+                                                <property name="title" translatable="yes">Hidden</property>
+                                                <property name="activatable-widget">tcrypt_hidden_switch_row</property>
+                                                <child type="suffix">
+                                                    <object class="GtkMenuButton">
+                                                        <property name="tooltip-text" translatable="yes">More Information</property>
+                                                        <property name="icon-name">help-about-symbolic</property>
+                                                        <property name="valign">center</property>
+                                                        <style>
+                                                            <class name="flat" />
+                                                        </style>
+                                                        <property name="popover">
+                                                            <object class="GtkPopover">
+                                                              <child>
+                                                                <object class="GtkLabel">
+                                                                  <property name="label" translatable="yes">Instead of unlocking this volume, attempt to unlock a secondary volume hidden inside.</property>
+                                                                  <property name="halign">center</property>
+                                                                  <property name="margin-bottom">6</property>
+                                                                  <property name="margin-end">6</property>
+                                                                  <property name="margin-start">6</property>
+                                                                  <property name="margin-top">6</property>
+                                                                  <property name="max-width-chars">50</property>
+                                                                  <property name="valign">center</property>
+                                                                  <property name="wrap">True</property>
+                                                                </object>
+                                                              </child>
+                                                            </object>
+                                                        </property>
+                                                    </object>
+                                                </child>
+                                                <child type="suffix">
+                                                    <object class="GtkSwitch" id="tcrypt_hidden_switch_row">
+                                                        <property name="valign">center</property>
+                                                        <style>
+                                                            <class name="flat" />
+                                                        </style>
+                                                    </object>
+                                                </child>
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="AdwSwitchRow" id="tcrypt_system_switch_row">
-                                                <property name="title">Windows System</property>
+                                            <object class="AdwActionRow">
+                                                <property name="title" translatable="yes">Windows System</property>
+                                                <property name="activatable-widget">tcrypt_system_switch_row</property>
+                                                <child type="suffix">
+                                                    <object class="GtkMenuButton">
+                                                        <property name="tooltip-text" translatable="yes">More Information</property>
+                                                        <property name="icon-name">help-about-symbolic</property>
+                                                        <property name="valign">center</property>
+                                                        <style>
+                                                            <class name="flat" />
+                                                        </style>
+                                                        <property name="popover">
+                                                            <object class="GtkPopover">
+                                                              <child>
+                                                                <object class="GtkLabel">
+                                                                  <property name="label" translatable="yes">Unlock an encrypted Windows system partition or drive.</property>
+                                                                  <property name="halign">center</property>
+                                                                  <property name="margin-bottom">6</property>
+                                                                  <property name="margin-end">6</property>
+                                                                  <property name="margin-start">6</property>
+                                                                  <property name="margin-top">6</property>
+                                                                  <property name="max-width-chars">50</property>
+                                                                  <property name="valign">center</property>
+                                                                  <property name="wrap">True</property>
+                                                                </object>
+                                                              </child>
+                                                            </object>
+                                                        </property>
+                                                    </object>
+                                                </child>
+                                                <child type="suffix">
+                                                    <object class="GtkSwitch" id="tcrypt_system_switch_row">
+                                                        <property name="valign">center</property>
+                                                        <style>
+                                                            <class name="flat" />
+                                                        </style>
+                                                    </object>
+                                                </child>
                                             </object>
                                         </child>
                                     </object>

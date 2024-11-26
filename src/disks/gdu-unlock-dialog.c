@@ -159,7 +159,7 @@ unlock_cb (GObject         *source_object,
                                             &error))
     gdu_utils_show_error (GTK_WINDOW (self->parent_window), _("Error unlocking device"), error);
 
-  adw_dialog_close (ADW_DIALOG (self));
+  g_object_unref (self);
 }
 
 static void
@@ -220,7 +220,8 @@ on_unlock_clicked_cb (GduUnlockDialog *self)
       if (n_items)
         self->keyfiles = g_variant_new ("as", builder);
     }
-  do_unlock (self);
+  do_unlock (g_object_ref (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void

@@ -57,7 +57,8 @@ drive_list_row_selection_changed_cb (GduWindow *self)
   else
     gtk_stack_set_visible_child_name (self->main_stack, "drive_page");
 
-  gdu_drive_view_set_drive (self->drive_view, gdu_drive_row_get_drive (row));
+  if (row)
+    gdu_drive_view_set_drive (self->drive_view, gdu_drive_row_get_drive (row));
 }
 
 static void

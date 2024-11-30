@@ -1006,7 +1006,6 @@ gdu_block_row_new (GduBlock *block)
 
   g_return_val_if_fail (GDU_IS_BLOCK (block), NULL);
 
-  g_warning("block: %p\n", block);
   self = g_object_new (GDU_TYPE_BLOCK_ROW, NULL);
   self->block = g_object_ref (block);
 

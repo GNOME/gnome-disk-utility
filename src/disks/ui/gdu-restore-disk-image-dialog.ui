@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <template class="GduRestoreDiskImageDialog" parent="AdwWindow">
-    <property name="default-width">440</property>
-    <property name="width-request">400</property>
-    <property name="modal">true</property>
+  <template class="GduRestoreDiskImageDialog" parent="AdwDialog">
+    <property name="content-width">440</property>
     <property name="title">Restore Disk Image</property>
-    <property name="content">
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -98,6 +96,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

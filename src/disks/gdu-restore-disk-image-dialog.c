@@ -21,7 +21,7 @@
 
 struct _GduRestoreDiskImageDialog
 {
-  AdwWindow      parent_instance;
+  AdwDialog      parent_instance;
 
   UDisksClient  *client;
   UDisksObject  *object;
@@ -72,7 +72,7 @@ struct _GduRestoreDiskImageDialog
   GduLocalJob   *local_job;
 };
 
-G_DEFINE_TYPE (GduRestoreDiskImageDialog, gdu_restore_disk_image_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduRestoreDiskImageDialog, gdu_restore_disk_image_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 restore_disk_image_dialog_get_window (GduRestoreDiskImageDialog *self)
@@ -708,7 +708,7 @@ start_copying (GduRestoreDiskImageDialog *self)
                             G_FILE_QUERY_INFO_NONE, NULL, &error);
   if (info == NULL)
     {
-      gdu_utils_show_error (GTK_WINDOW (self),
+      gdu_utils_show_error (restore_disk_image_dialog_get_window (self),
                             _("Error determining size of file"), error);
       return;
     }
@@ -721,7 +721,7 @@ start_copying (GduRestoreDiskImageDialog *self)
       if (!(error->domain == G_IO_ERROR
             && error->code == G_IO_ERROR_CANCELLED))
         {
-          gdu_utils_show_error (GTK_WINDOW (self),
+          gdu_utils_show_error (restore_disk_image_dialog_get_window (self),
                                 _("Error opening file for reading"), error);
         }
 
@@ -744,7 +744,7 @@ start_copying (GduRestoreDiskImageDialog *self)
     }
 
   self->inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
-                                                  GTK_WINDOW (self),
+                                                  restore_disk_image_dialog_get_window (self),
                                                   GTK_APPLICATION_INHIBIT_SUSPEND |
                                                   GTK_APPLICATION_INHIBIT_LOGOUT,
                                                   /* Translators: Reason why suspend/logout is being inhibited */
@@ -853,7 +853,7 @@ on_file_chooser_button_clicked_cb (GduRestoreDiskImageDialog *self)
                              _("Choose a disk image to restore."));
 
   gtk_file_dialog_open (file_dialog,
-                        GTK_WINDOW (self),
+                        restore_disk_image_dialog_get_window (self),
                         NULL, /* Cancellable */
                         file_dialog_open_cb,
                         self);
@@ -890,10 +890,6 @@ gdu_restore_disk_image_dialog_class_init (GduRestoreDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, error_banner);
   gtk_widget_class_bind_template_child (widget_class, GduRestoreDiskImageDialog, warning_banner);
 
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
-
   gtk_widget_class_bind_template_callback (widget_class, on_file_chooser_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_start_restore_button_clicked_cb);
 }
@@ -914,9 +910,7 @@ gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
 {
   GduRestoreDiskImageDialog *self;
 
-  self = g_object_new (GDU_TYPE_RESTORE_DISK_IMAGE_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_RESTORE_DISK_IMAGE_DIALOG, NULL);
 
   g_mutex_init (&self->copy_lock);
   self->client = client;
@@ -956,5 +950,5 @@ gdu_restore_disk_image_dialog_show (GtkWindow    *parent_window,
     }
   gdu_restore_disk_image_dialog_update (self);
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

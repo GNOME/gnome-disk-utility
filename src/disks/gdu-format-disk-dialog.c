@@ -31,7 +31,7 @@ static GParamSpec *properties [N_PROPS];
 
 struct _GduFormatDiskDialog
 {
-  AdwWindow              parent_instance;
+  AdwDialog              parent_instance;
 
   GtkWidget             *erase_switch;
   GtkWidget             *window_title;
@@ -45,7 +45,7 @@ struct _GduFormatDiskDialog
   GduPartitioningType    partitioning_type;
 };
 
-G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_DIALOG)
 
 G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type,
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_GPT, "gpt"),
@@ -96,7 +96,7 @@ format_cb (GObject      *source_object,
                             error);
     }
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -110,7 +110,7 @@ ensure_unused_cb (GtkWindow    *parent_window,
 
   if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL))
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -376,10 +376,6 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, erase_switch);
   gtk_widget_class_bind_template_child (widget_class, GduFormatDiskDialog, window_title);
 
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
-
   gtk_widget_class_bind_template_callback (widget_class, on_format_clicked_cb);
 
   properties[PROP_PARTITIONING_TYPE] =
@@ -408,7 +404,6 @@ gdu_format_disk_dialog_show (GtkWindow    *parent,
   GduFormatDiskDialog *self;
 
   self = g_object_new (GDU_TYPE_FORMAT_DISK_DIALOG,
-                       "transient-for", parent,
                        NULL);
 
   self->udisks_client = client;
@@ -435,5 +430,5 @@ gdu_format_disk_dialog_show (GtkWindow    *parent,
       self->partitioning_type = GDU_PARTITIONING_TYPE_DOS;
     }
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent));
 }

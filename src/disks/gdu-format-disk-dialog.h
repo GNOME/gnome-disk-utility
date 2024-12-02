@@ -15,7 +15,7 @@
 G_BEGIN_DECLS
 
 #define GDU_TYPE_FORMAT_DISK_DIALOG (gdu_format_disk_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, GDU, FORMAT_DISK_DIALOG, AdwWindow)
+G_DECLARE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, GDU, FORMAT_DISK_DIALOG, AdwDialog)
 
 GType gdu_partitioning_type_get_type (void) G_GNUC_CONST;
 #define GDU_TYPE_PARTITIONING_TYPE (gdu_partitioning_type_get_type ())

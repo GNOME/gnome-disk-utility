@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduFormatDiskDialog" parent="AdwWindow">
-    <property name="default-width">400</property>
-    <property name="modal">true</property>
+  <template class="GduFormatDiskDialog" parent="AdwDialog">
     <property name="title" translatable="yes">Format Disk</property>
-    <property name="content">
+    <property name="content-width">400</property>
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -130,6 +129,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

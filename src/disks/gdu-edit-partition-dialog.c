@@ -20,7 +20,7 @@
 
 struct _GduEditPartitionDialog
 {
-  AdwWindow             parent_instance;
+  AdwDialog             parent_instance;
 
   GtkWidget            *confirm_button;
 
@@ -45,7 +45,7 @@ struct _GduEditPartitionDialog
 };
 
 
-G_DEFINE_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_DIALOG)
 
 static char *
 gdu_edit_partition_dialog_get_new_type (GduEditPartitionDialog  *self)
@@ -144,7 +144,7 @@ on_confirm_button_clicked_cb (GduEditPartitionDialog *self,
     }
 
  end:
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -269,10 +269,6 @@ gdu_edit_partition_dialog_class_init (GduEditPartitionDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_confirm_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_property_changed_cb);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 static void
@@ -294,7 +290,6 @@ gdu_edit_partition_dialog_show (GtkWindow    *parent_window,
   GduEditPartitionDialog *self;
 
   self = g_object_new (GDU_TYPE_EDIT_PARTITION_DIALOG,
-                       "transient-for", parent_window,
                        NULL);
 
   self->window = parent_window;
@@ -322,5 +317,5 @@ gdu_edit_partition_dialog_show (GtkWindow    *parent_window,
   gdu_edit_partition_dialog_populate (self);
   gdu_edit_partition_dialog_populate_types_row (self);
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduEncryptionOptionsDialog" parent="AdwWindow">
+  <template class="GduEncryptionOptionsDialog" parent="AdwDialog">
     <property name="title" translatable="yes">Encryption Options</property>
-    <property name="default-width">560</property>
-    <property name="default-height">500</property>
-    <property name="modal">true</property>
-    <property name="content">
+    <property name="content-width">560</property>
+    <property name="content-height">500</property>
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -89,6 +88,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

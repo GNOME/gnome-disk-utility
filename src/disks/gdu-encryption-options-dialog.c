@@ -19,7 +19,7 @@
 
 struct _GduEncryptionOptionsDialog
 {
-  AdwWindow      parent_instance;
+  AdwDialog      parent_instance;
 
   GtkWidget     *infobar;
   GtkWidget     *done_button;
@@ -43,7 +43,7 @@ struct _GduEncryptionOptionsDialog
 };
 
 
-G_DEFINE_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_encryption_options_dialog_get_window (GduEncryptionOptionsDialog *self)
@@ -168,7 +168,7 @@ on_done_clicked_cb (GduEncryptionOptionsDialog *self)
                                                               &error))
         {
           if (g_error_matches (error, UDISKS_ERROR, UDISKS_ERROR_NOT_AUTHORIZED_DISMISSED))
-            gdu_utils_show_error (GTK_WINDOW (self),
+            gdu_utils_show_error (gdu_encryption_options_dialog_get_window (self),
                                   _("Error updating /etc/crypttab entry"),
                                   error);
         }
@@ -359,9 +359,7 @@ gdu_encryption_options_dialog_show (GtkWindow    *parent_window,
   g_return_if_fail (UDISKS_IS_CLIENT (client));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-  self = g_object_new (GDU_TYPE_ENCRYPTION_OPTIONS_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_ENCRYPTION_OPTIONS_DIALOG, NULL);
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
 
@@ -400,5 +398,5 @@ gdu_encryption_options_dialog_show (GtkWindow    *parent_window,
     }
 
   gdu_encryption_options_dialog_update (self);
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

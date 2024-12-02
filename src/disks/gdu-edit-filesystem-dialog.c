@@ -18,7 +18,7 @@
 
 struct _GduEditFilesystemDialog
 {
-  AdwWindow          parent_instance;
+  AdwDialog          parent_instance;
 
   GtkWidget          *change_button;
   GtkWidget          *warning_banner;
@@ -27,7 +27,7 @@ struct _GduEditFilesystemDialog
   GduBlock           *drive_block;
 };
 
-G_DEFINE_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_edit_filesystem_dialog_get_window (GduEditFilesystemDialog *self)
@@ -52,7 +52,7 @@ change_filesystem_label_cb (GObject      *object,
                             error);
     }
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -113,10 +113,6 @@ gdu_edit_filesystem_dialog_class_init (GduEditFilesystemDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduEditFilesystemDialog, warning_banner);
   gtk_widget_class_bind_template_child (widget_class, GduEditFilesystemDialog, fs_label_row);
 
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
-
   gtk_widget_class_bind_template_callback (widget_class, on_change_button_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_fs_label_row_changed_cb);
 }
@@ -139,9 +135,7 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
 
   g_return_if_fail (GDU_IS_BLOCK (block));
 
-  self = g_object_new (GDU_TYPE_EDIT_FILESYSTEM_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_EDIT_FILESYSTEM_DIALOG, NULL);
 
   self->drive_block = block;
 
@@ -156,5 +150,5 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
   adw_banner_set_revealed (ADW_BANNER (self->warning_banner),
                            gdu_block_needs_unmount (self->drive_block));
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

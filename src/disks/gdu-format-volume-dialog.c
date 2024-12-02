@@ -35,7 +35,7 @@
 
 struct _GduFormatVolumeDialog
 {
-  AdwWindow                parent_instance;
+  AdwDialog                parent_instance;
 
   GtkWidget               *pages_stack;
   GduCreatePartitionPage  *partition_page;
@@ -62,7 +62,7 @@ struct _GduFormatVolumeDialog
   guint64                  add_partition_maxsize;
 };
 
-G_DEFINE_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_format_volume_dialog_get_window (GduFormatVolumeDialog *self)
@@ -103,7 +103,7 @@ gdu_format_volume_dialog_set_dialog_title (GduFormatVolumeDialog *self)
   page = gtk_stack_get_page (GTK_STACK (self->pages_stack), child);
   title = gtk_stack_page_get_title (page);
 
-  gtk_window_set_title (GTK_WINDOW (self), title);
+  adw_dialog_set_title (ADW_DIALOG (self), title);
 }
 
 static GtkWidget *
@@ -322,7 +322,7 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                                (GAsyncReadyCallback)ensure_unused_cb,
                                NULL, /* GCancellable */
                                g_object_ref (self));
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -378,7 +378,7 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                                                 create_partition_cb,
                                                 g_object_ref (self));
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -413,7 +413,7 @@ create_partition_cb (GObject      *source_object,
   if (partition_block == NULL)
     {
       g_warning ("Created partition has no block interface");
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       g_clear_object (&partition_object);
       return;
     }
@@ -435,7 +435,7 @@ on_back_button_clicked_cb (GduFormatVolumeDialog *self, GtkWidget *widget)
 {
   if (self->prev == NULL)
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
   self->current = self->prev;
@@ -472,10 +472,6 @@ gdu_format_volume_dialog_class_init (GduFormatVolumeDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_back_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_forward_button_clicked_cb);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 static void
@@ -498,9 +494,7 @@ gdu_create_format_show (UDisksClient  *client,
   g_return_if_fail (GTK_IS_WINDOW (parent_window));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-  self = g_object_new (GDU_TYPE_FORMAT_VOLUME_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_FORMAT_VOLUME_DIALOG, NULL);
 
   self->udisks_client = client;
   self->udisks_object = g_object_ref (object);
@@ -554,5 +548,5 @@ gdu_create_format_show (UDisksClient  *client,
 
   update_dialog (NULL, NULL, self);
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduMountOptionsDialog" parent="AdwWindow">
+  <template class="GduMountOptionsDialog" parent="AdwDialog">
     <property name="title" translatable="yes">Mount Options</property>
-    <property name="default-height">600</property>
-    <property name="modal">true</property>
-    <property name="content">
+    <property name="content-height">600</property>
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -181,6 +180,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

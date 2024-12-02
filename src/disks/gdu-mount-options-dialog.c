@@ -18,7 +18,7 @@
 
 struct _GduMountOptionsDialog
 {
-  AdwWindow      parent_instance;
+  AdwDialog      parent_instance;
 
   GtkWidget     *info_banner;
   GtkWidget     *overlay;
@@ -50,7 +50,7 @@ struct _GduMountOptionsDialog
   GVariant      *orig_fstab_entry;
 };
 
-G_DEFINE_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, ADW_TYPE_DIALOG)
 
 static gboolean
 check_if_system_mount (const gchar *dir)
@@ -331,7 +331,7 @@ on_update_configuration_item_cb (GObject      *source_object,
     }
   else
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
     }
 }
 
@@ -354,7 +354,7 @@ on_add_configuration_item_cb (GObject      *source_object,
     }
   else
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
     }
 }
 
@@ -377,7 +377,7 @@ on_remove_configuration_item_cb (GObject      *source_object,
     }
   else
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
     }
 }
 
@@ -564,10 +564,6 @@ gdu_mount_options_dialog_class_init (GduMountOptionsDialogClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, on_property_changed);
   gtk_widget_class_bind_template_callback (widget_class, on_restore_default_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, fstab_on_device_combo_row_changed);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 void
@@ -587,9 +583,7 @@ gdu_mount_options_dialog_show (GtkWindow    *parent_window,
 {
   GduMountOptionsDialog *self;
 
-  self = g_object_new (GDU_TYPE_MOUNT_OPTIONS_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_MOUNT_OPTIONS_DIALOG, NULL);
 
   self->client = client;
   self->object = g_object_ref (object);
@@ -612,5 +606,5 @@ gdu_mount_options_dialog_show (GtkWindow    *parent_window,
   gdu_mount_options_dialog_populate (self);
   gdu_mount_options_dialog_populate_device_combo_row (self);
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

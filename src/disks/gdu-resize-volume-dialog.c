@@ -18,7 +18,7 @@
 
 struct _GduResizeVolumeDialog
 {
-  AdwWindow              parent_instance;
+  AdwDialog              parent_instance;
 
   UDisksClient          *client;
   UDisksObject          *object;
@@ -50,7 +50,7 @@ struct _GduResizeVolumeDialog
   guint                  wait_for_filesystem;
 };
 
-G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_DIALOG)
 
 static void set_unit_num (GduResizeVolumeDialog *self, gint unit_num);
 
@@ -160,7 +160,7 @@ resize_get_usage_mount_cb (GObject *source_object,
                         _("Error mounting filesystem to calculate minimum size"),
                         error);
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -240,7 +240,7 @@ part_resize_cb (GObject       *object,
                             _("Error resizing partition"), error);
     }
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -258,7 +258,7 @@ fs_resize_cb (GObject       *object,
                             _("Error resizing filesystem"), error);
     }
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -278,7 +278,7 @@ fs_repair_cb (GObject       *object,
                             error);
     }
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -294,7 +294,7 @@ fs_resize_cb_offline_next_repair (GObject       *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error resizing filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -317,7 +317,7 @@ fs_repair_cb_offline_next_grow (GObject       *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error repairing filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -336,7 +336,7 @@ ensure_unused_cb_offline_next_repair (GObject *source_object,
 
   if (!gdu_utils_ensure_unused_finish (self->client, res, NULL))
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -358,7 +358,7 @@ part_resize_cb_offline_next_fs_unmount (GObject *source_object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error resizing partition"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -386,7 +386,7 @@ fs_repair_cb_next_part_resize (GObject *object,
                             _("Error repairing filesystem after resize"),
                             error);
 
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -408,7 +408,7 @@ fs_resize_cb_offline_next_fs_repair (GObject *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error resizing filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -431,7 +431,7 @@ fs_repair_cb_offline_next_shrink (GObject      *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error repairing filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -455,7 +455,7 @@ fs_resize_cb_online_next_part_resize (GObject      *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error resizing filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -481,7 +481,7 @@ resize_filesystem_waiter (gpointer user_data)
       gdu_utils_show_message (_("Resizing not ready"),
                               _("Waited too long for the filesystem"),
                               gdu_resize_volume_dialog_get_window (self));
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return G_SOURCE_REMOVE;
     }
 
@@ -505,7 +505,7 @@ part_resize_cb_online_next_fs_resize (GObject      *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error resizing partition"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -552,7 +552,7 @@ unmount_cb (GObject      *source_object,
 
   if (!gdu_utils_ensure_unused_finish (self->client, res, NULL))
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -611,7 +611,7 @@ mount_cb (GObject      *object,
     {
       gdu_utils_show_error (gdu_resize_volume_dialog_get_window (self),
                             _("Error mounting the filesystem"), error);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -680,10 +680,6 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_resize_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 void
@@ -710,7 +706,6 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
   const char *const *mount_points;
 
   self = g_object_new (GDU_TYPE_RESIZE_VOLUME_DIALOG,
-                       "transient-for", parent_window,
                        NULL);
 
   self->support = 0;
@@ -779,5 +774,5 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                                     resize_get_usage_mount_cb, self);
     }
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

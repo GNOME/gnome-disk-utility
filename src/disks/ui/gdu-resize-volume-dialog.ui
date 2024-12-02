@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduResizeVolumeDialog" parent="AdwWindow">
+  <template class="GduResizeVolumeDialog" parent="AdwDialog">
     <property name="title" translatable="yes">Resize Volume</property>
-    <property name="modal">true</property>
-    <property name="content">
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -142,6 +141,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

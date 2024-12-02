@@ -18,7 +18,7 @@
 
 struct _GduChangePassphraseDialog
 {
-  AdwWindow          parent_instance;
+  AdwDialog          parent_instance;
 
   GtkWidget         *banner;
   GtkWidget         *change_pass_button;
@@ -40,7 +40,7 @@ struct _GduChangePassphraseDialog
 };
 
 
-G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_change_passphrase_dialog_get_window (GduChangePassphraseDialog *self)
@@ -103,7 +103,7 @@ update_configuration_item_cb (GObject      *source_object,
     gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self),
                           _("Error updating /etc/crypttab"), error);
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -126,7 +126,7 @@ change_passphrase_cb (GObject      *source_object,
 
   if (!self->has_passphrase_in_conf)
     {
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -215,7 +215,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
                             _("Error retrieving configuration data"),
                             error);
       
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -234,7 +234,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
               gtk_editable_select_region (GTK_EDITABLE (self->curr_pass_row), 0, 0);
               gtk_widget_grab_focus (GTK_WIDGET (self->new_pass_row));
               
-              gtk_window_present (GTK_WINDOW (self));
+              adw_dialog_present (ADW_DIALOG (self), gdu_change_passphrase_dialog_get_window (self));
               return;
             }
         }
@@ -244,7 +244,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
                         _("/etc/crypttab configuration data is malformed"),
                         NULL);
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -283,10 +283,6 @@ gdu_change_passphrase_dialog_class_init (GduChangePassphraseDialogClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_change_passphrase_clicked);
   gtk_widget_class_bind_template_callback (widget_class, on_dialog_entry_changed);
-
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
 }
 
 static void
@@ -305,9 +301,7 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
   g_return_if_fail (GTK_IS_WINDOW (window));
   g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-  self = g_object_new (GDU_TYPE_CHANGE_PASSPHRASE_DIALOG,
-                       "transient-for", window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_CHANGE_PASSPHRASE_DIALOG, NULL);
 
   self->udisks_object = g_object_ref (object);
   self->udisks_block = udisks_object_get_block (object);
@@ -329,5 +323,5 @@ gdu_change_passphrase_dialog_show (GtkWindow    *window,
       return;
     }
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (window));
 }

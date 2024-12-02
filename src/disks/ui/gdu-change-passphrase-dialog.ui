@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduChangePassphraseDialog" parent="AdwWindow">
+  <template class="GduChangePassphraseDialog" parent="AdwDialog">
     <property name="title" translatable="yes">Change Passphrase</property>
-    <property name="default-width">590</property>
-    <property name="default-height">320</property>
-    <property name="width-request">400</property>
-    <property name="modal">true</property>
-    <property name="content">
+    <property name="content-width">590</property>
+    <property name="content-height">320</property>
+    <child>
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
@@ -103,6 +101,6 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>

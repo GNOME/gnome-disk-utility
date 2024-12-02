@@ -15,7 +15,7 @@
 G_BEGIN_DECLS
 
 #define GDU_TYPE_NEW_DISK_IMAGE_DIALOG (gdu_new_disk_image_dialog_get_type ())
-G_DECLARE_FINAL_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, GDU, NEW_DISK_IMAGE_DIALOG, AdwWindow)
+G_DECLARE_FINAL_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, GDU, NEW_DISK_IMAGE_DIALOG, AdwDialog)
 
 void gdu_new_disk_image_dialog_show (UDisksClient *client, GtkWindow *window);
 

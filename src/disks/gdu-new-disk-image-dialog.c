@@ -31,7 +31,7 @@
 
 struct _GduNewDiskImageDialog
 {
-  AdwWindow      parent_instance;
+  AdwDialog      parent_instance;
 
   GtkWidget     *create_image_button;
 
@@ -46,7 +46,13 @@ struct _GduNewDiskImageDialog
   gint           cur_unit_num;
 };
 
-G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_DIALOG)
+
+static gpointer
+gdu_new_disk_image_dialog_get_window (GduNewDiskImageDialog *self)
+{
+  return gtk_widget_get_ancestor (GTK_WIDGET (self), GTK_TYPE_WINDOW);
+}
 
 /* adapted from
  * https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/3eccf2b5fec7200cb16c46dd5d047c083ac318f7/src/disks/gduwindow.c#L729
@@ -68,7 +74,7 @@ loop_setup_cb (UDisksManager *manager, GAsyncResult *res, gpointer user_data)
                                               &out_loop_device_object_path,
                                               NULL, res, &error))
     {
-      gdu_utils_show_error (GTK_WINDOW (self),
+      gdu_utils_show_error (gdu_new_disk_image_dialog_get_window (self),
                             _("Error attaching disk image"),
                             error);
       return;
@@ -106,7 +112,7 @@ dialog_attach_disk_image_helper (GduNewDiskImageDialog *self,
 
       error = g_error_new (G_IO_ERROR, g_io_error_from_errno (errno), "%s",
                            strerror (errno));
-      gdu_utils_show_error (GTK_WINDOW (self),
+      gdu_utils_show_error (gdu_new_disk_image_dialog_get_window (self),
                             _("Error attaching disk image"),
                             error);
       return FALSE;
@@ -148,7 +154,7 @@ create_new_disk (GduNewDiskImageDialog *self)
                                     G_FILE_CREATE_NONE, NULL, &error);
   if (!out_file_stream)
     {
-      gdu_utils_show_error (GTK_WINDOW (self),
+      gdu_utils_show_error (gdu_new_disk_image_dialog_get_window (self),
                             _("Error opening file for writing"), error);
       return;
     }
@@ -163,7 +169,7 @@ create_new_disk (GduNewDiskImageDialog *self)
           g_warning ("Error truncating file output stream: %s (%s, %d)",
                      error->message, g_quark_to_string (error->domain), error->code);
         }
-      gdu_utils_show_error (GTK_WINDOW (self), _("Error writing file"), error);
+      gdu_utils_show_error (gdu_new_disk_image_dialog_get_window (self), _("Error writing file"), error);
     }
 
   if (!g_output_stream_close (G_OUTPUT_STREAM (out_file_stream), NULL, &error))
@@ -176,7 +182,7 @@ create_new_disk (GduNewDiskImageDialog *self)
   /* load loop device */
   dialog_attach_disk_image_helper (self, out_filename, FALSE);
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -239,7 +245,7 @@ on_choose_folder_button_clicked_cb (GduNewDiskImageDialog *self)
   GtkFileDialog *file_dialog;
   GtkWindow *toplevel;
 
-  toplevel = (GtkWindow *)gtk_widget_get_native (GTK_WIDGET (self));
+  toplevel = gdu_new_disk_image_dialog_get_window (self);
   if (toplevel == NULL)
     {
       g_info ("Could not get native window for dialog");
@@ -392,10 +398,6 @@ gdu_new_disk_image_dialog_class_init (GduNewDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_entry);
   gtk_widget_class_bind_template_child (widget_class, GduNewDiskImageDialog, size_unit_combo);
 
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
-
   gtk_widget_class_bind_template_callback (widget_class, set_size_entry_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_unit_changed_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_choose_folder_button_clicked_cb);
@@ -420,9 +422,7 @@ gdu_new_disk_image_dialog_show (UDisksClient *client, GtkWindow *parent_window)
 {
   GduNewDiskImageDialog *self;
 
-  self = g_object_new (GDU_TYPE_NEW_DISK_IMAGE_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_NEW_DISK_IMAGE_DIALOG, NULL);
 
   g_return_if_fail (client != NULL);
   self->client = client;
@@ -430,5 +430,5 @@ gdu_new_disk_image_dialog_show (UDisksClient *client, GtkWindow *parent_window)
   g_return_if_fail (client != NULL);
   self->client = client;
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="GduCreateDiskImageDialog" parent="AdwWindow">
-    <property name="default-width">440</property>
-    <property name="width-request">400</property>
-    <property name="modal">true</property>
+  <template class="GduCreateDiskImageDialog" parent="AdwDialog">
+    <property name="content-width">440</property>
     <property name="title">Create Disk Image</property>
-    <property name="content">
+    <child>
       <object class="AdwToolbarView">
 
         <!-- Headerbar -->
@@ -78,6 +76,7 @@
           </object>
         </property>
       </object>
-    </property>
+    </child>
   </template>
 </interface>
+

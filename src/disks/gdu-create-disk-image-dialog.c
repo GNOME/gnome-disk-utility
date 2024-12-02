@@ -42,7 +42,7 @@
 
 struct _GduCreateDiskImageDialog
 {
-  AdwWindow parent_instance;
+  AdwDialog parent_instance;
 
   GtkWidget    *name_entry;
   GtkWidget    *location_entry;
@@ -80,7 +80,7 @@ struct _GduCreateDiskImageDialog
   GduLocalJob *local_job;
 };
 
-G_DEFINE_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_WINDOW)
+G_DEFINE_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gpointer
@@ -266,7 +266,7 @@ on_show_error (gpointer user_data)
   dialog_data_uninhibit (self);
 
   g_assert (self->copy_error != NULL);
-  gdu_utils_show_error (GTK_WINDOW (self),
+  gdu_utils_show_error (create_disk_dialog_get_window (self),
                         _("Error creating disk image"),
                         self->copy_error);
   g_clear_error (&self->copy_error);
@@ -762,7 +762,7 @@ start_copying (GduCreateDiskImageDialog *self)
                                              &error);
   if (self->output_file_stream == NULL)
     {
-      gdu_utils_show_error (GTK_WINDOW (self), _("Error opening file for writing"), error);
+      gdu_utils_show_error (create_disk_dialog_get_window (self), _("Error opening file for writing"), error);
       return;
     }
 
@@ -771,7 +771,7 @@ start_copying (GduCreateDiskImageDialog *self)
   // gdu_utils_file_chooser_for_disk_images_set_default_folder (folder);
 
   self->inhibit_cookie = gtk_application_inhibit ((gpointer)g_application_get_default (),
-                                                  GTK_WINDOW (self),
+                                                  create_disk_dialog_get_window (self),
                                                   GTK_APPLICATION_INHIBIT_SUSPEND |
                                                   GTK_APPLICATION_INHIBIT_LOGOUT,
                                                   /* Translators: Reason why suspend/logout is being inhibited */
@@ -844,7 +844,7 @@ overwrite_response_cb (GObject          *object,
 
   create_disk_image (self);
 
-  gtk_window_close (GTK_WINDOW (self));
+  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -861,7 +861,7 @@ on_create_image_button_clicked_cb (GduCreateDiskImageDialog *self,
   if (!g_file_query_exists (file, NULL))
     {
       create_disk_image (self);
-      gtk_window_close (GTK_WINDOW (self));
+      adw_dialog_close (ADW_DIALOG (self));
       return;
     }
 
@@ -913,7 +913,7 @@ on_choose_folder_button_clicked_cb (GduCreateDiskImageDialog *self)
   GtkFileDialog *file_dialog;
   GtkWindow *toplevel;
 
-  toplevel = (GtkWindow*) gtk_widget_get_native (GTK_WIDGET (self));
+  toplevel = create_disk_dialog_get_window (self);
   if (toplevel == NULL)
     {
       g_info("Could not get native window for dialog");
@@ -1001,10 +1001,6 @@ gdu_create_disk_image_dialog_class_init (GduCreateDiskImageDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduCreateDiskImageDialog, location_entry);
   gtk_widget_class_bind_template_child (widget_class, GduCreateDiskImageDialog, source_label);
 
-  gtk_widget_class_add_binding_action (widget_class,
-                                       GDK_KEY_Escape, 0, "window.close",
-                                       NULL);
-
   gtk_widget_class_bind_template_callback (widget_class, on_choose_folder_button_clicked_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_create_image_button_clicked_cb);
 }
@@ -1027,9 +1023,7 @@ gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
 {
   GduCreateDiskImageDialog *self;
 
-  self = g_object_new (GDU_TYPE_CREATE_DISK_IMAGE_DIALOG,
-                       "transient-for", parent_window,
-                       NULL);
+  self = g_object_new (GDU_TYPE_CREATE_DISK_IMAGE_DIALOG, NULL);
 
   self->client = client;
   self->object = g_object_ref (object);
@@ -1046,5 +1040,5 @@ gdu_create_disk_image_dialog_show (GtkWindow    *parent_window,
   //                                                   FALSE,   /* set file types */
   //                                                   FALSE);  /* allow_compressed */
 
-  gtk_window_present (GTK_WINDOW (self));
+  adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

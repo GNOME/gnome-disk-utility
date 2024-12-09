@@ -162,7 +162,6 @@ format_disk_clicked_cb (GtkWidget  *widget,
 
   object = gdu_drive_get_object_for_format (self->drive);
   manager = gdu_manager_get_default (NULL);
-  g_warning ("format :%p", object);
   g_assert (object != NULL);
   gdu_format_disk_dialog_show (drive_view_get_window (self),
                                object,
@@ -202,7 +201,6 @@ restore_disk_image_clicked_cb (GtkWidget  *widget,
 
   object = gdu_drive_get_object_for_format (self->drive);
   manager = gdu_manager_get_default (NULL);
-  g_warning ("restore disk :%p", object);
   g_assert (object != NULL);
 
   g_assert (object != NULL);
@@ -225,7 +223,6 @@ benchmark_disk_clicked_cb (GtkWidget  *widget,
 
   object = gdu_drive_get_object (self->drive);
   manager = gdu_manager_get_default (NULL);
-  g_warning ("benchmark disk :%p", object);
   g_assert (object != NULL);
 
   g_assert (object != NULL);

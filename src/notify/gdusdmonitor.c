@@ -297,6 +297,7 @@ update_notification (GduSdMonitor        *monitor,
           notify_notification_set_urgency (*notification, NOTIFY_URGENCY_CRITICAL);
           notify_notification_set_timeout (*notification, NOTIFY_EXPIRES_NEVER);
           notify_notification_set_hint_string (*notification, "desktop-entry", "gnome-disks");
+          notify_notification_set_app_name (*notification, _("Disks"));
           notify_notification_add_action (*notification,
                                           action,
                                           action_label,

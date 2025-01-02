@@ -62,10 +62,7 @@ libgnome_disks = custom_target(
 
 libgnome_disks_dep = declare_dependency(
   sources: libgnome_disks,
-  dependencies: cc.find_library(
-    'libgnome_disks',
-    dirs: join_paths(meson.project_build_root(), 'src', rust_target),
-  ),
+  link_args: [build_root / 'src' / 'disks' / 'libgnome_disks.so'],
 )
 
 # Build C version

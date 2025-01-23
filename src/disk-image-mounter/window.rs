@@ -324,14 +324,14 @@ impl ImageMounterWindow {
             log::error!("Failed to unmount: {}", err);
             return Err(err.into());
         }
-        log::info!("Succesfully unmounted");
+        log::info!("Successfully unmounted");
 
         mounted_object
             .r#loop()
             .await?
             .delete(udisks::standard_options(false))
             .await?;
-        log::info!("Succesfully deleted loop device");
+        log::info!("Successfully deleted loop device");
 
         Ok(())
     }
@@ -355,7 +355,7 @@ impl ImageMounterWindow {
         log::info!("Mounted {} at {}", path.display(), object_path);
 
         //safe to unwrap, since the given path is
-        //already an oject path
+        //already an object path
         let object = client.object(object_path).unwrap();
 
         if let Ok(encrypted) = object.encrypted().await {

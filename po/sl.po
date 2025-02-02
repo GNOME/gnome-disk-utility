@@ -4,25 +4,25 @@
 #
 # Andrej Žnidaršič <andrej.znidarsic@gmail.com>, 2009.
 # Matej Urbančič <mateju@src.gnome.org>, 2009–2024.
-# Martin Srebotnjak <miles@filmsi.net>, 2023-2024.
+# Martin Srebotnjak <miles@filmsi.net>, 2023-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2024-08-14 07:57+0000\n"
-"PO-Revision-Date: 2024-08-14 14:31+0200\n"
+"POT-Creation-Date: 2025-02-02 15:09+0000\n"
+"PO-Revision-Date: 2025-02-02 20:59+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Launchpad-Export-Date: 2011-04-11 06:24+0000\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3
@@ -70,7 +70,7 @@ msgstr ""
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 #: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:301
-#: src/disks/ui/gdu-window.ui:23
+#: src/disks/ui/gdu-window.ui:24
 msgid "Disks"
 msgstr "Diski"
 
@@ -124,31 +124,31 @@ msgstr ""
 "disk;pogon;nosilec;trdi disk;hdd;cdrom;dvd;razdelek;iso;odtis;varnostna "
 "kopija;obnovitev;benchmark;raid;luks;šifriranje;S.M.A.R.T.;smart;"
 
-#: src/disk-image-mounter/main.rs:21
+#: src/disk-image-mounter/main.rs:20
 msgid "GNOME Disk Image Mounter"
 msgstr "Priklopnik odtisov diskov GNOME"
 
-#: src/disk-image-mounter/window.rs:108
+#: src/disk-image-mounter/window.rs:107
 msgid "Compressed image files are not mountable"
 msgstr "Stisnjenih datotek odtisov diska ni mogoče priklopiti"
 
-#: src/disk-image-mounter/window.rs:116
+#: src/disk-image-mounter/window.rs:115
 msgid "Open the mounted image"
 msgstr "Odpri priklopljeni odtis"
 
-#: src/disk-image-mounter/window.rs:119
+#: src/disk-image-mounter/window.rs:118
 msgid "Already mounted read-only"
 msgstr "Že priklopljeno, samo za branje"
 
-#: src/disk-image-mounter/window.rs:122
+#: src/disk-image-mounter/window.rs:121
 msgid "Already mounted"
 msgstr "Že priklopljeno"
 
-#: src/disk-image-mounter/window.rs:156 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.rs:155 src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Odpri v Datotekah"
 
-#: src/disk-image-mounter/window.rs:227
+#: src/disk-image-mounter/window.rs:226
 msgid "Failed to mount file"
 msgstr "Priklop datoteke ni uspel"
 
@@ -1135,7 +1135,7 @@ msgstr "Posodobitev"
 msgid "Assessment"
 msgstr "Delovanje"
 
-#: src/disks/gdu-benchmark-dialog.c:184
+#: src/disks/gdu-benchmark-dialog.c:172
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
@@ -1144,13 +1144,13 @@ msgstr[1] "%u vzorec"
 msgstr[2] "%u vzorca"
 msgstr[3] "%u vzorci"
 
-#: src/disks/gdu-benchmark-dialog.c:536
+#: src/disks/gdu-benchmark-dialog.c:519
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr "Napaka iskanja do odmika %lld: %m"
 
-#: src/disks/gdu-benchmark-dialog.c:547
+#: src/disks/gdu-benchmark-dialog.c:530
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
@@ -1176,89 +1176,97 @@ msgstr "Razširjeni razdelek"
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s – %s prosto (%.1f%% full)"
 
-#: src/disks/gdu-block-row.c:339
+#: src/disks/gdu-block-row.c:134 src/disks/gdu-block-row.c:141
+msgid "Unmount"
+msgstr "Odklopi"
+
+#: src/disks/gdu-block-row.c:135 src/disks/gdu-block-row.c:139
+msgid "Mount"
+msgstr "Priklopi"
+
+#: src/disks/gdu-block-row.c:354
 msgid "Error mounting filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
-#: src/disks/gdu-block-row.c:378
+#: src/disks/gdu-block-row.c:393
 msgid "Error deleting partition"
 msgstr "Napaka pri brisanju razdelka"
 
-#: src/disks/gdu-block-row.c:445
+#: src/disks/gdu-block-row.c:460
 msgid "Delete Partition?"
 msgstr "Želite izbrisati razdelek?"
 
-#: src/disks/gdu-block-row.c:446
+#: src/disks/gdu-block-row.c:461
 msgid "All data on the partition will be lost"
 msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni."
 
-#: src/disks/gdu-block-row.c:447
+#: src/disks/gdu-block-row.c:462
 msgid "Delete"
 msgstr "Izbriši"
 
-#: src/disks/gdu-block-row.c:507
+#: src/disks/gdu-block-row.c:522
 msgid "Error while checking filesystem"
 msgstr "Prišlo je do napake med preverjanjem datotečnega sistema ..."
 
-#: src/disks/gdu-block-row.c:520
+#: src/disks/gdu-block-row.c:535
 msgid "Filesystem intact"
 msgstr "Datotečni sistem ni poškodovan."
 
-#: src/disks/gdu-block-row.c:520
+#: src/disks/gdu-block-row.c:535
 msgid "Filesystem damaged"
 msgstr "Datotečni sistem je poškodovan."
 
-#: src/disks/gdu-block-row.c:522
+#: src/disks/gdu-block-row.c:537
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sistem %s na %s je nepoškodovan."
 
-#: src/disks/gdu-block-row.c:523
+#: src/disks/gdu-block-row.c:538
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sistem %s na %s zahteva popravilo."
 
-#: src/disks/gdu-block-row.c:585
+#: src/disks/gdu-block-row.c:605
 msgid "Confirm Check?"
 msgstr "Potrditev preverjanja"
 
-#: src/disks/gdu-block-row.c:586
+#: src/disks/gdu-block-row.c:606
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Pregled je lahko dolgotrajen, če je na razdelku veliko podatkov."
 
-#: src/disks/gdu-block-row.c:587
+#: src/disks/gdu-block-row.c:607
 msgid "Check"
 msgstr "Preveri"
 
-#: src/disks/gdu-block-row.c:617
+#: src/disks/gdu-block-row.c:638
 msgid "Error while repairing filesystem"
 msgstr "Prišlo je do napake med popravljanjem datotečnega sistema"
 
-#: src/disks/gdu-block-row.c:629
+#: src/disks/gdu-block-row.c:654
 msgid "Repair successful"
 msgstr "Popravilo je uspešno zaključeno!"
 
-#: src/disks/gdu-block-row.c:629
+#: src/disks/gdu-block-row.c:654
 msgid "Repair failed"
 msgstr "Popravilo je spodletelo!"
 
-#: src/disks/gdu-block-row.c:631
+#: src/disks/gdu-block-row.c:656
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečnega sistema %s na %s je popravljen."
 
-#: src/disks/gdu-block-row.c:632
+#: src/disks/gdu-block-row.c:657
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečnega sistema %s na %s ni mogoče popraviti."
 
-#: src/disks/gdu-block-row.c:695
+#: src/disks/gdu-block-row.c:725
 msgid "Repair Filesystem?"
 msgstr "Želite popraviti datotečni sistem?"
 
-#: src/disks/gdu-block-row.c:696
+#: src/disks/gdu-block-row.c:726
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -1270,16 +1278,16 @@ msgstr ""
 "varnostno kopijo. Opravilo je lahko dolgotrajno, če je na razdelku veliko "
 "podatkov."
 
-#: src/disks/gdu-block-row.c:700
+#: src/disks/gdu-block-row.c:730
 msgid "Repair"
 msgstr "Popravi"
 
-#: src/disks/gdu-block-row.c:722
+#: src/disks/gdu-block-row.c:752
 msgid "Error while taking filesystem ownership"
 msgstr ""
 "Prišlo je do napake med prevzemanjem lastništva datotečnega sistema ..."
 
-#: src/disks/gdu-block-row.c:810
+#: src/disks/gdu-block-row.c:840
 #, c-format
 msgid "Make your user and group the owner of \"%s\""
 msgstr "Nastavi svojega uporabnika in skupino za lastnika »%s«"
@@ -1378,8 +1386,8 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:345
 #: src/disks/gdu-format-volume-dialog.c:197
-#: src/disks/ui/gdu-benchmark-dialog.ui:16
-#: src/disks/ui/gdu-benchmark-dialog.ui:23
+#: src/disks/ui/gdu-benchmark-dialog.ui:15
+#: src/disks/ui/gdu-benchmark-dialog.ui:22
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:18
 #: src/disks/ui/gdu-create-disk-image-dialog.ui:18
 #: src/disks/ui/gdu-disk-settings-dialog.ui:15
@@ -1400,12 +1408,12 @@ msgid "_Delete Disk Image File"
 msgstr "_Izbriši datoteko odtis diska"
 
 #: src/disks/gdu-create-disk-image-dialog.c:567
-#: src/disks/gdu-restore-disk-image-dialog.c:521
+#: src/disks/gdu-restore-disk-image-dialog.c:514
 msgid "Error determining size of device: "
 msgstr "Napaka določanja velikosti naprave: "
 
 #: src/disks/gdu-create-disk-image-dialog.c:574
-#: src/disks/gdu-restore-disk-image-dialog.c:528
+#: src/disks/gdu-restore-disk-image-dialog.c:521
 #, c-format
 msgid "Device is size 0"
 msgstr "Naprava je velikosti 0"
@@ -1700,7 +1708,7 @@ msgstr "Tiho (počasno)"
 msgid "Loud (Fast)"
 msgstr "Glasno (hitro)"
 
-#: src/disks/gdu-edit-filesystem-dialog.c:52
+#: src/disks/gdu-edit-filesystem-dialog.c:51
 msgid "Error setting label"
 msgstr "Napaka nastavljanja oznake"
 
@@ -1760,40 +1768,40 @@ msgstr "Brez"
 msgid "Will be deleted"
 msgstr "Bo izbrisano"
 
-#: src/disks/gdu-drive-view.c:130
+#: src/disks/gdu-drive-view.c:140
 msgid "Copied drive model to clipboard"
 msgstr "Kopiran model pogona v odložišče"
 
-#: src/disks/gdu-drive-view.c:139
+#: src/disks/gdu-drive-view.c:149
 msgid "Copied drive serial to clipboard"
 msgstr "Kopirana serijska številka pogona v odložišče"
 
-#: src/disks/gdu-drive-view.c:280
+#: src/disks/gdu-drive-view.c:290
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Med poskusom pošiljanja v stanje pripravljenosti je prišlo do napake."
 
-#: src/disks/gdu-drive-view.c:312
+#: src/disks/gdu-drive-view.c:322
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Med poskusom povrnitve iz stanja pripravljenosti je prišlo do napake."
 
-#: src/disks/gdu-drive-view.c:344
+#: src/disks/gdu-drive-view.c:354
 msgid "Error powering off drive"
 msgstr "Napaka izklapljanja pogona"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:401
+#: src/disks/gdu-drive-view.c:411
 msgid "Are you sure you want to power off the drives?"
 msgstr "Ali ste prepričani, da želite izklopiti pogone?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:403
+#: src/disks/gdu-drive-view.c:413
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "powered down and removed."
 msgstr ""
 "To opravilo bo pripravilo sistem za izklop in odstranitev naslednjih pogonov."
 
-#: src/disks/gdu-drive-view.c:404
+#: src/disks/gdu-drive-view.c:414
 msgid "_Power Off"
 msgstr "_Odklopi"
 
@@ -1880,7 +1888,7 @@ msgstr "Napaka formatiranja nosilca"
 msgid "Error creating partition"
 msgstr "Napaka ustvarjanja razdelka"
 
-#: src/disks/gdu-format-volume-dialog.c:526 src/disks/ui/gdu-block-row.ui:51
+#: src/disks/gdu-format-volume-dialog.c:526 src/disks/ui/gdu-block-row.ui:53
 msgid "Create Partition"
 msgstr "Ustvari razdelek"
 
@@ -1900,15 +1908,15 @@ msgstr "Nastavi geslo"
 msgid "Confirm Details"
 msgstr "Potrdi podrobnosti"
 
-#: src/disks/gdu-mount-options-dialog.c:324
+#: src/disks/gdu-mount-options-dialog.c:328
 msgid "Error updating /etc/fstab entry"
 msgstr "Napaka posodabljanja vnosa v datoteki /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:347
+#: src/disks/gdu-mount-options-dialog.c:351
 msgid "Error adding new /etc/fstab entry"
 msgstr "Napaka dodajanja novega vnosa v datoteko /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:370
+#: src/disks/gdu-mount-options-dialog.c:374
 msgid "Error removing old /etc/fstab entry"
 msgstr "Napaka odstranjevanja starega vnosa iz datoteke /etc/fstab"
 
@@ -1929,53 +1937,53 @@ msgstr "Napaka zapisovanja datoteke"
 msgid "Unnamed (%s).img"
 msgstr "Neimenovan odtis (%s).img"
 
-#: src/disks/gdu-resize-volume-dialog.c:152
+#: src/disks/gdu-resize-volume-dialog.c:160
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr ""
 "Napaka priklapljanja datotečnega sistema za izračun najmanjše možne velikosti"
 
-#: src/disks/gdu-resize-volume-dialog.c:203
-#: src/disks/ui/gdu-resize-volume-dialog.ui:63
+#: src/disks/gdu-resize-volume-dialog.c:211
+#: src/disks/ui/gdu-resize-volume-dialog.ui:66
 msgid "Current Size"
 msgstr "Trenutna velikost"
 
-#: src/disks/gdu-resize-volume-dialog.c:206
-#: src/disks/ui/gdu-resize-volume-dialog.ui:71
+#: src/disks/gdu-resize-volume-dialog.c:214
+#: src/disks/ui/gdu-resize-volume-dialog.ui:74
 msgid "Minimum Size"
 msgstr "Najmanjša velikost"
 
-#: src/disks/gdu-resize-volume-dialog.c:232
-#: src/disks/gdu-resize-volume-dialog.c:352
-#: src/disks/gdu-resize-volume-dialog.c:499
+#: src/disks/gdu-resize-volume-dialog.c:240
+#: src/disks/gdu-resize-volume-dialog.c:360
+#: src/disks/gdu-resize-volume-dialog.c:507
 msgid "Error resizing partition"
 msgstr "Napaka spreminjanja velikosti razdelka"
 
-#: src/disks/gdu-resize-volume-dialog.c:250
-#: src/disks/gdu-resize-volume-dialog.c:288
-#: src/disks/gdu-resize-volume-dialog.c:402
-#: src/disks/gdu-resize-volume-dialog.c:449
+#: src/disks/gdu-resize-volume-dialog.c:258
+#: src/disks/gdu-resize-volume-dialog.c:296
+#: src/disks/gdu-resize-volume-dialog.c:410
+#: src/disks/gdu-resize-volume-dialog.c:457
 msgid "Error resizing filesystem"
 msgstr "Napaka spreminjanja velikosti datotečnega sistema"
 
-#: src/disks/gdu-resize-volume-dialog.c:269
-#: src/disks/gdu-resize-volume-dialog.c:378
+#: src/disks/gdu-resize-volume-dialog.c:277
+#: src/disks/gdu-resize-volume-dialog.c:386
 msgid "Error repairing filesystem after resize"
 msgstr "Napaka popravljanja datotečnega sistema po spreminjanju velikosti"
 
-#: src/disks/gdu-resize-volume-dialog.c:311
-#: src/disks/gdu-resize-volume-dialog.c:425
+#: src/disks/gdu-resize-volume-dialog.c:319
+#: src/disks/gdu-resize-volume-dialog.c:433
 msgid "Error repairing filesystem"
 msgstr "Napaka popravljanja datotečnega sistema"
 
-#: src/disks/gdu-resize-volume-dialog.c:473
+#: src/disks/gdu-resize-volume-dialog.c:481
 msgid "Resizing not ready"
 msgstr "Spreminjanje velikosti ni mogoče"
 
-#: src/disks/gdu-resize-volume-dialog.c:474
+#: src/disks/gdu-resize-volume-dialog.c:482
 msgid "Waited too long for the filesystem"
 msgstr "Čas čakanja na odziv datotečnega sistema je potekel."
 
-#: src/disks/gdu-resize-volume-dialog.c:605
+#: src/disks/gdu-resize-volume-dialog.c:613
 msgid "Error mounting the filesystem"
 msgstr "Napaka priklapljanja datotečnega sistema"
 
@@ -2008,42 +2016,42 @@ msgstr "Odtis diska je za %s manjši od ciljne naprave"
 msgid "The disk image is %s bigger than the target device"
 msgstr "Odtis diska je za %s večji od ciljne naprave"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:444
+#: src/disks/gdu-restore-disk-image-dialog.c:437
 msgid "Error restoring disk image"
 msgstr "Napaka med obnavljanjem odtisa diska"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:719
+#: src/disks/gdu-restore-disk-image-dialog.c:712
 msgid "Error determining size of file"
 msgstr "Napaka določevanja velikosti datoteke"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:732
+#: src/disks/gdu-restore-disk-image-dialog.c:725
 msgid "Error opening file for reading"
 msgstr "Napaka odpiranja datoteke za branje"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdu-restore-disk-image-dialog.c:758
+#: src/disks/gdu-restore-disk-image-dialog.c:751
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
 msgstr "Kopiranje odtisa diska na napravo"
 
 #. Translators: this is the description of the job
-#: src/disks/gdu-restore-disk-image-dialog.c:763
+#: src/disks/gdu-restore-disk-image-dialog.c:756
 msgid "Restoring Disk Image"
 msgstr "Obnovi odtis diska"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:826
+#: src/disks/gdu-restore-disk-image-dialog.c:819
 msgid "Are you sure you want to write the disk image to the device?"
 msgstr "Ali ste prepričani, da želite zapisati odtis diska na napravo?"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:827
+#: src/disks/gdu-restore-disk-image-dialog.c:820
 msgid "All existing data will be lost"
 msgstr "Vsi obstoječi podatki bodo nepovratno izgubljeni."
 
-#: src/disks/gdu-restore-disk-image-dialog.c:828
+#: src/disks/gdu-restore-disk-image-dialog.c:821
 msgid "Restore"
 msgstr "Obnovi"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:860
+#: src/disks/gdu-restore-disk-image-dialog.c:853
 msgid "Choose a disk image to restore."
 msgstr "Izberite odtis diska za obnovitev."
 
@@ -2161,15 +2169,15 @@ msgid "_Conveyance"
 msgstr "_Posredovanje"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:4
-#: src/disks/ui/gdu-benchmark-dialog.ui:48
+#: src/disks/ui/gdu-benchmark-dialog.ui:47
 msgid "Benchmark"
 msgstr "Primerjalni preizkus"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:34
+#: src/disks/ui/gdu-benchmark-dialog.ui:33
 msgid "_Start…"
 msgstr "_Začni …"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:61
+#: src/disks/ui/gdu-benchmark-dialog.ui:60
 msgid ""
 "Benchmarking measures the transfer rate for different areas of the disk. It "
 "also measures seek times from one area to another."
@@ -2177,134 +2185,119 @@ msgstr ""
 "Primerjalna analiza meri hitrost prenosa za različna področja diska. Prav "
 "tako meri čas iskanja z enega območja na drugega."
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:66
+#: src/disks/ui/gdu-benchmark-dialog.ui:65
 msgid "Transfer S_amples"
 msgstr "Vzorci prenos_a"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:81
+#: src/disks/ui/gdu-benchmark-dialog.ui:80
 msgid "Transfer Sample S_ize"
 msgstr "Vel_ikost vzorca prenosa"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:97
+#: src/disks/ui/gdu-benchmark-dialog.ui:96
 msgid "_Access Time Samples"
 msgstr "Vzor_ci dostopnega časa"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:116
+#: src/disks/ui/gdu-benchmark-dialog.ui:115
 msgid "_Write Benchmark"
 msgstr "Primerjalni prei_zkus pisanja"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:118
+#: src/disks/ui/gdu-benchmark-dialog.ui:117
 msgid "Data should be backed up before using this feature"
 msgstr "Pred uporabo te funkcije je priporočljivo varnostno kopirati podatke"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:159
+#: src/disks/ui/gdu-benchmark-dialog.ui:142
 msgid "Sample Size"
 msgstr "Velikost vzorca"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:169
-#: src/disks/ui/gdu-benchmark-dialog.ui:189
-#: src/disks/ui/gdu-benchmark-dialog.ui:209
-#: src/disks/ui/gdu-benchmark-dialog.ui:229
-msgid "—"
-msgstr "—"
-
-#: src/disks/ui/gdu-benchmark-dialog.ui:179
+#: src/disks/ui/gdu-benchmark-dialog.ui:151
 msgid "Average Read Rate"
 msgstr "Povprečna hitrost branja"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:199
+#: src/disks/ui/gdu-benchmark-dialog.ui:161
 msgid "Average Write Rate"
 msgstr "Povprečna hitrost pisanja"
 
-#: src/disks/ui/gdu-benchmark-dialog.ui:219
+#: src/disks/ui/gdu-benchmark-dialog.ui:171
 msgid "Average Access Time"
 msgstr "Povprečni dostopni čas"
 
-#: src/disks/ui/gdu-block-row.ui:64
+#: src/disks/ui/gdu-block-row.ui:65
 msgid "Partition Options"
 msgstr "Možnosti razdelka"
 
-#: src/disks/ui/gdu-block-row.ui:91 src/disks/ui/gdu-drive-view.ui:197
+#: src/disks/ui/gdu-block-row.ui:80 src/disks/ui/gdu-drive-view.ui:102
 msgid "Size"
 msgstr "Velikost"
 
-#: src/disks/ui/gdu-block-row.ui:113
+#: src/disks/ui/gdu-block-row.ui:89
 msgid "Device ID"
 msgstr "Določilo ID naprave"
 
-#: src/disks/ui/gdu-block-row.ui:135
+#: src/disks/ui/gdu-block-row.ui:98
 msgid "UUID"
 msgstr "Koda UUID"
 
-#: src/disks/ui/gdu-block-row.ui:157
+#: src/disks/ui/gdu-block-row.ui:107
 msgid "Partition Type"
 msgstr "Vrsta razdelka"
 
-#: src/disks/ui/gdu-block-row.ui:185
-msgid "Unmount"
-msgstr "Odklopi"
-
-#: src/disks/ui/gdu-block-row.ui:189
-msgid "Mount"
-msgstr "Priklopi"
-
-#: src/disks/ui/gdu-block-row.ui:193
+#: src/disks/ui/gdu-block-row.ui:120
 msgid "Resize…"
 msgstr "Spremeni velikost …"
 
-#: src/disks/ui/gdu-block-row.ui:197
+#: src/disks/ui/gdu-block-row.ui:124
 msgid "Edit"
 msgstr "Uredi"
 
-#: src/disks/ui/gdu-block-row.ui:199
+#: src/disks/ui/gdu-block-row.ui:126
 msgid "Partition…"
 msgstr "Razdelek …"
 
-#: src/disks/ui/gdu-block-row.ui:203
+#: src/disks/ui/gdu-block-row.ui:130
 msgid "Filesystem…"
 msgstr "Datotečni sistem …"
 
-#: src/disks/ui/gdu-block-row.ui:207
+#: src/disks/ui/gdu-block-row.ui:134
 msgid "Change Passphrase…"
 msgstr "Spremeni šifrirno geslo …"
 
-#: src/disks/ui/gdu-block-row.ui:211
+#: src/disks/ui/gdu-block-row.ui:138
 msgid "Mount Options…"
 msgstr "Možnosti priklopa …"
 
-#: src/disks/ui/gdu-block-row.ui:215
+#: src/disks/ui/gdu-block-row.ui:142
 msgid "Encryption Options…"
 msgstr "Možnosti šifriranja …"
 
-#: src/disks/ui/gdu-block-row.ui:219
+#: src/disks/ui/gdu-block-row.ui:146
 msgid "Take Ownership…"
 msgstr "Prevzemi lastništvo …"
 
-#: src/disks/ui/gdu-block-row.ui:224
+#: src/disks/ui/gdu-block-row.ui:151
 msgid "Format Partition…"
 msgstr "Formatiraj razdelek …"
 
-#: src/disks/ui/gdu-block-row.ui:228
+#: src/disks/ui/gdu-block-row.ui:155
 msgid "Delete…"
 msgstr "Izbriši …"
 
-#: src/disks/ui/gdu-block-row.ui:234
+#: src/disks/ui/gdu-block-row.ui:161
 msgid "Check Filesystem…"
 msgstr "Preveri _datotečni sistem …"
 
-#: src/disks/ui/gdu-block-row.ui:238
+#: src/disks/ui/gdu-block-row.ui:165
 msgid "Repair Filesystem…"
 msgstr "Popravi datotečni sistem …"
 
-#: src/disks/ui/gdu-block-row.ui:242
+#: src/disks/ui/gdu-block-row.ui:169
 msgid "Benchmark Partition…"
 msgstr "Primerjalni preizkus razdelka …"
 
-#: src/disks/ui/gdu-block-row.ui:248
+#: src/disks/ui/gdu-block-row.ui:175
 msgid "Create Partition Image…"
 msgstr "Ustvari odtis razdelka …"
 
-#: src/disks/ui/gdu-block-row.ui:252
+#: src/disks/ui/gdu-block-row.ui:179
 msgid "Restore Partition Image…"
 msgstr "Obnovi odtis razdelka …"
 
@@ -2455,67 +2448,67 @@ msgstr "Enote"
 
 #: src/disks/ui/gdu-create-partition-page.ui:84
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:97
-#: src/disks/ui/gdu-resize-volume-dialog.ui:114
+#: src/disks/ui/gdu-resize-volume-dialog.ui:117
 msgid "bytes"
 msgstr "bajti"
 
 #: src/disks/ui/gdu-create-partition-page.ui:85
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:98
-#: src/disks/ui/gdu-resize-volume-dialog.ui:115
+#: src/disks/ui/gdu-resize-volume-dialog.ui:118
 msgid "kB"
 msgstr "kB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:86
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:99
-#: src/disks/ui/gdu-resize-volume-dialog.ui:116
+#: src/disks/ui/gdu-resize-volume-dialog.ui:119
 msgid "MB"
 msgstr "MB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:87
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:100
-#: src/disks/ui/gdu-resize-volume-dialog.ui:117
+#: src/disks/ui/gdu-resize-volume-dialog.ui:120
 msgid "GB"
 msgstr "GB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:88
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:101
-#: src/disks/ui/gdu-resize-volume-dialog.ui:118
+#: src/disks/ui/gdu-resize-volume-dialog.ui:121
 msgid "TB"
 msgstr "TB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:89
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:102
-#: src/disks/ui/gdu-resize-volume-dialog.ui:119
+#: src/disks/ui/gdu-resize-volume-dialog.ui:122
 msgid "PB"
 msgstr "PB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:90
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:103
-#: src/disks/ui/gdu-resize-volume-dialog.ui:120
+#: src/disks/ui/gdu-resize-volume-dialog.ui:123
 msgid "KiB"
 msgstr "KiB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:91
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:104
-#: src/disks/ui/gdu-resize-volume-dialog.ui:121
+#: src/disks/ui/gdu-resize-volume-dialog.ui:124
 msgid "MiB"
 msgstr "MiB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:92
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:105
-#: src/disks/ui/gdu-resize-volume-dialog.ui:122
+#: src/disks/ui/gdu-resize-volume-dialog.ui:125
 msgid "GiB"
 msgstr "GiB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:93
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:106
-#: src/disks/ui/gdu-resize-volume-dialog.ui:123
+#: src/disks/ui/gdu-resize-volume-dialog.ui:126
 msgid "TiB"
 msgstr "TiB"
 
 #: src/disks/ui/gdu-create-partition-page.ui:94
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:107
-#: src/disks/ui/gdu-resize-volume-dialog.ui:124
+#: src/disks/ui/gdu-resize-volume-dialog.ui:127
 msgid "PiB"
 msgstr "PiB"
 
@@ -2648,73 +2641,73 @@ msgstr ""
 msgid "Wr_ite Cache"
 msgstr "Predpomnilnik _pisanja"
 
-#: src/disks/ui/gdu-drive-view.ui:76 src/disks/ui/gdu-drive-view.ui:133
+#: src/disks/ui/gdu-drive-header.ui:119 src/disks/ui/gdu-drive-view.ui:38
 msgid "Drive Information"
 msgstr "Podatki o pogonu"
 
-#: src/disks/ui/gdu-drive-view.ui:85
+#: src/disks/ui/gdu-drive-header.ui:128
 msgid "Drive Options"
 msgstr "Možnosti pogona"
 
-#: src/disks/ui/gdu-drive-view.ui:102
-msgid "Space Allocation"
-msgstr "Dodeljevanje prostora"
-
-#: src/disks/ui/gdu-drive-view.ui:111
-msgid "Volumes"
-msgstr "Nosilci"
-
-#: src/disks/ui/gdu-drive-view.ui:148
-msgid "Model"
-msgstr "Model"
-
-#: src/disks/ui/gdu-drive-view.ui:152 src/disks/ui/gdu-drive-view.ui:172
-msgid "Copy"
-msgstr "Kopiraj"
-
-#: src/disks/ui/gdu-drive-view.ui:168
-msgid "Serial"
-msgstr "Zaporedna številka"
-
-#: src/disks/ui/gdu-drive-view.ui:188 src/disks/ui/gdu-format-disk-dialog.ui:85
-msgid "Partitioning"
-msgstr "Razdelek"
-
-#: src/disks/ui/gdu-drive-view.ui:217
+#: src/disks/ui/gdu-drive-header.ui:142
 msgid "Format Disk…"
 msgstr "Formatiraj disk …"
 
-#: src/disks/ui/gdu-drive-view.ui:221
+#: src/disks/ui/gdu-drive-header.ui:146
 msgid "Create Disk Image…"
 msgstr "Ustvari odtis diska …"
 
-#: src/disks/ui/gdu-drive-view.ui:225
+#: src/disks/ui/gdu-drive-header.ui:150
 msgid "Restore Disk Image…"
 msgstr "Obnovi odtis diska …"
 
-#: src/disks/ui/gdu-drive-view.ui:231
+#: src/disks/ui/gdu-drive-header.ui:156
 msgid "Benchmark Disk…"
 msgstr "Primerjalni preizkus diska …"
 
-#: src/disks/ui/gdu-drive-view.ui:235
+#: src/disks/ui/gdu-drive-header.ui:160
 msgid "SMART Data & Self-Tests…"
 msgstr "Podatki SMART in samopreizkusi …"
 
-#: src/disks/ui/gdu-drive-view.ui:239
+#: src/disks/ui/gdu-drive-header.ui:164
 msgid "Drive Settings…"
 msgstr "Nastavitve pogona …"
 
-#: src/disks/ui/gdu-drive-view.ui:245
+#: src/disks/ui/gdu-drive-header.ui:170
 msgid "Standby"
 msgstr "V _pripravljenost"
 
-#: src/disks/ui/gdu-drive-view.ui:249
+#: src/disks/ui/gdu-drive-header.ui:174
 msgid "Wake Up"
 msgstr "Povrni iz pripravljenosti"
 
-#: src/disks/ui/gdu-drive-view.ui:253
+#: src/disks/ui/gdu-drive-header.ui:178
 msgid "Power Off"
 msgstr "Izključi"
+
+#: src/disks/ui/gdu-drive-view.ui:15
+msgid "Space Allocation"
+msgstr "Dodeljevanje prostora"
+
+#: src/disks/ui/gdu-drive-view.ui:23
+msgid "Volumes"
+msgstr "Nosilci"
+
+#: src/disks/ui/gdu-drive-view.ui:53
+msgid "Model"
+msgstr "Model"
+
+#: src/disks/ui/gdu-drive-view.ui:57 src/disks/ui/gdu-drive-view.ui:77
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: src/disks/ui/gdu-drive-view.ui:73
+msgid "Serial"
+msgstr "Zaporedna številka"
+
+#: src/disks/ui/gdu-drive-view.ui:93 src/disks/ui/gdu-format-disk-dialog.ui:85
+msgid "Partitioning"
+msgstr "Razdelek"
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:4
 msgid "Edit Filesystem"
@@ -2742,8 +2735,8 @@ msgid "_Partition Type"
 msgstr "Vrsta razde_lka"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:42
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
-msgstr "Vrsta razdelka opredeljena kot 32-bitni <i>GUID</i>"
+msgid "The partition type represented as a 32-bit GUID"
+msgstr "Vrsta razdelka, opredeljena kot 32-bitni GUID"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:49
 msgid ""
@@ -2953,7 +2946,7 @@ msgstr "Spremeni velikost nosilca"
 msgid "_Resize"
 msgstr "_Spremeni velikost"
 
-#: src/disks/ui/gdu-resize-volume-dialog.ui:34
+#: src/disks/ui/gdu-resize-volume-dialog.ui:37
 msgid ""
 "Resizing a filesystem can result in data loss. It is recommended to backup "
 "any data before continuing."
@@ -2961,19 +2954,19 @@ msgstr ""
 "Spreminjanje velikosti datotečnega sistema lahko povzroči izgubo podatkov. "
 "Priporočljivo je, da pred nadaljevanjem varnostno kopirate vse podatke."
 
-#: src/disks/ui/gdu-resize-volume-dialog.ui:55
+#: src/disks/ui/gdu-resize-volume-dialog.ui:58
 msgid "Available Space"
 msgstr "Razpoložljiv prostor"
 
-#: src/disks/ui/gdu-resize-volume-dialog.ui:83
+#: src/disks/ui/gdu-resize-volume-dialog.ui:86
 msgid "_New Size"
 msgstr "_Nova velikost"
 
-#: src/disks/ui/gdu-resize-volume-dialog.ui:90
+#: src/disks/ui/gdu-resize-volume-dialog.ui:93
 msgid "_Free After Resize"
 msgstr "_Sprosti po spremembi velikosti"
 
-#: src/disks/ui/gdu-resize-volume-dialog.ui:107
+#: src/disks/ui/gdu-resize-volume-dialog.ui:110
 msgid "_Units"
 msgstr "_Enote"
 
@@ -3022,39 +3015,39 @@ msgstr ""
 "Rekurzivni način spremeni lastništvo podmap in datotek. To lahko povzroči "
 "težave, če so datoteke v lasti drugih uporabnikov."
 
-#: src/disks/ui/gdu-window.ui:32
+#: src/disks/ui/gdu-window.ui:33
 msgid "Main Menu"
 msgstr "Glavni meni"
 
-#: src/disks/ui/gdu-window.ui:70
+#: src/disks/ui/gdu-window.ui:71
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: src/disks/ui/gdu-window.ui:83
+#: src/disks/ui/gdu-window.ui:84
 msgid "No Device Selected"
 msgstr "Ni izbrane naprave"
 
-#: src/disks/ui/gdu-window.ui:112
+#: src/disks/ui/gdu-window.ui:113
 msgid "_New Disk Image…"
 msgstr "_Nov odtis diska …"
 
-#: src/disks/ui/gdu-window.ui:116
+#: src/disks/ui/gdu-window.ui:117
 msgid "_Attach Disk Image…"
 msgstr "Pripni _odtis diska …"
 
-#: src/disks/ui/gdu-window.ui:123
+#: src/disks/ui/gdu-window.ui:124
 msgid "_Keyboard Shortcuts"
 msgstr "_Tipkovne bližnjice"
 
-#: src/disks/ui/gdu-window.ui:127
+#: src/disks/ui/gdu-window.ui:128
 msgid "_Help"
 msgstr "Pomo_ć"
 
-#: src/disks/ui/gdu-window.ui:130
+#: src/disks/ui/gdu-window.ui:131
 msgid "_About Disks"
 msgstr "O _programu"
 
-#: src/disks/ui/gdu-window.ui:137
+#: src/disks/ui/gdu-window.ui:138
 msgid "Set up _read-only loop device"
 msgstr "Nastavitev zančne naprave le _za branje"
 

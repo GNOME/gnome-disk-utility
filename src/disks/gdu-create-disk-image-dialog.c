@@ -283,13 +283,13 @@ on_delete_response (GObject       *object,
                     GAsyncResult  *response,
                     gpointer       userdata)
 {
-  AdwMessageDialog *dialog = ADW_MESSAGE_DIALOG (object);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
   GduCreateDiskImageDialog *self = userdata;
   g_autoptr(GError) error = NULL;
   g_autoptr(GFile) file = NULL;
   const char *name;
 
-  if (g_strcmp0 (adw_message_dialog_choose_finish(dialog, response), "cancel") == 0)
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
   name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
 
@@ -304,7 +304,7 @@ on_delete_response (GObject       *object,
 static gboolean
 on_success (gpointer user_data)
 {
-  GtkWidget *dialog;
+  AdwDialog *dialog;
   gdouble percentage;
   g_autofree gchar *s = NULL;
   GduCreateDiskImageDialog *self = user_data;
@@ -321,39 +321,39 @@ on_success (gpointer user_data)
    */
   if (self->num_error_bytes > 0)
     {
-      dialog = adw_message_dialog_new (NULL,
-                                      /* Translators: Heading in dialog shown if some data was unreadable while creating a disk image */
+      dialog = adw_alert_dialog_new (/* Translators: Heading in dialog shown if some data was unreadable while creating a disk image */
                                        _("Unrecoverable Read Errors"),
                                        NULL);
 
       s = g_format_size (self->num_error_bytes);
       percentage = 100.0 * ((gdouble) self->num_error_bytes) / ((gdouble) gdu_estimator_get_target_bytes (self->estimator));
 
-      adw_message_dialog_format_body (ADW_MESSAGE_DIALOG (dialog),
-                                      /* Translators: Body in dialog shown if some data was unreadable while creating a disk image.
-                                       * The %f is the percentage of unreadable data (ex. 13.0).
-                                       * The first %s is the amount of unreadable data (ex. "4.2 MB").
-                                       * The second %s is the name of the device (ex "/dev/").
-                                       */
-                                      _("%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive."),
-                                      percentage,
-                                      s,
-                                      gtk_label_get_text (GTK_LABEL (self->source_label)));
+      adw_alert_dialog_format_body (ADW_ALERT_DIALOG (dialog),
+                                    /* Translators: Body in dialog shown if some data was unreadable while creating a disk image.
+                                     * The %f is the percentage of unreadable data (ex. 13.0).
+                                     * The first %s is the amount of unreadable data (ex. "4.2 MB").
+                                     * The second %s is the name of the device (ex "/dev/").
+                                     */
+                                    _("%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive."),
+                                    percentage,
+                                    s,
+                                    gtk_label_get_text (GTK_LABEL (self->source_label)));
 
-      adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
-                                        "cancel",  _("_Cancel"),
-                                        "confirm", _("_Delete Disk Image File"),
-                                        NULL);
+      adw_alert_dialog_add_responses (ADW_ALERT_DIALOG (dialog),
+                                      "cancel",  _("_Cancel"),
+                                      "confirm", _("_Delete Disk Image File"),
+                                      NULL);
 
-      adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog), "cancel");
-      adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog),
-                                                  "confirm",
-                                                  ADW_RESPONSE_DESTRUCTIVE);
+      adw_alert_dialog_set_default_response (ADW_ALERT_DIALOG (dialog), "cancel");
+      adw_alert_dialog_set_response_appearance (ADW_ALERT_DIALOG (dialog),
+                                                "confirm",
+                                                ADW_RESPONSE_DESTRUCTIVE);
 
-      adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog),
-                                 NULL,
-                                 on_delete_response,
-                                 self);
+      adw_alert_dialog_choose (ADW_ALERT_DIALOG (dialog),
+                               NULL,
+                               NULL,
+                               on_delete_response,
+                               self);
     }
 
   return FALSE; /* remove source */

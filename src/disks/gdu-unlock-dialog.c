@@ -326,6 +326,11 @@ gdu_unlock_dialog_show (GtkWindow    *parent_window,
       adw_banner_set_revealed (ADW_BANNER (self->veracrypt_banner), g_str_equal (type, "crypto_unknown"));
     }
 
+  g_signal_connect_swapped (self->key_files_store,
+                            "notify::n-items",
+                            G_CALLBACK (unlock_dialog_update_unlock_button_cb),
+                            self);
+
   secret_password_lookup (&luks_passphrase_schema,
                           NULL, /* GCancellable */
                           luks_find_passphrase_cb,

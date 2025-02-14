@@ -17,7 +17,7 @@ use crate::estimator::{self, GduEstimator};
 mod imp {
     use std::cell::{Cell, RefCell};
 
-    use adw::subclass::window::AdwWindowImpl;
+    use adw::subclass::dialog::AdwDialogImpl;
 
     use crate::config;
 
@@ -55,7 +55,7 @@ mod imp {
     impl ObjectSubclass for GduRestoreDiskImageDialog {
         const NAME: &'static str = "GduRestoreDiskImageDialog";
         type Type = super::GduRestoreDiskImageDialog;
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
 
         fn class_init(klass: &mut Self::Class) {
             klass.bind_template();
@@ -84,28 +84,24 @@ mod imp {
     }
 
     impl WidgetImpl for GduRestoreDiskImageDialog {}
-    impl WindowImpl for GduRestoreDiskImageDialog {}
-    impl AdwWindowImpl for GduRestoreDiskImageDialog {}
+    impl AdwDialogImpl for GduRestoreDiskImageDialog {}
 }
 
 glib::wrapper! {
     pub struct GduRestoreDiskImageDialog(ObjectSubclass<imp::GduRestoreDiskImageDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window,
+        @extends gtk::Widget, adw::Dialog,
         @implements gio::ActionMap, gio::ActionGroup, gtk::Root;
 }
 
 #[gtk::template_callbacks]
 impl GduRestoreDiskImageDialog {
     pub async fn show(
-        parent_window: &impl IsA<gtk::Window>,
+        parent_window: &impl IsA<gtk::Widget>,
         object: Option<&udisks::Object>,
         client: udisks::Client,
         disk_image_filename: Option<&str>,
     ) {
-        let dialog: Self = glib::Object::builder()
-            .property("application", parent_window.application())
-            .property("transient-for", parent_window)
-            .build();
+        let dialog: Self = glib::Object::builder().build();
         let imp = dialog.imp();
         imp.client.replace(Some(client));
         dialog.set_destination_object(object.cloned()).await;
@@ -129,7 +125,7 @@ impl GduRestoreDiskImageDialog {
         }
         dialog.update();
 
-        dialog.present();
+        dialog.present(parent_window);
     }
 
     async fn set_destination_object(&self, object: Option<udisks::Object>) {
@@ -150,6 +146,12 @@ impl GduRestoreDiskImageDialog {
                 imp.block.replace(Some(block));
             }
         }
+    }
+
+    pub fn window(&self) -> gtk::Window {
+        self.ancestor(gtk::Window::static_type())
+            .and_downcast()
+            .expect("`dialog` must be attached to a parent window")
     }
 
     fn update(&self) -> Option<()> {
@@ -373,7 +375,10 @@ impl GduRestoreDiskImageDialog {
             &mut input_stream
         };
 
-        let application = self.application().expect("`application` should be set");
+        let application = self
+            .window()
+            .application()
+            .expect("`application` should be set");
         let inhibit_cookie = application.inhibit(
             self.native().and_downcast_ref::<gtk::Window>(),
             gtk::ApplicationInhibitFlags::SUSPEND | gtk::ApplicationInhibitFlags::LOGOUT,
@@ -528,7 +533,7 @@ impl GduRestoreDiskImageDialog {
         let file_dialog = gtk::FileDialog::builder()
             .title(gettext("Choose a disk image to restore."))
             .build();
-        if let Ok(file) = file_dialog.open_future(Some(self)).await {
+        if let Ok(file) = file_dialog.open_future(Some(&self.window())).await {
             self.imp().restore_file.set(Some(file));
             self.update();
         }

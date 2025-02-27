@@ -377,8 +377,6 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                                                 NULL,           /* GCancellable */
                                                 create_partition_cb,
                                                 g_object_ref (self));
-
-  adw_dialog_close (ADW_DIALOG (self));
 }
 
 static void
@@ -498,9 +496,21 @@ gdu_create_format_show (UDisksClient  *client,
 
   self->udisks_client = client;
   self->udisks_object = g_object_ref (object);
+  self->udisks_drive = udisks_object_get_drive (object);
   self->udisks_block = udisks_object_get_block (object);
+
+  // in case the object passed was from a gdu drive get block from drive
+  if (self->udisks_block == NULL && self->udisks_drive != NULL)
+    self->udisks_block = udisks_client_get_block_for_drive (self->udisks_client,
+                                                     self->udisks_drive,
+                                                     FALSE);
+
+  // in case the object passed was from gdu-block get drive from block
   self->udisks_drive = udisks_client_get_drive_for_block (client, self->udisks_block);
-  self->udisks_table = udisks_object_get_partition_table (object);
+
+  // get dbus inteface for the block
+  UDisksObject* block_object = (gpointer) g_dbus_interface_get_object ((gpointer) self->udisks_block);
+  self->udisks_table = udisks_object_get_partition_table (block_object);
   g_assert (self->udisks_block != NULL);
 
   self->add_partition = add_partition;

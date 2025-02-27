@@ -188,5 +188,7 @@ output += '        Use logind:                 ' + logind + '\n'
 output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
 output += '        compiler:                   ' + cc.get_id() + '\n'
 output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n\n'
-output += '        (Change with: meson configure BUILDDIR -D logind=libsystemd|libelogind|none -D gsd_plugin=true|false)\n\n'
+output += '        C buildtype:                ' + get_option('buildtype') + '\n\n'
+output += '        Rust profile:               ' + get_option('profile') + '\n\n'
+output += '        (Change with: meson configure BUILDDIR -D profile=release|development -D logind=libsystemd|libelogind|none -D gsd_plugin=true|false)\n\n'
 message(output)

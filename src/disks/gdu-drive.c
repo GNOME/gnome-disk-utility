@@ -152,8 +152,11 @@ gdu_drive_get_size (GduItem *item)
 
   g_assert (GDU_IS_DRIVE (self));
 
-  if (self->drive)
-    return udisks_drive_get_size (self->drive);
+  if (self->drive) {
+      guint64 drive_size = udisks_drive_get_size (self->drive);
+      if (drive_size)
+          return drive_size;
+  }
 
   if (self->block)
     return udisks_block_get_size (self->block);

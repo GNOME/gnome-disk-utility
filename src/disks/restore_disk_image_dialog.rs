@@ -9,8 +9,8 @@ use gettextrs::{gettext, pgettext};
 use gtk::glib::property::PropertySet;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
-use libgdu::gettext::gettext_f;
 use libgdu::ConfirmationDialogResponse;
+use libgdu::gettext::gettext_f;
 
 use crate::estimator::{self, GduEstimator};
 
@@ -260,19 +260,73 @@ impl GduRestoreDiskImageDialog {
             .into_iter()
             .filter_map(|(object_path, _)| client.object(object_path).ok())
         {
-            let Ok(drive): udisks::Result<udisks::drive::DriveProxy> = object.drive().await else {
+            //TODO: clean this up once if-let chains get stabilized
+            let block = if let Ok(drive) = object.drive().await {
+                let Some(block) = client.block_for_drive(&drive, false).await else {
+                    continue;
+                };
+                block
+            } else if let Ok(block) = object.block().await {
+                if self.should_display(&object).await == Ok(true) {
+                    block
+                } else {
+                    continue;
+                }
+            } else {
                 continue;
             };
+
             let info = client.object_info(&object).await;
             drive_names.append(&info.one_liner.unwrap());
-            if let Some(block) = client.block_for_drive(&drive, false).await {
-                let object = client.object(block.inner().path().to_owned()).unwrap();
-                drives.push(object);
-            }
+            let object = client.object(block.inner().path().to_owned()).unwrap();
+            drives.push(object);
         }
+
         //TODO: names are truncated
         self.imp().destination_row.set_model(Some(&drive_names));
         self.imp().destination_drives.replace(drives);
+    }
+
+    async fn should_display(&self, object: &udisks::Object) -> udisks::Result<bool> {
+        let block = object.block().await?;
+        if libgdu::has_userspace_mount_option(&block, "x-gdu.hide").await {
+            return Ok(false);
+        }
+
+        // skip RAM devices
+        let device = block.device().await?;
+        if device.starts_with(b"/dev/ram") || device.starts_with(b"/dev/zram") {
+            return Ok(false);
+        }
+
+        // skip if loop is zero-sized (unused)
+        // Note that we _do_ want to show any other device of size 0 since
+        // that's a good hint that the system may be misconfigured and
+        // attention is needed.
+        let size = block.size().await?;
+        let loop_proxy = object.r#loop().await;
+        if size == 0 && loop_proxy.is_ok() {
+            return Ok(false);
+        }
+
+        // only include devices that are top-level
+        if object.partition().await.is_ok() {
+            return Ok(false);
+        }
+
+        // skip if already shown as a drive
+        let drive = block.drive().await?;
+        if drive.as_str() != "/" {
+            return Ok(false);
+        }
+
+        // skip if already shown as an unlocked device
+        let crypto_backing_device = block.crypto_backing_device().await?;
+        if crypto_backing_device.as_str() != "/" {
+            return Ok(false);
+        }
+
+        Ok(true)
     }
 
     #[template_callback]

@@ -171,7 +171,7 @@ on_property_changed_cb (GduEditPartitionDialog *self)
 static void
 gdu_edit_partition_dialog_populate_types_row (GduEditPartitionDialog *self)
 {
-  guint n;
+  guint n = 0;
   GList *l;
   g_autoptr(GList) infos;
   const gchar *cur_type;
@@ -180,7 +180,7 @@ gdu_edit_partition_dialog_populate_types_row (GduEditPartitionDialog *self)
   infos = udisks_client_get_partition_type_infos (self->client,
                                                   self->partition_table_type,
                                                   NULL);
-  for (l = infos, n = 0; l != NULL; l = l->next, n++)
+  for (l = infos; l != NULL; l = l->next)
     {
       UDisksPartitionTypeInfo *info = l->data;
       g_autoptr(GObject) obj = NULL;
@@ -201,6 +201,7 @@ gdu_edit_partition_dialog_populate_types_row (GduEditPartitionDialog *self)
       g_object_set_data (G_OBJECT (obj), "type", (gpointer) info->type);
       if (g_strcmp0 (info->type, cur_type) == 0)
         adw_combo_row_set_selected (ADW_COMBO_ROW (self->type_row), n);
+      n+=1;
     }
 
   g_list_foreach (infos, (GFunc) udisks_partition_type_info_free, NULL);

@@ -227,6 +227,9 @@ gdu_block_get_features (GduItem *item)
   UDisksBlock *block;
   GduFeature features = 0, drive_features;
   gboolean read_only;
+  g_autofree gchar *fs_resize_missing_utility = NULL;
+  g_autofree gchar *fs_check_missing_utility = NULL;
+  g_autofree gchar *fs_repair_missing_utility = NULL;
 
   g_assert (GDU_IS_BLOCK (self));
 
@@ -353,17 +356,21 @@ gdu_block_get_features (GduItem *item)
 
       type = udisks_block_get_id_type (block);
       /* for now the filesystem resize on just any block device is not shown, see resize_dialog_show */
+      /* partition is considered to be able to perform an operation even if it is missing an utility */
       if (!read_only && self->partition != NULL &&
-          gdu_utils_can_resize (self->client, type, FALSE, NULL, NULL))
+          (gdu_utils_can_resize (self->client, type, FALSE, NULL, &fs_resize_missing_utility) ||
+           g_strcmp0(fs_resize_missing_utility, "") > 0))
         features |= GDU_FEATURE_RESIZE_PARTITION;
 
-      if (!read_only && gdu_utils_can_repair (self->client, type, FALSE, NULL))
+      if (!read_only && (gdu_utils_can_repair (self->client, type, FALSE, &fs_repair_missing_utility) ||
+          g_strcmp0(fs_repair_missing_utility, "") > 0))
         features |= GDU_FEATURE_REPAIR_FILESYSTEM;
 
       if (!read_only && gdu_utils_can_take_ownership (type))
         features |= GDU_FEATURE_TAKE_OWNERSHIP;
 
-      if (gdu_utils_can_check (self->client, type, FALSE, NULL))
+      if (gdu_utils_can_check (self->client, type, FALSE, &fs_check_missing_utility) ||
+          g_strcmp0(fs_check_missing_utility, "") > 0)
         features |= GDU_FEATURE_CHECK_FILESYSTEM;
     }
 

@@ -514,6 +514,27 @@ resize_cb (GtkWidget  *widget,
 {
   GduBlockRow *self = GDU_BLOCK_ROW (widget);
   UDisksObject *object;
+  g_autofree gchar *missing_util = NULL;
+  const gchar *fs_type;
+  g_autoptr(GError) error = NULL;
+
+  g_assert (GDU_IS_BLOCK (self->block));
+
+  fs_type = gdu_block_get_fs_type (self->block);
+  gdu_utils_can_resize (self->client, fs_type, FALSE, NULL, &missing_util);
+
+  if (g_strcmp0 (missing_util, "") > 0) {
+    error = g_error_new (udisks_error_quark(), 
+                         0,
+                         _("The utility “%s” is required to resize a %s partition."), 
+                         missing_util, fs_type);
+
+    gdu_utils_show_error (block_row_get_window (self),
+                          _("Error while resizing filesystem"),
+                          error);
+
+    return;
+  }
 
   object = gdu_block_get_object (self->block);
   g_assert (object != NULL);

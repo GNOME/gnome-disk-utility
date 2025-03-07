@@ -635,6 +635,7 @@ gdu_drive_set_child (GduDrive *self,
       GList *partitions;
       guint64 begin = 0, prev_end = 0, end = 0;
       guint64 free_space_slack;
+      guint64 extended_partition_end_offset = 0;
 
       table = udisks_object_peek_partition_table (self->partition_table);
       partitions = udisks_client_get_partitions (self->client, table);
@@ -663,15 +664,14 @@ gdu_drive_set_child (GduDrive *self,
           if (begin > prev_end &&
               begin - prev_end > free_space_slack)
             {
-              partition = gdu_block_sized_new (self->client, prev_end, begin - prev_end, parent);
+              /* the free space block might have different parent than the current block */
+              GduItem* free_space_parent = block_get_parent (self, prev_end, begin);
+              partition = gdu_block_sized_new (self->client, prev_end, begin - prev_end, free_space_parent);
               gdu_drive_set_block_color (self, partition);
 
               g_list_store_append (self->partitions, partition);
               g_clear_object (&partition);
             }
-
-          /* Keep track of current block end offset to be used in the next iteration */
-          prev_end = end;
 
           object = (gpointer)g_dbus_interface_get_object (part->data);
           partition = gdu_block_new (self->client, object, parent);
@@ -681,15 +681,41 @@ gdu_drive_set_child (GduDrive *self,
           if (udisks_object_peek_encrypted (object))
             gdu_drive_add_decrypted (self, object, GDU_ITEM (partition));
 
+          /* Keep track of current block end offset to be used in the next iteration 
+           * if the current block is extended partition then don't use end offset */
+          if(gdu_block_is_extended(partition))
+            {
+              prev_end = begin;
+              extended_partition_end_offset = end;
+            }
+          else 
+            {
+              prev_end = end;
+            }
+
           g_clear_object (&partition);
         }
 
-      /* If we still have some blocks left, add it as a free space at the end */
+      /* If we still have some blocks left, add it as a free space at the end 
+       * Also check if any extended partition is still remaining */
       {
         guint64 size, disk_end_offset;
 
         size = gdu_item_get_size (GDU_ITEM (self));
         disk_end_offset = size;
+
+        if (extended_partition_end_offset > prev_end 
+            && extended_partition_end_offset - prev_end > free_space_slack)
+          {
+            g_autoptr(GduBlock) partition = NULL;
+            GduItem *parent;
+
+            parent = block_get_parent (self, prev_end, extended_partition_end_offset);
+            partition = gdu_block_sized_new (self->client, prev_end, extended_partition_end_offset - prev_end, parent);
+            gdu_drive_set_block_color (self, partition);
+            g_list_store_append (self->partitions, partition);
+            prev_end = extended_partition_end_offset;
+          }
 
         if (disk_end_offset > prev_end &&
             disk_end_offset - prev_end > free_space_slack)

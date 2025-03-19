@@ -35,8 +35,7 @@ mod imp {
                     );
                     continue;
                 }
-                let win = ImageMounterWindow::new(&self.obj(), file);
-                win.present();
+                ImageMounterWindow::new(&self.obj(), file).present();
             }
         }
 

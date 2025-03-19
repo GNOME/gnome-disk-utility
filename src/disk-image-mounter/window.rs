@@ -17,6 +17,7 @@ use zbus::export::futures_util::StreamExt;
 
 use crate::application::ImageMounterApplication;
 
+/// Action to perform for the image.
 #[derive(Debug, Default, Clone, Copy, glib::Enum)]
 #[enum_type(name = "Action")]
 pub enum Action {
@@ -24,19 +25,19 @@ pub enum Action {
     #[default]
     #[enum_value(name = "Open in Files", nick = "open-in-files")]
     OpenInFiles,
-    /// Open the image in Nautilus with write access
+    /// Open the image in Nautilus with write access.
     #[enum_value(
         name = "Open in Files with write access",
         nick = "open-in-files-writable"
     )]
     OpenInFilesWritable,
-    /// Unmount the mounted image
+    /// Unmount the mounted image.
     #[enum_value(name = "Unmount the mounted image", nick = "unmount")]
     Unmount,
-    /// Opens Disks to write the image
+    /// Opens Disks to write the image.
     #[enum_value(name = "Open Disks to write", nick = "write")]
     Write,
-    /// Opens Disk to inspect the image
+    /// Opens Disk to inspect the image.
     #[enum_value(name = "Open Disks to inspect", nick = "inspect")]
     Inspect,
 }
@@ -65,8 +66,11 @@ mod imp {
         pub(super) open_files_edit_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         pub(super) toast_overlay: TemplateChild<adw::ToastOverlay>,
+
+        /// File of the disk image.
         #[property(get, set, construct_only)]
         pub(super) file: RefCell<Option<gio::File>>,
+        /// Selected action to perform.
         #[property(get, set, builder(Action::default()))]
         pub(super) continue_action: Cell<Action>,
     }
@@ -142,6 +146,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl ImageMounterWindow {
+    /// Creates a new [`ImageMounterWindow`] for the given disk image `file`.
     pub fn new(app: &ImageMounterApplication, file: &gio::File) -> Self {
         glib::Object::builder()
             .property("application", app)
@@ -149,6 +154,7 @@ impl ImageMounterWindow {
             .build()
     }
 
+    /// Returns the button label, which should be displayed for the given `action`.
     #[template_callback]
     fn button_label(&self, action: Action) -> String {
         gettext(match action {
@@ -160,6 +166,7 @@ impl ImageMounterWindow {
         })
     }
 
+    /// Returns the display name of the given `file`.
     #[template_callback]
     fn window_title(&self, file: Option<&gio::File>) -> Option<String> {
         let info = file?
@@ -172,6 +179,7 @@ impl ImageMounterWindow {
         Some(info.display_name().into())
     }
 
+    /// Returns `true` when the given file is (directly) mountable.
     #[template_callback]
     fn mountable(&self, file: Option<&gio::File>) -> bool {
         let Some(file) = file else { return false };
@@ -182,6 +190,9 @@ impl ImageMounterWindow {
         content_type != "application/x-raw-disk-image-xz-compressed"
     }
 
+    /// Returns the [`udisks::Object`] corresponding to [`Self::file`].
+    ///
+    /// If the file is not mounted as a loopback device, None is returned.
     async fn mounted_file_object(&self) -> Option<udisks::Object> {
         let path = self.file().and_then(|file| file.path())?;
         let client = udisks::Client::new().await.ok()?;
@@ -213,6 +224,7 @@ impl ImageMounterWindow {
         None
     }
 
+    /// Reads the device filepath of the given [`udisks::Object`].
     async fn read_device(&self, object: &udisks::Object) -> anyhow::Result<String> {
         let block = object.block().await?;
         Ok(CString::from_vec_with_nul(block.device().await?)?
@@ -251,6 +263,9 @@ impl ImageMounterWindow {
         }
     }
 
+    /// Opens the image in [Files](https://apps.gnome.org/Nautilus/).
+    ///
+    /// If the image is not yet mounted, it will be mounted first.
     async fn open_in_files(&self, read_only: bool) -> anyhow::Result<()> {
         let mut object = if let Some(object) = self.mounted_file_object().await {
             object
@@ -302,6 +317,10 @@ impl ImageMounterWindow {
         Ok(())
     }
 
+    /// Opens the image in disks,
+    /// allowing the users to see information about the image.
+    ///
+    /// If the image is not yet mounted, it will be mounted first.
     async fn inspect(&self) -> anyhow::Result<()> {
         let object = if let Some(object) = self.mounted_file_object().await {
             object
@@ -313,6 +332,7 @@ impl ImageMounterWindow {
         self.open_in_disks(device).await
     }
 
+    /// Unmounts the disk image.
     async fn unmount(&self) -> anyhow::Result<()> {
         let mounted_object = self
             .mounted_file_object()
@@ -337,6 +357,7 @@ impl ImageMounterWindow {
         Ok(())
     }
 
+    /// Mounts the disk image as a loop dvice.
     async fn mount(&self, read_only: bool) -> anyhow::Result<udisks::Object> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
@@ -371,6 +392,10 @@ impl ImageMounterWindow {
         Ok(object)
     }
 
+    /// Writes the image to a disk.
+    ///
+    /// Opens the restore dialog from GNOME Disks, allowing the users to restore the contents of the
+    /// disk image to a disk device.
     fn write_image(&self) -> anyhow::Result<()> {
         let path = self
             .file()
@@ -383,12 +408,13 @@ impl ImageMounterWindow {
         Ok(())
     }
 
+    /// Opens the given `device` in [Disks](https://apps.gnome.org/DiskUtility/).
     async fn open_in_disks(&self, device: String) -> anyhow::Result<()> {
         let connection = zbus::Connection::session().await?;
 
         const EMPTY_ARR: &[&[u8]] = &[];
 
-        //('/org/gnome/DiskUtility', [], {'options': <{'block-device': <'/dev/loop0'>}>})
+        // ('/org/gnome/DiskUtility', [], {'options': <{'block-device': <'/dev/loop0'>}>})
         connection
             .call_method(
                 Some("org.gnome.DiskUtility"),

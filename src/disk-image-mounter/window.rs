@@ -169,7 +169,7 @@ impl ImageMounterWindow {
                 gio::Cancellable::NONE,
             )
             .ok()?;
-        Some(info.display_name().to_string())
+        Some(info.display_name().into())
     }
 
     #[template_callback]
@@ -179,7 +179,7 @@ impl ImageMounterWindow {
         let (content_type, _uncertain) = gio::content_type_guess(file.path().as_ref(), &[]);
         // explicitly deny mime types, rather than allowing them, as some may be reported wrong
         // and we want to allow mounting obfuscated VeraCrypt images
-        content_type.as_str() != "application/x-raw-disk-image-xz-compressed"
+        content_type != "application/x-raw-disk-image-xz-compressed"
     }
 
     async fn mounted_file_object(&self) -> Option<udisks::Object> {
@@ -259,9 +259,9 @@ impl ImageMounterWindow {
         };
 
         if let Ok(encrypted) = object.encrypted().await {
-            if encrypted.cleartext_device().await?.to_string().eq("/") {
+            if encrypted.cleartext_device().await?.to_string() == "/" {
                 // the encrypted file is already mounted, but not unlocked,
-                // so we unmount to prompt the system to show the unlock dialog again
+                // so we re-mount to prompt the system to show the unlock dialog again
                 log::debug!(
                     "{} is already mounted, but not unlocked",
                     object.object_path()
@@ -354,19 +354,14 @@ impl ImageMounterWindow {
         let object_path = manager.loop_setup(file.as_fd().into(), options).await?;
         log::info!("Mounted {} at {}", path.display(), object_path);
 
-        //safe to unwrap, since the given path is
-        //already an object path
+        // safe to unwrap, since the given path is already an object path
         let object = client.object(object_path).unwrap();
 
         if let Ok(encrypted) = object.encrypted().await {
             // wait until encrypted block has been unlocked, i.e. there is an cleartext device
             let mut cleartext_dev_changes = encrypted.receive_cleartext_device_changed().await;
             while let Some(dev) = cleartext_dev_changes.next().await {
-                if dev
-                    .get()
-                    .await
-                    .is_ok_and(|clear| !clear.to_string().eq("/"))
-                {
+                if dev.get().await.is_ok_and(|clear| clear.to_string() != "/") {
                     log::debug!("Encrypted device has been unlocked");
                     break;
                 }

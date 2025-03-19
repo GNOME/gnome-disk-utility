@@ -232,7 +232,7 @@ impl ImageMounterWindow {
 
     #[template_callback]
     async fn on_continue_button(&self, _button: &gtk::Button) {
-        let success = match self.continue_action() {
+        let action_result = match self.continue_action() {
             Action::OpenInFiles => self.open_in_files(true).await,
             Action::OpenInFilesWritable => self.open_in_files(false).await,
             Action::Unmount => self.unmount().await,
@@ -240,13 +240,14 @@ impl ImageMounterWindow {
             Action::Inspect => self.inspect().await,
         };
 
-        if let Some(err) = success.err() {
-            log::error!("{}", err);
-            self.imp()
-                .toast_overlay
-                .add_toast(adw::Toast::new(&self.user_visible_error_msg()))
-        } else {
-            self.close();
+        match action_result {
+            Ok(_) => self.close(),
+            Err(err) => {
+                log::error!("{}", err);
+                self.imp()
+                    .toast_overlay
+                    .add_toast(adw::Toast::new(&self.user_visible_error_msg()))
+            }
         }
     }
 

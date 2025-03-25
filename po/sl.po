@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2025-02-15 02:44+0000\n"
-"PO-Revision-Date: 2025-02-16 09:07+0100\n"
+"POT-Creation-Date: 2025-03-23 12:07+0000\n"
+"PO-Revision-Date: 2025-03-25 23:14+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -128,27 +128,27 @@ msgstr ""
 msgid "GNOME Disk Image Mounter"
 msgstr "Priklopnik odtisov diskov GNOME"
 
-#: src/disk-image-mounter/window.rs:107
+#: src/disk-image-mounter/window.rs:111
 msgid "Compressed image files are not mountable"
 msgstr "Stisnjenih datotek odtisov diska ni mogoče priklopiti"
 
-#: src/disk-image-mounter/window.rs:115
+#: src/disk-image-mounter/window.rs:119
 msgid "Open the mounted image"
 msgstr "Odpri priklopljeni odtis"
 
-#: src/disk-image-mounter/window.rs:118
+#: src/disk-image-mounter/window.rs:122
 msgid "Already mounted read-only"
 msgstr "Že priklopljeno, samo za branje"
 
-#: src/disk-image-mounter/window.rs:121
+#: src/disk-image-mounter/window.rs:125
 msgid "Already mounted"
 msgstr "Že priklopljeno"
 
-#: src/disk-image-mounter/window.rs:155 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.rs:161 src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Odpri v Datotekah"
 
-#: src/disk-image-mounter/window.rs:226
+#: src/disk-image-mounter/window.rs:238
 msgid "Failed to mount file"
 msgstr "Priklop datoteke ni uspel"
 
@@ -1171,26 +1171,10 @@ msgstr "Razširjeni razdelek"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:570
+#: src/disks/gdu-block.c:577
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s – %s prosto (%.1f%% full)"
-
-#: src/disks/gdu-block-row.c:135
-msgid "row.unmount"
-msgstr "vrstica.odklopi"
-
-#: src/disks/gdu-block-row.c:136
-msgid "row.mount"
-msgstr "vrstica.priklopi"
-
-#: src/disks/gdu-block-row.c:137
-msgid "row.lock"
-msgstr "vrstica.zakleni"
-
-#: src/disks/gdu-block-row.c:138
-msgid "row.unlock"
-msgstr "vrstica.odkleni"
 
 #: src/disks/gdu-block-row.c:142
 msgid "Mount"
@@ -1228,69 +1212,78 @@ msgstr "Vsi podatki na nosilcu bodo nepovratno izgubljeni."
 msgid "Delete"
 msgstr "Izbriši"
 
-#: src/disks/gdu-block-row.c:546
+#: src/disks/gdu-block-row.c:529
+#, c-format
+msgid "The utility “%s” is required to resize a %s partition."
+msgstr "Pripomoček »%s« je potreben za spremembo velikosti razdelka %s."
+
+#: src/disks/gdu-block-row.c:533
+msgid "Error while resizing filesystem"
+msgstr "Napaka med spreminjanjem velikosti datotečnega sistema"
+
+#: src/disks/gdu-block-row.c:567
 msgid "Error while checking filesystem"
 msgstr "Prišlo je do napake med preverjanjem datotečnega sistema ..."
 
-#: src/disks/gdu-block-row.c:559
+#: src/disks/gdu-block-row.c:580
 msgid "Filesystem intact"
 msgstr "Datotečni sistem ni poškodovan."
 
-#: src/disks/gdu-block-row.c:559
+#: src/disks/gdu-block-row.c:580
 msgid "Filesystem damaged"
 msgstr "Datotečni sistem je poškodovan."
 
-#: src/disks/gdu-block-row.c:561
+#: src/disks/gdu-block-row.c:582
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "Datotečni sistem %s na %s je nepoškodovan."
 
-#: src/disks/gdu-block-row.c:562
+#: src/disks/gdu-block-row.c:583
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "Datotečni sistem %s na %s zahteva popravilo."
 
-#: src/disks/gdu-block-row.c:629
+#: src/disks/gdu-block-row.c:650
 msgid "Confirm Check?"
 msgstr "Potrditev preverjanja"
 
-#: src/disks/gdu-block-row.c:630
+#: src/disks/gdu-block-row.c:651
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Pregled je lahko dolgotrajen, če je na razdelku veliko podatkov."
 
-#: src/disks/gdu-block-row.c:631
+#: src/disks/gdu-block-row.c:652
 msgid "Check"
 msgstr "Preveri"
 
-#: src/disks/gdu-block-row.c:662
+#: src/disks/gdu-block-row.c:683
 msgid "Error while repairing filesystem"
 msgstr "Prišlo je do napake med popravljanjem datotečnega sistema"
 
-#: src/disks/gdu-block-row.c:678
+#: src/disks/gdu-block-row.c:699
 msgid "Repair successful"
 msgstr "Popravilo je uspešno zaključeno!"
 
-#: src/disks/gdu-block-row.c:678
+#: src/disks/gdu-block-row.c:699
 msgid "Repair failed"
 msgstr "Popravilo je spodletelo!"
 
-#: src/disks/gdu-block-row.c:680
+#: src/disks/gdu-block-row.c:701
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "Datotečnega sistema %s na %s je popravljen."
 
-#: src/disks/gdu-block-row.c:681
+#: src/disks/gdu-block-row.c:702
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "Datotečnega sistema %s na %s ni mogoče popraviti."
 
-#: src/disks/gdu-block-row.c:749
+#: src/disks/gdu-block-row.c:770
 msgid "Repair Filesystem?"
 msgstr "Želite popraviti datotečni sistem?"
 
-#: src/disks/gdu-block-row.c:750
+#: src/disks/gdu-block-row.c:771
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -1302,16 +1295,16 @@ msgstr ""
 "varnostno kopijo. Opravilo je lahko dolgotrajno, če je na razdelku veliko "
 "podatkov."
 
-#: src/disks/gdu-block-row.c:754
+#: src/disks/gdu-block-row.c:775
 msgid "Repair"
 msgstr "Popravi"
 
-#: src/disks/gdu-block-row.c:776
+#: src/disks/gdu-block-row.c:797
 msgid "Error while taking filesystem ownership"
 msgstr ""
 "Prišlo je do napake med prevzemanjem lastništva datotečnega sistema ..."
 
-#: src/disks/gdu-block-row.c:864
+#: src/disks/gdu-block-row.c:885
 #, c-format
 msgid "Make your user and group the owner of ”%s”"
 msgstr "Nastavi svojega uporabnika in skupino za lastnika »%s«"
@@ -1748,15 +1741,15 @@ msgstr "Napaka nastavljanja imena razdelka"
 msgid "Error setting partition flags"
 msgstr "Napaka nastavljanja zastavic razdelka"
 
-#: src/disks/gdu-edit-partition-dialog.c:309
+#: src/disks/gdu-edit-partition-dialog.c:310
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "Vrsta razdelka, opredeljena kot 8-bitno pozitivno celo število"
 
-#: src/disks/gdu-edit-partition-dialog.c:310
+#: src/disks/gdu-edit-partition-dialog.c:311
 msgid "_Bootable"
 msgstr "_Zagonljivo"
 
-#: src/disks/gdu-edit-partition-dialog.c:312
+#: src/disks/gdu-edit-partition-dialog.c:313
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -1908,27 +1901,27 @@ msgstr "N_aslednji"
 msgid "Error formatting volume"
 msgstr "Napaka formatiranja nosilca"
 
-#: src/disks/gdu-format-volume-dialog.c:400
+#: src/disks/gdu-format-volume-dialog.c:398
 msgid "Error creating partition"
 msgstr "Napaka ustvarjanja razdelka"
 
-#: src/disks/gdu-format-volume-dialog.c:520 src/disks/ui/gdu-block-row.ui:53
+#: src/disks/gdu-format-volume-dialog.c:530 src/disks/ui/gdu-block-row.ui:53
 msgid "Create Partition"
 msgstr "Ustvari razdelek"
 
-#: src/disks/gdu-format-volume-dialog.c:527
+#: src/disks/gdu-format-volume-dialog.c:537
 msgid "Format Volume"
 msgstr "Formatiraj nosilec"
 
-#: src/disks/gdu-format-volume-dialog.c:533
+#: src/disks/gdu-format-volume-dialog.c:543
 msgid "Custom Format"
 msgstr "Oblika po meri"
 
-#: src/disks/gdu-format-volume-dialog.c:539
+#: src/disks/gdu-format-volume-dialog.c:549
 msgid "Set Password"
 msgstr "Nastavi geslo"
 
-#: src/disks/gdu-format-volume-dialog.c:547
+#: src/disks/gdu-format-volume-dialog.c:557
 msgid "Confirm Details"
 msgstr "Potrdi podrobnosti"
 

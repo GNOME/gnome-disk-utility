@@ -137,7 +137,7 @@ get_max_min_avg (GArray *array)
   if (array->len == 0)
     return ret;
 
-  ret.max = -G_MAXDOUBLE;
+  ret.max = G_MINDOUBLE;
   ret.min = G_MAXDOUBLE;
   sum = 0;
 
@@ -154,11 +154,110 @@ get_max_min_avg (GArray *array)
   return ret;
 }
 
+static gdouble
+get_overall_max (GduBenchmarkGraph *self)
+{
+  gdouble max_val = 0.0;
+  BMStats stats;
+
+  if (self->read_samples && self->read_samples->len > 0)
+    {
+      stats = get_max_min_avg (self->read_samples);
+      max_val = MAX (max_val, stats.max);
+    }
+
+  if (self->write_samples && self->write_samples->len > 0)
+    {
+      stats = get_max_min_avg (self->write_samples);
+      max_val = MAX (max_val, stats.max);
+    }
+
+  if (self->atime_samples && self->atime_samples->len > 0)
+    {
+      stats = get_max_min_avg (self->atime_samples);
+      max_val = MAX (max_val, stats.max);
+    }
+
+  return (max_val <= 0) ? 1 : max_val;
+}
+
+static void
+gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
+                               GtkSnapshot       *snapshot)
+{
+  int width, height;
+  GdkRGBA color;
+  gdouble max_val;
+
+  gtk_widget_get_color (GTK_WIDGET (self), &color);
+  color.alpha *= 0.15;
+
+  /* Get allocated size */
+  width = gtk_widget_get_width (GTK_WIDGET (self));
+  height = gtk_widget_get_height (GTK_WIDGET (self));
+
+  max_val = get_overall_max (self);
+
+  /* Draw vertical grid lines. */
+  {
+    GskPathBuilder *builder;
+    GskPath *path;
+    GskStroke *stroke;
+    float dash[2] = {4.0, 2.0};
+
+    builder = gsk_path_builder_new ();
+    for (int i = 1; i < 10; i++)
+      {
+        int x = i * width / 10;
+        gsk_path_builder_move_to (builder, x, 0);
+        gsk_path_builder_line_to (builder, x, height);
+      }
+    path = gsk_path_builder_free_to_path (builder);
+
+    stroke = gsk_stroke_new (1);
+    gsk_stroke_set_dash (stroke, dash, 2);
+    gtk_snapshot_append_stroke (snapshot, path, stroke, &color);
+  }
+
+  /* Choose a “nice” tick value based on the maximum value.
+   * For example, grid_step is computed as the largest power of ten that is less than
+   * or equal to max_val.
+   */
+  gdouble grid_step = pow (10, floor (log10 (max_val)));
+  int num_hlines = (int)ceil (max_val / grid_step);
+
+  /* Draw horizontal grid lines. */
+   {
+     GskPathBuilder *builder;
+     GskPath *path;
+     GskStroke *stroke;
+
+     builder = gsk_path_builder_new ();
+     for (int j = 1; j < num_hlines; j++)
+       {
+        int y = height - (j * height / num_hlines);
+        gsk_path_builder_move_to (builder, 0, y);
+        gsk_path_builder_line_to (builder, width, y);
+       }
+     path = gsk_path_builder_free_to_path (builder);
+     stroke = gsk_stroke_new (1);
+     gtk_snapshot_append_stroke (snapshot, path, stroke, &color);
+   }
+}
+
 static void
 gdu_benchmark_graph_snapshot (GtkWidget   *widget,
                               GtkSnapshot *snapshot)
 {
-  /* TODO */
+  GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH(widget);
+  int width, height;
+
+  gdu_benchmark_graph_draw_grid (self, snapshot);
+
+  /* Get allocated size */
+  width = gtk_widget_get_width (widget);
+  height = gtk_widget_get_height (widget);
+
 }
 
 static gchar *

@@ -195,6 +195,8 @@ typedef struct
 {
   int width;
   int height;
+  gboolean is_time;
+  const GdkRGBA *color;
   GArray *samples;
   guint total_samples;
   gdouble max_speed;
@@ -410,16 +412,14 @@ gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
 
 static void
 draw_curve(GdkSnapshot    *snapshot,
-           GraphData      *graph_data,
-           const GdkRGBA  *curve_color,
-           gboolean        is_time)
+           GraphData      *graph_data)
 {
   g_autoptr(GskPath) path = NULL;
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
   guint n, n_samples, total_samples;
   double x, y;
-  gdouble maximum_value = is_time ?
+  gdouble maximum_value = graph_data->is_time ?
                           graph_data->max_time :
                           graph_data->max_speed;
 
@@ -446,7 +446,7 @@ draw_curve(GdkSnapshot    *snapshot,
   path = gsk_path_builder_free_to_path(g_steal_pointer(&builder));
 
   stroke = gsk_stroke_new(GRID_LINE_WIDTH);
-  gtk_snapshot_append_stroke(snapshot, path, stroke, curve_color);
+  gtk_snapshot_append_stroke(snapshot, path, stroke, graph_data->color);
 }
 
 static void
@@ -466,14 +466,19 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
 
   graph_data.samples = self->read_samples;
   graph_data.total_samples = self->total_transfer_samples;
-  draw_curve(snapshot, &graph_data, &READ_CURVE_COLOR, FALSE);
+  graph_data.is_time = FALSE;
+  graph_data.color = &READ_CURVE_COLOR;
+  draw_curve(snapshot, &graph_data);
 
   graph_data.samples = self->write_samples;
-  draw_curve(snapshot, &graph_data, &WRITE_CURVE_COLOR, FALSE);
+  graph_data.color = &WRITE_CURVE_COLOR;
+  draw_curve(snapshot, &graph_data);
 
   graph_data.samples = self->atime_samples;
   graph_data.total_samples = self->total_atime_samples;
-  draw_curve(snapshot, &graph_data, &ATIME_CURVE_COLOR, TRUE);
+  graph_data.is_time = TRUE;
+  graph_data.color = &ATIME_CURVE_COLOR;
+  draw_curve(snapshot, &graph_data);
 }
 
 static gchar *

@@ -10,12 +10,13 @@
 
 #include <glib/gi18n.h>
 
-#include <sys/ioctl.h>
 #include <linux/fs.h>
+#include <sys/ioctl.h>
 
 #include "gdu-benchmark-dialog.h"
 
-typedef struct {
+typedef struct
+{
   guint64 offset;
   gdouble value;
 } BMSample;
@@ -82,7 +83,7 @@ gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 }
 
 static void
-gdu_benchmark_dialog_restore_options (GduBenchmarkDialog *self)
+gdu_benchmark_dialog_load_options (GduBenchmarkDialog *self)
 {
   gint num_samples;
   gint sample_size_mib;
@@ -135,7 +136,7 @@ get_max_min_avg (GArray *array)
 
   for (n = 0; n < array->len; n++)
     {
-      BMSample *s = &g_array_index(array, BMSample, n);
+      BMSample *s = &g_array_index (array, BMSample, n);
       ret.max = MAX (ret.max, s->value);
       ret.min = MIN (ret.min, s->value);
       sum += s->value;
@@ -153,10 +154,8 @@ on_drawing_area_draw (GtkDrawingArea *widget,
                       int             height,
                       gpointer        user_data)
 {
-  /* gtk4 todo fill this function */
+  /* TODO */
 }
-
-/* ---------------------------------------------------------------------------------------------------- */
 
 static gchar *
 format_stats (gdouble stat,
@@ -188,24 +187,21 @@ update_dialog (GduBenchmarkDialog *self)
 
   G_LOCK (bm_lock);
   if (self->bm_error != NULL)
-    {
-      error = g_steal_pointer (&self->bm_error);
-    }  
+    error = g_steal_pointer (&self->bm_error);
   G_UNLOCK (bm_lock);
 
   /* present an error if something went wrong */
   if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED))
     {
       gdu_utils_show_error (gdu_benchmark_dialog_get_window (self),
-                            "An error occurred",
-                            error);          
+                            _("An error occurred"), error);
 
-      
       s = g_strdup ("–");
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
+      g_free (s);
       return;
     }
 
@@ -259,8 +255,7 @@ bmt_schedule_update (GduBenchmarkDialog *self)
   if (!self->bm_update_timeout_pending)
     {
       g_timeout_add (200, /* ms */
-                     bmt_on_timeout,
-                     self);
+                     bmt_on_timeout, self);
       self->bm_update_timeout_pending = TRUE;
     }
   G_UNLOCK (bm_lock);
@@ -273,17 +268,13 @@ end_benchmark (GduBenchmarkDialog *self,
                guint               inhibit_cookie)
 {
   if (fd != -1)
-    {
-      close (fd);
-    }
+    close (fd);
   self->bm_in_progress = FALSE;
   gtk_widget_set_visible (self->cancel_button, FALSE);
 
   if (inhibit_cookie != 0)
-    {
-      gtk_application_uninhibit ((gpointer) g_application_get_default (),
-                                 inhibit_cookie);
-    }
+    gtk_application_uninhibit ((gpointer) g_application_get_default (),
+                                          inhibit_cookie);
 
   if (error != NULL)
     {
@@ -299,7 +290,7 @@ end_benchmark (GduBenchmarkDialog *self,
 
 static GError *
 open_for_benchmark (GduBenchmarkDialog *self,
-                    int *fd)
+                    int                *fd)
 {
   GVariantBuilder options_builder;
   GError *error = NULL;
@@ -320,9 +311,7 @@ open_for_benchmark (GduBenchmarkDialog *self,
                                                   NULL, /* fd_list */
                                                   &fd_index, &fd_list,
                                                   self->bm_cancellable, &error))
-    {
-      return error;
-    }
+    return error;
 
   *fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
 
@@ -331,10 +320,10 @@ open_for_benchmark (GduBenchmarkDialog *self,
 
 static GError *
 benchmark_transfer_rate (GduBenchmarkDialog *self,
-                         guchar *buffer,
-                         int fd,
-                         long page_size,
-                         guint64 disk_size)
+                         guchar             *buffer,
+                         int                 fd,
+                         long                page_size,
+                         guint64             disk_size)
 {
   guint n;
   guint num_samples = 0;
@@ -637,7 +626,8 @@ start_benchmark (GduBenchmarkDialog *self)
 
   if (sample_size != 0)
   {
-    s = g_format_size_full (sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
+    s = g_format_size_full (sample_size, G_FORMAT_SIZE_IEC_UNITS |
+                                         G_FORMAT_SIZE_LONG_FORMAT);
     adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
   }
 
@@ -652,10 +642,9 @@ ensure_unused_cb (GtkWindow     *window,
                   gpointer       user_data)
 {
   GduBenchmarkDialog *self = user_data;
+
   if (gdu_utils_ensure_unused_finish (self->client, res, NULL))
-    {
-      start_benchmark (self);
-    }
+    start_benchmark (self);
 }
 
 static void
@@ -667,23 +656,19 @@ on_start_clicked_cb (GduBenchmarkDialog *self,
   g_assert (!self->bm_in_progress);
 
   gdu_benchmark_dialog_save_options (self);
-  
+
   write_benchmark = g_settings_get_boolean (self->settings, "do-write");
-  
+
+  /* ensure the device is unused (e.g. unmounted) before formatting it... */
   if (write_benchmark)
-    {
-      /* ensure the device is unused (e.g. unmounted) before formatting it... */
-      gdu_utils_ensure_unused (self->client,
-                               gdu_benchmark_dialog_get_window (self),
-                               self->object,
-                               (GAsyncReadyCallback) ensure_unused_cb,
-                               NULL, /* GCancellable */
-                               self);
-    }
+    gdu_utils_ensure_unused (self->client,
+                              gdu_benchmark_dialog_get_window (self),
+                              self->object,
+                              (GAsyncReadyCallback) ensure_unused_cb,
+                              NULL, /* GCancellable */
+                              self);
   else
-    {
-      start_benchmark (self);
-    }
+    start_benchmark (self);
 
   gtk_stack_set_visible_child_name (GTK_STACK (self->pages_stack), "results");
   gtk_widget_set_visible (self->close_button, FALSE);
@@ -695,20 +680,21 @@ gdu_benchmark_dialog_set_title (GduBenchmarkDialog *self)
   g_autoptr(UDisksObjectInfo) info = NULL;
 
   info = udisks_client_get_object_info (self->client, self->object);
-  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (self->window_title), udisks_object_info_get_one_liner (info));
+  adw_window_title_set_subtitle (ADW_WINDOW_TITLE (self->window_title),
+                                 udisks_object_info_get_one_liner (info));
 }
 
 static gboolean
 set_sample_size_unit_cb (AdwSpinRow  *spin_row,
-                        gpointer    *user_data)
+                         gpointer    *user_data)
 {
   GtkAdjustment *adjustment;
   g_autofree char *unit = NULL;
-  
+
   adjustment = adw_spin_row_get_adjustment (spin_row);
   unit = g_strdup_printf ("%.2f MiB", gtk_adjustment_get_value (adjustment));
   gtk_editable_set_text (GTK_EDITABLE (spin_row), unit);
-  
+
   return TRUE;
 }
 
@@ -723,7 +709,7 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
- 
+
   object_class->finalize = gdu_benchmark_dialog_finalize;
 
   gtk_widget_class_set_template_from_resource (widget_class,
@@ -761,16 +747,18 @@ gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
   self->bm_cancellable = g_cancellable_new ();
 
   self->read_samples = g_array_new (FALSE, /* zero-terminated */
-                                       FALSE, /* clear */
-                                       sizeof (BMSample));
+                                    FALSE, /* clear */
+                                    sizeof (BMSample));
   self->write_samples = g_array_new (FALSE, /* zero-terminated */
-                                        FALSE, /* clear */
-                                        sizeof (BMSample));
+                                     FALSE, /* clear */
+                                     sizeof (BMSample));
   self->atime_samples = g_array_new (FALSE, /* zero-terminated */
-                                              FALSE, /* clear */
-                                              sizeof (BMSample));
+                                     FALSE, /* clear */
+                                     sizeof (BMSample));
 
-  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (self->drawing_area), (GtkDrawingAreaDrawFunc) on_drawing_area_draw, NULL, NULL);
+  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (self->drawing_area),
+                                  (GtkDrawingAreaDrawFunc)on_drawing_area_draw,
+                                  NULL, NULL);
 }
 
 void
@@ -787,7 +775,7 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
   self->client = client;
 
   gdu_benchmark_dialog_set_title (self);
-  gdu_benchmark_dialog_restore_options (self);
+  gdu_benchmark_dialog_load_options (self);
 
   /* if device is read-only, uncheck the "perform write-test"
    * check-button and also make it insensitive
@@ -800,9 +788,8 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
 
   /* If the device is currently in use, uncheck the "perform write-test" check-button */
   if (gdu_utils_is_in_use (self->client, self->object))
-    {
-      adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch), FALSE);
-    }
+    adw_switch_row_set_active (ADW_SWITCH_ROW (self->write_bench_switch),
+                               FALSE);
 
   adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

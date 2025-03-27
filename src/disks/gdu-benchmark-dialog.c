@@ -182,67 +182,92 @@ get_overall_max (GduBenchmarkGraph *self)
 }
 
 static void
+draw_horizontal_axis_and_labels (GtkWidget   *widget,
+                                 GtkSnapshot *snapshot)
+{
+  /* TOOD */
+}
+
+static void
+draw_vertical_axis_and_labels (GtkWidget   *widget,
+                               GtkSnapshot *snapshot)
+{
+  AdwStyleManager *style_manager;
+  g_autoptr(GskPath) path = NULL;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPathBuilder) builder = NULL;
+  g_autoptr(PangoLayout) layout = NULL;
+  g_autofree char* label;
+  int width, height;
+  GdkRGBA text_color;
+  const GdkRGBA *grid_line_color;
+  int text_width, text_height;
+
+  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
+
+  width = gtk_widget_get_width (widget);
+  height = gtk_widget_get_height (widget);
+
+  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
+  else if (adw_style_manager_get_dark (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_DARK;
+  else if (adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC;
+  else
+    grid_line_color = &GRID_LINE_COLOR;
+
+  if (adw_style_manager_get_dark (style_manager)) {
+    gdk_rgba_parse (&text_color, "#FFFFFF");
+  } else {
+    gdk_rgba_parse (&text_color, "#000000");
+  }
+
+  builder = gsk_path_builder_new ();
+  for (int i = 0; i <= 10; i++)
+    {
+      double x = i * width / 10.0;
+      double y = height;
+
+      gsk_path_builder_move_to (builder, x, 0);
+      if (i != 0 && i != 10)
+        gsk_path_builder_line_to (builder, x, height);
+
+      label = g_strdup_printf ("%d", i * 10);
+      layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+      gtk_snapshot_save (snapshot);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - (text_width / 2.0), y));
+      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_restore (snapshot);
+
+      g_free (label);
+    }
+
+
+    label = g_strdup_printf ("Progress (%%)");
+    layout = gtk_widget_create_pango_layout (widget, label);
+    pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+    gtk_snapshot_save (snapshot);
+    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((width - text_width) / 2.0, height + text_width));
+    gtk_snapshot_append_layout (snapshot, layout, &text_color);
+    gtk_snapshot_restore (snapshot);
+
+    path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
+
+    stroke = gsk_stroke_new (GRID_LINE_WIDTH);
+    gsk_stroke_set_dash (stroke, GRID_LINE_DASH, 2);
+    gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
+}
+
+static void
 gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
                                GtkSnapshot       *snapshot)
 {
-  int width, height;
-  GdkRGBA color;
-  gdouble max_val;
-
-  gtk_widget_get_color (GTK_WIDGET (self), &color);
-  color.alpha *= 0.15;
-
-  /* Get allocated size */
-  width = gtk_widget_get_width (GTK_WIDGET (self));
-  height = gtk_widget_get_height (GTK_WIDGET (self));
-
-  max_val = get_overall_max (self);
-
-  /* Draw vertical grid lines. */
-  {
-    GskPathBuilder *builder;
-    GskPath *path;
-    GskStroke *stroke;
-    float dash[2] = {4.0, 2.0};
-
-    builder = gsk_path_builder_new ();
-    for (int i = 1; i < 10; i++)
-      {
-        int x = i * width / 10;
-        gsk_path_builder_move_to (builder, x, 0);
-        gsk_path_builder_line_to (builder, x, height);
-      }
-    path = gsk_path_builder_free_to_path (builder);
-
-    stroke = gsk_stroke_new (1);
-    gsk_stroke_set_dash (stroke, dash, 2);
-    gtk_snapshot_append_stroke (snapshot, path, stroke, &color);
-  }
-
-  /* Choose a “nice” tick value based on the maximum value.
-   * For example, grid_step is computed as the largest power of ten that is less than
-   * or equal to max_val.
-   */
-  gdouble grid_step = pow (10, floor (log10 (max_val)));
-  int num_hlines = (int)ceil (max_val / grid_step);
-
-  /* Draw horizontal grid lines. */
-   {
-     GskPathBuilder *builder;
-     GskPath *path;
-     GskStroke *stroke;
-
-     builder = gsk_path_builder_new ();
-     for (int j = 1; j < num_hlines; j++)
-       {
-        int y = height - (j * height / num_hlines);
-        gsk_path_builder_move_to (builder, 0, y);
-        gsk_path_builder_line_to (builder, width, y);
-       }
-     path = gsk_path_builder_free_to_path (builder);
-     stroke = gsk_stroke_new (1);
-     gtk_snapshot_append_stroke (snapshot, path, stroke, &color);
-   }
+  draw_vertical_axis_and_labels (GTK_WIDGET (self), snapshot);
+  draw_horizontal_axis_and_labels (GTK_WIDGET (self), snapshot);
 }
 
 static void
@@ -250,14 +275,8 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
                               GtkSnapshot *snapshot)
 {
   GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH(widget);
-  int width, height;
 
   gdu_benchmark_graph_draw_grid (self, snapshot);
-
-  /* Get allocated size */
-  width = gtk_widget_get_width (widget);
-  height = gtk_widget_get_height (widget);
-
 }
 
 static gchar *

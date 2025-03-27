@@ -466,14 +466,14 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
 
   graph_data.samples = self->read_samples;
   graph_data.total_samples = self->total_transfer_samples;
-  draw_curve(snapshot, &graph_data, &READ_CURVE_COLOR_DARK, FALSE);
+  draw_curve(snapshot, &graph_data, &READ_CURVE_COLOR, FALSE);
 
   graph_data.samples = self->write_samples;
-  draw_curve(snapshot, &graph_data, &WRITE_CURVE_COLOR_DARK, FALSE);
+  draw_curve(snapshot, &graph_data, &WRITE_CURVE_COLOR, FALSE);
 
   graph_data.samples = self->atime_samples;
   graph_data.total_samples = self->total_atime_samples;
-  draw_curve(snapshot, &graph_data, &ATIME_CURVE_COLOR_DARK, TRUE);
+  draw_curve(snapshot, &graph_data, &ATIME_CURVE_COLOR, TRUE);
 }
 
 static gchar *

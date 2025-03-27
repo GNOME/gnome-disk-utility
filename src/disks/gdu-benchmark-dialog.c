@@ -155,8 +155,7 @@ get_max_min_avg (GArray *array)
 }
 
 static gdouble
-get_overall_max (GduBenchmarkGraph *self)
-{
+get_max_speed(GduBenchmarkGraph *self) {
   gdouble max_val = 0.0;
   BMStats stats;
 
@@ -172,6 +171,15 @@ get_overall_max (GduBenchmarkGraph *self)
       max_val = MAX (max_val, stats.max);
     }
 
+  return (max_val <= 0) ? 1 : max_val;
+}
+
+static gdouble
+get_max_time (GduBenchmarkGraph *self)
+{
+  gdouble max_val = 0.0;
+  BMStats stats;
+
   if (self->atime_samples && self->atime_samples->len > 0)
     {
       stats = get_max_min_avg (self->atime_samples);
@@ -185,7 +193,116 @@ static void
 draw_horizontal_axis_and_labels (GtkWidget   *widget,
                                  GtkSnapshot *snapshot)
 {
-  /* TOOD */
+  AdwStyleManager *style_manager;
+  g_autoptr(GskPath) path = NULL;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPathBuilder) builder = NULL;
+  g_autoptr(PangoLayout) layout = NULL;
+  char* label;
+  int width, height;
+  GdkRGBA text_color;
+  const GdkRGBA *grid_line_color;
+  int text_width, text_height;
+  gdouble max_visible_speed, max_speed, max_time, max_visible_time;
+  gdouble speed_step, time_step;
+  guint num_hlines;
+  gdouble padding = 5;
+
+  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
+
+  width = gtk_widget_get_width (widget);
+  height = gtk_widget_get_height (widget);
+
+  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
+  else if (adw_style_manager_get_dark (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_DARK;
+  else if (adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC;
+  else
+    grid_line_color = &GRID_LINE_COLOR;
+
+  if (adw_style_manager_get_dark (style_manager)) {
+    gdk_rgba_parse (&text_color, "#FFFFFF");
+  } else {
+    gdk_rgba_parse (&text_color, "#000000");
+  }
+
+  /* TODO: Calculate this based on some maximum time or speed
+   * TODO: Usually time (ms) is going to be really small compared to speed.
+   * Try scaling the time data so that the graph height is equal for time and speed
+   */
+
+  num_hlines = 10;
+  max_speed = get_max_speed (GDU_BENCHMARK_GRAPH (widget));
+  max_time = get_max_time (GDU_BENCHMARK_GRAPH (widget));
+  if (max_speed == 0)
+    max_speed = 100 * 1000 * 1000;
+
+  if (max_time == 0)
+    max_time = 50 / 1000.0;
+
+  time_step = max_time / num_hlines;
+
+  /* round up to next multiple of 10 MB/s */
+  max_visible_speed = ceil (max_speed / (10*1000*1000)) * 10*1000*1000;
+  speed_step = max_visible_speed / num_hlines;
+
+  if (time_step < 0.0001)
+    time_step = 0.0001;
+  else if (time_step < 0.0005)
+    time_step = 0.0005;
+  else if (time_step < 0.001)
+    time_step = 0.001;
+  else if (time_step < 0.0025)
+    time_step = 0.0025;
+  else if (time_step < 0.005)
+    time_step = 0.005;
+  else
+    time_step = ceil (((gdouble) time_step) / 0.005) * 0.005;
+
+  max_visible_time = time_step * num_hlines;
+
+  builder = gsk_path_builder_new ();
+  for (guint j = 0; j <= num_hlines; j++)
+    {
+      double x,  y;
+
+      y = height - (j * height / num_hlines);
+
+      gsk_path_builder_move_to (builder, 0, y);
+      if (j != 0 && j != num_hlines) {
+        gsk_path_builder_line_to (builder, width, y);
+      }
+
+      x = 0.0;
+      label = g_strdup_printf ("%d", (guint) (j * speed_step) / (1000 * 1000));
+      layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+      gtk_snapshot_save (snapshot);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - text_width - padding, y - (text_height / 2.0)));
+      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_restore (snapshot);
+
+      g_free (label);
+
+      x = width;
+      label = g_strdup_printf ("%3g", j * time_step * 1000);
+      layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+      gtk_snapshot_save (snapshot);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x + padding, y - (text_height / 2.0)));
+      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_restore (snapshot);
+
+      g_free(label);
+    }
+
+  path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
+  stroke = gsk_stroke_new (GRID_LINE_WIDTH);
+  gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 }
 
 static void
@@ -202,6 +319,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
   GdkRGBA text_color;
   const GdkRGBA *grid_line_color;
   int text_width, text_height;
+  gdouble padding = 5;
 
   style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
 
@@ -238,7 +356,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
 
       gtk_snapshot_save (snapshot);
-      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - (text_width / 2.0), y));
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - (text_width / 2.0), y + padding));
       gtk_snapshot_append_layout (snapshot, layout, &text_color);
       gtk_snapshot_restore (snapshot);
 
@@ -251,7 +369,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
 
     gtk_snapshot_save (snapshot);
-    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((width - text_width) / 2.0, height + text_width));
+    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((width - text_width) / 2.0, height + padding + text_height));
     gtk_snapshot_append_layout (snapshot, layout, &text_color);
     gtk_snapshot_restore (snapshot);
 

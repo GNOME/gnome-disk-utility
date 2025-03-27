@@ -276,7 +276,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
       }
 
       x = 0.0;
-      label = g_strdup_printf ("%d", (guint) (j * speed_step) / (1000 * 1000));
+      label = g_strdup_printf ("%ld", (gulong) (j * speed_step) / (1000 * 1000));
       layout = gtk_widget_create_pango_layout (widget, label);
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
 

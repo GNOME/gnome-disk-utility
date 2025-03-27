@@ -434,7 +434,7 @@ draw_curve(GdkSnapshot    *snapshot,
     {
       BMSample sample = g_array_index(graph_data->samples, BMSample, n);
 
-      x = ((double)n / total_samples) * graph_data->width;
+      x = ((double)n / (total_samples - 1)) * graph_data->width;
       y = graph_data->height - sample.value / maximum_value * graph_data->height;
 
       if (n == 0)

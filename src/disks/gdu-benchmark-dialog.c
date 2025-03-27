@@ -33,6 +33,8 @@ struct _GduBenchmarkGraph
   AdwBin         parent_instance;
 
   guint64        bm_size;
+  guint          total_transfer_samples;
+  guint          total_atime_samples;
   GArray        *read_samples;
   GArray        *write_samples;
   GArray        *atime_samples;
@@ -189,7 +191,17 @@ get_max_time (GduBenchmarkGraph *self)
   return (max_val <= 0) ? 1 : max_val;
 }
 
-static void
+typedef struct
+{
+  int width;
+  int height;
+  GArray *samples;
+  guint total_samples;
+  gdouble max_speed;
+  gdouble max_time;
+} GraphData;
+
+static GraphData
 draw_horizontal_axis_and_labels (GtkWidget   *widget,
                                  GtkSnapshot *snapshot)
 {
@@ -198,12 +210,13 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
   g_autoptr(PangoLayout) layout = NULL;
+  GraphData graph_data = { 0 };
   char* label;
   int width, height;
   GdkRGBA text_color;
   const GdkRGBA *grid_line_color;
   int text_width, text_height;
-  gdouble max_visible_speed, max_speed, max_time, max_visible_time;
+  gdouble max_visible_speed, max_speed, max_time;
   gdouble speed_step, time_step;
   guint num_hlines;
   gdouble padding = 5;
@@ -248,6 +261,9 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   max_visible_speed = ceil (max_speed / (10*1000*1000)) * 10*1000*1000;
   speed_step = max_visible_speed / num_hlines;
 
+  graph_data.max_time =  max_time;
+  graph_data.max_speed = max_visible_speed;
+
   if (time_step < 0.0001)
     time_step = 0.0001;
   else if (time_step < 0.0005)
@@ -260,8 +276,6 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
     time_step = 0.005;
   else
     time_step = ceil (((gdouble) time_step) / 0.005) * 0.005;
-
-  max_visible_time = time_step * num_hlines;
 
   builder = gsk_path_builder_new ();
   for (guint j = 0; j <= num_hlines; j++)
@@ -303,6 +317,8 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
   stroke = gsk_stroke_new (GRID_LINE_WIDTH);
   gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
+
+  return graph_data;
 }
 
 static void
@@ -380,12 +396,57 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
     gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 }
 
-static void
+static GraphData
 gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
                                GtkSnapshot       *snapshot)
 {
+  GraphData graph_data;
+
   draw_vertical_axis_and_labels (GTK_WIDGET (self), snapshot);
-  draw_horizontal_axis_and_labels (GTK_WIDGET (self), snapshot);
+  graph_data = draw_horizontal_axis_and_labels (GTK_WIDGET (self), snapshot);
+
+  return graph_data;
+}
+
+static void
+draw_curve(GdkSnapshot    *snapshot,
+           GraphData      *graph_data,
+           const GdkRGBA  *curve_color,
+           gboolean        is_time)
+{
+  g_autoptr(GskPath) path = NULL;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPathBuilder) builder = NULL;
+  guint n, n_samples, total_samples;
+  double x, y;
+  gdouble maximum_value = is_time ?
+                          graph_data->max_time :
+                          graph_data->max_speed;
+
+  if (graph_data->samples == NULL || graph_data->samples->len == 0)
+    return;
+  n_samples = graph_data->samples->len;
+  total_samples = graph_data->total_samples;
+
+  builder = gsk_path_builder_new();
+
+  for (n = 0; n < n_samples; n++)
+    {
+      BMSample sample = g_array_index(graph_data->samples, BMSample, n);
+
+      x = ((double)n / total_samples) * graph_data->width;
+      y = graph_data->height - sample.value / maximum_value * graph_data->height;
+
+      if (n == 0)
+        gsk_path_builder_move_to(builder, x, y);
+      else
+        gsk_path_builder_line_to(builder, x, y);
+    }
+
+  path = gsk_path_builder_free_to_path(g_steal_pointer(&builder));
+
+  stroke = gsk_stroke_new(GRID_LINE_WIDTH);
+  gtk_snapshot_append_stroke(snapshot, path, stroke, curve_color);
 }
 
 static void
@@ -393,8 +454,26 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
                               GtkSnapshot *snapshot)
 {
   GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH(widget);
+  GraphData graph_data;
+  int width, height;
 
-  gdu_benchmark_graph_draw_grid (self, snapshot);
+  width = gtk_widget_get_width (widget);
+  height = gtk_widget_get_height (widget);
+
+  graph_data = gdu_benchmark_graph_draw_grid (self, snapshot);
+  graph_data.width = width;
+  graph_data.height = height;
+
+  graph_data.samples = self->read_samples;
+  graph_data.total_samples = self->total_transfer_samples;
+  draw_curve(snapshot, &graph_data, &READ_CURVE_COLOR_DARK, FALSE);
+
+  graph_data.samples = self->write_samples;
+  draw_curve(snapshot, &graph_data, &WRITE_CURVE_COLOR_DARK, FALSE);
+
+  graph_data.samples = self->atime_samples;
+  graph_data.total_samples = self->total_atime_samples;
+  draw_curve(snapshot, &graph_data, &ATIME_CURVE_COLOR_DARK, TRUE);
 }
 
 static gchar *
@@ -860,6 +939,9 @@ start_benchmark (GduBenchmarkDialog *self)
   g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, 0);
   g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, 0);
   g_cancellable_reset (self->bm_cancellable);
+
+  GDU_BENCHMARK_GRAPH(self->benchmark_graph)->total_transfer_samples = (guint)g_settings_get_int (self->settings, "num-samples");
+  GDU_BENCHMARK_GRAPH(self->benchmark_graph)->total_atime_samples = (guint)g_settings_get_int (self->settings, "num-access-samples");
 
   sample_size = g_settings_get_int (self->settings, "sample-size-mib");
   sample_size = sample_size * 1024 * 1024;

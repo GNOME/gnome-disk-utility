@@ -28,6 +28,18 @@ typedef struct
   gdouble avg;
 } BMStats;
 
+struct _GduBenchmarkGraph
+{
+  AdwBin         parent_instance;
+
+  guint64        bm_size;
+  GArray        *read_samples;
+  GArray        *write_samples;
+  GArray        *atime_samples;
+};
+
+G_DEFINE_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
+
 struct _GduBenchmarkDialog
 {
   AdwDialog      parent_instance;
@@ -47,7 +59,7 @@ struct _GduBenchmarkDialog
   GtkWidget     *write_bench_switch;
 
   /* Results Page */
-  GtkWidget     *drawing_area;
+  GtkWidget     *benchmark_graph;
   GtkWidget     *sample_size_action_row;
   GtkWidget     *read_rate_row;
   GtkWidget     *write_rate_row;
@@ -58,11 +70,6 @@ struct _GduBenchmarkDialog
   GCancellable  *bm_cancellable;
   gboolean       bm_in_progress;
   gboolean       bm_update_timeout_pending;
-
-  guint64        bm_size;
-  GArray        *read_samples;
-  GArray        *write_samples;
-  GArray        *atime_samples;
 
   GSettings     *settings;
   UDisksClient  *client;
@@ -147,12 +154,9 @@ get_max_min_avg (GArray *array)
   return ret;
 }
 
-static gboolean
-on_drawing_area_draw (GtkDrawingArea *widget,
-                      cairo_t        *cr,
-                      int             width,
-                      int             height,
-                      gpointer        user_data)
+static void
+gdu_benchmark_graph_snapshot (GtkWidget   *widget,
+                              GtkSnapshot *snapshot)
 {
   /* TODO */
 }
@@ -206,33 +210,33 @@ update_dialog (GduBenchmarkDialog *self)
     }
 
   G_LOCK (bm_lock);
-  read_stats = get_max_min_avg (self->read_samples);
-  write_stats = get_max_min_avg (self->write_samples);
-  atime_stats = get_max_min_avg (self->atime_samples);
+  read_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples);
+  write_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples);
+  atime_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples);
   G_UNLOCK (bm_lock);
 
   if (read_stats.avg != 0.0)
     {
-      s = format_stats (read_stats.avg, self->read_samples->len, FALSE);
+      s = format_stats (read_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples->len, FALSE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
       g_free (s);
     }
 
   if (write_stats.avg != 0.0)
     {
-      s = format_stats (write_stats.avg, self->write_samples->len, FALSE);
+      s = format_stats (write_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples->len, FALSE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
       g_free (s);
     }
 
   if (atime_stats.avg != 0.0)
     {
-      s = format_stats (atime_stats.avg, self->atime_samples->len, TRUE);
+      s = format_stats (atime_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples->len, TRUE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
       g_free (s);
     }
 
-  gtk_widget_queue_draw (self->drawing_area);
+  gtk_widget_queue_draw (GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
 }
 
 /* called on main / UI thread */
@@ -396,7 +400,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
       sample.value = ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec);
 
       G_LOCK (bm_lock);
-      g_array_append_val (self->read_samples, sample);
+      g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, sample);
       G_UNLOCK (bm_lock);
 
       if (write_benchmark)
@@ -459,7 +463,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
                          / (end_usec - begin_usec);
 
           G_LOCK (bm_lock);
-          g_array_append_val (self->write_samples, sample);
+          g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, sample);
           G_UNLOCK (bm_lock);
         }
       bmt_schedule_update (self);
@@ -526,7 +530,7 @@ benchmark_access_time (GduBenchmarkDialog *self,
       sample.value = (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC);
 
       G_LOCK (bm_lock);
-      g_array_append_val (self->atime_samples, sample);
+      g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
       G_UNLOCK (bm_lock);
 
       bmt_schedule_update (self);
@@ -586,7 +590,7 @@ benchmark_thread (gpointer user_data)
   buffer = (guchar *)(((gintptr)(buffer_unaligned + page_size)) & (~(page_size - 1)));
 
   G_LOCK (bm_lock);
-  self->bm_size = disk_size;
+  GDU_BENCHMARK_GRAPH (self->benchmark_graph)->bm_size = disk_size;
   G_UNLOCK (bm_lock);
 
   error = benchmark_transfer_rate (self, buffer, fd, page_size, disk_size);
@@ -616,9 +620,9 @@ start_benchmark (GduBenchmarkDialog *self)
   gint sample_size = 0;
   g_autofree char *s = NULL;
   self->bm_in_progress = TRUE;
-  g_array_set_size (self->read_samples, 0);
-  g_array_set_size (self->write_samples, 0);
-  g_array_set_size (self->atime_samples, 0);
+  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, 0);
+  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, 0);
+  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, 0);
   g_cancellable_reset (self->bm_cancellable);
 
   sample_size = g_settings_get_int (self->settings, "sample-size-mib");
@@ -699,6 +703,40 @@ set_sample_size_unit_cb (AdwSpinRow  *spin_row,
 }
 
 static void
+gdu_benchmark_graph_dispose (GObject *object)
+{
+  G_OBJECT_CLASS (gdu_benchmark_graph_parent_class)->dispose (object);
+}
+
+static void
+gdu_benchmark_graph_init (GduBenchmarkGraph *self)
+{
+  self->read_samples = g_array_new (FALSE, /* zero-terminated */
+                                    FALSE, /* clear */
+                                    sizeof (BMSample));
+  self->write_samples = g_array_new (FALSE, /* zero-terminated */
+                                    FALSE, /* clear */
+                                    sizeof (BMSample));
+  self->atime_samples = g_array_new (FALSE, /* zero-terminated */
+                                     FALSE, /* clear */
+                                     sizeof (BMSample));
+
+  gtk_widget_set_size_request (GTK_WIDGET (self), -1, 279);
+  gtk_widget_add_css_class (GTK_WIDGET (self), "card");
+}
+
+static void
+gdu_benchmark_graph_class_init(GduBenchmarkGraphClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+
+  object_class->dispose = gdu_benchmark_graph_dispose;
+
+  widget_class->snapshot = gdu_benchmark_graph_snapshot;
+}
+
+static void
 gdu_benchmark_dialog_finalize (GObject *object)
 {
   G_OBJECT_CLASS (gdu_benchmark_dialog_parent_class)->finalize (object);
@@ -727,7 +765,7 @@ gdu_benchmark_dialog_class_init (GduBenchmarkDialogClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, access_samples_row);
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_bench_switch);
 
-  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, drawing_area);
+  gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, benchmark_graph);
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, sample_size_action_row);
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, read_rate_row);
   gtk_widget_class_bind_template_child (widget_class, GduBenchmarkDialog, write_rate_row);
@@ -745,20 +783,6 @@ gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
 
   self->settings = g_settings_new ("org.gnome.Disks.benchmark");
   self->bm_cancellable = g_cancellable_new ();
-
-  self->read_samples = g_array_new (FALSE, /* zero-terminated */
-                                    FALSE, /* clear */
-                                    sizeof (BMSample));
-  self->write_samples = g_array_new (FALSE, /* zero-terminated */
-                                     FALSE, /* clear */
-                                     sizeof (BMSample));
-  self->atime_samples = g_array_new (FALSE, /* zero-terminated */
-                                     FALSE, /* clear */
-                                     sizeof (BMSample));
-
-  gtk_drawing_area_set_draw_func (GTK_DRAWING_AREA (self->drawing_area),
-                                  (GtkDrawingAreaDrawFunc)on_drawing_area_draw,
-                                  NULL, NULL);
 }
 
 void

@@ -13,6 +13,30 @@
 
 G_BEGIN_DECLS
 
+/* Taken from https://gitlab.gnome.org/GNOME/gnome-control-center/-/blob/f9c4cbe62c3d456a08c35fddd8666af7c0f2884e/panels/wellbeing/cc-bar-chart.c#L553
+ * Adapted for Disks
+ */
+static const unsigned int GRID_LINE_WIDTH = 1;
+static const GdkRGBA GRID_LINE_COLOR = { .red = 0, .green = 0, .blue = 0, .alpha = 0.15 };
+static const GdkRGBA GRID_LINE_COLOR_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.15 };
+static const GdkRGBA GRID_LINE_COLOR_HC = { .red = 0, .green = 0, .blue = 0, .alpha = 0.5 };
+static const GdkRGBA GRID_LINE_COLOR_HC_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.5 };
+static const float GRID_LINE_DASH[] = { 4, 2 };
+
+static const unsigned int GRAPH_CURVE_WIDTH = 2;
+static const GdkRGBA READ_CURVE_COLOR = { .red = 0, .green = 0, .blue = 0, .alpha = 0.5 };
+static const GdkRGBA READ_CURVE_COLOR_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.5 };
+static const GdkRGBA READ_CURVE_COLOR_HC = { .red = 0, .green = 0, .blue = 0, .alpha = 0.8 };
+static const GdkRGBA READ_CURVE_COLOR_HC_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.8 };
+static const GdkRGBA WRITE_CURVE_COLOR = { .red = 0, .green = 0, .blue = 0, .alpha = 0.5 };
+static const GdkRGBA WRITE_CURVE_COLOR_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.5 };
+static const GdkRGBA WRITE_CURVE_COLOR_HC = { .red = 0, .green = 0, .blue = 0, .alpha = 0.8 };
+static const GdkRGBA WRITE_CURVE_COLOR_HC_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.8 };
+static const GdkRGBA ATIME_CURVE_COLOR = { .red = 0, .green = 0, .blue = 0, .alpha = 0.5 };
+static const GdkRGBA ATIME_CURVE_COLOR_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.5 };
+static const GdkRGBA ATIME_CURVE_COLOR_HC = { .red = 0, .green = 0, .blue = 0, .alpha = 0.8 };
+static const GdkRGBA ATIME_CURVE_COLOR_HC_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.8 };
+
 #define GDU_TYPE_BENCHMARK_GRAPH (gdu_benchmark_graph_get_type())
 G_DECLARE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, GDU, BENCHMARK_GRAPH, AdwBin)
 

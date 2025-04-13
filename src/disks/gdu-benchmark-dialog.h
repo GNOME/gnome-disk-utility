@@ -28,6 +28,12 @@ static const GdkRGBA READ_CURVE_COLOR = { .red = 53.0 / 255.0, .green = 132.0 / 
 static const GdkRGBA WRITE_CURVE_COLOR = { .red = 230.0 / 255.0, .green = 45.0 / 255.0, .blue = 66.0 / 255.0, .alpha = 1 };
 static const GdkRGBA ATIME_CURVE_COLOR = { .red = 58.0 / 255.0, .green = 148.0 / 255.0, .blue = 74.0 / 255.0, .alpha = 1 };
 
+static const GdkRGBA GRAPH_BG_COLOR = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1};
+static const GdkRGBA GRAPH_BG_COLOR_DARK = { .red = 52.0 / 255.0, .green = 52.0 / 255.0, .blue = 55.0 / 255.0, .alpha = 1};
+
+static const GdkRGBA LABEL_COLOR = { .red = 0.0, .green = 0.0, .blue = 0.0, .alpha = 1};
+static const GdkRGBA LABEL_COLOR_DARK = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1};
+
 #define GDU_TYPE_BENCHMARK_GRAPH (gdu_benchmark_graph_get_type())
 G_DECLARE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, GDU, BENCHMARK_GRAPH, AdwBin)
 

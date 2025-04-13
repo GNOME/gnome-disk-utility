@@ -7,6 +7,8 @@
  */
 
 #include "config.h"
+#include "gsk/gsk.h"
+#include "gtk/gtk.h"
 
 #include <glib/gi18n.h>
 
@@ -195,6 +197,10 @@ typedef struct
 {
   int width;
   int height;
+  int graph_width;
+  int graph_height;
+  int graph_x;
+  int graph_y;
   gboolean is_time;
   const GdkRGBA *color;
   GArray *samples;
@@ -203,30 +209,24 @@ typedef struct
   gdouble max_time;
 } GraphData;
 
-static GraphData
-draw_horizontal_axis_and_labels (GtkWidget   *widget,
-                                 GtkSnapshot *snapshot)
+static void
+gdu_benchmark_graph_draw_box (GtkWidget         *widget,
+                              GtkSnapshot       *snapshot,
+                              GraphData         *graph_data)
 {
   AdwStyleManager *style_manager;
-  g_autoptr(GskPath) path = NULL;
-  g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
-  g_autoptr(PangoLayout) layout = NULL;
-  GraphData graph_data = { 0 };
-  char* label;
-  int width, height;
-  GdkRGBA text_color;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPath) path = NULL;
+  GskRoundedRect rect;
   const GdkRGBA *grid_line_color;
-  int text_width, text_height;
-  gdouble max_visible_speed, max_speed, max_time;
-  gdouble speed_step, time_step;
-  guint num_hlines;
-  gdouble padding = 5;
+  const GdkRGBA *bg_color;
+  graphene_rect_t bounds = {.size.height = graph_data->graph_height, 
+                            .size.width = graph_data->graph_width, 
+                            .origin.x = graph_data->graph_x, 
+                            .origin.y = graph_data->graph_y};
 
-  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
-
-  width = gtk_widget_get_width (widget);
-  height = gtk_widget_get_height (widget);
+  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (GTK_WIDGET (widget)));
 
   if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
     grid_line_color = &GRID_LINE_COLOR_HC_DARK;
@@ -237,11 +237,76 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   else
     grid_line_color = &GRID_LINE_COLOR;
 
-  if (adw_style_manager_get_dark (style_manager)) {
-    gdk_rgba_parse (&text_color, "#FFFFFF");
-  } else {
-    gdk_rgba_parse (&text_color, "#000000");
-  }
+  if (adw_style_manager_get_dark (style_manager))
+    bg_color = &GRAPH_BG_COLOR_DARK;
+  else
+    bg_color = &GRAPH_BG_COLOR;
+
+  builder = gsk_path_builder_new ();
+  gsk_rounded_rect_init_from_rect (&rect, &bounds, 10);
+  gsk_path_builder_add_rounded_rect (builder, &rect);
+  
+  path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
+  stroke = gsk_stroke_new (GRID_LINE_WIDTH);
+  gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
+  gtk_snapshot_append_fill(snapshot, path, GSK_FILL_RULE_WINDING, bg_color);
+}
+
+
+static void
+draw_horizontal_axis_and_labels (GtkWidget   *widget,
+                                 GtkSnapshot *snapshot,
+                                 GraphData   *graph_data)
+{
+  AdwStyleManager *style_manager;
+  g_autoptr(GskPath) path = NULL;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPathBuilder) builder = NULL;
+  g_autoptr(PangoLayout) layout = NULL;
+  g_autoptr(PangoFontDescription) label_font_desc = NULL;
+  g_autoptr(PangoFontDescription) axis_title_font_desc = NULL;
+  PangoContext* pango_context = NULL;
+  gint font_size;
+  char* label;
+  const GdkRGBA *text_color;
+  const GdkRGBA *grid_line_color;
+  int text_width, text_height;
+  int max_left_label_width = 0, max_right_label_width = 0;
+  gdouble max_visible_speed, max_speed, max_time;
+  gdouble speed_step, time_step;
+  guint num_hlines;
+  gdouble padding = 5;
+
+  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
+
+  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
+  else if (adw_style_manager_get_dark (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_DARK;
+  else if (adw_style_manager_get_high_contrast (style_manager))
+    grid_line_color = &GRID_LINE_COLOR_HC;
+  else
+    grid_line_color = &GRID_LINE_COLOR;
+
+  pango_context = gtk_widget_get_pango_context (widget);
+  label_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
+  axis_title_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
+  font_size = pango_font_description_get_size (label_font_desc);
+  pango_font_description_set_absolute_size (label_font_desc, PANGO_SCALE_X_SMALL * font_size);
+  pango_font_description_set_absolute_size (axis_title_font_desc, PANGO_SCALE_SMALL * font_size);
+
+  label = g_strdup_printf ("100");
+  layout = gtk_widget_create_pango_layout (widget, label);
+  pango_layout_set_font_description (layout, label_font_desc);
+  pango_layout_get_pixel_size (layout, &text_width, &text_height);
+  g_free (label);
+
+  graph_data->graph_height -= (text_height + padding);
+
+  if (adw_style_manager_get_dark (style_manager))
+    text_color = &LABEL_COLOR_DARK;
+  else
+    text_color = &LABEL_COLOR;
 
   /* TODO: Calculate this based on some maximum time or speed
    * TODO: Usually time (ms) is going to be really small compared to speed.
@@ -263,8 +328,8 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   max_visible_speed = ceil (max_speed / (10*1000*1000)) * 10*1000*1000;
   speed_step = max_visible_speed / num_hlines;
 
-  graph_data.max_time =  max_time;
-  graph_data.max_speed = max_visible_speed;
+  graph_data->max_time =  max_time;
+  graph_data->max_speed = max_visible_speed;
 
   if (time_step < 0.0001)
     time_step = 0.0001;
@@ -279,70 +344,112 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   else
     time_step = ceil (((gdouble) time_step) / 0.005) * 0.005;
 
+  graph_data->max_time = (time_step * num_hlines);
+
   builder = gsk_path_builder_new ();
-  for (guint j = 0; j <= num_hlines; j++)
+  for (guint j = 0; j <= num_hlines; j++) 
     {
-      double x,  y;
+      double x, y;
 
-      y = height - (j * height / num_hlines);
-
-      gsk_path_builder_move_to (builder, 0, y);
-      if (j != 0 && j != num_hlines) {
-        gsk_path_builder_line_to (builder, width, y);
-      }
+      y = graph_data->graph_height - ((float) j * graph_data->graph_height / num_hlines);
 
       x = 0.0;
       label = g_strdup_printf ("%ld", (gulong) (j * speed_step) / (1000 * 1000));
       layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_set_font_description (layout, label_font_desc);
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
+      max_left_label_width = fmax (max_left_label_width, text_width);
 
       gtk_snapshot_save (snapshot);
-      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - text_width - padding, y - (text_height / 2.0)));
-      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x, y - (text_height / 2.0)));
+      gtk_snapshot_append_layout (snapshot, layout, text_color);
       gtk_snapshot_restore (snapshot);
+      g_free(label);
 
-      g_free (label);
-
-      x = width;
+      x = graph_data->graph_width;
       label = g_strdup_printf ("%3g", j * time_step * 1000);
       layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_set_font_description (layout, label_font_desc);
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
+      max_right_label_width = fmax (max_right_label_width, text_width);
 
       gtk_snapshot_save (snapshot);
-      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x + padding, y - (text_height / 2.0)));
-      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - text_width, y - (text_height / 2.0)));
+      gtk_snapshot_append_layout (snapshot, layout, text_color);
       gtk_snapshot_restore (snapshot);
 
       g_free(label);
+    }
+
+  graph_data->graph_width -= (max_left_label_width + max_right_label_width + 2 * padding);
+  graph_data->graph_x += (max_left_label_width + padding);
+
+  gdu_benchmark_graph_draw_box  (widget, snapshot, graph_data);
+  
+  for (guint j = 0; j <= num_hlines; j++)
+    {
+      double x,  y;
+
+      y = graph_data->graph_height - ((float) j * graph_data->graph_height / num_hlines);
+      x = graph_data->graph_x;
+
+      gsk_path_builder_move_to (builder, x, y);
+      if (j != 0 && j != num_hlines) {
+        gsk_path_builder_line_to (builder, graph_data->graph_x + graph_data->graph_width, y);
+      }
     }
 
   path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
   stroke = gsk_stroke_new (GRID_LINE_WIDTH);
   gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 
-  return graph_data;
+
+  label = g_strdup_printf ("Read/Write Speed (MB/s)");
+  layout = gtk_widget_create_pango_layout (widget, label);
+  pango_layout_set_font_description (layout, axis_title_font_desc);
+  pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+  gtk_snapshot_save (snapshot);
+  gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (0.0 - (text_height + padding), (graph_data->graph_height / 2.0) + ((float) text_width / 2)));
+  gtk_snapshot_rotate(snapshot, -90.0);
+  gtk_snapshot_append_layout (snapshot, layout, text_color);
+  gtk_snapshot_restore (snapshot);
+  g_free (label);
+
+  label = g_strdup_printf ("Access Time (ms)");
+  layout = gtk_widget_create_pango_layout (widget, label);
+  pango_layout_set_font_description (layout, axis_title_font_desc);
+  pango_layout_get_pixel_size (layout, &text_width, &text_height);
+
+  gtk_snapshot_save (snapshot);
+  gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (graph_data->width + padding + max_right_label_width, 
+                                                         (graph_data->graph_height / 2.0) - ((float) text_width / 2)));
+  gtk_snapshot_rotate(snapshot, 90.0);
+  gtk_snapshot_append_layout (snapshot, layout, text_color);
+  gtk_snapshot_restore (snapshot);
 }
 
 static void
 draw_vertical_axis_and_labels (GtkWidget   *widget,
-                               GtkSnapshot *snapshot)
+                               GtkSnapshot *snapshot,
+                               GraphData   *graph_data)
 {
   AdwStyleManager *style_manager;
   g_autoptr(GskPath) path = NULL;
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
   g_autoptr(PangoLayout) layout = NULL;
+  g_autoptr(PangoFontDescription) label_font_desc = NULL;
+  g_autoptr(PangoFontDescription) axis_title_font_desc = NULL;
+  PangoContext* pango_context = NULL;
+  gint font_size;
   g_autofree char* label;
-  int width, height;
-  GdkRGBA text_color;
+  const GdkRGBA *text_color;
   const GdkRGBA *grid_line_color;
   int text_width, text_height;
   gdouble padding = 5;
 
   style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
-
-  width = gtk_widget_get_width (widget);
-  height = gtk_widget_get_height (widget);
 
   if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
     grid_line_color = &GRID_LINE_COLOR_HC_DARK;
@@ -353,42 +460,49 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
   else
     grid_line_color = &GRID_LINE_COLOR;
 
-  if (adw_style_manager_get_dark (style_manager)) {
-    gdk_rgba_parse (&text_color, "#FFFFFF");
-  } else {
-    gdk_rgba_parse (&text_color, "#000000");
-  }
+  if (adw_style_manager_get_dark (style_manager))
+    text_color = &LABEL_COLOR_DARK;
+  else
+    text_color = &LABEL_COLOR;
+
+  pango_context = gtk_widget_get_pango_context (widget);
+  label_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
+  axis_title_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
+  font_size = pango_font_description_get_size (label_font_desc);
+  pango_font_description_set_absolute_size (label_font_desc, font_size * PANGO_SCALE_X_SMALL);
+  pango_font_description_set_absolute_size (axis_title_font_desc, font_size * PANGO_SCALE_SMALL);
 
   builder = gsk_path_builder_new ();
   for (int i = 0; i <= 10; i++)
     {
-      double x = i * width / 10.0;
-      double y = height;
+      double x = graph_data->graph_x + (i * graph_data->graph_width / 10.0);
+      double y = graph_data->height;
 
       gsk_path_builder_move_to (builder, x, 0);
       if (i != 0 && i != 10)
-        gsk_path_builder_line_to (builder, x, height);
+        gsk_path_builder_line_to (builder, x, graph_data->graph_height);
 
       label = g_strdup_printf ("%d", i * 10);
       layout = gtk_widget_create_pango_layout (widget, label);
+      pango_layout_set_font_description (layout, label_font_desc);
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
 
       gtk_snapshot_save (snapshot);
-      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - (text_width / 2.0), y + padding));
-      gtk_snapshot_append_layout (snapshot, layout, &text_color);
+      gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x - (text_width / 2.0), y - text_height));
+      gtk_snapshot_append_layout (snapshot, layout, text_color);
       gtk_snapshot_restore (snapshot);
 
       g_free (label);
     }
 
-
     label = g_strdup_printf ("Progress (%%)");
     layout = gtk_widget_create_pango_layout (widget, label);
+    pango_layout_set_font_description (layout, axis_title_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
 
     gtk_snapshot_save (snapshot);
-    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((width - text_width) / 2.0, height + padding + text_height));
-    gtk_snapshot_append_layout (snapshot, layout, &text_color);
+    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((graph_data->width - text_width) / 2.0, graph_data->height + padding));
+    gtk_snapshot_append_layout (snapshot, layout, text_color);
     gtk_snapshot_restore (snapshot);
 
     path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
@@ -398,16 +512,13 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
     gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 }
 
-static GraphData
+static void
 gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
-                               GtkSnapshot       *snapshot)
+                               GtkSnapshot       *snapshot,
+                               GraphData         *graph_data)
 {
-  GraphData graph_data;
-
-  draw_vertical_axis_and_labels (GTK_WIDGET (self), snapshot);
-  graph_data = draw_horizontal_axis_and_labels (GTK_WIDGET (self), snapshot);
-
-  return graph_data;
+  draw_horizontal_axis_and_labels (GTK_WIDGET (self), snapshot, graph_data);
+  draw_vertical_axis_and_labels (GTK_WIDGET (self), snapshot, graph_data);
 }
 
 static void
@@ -452,8 +563,8 @@ draw_curve(GdkSnapshot    *snapshot,
 
   {
     BMSample sample = g_array_index(graph_data->samples, BMSample, 0);
-    x = (0.0 / total_samples) * graph_data->width;
-    y = graph_data->height - (sample.value / maximum_value * graph_data->height);
+    x = graph_data->graph_x + ((0.0 / total_samples) * graph_data->graph_width);
+    y = graph_data->graph_y + graph_data->graph_height - (sample.value / maximum_value * graph_data->graph_height);
     gsk_path_builder_move_to(builder, x, y);
   }
 
@@ -466,18 +577,18 @@ draw_curve(GdkSnapshot    *snapshot,
       double c1_x, c1_y, c2_x, c2_y;
 
       /* Calculate P1 and P2 */
-      x1 = ((double)  n       / total_samples) * graph_data->width;
-      x2 = (((double)(n + 1)) / total_samples) * graph_data->width;
-      y1 = graph_data->height - (sample1.value / maximum_value * graph_data->height);
-      y2 = graph_data->height - (sample2.value / maximum_value * graph_data->height);
+      x1 = graph_data->graph_x + (((double)  n       / total_samples) * graph_data->graph_width);
+      x2 = graph_data->graph_x + ((((double)(n + 1)) / total_samples) * graph_data->graph_width);
+      y1 = graph_data->graph_y + (graph_data->graph_height - (sample1.value / maximum_value * graph_data->graph_height));
+      y2 = graph_data->graph_y + (graph_data->graph_height - (sample2.value / maximum_value * graph_data->graph_height));
 
       /* Determine P0*/
       x0 = x1; y0 = y1;
       if (n > 0)
         {
           BMSample prev = g_array_index(graph_data->samples, BMSample, n - 1);
-          x0 = ((double)(n - 1) / total_samples) * graph_data->width;
-          y0 = graph_data->height - prev.value / maximum_value * graph_data->height;
+          x0 = graph_data->graph_x + (((double)(n - 1) / total_samples) * graph_data->graph_width);
+          y0 = graph_data->graph_y + (graph_data->graph_height - prev.value / maximum_value * graph_data->graph_height);
         }
 
       /* Determine P3  */
@@ -485,8 +596,8 @@ draw_curve(GdkSnapshot    *snapshot,
       if (n + 2 < n_samples)
         {
           BMSample next = g_array_index(graph_data->samples, BMSample, n + 2);
-          x3 = (((double)(n + 2)) / total_samples) * graph_data->width;
-          y3 = graph_data->height - next.value / maximum_value * graph_data->height;
+          x3 = graph_data->graph_x + ((((double)(n + 2)) / total_samples) * graph_data->graph_width);
+          y3 = graph_data->graph_y + (graph_data->graph_height - next.value / maximum_value * graph_data->graph_height);
         }
 
       c1_x = x1 + (x2 - x0) * tension;
@@ -511,15 +622,14 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
                               GtkSnapshot *snapshot)
 {
   GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH(widget);
-  GraphData graph_data;
-  int width, height;
+  GraphData graph_data = {0};
 
-  width = gtk_widget_get_width (widget);
-  height = gtk_widget_get_height (widget);
+  graph_data.width = gtk_widget_get_width (GTK_WIDGET (self));
+  graph_data.height = gtk_widget_get_height (GTK_WIDGET (self));
+  graph_data.graph_width = graph_data.width;
+  graph_data.graph_height = graph_data.height;
 
-  graph_data = gdu_benchmark_graph_draw_grid (self, snapshot);
-  graph_data.width = width;
-  graph_data.height = height;
+  gdu_benchmark_graph_draw_grid (self, snapshot, &graph_data);
 
   graph_data.samples = self->read_samples;
   graph_data.total_samples = self->total_transfer_samples;
@@ -1102,7 +1212,6 @@ gdu_benchmark_graph_init (GduBenchmarkGraph *self)
                                      sizeof (BMSample));
 
   gtk_widget_set_size_request (GTK_WIDGET (self), -1, 279);
-  gtk_widget_add_css_class (GTK_WIDGET (self), "card");
 }
 
 static void

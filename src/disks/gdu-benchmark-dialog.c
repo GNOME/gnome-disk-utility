@@ -7,7 +7,10 @@
  */
 
 #include "config.h"
+#include "gio/gio.h"
+#include "glib-object.h"
 #include "glib.h"
+#include "glibconfig.h"
 #include "gsk/gsk.h"
 #include "gtk/gtk.h"
 
@@ -19,11 +22,15 @@
 
 #include "gdu-benchmark-dialog.h"
 
-typedef struct
+struct _GduBMSample
 {
+  GObject parent_instance;
+
   guint64 offset;
   gdouble value;
-} BMSample;
+};
+
+G_DEFINE_TYPE (GduBMSample, gdu_bm_sample, g_object_get_type())
 
 typedef struct
 {
@@ -39,9 +46,9 @@ struct _GduBenchmarkGraph
   guint64        bm_size;
   guint          total_transfer_samples;
   guint          total_atime_samples;
-  GArray        *read_samples;
-  GArray        *write_samples;
-  GArray        *atime_samples;
+  GListStore    *read_samples;
+  GListStore    *write_samples;
+  GListStore    *atime_samples;
 };
 
 G_DEFINE_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
@@ -134,28 +141,31 @@ gdu_benchmark_dialog_save_options (GduBenchmarkDialog *self)
 }
 
 static BMStats
-get_max_min_avg (GArray *array)
+get_max_min_avg (GListStore *list)
 {
   guint n;
+  guint n_items;
   gdouble sum;
   BMStats ret = { 0 };
 
-  if (array->len == 0)
+  n_items = g_list_model_get_n_items (G_LIST_MODEL (list));
+  if (n_items == 0)
     return ret;
 
   ret.max = G_MINDOUBLE;
   ret.min = G_MAXDOUBLE;
   sum = 0;
 
-  for (n = 0; n < array->len; n++)
+
+  for (n = 0; n < n_items; n++)
     {
-      BMSample *s = &g_array_index (array, BMSample, n);
+      GduBMSample *s = g_list_model_get_item (G_LIST_MODEL (list), n);
       ret.max = MAX (ret.max, s->value);
       ret.min = MIN (ret.min, s->value);
       sum += s->value;
     }
 
-  ret.avg = sum / array->len;
+  ret.avg = sum / n_items;
 
   return ret;
 }
@@ -165,13 +175,13 @@ get_max_speed(GduBenchmarkGraph *self) {
   gdouble max_val = 0.0;
   BMStats stats;
 
-  if (self->read_samples && self->read_samples->len > 0)
+  if (self->read_samples && g_list_model_get_n_items (G_LIST_MODEL (self->read_samples)) > 0)
     {
       stats = get_max_min_avg (self->read_samples);
       max_val = MAX (max_val, stats.max);
     }
 
-  if (self->write_samples && self->write_samples->len > 0)
+  if (self->write_samples && g_list_model_get_n_items (G_LIST_MODEL (self->write_samples)) > 0)
     {
       stats = get_max_min_avg (self->write_samples);
       max_val = MAX (max_val, stats.max);
@@ -186,7 +196,7 @@ get_max_time (GduBenchmarkGraph *self)
   gdouble max_val = 0.0;
   BMStats stats;
 
-  if (self->atime_samples && self->atime_samples->len > 0)
+  if (self->atime_samples && g_list_model_get_n_items (G_LIST_MODEL (self->atime_samples)) > 0)
     {
       stats = get_max_min_avg (self->atime_samples);
       max_val = MAX (max_val, stats.max);
@@ -205,7 +215,7 @@ typedef struct
   int graph_y;
   gboolean is_time;
   const GdkRGBA *color;
-  GArray *samples;
+  GListStore *samples;
   guint total_samples;
   gdouble max_speed;
   gdouble max_time;
@@ -537,9 +547,13 @@ draw_curve(GdkSnapshot    *snapshot,
                           graph_data->max_speed;
   gdouble prev_slope = 0, prev_m = 0;
 
-  if (graph_data->samples == NULL || graph_data->samples->len == 0)
+  if (graph_data->samples == NULL)
     return;
-  n_samples = graph_data->samples->len;
+
+  n_samples = g_list_model_get_n_items (G_LIST_MODEL (graph_data->samples));
+  if (n_samples == 0)
+    return;
+
   total_samples = graph_data->total_samples - 1;
 
   builder = gsk_path_builder_new();
@@ -549,25 +563,25 @@ draw_curve(GdkSnapshot    *snapshot,
    */
 
   {
-    BMSample sample = g_array_index(graph_data->samples, BMSample, 0);
+    GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
     x = graph_data->graph_x + ((0.0 / total_samples) * graph_data->graph_width);
-    y = graph_data->graph_y + graph_data->graph_height - (sample.value / maximum_value * graph_data->graph_height);
+    y = graph_data->graph_y + graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height);
     gsk_path_builder_move_to(builder, x, y);
   }
 
 
   for (n = 0; n < n_samples - 1; n++)
     {
-      BMSample sample1 = g_array_index(graph_data->samples, BMSample, n);
-      BMSample sample2 = g_array_index(graph_data->samples, BMSample, n + 1);
+      GduBMSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
+      GduBMSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n+1);
       gdouble x0, x1, x2, x3, y0, y1, y2, y3;
       gdouble slope, m;
       gdouble a, b, r;
 
       x0 = graph_data->graph_x + (((double)  n       / total_samples) * graph_data->graph_width);
       x3 = graph_data->graph_x + ((((double)(n + 1)) / total_samples) * graph_data->graph_width);
-      y0 = graph_data->graph_y + (graph_data->graph_height - (sample1.value / maximum_value * graph_data->graph_height));
-      y3 = graph_data->graph_y + (graph_data->graph_height - (sample2.value / maximum_value * graph_data->graph_height));
+      y0 = graph_data->graph_y + (graph_data->graph_height - (sample1->value / maximum_value * graph_data->graph_height));
+      y3 = graph_data->graph_y + (graph_data->graph_height - (sample2->value / maximum_value * graph_data->graph_height));
 
       slope = (y3 - y0) / (x3 - x0);
       if (n == 0 || n == n_samples - 1) {
@@ -706,21 +720,27 @@ update_dialog (GduBenchmarkDialog *self)
 
   if (read_stats.avg != 0.0)
     {
-      s = format_stats (read_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples->len, FALSE);
+      s = format_stats (read_stats.avg, 
+        g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples)), 
+        FALSE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
       g_free (s);
     }
 
   if (write_stats.avg != 0.0)
     {
-      s = format_stats (write_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples->len, FALSE);
+      s = format_stats (write_stats.avg, 
+        g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples)), 
+        FALSE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
       g_free (s);
     }
 
   if (atime_stats.avg != 0.0)
     {
-      s = format_stats (atime_stats.avg, GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples->len, TRUE);
+      s = format_stats (atime_stats.avg, 
+        g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples)), 
+        TRUE);
       adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
       g_free (s);
     }
@@ -840,7 +860,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      BMSample sample = { 0 };
+      GduBMSample *sample;
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         return error;
@@ -885,11 +905,11 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
         }
       end_usec = g_get_monotonic_time ();
 
-      sample.offset = offset;
-      sample.value = ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec);
+      sample = gdu_bm_sample_new (offset, 
+        ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec));
 
       G_LOCK (bm_lock);
-      g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, sample);
+      g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, sample);
       G_UNLOCK (bm_lock);
 
       if (write_benchmark)
@@ -947,12 +967,12 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
             }
           end_usec = g_get_monotonic_time ();
 
-          sample.offset = offset;
-          sample.value = ((gdouble)G_USEC_PER_SEC) * num_written
-                         / (end_usec - begin_usec);
+          sample = gdu_bm_sample_new (offset, 
+            ((gdouble)G_USEC_PER_SEC) * num_written
+                         / (end_usec - begin_usec));
 
           G_LOCK (bm_lock);
-          g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, sample);
+          g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, sample);
           G_UNLOCK (bm_lock);
         }
       bmt_schedule_update (self);
@@ -985,7 +1005,7 @@ benchmark_access_time (GduBenchmarkDialog *self,
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      BMSample sample = { 0 };
+      GduBMSample *sample;
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         {
@@ -1015,11 +1035,11 @@ benchmark_access_time (GduBenchmarkDialog *self,
         }
       end_usec = g_get_monotonic_time ();
 
-      sample.offset = offset;
-      sample.value = (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC);
+      sample = gdu_bm_sample_new (offset, 
+        (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC));
 
       G_LOCK (bm_lock);
-      g_array_append_val (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
+      g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
       G_UNLOCK (bm_lock);
 
       bmt_schedule_update (self);
@@ -1109,9 +1129,6 @@ start_benchmark (GduBenchmarkDialog *self)
   gint sample_size = 0;
   g_autofree char *s = NULL;
   self->bm_in_progress = TRUE;
-  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, 0);
-  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, 0);
-  g_array_set_size (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, 0);
   g_cancellable_reset (self->bm_cancellable);
 
   GDU_BENCHMARK_GRAPH(self->benchmark_graph)->total_transfer_samples = (guint)g_settings_get_int (self->settings, "num-samples");
@@ -1194,6 +1211,28 @@ set_sample_size_unit_cb (AdwSpinRow  *spin_row,
   return TRUE;
 }
 
+GduBMSample *
+gdu_bm_sample_new (guint64  offset,
+                   gdouble  value)
+{
+  GduBMSample *self;
+
+  self = g_object_new (GDU_TYPE_BM_SAMPLE, NULL);
+
+  self->offset = offset;
+  self->value = value;
+
+  return self;
+}
+
+static void
+gdu_bm_sample_init (GduBMSample *self)
+{}
+
+static void
+gdu_bm_sample_class_init (GduBMSampleClass *self)
+{}
+
 static void
 gdu_benchmark_graph_dispose (GObject *object)
 {
@@ -1203,15 +1242,9 @@ gdu_benchmark_graph_dispose (GObject *object)
 static void
 gdu_benchmark_graph_init (GduBenchmarkGraph *self)
 {
-  self->read_samples = g_array_new (FALSE, /* zero-terminated */
-                                    FALSE, /* clear */
-                                    sizeof (BMSample));
-  self->write_samples = g_array_new (FALSE, /* zero-terminated */
-                                    FALSE, /* clear */
-                                    sizeof (BMSample));
-  self->atime_samples = g_array_new (FALSE, /* zero-terminated */
-                                     FALSE, /* clear */
-                                     sizeof (BMSample));
+  self->read_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
+  self->write_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
+  self->atime_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
 
   gtk_widget_set_size_request (GTK_WIDGET (self), -1, 279);
 }
@@ -1230,6 +1263,12 @@ gdu_benchmark_graph_class_init(GduBenchmarkGraphClass *klass)
 static void
 gdu_benchmark_dialog_finalize (GObject *object)
 {
+  GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (object);
+
+  g_clear_object (&self->read_samples);
+  g_clear_object (&self->write_samples);
+  g_clear_object (&self->atime_samples);
+
   G_OBJECT_CLASS (gdu_benchmark_dialog_parent_class)->finalize (object);
 }
 
@@ -1288,6 +1327,21 @@ gdu_benchmark_dialog_show (GtkWindow    *parent_window,
   self->parent_window = g_object_ref (parent_window);
   self->block = udisks_object_peek_block (self->object);
   self->client = client;
+
+  g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples,
+                            "notify::n-items",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
+
+  g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples,
+                            "notify::n-items",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
+
+  g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples,
+                            "notify::n-items",
+                            G_CALLBACK (gtk_widget_queue_draw),
+                            GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
 
   gdu_benchmark_dialog_set_title (self);
   gdu_benchmark_dialog_load_options (self);

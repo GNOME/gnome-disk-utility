@@ -7,12 +7,14 @@
  */
 
 #include "config.h"
+#include "glib.h"
 #include "gsk/gsk.h"
 #include "gtk/gtk.h"
 
 #include <glib/gi18n.h>
 
 #include <linux/fs.h>
+#include <math.h>
 #include <sys/ioctl.h>
 
 #include "gdu-benchmark-dialog.h"
@@ -530,10 +532,10 @@ draw_curve(GdkSnapshot    *snapshot,
   g_autoptr(GskPathBuilder) builder = NULL;
   double x, y;
   guint n, n_samples, total_samples;
-  const double tension = 0.2;
   gdouble maximum_value = graph_data->is_time ?
                           graph_data->max_time :
                           graph_data->max_speed;
+  gdouble prev_slope = 0, prev_m = 0;
 
   if (graph_data->samples == NULL || graph_data->samples->len == 0)
     return;
@@ -543,22 +545,7 @@ draw_curve(GdkSnapshot    *snapshot,
   builder = gsk_path_builder_new();
 
   /*
-   * For smoothing, use Catmull–Rom-to-Bézier conversion.
-   * Let sample point:
-   *   P[i] = (x[i], y[i])
-   *
-   * For each segment connecting P[i] to P[i+1] define:
-   *
-   *  P0 = (if i > 0 then P[i-1] else P[i])
-   *  P1 = P[i]
-   *  P2 = P[i+1]
-   *  P3 = (if i + 2 < n_samples then P[i+2] else P[i+1])
-   *
-   * Then set control points as:
-   *   c1 = P1 + (P2 - P0) * tension
-   *   c2 = P2 - (P3 - P1) * tension
-   *
-   * `tension` - a value between 0 and 1 that determines the tightness of the curve.
+   * For smoothing, use monotonic cubic interpolation
    */
 
   {
@@ -568,47 +555,62 @@ draw_curve(GdkSnapshot    *snapshot,
     gsk_path_builder_move_to(builder, x, y);
   }
 
+
   for (n = 0; n < n_samples - 1; n++)
     {
       BMSample sample1 = g_array_index(graph_data->samples, BMSample, n);
       BMSample sample2 = g_array_index(graph_data->samples, BMSample, n + 1);
-      double x0, x1, x2, x3;
-      double y0, y1, y2, y3;
-      double c1_x, c1_y, c2_x, c2_y;
+      gdouble x0, x1, x2, x3, y0, y1, y2, y3;
+      gdouble slope, m;
+      gdouble a, b, r;
 
-      /* Calculate P1 and P2 */
-      x1 = graph_data->graph_x + (((double)  n       / total_samples) * graph_data->graph_width);
-      x2 = graph_data->graph_x + ((((double)(n + 1)) / total_samples) * graph_data->graph_width);
-      y1 = graph_data->graph_y + (graph_data->graph_height - (sample1.value / maximum_value * graph_data->graph_height));
-      y2 = graph_data->graph_y + (graph_data->graph_height - (sample2.value / maximum_value * graph_data->graph_height));
+      x0 = graph_data->graph_x + (((double)  n       / total_samples) * graph_data->graph_width);
+      x3 = graph_data->graph_x + ((((double)(n + 1)) / total_samples) * graph_data->graph_width);
+      y0 = graph_data->graph_y + (graph_data->graph_height - (sample1.value / maximum_value * graph_data->graph_height));
+      y3 = graph_data->graph_y + (graph_data->graph_height - (sample2.value / maximum_value * graph_data->graph_height));
 
-      /* Determine P0*/
-      x0 = x1; y0 = y1;
-      if (n > 0)
-        {
-          BMSample prev = g_array_index(graph_data->samples, BMSample, n - 1);
-          x0 = graph_data->graph_x + (((double)(n - 1) / total_samples) * graph_data->graph_width);
-          y0 = graph_data->graph_y + (graph_data->graph_height - prev.value / maximum_value * graph_data->graph_height);
-        }
+      slope = (y3 - y0) / (x3 - x0);
+      if (n == 0 || n == n_samples - 1) {
+        m = slope;
+      }
+      else {
+        if ((prev_slope > 0 && slope < 0) || (prev_slope < 0 && slope > 0))
+          m = 0;
+        else
+          m = (prev_slope + slope) / 2.0;
+      }
 
-      /* Determine P3  */
-      x3 = x2; y3 = y2;
-      if (n + 2 < n_samples)
-        {
-          BMSample next = g_array_index(graph_data->samples, BMSample, n + 2);
-          x3 = graph_data->graph_x + ((((double)(n + 2)) / total_samples) * graph_data->graph_width);
-          y3 = graph_data->graph_y + (graph_data->graph_height - next.value / maximum_value * graph_data->graph_height);
-        }
+      if (slope == 0) {
+        prev_slope = 0;
+        m = 0;
+      }
 
-      c1_x = x1 + (x2 - x0) * tension;
-      c1_y = y1 + (y2 - y0) * tension;
-      c2_x = x2 - (x3 - x1) * tension;
-      c2_y = y2 - (y3 - y1) * tension;
+      a = prev_m / prev_slope;
+      b = m / prev_slope;
+
+      if ((a * a + b * b) > 9) {
+        r = 3 / sqrt(a * a + b * b);
+        prev_m = r * a * prev_slope;
+        m = r * b * prev_slope;
+      }
+
+      x1 = x0 + (x3 - x0) / 3;
+      x2 = x3 - (x3 - x0) / 3;
+
+      y1 = y0 + ((1.0/3.0) * (x3 - x0) * prev_m);
+      y2 = y3 - ((1.0/3.0) * (x3 - x0) * m);
+
+      y1 = fmax (0.0, y1);
+      y2 = fmax (0.0, y2);
+      y3 = fmax (0.0, y3);
+
+      prev_m = m;
+      prev_slope = slope;
 
       gsk_path_builder_cubic_to(builder,
-                                (float)c1_x, (float)c1_y,
-                                (float)c2_x, (float)c2_y,
-                                (float)x2,  (float)y2);
+                                x1, y1,
+                                x2, y2,
+                                x3,  y3);
     }
 
   path = gsk_path_builder_free_to_path(g_steal_pointer(&builder));

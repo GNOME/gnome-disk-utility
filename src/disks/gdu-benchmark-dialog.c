@@ -46,9 +46,9 @@ struct _GduBenchmarkGraph
   guint64        bm_size;
   guint          total_transfer_samples;
   guint          total_atime_samples;
-  GListStore    *read_samples;
-  GListStore    *write_samples;
-  GListStore    *atime_samples;
+  GListStore     *read_samples;
+  GListStore     *write_samples;
+  GListStore     *atime_samples;
 };
 
 G_DEFINE_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
@@ -376,7 +376,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
       gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x, y - (text_height / 2.0)));
       gtk_snapshot_append_layout (snapshot, layout, text_color);
       gtk_snapshot_restore (snapshot);
-      g_free(label);
+      g_free (label);
 
       x = graph_data->graph_width;
       label = g_strdup_printf ("%3g", j * time_step * 1000);
@@ -390,12 +390,13 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
       gtk_snapshot_append_layout (snapshot, layout, text_color);
       gtk_snapshot_restore (snapshot);
 
-      g_free(label);
+      g_free (label);
     }
 
   graph_data->graph_width -= (max_left_label_width + max_right_label_width + 2 * padding);
   graph_data->graph_x += (max_left_label_width + padding);
 
+  // draw box before the grid lines are drawn
   gdu_benchmark_graph_draw_box  (widget, snapshot, graph_data);
   
   for (guint j = 0; j <= num_hlines; j++)
@@ -423,7 +424,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
 
   gtk_snapshot_save (snapshot);
   gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (0.0 - (text_height + padding), (graph_data->graph_height / 2.0) + ((float) text_width / 2)));
-  gtk_snapshot_rotate(snapshot, -90.0);
+  gtk_snapshot_rotate (snapshot, -90.0);
   gtk_snapshot_append_layout (snapshot, layout, text_color);
   gtk_snapshot_restore (snapshot);
   g_free (label);
@@ -436,7 +437,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   gtk_snapshot_save (snapshot);
   gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (graph_data->width + padding + max_right_label_width, 
                                                          (graph_data->graph_height / 2.0) - ((float) text_width / 2)));
-  gtk_snapshot_rotate(snapshot, 90.0);
+  gtk_snapshot_rotate (snapshot, 90.0);
   gtk_snapshot_append_layout (snapshot, layout, text_color);
   gtk_snapshot_restore (snapshot);
 }
@@ -513,7 +514,9 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
 
     gtk_snapshot_save (snapshot);
-    gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT ((graph_data->width - text_width) / 2.0, graph_data->height + padding));
+    gtk_snapshot_translate (snapshot, 
+      &GRAPHENE_POINT_INIT ((graph_data->width - text_width) / 2.0, 
+      graph_data->height + padding));
     gtk_snapshot_append_layout (snapshot, layout, text_color);
     gtk_snapshot_restore (snapshot);
 
@@ -534,8 +537,8 @@ gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
 }
 
 static void
-draw_curve(GdkSnapshot    *snapshot,
-           GraphData      *graph_data)
+draw_curve (GdkSnapshot    *snapshot,
+            GraphData      *graph_data)
 {
   g_autoptr(GskPath) path = NULL;
   g_autoptr(GskStroke) stroke = NULL;
@@ -556,17 +559,18 @@ draw_curve(GdkSnapshot    *snapshot,
 
   total_samples = graph_data->total_samples - 1;
 
-  builder = gsk_path_builder_new();
+  builder = gsk_path_builder_new ();
 
   /*
    * For smoothing, use monotonic cubic interpolation
+   *
    */
 
   {
     GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
     x = graph_data->graph_x + ((0.0 / total_samples) * graph_data->graph_width);
-    y = graph_data->graph_y + graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height);
-    gsk_path_builder_move_to(builder, x, y);
+    y = graph_data->graph_y + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
+    gsk_path_builder_move_to (builder, x, y);
   }
 
 
@@ -584,6 +588,8 @@ draw_curve(GdkSnapshot    *snapshot,
       y3 = graph_data->graph_y + (graph_data->graph_height - (sample2->value / maximum_value * graph_data->graph_height));
 
       slope = (y3 - y0) / (x3 - x0);
+
+      // initialize tangents as average of slopes
       if (n == 0 || n == n_samples - 1) {
         m = slope;
       }
@@ -602,18 +608,21 @@ draw_curve(GdkSnapshot    *snapshot,
       a = prev_m / prev_slope;
       b = m / prev_slope;
 
+      // scale down tangents to ensure monotonicity
       if ((a * a + b * b) > 9) {
-        r = 3 / sqrt(a * a + b * b);
+        r = 3 / sqrt (a * a + b * b);
         prev_m = r * a * prev_slope;
         m = r * b * prev_slope;
       }
 
+      // calculate bezier control points
       x1 = x0 + (x3 - x0) / 3;
       x2 = x3 - (x3 - x0) / 3;
 
       y1 = y0 + ((1.0/3.0) * (x3 - x0) * prev_m);
       y2 = y3 - ((1.0/3.0) * (x3 - x0) * m);
 
+      // cap it to graph height if it overflows
       y1 = fmax (0.0, y1);
       y2 = fmax (0.0, y2);
       y3 = fmax (0.0, y3);
@@ -621,23 +630,23 @@ draw_curve(GdkSnapshot    *snapshot,
       prev_m = m;
       prev_slope = slope;
 
-      gsk_path_builder_cubic_to(builder,
-                                x1, y1,
-                                x2, y2,
-                                x3,  y3);
+      gsk_path_builder_cubic_to (builder,
+                                 x1, y1,
+                                 x2, y2,
+                                 x3,  y3);
     }
 
-  path = gsk_path_builder_free_to_path(g_steal_pointer(&builder));
+  path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
 
-  stroke = gsk_stroke_new(GRID_LINE_WIDTH);
-  gtk_snapshot_append_stroke(snapshot, path, stroke, graph_data->color);
+  stroke = gsk_stroke_new (GRID_LINE_WIDTH);
+  gtk_snapshot_append_stroke (snapshot, path, stroke, graph_data->color);
 }
 
 static void
 gdu_benchmark_graph_snapshot (GtkWidget   *widget,
                               GtkSnapshot *snapshot)
 {
-  GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH(widget);
+  GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (widget);
   GraphData graph_data = {0};
 
   graph_data.width = gtk_widget_get_width (GTK_WIDGET (self));
@@ -651,17 +660,17 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
   graph_data.total_samples = self->total_transfer_samples;
   graph_data.is_time = FALSE;
   graph_data.color = &READ_CURVE_COLOR;
-  draw_curve(snapshot, &graph_data);
+  draw_curve (snapshot, &graph_data);
 
   graph_data.samples = self->write_samples;
   graph_data.color = &WRITE_CURVE_COLOR;
-  draw_curve(snapshot, &graph_data);
+  draw_curve (snapshot, &graph_data);
 
   graph_data.samples = self->atime_samples;
   graph_data.total_samples = self->total_atime_samples;
   graph_data.is_time = TRUE;
   graph_data.color = &ATIME_CURVE_COLOR;
-  draw_curve(snapshot, &graph_data);
+  draw_curve (snapshot, &graph_data);
 }
 
 static gchar *

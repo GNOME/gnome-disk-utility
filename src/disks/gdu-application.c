@@ -225,15 +225,7 @@ gdu_application_command_line (GApplication            *_app,
         }
     }
 
-  if (app->window == NULL)
-    {
-      g_application_activate (G_APPLICATION (app));
-    }
-  else
-    {
-      /* TODO: startup notification stuff */
-      gtk_window_present (GTK_WINDOW (app->window));
-    }
+  g_application_activate (G_APPLICATION (app));
 
   /* gtk4 todo: after using GtkSelectionModel or so */
   /* if (object_to_select != NULL) */
@@ -265,7 +257,9 @@ gdu_application_activate (GApplication *_app)
 
   gdu_application_ensure_client (app);
 
-  app->window = gdu_window_new (_app, app->disk_manager);
+  if (app->window == NULL)
+    app->window = gdu_window_new (_app, app->disk_manager);
+
   gtk_window_present (GTK_WINDOW (app->window));
 }
 

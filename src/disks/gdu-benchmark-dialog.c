@@ -563,8 +563,20 @@ draw_curve (GdkSnapshot    *snapshot,
 
   /*
    * For smoothing, use monotonic cubic interpolation
-   *
-   */
+   * Step 1: Compute slopes of the secant line between successive points
+   *         s_k = (y_k+1 - y_k) / (x_k+1 - x_k)
+   * Step 2: Initialize tangent as the average of successive secant slopes 
+   *         m_k = (s_k-1 / s_k) / 2
+   * Step 3: Initialize factors alpha and beta as 
+   *         a_k = (m_k-1 / s_k), b_k = (m_k / s_k)
+   * Step 4: The function a_k - ((2a_k + b_k - 3) ^ 2 / 3(a_k + b_k - 2)) must be positive
+   *         to ensure monotonicity
+   * Step 5: Easy way to do this is by scaling the vector (a_k, b_k) to a circle of radius 3
+   *         by some factor r
+   * Step 6: Rescale the tangents (m_k and m_k-1) by the factor r
+   * Step 7: Now you have the tangents to get a hermite spline. Use it to find the bezier
+   *         Control Points for the curve
+   */        
 
   {
     GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
@@ -578,9 +590,9 @@ draw_curve (GdkSnapshot    *snapshot,
     {
       GduBMSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
       GduBMSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n+1);
-      gdouble x0, x1, x2, x3, y0, y1, y2, y3;
-      gdouble slope, m;
-      gdouble a, b, r;
+      double x0, x1, x2, x3, y0, y1, y2, y3;
+      double slope, m;
+      double a, b, r;
 
       x0 = graph_data->graph_x + (((double)  n       / total_samples) * graph_data->graph_width);
       x3 = graph_data->graph_x + ((((double)(n + 1)) / total_samples) * graph_data->graph_width);
@@ -609,7 +621,7 @@ draw_curve (GdkSnapshot    *snapshot,
       b = m / prev_slope;
 
       // scale down tangents to ensure monotonicity
-      if ((a * a + b * b) > 9) {
+      if ((a * a + b * b) > 3 * 3) {
         r = 3 / sqrt (a * a + b * b);
         prev_m = r * a * prev_slope;
         m = r * b * prev_slope;

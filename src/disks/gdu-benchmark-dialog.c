@@ -419,7 +419,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 
 
-  label = g_strdup_printf ("Read/Write Speed (MB/s)");
+  label = g_strdup_printf (_("Read/Write Speed (MB/s)"));
   layout = gtk_widget_create_pango_layout (widget, label);
   pango_layout_set_font_description (layout, axis_title_font_desc);
   pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -431,7 +431,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   gtk_snapshot_restore (snapshot);
   g_free (label);
 
-  label = g_strdup_printf ("Access Time (ms)");
+  label = g_strdup_printf (_("Access Time (ms)"));
   layout = gtk_widget_create_pango_layout (widget, label);
   pango_layout_set_font_description (layout, axis_title_font_desc);
   pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -510,7 +510,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
       g_free (label);
     }
 
-    label = g_strdup_printf ("Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)");
+    label = g_strdup_printf (_("Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)"));
     layout = gtk_widget_create_pango_layout (widget, label);
     pango_layout_set_font_description (layout, axis_title_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);

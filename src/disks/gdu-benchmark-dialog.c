@@ -7,10 +7,12 @@
  */
 
 #include "config.h"
+#include "gdk/gdk.h"
 #include "gio/gio.h"
 #include "glib-object.h"
 #include "glib.h"
 #include "glibconfig.h"
+#include "graphene.h"
 #include "gsk/gsk.h"
 #include "gtk/gtk.h"
 
@@ -213,10 +215,10 @@ typedef struct
   int graph_height;
   int graph_x;
   int graph_y;
-  gboolean is_time;
   const GdkRGBA *color;
   GListStore *samples;
   guint total_samples;
+  guint64 bm_size;
   gdouble max_speed;
   gdouble max_time;
 } GraphData;
@@ -379,7 +381,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
       g_free (label);
 
       x = graph_data->graph_width;
-      label = g_strdup_printf ("%3g", j * time_step * 1000);
+      label = g_strdup_printf ("%-3g", j * time_step * 1000);
       layout = gtk_widget_create_pango_layout (widget, label);
       pango_layout_set_font_description (layout, label_font_desc);
       pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -456,7 +458,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
   g_autoptr(PangoFontDescription) axis_title_font_desc = NULL;
   PangoContext* pango_context = NULL;
   gint font_size;
-  g_autofree char* label;
+  g_autofree char* label = NULL;
   const GdkRGBA *text_color;
   const GdkRGBA *grid_line_color;
   int text_width, text_height;
@@ -508,7 +510,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
       g_free (label);
     }
 
-    label = g_strdup_printf ("Progress (%%)");
+    label = g_strdup_printf ("Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)");
     layout = gtk_widget_create_pango_layout (widget, label);
     pango_layout_set_font_description (layout, axis_title_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -537,6 +539,46 @@ gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self,
 }
 
 static void
+draw_scatterplot (GdkSnapshot     *snapshot,
+                  GraphData       *graph_data)
+{
+  guint n, n_samples;
+  gdouble maximum_value = graph_data->max_time;
+  g_autoptr(GskPathBuilder) builder = NULL;
+  g_autoptr(GskStroke) stroke = NULL;
+  g_autoptr(GskPath) path = NULL;
+  guint64 max_offset;
+
+  if (graph_data->samples == NULL)
+    return;
+
+  n_samples = g_list_model_get_n_items (G_LIST_MODEL (graph_data->samples));
+  if (n_samples == 0)
+    return;
+
+  max_offset = graph_data->bm_size;
+
+  g_assert(max_offset != 0);
+
+  for (n = 0; n < n_samples; n++)
+    {
+      GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
+      graphene_point_t p;
+
+      p.x = graph_data->graph_x + (((double) sample->offset / max_offset) * graph_data->graph_width);
+      p.y = graph_data->graph_y + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
+
+      builder = gsk_path_builder_new ();
+      gsk_path_builder_add_circle(builder, &p, 2);
+      
+      path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
+      stroke = gsk_stroke_new (GRID_LINE_WIDTH);
+      gtk_snapshot_append_stroke (snapshot, path, stroke, graph_data->color);
+      gtk_snapshot_append_fill(snapshot, path, GSK_FILL_RULE_WINDING, graph_data->color);
+    }
+}
+
+static void
 draw_curve (GdkSnapshot    *snapshot,
             GraphData      *graph_data)
 {
@@ -545,9 +587,7 @@ draw_curve (GdkSnapshot    *snapshot,
   g_autoptr(GskPathBuilder) builder = NULL;
   double x, y;
   guint n, n_samples, total_samples;
-  gdouble maximum_value = graph_data->is_time ?
-                          graph_data->max_time :
-                          graph_data->max_speed;
+  gdouble maximum_value = graph_data->max_speed;
   gdouble prev_slope = 0, prev_m = 0;
 
   if (graph_data->samples == NULL)
@@ -661,6 +701,7 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
   GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (widget);
   GraphData graph_data = {0};
 
+  graph_data.bm_size = self->bm_size;
   graph_data.width = gtk_widget_get_width (GTK_WIDGET (self));
   graph_data.height = gtk_widget_get_height (GTK_WIDGET (self));
   graph_data.graph_width = graph_data.width;
@@ -670,7 +711,6 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
 
   graph_data.samples = self->read_samples;
   graph_data.total_samples = self->total_transfer_samples;
-  graph_data.is_time = FALSE;
   graph_data.color = &READ_CURVE_COLOR;
   draw_curve (snapshot, &graph_data);
 
@@ -680,9 +720,8 @@ gdu_benchmark_graph_snapshot (GtkWidget   *widget,
 
   graph_data.samples = self->atime_samples;
   graph_data.total_samples = self->total_atime_samples;
-  graph_data.is_time = TRUE;
-  graph_data.color = &ATIME_CURVE_COLOR;
-  draw_curve (snapshot, &graph_data);
+  graph_data.color = &ATIME_DOT_COLOR;
+  draw_scatterplot (snapshot, &graph_data);
 }
 
 static gchar *
@@ -1012,6 +1051,7 @@ benchmark_access_time (GduBenchmarkDialog *self,
   guint n;
   GError *error = NULL;
   guint num_access_samples = 0;
+  gdouble prev_offset = 0;
   g_autoptr (GRand) rand = NULL;
 
   g_assert (buffer != NULL);
@@ -1027,6 +1067,7 @@ benchmark_access_time (GduBenchmarkDialog *self,
       gint64 offset;
       ssize_t num_read;
       GduBMSample *sample;
+      gdouble temp;
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         {
@@ -1059,9 +1100,15 @@ benchmark_access_time (GduBenchmarkDialog *self,
       sample = gdu_bm_sample_new (offset, 
         (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC));
 
-      G_LOCK (bm_lock);
-      g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
-      G_UNLOCK (bm_lock);
+      temp = sample->offset;
+      if (n != 0)
+        {
+          sample->offset = fabs(sample->offset - prev_offset);
+          G_LOCK (bm_lock);
+          g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
+          G_UNLOCK (bm_lock);
+        }
+      prev_offset = temp;
 
       bmt_schedule_update (self);
     }

@@ -26,7 +26,7 @@ static const float GRID_LINE_DASH[] = { 4, 2 };
 static const unsigned int GRAPH_CURVE_WIDTH = 2;
 static const GdkRGBA READ_CURVE_COLOR = { .red = 53.0 / 255.0, .green = 132.0 / 255.0, .blue = 228.0 / 255.0, .alpha = 1 };
 static const GdkRGBA WRITE_CURVE_COLOR = { .red = 230.0 / 255.0, .green = 45.0 / 255.0, .blue = 66.0 / 255.0, .alpha = 1 };
-static const GdkRGBA ATIME_CURVE_COLOR = { .red = 58.0 / 255.0, .green = 148.0 / 255.0, .blue = 74.0 / 255.0, .alpha = 1 };
+static const GdkRGBA ATIME_DOT_COLOR = { .red = 58.0 / 255.0, .green = 148.0 / 255.0, .blue = 74.0 / 255.0, .alpha = 0.5 };
 
 static const GdkRGBA GRAPH_BG_COLOR = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1};
 static const GdkRGBA GRAPH_BG_COLOR_DARK = { .red = 52.0 / 255.0, .green = 52.0 / 255.0, .blue = 55.0 / 255.0, .alpha = 1};

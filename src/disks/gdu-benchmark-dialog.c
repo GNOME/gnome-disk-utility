@@ -315,7 +315,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   pango_layout_get_pixel_size (layout, &text_width, &text_height);
   g_free (label);
 
-  graph_data->graph_height -= (text_height + padding);
+  graph_data->graph_height -= (text_height + 2 * padding);
 
   if (adw_style_manager_get_dark (style_manager))
     text_color = &LABEL_COLOR_DARK;
@@ -518,7 +518,7 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
     gtk_snapshot_save (snapshot);
     gtk_snapshot_translate (snapshot, 
       &GRAPHENE_POINT_INIT ((graph_data->width - text_width) / 2.0, 
-      graph_data->height + padding));
+      graph_data->height));
     gtk_snapshot_append_layout (snapshot, layout, text_color);
     gtk_snapshot_restore (snapshot);
 

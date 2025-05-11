@@ -72,6 +72,7 @@ drive_in_manager (GduManager *self,
 }
 
 /* Copied from https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/3eccf2b5fec7200cb16c46dd5d047c083ac318f7/src/disks/gdudevicetreemodel.c#L1181  */
+/* NOTE: this should be kept in sync with `src/disks/restore_disk_image_dialog.rs` */
 static bool
 should_include_block (UDisksObject *object)
 {

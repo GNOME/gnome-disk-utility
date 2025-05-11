@@ -287,6 +287,7 @@ impl GduRestoreDiskImageDialog {
         self.imp().destination_drives.replace(drives);
     }
 
+    //NOTE: this should be kept in sync with `src/disks/gdu-manager.c`
     async fn should_display(&self, object: &udisks::Object) -> udisks::Result<bool> {
         let block = object.block().await?;
         if libgdu::has_userspace_mount_option(&block, "x-gdu.hide").await {

@@ -23,7 +23,9 @@ pub extern "C" fn gdu_rs_restore_disk_image_dialog_show(
     object_path: *const c_char,
     disk_image_filename: *const c_char,
 ) {
-    //SAFETY: the C side has already initialized gtk
+    assert!(!window_ptr.is_null(), "`window_ptr` must be non-null");
+
+    //SAFETY: the C side has already initialized GTK
     unsafe { gtk::set_initialized() }
     let parent_window = unsafe { gtk::Window::from_glib_borrow(window_ptr) };
     let disk_image_filename = read_nullable_cstr(disk_image_filename);

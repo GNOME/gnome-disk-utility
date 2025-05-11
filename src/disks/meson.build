@@ -88,7 +88,6 @@ sources = files(
   'gdu-format-volume-dialog.c',
   'gdu-mount-options-dialog.c',
   'gdu-new-disk-image-dialog.c',
-  'gdu-restore-disk-image-dialog.c',
   'gdu-window.c',
   'gdu-item.c',
   'gdu-block.c',

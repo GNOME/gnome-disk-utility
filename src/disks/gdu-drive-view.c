@@ -26,7 +26,6 @@
 #include "gdu-create-disk-image-dialog.h"
 #include "gdu-disk-settings-dialog.h"
 #include "gdu-format-disk-dialog.h"
-#include "gdu-restore-disk-image-dialog.h"
 #include "gdu-drive-header.h"
 #include "gdu-drive-view.h"
 #include "gdu-space-allocation-bar.h"

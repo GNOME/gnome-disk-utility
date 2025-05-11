@@ -18,7 +18,6 @@
 #include "gdu-manager.h"
 #include "gdu-application.h"
 #include "gdu-format-volume-dialog.h"
-#include "gdu-restore-disk-image-dialog.h"
 #include "gdu-new-disk-image-dialog.h"
 #include "gdu-window.h"
 #include "gdulocaljob.h"

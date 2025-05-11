@@ -24,7 +24,6 @@
 #include "gdu-benchmark-dialog.h"
 #include "gdu-encryption-options-dialog.h"
 #include "gdu-create-disk-image-dialog.h"
-#include "gdu-restore-disk-image-dialog.h"
 #include "gdu-format-volume-dialog.h"
 #include "gdu-edit-filesystem-dialog.h"
 #include "gdu-change-passphrase-dialog.h"

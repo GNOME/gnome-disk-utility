@@ -17,7 +17,7 @@ fn read_nullable_cstr(cstr_ptr: *const c_char) -> Option<String> {
     Some(cstr.to_str().ok()?.to_string())
 }
 
-#[no_mangle]
+#[unsafe(no_mangle)]
 pub extern "C" fn gdu_rs_restore_disk_image_dialog_show(
     window_ptr: *mut gtk::ffi::GtkWindow,
     object_path: *const c_char,

@@ -357,7 +357,7 @@ impl ImageMounterWindow {
         Ok(())
     }
 
-    /// Mounts the disk image as a loop dvice.
+    /// Mounts the disk image as a loop device.
     async fn mount(&self, read_only: bool) -> anyhow::Result<udisks::Object> {
         let client = udisks::Client::new().await?;
         let manager = client.manager();
@@ -380,7 +380,7 @@ impl ImageMounterWindow {
         let object = client.object(object_path).unwrap();
 
         if let Ok(encrypted) = object.encrypted().await {
-            // wait until encrypted block has been unlocked, i.e. there is an cleartext device
+            // wait until encrypted block has been unlocked, i.e. there is a cleartext device
             let mut cleartext_dev_changes = encrypted.receive_cleartext_device_changed().await;
             while let Some(dev) = cleartext_dev_changes.next().await {
                 if dev.get().await.is_ok_and(|clear| clear.to_string() != "/") {

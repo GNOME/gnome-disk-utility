@@ -100,7 +100,7 @@ impl GduRestoreDiskImageDialog {
         object: Option<&udisks::Object>,
         client: udisks::Client,
         disk_image_filename: Option<&str>,
-    ) {
+    ) -> Self {
         let dialog: Self = glib::Object::builder().build();
         let imp = dialog.imp();
         imp.client.replace(Some(client));
@@ -124,8 +124,8 @@ impl GduRestoreDiskImageDialog {
             dialog.populate_destination_combobox().await;
         }
         dialog.update();
-
         dialog.present(parent_window);
+        dialog
     }
 
     async fn set_destination_object(&self, object: Option<udisks::Object>) {

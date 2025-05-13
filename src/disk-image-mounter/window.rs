@@ -4,11 +4,13 @@ use std::fs::OpenOptions;
 use std::os::fd::AsFd;
 use std::path::PathBuf;
 
+use adw::prelude::AdwDialogExt;
 use anyhow::anyhow;
 use anyhow::Context;
 use gettextrs::gettext;
 use gtk::prelude::FileExt;
 use gtk::prelude::GtkWindowExt;
+use gtk::prelude::WidgetExt;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use udisks::zbus;
@@ -243,7 +245,8 @@ impl ImageMounterWindow {
     }
 
     #[template_callback]
-    async fn on_continue_button(&self, _button: &gtk::Button) {
+    async fn on_continue_button(&self, button: &gtk::Button) {
+        button.set_sensitive(false);
         let action_result = match self.continue_action() {
             Action::OpenInFiles => self.open_in_files(true).await,
             Action::OpenInFilesWritable => self.open_in_files(false).await,
@@ -252,15 +255,16 @@ impl ImageMounterWindow {
             Action::Inspect => self.inspect().await,
         };
 
+        button.set_sensitive(true);
         match action_result {
             Ok(_) => self.close(),
             Err(err) => {
                 log::error!("{}", err);
                 self.imp()
                     .toast_overlay
-                    .add_toast(adw::Toast::new(&self.user_visible_error_msg()))
+                    .add_toast(adw::Toast::new(&self.user_visible_error_msg()));
             }
-        }
+        };
     }
 
     /// Opens the image in [Files](https://apps.gnome.org/Nautilus/).
@@ -403,10 +407,18 @@ impl ImageMounterWindow {
             .context("Failed to find file path")?;
         let client = udisks::Client::new().await?;
 
-        gnome_disks::GduRestoreDiskImageDialog::show(self, None, client, path.to_str()).await;
-        //TODO: wait until the dialog has been closed to exit
-        // spawn a never ending future, so the dialog stays open
-        std::future::pending::<()>().await;
+        let dialog =
+            gnome_disks::GduRestoreDiskImageDialog::show(self, None, client, path.to_str()).await;
+
+        let (rx, tx) = async_channel::bounded(1);
+        dialog.connect_closed(move |_dialog| {
+            let rx = rx.clone();
+            glib::spawn_future_local(async move {
+                let _ = rx.send(()).await;
+            });
+        });
+        tx.recv().await?;
+
         Ok(())
     }
 

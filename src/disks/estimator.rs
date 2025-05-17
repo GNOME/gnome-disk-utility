@@ -20,7 +20,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, glib::Properties)]
-    #[properties(wrapper_type = super::GduEstimator)]
+    #[properties(wrapper_type = super::Estimator)]
     pub struct GduEstimator {
         #[property(get, construct_only)]
         target_bytes: Cell<u64>,
@@ -48,7 +48,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for GduEstimator {
         const NAME: &'static str = "GduEstimator";
-        type Type = super::GduEstimator;
+        type Type = super::Estimator;
     }
 
     #[glib::derived_properties]
@@ -108,16 +108,16 @@ mod imp {
 }
 
 glib::wrapper! {
-    pub struct GduEstimator(ObjectSubclass<imp::GduEstimator>);
+    pub struct Estimator(ObjectSubclass<imp::GduEstimator>);
 }
-impl GduEstimator {
+impl Estimator {
     pub fn new(target_bytes: u64) -> Self {
         Object::builder()
             .property("target-bytes", target_bytes)
             .build()
     }
 }
-impl GduEstimator {
+impl Estimator {
     pub fn add_sample(&self, completed_bytes: u64) {
         self.imp().add_sample(completed_bytes);
     }

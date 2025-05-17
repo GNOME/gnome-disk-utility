@@ -12,7 +12,7 @@ use gtk::{gio, glib};
 use libgdu::ConfirmationDialogResponse;
 use libgdu::gettext::gettext_f;
 
-use crate::estimator::{self, GduEstimator};
+use crate::estimator::{self, Estimator};
 
 mod imp {
     use std::cell::{Cell, RefCell};
@@ -203,7 +203,7 @@ impl GduRestoreDiskImageDialog {
 
         let block_left_over_size = imp.block_size.get() as i64 - size as i64;
 
-        // if size is 0, error may be set already..
+        // if size is 0, error may be set already
         if size == 0 && restore_error.is_none() {
             restore_error = Some(gettext("Cannot restore image of size 0"));
         } else if block_left_over_size > 1000 * 1000 {
@@ -457,13 +457,13 @@ impl GduRestoreDiskImageDialog {
                 input_size,
             )
             .await;
+
         self.play_complete_sound();
-        //TODO: update job
         application.uninhibit(inhibit_cookie);
         if let Err(err) = res {
             libgdu::show_error(self, &gettext("Error restoring disk image"), err).await;
         } else {
-            // sucessfully written image to device
+            // successfully written image to device
             self.update_job(None, true);
         }
 
@@ -518,7 +518,7 @@ impl GduRestoreDiskImageDialog {
         let mut page_buffer = PageAlignedBuffer::new(BUFFER_SIZE);
         let buffer = page_buffer.as_mut_slice();
 
-        let estimator = estimator::GduEstimator::new(input_size);
+        let estimator = estimator::Estimator::new(input_size);
 
         // Read huge (e.g. 1 MiB) blocks and write it to the output device even if it was only
         // partially read
@@ -568,7 +568,7 @@ impl GduRestoreDiskImageDialog {
         Ok(copy_result?)
     }
 
-    fn update_job(&self, estimator: Option<&GduEstimator>, done: bool) {
+    fn update_job(&self, estimator: Option<&Estimator>, done: bool) {
         let (bytes_per_sec, usec_remaining, completed_bytes, target_bytes) =
             if let Some(estimator) = estimator {
                 (

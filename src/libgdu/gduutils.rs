@@ -447,7 +447,7 @@ pub fn show_error(
     // Never show an error if it's because the user dismissed the
     // authentication dialog himself
     //
-    // ... or if the user cancelled the operation
+    // ... or if the user canceled the operation
     if matches!(
         error.downcast_ref::<udisks::Error>(),
         Some(udisks::Error::NotAuthorizedDismissed) | Some(udisks::Error::Cancelled)
@@ -759,20 +759,17 @@ async fn all_contained_objects(
     };
 
     if let Some(block) = block {
-        if let Ok(block_object) = client.object(block.inner().path().clone()) {
-            objects_to_check.push(block_object.clone());
-            // if we're a partitioned block device, add all partitions
-            if let Ok(partition_table) = block_object.partition_table().await {
-                objects_to_check.extend(
-                    client
-                        .partitions(&partition_table)
-                        .await
-                        .iter()
-                        .filter_map(|partition| {
-                            client.object(partition.inner().path().clone()).ok()
-                        }),
-                );
-            }
+        let Ok(block_object) = client.object(block.inner().path().clone());
+        objects_to_check.push(block_object.clone());
+        // if we're a partitioned block device, add all partitions
+        if let Ok(partition_table) = block_object.partition_table().await {
+            objects_to_check.extend(
+                client
+                    .partitions(&partition_table)
+                    .await
+                    .iter()
+                    .filter_map(|partition| client.object(partition.inner().path().clone()).ok()),
+            );
         }
     }
 
@@ -782,9 +779,8 @@ async fn all_contained_objects(
         let object_iter = &objects_to_check[i];
         if let Ok(block_for_object) = object_iter.block().await {
             if let Some(cleartext) = client.cleartext_block(&block_for_object).await {
-                if let Ok(cleartext_object) = client.object(cleartext.inner().path().clone()) {
-                    objects_to_check.push(cleartext_object);
-                }
+                let Ok(cleartext_object) = client.object(cleartext.inner().path().clone());
+                objects_to_check.push(cleartext_object);
             }
         }
         i += 1;

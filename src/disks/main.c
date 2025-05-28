@@ -26,8 +26,6 @@ main (int argc, char *argv[])
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 
-  adw_init ();
-
   app = gdu_application_new ();
 
   return g_application_run (G_APPLICATION (app), argc, argv);

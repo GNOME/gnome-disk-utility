@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::io::{ErrorKind, Read};
 use std::ops::Sub;
 use std::os::fd::AsRawFd;
+use std::rc::Rc;
 
 use adw::prelude::*;
 use async_std::io::{ReadExt, WriteExt};
@@ -13,13 +14,18 @@ use libgdu::ConfirmationDialogResponse;
 use libgdu::gettext::gettext_f;
 
 use crate::estimator::{self, Estimator};
+use crate::ffi;
+use crate::localjob::LocalJob;
 
 mod imp {
-    use std::cell::{Cell, RefCell};
+    use std::{
+        cell::{Cell, RefCell},
+        rc::Rc,
+    };
 
     use adw::subclass::dialog::AdwDialogImpl;
 
-    use crate::config;
+    use crate::{config, localjob::LocalJob};
 
     use super::*;
 
@@ -34,6 +40,7 @@ mod imp {
         pub(super) drive: RefCell<Option<udisks::drive::DriveProxy<'static>>>,
         pub(super) inhibit_cookie: Cell<Option<u32>>,
         pub(super) destination_drives: RefCell<Vec<udisks::Object>>,
+        pub(super) local_job: RefCell<Option<Rc<LocalJob>>>,
 
         #[template_child]
         pub(super) size_row: TemplateChild<adw::ActionRow>,
@@ -80,6 +87,17 @@ mod imp {
 
         fn dispose(&self) {
             self.dispose_template();
+            if let Some(cookie) = self.inhibit_cookie.take() {
+                self.obj()
+                    .window()
+                    .application()
+                    .expect("`application` should be set")
+                    .uninhibit(cookie);
+            }
+
+            if let Some(job) = self.local_job.take() {
+                ffi::destroy_local_job(job);
+            }
         }
     }
 
@@ -101,7 +119,7 @@ impl GduRestoreDiskImageDialog {
         client: udisks::Client,
         disk_image_filename: Option<&str>,
     ) -> Self {
-        let dialog: Self = glib::Object::builder().build();
+        let dialog: Self = glib::Object::new();
         let imp = dialog.imp();
         imp.client.replace(Some(client));
         dialog.set_destination_object(object.cloned()).await;
@@ -130,7 +148,7 @@ impl GduRestoreDiskImageDialog {
 
     async fn set_destination_object(&self, object: Option<udisks::Object>) {
         let imp = self.imp();
-        //TODO: add a eq impl in udisks
+        //TODO: add an eq impl in udisks
         if imp.object.borrow().as_ref().map(|v| v.object_path())
             != object.as_ref().map(|v| v.object_path())
         {
@@ -359,7 +377,8 @@ impl GduRestoreDiskImageDialog {
 
     #[template_callback]
     async fn on_start_restore_button_clicked_cb(&self, _button: &gtk::Button) {
-        let object = self.imp().object.borrow().clone().unwrap();
+        let imp = self.imp();
+        let object = imp.object.borrow().clone().unwrap();
         let objects = [&object];
         let affected_devices_widget =
             libgdu::create_widget_from_objects(&self.client(), &objects).await;
@@ -443,12 +462,19 @@ impl GduRestoreDiskImageDialog {
                 "Copying disk image to device",
             )),
         );
-        self.imp().inhibit_cookie.set(Some(inhibit_cookie));
+        imp.inhibit_cookie.set(Some(inhibit_cookie));
 
-        //TODO: create udisks job
-        // self.local_job =
+        //TODO: create job in application
+        let object = imp.object.take().unwrap();
+        let local_job = Rc::new(LocalJob::new(object));
+        local_job.set_operation("x-gdu-restore-disk-image");
+        // Translators: this is the description of the job
+        local_job.set_description(gettext("Restoring Disk Image"));
+        local_job.set_progress_valid(true);
+        local_job.set_cancelable(true);
+        imp.local_job.replace(Some(local_job));
 
-        let block = self.imp().block.take().unwrap();
+        let block = imp.block.take().unwrap();
 
         let res = self
             .copy_disk_image(
@@ -528,7 +554,7 @@ impl GduRestoreDiskImageDialog {
         let update_timer = std::time::Instant::now().sub(update_interval);
         let mut device = async_std::fs::File::from(std::fs::File::from(fd));
         let copy_result = loop {
-            // Update GUI - but only every 200ms and if the last update isn't peding
+            // Update GUI - but only every 200ms and if the last update isn't pending
             if update_timer.elapsed() >= update_interval {
                 if bytes_completed > 0 {
                     estimator.add_sample(bytes_completed);
@@ -580,7 +606,27 @@ impl GduRestoreDiskImageDialog {
             } else {
                 (0, 0, 0, 0)
             };
-        //TODO: update job
+
+        if let Some(ref mut job) = *self.imp().local_job.borrow_mut() {
+            job.set_bytes(target_bytes);
+            job.set_rate(bytes_per_sec);
+
+            let progress = if done {
+                1.0
+            } else if target_bytes != 0 {
+                completed_bytes as f64 / bytes_per_sec as f64
+            } else {
+                0.0
+            };
+            job.set_progress(progress);
+
+            let end_time = if usec_remaining == 0 {
+                0
+            } else {
+                usec_remaining + glib::real_time() as u64
+            };
+            job.set_expected_end_time(end_time);
+        }
     }
 
     #[template_callback]
@@ -634,7 +680,7 @@ mod sealed {
     impl Drop for PageAlignedBuffer {
         fn drop(&mut self) {
             unsafe {
-                // SAFETY: as we only ever give out an exlcusive reference to the buffer and it's not
+                // SAFETY: as we only ever give out an exclusive reference to the buffer and it's not
                 // possible to clone, we can be sure that there exists no other reference to the
                 // buffer.
                 // As the buffer cannot be swapped out, it was created from self.layout.

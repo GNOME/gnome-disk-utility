@@ -67,6 +67,9 @@ gdu_application_finalize (GObject *object)
       g_hash_table_destroy (app->local_jobs);
     }
 
+  if (gdu_rs_has_local_jobs())
+      gdu_rs_local_jobs_clear();
+
   if (app->client != NULL)
     g_object_unref (app->client);
 
@@ -312,7 +315,7 @@ gdu_application_quit (GSimpleAction *action,
   GduApplication *app = GDU_APPLICATION (user_data);
   ConfirmationDialogData *data;
 
-  if (app->local_jobs == NULL || g_hash_table_size (app->local_jobs) == 0)
+  if ((app->local_jobs == NULL || g_hash_table_size (app->local_jobs) == 0) && !gdu_rs_has_local_jobs())
     gtk_window_close (GTK_WINDOW (app->window));
 
   data = g_new0 (ConfirmationDialogData, 1);

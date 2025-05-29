@@ -1,8 +1,54 @@
-use std::ffi::c_char;
+use std::{
+    collections::HashMap,
+    ffi::c_char,
+    rc::Rc,
+    sync::{LazyLock, Mutex},
+};
 
 use gtk::glib::{self, translate::FromGlibPtrBorrow};
+use udisks::zbus::zvariant::OwnedObjectPath;
 
-use crate::GduRestoreDiskImageDialog;
+use crate::{GduRestoreDiskImageDialog, localjob::LocalJob};
+
+//FIXME: move this to Gdu application once ported
+// GTK is single threaded
+thread_local! {
+    static GLOBAL_MAP: LazyLock<Mutex<HashMap<OwnedObjectPath, Rc<LocalJob>>>> =
+    LazyLock::new(|| Mutex::new(HashMap::new()));
+}
+
+pub fn create_local_job(object: &udisks::Object) -> Rc<LocalJob> {
+    let local_job = Rc::new(LocalJob::new(object.clone()));
+    GLOBAL_MAP.with(|map| {
+        let mut map = map.lock().expect("poisoned lock");
+        map.entry(object.object_path().clone())
+            .or_insert_with(|| local_job)
+            .clone()
+    })
+}
+
+pub fn destroy_local_job(job: Rc<LocalJob>) {
+    GLOBAL_MAP.with(|map| {
+        let mut map = map.lock().expect("poisoned lock");
+        let _ = map.remove(job.object().unwrap().0.object_path());
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gdu_rs_has_local_jobs() -> bool {
+    GLOBAL_MAP.with(|map| {
+        let map = map.lock().expect("poisoned lock");
+        map.is_empty()
+    })
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn gdu_rs_local_jobs_clear() {
+    GLOBAL_MAP.with(|map| {
+        let mut map = map.lock().expect("poisoned lock");
+        map.clear();
+    })
+}
 
 /// Reads a C string and converts it to a Rust String.
 ///

@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::io::{ErrorKind, Read};
 use std::ops::Sub;
 use std::os::fd::AsRawFd;
-use std::rc::Rc;
 
 use adw::prelude::*;
 use async_std::io::{ReadExt, WriteExt};
@@ -15,7 +14,6 @@ use libgdu::gettext::gettext_f;
 
 use crate::estimator::{self, Estimator};
 use crate::ffi;
-use crate::localjob::LocalJob;
 
 mod imp {
     use std::{
@@ -466,7 +464,7 @@ impl GduRestoreDiskImageDialog {
 
         //TODO: create job in application
         let object = imp.object.take().unwrap();
-        let local_job = Rc::new(LocalJob::new(object));
+        let local_job = ffi::create_local_job(&object);
         local_job.set_operation("x-gdu-restore-disk-image");
         // Translators: this is the description of the job
         local_job.set_description(gettext("Restoring Disk Image"));

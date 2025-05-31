@@ -489,6 +489,10 @@ impl GduRestoreDiskImageDialog {
         } else {
             // successfully written image to device
             self.update_job(None, true);
+            // clear job
+            if let Some(job) = imp.local_job.take() {
+                ffi::destroy_local_job(job);
+            }
         }
 
         self.set_visible(false);

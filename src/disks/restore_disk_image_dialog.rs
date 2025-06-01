@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::io::{ErrorKind, Read};
 use std::ops::Sub;
-use std::os::fd::AsRawFd;
+use std::os::fd::{AsRawFd, OwnedFd};
 
 use adw::prelude::*;
 use async_std::io::{ReadExt, WriteExt};
@@ -14,6 +14,22 @@ use libgdu::gettext::gettext_f;
 
 use crate::estimator::{self, Estimator};
 use crate::ffi;
+
+// Defined in Linux/fs.h
+const BLKGETSIZE64_CODE: u8 = 0x12;
+const BLKGETSIZE64_SEQ: u8 = 114;
+nix::ioctl_read!(blkgetsize64, BLKGETSIZE64_CODE, BLKGETSIZE64_SEQ, u64);
+
+/// Device size in bytes of the block device from `fd`.
+fn device_size(fd: &OwnedFd) -> std::io::Result<u64> {
+    let mut block_device_size = 0;
+    if unsafe { blkgetsize64(fd.as_raw_fd(), &mut block_device_size) } != Ok(0) {
+        log::error!("Error determining size of device");
+        return Err(std::io::Error::from(std::io::ErrorKind::InvalidInput));
+    }
+
+    Ok(block_device_size)
+}
 
 mod imp {
     use std::{
@@ -517,21 +533,7 @@ impl GduRestoreDiskImageDialog {
         // We can't use udisks_block_get_size() because the media may have
         // changed and udisks may not have noticed. TODO: maybe have a
         // Block.GetSize() method instead...
-
-        // https://github.com/topjohnwu/Magisk/blob/33f70f8f6df24f66f7da9ad855cd4f7fe72c37a9/native/src/base/files.rs#L908
-        #[cfg(target_pointer_width = "32")]
-        const BLKGETSIZE64: u64 = 0x80041272;
-        #[cfg(target_pointer_width = "64")]
-        const BLKGETSIZE64: u64 = 0x80081272;
-
-        //TODO: use safe version
-        let mut block_device_size = 0;
-        if unsafe { libc::ioctl(fd.as_raw_fd(), BLKGETSIZE64, &mut block_device_size) } != 0 {
-            log::error!("Error determining size of device");
-            return Err(Box::new(std::io::Error::from(
-                std::io::ErrorKind::InvalidData,
-            )));
-        }
+        let block_device_size = device_size(&fd)?;
 
         if block_device_size == 0 {
             log::error!("Device is size 0");

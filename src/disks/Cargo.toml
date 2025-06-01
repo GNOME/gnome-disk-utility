@@ -9,8 +9,6 @@ license = "GPL-2.0-or-later"
 # name = 'gnome-disks'
 # path = "main.rs"
 
-#TODO: possibly remove this?
-# expose the restore dialog as a lib, so it can be used in disk-image-mounter
 [lib]
 path = "lib.rs"
 crate-type = ["rlib", "cdylib"]
@@ -28,3 +26,4 @@ itertools = "0.13.0"
 liblzma = "0.3.4"
 async-std = "1.13.0"
 futures = "0.3.31"
+nix = { version = "0.30", default-features = false, features = ["ioctl"] }

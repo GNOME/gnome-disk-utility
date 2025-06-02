@@ -102,7 +102,7 @@ mod imp {
             let obj = self.obj();
 
             // Devel Profile
-            if config::PROFILE == "Devel" {
+            if config::PROFILE != "release" {
                 obj.add_css_class("devel");
             }
 

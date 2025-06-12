@@ -180,7 +180,8 @@ impl GduRestoreDiskImageDialog {
         }
     }
 
-    pub fn window(&self) -> gtk::Window {
+    /// Returns a the [`gtk::Window`] of the dialog.
+    fn window(&self) -> gtk::Window {
         self.ancestor(gtk::Window::static_type())
             .and_downcast()
             .expect("`dialog` must be attached to a parent window")

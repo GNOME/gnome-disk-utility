@@ -216,7 +216,7 @@ impl GduRestoreDiskImageDialog {
         let size = if is_xz_compressed {
             let filestream = file.read(gio::Cancellable::NONE).ok()?.into_read();
             liblzma::uncompressed_size(filestream).unwrap_or_else(|_| {
-                restore_error = Some(gettext("File does not appear to be XY compressed"));
+                restore_error = Some(gettext("File does not appear to be XZ compressed"));
                 0
             })
         } else {

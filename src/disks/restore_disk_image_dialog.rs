@@ -137,6 +137,7 @@ impl GduRestoreDiskImageDialog {
         let imp = dialog.imp();
         imp.client.replace(Some(client));
         dialog.set_destination_object(object.cloned()).await;
+
         if let Some(disk_image_filename) = disk_image_filename {
             let file = gio::File::for_commandline_arg(disk_image_filename);
             imp.restore_file.set(Some(file));
@@ -155,6 +156,7 @@ impl GduRestoreDiskImageDialog {
             imp.destination_row.remove_css_class("property");
             dialog.populate_destination_combobox().await;
         }
+
         dialog.update();
         dialog.present(parent_window);
         dialog

@@ -517,10 +517,10 @@ pub struct ConfirmationDialog {
 }
 
 impl ConfirmationDialog {
-    /// Reponse id when the dialog is canceled.
+    /// Response id when the dialog is canceled.
     pub(super) const RESPONSE_CANCEL: &'static str = "cancel";
 
-    /// Reponse id when the user chooses to confirm the dialog action.
+    /// Response id when the user chooses to confirm the dialog action.
     pub(super) const RESPONSE_CONFIRM: &'static str = "confirm";
 
     pub async fn show(

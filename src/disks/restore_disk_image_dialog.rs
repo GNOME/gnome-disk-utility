@@ -136,7 +136,6 @@ impl GduRestoreDiskImageDialog {
         let dialog: Self = glib::Object::new();
         let imp = dialog.imp();
         imp.client.replace(Some(client));
-        dialog.set_destination_object(object.cloned()).await;
 
         if let Some(disk_image_filename) = disk_image_filename {
             let file = gio::File::for_commandline_arg(disk_image_filename);
@@ -151,7 +150,8 @@ impl GduRestoreDiskImageDialog {
         if let Some(object) = object {
             let info = dialog.client().object_info(object).await;
             imp.destination_row
-                .set_subtitle(&info.one_liner.unwrap_or_default())
+                .set_subtitle(&info.one_liner.unwrap_or_default());
+            dialog.set_destination_object(object.clone()).await;
         } else {
             imp.destination_row.remove_css_class("property");
             dialog.populate_destination_combobox().await;
@@ -162,20 +162,12 @@ impl GduRestoreDiskImageDialog {
         dialog
     }
 
-    async fn set_destination_object(&self, object: Option<udisks::Object>) {
+    async fn set_destination_object(&self, object: udisks::Object) {
         let imp = self.imp();
-        //TODO: add an eq impl in udisks
-        if imp.object.borrow().as_ref().map(|v| v.object_path())
-            == object.as_ref().map(|v| v.object_path())
-        {
+        if imp.object.borrow().as_ref().map(|v| v.object_path()) == Some(object.object_path()) {
             // object is the same as is currently displayed, nothing to update
             return;
         }
-
-        let Some(object) = object else {
-            imp.block_size.set(0);
-            return;
-        };
 
         let block = object.block().await.expect("`block` should be Ok");
         let drive = self.client().drive_for_block(&block).await;

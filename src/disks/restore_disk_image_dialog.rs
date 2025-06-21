@@ -166,20 +166,25 @@ impl GduRestoreDiskImageDialog {
         let imp = self.imp();
         //TODO: add an eq impl in udisks
         if imp.object.borrow().as_ref().map(|v| v.object_path())
-            != object.as_ref().map(|v| v.object_path())
+            == object.as_ref().map(|v| v.object_path())
         {
-            imp.block_size.set(0);
-            if let Some(object) = object {
-                let block = object.block().await.expect("`block` should be Ok");
-                let drive = self.client().drive_for_block(&block).await;
-                imp.object.replace(Some(object));
-                imp.drive.replace(drive.ok());
-
-                //TODO: use a method call for this so it works on e.g. floppy drives where e.g. we don't know the size
-                imp.block_size.set(block.size().await.unwrap_or_default());
-                imp.block.replace(Some(block));
-            }
+            // object is the same as is currently displayed, nothing to update
+            return;
         }
+
+        let Some(object) = object else {
+            imp.block_size.set(0);
+            return;
+        };
+
+        let block = object.block().await.expect("`block` should be Ok");
+        let drive = self.client().drive_for_block(&block).await;
+        imp.object.replace(Some(object));
+        imp.drive.replace(drive.ok());
+
+        //TODO: use a method call for this so it works on e.g. floppy drives where e.g. we don't know the size
+        imp.block_size.set(block.size().await.unwrap_or_default());
+        imp.block.replace(Some(block));
     }
 
     /// Returns a the [`gtk::Window`] of the dialog.

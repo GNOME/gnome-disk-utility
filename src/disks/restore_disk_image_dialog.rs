@@ -235,8 +235,7 @@ impl GduRestoreDiskImageDialog {
 
         let block_left_over_size = imp.block_size.get() as i64 - size as i64;
 
-        // if size is 0, error may be set already
-        if size == 0 && restore_error.is_none() {
+        if size == 0 {
             restore_error = Some(gettext("Cannot restore image of size 0"));
         } else if block_left_over_size > 1000 * 1000 {
             // Only complain if slack is bigger than 1MB

@@ -188,14 +188,14 @@ impl GduRestoreDiskImageDialog {
 
     fn update(&self) -> Option<()> {
         let imp = self.imp();
+        let client = self.client();
+        let mut restore_warning = None;
+        let mut restore_error = None;
+
         let Some(file) = &*imp.restore_file.borrow() else {
-            //TODO: figure out why this check was placed here
-            //|| imp.block_size.get() == 0 {
             imp.start_restore_button.set_sensitive(false);
             return None;
         };
-        let mut restore_warning = None;
-        let mut restore_error = None;
 
         let info = file
             .query_info(
@@ -230,7 +230,7 @@ impl GduRestoreDiskImageDialog {
             } else {
                 "{}"
             },
-            [self.client().size_for_display(size, false, true)],
+            [client.size_for_display(size, false, true)],
         );
 
         let block_left_over_size = imp.block_size.get() as i64 - size as i64;
@@ -240,23 +240,18 @@ impl GduRestoreDiskImageDialog {
         } else if block_left_over_size > 1000 * 1000 {
             // Only complain if slack is bigger than 1MB
             let size_str =
-                self.client()
-                    .size_for_display(block_left_over_size.unsigned_abs(), false, false);
+                client.size_for_display(block_left_over_size.unsigned_abs(), false, false);
             restore_warning = Some(gettext_f(
                 "The disk image is {} smaller than the target device",
                 [size_str],
             ));
         } else if size > imp.block_size.get() {
-            let size_str =
-                self.client()
-                    .size_for_display(size - imp.block_size.get(), false, false);
+            let size_str = client.size_for_display(size - imp.block_size.get(), false, false);
             restore_error = Some(gettext_f(
                 "The disk image is {} bigger than the target device",
                 [size_str],
             ));
         }
-
-        let imp = self.imp();
 
         if let Some(error) = &restore_error {
             imp.error_banner.set_title(error);

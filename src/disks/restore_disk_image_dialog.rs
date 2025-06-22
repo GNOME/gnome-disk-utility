@@ -101,6 +101,7 @@ mod imp {
 
         fn dispose(&self) {
             self.dispose_template();
+
             if let Some(cookie) = self.inhibit_cookie.take() {
                 self.obj()
                     .window()
@@ -390,6 +391,7 @@ impl GduRestoreDiskImageDialog {
         let objects = [&object];
         let affected_devices_widget =
             libgdu::create_widget_from_objects(&self.client(), &objects).await;
+
         let confirmation_dialog = libgdu::ConfirmationDialog {
             message: gettext("Are you sure you want to write the disk image to the device?"),
             description: gettext("All existing data will be lost"),
@@ -520,8 +522,7 @@ impl GduRestoreDiskImageDialog {
     ) -> Result<(), Box<dyn std::error::Error>> {
         let fd: std::os::fd::OwnedFd = block
             .open_for_restore(udisks::standard_options(false))
-            .await
-            .map_err(Box::new)?
+            .await?
             .into();
 
         // We can't use udisks_block_get_size() because the media may have
@@ -584,7 +585,7 @@ impl GduRestoreDiskImageDialog {
             }
         }
 
-        // request that the OS / kernel rescans the device
+        // request that the OS / kernel re-scans the device
         if let Err(err) = block.rescan(HashMap::new()).await {
             log::error!("Error rescanning device: {}", err);
         };
@@ -593,6 +594,10 @@ impl GduRestoreDiskImageDialog {
     }
 
     fn update_job(&self, estimator: Option<&Estimator>, done: bool) {
+        let Some(ref mut job) = *self.imp().local_job.borrow_mut() else {
+            return;
+        };
+
         let (bytes_per_sec, usec_remaining, completed_bytes, target_bytes) =
             if let Some(estimator) = estimator {
                 (
@@ -605,26 +610,24 @@ impl GduRestoreDiskImageDialog {
                 (0, 0, 0, 0)
             };
 
-        if let Some(ref mut job) = *self.imp().local_job.borrow_mut() {
-            job.set_bytes(target_bytes);
-            job.set_rate(bytes_per_sec);
+        job.set_bytes(target_bytes);
+        job.set_rate(bytes_per_sec);
 
-            let progress = if done {
-                1.0
-            } else if target_bytes != 0 {
-                completed_bytes as f64 / bytes_per_sec as f64
-            } else {
-                0.0
-            };
-            job.set_progress(progress);
+        let progress = if done {
+            1.0
+        } else if target_bytes != 0 {
+            completed_bytes as f64 / bytes_per_sec as f64
+        } else {
+            0.0
+        };
+        job.set_progress(progress);
 
-            let end_time = if usec_remaining == 0 {
-                0
-            } else {
-                usec_remaining + glib::real_time() as u64
-            };
-            job.set_expected_end_time(end_time);
-        }
+        let end_time = if usec_remaining == 0 {
+            0
+        } else {
+            usec_remaining + glib::real_time() as u64
+        };
+        job.set_expected_end_time(end_time);
     }
 
     #[template_callback]
@@ -643,7 +646,7 @@ use sealed::PageAlignedBuffer;
 // hide private struct fields
 //TODO: possibly move to different file
 mod sealed {
-    /// A RAII buffer that is aligned to the page size of the system.
+    /// An RAII buffer that is aligned to the page size of the system.
     pub struct PageAlignedBuffer {
         /// Memory layout of the buffer.
         layout: std::alloc::Layout,

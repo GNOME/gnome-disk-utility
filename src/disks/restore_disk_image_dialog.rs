@@ -162,11 +162,12 @@ impl GduRestoreDiskImageDialog {
             dialog.populate_destination_combobox().await;
         }
 
-        dialog.update();
+        dialog.display_size_warning();
         dialog.present(parent_window);
         dialog
     }
 
+    /// Sets the [`destination`] drive to the given object.
     async fn set_destination_object(&self, object: udisks::Object) {
         let imp = self.imp();
         if imp.object.borrow().as_ref().map(|v| v.object_path()) == Some(object.object_path()) {
@@ -191,7 +192,9 @@ impl GduRestoreDiskImageDialog {
             .expect("`dialog` must be attached to a parent window")
     }
 
-    fn update(&self) -> Option<()> {
+    /// Displays an error banner, if the disk image is too large,
+    /// or a warning banner if the disk image is much smaller, than the target device.
+    fn display_size_warning(&self) -> Option<()> {
         let imp = self.imp();
         let client = self.client();
         let mut restore_warning = None;
@@ -239,7 +242,6 @@ impl GduRestoreDiskImageDialog {
         );
 
         let block_left_over_size = imp.block_size.get() as i64 - size as i64;
-
         if size == 0 {
             restore_error = Some(gettext("Cannot restore image of size 0"));
         } else if block_left_over_size > 1000 * 1000 {
@@ -269,11 +271,7 @@ impl GduRestoreDiskImageDialog {
         imp.start_restore_button
             .set_sensitive(restore_error.is_none());
         imp.image_row.set_subtitle(&name);
-        imp.size_row.set_subtitle(if size_str.is_empty() {
-            "—"
-        } else {
-            &size_str
-        });
+        imp.size_row.set_subtitle(&size_str);
 
         Some(())
     }
@@ -367,12 +365,13 @@ impl GduRestoreDiskImageDialog {
         _param: &glib::ParamSpec,
         combo_row: &adw::ComboRow,
     ) {
-        let imp = self.imp();
-        let selected_drive = imp.destination_drives.borrow()[combo_row.selected() as usize].clone();
-        self.set_destination_object(Some(selected_drive)).await;
-        self.update();
+        let selected_drive =
+            self.imp().destination_drives.borrow()[combo_row.selected() as usize].clone();
+        self.set_destination_object(selected_drive).await;
+        self.display_size_warning();
     }
 
+    /// Returns the [udisks::Client].
     fn client(&self) -> udisks::Client {
         self.imp().client.borrow().clone().unwrap()
     }
@@ -489,7 +488,6 @@ impl GduRestoreDiskImageDialog {
         imp.local_job.replace(Some(local_job));
 
         let block = imp.block.take().unwrap();
-
         let res = self
             .copy_disk_image(
                 block,
@@ -641,7 +639,7 @@ impl GduRestoreDiskImageDialog {
             .build();
         if let Ok(file) = file_dialog.open_future(Some(&self.window())).await {
             self.imp().restore_file.set(Some(file));
-            self.update();
+            self.display_size_warning();
         }
     }
 }

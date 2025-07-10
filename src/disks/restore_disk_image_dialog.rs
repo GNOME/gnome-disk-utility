@@ -246,17 +246,14 @@ impl GduRestoreDiskImageDialog {
             restore_error = Some(gettext("Cannot restore image of size 0"));
         } else if block_left_over_size > 1000 * 1000 {
             // Only complain if slack is bigger than 1MB
-            let size_str =
-                client.size_for_display(block_left_over_size.unsigned_abs(), false, false);
             restore_warning = Some(gettext_f(
                 "The disk image is {} smaller than the target device",
-                [size_str],
+                [client.size_for_display(block_left_over_size.unsigned_abs(), false, false)],
             ));
         } else if size > imp.block_size.get() {
-            let size_str = client.size_for_display(size - imp.block_size.get(), false, false);
             restore_error = Some(gettext_f(
                 "The disk image is {} bigger than the target device",
-                [size_str],
+                [client.size_for_display(size - imp.block_size.get(), false, false)],
             ));
         }
 
@@ -391,9 +388,8 @@ impl GduRestoreDiskImageDialog {
     async fn on_start_restore_button_clicked_cb(&self, _button: &gtk::Button) {
         let imp = self.imp();
         let object = imp.object.borrow().clone().unwrap();
-        let objects = [&object];
         let affected_devices_widget =
-            libgdu::create_widget_from_objects(&self.client(), &objects).await;
+            libgdu::create_widget_from_objects(&self.client(), &[&object]).await;
 
         let confirmation_dialog = libgdu::ConfirmationDialog {
             message: gettext("Are you sure you want to write the disk image to the device?"),
@@ -416,6 +412,7 @@ impl GduRestoreDiskImageDialog {
         self.restore_disk_image().await;
     }
 
+    /// Restores the disk image to the selected destination drive.
     async fn restore_disk_image(&self) -> Option<()> {
         let imp = self.imp();
         let file = imp.restore_file.take()?;
@@ -514,6 +511,7 @@ impl GduRestoreDiskImageDialog {
         None
     }
 
+    /// Copies the disk image from the `input_stream` to the given block device.
     async fn copy_disk_image(
         &self,
         block: udisks::block::BlockProxy<'static>,
@@ -543,7 +541,7 @@ impl GduRestoreDiskImageDialog {
         // default to 1 MiB blocks
         const BUFFER_SIZE: usize = 1024 * 1024;
         let mut page_buffer = PageAlignedBuffer::new(BUFFER_SIZE);
-        let buffer = page_buffer.as_mut_slice();
+        let buffer_slice = page_buffer.as_mut_slice();
 
         let estimator = estimator::Estimator::new(input_size);
 
@@ -555,18 +553,16 @@ impl GduRestoreDiskImageDialog {
         let update_timer = std::time::Instant::now().sub(update_interval);
         let mut device = async_std::fs::File::from(std::fs::File::from(fd));
         let copy_result = loop {
-            // Update GUI - but only every 200ms and if the last update isn't pending
+            // update GUI
             if update_timer.elapsed() >= update_interval {
-                if bytes_completed > 0 {
-                    estimator.add_sample(bytes_completed);
-                }
+                estimator.add_sample(bytes_completed);
                 //TODO: add a progress bar?
                 self.update_job(Some(&estimator), false)
             }
 
             //TODO: check if using kernel calls like std's (file) copy does is faster
             //or using BufWriter
-            let read_bytes = match input_stream.read(buffer).await {
+            let read_bytes = match input_stream.read(buffer_slice).await {
                 // we finished reading all bytes
                 Ok(0) => break Ok(()),
                 Ok(n) => n,
@@ -574,7 +570,7 @@ impl GduRestoreDiskImageDialog {
                 Err(err) => break Err(Box::new(err)),
             };
 
-            if let Err(err) = device.write_all(&buffer[..read_bytes]).await {
+            if let Err(err) = device.write_all(&buffer_slice[..read_bytes]).await {
                 log::error!("Error writing to device: {}", err);
                 break Err(Box::new(err));
             }

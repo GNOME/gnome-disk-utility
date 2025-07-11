@@ -73,15 +73,15 @@ fi
 echo "Meson version:"
 sed ${SEDARG} -e "3,\$s/^  version: '${LAST_TAG}',\$/  version: '${ARG}',/" meson.build | grep -m 1 version "${PASS}"
 if [ "${DRY}" = "0" ]; then
-  PASS="data/org.gnome.DiskUtility.appdata.xml.in"
+  PASS="data/org.gnome.DiskUtility.metainfo.xml.in"
 else
   PASS="-"
 fi
-echo "Appdata URLs:"
-sed ${SEDARG} -e "s,/raw/[^/]*,/raw/${BRANCH},g" data/org.gnome.DiskUtility.appdata.xml.in | grep raw/ "${PASS}"
+echo "Metainfo URLs:"
+sed ${SEDARG} -e "s,/raw/[^/]*,/raw/${BRANCH},g" data/org.gnome.DiskUtility.metainfo.xml.in | grep raw/ "${PASS}"
 
 if [ "${DRY}" = "0" ]; then
-  git add NEWS meson.build data/org.gnome.DiskUtility.appdata.xml.in
+  git add NEWS meson.build data/org.gnome.DiskUtility.metainfo.xml.in
   git commit -m "Prepare ${ARG}"
   git tag -a -m "GNOME Disks ${ARG}" "${ARG}"
   rm -r builddir

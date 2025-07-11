@@ -33,9 +33,9 @@ install_data(
   install_dir: join_paths(gdu_datadir, 'glib-2.0', 'schemas')
 )
 
-info = 'org.gnome.DiskUtility.appdata.xml'
+info = 'org.gnome.DiskUtility.metainfo.xml'
 
-appdata_file = i18n.merge_file(
+metainfo_file = i18n.merge_file(
   input: info + '.in',
   output: info,
   po_dir: po_dir,
@@ -43,12 +43,12 @@ appdata_file = i18n.merge_file(
   install_dir: gdu_datadir / 'metainfo',
 )
 
-# Validate Appdata
+# Validate AppStream metadata
 appstreamcli = find_program('appstreamcli', required: false)
 if (appstreamcli.found())
-  test('validate-appdata',
+  test('validate-metainfo',
     appstreamcli,
-    args: ['validate', '--no-net', '--explain', appdata_file],
+    args: ['validate', '--no-net', '--explain', metainfo_file],
     workdir: meson.current_build_dir()
   )
 endif

@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2025-02-15 02:44+0000\n"
-"PO-Revision-Date: 2025-02-16 08:00+0300\n"
+"POT-Creation-Date: 2025-07-10 08:29+0000\n"
+"PO-Revision-Date: 2025-07-13 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -69,7 +69,7 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Kıyaslamanın erişim zamanı sınaması için yapacağı örnek sayısı."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:301
+#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:295
 #: src/disks/ui/gdu-window.ui:24 src/notify/gdusdmonitor.c:300
 msgid "Disks"
 msgstr "Diskler"
@@ -107,7 +107,7 @@ msgid "Manage your storage devices"
 msgstr "Depolama aygıtlarını yönet"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:44 src/disks/gdu-application.c:303
+#: data/org.gnome.DiskUtility.appdata.xml.in:44 src/disks/gdu-application.c:297
 msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
@@ -131,27 +131,27 @@ msgstr ""
 msgid "GNOME Disk Image Mounter"
 msgstr "GNOME Disk Görüntüsü Bağlayıcı"
 
-#: src/disk-image-mounter/window.rs:107
+#: src/disk-image-mounter/window.rs:111
 msgid "Compressed image files are not mountable"
 msgstr "Sıkıştırılmış görüntü dosyaları bağlanamaz"
 
-#: src/disk-image-mounter/window.rs:115
+#: src/disk-image-mounter/window.rs:119
 msgid "Open the mounted image"
 msgstr "Bağlı görüntüyü aç"
 
-#: src/disk-image-mounter/window.rs:118
+#: src/disk-image-mounter/window.rs:122
 msgid "Already mounted read-only"
 msgstr "Zaten salt-okunur bağlı"
 
-#: src/disk-image-mounter/window.rs:121
+#: src/disk-image-mounter/window.rs:125
 msgid "Already mounted"
 msgstr "Zaten bağlı"
 
-#: src/disk-image-mounter/window.rs:155 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.rs:161 src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Dosyalarʼda Aç"
 
-#: src/disk-image-mounter/window.rs:226
+#: src/disk-image-mounter/window.rs:238
 msgid "Failed to mount file"
 msgstr "Dosya bağlanamadı"
 
@@ -232,7 +232,7 @@ msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 "--format-device seçeneği --restore-disk-image ile birlikte kullanılmamalıdır"
 
-#: src/disks/gdu-application.c:305
+#: src/disks/gdu-application.c:299
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -242,22 +242,22 @@ msgstr ""
 "© 2008-2013 Red Hat, Inc.\n"
 "© 2008-2013 David Zeuthen"
 
-#: src/disks/gdu-application.c:309
+#: src/disks/gdu-application.c:303
 msgid "translator-credits"
 msgstr ""
 "Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Muhammet Kara <muhammetk@gmail.com>\n"
 "Sabri Ünal <yakushabb@gmail.com>"
 
-#: src/disks/gdu-application.c:325
+#: src/disks/gdu-application.c:319
 msgid "Stop running jobs?"
 msgstr "Çalışan işler durdurulsun mu?"
 
-#: src/disks/gdu-application.c:326
+#: src/disks/gdu-application.c:320
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr "Şimdi kapatmak çalışan işleri durdurur ve bozuk sonuca yol açar."
 
-#: src/disks/gdu-application.c:327
+#: src/disks/gdu-application.c:321
 msgid "Stop"
 msgstr "Durdur"
 
@@ -1163,26 +1163,10 @@ msgstr "Genişletilmiş Bölüm"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:570
+#: src/disks/gdu-block.c:577
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s boş (%%%.1f dolu)"
-
-#: src/disks/gdu-block-row.c:135
-msgid "row.unmount"
-msgstr ""
-
-#: src/disks/gdu-block-row.c:136
-msgid "row.mount"
-msgstr ""
-
-#: src/disks/gdu-block-row.c:137
-msgid "row.lock"
-msgstr ""
-
-#: src/disks/gdu-block-row.c:138
-msgid "row.unlock"
-msgstr ""
 
 #: src/disks/gdu-block-row.c:142
 msgid "Mount"
@@ -1220,69 +1204,78 @@ msgstr "Bölümdeki tüm veri yitecek"
 msgid "Delete"
 msgstr "Sil"
 
-#: src/disks/gdu-block-row.c:546
+#: src/disks/gdu-block-row.c:529
+#, c-format
+msgid "The utility “%s” is required to resize a %s partition."
+msgstr "%2$s bölümünü yeniden boyutlandırmak için “%1$s” aracı gerekiyor."
+
+#: src/disks/gdu-block-row.c:533
+msgid "Error while resizing filesystem"
+msgstr "Dosya sistemi yeniden boyutlandırılırken hata"
+
+#: src/disks/gdu-block-row.c:567
 msgid "Error while checking filesystem"
 msgstr "Dosya sistemi denetlenirken hata"
 
-#: src/disks/gdu-block-row.c:559
+#: src/disks/gdu-block-row.c:580
 msgid "Filesystem intact"
 msgstr "Dosya sistemi sağlam"
 
-#: src/disks/gdu-block-row.c:559
+#: src/disks/gdu-block-row.c:580
 msgid "Filesystem damaged"
 msgstr "Dosya sistemi hasarlı"
 
-#: src/disks/gdu-block-row.c:561
+#: src/disks/gdu-block-row.c:582
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
 msgstr "%2$s üzerindeki %1$s dosya sistemi sağlamdır."
 
-#: src/disks/gdu-block-row.c:562
+#: src/disks/gdu-block-row.c:583
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarım gerektiriyor."
 
-#: src/disks/gdu-block-row.c:629
+#: src/disks/gdu-block-row.c:650
 msgid "Confirm Check?"
 msgstr "Denetimi Onaylıyor Musunuz?"
 
-#: src/disks/gdu-block-row.c:630
+#: src/disks/gdu-block-row.c:651
 msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr "Bölüm çok veri içeriyorsa denetim işlemi uzun sürebilir."
 
-#: src/disks/gdu-block-row.c:631
+#: src/disks/gdu-block-row.c:652
 msgid "Check"
 msgstr "Denetle"
 
-#: src/disks/gdu-block-row.c:662
+#: src/disks/gdu-block-row.c:683
 msgid "Error while repairing filesystem"
 msgstr "Dosya sistemi onarılırken hata"
 
-#: src/disks/gdu-block-row.c:678
+#: src/disks/gdu-block-row.c:699
 msgid "Repair successful"
 msgstr "Onarım başarılı"
 
-#: src/disks/gdu-block-row.c:678
+#: src/disks/gdu-block-row.c:699
 msgid "Repair failed"
 msgstr "Onarım başarısız"
 
-#: src/disks/gdu-block-row.c:680
+#: src/disks/gdu-block-row.c:701
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarıldı."
 
-#: src/disks/gdu-block-row.c:681
+#: src/disks/gdu-block-row.c:702
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
 msgstr "%2$s üzerindeki %1$s dosya sistemi onarılamadı."
 
-#: src/disks/gdu-block-row.c:749
+#: src/disks/gdu-block-row.c:770
 msgid "Repair Filesystem?"
 msgstr "Dosya Sistemini Onarılsın Mı?"
 
-#: src/disks/gdu-block-row.c:750
+#: src/disks/gdu-block-row.c:771
 msgid ""
 "A filesystem repair is not always possible and can cause data loss. Consider "
 "backing it up first in order to use forensic recovery tools that retrieve "
@@ -1294,15 +1287,15 @@ msgstr ""
 "verinizi yedeklemenizi öneririz. Bu işlem veri tutarına bağlı olarak uzun "
 "sürebilir."
 
-#: src/disks/gdu-block-row.c:754
+#: src/disks/gdu-block-row.c:775
 msgid "Repair"
 msgstr "Onar"
 
-#: src/disks/gdu-block-row.c:776
+#: src/disks/gdu-block-row.c:797
 msgid "Error while taking filesystem ownership"
 msgstr "Dosya sistemi sahipliği alınırken hata"
 
-#: src/disks/gdu-block-row.c:864
+#: src/disks/gdu-block-row.c:885
 #, c-format
 msgid "Make your user and group the owner of ”%s”"
 msgstr "Kullanıcınızı ve grubunuzu ”%s” sahibi yapın"
@@ -1739,23 +1732,23 @@ msgstr "Bölüm adı ayarlamada hata"
 msgid "Error setting partition flags"
 msgstr "Bölüm bayrağı ayarlamada hata"
 
-#: src/disks/gdu-edit-partition-dialog.c:309
+#: src/disks/gdu-edit-partition-dialog.c:310
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "8 bit işaretsiz tamsayı biçiminde bölüm türü"
 
-#: src/disks/gdu-edit-partition-dialog.c:310
+#: src/disks/gdu-edit-partition-dialog.c:311
 msgid "_Bootable"
 msgstr "_Önyüklenir"
 
-#: src/disks/gdu-edit-partition-dialog.c:312
+#: src/disks/gdu-edit-partition-dialog.c:313
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the “active” partition"
 msgstr ""
-"Platform önyükleyicisince işletim sisteminin nereden yüklenmesi "
-"gerektiğini belirlemede kullanılan bayrak. Ara sıra bu bayrağın "
-"ayarlanmış olduğu bölüm “etkin” bölüm olarak anılır"
+"Platform önyükleyicisince işletim sisteminin nereden yüklenmesi gerektiğini "
+"belirlemede kullanılan bayrak. Ara sıra bu bayrağın ayarlanmış olduğu bölüm "
+"“etkin” bölüm olarak anılır"
 
 #: src/disks/gdu-encryption-options-dialog.c:135
 msgid "Error removing /etc/crypttab entry"
@@ -1900,27 +1893,27 @@ msgstr "_Sonraki"
 msgid "Error formatting volume"
 msgstr "Birim biçimlendirmede hata"
 
-#: src/disks/gdu-format-volume-dialog.c:400
+#: src/disks/gdu-format-volume-dialog.c:398
 msgid "Error creating partition"
 msgstr "Bölüm oluşturulurken hata"
 
-#: src/disks/gdu-format-volume-dialog.c:520 src/disks/ui/gdu-block-row.ui:53
+#: src/disks/gdu-format-volume-dialog.c:530 src/disks/ui/gdu-block-row.ui:53
 msgid "Create Partition"
 msgstr "Bölüm Oluştur"
 
-#: src/disks/gdu-format-volume-dialog.c:527
+#: src/disks/gdu-format-volume-dialog.c:537
 msgid "Format Volume"
 msgstr "Birimi Biçimlendir"
 
-#: src/disks/gdu-format-volume-dialog.c:533
+#: src/disks/gdu-format-volume-dialog.c:543
 msgid "Custom Format"
 msgstr "Özel Biçim"
 
-#: src/disks/gdu-format-volume-dialog.c:539
+#: src/disks/gdu-format-volume-dialog.c:549
 msgid "Set Password"
 msgstr "Parola Belirle"
 
-#: src/disks/gdu-format-volume-dialog.c:547
+#: src/disks/gdu-format-volume-dialog.c:557
 msgid "Confirm Details"
 msgstr "Ayrıntıları Onayla"
 
@@ -2757,8 +2750,8 @@ msgid ""
 "to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
 "directory"
 msgstr ""
-"Bölüm adı (36 unikod karaktere dek). Bu, aygıtı <b>/dev/disk/by-partlabel</b> "
-"içinde bir simgesel bağ ile imlemek istiyorsanız kullanışlıdır"
+"Bölüm adı (36 unikod karaktere dek). Bu, aygıtı <b>/dev/disk/by-partlabel</"
+"b> içinde bir simgesel bağ ile imlemek istiyorsanız kullanışlıdır"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:60
 msgid "Flags"
@@ -3109,93 +3102,93 @@ msgstr "Diskler _Hakkında"
 msgid "Set up _read-only loop device"
 msgstr "_Salt okunur döngü aygıtı olarak ayarla"
 
-#: src/disks/ui/shortcuts.ui:12
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:6
+msgctxt "shortcuts dialog"
 msgid "General"
 msgstr "Genel"
 
-#: src/disks/ui/shortcuts.ui:15
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:9
+msgctxt "shortcuts dialog"
 msgid "Help"
 msgstr "Yardım"
 
-#: src/disks/ui/shortcuts.ui:21
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:15
+msgctxt "shortcuts dialog"
 msgid "Open the application menu"
 msgstr "Uygulama menüsünü aç"
 
-#: src/disks/ui/shortcuts.ui:27
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:21
+msgctxt "shortcuts dialog"
 msgid "Keyboard shortcuts"
 msgstr "Klavye kısayolları"
 
-#: src/disks/ui/shortcuts.ui:33
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:27
+msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Çık"
 
-#: src/disks/ui/shortcuts.ui:41
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:35
+msgctxt "shortcuts dialog"
 msgid "Disks"
 msgstr "Diskler"
 
-#: src/disks/ui/shortcuts.ui:44
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:38
+msgctxt "shortcuts dialog"
 msgid "Create a new empty disk image"
 msgstr "Yeni boş disk görüntüsü oluştur"
 
-#: src/disks/ui/shortcuts.ui:50
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:44
+msgctxt "shortcuts dialog"
 msgid "Attach an existing disk image"
 msgstr "Var olan disk görüntüsü ekle"
 
-#: src/disks/ui/shortcuts.ui:56
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:50
+msgctxt "shortcuts dialog"
 msgid "Unselect current disk"
 msgstr "Geçerli disk seçimini kaldır"
 
-#: src/disks/ui/shortcuts.ui:64
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:58
+msgctxt "shortcuts dialog"
 msgid "Drive"
 msgstr "Sürücü"
 
-#: src/disks/ui/shortcuts.ui:67
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:61
+msgctxt "shortcuts dialog"
 msgid "Open the drive menu"
 msgstr "Sürücü menüsünü aç"
 
-#: src/disks/ui/shortcuts.ui:73
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:67
+msgctxt "shortcuts dialog"
 msgid "Format the drive"
 msgstr "Sürücüyü biçimlendir"
 
-#: src/disks/ui/shortcuts.ui:79
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:73
+msgctxt "shortcuts dialog"
 msgid "Restore an image to the disk"
 msgstr "Görüntüyü diske geri yükle"
 
-#: src/disks/ui/shortcuts.ui:85
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:79
+msgctxt "shortcuts dialog"
 msgid "SMART data"
 msgstr "SMART verisi"
 
-#: src/disks/ui/shortcuts.ui:91
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:85
+msgctxt "shortcuts dialog"
 msgid "Drive settings"
 msgstr "Sürücü ayarları"
 
-#: src/disks/ui/shortcuts.ui:99
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:93
+msgctxt "shortcuts dialog"
 msgid "Partition"
 msgstr "Bölüm"
 
-#: src/disks/ui/shortcuts.ui:102
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:96
+msgctxt "shortcuts dialog"
 msgid "Open the volume menu"
 msgstr "Birim menüsünü aç"
 
-#: src/disks/ui/shortcuts.ui:108
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:102
+msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Seçilen birimi biçimlendir"
 
@@ -3348,6 +3341,14 @@ msgstr "Sabit disk yakında bozulabilir."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "İncele"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Genel"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Disks"
+#~ msgstr "Diskler"
 
 #, c-format
 #~ msgid "%s"

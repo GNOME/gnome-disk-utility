@@ -14,6 +14,7 @@ use libgdu::gettext::gettext_f;
 
 use crate::estimator::{self, Estimator};
 use crate::ffi;
+use crate::page_aligned_buffer::PageAlignedBuffer;
 
 /// Device size in bytes of the block device from `fd`.
 ///
@@ -636,55 +637,6 @@ impl GduRestoreDiskImageDialog {
         if let Ok(file) = file_dialog.open_future(Some(&self.window())).await {
             self.imp().restore_file.set(Some(file));
             self.display_size_warning();
-        }
-    }
-}
-
-use sealed::PageAlignedBuffer;
-// hide private struct fields
-//TODO: possibly move to different file
-mod sealed {
-    /// An RAII buffer that is aligned to the page size of the system.
-    pub struct PageAlignedBuffer {
-        /// Memory layout of the buffer.
-        layout: std::alloc::Layout,
-        /// Reference to the page aligned memory.
-        buffer: &'static mut [u8],
-    }
-
-    impl PageAlignedBuffer {
-        /// Allocates a new buffer with aligned to the page size of the operating system.
-        /// The allocated memory will be zeroed.
-        #[must_use]
-        pub fn new(size: usize) -> Self {
-            unsafe {
-                let page_size = libc::sysconf(libc::_SC_PAGESIZE) as usize;
-                let layout = std::alloc::Layout::from_size_align(size, page_size)
-                    .expect("Failed to create layout for buffer");
-                let buffer_ptr = std::alloc::alloc_zeroed(layout);
-                assert!(!buffer_ptr.is_null(), "Failed to alloc buffer memory");
-                // SAFETY: we know that the pointer is valid, correctly aligned and has space for `BUFFER_SIZE`
-                // bytes
-                let buffer = std::slice::from_raw_parts_mut(buffer_ptr, size);
-                Self { layout, buffer }
-            }
-        }
-
-        /// Returns a mutable slice of the allocated buffer.
-        pub fn as_mut_slice(&mut self) -> &mut [u8] {
-            self.buffer
-        }
-    }
-
-    impl Drop for PageAlignedBuffer {
-        fn drop(&mut self) {
-            unsafe {
-                // SAFETY: as we only ever give out an exclusive reference to the buffer and it's not
-                // possible to clone, we can be sure that there exists no other reference to the
-                // buffer.
-                // As the buffer cannot be swapped out, it was created from self.layout.
-                std::alloc::dealloc(self.buffer.as_mut_ptr(), self.layout);
-            }
         }
     }
 }

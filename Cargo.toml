@@ -1,10 +1,13 @@
 [workspace]
 resolver = "2"
-members = [
-    "src/disk-image-mounter",
-    "src/libgdu",
-    "src/disks",
-]
+members = ["src/disk-image-mounter", "src/libgdu", "src/disks"]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.85"
+license = "GPL-2.0-or-later"
+homepage = "https://apps.gnome.org/DiskUtility/"
+repository = "https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 
 [profile.release]
 lto = true
@@ -17,6 +20,6 @@ gettext-rs = { version = "0.7", features = ["gettext-system"] }
 gtk = { version = "0.8", package = "gtk4", features = [
     "v4_12",
     "xml_validation",
-]}
+] }
 adw = { package = "libadwaita", version = "0.6", features = ["v1_5"] }
-udisks = { package = "udisks2", git = "https://github.com/FineFindus/udisks-rs.git", rev = "001e0c02830a4a229adb99207250b275c79261a2"}
+udisks = { package = "udisks2", git = "https://github.com/FineFindus/udisks-rs.git", rev = "001e0c02830a4a229adb99207250b275c79261a2" }

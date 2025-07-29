@@ -43,7 +43,7 @@ mod imp {
 
     use adw::subclass::dialog::AdwDialogImpl;
 
-    use crate::{config, localjob::LocalJob};
+    use crate::{config, gdu_combo_row::GduComboRow, localjob::LocalJob};
 
     use super::*;
 
@@ -69,7 +69,7 @@ mod imp {
         #[template_child]
         pub(super) file_chooser_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub(super) destination_row: TemplateChild<adw::ComboRow>,
+        pub(super) destination_row: TemplateChild<GduComboRow>,
         #[template_child]
         pub(super) error_banner: TemplateChild<adw::Banner>,
         #[template_child]

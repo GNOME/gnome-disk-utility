@@ -15,6 +15,7 @@ impl PageAlignedBuffer {
             let page_size = libc::sysconf(libc::_SC_PAGESIZE) as usize;
             let layout = std::alloc::Layout::from_size_align(size, page_size)
                 .expect("Failed to create layout for buffer");
+            assert!(layout.size() >= size, "Layout is smaller than requested");
             let buffer_ptr = std::alloc::alloc_zeroed(layout);
             assert!(!buffer_ptr.is_null(), "Failed to alloc buffer memory");
             // SAFETY: we know that the pointer is valid, correctly aligned and has space for `BUFFER_SIZE`

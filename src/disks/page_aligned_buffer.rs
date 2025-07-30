@@ -2,12 +2,15 @@
 pub struct PageAlignedBuffer {
     /// Memory layout of the buffer.
     layout: std::alloc::Layout,
-    /// Reference to the page aligned memory.
-    buffer: &'static mut [u8],
+    /// Pointer to the page aligned memory.
+    buffer_ptr: *mut u8,
+    /// Size of the allocated memory in bytes.
+    size: usize,
 }
 
 impl PageAlignedBuffer {
     /// Allocates a new buffer with aligned to the page size of the operating system.
+    ///
     /// The allocated memory will be zeroed.
     #[must_use]
     pub fn new(size: usize) -> Self {
@@ -16,18 +19,23 @@ impl PageAlignedBuffer {
             let layout = std::alloc::Layout::from_size_align(size, page_size)
                 .expect("Failed to create layout for buffer");
             assert!(layout.size() >= size, "Layout is smaller than requested");
+
             let buffer_ptr = std::alloc::alloc_zeroed(layout);
-            assert!(!buffer_ptr.is_null(), "Failed to alloc buffer memory");
-            // SAFETY: we know that the pointer is valid, correctly aligned and has space for `BUFFER_SIZE`
-            // bytes
-            let buffer = std::slice::from_raw_parts_mut(buffer_ptr, size);
-            Self { layout, buffer }
+            assert!(!buffer_ptr.is_null(), "Failed to allocate buffer memory");
+
+            Self {
+                layout,
+                buffer_ptr,
+                size,
+            }
         }
     }
 
     /// Returns a mutable slice of the allocated buffer.
     pub fn as_mut_slice(&mut self) -> &mut [u8] {
-        self.buffer
+        // SAFETY: we know that the pointer is valid, correctly aligned and can hold at least
+        // [`self.size`] bytes
+        unsafe { std::slice::from_raw_parts_mut(self.buffer_ptr, self.size) }
     }
 }
 
@@ -38,7 +46,7 @@ impl Drop for PageAlignedBuffer {
             // possible to clone, we can be sure that there exists no other reference to the
             // buffer.
             // As the buffer cannot be swapped out, it was created from self.layout.
-            std::alloc::dealloc(self.buffer.as_mut_ptr(), self.layout);
+            std::alloc::dealloc(self.buffer_ptr, self.layout);
         }
     }
 }

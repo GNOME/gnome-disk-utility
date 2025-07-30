@@ -12,6 +12,17 @@ impl PageAlignedBuffer {
     /// Allocates a new buffer with aligned to the page size of the operating system.
     ///
     /// The allocated memory will be zeroed.
+    ///
+    /// # Panics
+    ///
+    /// This function panics, the memory required for the buffer could not be allocated.
+    ///
+    /// # Examples
+    /// ```ignore
+    /// # use gnome_disks::page_aligned_buffer::PageAlignedBuffer;
+    /// let mut buffer = PageAlignedBuffer::new(42);
+    /// assert_eq!(buffer.as_mut_slice().len(), 42);
+    /// ```
     #[must_use]
     pub fn new(size: usize) -> Self {
         unsafe {
@@ -32,6 +43,15 @@ impl PageAlignedBuffer {
     }
 
     /// Returns a mutable slice of the allocated buffer.
+    ///
+    /// # Examples
+    /// ```ignore
+    /// # use gnome_disks::page_aligned_buffer::PageAlignedBuffer;
+    /// let mut buffer = PageAlignedBuffer::new(42);
+    /// let slice = buffer.as_mut_slice();
+    /// slice[0] = 12;
+    /// assert_eq!(slice[0], 12);
+    /// ```
     pub fn as_mut_slice(&mut self) -> &mut [u8] {
         // SAFETY: we know that the pointer is valid, correctly aligned and can hold at least
         // [`self.size`] bytes

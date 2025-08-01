@@ -1,0 +1,11 @@
+[Unit]
+Description=Disk Health Notifications
+PartOf=gnome-session.target
+After=gnome-session.target
+
+[Service]
+Type=dbus
+BusName=org.gnome.Disks.NotificationMonitor
+ExecStart=@libexecdir@/gnome-disk-utility-notify
+Restart=on-failure
+Slice=app.slice

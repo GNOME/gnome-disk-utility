@@ -103,6 +103,13 @@ config_h.set(
   description: 'Define to 1 if logind API is available',
 )
 
+systemd = dependency('systemd', required : false)
+systemd_user_unit_dir = systemd.get_variable(
+    'systemd_user_unit_dir',
+    pkgconfig_define : ['prefix', gdu_prefix],
+    default_value: gdu_prefix / 'lib' / 'systemd' / 'user'
+)
+
 # configure rust
 cargo = find_program('cargo', required: true)
 

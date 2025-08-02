@@ -425,12 +425,8 @@ impl GduRestoreDiskImageDialog {
         ) {
             Ok(info) => info,
             Err(err) => {
-                libgdu::show_error(
-                    self,
-                    &gettext("Error determining size of file"),
-                    Box::new(err),
-                )
-                .await;
+                libgdu::show_error(self, &gettext("Error determining size of file"), err.into())
+                    .await;
                 return None;
             }
         };
@@ -439,12 +435,8 @@ impl GduRestoreDiskImageDialog {
         let mut input_stream = match file.read(gio::Cancellable::NONE) {
             Ok(stream) => stream.into_read(),
             Err(err) => {
-                libgdu::show_error(
-                    self,
-                    &gettext("Error opening file for reading"),
-                    Box::new(err),
-                )
-                .await;
+                libgdu::show_error(self, &gettext("Error opening file for reading"), err.into())
+                    .await;
                 return None;
             }
         };
@@ -532,9 +524,7 @@ impl GduRestoreDiskImageDialog {
 
         if block_device_size == 0 {
             log::error!("Device is size 0");
-            return Err(Box::new(std::io::Error::from(
-                std::io::ErrorKind::InvalidData,
-            )));
+            return Err(std::io::Error::from(std::io::ErrorKind::InvalidData).into());
         }
         self.imp().block_size.set(block_device_size as u64);
 
@@ -552,7 +542,7 @@ impl GduRestoreDiskImageDialog {
         // set initial timer back by the update interval, so the UI is refreshed on the first cycle
         let update_timer = std::time::Instant::now().sub(update_interval);
         let mut device = async_std::fs::File::from(std::fs::File::from(fd));
-        let copy_result = loop {
+        let copy_result: Result<(), std::io::Error> = loop {
             // update GUI
             if update_timer.elapsed() >= update_interval {
                 estimator.add_sample(bytes_completed);
@@ -567,12 +557,12 @@ impl GduRestoreDiskImageDialog {
                 Ok(0) => break Ok(()),
                 Ok(n) => n,
                 Err(err) if err.kind() == ErrorKind::Interrupted => continue,
-                Err(err) => break Err(Box::new(err)),
+                Err(err) => break Err(err),
             };
 
             if let Err(err) = device.write_all(&buffer_slice[..read_bytes]).await {
                 log::error!("Error writing to device: {}", err);
-                break Err(Box::new(err));
+                break Err(err);
             }
             bytes_completed += read_bytes as u64;
         };

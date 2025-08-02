@@ -413,7 +413,7 @@ impl GduRestoreDiskImageDialog {
     /// Restores the disk image to the selected destination drive.
     async fn restore_disk_image(&self, object: &udisks::Object) -> Option<()> {
         let imp = self.imp();
-        let file = imp.restore_file.take()?;
+        let file = imp.restore_file.borrow().clone()?;
         let info = match file.query_info(
             &format!(
                 "{},{}",
@@ -441,7 +441,7 @@ impl GduRestoreDiskImageDialog {
             }
         };
 
-        let is_xz_compressed = info.content_type().unwrap().ends_with("-xz-compressed");
+        let is_xz_compressed = info.content_type()?.ends_with("-xz-compressed");
         let input_stream: &mut dyn Read = if is_xz_compressed {
             input_size = liblzma::uncompressed_size(&mut input_stream).ok()?;
             &mut liblzma::read::XzDecoder::new(input_stream)
@@ -476,7 +476,7 @@ impl GduRestoreDiskImageDialog {
         local_job.set_cancelable(true);
         imp.local_job.replace(Some(local_job));
 
-        let block = imp.block.take().unwrap();
+        let block = imp.block.borrow().clone()?;
         let res = self
             .copy_disk_image(
                 block,

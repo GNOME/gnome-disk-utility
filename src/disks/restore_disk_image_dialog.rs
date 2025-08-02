@@ -110,6 +110,7 @@ mod imp {
             if let Some(cookie) = self.inhibit_cookie.take() {
                 self.obj()
                     .window()
+                    .expect("`window` should be available")
                     .application()
                     .expect("`application` should be set")
                     .uninhibit(cookie);
@@ -187,10 +188,8 @@ impl GduRestoreDiskImageDialog {
     }
 
     /// Returns a the [`gtk::Window`] of the dialog.
-    fn window(&self) -> gtk::Window {
-        self.ancestor(gtk::Window::static_type())
-            .and_downcast()
-            .expect("`dialog` must be attached to a parent window")
+    fn window(&self) -> Option<gtk::Window> {
+        self.ancestor(gtk::Window::static_type()).and_downcast()
     }
 
     /// Displays an error banner, if the disk image is too large,
@@ -450,7 +449,7 @@ impl GduRestoreDiskImageDialog {
         };
 
         let application = self
-            .window()
+            .window()?
             .application()
             .expect("`application` should be set");
         let inhibit_cookie = application.inhibit(
@@ -464,7 +463,7 @@ impl GduRestoreDiskImageDialog {
         );
         imp.inhibit_cookie.set(Some(inhibit_cookie));
 
-        libgdu::ensure_unused(&self.client(), &self.window(), object)
+        libgdu::ensure_unused(&self.client(), &self.window()?, object)
             .await
             .ok()?;
 
@@ -486,7 +485,8 @@ impl GduRestoreDiskImageDialog {
             .await;
 
         self.play_complete_sound();
-        application.uninhibit(inhibit_cookie);
+        application.uninhibit(imp.inhibit_cookie.take()?);
+
         if let Err(err) = res {
             libgdu::show_error(self, &gettext("Error restoring disk image"), err).await;
         } else {
@@ -623,7 +623,7 @@ impl GduRestoreDiskImageDialog {
         let file_dialog = gtk::FileDialog::builder()
             .title(gettext("Choose a disk image to restore."))
             .build();
-        if let Ok(file) = file_dialog.open_future(Some(&self.window())).await {
+        if let Ok(file) = file_dialog.open_future(self.window().as_ref()).await {
             self.imp().restore_file.set(Some(file));
             self.display_size_warning();
         }

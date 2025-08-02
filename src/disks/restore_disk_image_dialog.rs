@@ -407,14 +407,11 @@ impl GduRestoreDiskImageDialog {
             return;
         }
 
-        let Ok(_) = libgdu::ensure_unused(&self.client(), self, &object).await else {
-            return;
-        };
-        self.restore_disk_image().await;
+        self.restore_disk_image(&object).await;
     }
 
     /// Restores the disk image to the selected destination drive.
-    async fn restore_disk_image(&self) -> Option<()> {
+    async fn restore_disk_image(&self, object: &udisks::Object) -> Option<()> {
         let imp = self.imp();
         let file = imp.restore_file.take()?;
         let info = match file.query_info(
@@ -475,9 +472,11 @@ impl GduRestoreDiskImageDialog {
         );
         imp.inhibit_cookie.set(Some(inhibit_cookie));
 
-        //TODO: create job in application
-        let object = imp.object.take().unwrap();
-        let local_job = ffi::create_local_job(&object);
+        libgdu::ensure_unused(&self.client(), &self.window(), object)
+            .await
+            .ok()?;
+
+        let local_job = ffi::create_local_job(object);
         local_job.set_operation("x-gdu-restore-disk-image");
         // Translators: this is the description of the job
         local_job.set_description(gettext("Restoring Disk Image"));
@@ -509,7 +508,7 @@ impl GduRestoreDiskImageDialog {
 
         self.set_visible(false);
         self.close();
-        None
+        Some(())
     }
 
     /// Copies the disk image from the `input_stream` to the given block device.

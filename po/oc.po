@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2025-06-14 00:51+0000\n"
-"PO-Revision-Date: 2025-08-07 09:43+0200\n"
+"PO-Revision-Date: 2025-08-07 20:19+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
 "Language: oc\n"
@@ -135,7 +135,7 @@ msgid ""
 "restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
 "disc;lector;volum;disc dur;dd;disc;cdrom;dvd;particion;iso;imatge;salvament;"
-"restabliment;pròva de performança;raid;luks;chiframent;S.M.A.R.T.;smart;"
+"restabliment;tèst de performànça;raid;luks;chiframent;S.M.A.R.T.;smart;"
 "performança;"
 
 #: src/disk-image-mounter/main.c:52
@@ -879,18 +879,18 @@ msgstr "Lo nombre de las errors pendent la lectura dempuèi lo disc"
 #.
 #: src/disks/gduatasmartdialog.c:578
 msgid "Total LBAs Written"
-msgstr ""
+msgstr "Nombre total de LBA escriches"
 
 #: src/disks/gduatasmartdialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
-msgstr ""
+msgstr "La quantitat de donadas escrichas pendent la durada de vida del disc"
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
 #: src/disks/gduatasmartdialog.c:586
 msgid "Total LBAs Read"
-msgstr ""
+msgstr "Nombre total de LBA legits"
 
 #: src/disks/gduatasmartdialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
@@ -1547,18 +1547,21 @@ msgstr "Particion d'escambi Linux"
 #: src/disks/gducreateotherpage.c:18
 msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
+"Btrfs — Sistèma de fichièrs Linux amb còpia a l’escritura, per instantanèus"
 
 #: src/disks/gducreateotherpage.c:19
 msgid "F2FS — Flash Storage Linux Filesystem"
-msgstr ""
+msgstr "F2FS — Sistèma de fichièrs adaptat a l'emmagazinatge flash"
 
 #: src/disks/gducreateotherpage.c:20
 msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
+"exFAT — Sistèma d'emmagazinatge de fichièrs Windows, utilizat sus las cartas "
+"SDXC"
 
 #: src/disks/gducreateotherpage.c:21
 msgid "UDF — Universal Disk Format, for removable devices on many systems"
-msgstr ""
+msgstr "UDF — Universal Disk Format (UDF), pels periferics amovibles"
 
 #: src/disks/gducreateotherpage.c:22
 msgid "No Filesystem"
@@ -2354,13 +2357,13 @@ msgstr "Reparacion fracassada"
 #: src/disks/gduwindow.c:3011
 #, c-format
 msgid "Filesystem %s on %s has been repaired."
-msgstr ""
+msgstr "Lo sistèma de fichièrs %s sus %s es estat reparat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3017
 #, c-format
 msgid "Filesystem %s on %s could not be repaired."
-msgstr ""
+msgstr "Lo sistèma de fichièrs %s sus %s se podiá pas reparar."
 
 #: src/disks/gduwindow.c:3087
 msgid "Confirm Repair"
@@ -2373,6 +2376,11 @@ msgid ""
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
 msgstr ""
+"Una reparacion del sistèma de fichièrs es pas totjorn possibla e pòt causar "
+"una pèrda de donadas. Consideratz de lo sauvar d'en primièr per fin "
+"d'utilizar d'espleches de recuperacion tèrces que recupèran los fichièrs "
+"perduts. L'operacion pòt prendre fòrça temps, mai que mai se la particion "
+"conten fòrça donadas."
 
 #: src/disks/gduwindow.c:3132
 msgid "Error while taking filesystem ownership"
@@ -2393,13 +2401,13 @@ msgstr "Sistèma de fichièrs damatjat"
 #: src/disks/gduwindow.c:3234
 #, c-format
 msgid "Filesystem %s on %s is undamaged."
-msgstr ""
+msgstr "Sistèma de fichièrs %s sus %s es pas damatjat."
 
 #. show as result and not error message, because it's not a malfunction of GDU
 #: src/disks/gduwindow.c:3240
 #, c-format
 msgid "Filesystem %s on %s needs repairing."
-msgstr ""
+msgstr "Lo sistèma de fichièrs %s sus %s requerís una reparacion."
 
 #: src/disks/gduwindow.c:3308
 msgid "Confirm Check"
@@ -2410,14 +2418,16 @@ msgid ""
 "The check may take a long time, especially if the partition contains a lot "
 "of data."
 msgstr ""
+"La verificacion pòt prendre fòrça temps, mai que mai se la particion conten "
+"fòrça donadas."
 
 #: src/disks/gduwindow.c:3588
 msgid "An error occurred when trying to put the drive into standby mode"
-msgstr "Una error s'es produita pendent l'ensag de mesa en velha del disc"
+msgstr "Una error s'es producha pendent l'ensag de mesa en velha del disc"
 
 #: src/disks/gduwindow.c:3635
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr "Una error s'es produita pendent l'ensag de sortida de velha del disc"
+msgstr "Una error s'es producha pendent l'ensag de sortida de velha del disc"
 
 #: src/disks/gduwindow.c:3681
 msgid "Error powering off drive"
@@ -2426,7 +2436,7 @@ msgstr "Error al moment de l'atudament del lector"
 #. Translators: Heading for powering off a device with multiple drives
 #: src/disks/gduwindow.c:3733
 msgid "Are you sure you want to power off the drives?"
-msgstr "Sètz segur que volètz atudar los lectors ?"
+msgstr "Volètz vertadièrament atudar los lectors ?"
 
 #. Translators: Message for powering off a device with multiple drives
 #: src/disks/gduwindow.c:3735
@@ -2451,7 +2461,7 @@ msgstr "Error al moment de la supression de la particion"
 
 #: src/disks/gduwindow.c:3941
 msgid "Are you sure you want to delete the partition?"
-msgstr "Sètz segur que volètz suprimir la particion ?"
+msgstr "Volètz vertadièrament suprimir la particion ?"
 
 #: src/disks/gduwindow.c:3942
 msgid "All data on the partition will be lost"
@@ -2479,7 +2489,7 @@ msgstr "Error al moment de la definicion de la bandièra autoclear"
 
 #: src/disks/gduwindow.c:4189 src/disks/gduwindow.c:4253
 msgid "Error canceling job"
-msgstr "Error al moment de l'anullacion del prètzfait"
+msgstr "Error al moment de l'anullacion del prètzfach"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -2496,7 +2506,7 @@ msgstr "Error intèrna"
 
 #: src/disks/gduxzdecompressor.c:151
 msgid "Need more input"
-msgstr "Necessita mai d'entradas"
+msgstr "Requerís mai d'entradas"
 
 #: src/disks/ui/about-dialog.ui:11
 msgid ""
@@ -2588,10 +2598,10 @@ msgid ""
 "device as well as measuring how long it takes to seek from one random area "
 "to another. Please back up important data before using the write benchmark."
 msgstr ""
-"Lo tèst de performança mesura lo taus de transferiment a divèrses endreits "
-"del periferic e tanben lo temps necessari per anar d'un endreit aleatòri a "
-"un autre. Salvatz totas vòstras donadas importantas abans d'aviar una pròva "
-"de performança en escritura."
+"Lo tèst de performança mesura lo taus de transferiment a divèrses endreches "
+"del periferic e tanben lo temps necessari per anar d'un endrech aleatòri a "
+"un autre. Salvatz totas vòstras donadas importantas abans d'aviar un tèst de "
+"performança en escritura."
 
 #: src/disks/ui/benchmark-dialog.ui:328
 msgid "Transfer Rate"
@@ -2625,9 +2635,9 @@ msgstr ""
 "ni en servici) e implica la lectura de las donadas abans lor reescritura. "
 "Per consequéncia, lo contengut del disc demòra incambiat.\n"
 "\n"
-"Se la casa es desmarcada, la pròva de performança-escritura serà pas fait "
-"per consequéncia l'accès exclusiu al disc es pas requesit (es a dire que lo "
-"disc o lo periferic pòdon demorar en servici pendent lo tèst)."
+"Se la casa es desmarcada, lo tèst de performança-escritura serà pas fach per "
+"consequéncia l'accès exclusiu al disc es pas requesit (es a dire que lo disc "
+"o lo periferic pòdon demorar en servici pendent lo tèst)."
 
 #: src/disks/ui/benchmark-dialog.ui:398
 msgid ""
@@ -2721,7 +2731,7 @@ msgstr "Atencion : totas las donadas de la particion seràn perdudas"
 
 #: src/disks/ui/create-confirm-page.ui:33
 msgid "Confirm the details of the current volume before proceeding."
-msgstr ""
+msgstr "Confirmar los detalhs del volum actual abans de contunhar."
 
 #: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
 msgid "Device"
@@ -2796,7 +2806,7 @@ msgstr "Espotir las donadas existentas amb de zèros, pren mai de temps."
 
 #: src/disks/ui/create-filesystem-page.ui:115
 msgid "_Internal disk for use with Linux systems only (Ext4)"
-msgstr ""
+msgstr "_Disc intèrne d'utilizar sonque amb de sistèmas Linux (Ext4)"
 
 #: src/disks/ui/create-filesystem-page.ui:131
 #: src/disks/ui/create-other-page.ui:36
@@ -3079,7 +3089,7 @@ msgstr "Mèdia"
 
 #: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
 msgid "Job"
-msgstr "Prètzfait"
+msgstr "Prètzfach"
 
 #: src/disks/ui/disks.ui:484
 msgid "Name"
@@ -3104,7 +3114,7 @@ msgstr "Fichièr de salvament"
 
 #: src/disks/ui/disks.ui:603
 msgid "Partitioning"
-msgstr "Ptype"
+msgstr "Particionament"
 
 #: src/disks/ui/disks.ui:634
 msgid "_Volumes"

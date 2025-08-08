@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2025-03-18 08:44+0000\n"
-"PO-Revision-Date: 2025-03-20 18:35+0300\n"
+"POT-Creation-Date: 2025-07-14 16:21+0000\n"
+"PO-Revision-Date: 2025-07-15 13:56+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Disk Image Mounter"
@@ -68,17 +68,26 @@ msgstr "Для разрешения или запрещения теста за�
 msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Количество образцов в измерениях скорости доступа."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:301
+#: data/org.gnome.DiskUtility.desktop.in:3
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:295
 #: src/disks/ui/gdu-window.ui:24 src/notify/gdusdmonitor.c:300
 msgid "Disks"
 msgstr "Диски"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:8
+#: data/org.gnome.DiskUtility.desktop.in:4
+msgid "Manage Drives and Media"
+msgstr "Управление дисками и носителями"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.DiskUtility.desktop.in:6
+msgid "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+msgstr "диск;привод;том;жесткий;hdd;cdrom;dvd;раздел;iso;образ;резервное;копирование;восстановление;тест;производительность;raid;шифрование;S.M.A.R.T.;smart;"
+
+#: data/org.gnome.DiskUtility.metainfo.xml.in:8
 msgid "Disk management utility for GNOME"
 msgstr "Приложение управления дисками для GNOME"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:10
+#: data/org.gnome.DiskUtility.metainfo.xml.in:10
 msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
@@ -86,7 +95,7 @@ msgstr ""
 "Приложение Диски предоставляет простой способ проверки, форматирования, "
 "разметки и настройки дисков и блочных устройств."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:14
+#: data/org.gnome.DiskUtility.metainfo.xml.in:14
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -95,61 +104,49 @@ msgstr ""
 "устройствами, оценивать производительность физических дисков, и записывать "
 "образы на USB носители."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:22
+#: data/org.gnome.DiskUtility.metainfo.xml.in:22
 msgid "Partition and format disks"
 msgstr "Разметка и форматирование дисков"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:26
+#: data/org.gnome.DiskUtility.metainfo.xml.in:26
 msgid "Inspect drive speed and health status"
 msgstr "Проверка скорости диска и состояния здоровья"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:30
+#: data/org.gnome.DiskUtility.metainfo.xml.in:30
 msgid "Manage your storage devices"
 msgstr "Управление устройствами хранения данных"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:44 src/disks/gdu-application.c:303
+#: data/org.gnome.DiskUtility.metainfo.xml.in:44
+#: src/disks/gdu-application.c:297
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
-
-#: data/org.gnome.DiskUtility.desktop.in:4
-msgid "Manage Drives and Media"
-msgstr "Управление дисками и носителями"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.DiskUtility.desktop.in:6
-msgid ""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
-"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
-msgstr ""
-"диск;привод;том;жесткий;hdd;cdrom;dvd;раздел;iso;образ;резервное;копирование;"
-"восстановление;тест;производительность;raid;шифрование;S.M.A.R.T.;smart;"
 
 #: src/disk-image-mounter/main.rs:20
 msgid "GNOME Disk Image Mounter"
 msgstr "Устройство монтирования образа диска GNOME"
 
-#: src/disk-image-mounter/window.rs:107
+#: src/disk-image-mounter/window.rs:111
 msgid "Compressed image files are not mountable"
 msgstr "Файлы сжатого образа не монтируются"
 
-#: src/disk-image-mounter/window.rs:115
+#: src/disk-image-mounter/window.rs:119
 msgid "Open the mounted image"
 msgstr "Открыть смонтированный образ"
 
-#: src/disk-image-mounter/window.rs:118
+#: src/disk-image-mounter/window.rs:122
 msgid "Already mounted read-only"
 msgstr "Уже смонтировано только для чтения"
 
-#: src/disk-image-mounter/window.rs:121
+#: src/disk-image-mounter/window.rs:125
 msgid "Already mounted"
 msgstr "Уже смонтировано"
 
-#: src/disk-image-mounter/window.rs:155 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.rs:161 src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Открыть в Файлах"
 
-#: src/disk-image-mounter/window.rs:226
+#: src/disk-image-mounter/window.rs:238
 msgid "Failed to mount file"
 msgstr "Не удалось монтировать файл"
 
@@ -229,7 +226,7 @@ msgstr ""
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device не должен использоваться вместе с --restore-disk-image"
 
-#: src/disks/gdu-application.c:305
+#: src/disks/gdu-application.c:299
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -239,7 +236,7 @@ msgstr ""
 "© 2008-2013 Red Hat, Inc.\n"
 "© 2008-2013 David Zeuthen"
 
-#: src/disks/gdu-application.c:309
+#: src/disks/gdu-application.c:303
 msgid "translator-credits"
 msgstr ""
 "Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2017.\n"
@@ -247,17 +244,17 @@ msgstr ""
 "Alexey Rubtsov <rushills@gmail.com>, 2021-2022\n"
 "Aleksandr Melman, 2022-2023"
 
-#: src/disks/gdu-application.c:325
+#: src/disks/gdu-application.c:319
 msgid "Stop running jobs?"
 msgstr "Остановить выполнение заданий?"
 
-#: src/disks/gdu-application.c:326
+#: src/disks/gdu-application.c:320
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr ""
 "Если закрыть, остановятся выполняемые задания, что приведёт к некорректному "
 "результату."
 
-#: src/disks/gdu-application.c:327
+#: src/disks/gdu-application.c:321
 msgid "Stop"
 msgstr "Остановить"
 
@@ -3134,93 +3131,93 @@ msgstr "_О приложении"
 msgid "Set up _read-only loop device"
 msgstr "Настроить _петлевое устройство только для чтения"
 
-#: src/disks/ui/shortcuts.ui:12
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:6
+msgctxt "shortcuts dialog"
 msgid "General"
 msgstr "Общие"
 
-#: src/disks/ui/shortcuts.ui:15
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:9
+msgctxt "shortcuts dialog"
 msgid "Help"
 msgstr "Справка"
 
-#: src/disks/ui/shortcuts.ui:21
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:15
+msgctxt "shortcuts dialog"
 msgid "Open the application menu"
 msgstr "Открыть меню приложения"
 
-#: src/disks/ui/shortcuts.ui:27
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:21
+msgctxt "shortcuts dialog"
 msgid "Keyboard shortcuts"
 msgstr "Комбинации клавиш"
 
-#: src/disks/ui/shortcuts.ui:33
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:27
+msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Закрыть"
 
-#: src/disks/ui/shortcuts.ui:41
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:35
+msgctxt "shortcuts dialog"
 msgid "Disks"
 msgstr "Диски"
 
-#: src/disks/ui/shortcuts.ui:44
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:38
+msgctxt "shortcuts dialog"
 msgid "Create a new empty disk image"
 msgstr "Создать новый пустой образ диска"
 
-#: src/disks/ui/shortcuts.ui:50
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:44
+msgctxt "shortcuts dialog"
 msgid "Attach an existing disk image"
-msgstr "Подключить существующий образа диска"
+msgstr "Подключить существующий образ диска"
 
-#: src/disks/ui/shortcuts.ui:56
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:50
+msgctxt "shortcuts dialog"
 msgid "Unselect current disk"
 msgstr "Снять выделение текущего диска"
 
-#: src/disks/ui/shortcuts.ui:64
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:58
+msgctxt "shortcuts dialog"
 msgid "Drive"
 msgstr "Диск"
 
-#: src/disks/ui/shortcuts.ui:67
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:61
+msgctxt "shortcuts dialog"
 msgid "Open the drive menu"
 msgstr "Открыть меню диска"
 
-#: src/disks/ui/shortcuts.ui:73
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:67
+msgctxt "shortcuts dialog"
 msgid "Format the drive"
 msgstr "Форматировать диск"
 
-#: src/disks/ui/shortcuts.ui:79
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:73
+msgctxt "shortcuts dialog"
 msgid "Restore an image to the disk"
 msgstr "Восстановить образ на диск"
 
-#: src/disks/ui/shortcuts.ui:85
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:79
+msgctxt "shortcuts dialog"
 msgid "SMART data"
 msgstr "Данные SMART"
 
-#: src/disks/ui/shortcuts.ui:91
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:85
+msgctxt "shortcuts dialog"
 msgid "Drive settings"
 msgstr "Настройки диска"
 
-#: src/disks/ui/shortcuts.ui:99
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:93
+msgctxt "shortcuts dialog"
 msgid "Partition"
 msgstr "Раздел"
 
-#: src/disks/ui/shortcuts.ui:102
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:96
+msgctxt "shortcuts dialog"
 msgid "Open the volume menu"
 msgstr "Открыть меню тома"
 
-#: src/disks/ui/shortcuts.ui:108
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:102
+msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Форматировать выбранный том"
 
@@ -3386,6 +3383,14 @@ msgstr "Возможно, этот жёсткий диск скоро выйде
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Проверить"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Общие"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Disks"
+#~ msgstr "Диски"
 
 #~ msgid "row.unmount"
 #~ msgstr "Размонтировать"
@@ -3664,8 +3669,8 @@ msgstr "Проверить"
 #~ "длительное время и не может быть отменена, на некотором оборудовании эта "
 #~ "команда может работать неправильно. В наихудшем случае ваш диск станет "
 #~ "неисправным, произойдёт поломка или блокировка системы. Перед тем, как "
-#~ "продолжить, прочтите статью <a href='https://ata.wiki.kernel.org/index."
-#~ "php/ATA_Secure_Erase'>ATA Secure Erase</a> и удостверьтесь, что вы "
+#~ "продолжить, прочтите статью <a href='https://ata.wiki.kernel.org/"
+#~ "index.php/ATA_Secure_Erase'>ATA Secure Erase</a> и удостверьтесь, что вы "
 #~ "понимаете возможные риски"
 
 #~ msgid "Quick"

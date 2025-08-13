@@ -604,7 +604,7 @@ impl GduRestoreDiskImageDialog {
         let progress = if done {
             1.0
         } else if target_bytes != 0 {
-            completed_bytes as f64 / bytes_per_sec as f64
+            completed_bytes as f64 / target_bytes as f64
         } else {
             0.0
         };

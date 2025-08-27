@@ -30,7 +30,20 @@ else
   message('Building in release mode')
 endif
 
-cargo_env = {'CARGO_HOME': build_root / 'cargo-home'}
+cargo_env = {
+  'CARGO_HOME': build_root / 'cargo-home',
+  # Without a soname we cannot link libgnome_disks.so in build directory and
+  # for it to load correctly after installation, since the path in DT_NEEDED
+  # (in gnome-disks binary) will be the full path to libgnome_disks.so given
+  # the link command line.
+  # meson cannot rewrite DT_NEEDED entries. But it can rewrite DT_RPATH.
+  # And soname will make the name in DT_NEEDED a basename, and allow
+  # us to use DT_RPATH.
+  # Now, cargo does not allow us to set the soname, but rust can. So we
+  # are forced to set RUSTFLAGS.
+  # See https://github.com/rust-lang/cargo/issues/5045
+  'RUSTFLAGS': '-Clink-arg=-Wl,-soname=libgnome_disks.so',
+}
 
 cargo_build = custom_target(
   'cargo-build',
@@ -46,6 +59,8 @@ cargo_build = custom_target(
   ],
 )
 
+private_libdir = join_paths(get_option('prefix'), get_option('libdir')) / 'gnome_disks'
+
 # meson expects the .so file to be in the disks build directory
 libgnome_disks = custom_target(
   'libgnome_disks',
@@ -53,6 +68,8 @@ libgnome_disks = custom_target(
   build_always_stale: true,
   build_by_default: true,
   output: 'libgnome_disks.so',
+  install_dir: private_libdir,
+  install: true,
   command: [
     'cp',
     '-a', build_root / 'src' / rust_target / 'libgnome_disks.so',
@@ -62,7 +79,6 @@ libgnome_disks = custom_target(
 
 libgnome_disks_dep = declare_dependency(
   sources: libgnome_disks,
-  link_args: [build_root / 'src' / 'disks' / 'libgnome_disks.so'],
 )
 
 # Build C version
@@ -179,6 +195,8 @@ executable(
   sources,
   include_directories: top_inc,
   dependencies: deps,
+  build_rpath: meson.current_build_dir(),
+  install_rpath: private_libdir,
   c_args: cflags,
   install: true,
 )

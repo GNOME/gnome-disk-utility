@@ -24,7 +24,7 @@
 
 #include "gdu-benchmark-dialog.h"
 
-struct _GduBMSample
+struct _GduBenchmarkSample
 {
   GObject parent_instance;
 
@@ -32,7 +32,7 @@ struct _GduBMSample
   gdouble value;
 };
 
-G_DEFINE_TYPE (GduBMSample, gdu_bm_sample, g_object_get_type())
+G_DEFINE_TYPE (GduBenchmarkSample, gdu_benchmark_sample, g_object_get_type())
 
 typedef struct
 {
@@ -98,6 +98,9 @@ G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_DIALOG)
 
 G_LOCK_DEFINE (bm_lock);
 
+static GduBenchmarkSample* gdu_benchmark_sample_new(guint64  offset,
+                                                    gdouble  value);
+
 static gpointer
 gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 {
@@ -161,7 +164,7 @@ get_max_min_avg (GListStore *list)
 
   for (n = 0; n < n_items; n++)
     {
-      GduBMSample *s = g_list_model_get_item (G_LIST_MODEL (list), n);
+      GduBenchmarkSample *s = g_list_model_get_item (G_LIST_MODEL (list), n);
       ret.max = MAX (ret.max, s->value);
       ret.min = MIN (ret.min, s->value);
       sum += s->value;
@@ -189,7 +192,7 @@ get_max_speed(GduBenchmarkGraph *self) {
       max_val = MAX (max_val, stats.max);
     }
 
-  return (max_val <= 0) ? 1 : max_val;
+  return MAX (1, max_val);
 }
 
 static gdouble
@@ -204,7 +207,7 @@ get_max_time (GduBenchmarkGraph *self)
       max_val = MAX (max_val, stats.max);
     }
 
-  return (max_val <= 0) ? 1 : max_val;
+  return MAX(1, max_val);
 }
 
 typedef struct
@@ -223,12 +226,34 @@ typedef struct
   gdouble max_time;
 } GraphData;
 
+static const GdkRGBA* get_color_hc (GtkWidget* widget,
+                                    const GdkRGBA *color_light,
+                                    const GdkRGBA *color_dark,
+                                    const GdkRGBA *color_hc_light,
+                                    const GdkRGBA *color_hc_dark)
+{
+  AdwStyleManager *style_manager;
+
+  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (GTK_WIDGET (widget)));
+
+  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
+    return color_hc_dark;
+  else if (adw_style_manager_get_dark (style_manager))
+    return color_dark;
+  else if (adw_style_manager_get_high_contrast (style_manager))
+    return color_hc_light;
+  else
+    return color_light;
+}
+
+#define get_color(widget, color_light, color_dark) \
+  get_color_hc (widget, color_light, color_dark, color_light, color_dark) \
+
 static void
 gdu_benchmark_graph_draw_box (GtkWidget         *widget,
                               GtkSnapshot       *snapshot,
                               GraphData         *graph_data)
 {
-  AdwStyleManager *style_manager;
   g_autoptr(GskPathBuilder) builder = NULL;
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPath) path = NULL;
@@ -240,21 +265,15 @@ gdu_benchmark_graph_draw_box (GtkWidget         *widget,
                             .origin.x = graph_data->graph_x, 
                             .origin.y = graph_data->graph_y};
 
-  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (GTK_WIDGET (widget)));
+  grid_line_color = get_color_hc (widget, 
+                                  &GRID_LINE_COLOR, 
+                                  &GRID_LINE_COLOR_DARK, 
+                                  &GRID_LINE_COLOR_HC, 
+                                  &GRID_LINE_COLOR_HC_DARK);
 
-  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
-  else if (adw_style_manager_get_dark (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_DARK;
-  else if (adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC;
-  else
-    grid_line_color = &GRID_LINE_COLOR;
-
-  if (adw_style_manager_get_dark (style_manager))
-    bg_color = &GRAPH_BG_COLOR_DARK;
-  else
-    bg_color = &GRAPH_BG_COLOR;
+  bg_color = get_color (widget,
+                        &GRAPH_BG_COLOR,
+                        &GRAPH_BG_COLOR_DARK);
 
   builder = gsk_path_builder_new ();
   gsk_rounded_rect_init_from_rect (&rect, &bounds, 10);
@@ -263,7 +282,7 @@ gdu_benchmark_graph_draw_box (GtkWidget         *widget,
   path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
   stroke = gsk_stroke_new (GRID_LINE_WIDTH);
   gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
-  gtk_snapshot_append_fill(snapshot, path, GSK_FILL_RULE_WINDING, bg_color);
+  gtk_snapshot_append_fill (snapshot, path, GSK_FILL_RULE_WINDING, bg_color);
 }
 
 
@@ -272,7 +291,6 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
                                  GtkSnapshot *snapshot,
                                  GraphData   *graph_data)
 {
-  AdwStyleManager *style_manager;
   g_autoptr(GskPath) path = NULL;
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
@@ -289,18 +307,13 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
   gdouble max_visible_speed, max_speed, max_time;
   gdouble speed_step, time_step;
   guint num_hlines;
-  gdouble padding = 5;
+  gdouble padding = 6;
 
-  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
-
-  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
-  else if (adw_style_manager_get_dark (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_DARK;
-  else if (adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC;
-  else
-    grid_line_color = &GRID_LINE_COLOR;
+  grid_line_color = get_color_hc (widget, 
+                                  &GRID_LINE_COLOR, 
+                                  &GRID_LINE_COLOR_DARK, 
+                                  &GRID_LINE_COLOR_HC, 
+                                  &GRID_LINE_COLOR_HC_DARK);
 
   pango_context = gtk_widget_get_pango_context (widget);
   label_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
@@ -317,10 +330,7 @@ draw_horizontal_axis_and_labels (GtkWidget   *widget,
 
   graph_data->graph_height -= (text_height + 2 * padding);
 
-  if (adw_style_manager_get_dark (style_manager))
-    text_color = &LABEL_COLOR_DARK;
-  else
-    text_color = &LABEL_COLOR;
+  text_color = get_color (widget, &LABEL_COLOR, &LABEL_COLOR_DARK);
 
   /* TODO: Calculate this based on some maximum time or speed
    * TODO: Usually time (ms) is going to be really small compared to speed.
@@ -449,7 +459,6 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
                                GtkSnapshot *snapshot,
                                GraphData   *graph_data)
 {
-  AdwStyleManager *style_manager;
   g_autoptr(GskPath) path = NULL;
   g_autoptr(GskStroke) stroke = NULL;
   g_autoptr(GskPathBuilder) builder = NULL;
@@ -462,23 +471,14 @@ draw_vertical_axis_and_labels (GtkWidget   *widget,
   const GdkRGBA *text_color;
   const GdkRGBA *grid_line_color;
   int text_width, text_height;
-  gdouble padding = 5;
 
-  style_manager = adw_style_manager_get_for_display (gtk_widget_get_display (widget));
+  grid_line_color = get_color_hc (widget, 
+                                  &GRID_LINE_COLOR, 
+                                  &GRID_LINE_COLOR_DARK, 
+                                  &GRID_LINE_COLOR_HC, 
+                                  &GRID_LINE_COLOR_HC_DARK);
 
-  if (adw_style_manager_get_dark (style_manager) && adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC_DARK;
-  else if (adw_style_manager_get_dark (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_DARK;
-  else if (adw_style_manager_get_high_contrast (style_manager))
-    grid_line_color = &GRID_LINE_COLOR_HC;
-  else
-    grid_line_color = &GRID_LINE_COLOR;
-
-  if (adw_style_manager_get_dark (style_manager))
-    text_color = &LABEL_COLOR_DARK;
-  else
-    text_color = &LABEL_COLOR;
+  text_color = get_color (widget, &LABEL_COLOR, &LABEL_COLOR_DARK);
 
   pango_context = gtk_widget_get_pango_context (widget);
   label_font_desc = pango_font_description_copy (pango_context_get_font_description (pango_context));
@@ -562,7 +562,7 @@ draw_scatterplot (GdkSnapshot     *snapshot,
 
   for (n = 0; n < n_samples; n++)
     {
-      GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
+      GduBenchmarkSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
       graphene_point_t p;
 
       p.x = graph_data->graph_x + (((double) sample->offset / max_offset) * graph_data->graph_width);
@@ -619,7 +619,7 @@ draw_curve (GdkSnapshot    *snapshot,
    */        
 
   {
-    GduBMSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
+    GduBenchmarkSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
     x = graph_data->graph_x + ((0.0 / total_samples) * graph_data->graph_width);
     y = graph_data->graph_y + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
     gsk_path_builder_move_to (builder, x, y);
@@ -628,8 +628,8 @@ draw_curve (GdkSnapshot    *snapshot,
 
   for (n = 0; n < n_samples - 1; n++)
     {
-      GduBMSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
-      GduBMSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n+1);
+      GduBenchmarkSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
+      GduBenchmarkSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n+1);
       double x0, x1, x2, x3, y0, y1, y2, y3;
       double slope, m;
       double a, b, r;
@@ -920,7 +920,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      GduBMSample *sample;
+      GduBenchmarkSample *sample;
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         return error;
@@ -965,8 +965,8 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
         }
       end_usec = g_get_monotonic_time ();
 
-      sample = gdu_bm_sample_new (offset, 
-        ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec));
+      sample = gdu_benchmark_sample_new(offset, 
+                ((gdouble)G_USEC_PER_SEC) * num_read / (end_usec - begin_usec));
 
       G_LOCK (bm_lock);
       g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, sample);
@@ -1027,7 +1027,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self,
             }
           end_usec = g_get_monotonic_time ();
 
-          sample = gdu_bm_sample_new (offset, 
+          sample = gdu_benchmark_sample_new (offset, 
             ((gdouble)G_USEC_PER_SEC) * num_written
                          / (end_usec - begin_usec));
 
@@ -1066,8 +1066,7 @@ benchmark_access_time (GduBenchmarkDialog *self,
       gint64 end_usec;
       gint64 offset;
       ssize_t num_read;
-      GduBMSample *sample;
-      gdouble temp;
+      GduBenchmarkSample *sample;
 
       if (g_cancellable_set_error_if_cancelled (self->bm_cancellable, &error))
         {
@@ -1097,18 +1096,20 @@ benchmark_access_time (GduBenchmarkDialog *self,
         }
       end_usec = g_get_monotonic_time ();
 
-      sample = gdu_bm_sample_new (offset, 
+      sample = gdu_benchmark_sample_new (offset, 
         (end_usec - begin_usec) / ((gdouble)G_USEC_PER_SEC));
 
-      temp = sample->offset;
-      if (n != 0)
-        {
-          sample->offset = fabs(sample->offset - prev_offset);
-          G_LOCK (bm_lock);
-          g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
-          G_UNLOCK (bm_lock);
-        }
-      prev_offset = temp;
+      {
+        gdouble sample_offset = sample->offset;
+        if (n != 0)
+          {
+            sample->offset = fabs(sample->offset - prev_offset);
+            G_LOCK (bm_lock);
+            g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
+            G_UNLOCK (bm_lock);
+          }
+        prev_offset = sample_offset;
+      }
 
       bmt_schedule_update (self);
     }
@@ -1279,13 +1280,13 @@ set_sample_size_unit_cb (AdwSpinRow  *spin_row,
   return TRUE;
 }
 
-GduBMSample *
-gdu_bm_sample_new (guint64  offset,
-                   gdouble  value)
+static GduBenchmarkSample*
+gdu_benchmark_sample_new (guint64  offset,
+                          gdouble  value)
 {
-  GduBMSample *self;
+  GduBenchmarkSample *self;
 
-  self = g_object_new (GDU_TYPE_BM_SAMPLE, NULL);
+  self = g_object_new (GDU_TYPE_BENCHMARK_SAMPLE, NULL);
 
   self->offset = offset;
   self->value = value;
@@ -1294,11 +1295,11 @@ gdu_bm_sample_new (guint64  offset,
 }
 
 static void
-gdu_bm_sample_init (GduBMSample *self)
+gdu_benchmark_sample_init (GduBenchmarkSample *self)
 {}
 
 static void
-gdu_bm_sample_class_init (GduBMSampleClass *self)
+gdu_benchmark_sample_class_init (GduBenchmarkSampleClass *self)
 {}
 
 static void
@@ -1310,9 +1311,9 @@ gdu_benchmark_graph_dispose (GObject *object)
 static void
 gdu_benchmark_graph_init (GduBenchmarkGraph *self)
 {
-  self->read_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
-  self->write_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
-  self->atime_samples = g_list_store_new (GDU_TYPE_BM_SAMPLE);
+  self->read_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
+  self->write_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
+  self->atime_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
 
   gtk_widget_set_size_request (GTK_WIDGET (self), -1, 279);
 }

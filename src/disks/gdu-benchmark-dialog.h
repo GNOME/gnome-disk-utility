@@ -34,17 +34,14 @@ static const GdkRGBA GRAPH_BG_COLOR_DARK = { .red = 52.0 / 255.0, .green = 52.0 
 static const GdkRGBA LABEL_COLOR = { .red = 0.0, .green = 0.0, .blue = 0.0, .alpha = 1};
 static const GdkRGBA LABEL_COLOR_DARK = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1};
 
-#define GDU_TYPE_BM_SAMPLE (gdu_bm_sample_get_type())
-G_DECLARE_FINAL_TYPE (GduBMSample, gdu_bm_sample, GDU, BM_SAMPLE, GObject)
+#define GDU_TYPE_BENCHMARK_SAMPLE (gdu_benchmark_sample_get_type())
+G_DECLARE_FINAL_TYPE (GduBenchmarkSample, gdu_benchmark_sample, GDU, BENCHMARK_SAMPLE, GObject)
 
 #define GDU_TYPE_BENCHMARK_GRAPH (gdu_benchmark_graph_get_type())
 G_DECLARE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, GDU, BENCHMARK_GRAPH, AdwBin)
 
 #define GDU_TYPE_BENCHMARK_DIALOG (gdu_benchmark_dialog_get_type ())
 G_DECLARE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, GDU, BENCHMARK_DIALOG, AdwDialog)
-
-GduBMSample* gdu_bm_sample_new         (guint64  offset,
-                                        gdouble  value);
 
 void         gdu_benchmark_dialog_show (GtkWindow    *window,
                                         UDisksObject *object,

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2025-08-07 18:22+0000\n"
-"PO-Revision-Date: 2025-08-07 22:16+0200\n"
+"POT-Creation-Date: 2025-08-20 14:42+0000\n"
+"PO-Revision-Date: 2025-09-07 21:22+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
 "Language: oc\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Project-Style: gnome\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:2 src/disk-image-mounter/main.c:54
@@ -76,14 +76,9 @@ msgid "Disks provides an easy way to inspect, format, partition, and configure d
 msgstr "Disques prepausa un biais simple d'inspectar, de formatar, particionar e configurar los disques e periferics en mòde blòt."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:14
-#, fuzzy
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark physical disks, and image USB sticks. Tasks are executed in "
-#| "the background, even after the application has been closed by the user."
 msgid "Using Disks, you can view SMART data, manage devices, benchmark physical disks, and image USB sticks."
 msgstr ""
 "Disques permet de consultar las donadas SMART, gerir de periferics RAID, testar de disques fisics e crear d'imatges sus de claus USB. "
-"Las accions son efectuadas en rèireplan, quitament aprèp que l'aplicacion es tampada per l'utilizaire."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:22
 msgid "Partition and format disks"
@@ -110,8 +105,8 @@ msgstr "Gerir los disques e los lectors"
 #: data/org.gnome.DiskUtility.desktop.in:5
 msgid "disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
 msgstr ""
-"disc;lector;volum;disc dur;dd;disc;cdrom;dvd;particion;iso;imatge;salvament;restabliment;tèst de performànça;raid;luks;chiframent;S.M."
-"A.R.T.;smart;performança;"
+"disc;lector;volum;disc dur;dd;disc;cdrom;dvd;particion;iso;imatge;salvament;restabliment;tèst de "
+"performànça;raid;luks;chiframent;S.M.A.R.T.;smart;performança;"
 
 #: src/disk-image-mounter/main.c:52
 msgid "An error occurred"
@@ -210,10 +205,8 @@ msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device deu èsser utilizat conjuntament a --block-device\n"
 
 #: src/disks/gduapplication.c:213
-#, fuzzy
-#| msgid "--format-device must be used together with --block-device\n"
 msgid "--format-device must not be used together with --restore-disk-image"
-msgstr "--format-device deu èsser utilizat conjuntament a --block-device\n"
+msgstr "--format-device deu pas èsser utilizat conjuntament a --restore-disk-image"
 
 #. Translators: Shown in the About dialog to convey version numbers.
 #. *              The first %s is the version of Disks (for example "3.6").
@@ -1652,8 +1645,8 @@ msgid ""
 msgstr ""
 "<b>ATENCION</b> : l'execucion de l'escafament securizat pòt prene fòrça de temps, pòt pas èsser anullat e es possible que foncione pas "
 "corrèctament amb certans materials. Dins lo pièger dels cases, vòstre disc risca d'èsser irremediablament damatjat, o vòstre sistèma "
-"pòt gelar o s'arrestar brutalament. Abans d'aviar aquesta procedura, legissètz l'article <a href='https://ata.wiki.kernel.org/index."
-"php/ATA_Secure_Erase'>ATA Secure Erase</a> e asseguratz-vos de ne compréner las riscas"
+"pòt gelar o s'arrestar brutalament. Abans d'aviar aquesta procedura, legissètz l'article <a href='https://ata.wiki.kernel.org/"
+"index.php/ATA_Secure_Erase'>ATA Secure Erase</a> e asseguratz-vos de ne compréner las riscas"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
@@ -1800,14 +1793,10 @@ msgid "Legacy BIOS _Bootable"
 msgstr "BIOS Legacy amorsa_ble"
 
 #: src/disks/gdupartitiondialog.c:388 src/disks/ui/edit-partition-dialog.ui:94
-#, fuzzy
-#| msgid ""
-#| "Legacy BIOS Bootable. This is equivalent to Master Boot Record <i>bootable</i> flag. It is normally only used for GPT partitions on "
-#| "MBR systems"
 msgid "This is equivalent to Master Boot Record <i>bootable</i> flag. It is normally only used for GPT partitions on MBR systems"
 msgstr ""
-"BIOS Legacy amorsable. Es equivalent a la bandièra <i>amorsable</i> del Master Boot Record. Normalament es pas utilizat que per las "
-"particions GPT dels sistèmas amb MBR"
+"Es equivalent a la bandièra <i>amorsable</i> del Master Boot Record. Normalament es pas utilizat que per las particions GPT dels "
+"sistèmas amb MBR"
 
 #: src/disks/gdupartitiondialog.c:394
 msgid "The partition type as a 8-bit unsigned integer"
@@ -2456,8 +2445,8 @@ msgid ""
 "Benchmarking the write-rate of a disk requires exclusive access to the disk (e.g. the disk or its partitions cannot be mounted or in "
 "use) and involves reading data and then writing it back. As a result, the contents of the disk is not changed.\n"
 "\n"
-"If not checked, the write-part of the benchmark will not be done but on the other hand exclusive access to the device is not needed (e."
-"g. the disk or device can be in use)."
+"If not checked, the write-part of the benchmark will not be done but on the other hand exclusive access to the device is not needed "
+"(e.g. the disk or device can be in use)."
 msgstr ""
 "Lo tèst de performança en escritura d'un disc necessita un accès exclusiu a aqueste disc (es a dire que lo disc o sas particions pòdon "
 "pas èsser montats ni en servici) e implica la lectura de las donadas abans lor reescritura. Per consequéncia, lo contengut del disc "
@@ -3063,16 +3052,12 @@ msgid "Mount Options"
 msgstr "Opcions del punt de montatge"
 
 #: src/disks/ui/edit-fstab-dialog.ui:54
-#, fuzzy
-#| msgid ""
-#| "Switch off <i>Automatic Mount Options</i> to manage mount point and mount options for the device. The options correspond to an "
-#| "entry in the <b>/etc/fstab</b> file"
 msgid ""
 "Switch off <i>User Session Defaults</i> to manage mount point and mount options for the device. The options correspond to an entry in "
 "the <b>/etc/fstab</b> file"
 msgstr ""
-"Desactivar las <i>opcions de montatge automatic</i> per gerir lo punt de montatge e las opcions de montatge del periferic. Las opcions "
-"correspondon a una entrada dins lo fichièr <b>/etc/fstab</b>"
+"Desactivar las <i>las opcions per defaut de la session utilizaire</i> per gerir lo punt de montatge e las opcions de montatge del "
+"periferic. Las opcions correspondon a una entrada dins lo fichièr <b>/etc/fstab</b>"
 
 #: src/disks/ui/edit-fstab-dialog.ui:71
 msgid "I_dentify As"

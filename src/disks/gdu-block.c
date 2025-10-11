@@ -178,6 +178,16 @@ gdu_block_get_size (GduItem *item)
 
   g_assert (GDU_IS_BLOCK (self));
 
+  /* For mounted filesystems, try to get the actual filesystem size
+   * which includes the total size of multi-device filesystems like BTRFS */
+  if (self->file_system)
+    {
+      gint64 total_size = gdu_utils_get_total_size_for_block (self->client, self->block);
+      if (total_size > 0)
+        return (guint64) total_size;
+    }
+
+  /* Fall back to the individual block device size */
   return self->size;
 }
 

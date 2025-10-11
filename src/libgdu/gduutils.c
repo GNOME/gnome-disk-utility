@@ -1603,15 +1603,15 @@ gdu_utils_calc_space_to_shrink_extended (UDisksClient *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-gint64
-gdu_utils_get_unused_for_block (UDisksClient *client,
-                                UDisksBlock  *block)
+static gint 
+statvfs_for_block (UDisksClient *client,
+                   UDisksBlock  *block,
+                   struct statvfs *statvfs_buf)
 {
   gint64 ret = -1;
   UDisksFilesystem *filesystem = NULL;
   UDisksObject *object = NULL;
   const gchar *const *mount_points = NULL;
-  struct statvfs statvfs_buf;
 
   object = (UDisksObject *) g_dbus_interface_get_object (G_DBUS_INTERFACE (block));
   if (object == NULL)
@@ -1631,10 +1631,43 @@ gdu_utils_get_unused_for_block (UDisksClient *client,
   /* Don't warn, could be the filesystem is mounted in a place we have no
    * permission to look at
    */
-  if (statvfs (mount_points[0], &statvfs_buf) != 0)
+  ret = statvfs (mount_points[0], statvfs_buf);
+
+ out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gint64
+gdu_utils_get_unused_for_block (UDisksClient *client,
+                                UDisksBlock  *block)
+{
+  gint64 ret = -1;
+  struct statvfs statvfs_buf;
+
+  if (statvfs_for_block (client, block, &statvfs_buf) != 0)
     goto out;
 
   ret = ((gint64) statvfs_buf.f_bfree) * ((gint64) statvfs_buf.f_bsize);
+
+ out:
+  return ret;
+}
+
+/* ---------------------------------------------------------------------------------------------------- */
+
+gint64
+gdu_utils_get_total_size_for_block (UDisksClient *client,
+                                    UDisksBlock  *block)
+{
+  gint64 ret = -1;
+  struct statvfs statvfs_buf;
+
+  if (statvfs_for_block (client, block, &statvfs_buf) != 0)
+    goto out;
+
+  ret = ((gint64) statvfs_buf.f_blocks) * ((gint64) statvfs_buf.f_bsize);
 
  out:
   return ret;

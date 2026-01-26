@@ -6,14 +6,14 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Re. <ted.korostiled@gmail.com>, 2012.
 # Daniel Korostil <ted.korostiled@gmail.com>, 2013, 2014, 2015, 2016, 2017.
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2023, 2024, 2025.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2023, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issue"
 "s\n"
-"POT-Creation-Date: 2025-06-14 00:54+0000\n"
-"PO-Revision-Date: 2025-06-19 08:30+0300\n"
+"POT-Creation-Date: 2025-08-16 12:13+0000\n"
+"PO-Revision-Date: 2026-01-26 03:30+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -25,11 +25,11 @@ msgstr ""
 "X-Generator: Lokalize 23.04.3\n"
 "X-Project-Style: gnome\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3
+#: data/gnome-disk-image-mounter.desktop.in:2
 msgid "Disk Image Mounter"
 msgstr "Монтування образів диска"
 
-#: data/gnome-disk-image-mounter.desktop.in:4
+#: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Mount/Write Disk Images"
 msgstr "Монтування та запис образів диска"
 
@@ -64,17 +64,30 @@ msgstr "Увімкнути або вимкнути тестування запи
 msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Кількість зразків, які буде включено до тестування часу доступу."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gdu-application.c:301
+#: data/org.gnome.DiskUtility.desktop.in:2
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:298
 #: src/disks/ui/gdu-window.ui:24 src/notify/gdusdmonitor.c:300
 msgid "Disks"
 msgstr "Диски"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:8
+#: data/org.gnome.DiskUtility.desktop.in:3
+msgid "Manage Drives and Media"
+msgstr "Керування дисками та змінними носіями"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.DiskUtility.desktop.in:5
+msgid ""
+"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;rest"
+"ore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+msgstr ""
+"диск;пристрій;том;жорсткий;хард;вінчестер;дисковод;dvd;розділ;iso;образ;копії"
+";відновити;тестування;raid;luks;шифрування;S.M.A.R.T.;смарт;"
+
+#: data/org.gnome.DiskUtility.metainfo.xml.in:8
 msgid "Disk management utility for GNOME"
 msgstr "Засіб керування дисками для GNOME"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:10
+#: data/org.gnome.DiskUtility.metainfo.xml.in:10
 msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
@@ -82,7 +95,7 @@ msgstr ""
 "Диски надають простий спосіб досліджувати, форматувати, розділяти, "
 "налаштовувати диски і пристрої."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:14
+#: data/org.gnome.DiskUtility.metainfo.xml.in:14
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -90,63 +103,31 @@ msgstr ""
 "За допомогою «Дисків» ви зможете переглядати дані SMART, керувати "
 "пристроями, випробовувати фізичні диски і записувати образи на флешки USB."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:22
+#: data/org.gnome.DiskUtility.metainfo.xml.in:22
 msgid "Partition and format disks"
 msgstr "Форматування дисків та поділ дисків на розділи"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:26
+#: data/org.gnome.DiskUtility.metainfo.xml.in:26
 msgid "Inspect drive speed and health status"
 msgstr "Визначення швидкості диска та його стану справності"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:30
+#: data/org.gnome.DiskUtility.metainfo.xml.in:30
 msgid "Manage your storage devices"
 msgstr "Керування вашими сховищами даних"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.appdata.xml.in:44 src/disks/gdu-application.c:303
+#: data/org.gnome.DiskUtility.metainfo.xml.in:44
+#: src/disks/gdu-application.c:300
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
-
-#: data/org.gnome.DiskUtility.desktop.in:4
-msgid "Manage Drives and Media"
-msgstr "Керування дисками та змінними носіями"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.DiskUtility.desktop.in:6
-msgid ""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
-"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
-msgstr ""
-"диск;пристрій;том;жорсткий;хард;вінчестер;дисковод;dvd;розділ;iso;образ;"
-"копії;відновити;тестування;raid;luks;шифрування;S.M.A.R.T.;смарт;"
 
 #: src/disk-image-mounter/main.rs:20
 msgid "GNOME Disk Image Mounter"
 msgstr "Монтування образів диска GNOME"
 
-#: src/disk-image-mounter/window.rs:111
-msgid "Compressed image files are not mountable"
-msgstr "Не можна монтувати стиснені файли образів"
-
-#: src/disk-image-mounter/window.rs:119
-msgid "Open the mounted image"
-msgstr "Відкрити змонтований образ"
-
-#: src/disk-image-mounter/window.rs:122
-msgid "Already mounted read-only"
-msgstr "Вже змонтовано лише для читання"
-
-#: src/disk-image-mounter/window.rs:125
-msgid "Already mounted"
-msgstr "Вже змонтовано"
-
-#: src/disk-image-mounter/window.rs:161 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Відкрити у «Файлах»"
-
-#: src/disk-image-mounter/window.rs:238
-msgid "Failed to mount file"
-msgstr "Не вдалося змонтувати файл"
 
 #: src/disk-image-mounter/window.ui:40
 msgid "Mount the image read-only"
@@ -184,47 +165,47 @@ msgstr "Вивчити у «Дисках»"
 msgid "Mount the image and open in Disks"
 msgstr "Змонтувати образ і відкрити у «Дисках»"
 
-#: src/disks/gdu-application.c:117
+#: src/disks/gdu-application.c:120
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Помилка відкривання %s: %s"
 
-#: src/disks/gdu-application.c:124
+#: src/disks/gdu-application.c:127
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Помилка знаходження блокового пристрою для %s"
 
-#: src/disks/gdu-application.c:157
+#: src/disks/gdu-application.c:160
 msgid "Select device"
 msgstr "Виберіть пристрій"
 
-#: src/disks/gdu-application.c:158
+#: src/disks/gdu-application.c:161
 msgid "Format selected device"
 msgstr "Форматувати вибраний пристрій"
 
-#: src/disks/gdu-application.c:159
+#: src/disks/gdu-application.c:162
 msgid "Show verbose logs, specify up to four times to increase log level"
 msgstr ""
 "Показати докладний журнал, вкажіть аж до чотирьох разів, щоб збільшити "
 "рівень журналювання"
 
-#: src/disks/gdu-application.c:160
+#: src/disks/gdu-application.c:163
 msgid "Ignored, kept for compatibility"
 msgstr "Буде проігноровано, зберігається для сумісності"
 
-#: src/disks/gdu-application.c:161
+#: src/disks/gdu-application.c:164
 msgid "Restore disk image"
 msgstr "Відновити образ диска"
 
-#: src/disks/gdu-application.c:194
+#: src/disks/gdu-application.c:197
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device потрібно використовувати з --block-device\n"
 
-#: src/disks/gdu-application.c:200
+#: src/disks/gdu-application.c:203
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device не можна поєднувати із --restore-disk-image"
 
-#: src/disks/gdu-application.c:305
+#: src/disks/gdu-application.c:302
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -234,22 +215,22 @@ msgstr ""
 "© Red Hat, Inc., 2008-2013\n"
 "© David Zeuthen, 2008-2013"
 
-#: src/disks/gdu-application.c:309
+#: src/disks/gdu-application.c:306
 msgid "translator-credits"
 msgstr ""
 "wanderlust <wanderlust@ukr.net>\n"
 "Максим Дзюманенко\n"
 "Daniel Korostil <ted.korostiled@gmail.com>"
 
-#: src/disks/gdu-application.c:325
+#: src/disks/gdu-application.c:322
 msgid "Stop running jobs?"
 msgstr "Припинити виконання завдань?"
 
-#: src/disks/gdu-application.c:326
+#: src/disks/gdu-application.c:323
 msgid "Closing now stops the running jobs and leads to a corrupt result."
 msgstr "Завершення роботи програми зараз призведе до ушкодженого результату."
 
-#: src/disks/gdu-application.c:327
+#: src/disks/gdu-application.c:324
 msgid "Stop"
 msgstr "Зупинити"
 
@@ -1181,14 +1162,10 @@ msgid "Unmount"
 msgstr "Демонтувати"
 
 #: src/disks/gdu-block-row.c:146
-#| msgctxt "Accessibility label for toolbutton-lock"
-#| msgid "Lock"
 msgid "Lock"
 msgstr "Заблокувати"
 
 #: src/disks/gdu-block-row.c:148
-#| msgctxt "Accessibility label for toolbutton-unlock"
-#| msgid "Unlock"
 msgid "Unlock"
 msgstr "Розблокувати"
 
@@ -1218,7 +1195,6 @@ msgid "The utility “%s” is required to resize a %s partition."
 msgstr "Потрібна допоміжна програма «%s» для зміни розмірів розділу %s."
 
 #: src/disks/gdu-block-row.c:533
-#| msgid "Error while repairing filesystem"
 msgid "Error while resizing filesystem"
 msgstr "Помилка під час спроби змінити розмір файлової системи"
 
@@ -1309,7 +1285,6 @@ msgstr "Помилка під час спроби перейняти права 
 
 #: src/disks/gdu-block-row.c:885
 #, c-format
-#| msgid "Make your user and group the owner of \"%s\""
 msgid "Make your user and group the owner of ”%s”"
 msgstr "Зробіть вашого користувача і його групу власниками «%s»"
 
@@ -1373,10 +1348,8 @@ msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s неможливо прочитати (замінено нулями)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#. Translators: A descriptive string for the 'complete' sound, see
-#. * CA_PROP_EVENT_DESCRIPTION
 #: src/disks/gdu-create-disk-image-dialog.c:240
-#: src/disks/gdu-restore-disk-image-dialog.c:410
+#: src/disks/restore_disk_image_dialog.rs:378
 msgid "Disk image copying complete"
 msgstr "Копіювання образу диска завершено"
 
@@ -1386,7 +1359,6 @@ msgstr "Помилка створення образа диска"
 
 #. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
 #: src/disks/gdu-create-disk-image-dialog.c:325
-#| msgid "<big><b>Unrecoverable read errors</b></big>"
 msgid "Unrecoverable Read Errors"
 msgstr "Невиправні помилки читання"
 
@@ -1397,10 +1369,6 @@ msgstr "Невиправні помилки читання"
 #.
 #: src/disks/gdu-create-disk-image-dialog.c:337
 #, c-format
-#| msgid ""
-#| "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced "
-#| "with zeroes in the created disk image file. This typically happens if the "
-#| "medium is scratched or if there is physical damage to the drive"
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
@@ -1433,12 +1401,10 @@ msgid "_Delete Disk Image File"
 msgstr "В_илучити файл образа диска"
 
 #: src/disks/gdu-create-disk-image-dialog.c:566
-#: src/disks/gdu-restore-disk-image-dialog.c:514
 msgid "Error determining size of device: "
 msgstr "Помилка визначення розміру пристрою: "
 
 #: src/disks/gdu-create-disk-image-dialog.c:573
-#: src/disks/gdu-restore-disk-image-dialog.c:521
 #, c-format
 msgid "Device is size 0"
 msgstr "Розмір пристрою — 0"
@@ -1734,6 +1700,45 @@ msgstr "Тихо (поволі)"
 msgid "Loud (Fast)"
 msgstr "Гучно (хутко)"
 
+#: src/disks/gdu-drive-view.c:142
+msgid "Copied drive model to clipboard"
+msgstr "Скопійовано модель диска до буфера обміну даними"
+
+#: src/disks/gdu-drive-view.c:151
+msgid "Copied drive serial to clipboard"
+msgstr "Скопійовано серійний номер диска до буфера обміну даними"
+
+#: src/disks/gdu-drive-view.c:290
+msgid "An error occurred when trying to put the drive into standby mode"
+msgstr ""
+"Виникла помилка, коли спробували встановити пристрій у режим чергування"
+
+#: src/disks/gdu-drive-view.c:322
+msgid "An error occurred when trying to wake up the drive from standby mode"
+msgstr ""
+"Виникла помилка, коли спробували розбудити пристрій з режиму чергування"
+
+#: src/disks/gdu-drive-view.c:354
+msgid "Error powering off drive"
+msgstr "Помилка вимкнення пристрою"
+
+#. Translators: Heading for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:411
+msgid "Are you sure you want to power off the drives?"
+msgstr "Вимкнути пристрої?"
+
+#. Translators: Message for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:413
+msgid ""
+"This operation will prepare the system for the following drives to be "
+"powered down and removed."
+msgstr ""
+"Ця операція підготує систему до пристроїв, які буде вимкнено та вилучено."
+
+#: src/disks/gdu-drive-view.c:414
+msgid "_Power Off"
+msgstr "Ви_мкнути"
+
 #: src/disks/gdu-edit-filesystem-dialog.c:51
 msgid "Error setting label"
 msgstr "Помилка налаштування мітки"
@@ -1793,45 +1798,6 @@ msgstr "Немає"
 #: src/disks/gdu-encryption-options-dialog.c:239
 msgid "Will be deleted"
 msgstr "Буде вилучено"
-
-#: src/disks/gdu-drive-view.c:140
-msgid "Copied drive model to clipboard"
-msgstr "Скопійовано модель диска до буфера обміну даними"
-
-#: src/disks/gdu-drive-view.c:149
-msgid "Copied drive serial to clipboard"
-msgstr "Скопійовано серійний номер диска до буфера обміну даними"
-
-#: src/disks/gdu-drive-view.c:287
-msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
-"Виникла помилка, коли спробували встановити пристрій у режим чергування"
-
-#: src/disks/gdu-drive-view.c:319
-msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
-"Виникла помилка, коли спробували розбудити пристрій з режиму чергування"
-
-#: src/disks/gdu-drive-view.c:351
-msgid "Error powering off drive"
-msgstr "Помилка вимкнення пристрою"
-
-#. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:408
-msgid "Are you sure you want to power off the drives?"
-msgstr "Вимкнути пристрої?"
-
-#. Translators: Message for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:410
-msgid ""
-"This operation will prepare the system for the following drives to be "
-"powered down and removed."
-msgstr ""
-"Ця операція підготує систему до пристроїв, які буде вимкнено та вилучено."
-
-#: src/disks/gdu-drive-view.c:411
-msgid "_Power Off"
-msgstr "Ви_мкнути"
 
 #: src/disks/gdu-format-disk-dialog.c:95
 msgid "Error formatting disk"
@@ -2016,69 +1982,6 @@ msgstr "Надто довге очікування на готовність ф�
 msgid "Error mounting the filesystem"
 msgstr "Помилка під час монтування файлової системи"
 
-#: src/disks/gdu-restore-disk-image-dialog.c:182
-msgid "File does not appear to be XZ compressed"
-msgstr "Не схоже, що файл стиснено через XZ"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:190
-#, c-format
-msgid "%s when compressed"
-msgstr "%s, коли стиснено"
-
-#. if size is 0, error may be set already..
-#: src/disks/gdu-restore-disk-image-dialog.c:196
-msgid "Cannot restore image of size 0"
-msgstr "Неможливо відновити образ розміру 0"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:203
-#, c-format
-msgid "The disk image is %s smaller than the target device"
-msgstr "Образ диска на %s менший за цільовий пристрій"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:209
-#, c-format
-msgid "The disk image is %s bigger than the target device"
-msgstr "Образ диска на %s більший за цільовий пристрій"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:437
-msgid "Error restoring disk image"
-msgstr "Помилка відновлення образа диска"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:712
-msgid "Error determining size of file"
-msgstr "Помилка визначення розміру файла"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:725
-msgid "Error opening file for reading"
-msgstr "Помилка відкриття файла для читання"
-
-#. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdu-restore-disk-image-dialog.c:751
-msgctxt "restore-inhibit-message"
-msgid "Copying disk image to device"
-msgstr "Копіювання образа диска на пристрій"
-
-#. Translators: this is the description of the job
-#: src/disks/gdu-restore-disk-image-dialog.c:756
-msgid "Restoring Disk Image"
-msgstr "Відновлення образа диска"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:819
-msgid "Are you sure you want to write the disk image to the device?"
-msgstr "Записати образ диска на пристрій?"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:820
-msgid "All existing data will be lost"
-msgstr "Усі наявні дані буде втрачено"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:821
-msgid "Restore"
-msgstr "Відновити"
-
-#: src/disks/gdu-restore-disk-image-dialog.c:853
-msgid "Choose a disk image to restore."
-msgstr "Виберіть образ диска для відновлення."
-
 #: src/disks/gdu-unlock-dialog.c:130
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:49
 #: src/disks/ui/gdu-unlock-dialog.ui:72
@@ -2086,7 +1989,6 @@ msgid "None Selected"
 msgstr "Не вибрано жодного елемента"
 
 #: src/disks/gdu-unlock-dialog.c:139
-#| msgid "Select a keyfile to unlock this volume"
 msgid "Select keyfiles to unlock this volume."
 msgstr "Виберіть файли ключів для розблокування цього тому."
 
@@ -2114,6 +2016,64 @@ msgstr "Внутрішня помилка"
 #: src/disks/gduxzdecompressor.c:151
 msgid "Need more input"
 msgstr "Потрібно більше вхідних даних"
+
+#: src/disks/restore_disk_image_dialog.rs:226
+msgid "File does not appear to be XZ compressed"
+msgstr "Не схоже, що файл стиснено через XZ"
+
+#: src/disks/restore_disk_image_dialog.rs:246
+msgid "Cannot restore image of size 0"
+msgstr "Неможливо відновити образ розміру 0"
+
+#: src/disks/restore_disk_image_dialog.rs:250
+#, rust-format
+#| msgid "The disk image is %s smaller than the target device"
+msgid "The disk image is {} smaller than the target device"
+msgstr "Образ диска на {} менший за цільовий пристрій"
+
+#: src/disks/restore_disk_image_dialog.rs:255
+#, rust-format
+#| msgid "The disk image is %s bigger than the target device"
+msgid "The disk image is {} bigger than the target device"
+msgstr "Образ диска на {} більший за цільовий пристрій"
+
+#: src/disks/restore_disk_image_dialog.rs:395
+msgid "Are you sure you want to write the disk image to the device?"
+msgstr "Записати образ диска на пристрій?"
+
+#: src/disks/restore_disk_image_dialog.rs:396
+msgid "All existing data will be lost"
+msgstr "Усі наявні дані буде втрачено"
+
+#: src/disks/restore_disk_image_dialog.rs:397
+msgid "Restore"
+msgstr "Відновити"
+
+#: src/disks/restore_disk_image_dialog.rs:427
+msgid "Error determining size of file"
+msgstr "Помилка визначення розміру файла"
+
+#: src/disks/restore_disk_image_dialog.rs:437
+msgid "Error opening file for reading"
+msgstr "Помилка відкриття файла для читання"
+
+#: src/disks/restore_disk_image_dialog.rs:461
+msgctxt "restore-inhibit-message"
+msgid "Copying disk image to device"
+msgstr "Копіювання образа диска на пристрій"
+
+#. Translators: this is the description of the job
+#: src/disks/restore_disk_image_dialog.rs:473
+msgid "Restoring Disk Image"
+msgstr "Відновлення образа диска"
+
+#: src/disks/restore_disk_image_dialog.rs:491
+msgid "Error restoring disk image"
+msgstr "Помилка відновлення образа диска"
+
+#: src/disks/restore_disk_image_dialog.rs:624
+msgid "Choose a disk image to restore."
+msgstr "Виберіть образ диска для відновлення."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -2764,7 +2724,6 @@ msgid "_Partition Type"
 msgstr "Тип _розділу"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:41
-#| msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgid "The partition type represented as a 32-bit GUID"
 msgstr "Тип розділу зображено як 32-ох бітний GUID"
 
@@ -2823,7 +2782,7 @@ msgstr ""
 msgid "Encryption Options"
 msgstr "Параметри шифрування"
 
-#: src/disks/ui/gdu-encryption-options-dialog.ui:14
+#: src/disks/ui/gdu-encryption-options-dialog.ui:14 src/libgdu/gduutils.rs:549
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -2998,8 +2957,9 @@ msgid "_Units"
 msgstr "_Одиниці"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:22
-msgid "_Restore"
-msgstr "Від_новити"
+#| msgid "_Restore"
+msgid "_Restore…"
+msgstr "_Відновити…"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:48
 msgid "Image"
@@ -3014,7 +2974,6 @@ msgid "Image Size"
 msgstr "Розмір образа"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:77
-#: src/disks/ui/gdu-restore-disk-image-dialog.ui:85
 msgid "Destination"
 msgstr "Призначення"
 
@@ -3039,8 +2998,6 @@ msgstr ""
 "спричинити проблеми, якщо файли належать іншим користувачам."
 
 #: src/disks/ui/gdu-unlock-dialog.ui:4
-#| msgctxt "volume-content-crypto"
-#| msgid "Unlocked"
 msgid "Unlock Volume"
 msgstr "Розблокувати том"
 
@@ -3063,22 +3020,18 @@ msgid "Security Credentials"
 msgstr "Реєстраційні дані захисту"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:71
-#| msgid "_Keyfiles"
 msgid "Keyfiles"
 msgstr "Файли ключів"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:79
-#| msgid "Select a Keyfile"
 msgid "Select Keyfiles"
 msgstr "Виберіть файли ключів"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:97
-#| msgid "Error setting configuration"
 msgid "Volume Configuration"
 msgstr "Налаштування тому"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:103
-#| msgid "_Hidden"
 msgid "Hidden"
 msgstr "Прихований"
 
@@ -3091,7 +3044,6 @@ msgstr ""
 "приховано всередині."
 
 #: src/disks/ui/gdu-unlock-dialog.ui:144
-#| msgid "Windows _system"
 msgid "Windows System"
 msgstr "Система Windows"
 
@@ -3135,97 +3087,131 @@ msgstr "_Про «Диски»"
 msgid "Set up _read-only loop device"
 msgstr "Налаштувати лише для _читання циклічний пристрій"
 
-#: src/disks/ui/shortcuts.ui:12
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:6
+#| msgid "General"
+msgctxt "shortcuts dialog"
 msgid "General"
 msgstr "Загальні"
 
-#: src/disks/ui/shortcuts.ui:15
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:9
+#| msgctxt "shortcut window"
+#| msgid "Help"
+msgctxt "shortcuts dialog"
 msgid "Help"
 msgstr "Довідка"
 
-#: src/disks/ui/shortcuts.ui:21
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:15
+#| msgctxt "shortcut window"
+#| msgid "Open the application menu"
+msgctxt "shortcuts dialog"
 msgid "Open the application menu"
 msgstr "Відкрити меню програми"
 
-#: src/disks/ui/shortcuts.ui:27
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:21
+#| msgctxt "shortcut window"
+#| msgid "Keyboard shortcuts"
+msgctxt "shortcuts dialog"
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: src/disks/ui/shortcuts.ui:33
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:27
+#| msgctxt "shortcut window"
+#| msgid "Quit"
+msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Вийти"
 
-#: src/disks/ui/shortcuts.ui:41
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:35
+#| msgid "Disks"
+msgctxt "shortcuts dialog"
 msgid "Disks"
 msgstr "Диски"
 
-#: src/disks/ui/shortcuts.ui:44
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:38
+#| msgctxt "shortcut window"
+#| msgid "Create a new empty disk image"
+msgctxt "shortcuts dialog"
 msgid "Create a new empty disk image"
 msgstr "Створити порожній образ диска"
 
-#: src/disks/ui/shortcuts.ui:50
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:44
+#| msgctxt "shortcut window"
+#| msgid "Attach an existing disk image"
+msgctxt "shortcuts dialog"
 msgid "Attach an existing disk image"
 msgstr "Долучити наявний образ диска"
 
-#: src/disks/ui/shortcuts.ui:56
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:50
+#| msgctxt "shortcut window"
+#| msgid "Unselect current disk"
+msgctxt "shortcuts dialog"
 msgid "Unselect current disk"
 msgstr "Зняти вибір з поточного диска"
 
-#: src/disks/ui/shortcuts.ui:64
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:58
+#| msgctxt "shortcut window"
+#| msgid "Drive"
+msgctxt "shortcuts dialog"
 msgid "Drive"
 msgstr "Диск"
 
-#: src/disks/ui/shortcuts.ui:67
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:61
+#| msgctxt "shortcut window"
+#| msgid "Open the drive menu"
+msgctxt "shortcuts dialog"
 msgid "Open the drive menu"
 msgstr "Відкрити меню диска"
 
-#: src/disks/ui/shortcuts.ui:73
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:67
+#| msgctxt "shortcut window"
+#| msgid "Format the drive"
+msgctxt "shortcuts dialog"
 msgid "Format the drive"
 msgstr "Форматувати диск"
 
-#: src/disks/ui/shortcuts.ui:79
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:73
+#| msgctxt "shortcut window"
+#| msgid "Restore an image to the disk"
+msgctxt "shortcuts dialog"
 msgid "Restore an image to the disk"
 msgstr "Відновити образ на диску"
 
-#: src/disks/ui/shortcuts.ui:85
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:79
+#| msgctxt "shortcut window"
+#| msgid "SMART data"
+msgctxt "shortcuts dialog"
 msgid "SMART data"
 msgstr "Дані SMART"
 
-#: src/disks/ui/shortcuts.ui:91
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:85
+#| msgctxt "shortcut window"
+#| msgid "Drive settings"
+msgctxt "shortcuts dialog"
 msgid "Drive settings"
 msgstr "Параметри диска"
 
-#: src/disks/ui/shortcuts.ui:99
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:93
+#| msgctxt "shortcut window"
+#| msgid "Partition"
+msgctxt "shortcuts dialog"
 msgid "Partition"
 msgstr "Розділ диска"
 
-#: src/disks/ui/shortcuts.ui:102
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:96
+#| msgctxt "shortcut window"
+#| msgid "Open the volume menu"
+msgctxt "shortcuts dialog"
 msgid "Open the volume menu"
 msgstr "Відкрити меню тому"
 
-#: src/disks/ui/shortcuts.ui:108
-msgctxt "shortcut window"
+#: src/disks/ui/shortcuts-dialog.ui:102
+#| msgctxt "shortcut window"
+#| msgid "Format the selected volume"
+msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Форматувати позначений том"
 
-#: src/libgdu/gduutils.c:98
+#: src/libgdu/gduutils.c:98 src/libgdu/gduutils.rs:80
 msgid "All Files"
 msgstr "Усі файли"
 
@@ -3238,7 +3224,7 @@ msgid "Disk Images (*.img, *.iso)"
 msgstr "Образи диска (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:371
+#: src/libgdu/gduutils.c:371 src/libgdu/gduutils.rs:256
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3247,7 +3233,7 @@ msgstr[1] "%d роки"
 msgstr[2] "%d років"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:378
+#: src/libgdu/gduutils.c:378 src/libgdu/gduutils.rs:261
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3256,7 +3242,7 @@ msgstr[1] "%d місяці"
 msgstr[2] "%d місяців"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:385
+#: src/libgdu/gduutils.c:385 src/libgdu/gduutils.rs:266
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3265,7 +3251,7 @@ msgstr[1] "%d дні"
 msgstr[2] "%d днів"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:392
+#: src/libgdu/gduutils.c:392 src/libgdu/gduutils.rs:271
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3274,7 +3260,7 @@ msgstr[1] "%d години"
 msgstr[2] "%d годин"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:399
+#: src/libgdu/gduutils.c:399 src/libgdu/gduutils.rs:276
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3283,7 +3269,7 @@ msgstr[1] "%d хвилини"
 msgstr[2] "%d хвилин"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:406
+#: src/libgdu/gduutils.c:406 src/libgdu/gduutils.rs:281
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3292,7 +3278,7 @@ msgstr[1] "%d секунди"
 msgstr[2] "%d секунд"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:413
+#: src/libgdu/gduutils.c:413 src/libgdu/gduutils.rs:288
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3335,7 +3321,7 @@ msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s і %s"
 
-#: src/libgdu/gduutils.c:512
+#: src/libgdu/gduutils.c:512 src/libgdu/gduutils.rs:375
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Менше за хвилину"
@@ -3354,22 +3340,58 @@ msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
-#: src/libgdu/gduutils.c:652
+#: src/libgdu/gduutils.c:652 src/libgdu/gduutils.rs:442
 msgid "_Close"
 msgstr "З_акрити"
 
-#: src/libgdu/gduutils.c:1316
+#: src/libgdu/gduutils.c:1316 src/libgdu/gduutils.rs:910
 msgid "Error unmounting filesystem"
 msgstr "Помилка демонтування файлової системи"
 
-#: src/libgdu/gduutils.c:1348
+#: src/libgdu/gduutils.c:1348 src/libgdu/gduutils.rs:916
 msgid "Error locking device"
 msgstr "Помилка блокувального пристрою"
 
-#: src/libgdu/gduutils.c:1369
+#: src/libgdu/gduutils.c:1369 src/libgdu/gduutils.rs:897
 msgid "Error disabling autoclear for loop device"
 msgstr ""
 "Помилка під час спроби вимкнути автоматичне очищення для циклічного пристрою"
+
+#: src/libgdu/gduutils.rs:338
+msgid "duration-year-to-inf"
+msgstr "duration-year-to-inf"
+
+#: src/libgdu/gduutils.rs:345
+msgid "duration-months-to-year"
+msgstr "duration-months-to-year"
+
+#. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
+#: src/libgdu/gduutils.rs:351
+msgid "duration-day-to-month"
+msgstr "duration-day-to-month"
+
+#: src/libgdu/gduutils.rs:355
+msgid "duration-hour-to-day"
+msgstr "duration-hour-to-day"
+
+#: src/libgdu/gduutils.rs:365
+msgid "duration-minute-to-hour"
+msgstr "duration-minute-to-hour"
+
+#. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
+#: src/libgdu/gduutils.rs:378
+msgid "duration-second-to-minute"
+msgstr "duration-second-to-minute"
+
+#. Translators: Used for durations less than one second. First %s is number of milli-seconds
+#: src/libgdu/gduutils.rs:382
+msgid "duration-zero-to-second"
+msgstr "duration-zero-to-second"
+
+#: src/libgdu/gduutils.rs:883
+#| msgid "Failed to mount file"
+msgid "Failed to find filesystem"
+msgstr "Не вдалося знайти файлову систему"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3388,6 +3410,30 @@ msgstr "Жорсткий диск, імовірно, скоро вийде з л
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Оглянути"
+
+#~ msgid "Compressed image files are not mountable"
+#~ msgstr "Не можна монтувати стиснені файли образів"
+
+#~ msgid "Open the mounted image"
+#~ msgstr "Відкрити змонтований образ"
+
+#~ msgid "Already mounted read-only"
+#~ msgstr "Вже змонтовано лише для читання"
+
+#~ msgid "Already mounted"
+#~ msgstr "Вже змонтовано"
+
+#, c-format
+#~ msgid "%s when compressed"
+#~ msgstr "%s, коли стиснено"
+
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Загальні"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Disks"
+#~ msgstr "Диски"
 
 #, c-format
 #~| msgctxt "duration-second-to-minute"

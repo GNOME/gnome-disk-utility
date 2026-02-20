@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-17 18:14+0100\n"
+"PO-Revision-Date: 2026-02-20 18:50+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
 "Language: oc\n"
@@ -79,14 +79,9 @@ msgid "Disks provides an easy way to inspect, format, partition, and configure d
 msgstr "Disques prepausa un biais simple d'inspectar, de formatar, particionar e configurar los disques e periferics en mòde blòt."
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:14
-#, fuzzy
-#| msgid ""
-#| "Using Disks, you can view SMART data, manage RAID devices, benchmark physical disks, and image USB sticks. Tasks are executed in "
-#| "the background, even after the application has been closed by the user."
 msgid "Using Disks, you can view SMART data, manage devices, benchmark physical disks, and image USB sticks."
 msgstr ""
-"Disques permet de consultar las donadas SMART, gerir de periferics RAID, testar de disques fisics e crear d'imatges sus de claus USB. "
-"Las accions son efectuadas en rèireplan, quitament aprèp que l'aplicacion es tampada per l'utilizaire."
+"Disques permet de consultar las donadas SMART, gerir de periferics RAID, testar de disques fisics e crear d'imatges sus de claus USB."
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:22
 msgid "Partition and format disks"
@@ -138,10 +133,8 @@ msgid "Write to Drive"
 msgstr "Escritura disc"
 
 #: src/disk-image-mounter/window.ui:96
-#, fuzzy
-#| msgid "Are you sure you want to write the disk image to the device?"
 msgid "Open in Disks to write the image to a drive"
-msgstr "Sètz segur que volètz escriure l'imatge disc sul periferic ?"
+msgstr "Dobrir dins Disques per escriure l’imatge dins un lector"
 
 #: src/disk-image-mounter/window.ui:109
 msgid "Inspect in Disks"
@@ -186,10 +179,8 @@ msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device deu èsser utilizat conjuntament a --block-device\n"
 
 #: src/disks/gdu-application.c:203
-#, fuzzy
-#| msgid "--format-device must be used together with --block-device\n"
 msgid "--format-device must not be used together with --restore-disk-image"
-msgstr "--format-device deu èsser utilizat conjuntament a --block-device\n"
+msgstr "--format-device deu pas èsser utilizat conjuntament a -restore-disk-image"
 
 #: src/disks/gdu-application.c:302
 msgid ""
@@ -1296,10 +1287,8 @@ msgstr "Error al moment de la creacion de l'imatge de disc"
 
 #. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
 #: src/disks/gdu-create-disk-image-dialog.c:325
-#, fuzzy
-#| msgid "Unrecoverable read errors while creating disk image"
 msgid "Unrecoverable Read Errors"
-msgstr "Error de lectura irrecuperabla al moment de la creacion de l'imatge de disc"
+msgstr "Errors de lectura irrecuperabla"
 
 #. Translators: Body in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
@@ -2070,16 +2059,12 @@ msgstr ""
 "recèrca d'una zòna a l'autra."
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:65
-#, fuzzy
-#| msgid "Transfer Rate"
 msgid "Transfer S_amples"
-msgstr "Taus de transferiment"
+msgstr "Esc_andalhatges de transferiment"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:80
-#, fuzzy
-#| msgid "Sample Size"
 msgid "Transfer Sample S_ize"
-msgstr "Talha de l'escandalhatge"
+msgstr "Tal_ha de l'escandalhatge de transferiment"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:96
 #, fuzzy
@@ -2088,10 +2073,8 @@ msgid "_Access Time Samples"
 msgstr "Temps d'accès"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:115
-#, fuzzy
-#| msgid "_Abort Benchmark"
 msgid "_Write Benchmark"
-msgstr "_Anullar lo tèst de performança"
+msgstr "_Tèst de performança d’escritura"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:117
 msgid "Data should be backed up before using this feature"
@@ -2175,10 +2158,8 @@ msgid "Delete…"
 msgstr "Suprimir…"
 
 #: src/disks/ui/gdu-block-row.ui:161
-#, fuzzy
-#| msgid "C_heck Filesystem…"
 msgid "Check Filesystem…"
-msgstr "V_erificar lo sistèma de fichièrs…"
+msgstr "Verificar lo sistèma de fichièrs…"
 
 #: src/disks/ui/gdu-block-row.ui:165
 msgid "Repair Filesystem…"
@@ -2221,8 +2202,6 @@ msgid "C_onfirm Password"
 msgstr "C_onfirmatz lo senhal"
 
 #: src/disks/ui/gdu-create-confirm-page.ui:11
-#, fuzzy
-#| msgid "Warning: all data on the volume will be lost"
 msgid "Warning: All the data on the volume will be lost"
 msgstr "Atencion : totas las donadas de la particion seràn perdudas"
 
@@ -2269,10 +2248,8 @@ msgid "_Volume Name"
 msgstr "_Nom del volume"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:25 src/disks/ui/gdu-format-disk-dialog.ui:43
-#, fuzzy
-#| msgid "Don’t overwrite existing data"
 msgid "_Overwrite Existing Data"
-msgstr "Espotir pas las donadas existentas"
+msgstr "_Espotir las donadas existentas"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:30 src/disks/ui/gdu-edit-partition-dialog.ui:68
 #: src/disks/ui/gdu-edit-partition-dialog.ui:109 src/disks/ui/gdu-edit-partition-dialog.ui:150 src/disks/ui/gdu-format-disk-dialog.ui:48
@@ -2510,16 +2487,12 @@ msgid "Restore Disk Image…"
 msgstr "Restablir l'imatge de disc…"
 
 #: src/disks/ui/gdu-drive-header.ui:156
-#, fuzzy
-#| msgid "_Benchmark Disk…"
 msgid "Benchmark Disk…"
-msgstr "Tèst de _performança del disc…"
+msgstr "Tèst de performança del disc…"
 
 #: src/disks/ui/gdu-drive-header.ui:160
-#, fuzzy
-#| msgid "_SMART Data & Self-Tests…"
 msgid "SMART Data & Self-Tests…"
-msgstr "Donadas _SMART e autotèsts…"
+msgstr "Donadas SMART e autotèsts…"
 
 #: src/disks/ui/gdu-drive-header.ui:164
 msgid "Drive Settings…"
@@ -2562,10 +2535,8 @@ msgid "Partitioning"
 msgstr "Ptype"
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:4
-#, fuzzy
-#| msgid "Edit _Filesystem…"
 msgid "Edit Filesystem"
-msgstr "Modificar lo sistèma de _fichièrs…"
+msgstr "Modificar lo sistèma de fichièrs"
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:33
 msgid "This filesystem will be automatically unmounted prior to any changes."
@@ -2638,10 +2609,8 @@ msgstr ""
 "suprimir pas ni espotir pas lo contengut"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:145
-#, fuzzy
-#| msgid "Hide from _Firmware"
 msgid "_Hide from Firmware"
-msgstr "Amagar pel _micrologicial"
+msgstr "_Amagar pel micrologicial"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:160
 msgid "Indicates that EFI firmware should ignore the content of the partition and not try to read from it"
@@ -2668,10 +2637,8 @@ msgstr ""
 "utilizatz <i>Modificar la frasa secrèta…</i>"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:42
-#, fuzzy
-#| msgid "_Automatic Encryption Options"
 msgid "Automatic Encryption Options"
-msgstr "Opcions de chiframent _automatic"
+msgstr "Opcions de chiframent automatic"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:53
 msgid "Name"
@@ -2682,16 +2649,12 @@ msgid "Passphrase"
 msgstr "Frasa secrèta"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:70
-#, fuzzy
-#| msgid "_Unlock at system startup"
 msgid "Unlock at System Start"
-msgstr "Desverro_lhar a l'aviada del sistèma"
+msgstr "Desverrolhar a l'aviada del sistèma"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:76
-#, fuzzy
-#| msgid "Require additional authori_zation to mount"
 msgid "Require Additional Authorization"
-msgstr "Necessita una autori_zacion suplementària per èsser montat"
+msgstr "Requerir una autorizacion suplementària"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:82
 msgid "Additional Options"
@@ -2706,10 +2669,8 @@ msgid "_GUID Partition Table (GPT)"
 msgstr "_Table de particion GUID (GPT)"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:88
-#, fuzzy
-#| msgid "Compatible with modern systems and hard disks > 2TB"
 msgid "Compatible with UEFI and disks over 2 TB"
-msgstr "Compatible amb los sistèmas modèrnes e los disques durs > a 2To"
+msgstr "Compatible amb UEFI e los disques durs de mai de 2To"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:101
 msgid "_Master Boot Record (MBR)"
@@ -2754,40 +2715,32 @@ msgid "_Show in Files"
 msgstr "_Afichar dins Fichièrs"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:74
-#, fuzzy
-#| msgid "Require additional authori_zation to mount"
 msgid "_Require Authorization"
-msgstr "Necessita una autori_zacion suplementària per èsser montat"
+msgstr "_Demandar l'autorizacion"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:83
 msgid "Appearance"
 msgstr "Aparéncia"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:87
-#, fuzzy
-#| msgid "Display _Name"
 msgid "D_isplay Name"
-msgstr "Afichar lo _nom"
+msgstr "Af_ichar lo nom"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:94
 msgid "C_olor Icon"
 msgstr "Icòna en c_olor"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:101
-#, fuzzy
-#| msgid "S_ymbolic Icon Name"
 msgid "S_ymbolic Icon"
-msgstr "Nom de l'icòna s_imbolica"
+msgstr "Icòna s_imbolica"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:110
 msgid "Technical Options"
 msgstr "Opcions tecnicas"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:114
-#, fuzzy
-#| msgid "Mount Options"
 msgid "_fstab Options"
-msgstr "Opcions del punt de montatge"
+msgstr "Opcions _fstab"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:124
 msgid "Mount _Point"
@@ -2798,10 +2751,8 @@ msgid "Filesystem _Type"
 msgstr "_Tipe de sistèma de fichièrs"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:149
-#, fuzzy
-#| msgid "I_dentify As"
 msgid "Ide_ntify As"
-msgstr "S'i_dentificar coma"
+msgstr "S'ide_ntificar coma"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:161
 msgid "R_estore Default Settings"
@@ -2910,10 +2861,8 @@ msgid "Select Keyfiles"
 msgstr "Seleccionar un fichièr de clau"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:97
-#, fuzzy
-#| msgid "Error setting configuration"
 msgid "Volume Configuration"
-msgstr "Error de parametratge de la configuracion"
+msgstr "Configuracion del volum"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:103
 msgid "Hidden"
@@ -2950,10 +2899,8 @@ msgid "_New Disk Image…"
 msgstr "Crear un imatge de disc _novèl…"
 
 #: src/disks/ui/gdu-window.ui:117
-#, fuzzy
-#| msgid "Attach new _Image…"
 msgid "_Attach Disk Image…"
-msgstr "Estacar l'_imatge de disc novèl…"
+msgstr "_Estacar l'imatge de disc…"
 
 #: src/disks/ui/gdu-window.ui:124
 msgid "_Keyboard Shortcuts"
@@ -3233,10 +3180,8 @@ msgid "duration-zero-to-second"
 msgstr ""
 
 #: src/libgdu/gduutils.rs:883
-#, fuzzy
-#| msgid "Waited too long for the filesystem"
 msgid "Failed to find filesystem"
-msgstr "Tròp esperat pel sistèma de fichièr"
+msgstr "Impossible de trobar lo sistèma de fichièr"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356

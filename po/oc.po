@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility fr\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-20 18:50+0100\n"
+"PO-Revision-Date: 2026-02-21 16:58+0100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Tot en òc (totenoc.eu)\n"
 "Language: oc\n"
@@ -1296,16 +1296,13 @@ msgstr "Errors de lectura irrecuperabla"
 #. * The second %s is the name of the device (ex "/dev/").
 #.
 #: src/disks/gdu-create-disk-image-dialog.c:337
-#, fuzzy, c-format
-#| msgid ""
-#| "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically "
-#| "happens if the medium is scratched or if there is physical damage to the drive"
+#, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically "
 "happens if the medium is scratched or if there is physical damage to the drive."
 msgstr ""
-"%2.1f%% (%s) de las donadas sul periferic « %s » èran illegiblas e son estadas remplaçadas per de zèros dins l'imatge disc creada. "
-"Aquò arriba generalament se lo mèdium es raiat o se i a de damatges fisics sul disc"
+"%2.1f%% (%s) de las donadas sul periferic « %s » èran illegiblas e son estadas remplaçadas per de zèros dins l'imatge disc creat. Aquò "
+"arriba generalament se lo mèdium es raiat o se i a de damatges fisics sul disc."
 
 #: src/disks/gdu-create-disk-image-dialog.c:343 src/disks/gdu-format-volume-dialog.c:197 src/disks/ui/gdu-benchmark-dialog.ui:15
 #: src/disks/ui/gdu-benchmark-dialog.ui:22 src/disks/ui/gdu-change-passphrase-dialog.ui:16
@@ -1332,7 +1329,7 @@ msgstr "La talha del periferic es 0"
 
 #: src/disks/gdu-create-disk-image-dialog.c:606
 msgid "Error allocating space for disk image file: "
-msgstr "Error d'alogason d'espaci al fichièr imatge disc : "
+msgstr "Error d'allocacion d'espaci al fichièr imatge disc : "
 
 #: src/disks/gdu-create-disk-image-dialog.c:765 src/disks/gdu-new-disk-image-dialog.c:158
 msgid "Error opening file for writing"
@@ -1354,20 +1351,17 @@ msgid "Replace File?"
 msgstr "Remplaçar lo fichièr ?"
 
 #: src/disks/gdu-create-disk-image-dialog.c:870 src/disks/gdu-new-disk-image-dialog.c:300
-#, fuzzy, c-format
-#| msgid "A file named “%s” already exists.  Do you want to replace it?"
+#, c-format
 msgid "A file named “%s” already exists in %s"
-msgstr "Un fichièr nomenat « %s » existís ja. O volètz remplaçar ?"
+msgstr "Un fichièr nomenat « %s » existís ja dins %s"
 
 #: src/disks/gdu-create-disk-image-dialog.c:871 src/disks/gdu-new-disk-image-dialog.c:301
 msgid "Replace"
 msgstr "Remplaçar"
 
 #: src/disks/gdu-create-disk-image-dialog.c:923 src/disks/gdu-new-disk-image-dialog.c:256
-#, fuzzy
-#| msgid "Error allocating space for disk image file: "
 msgid "Choose a location to save the disk image."
-msgstr "Error d'alogason d'espaci al fichièr imatge disc : "
+msgstr "Causir un emplaçament per enregistrar l’imatge disc."
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
@@ -1408,10 +1402,8 @@ msgid "F2FS"
 msgstr "F2FS"
 
 #: src/disks/gdu-create-other-page.c:184
-#, fuzzy
-#| msgid "XFS — Linux Filesystem"
 msgid "Flash Storage Linux Filesystem"
-msgstr "XFS — Sistèma de fichièr Linux"
+msgstr "Sistèma de fichièr Linux per emmagazinatge Flash"
 
 #: src/disks/gdu-create-other-page.c:185
 msgid "exFAT"
@@ -1842,16 +1834,12 @@ msgstr "Error redimencionant la particion"
 
 #: src/disks/gdu-resize-volume-dialog.c:258 src/disks/gdu-resize-volume-dialog.c:296 src/disks/gdu-resize-volume-dialog.c:410
 #: src/disks/gdu-resize-volume-dialog.c:457
-#, fuzzy
-#| msgid "Error mounting filesystem"
 msgid "Error resizing filesystem"
-msgstr "Error al moment del montatge del sistèma de fichièrs"
+msgstr "Error al moment de redimensionar lo sistèma de fichièrs"
 
 #: src/disks/gdu-resize-volume-dialog.c:277 src/disks/gdu-resize-volume-dialog.c:386
-#, fuzzy
-#| msgid "Error opening file for reading"
 msgid "Error repairing filesystem after resize"
-msgstr "Error al moment de la dobertura del fichièr en lectura"
+msgstr "Error al moment de reparar lo sistèma de fichièrs aprèp redimensionament"
 
 #: src/disks/gdu-resize-volume-dialog.c:319 src/disks/gdu-resize-volume-dialog.c:433
 msgid "Error repairing filesystem"
@@ -1882,10 +1870,8 @@ msgid "Error unlocking device"
 msgstr "Error pendent lo verrolhatge del periferic"
 
 #: src/disks/gdu-window.c:175
-#, fuzzy
-#| msgid "Select Disk Image to Attach"
 msgid "Select a Disk Image to Attach"
-msgstr "Seleccionar l'imatge disc d'estacar"
+msgstr "Seleccionar un imatge disc d'estacar"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -1913,20 +1899,18 @@ msgid "Cannot restore image of size 0"
 msgstr "Impossible de restablir un imatge de talha 0"
 
 #: src/disks/restore_disk_image_dialog.rs:250
-#, fuzzy, rust-format
-#| msgid "The disk image is %s smaller than the target device"
+#, rust-format
 msgid "The disk image is {} smaller than the target device"
-msgstr "L'imatge seleccionada es mai pichona de %s que lo periferic cibla"
+msgstr "L'imatge seleccionat es mai pichon de {} que lo periferic cibla"
 
 #: src/disks/restore_disk_image_dialog.rs:255
-#, fuzzy, rust-format
-#| msgid "The disk image is %s bigger than the target device"
+#, rust-format
 msgid "The disk image is {} bigger than the target device"
-msgstr "L'imatge seleccionada es mai granda de %s que lo periferic cibla"
+msgstr "L'imatge seleccionat es mai grand de {} que lo periferic cibla"
 
 #: src/disks/restore_disk_image_dialog.rs:395
 msgid "Are you sure you want to write the disk image to the device?"
-msgstr "Sètz segur que volètz escriure l'imatge disc sul periferic ?"
+msgstr "Volètz vertadièrament escriure l'imatge disc sul periferic ?"
 
 #: src/disks/restore_disk_image_dialog.rs:396
 msgid "All existing data will be lost"
@@ -1959,10 +1943,8 @@ msgid "Error restoring disk image"
 msgstr "Error al moment del restabliment de l'imatge de disc"
 
 #: src/disks/restore_disk_image_dialog.rs:624
-#, fuzzy
-#| msgid "Select Disk Image to Restore"
 msgid "Choose a disk image to restore."
-msgstr "Seleccionar l'imatge disc a restablir"
+msgstr "Causir un imatge disc a restablir."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -2577,10 +2559,8 @@ msgid "Flags"
 msgstr "Marcadors"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:63
-#, fuzzy
-#| msgid "Legacy BIOS _Bootable"
 msgid "_Legacy BIOS Bootable"
-msgstr "BIOS Legacy amorsa_ble"
+msgstr "BIOS _Legacy amorsable"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:78
 #, fuzzy
@@ -2802,7 +2782,7 @@ msgstr "Imatge"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:55
 msgid "Select Image"
-msgstr "Causissètz un imatge"
+msgstr "Seleccionar imatge"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:68
 msgid "Image Size"
@@ -2855,10 +2835,8 @@ msgid "Keyfiles"
 msgstr "Fichièrs de claus"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:79
-#, fuzzy
-#| msgid "Select a Keyfile"
 msgid "Select Keyfiles"
-msgstr "Seleccionar un fichièr de clau"
+msgstr "Seleccionar fichièr de clau"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:97
 msgid "Volume Configuration"
@@ -3150,34 +3128,34 @@ msgstr "Error al moment de la supression del periferic bocla"
 
 #: src/libgdu/gduutils.rs:338
 msgid "duration-year-to-inf"
-msgstr ""
+msgstr "duration-year-to-inf"
 
 #: src/libgdu/gduutils.rs:345
 msgid "duration-months-to-year"
-msgstr ""
+msgstr "duration-months-to-year"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
 #: src/libgdu/gduutils.rs:351
 msgid "duration-day-to-month"
-msgstr ""
+msgstr "duration-day-to-month"
 
 #: src/libgdu/gduutils.rs:355
 msgid "duration-hour-to-day"
-msgstr ""
+msgstr "duration-hour-to-day"
 
 #: src/libgdu/gduutils.rs:365
 msgid "duration-minute-to-hour"
-msgstr ""
+msgstr "duration-minute-to-hour"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
 #: src/libgdu/gduutils.rs:378
 msgid "duration-second-to-minute"
-msgstr ""
+msgstr "duration-second-to-minute"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
 #: src/libgdu/gduutils.rs:382
 msgid "duration-zero-to-second"
-msgstr ""
+msgstr "duration-zero-to-second"
 
 #: src/libgdu/gduutils.rs:883
 msgid "Failed to find filesystem"

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-14 15:22+0100\n"
+"PO-Revision-Date: 2026-02-21 22:48+0100\n"
 "Last-Translator: Jordi Mas i Herǹandez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <info@softcatala.org>\n"
 "Language: ca\n"
@@ -111,45 +111,39 @@ msgstr "Obre al Fitxers"
 
 #: src/disk-image-mounter/window.ui:40
 msgid "Mount the image read-only"
-msgstr ""
+msgstr "Munta la imatge només de lectura"
 
 #: src/disk-image-mounter/window.ui:60
-#, fuzzy
-#| msgid "Mount Disk Images"
 msgid "Unmount Disk Image"
-msgstr "Munteu imatges de disc"
+msgstr "Desmunta la imatge de disc"
 
 #: src/disk-image-mounter/window.ui:61
 msgid "Unmount the mounted image"
-msgstr ""
+msgstr "Desmunta la imatge muntada"
 
 #: src/disk-image-mounter/window.ui:75
 msgid "Edit Contents in Files"
-msgstr ""
+msgstr "Edita el contingut al Fitxers"
 
 #: src/disk-image-mounter/window.ui:76
 msgid "Mount the image and allow editing"
-msgstr ""
+msgstr "Munta la imatge i permet l'edició"
 
 #: src/disk-image-mounter/window.ui:95
-#, fuzzy
-#| msgid "Fit to size"
 msgid "Write to Drive"
-msgstr "Ajusta a la mida"
+msgstr "Escriu a la unitat"
 
 #: src/disk-image-mounter/window.ui:96
-#, fuzzy
-#| msgid "Are you sure you want to write the disk image to the device?"
 msgid "Open in Disks to write the image to a drive"
-msgstr "Segur que voleu escriure la imatge de disc al dispositiu?"
+msgstr "Obre al Discs per a escriure la imatge en una unitat"
 
 #: src/disk-image-mounter/window.ui:109
 msgid "Inspect in Disks"
-msgstr ""
+msgstr "Inspecciona al Discs"
 
 #: src/disk-image-mounter/window.ui:110
 msgid "Mount the image and open in Disks"
-msgstr ""
+msgstr "Munta la imatge i obre al Discs"
 
 #: src/disks/gdu-application.c:120
 #, c-format
@@ -171,7 +165,7 @@ msgstr "Formata el dispositiu seleccionat"
 
 #: src/disks/gdu-application.c:162
 msgid "Show verbose logs, specify up to four times to increase log level"
-msgstr ""
+msgstr "Mostra els registres detallats, especifiqueu fins a quatre vegades per augmentar el nivell de registre"
 
 #: src/disks/gdu-application.c:163
 msgid "Ignored, kept for compatibility"
@@ -1303,16 +1297,13 @@ msgstr "Errades de lectura no recuperables"
 #. * The second %s is the name of the device (ex "/dev/").
 #.
 #: src/disks/gdu-create-disk-image-dialog.c:337
-#, fuzzy, c-format
-#| msgid ""
-#| "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically "
-#| "happens if the medium is scratched or if there is physical damage to the drive"
+#, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically "
 "happens if the medium is scratched or if there is physical damage to the drive."
 msgstr ""
 "No s'han pogut llegir un %2.1f%% (%s) de les dades del dispositiu «%s» i s'han reemplaçat per zeros en el fitxer d'imatge de disc que "
-"s'ha creat. Normalment això és degut al fet que el medi està ratllat o que la unitat pot tenir algun cop"
+"s'ha creat. Normalment això és degut al fet que el medi està ratllat o que la unitat pot tenir algun cop."
 
 #: src/disks/gdu-create-disk-image-dialog.c:343 src/disks/gdu-format-volume-dialog.c:197 src/disks/ui/gdu-benchmark-dialog.ui:15
 #: src/disks/ui/gdu-benchmark-dialog.ui:22 src/disks/ui/gdu-change-passphrase-dialog.ui:16
@@ -1357,28 +1348,21 @@ msgid "Creating Disk Image"
 msgstr "Creació d'una imatge de disc"
 
 #: src/disks/gdu-create-disk-image-dialog.c:869 src/disks/gdu-new-disk-image-dialog.c:299
-#, fuzzy
-#| msgid "_Replace"
 msgid "Replace File?"
-msgstr "_Reemplaça"
+msgstr "Voleu reemplaçar el fitxer?"
 
 #: src/disks/gdu-create-disk-image-dialog.c:870 src/disks/gdu-new-disk-image-dialog.c:300
-#, fuzzy, c-format
-#| msgid "A file named “%s” already exists.  Do you want to replace it?"
+#, c-format
 msgid "A file named “%s” already exists in %s"
-msgstr "Ja existeix un fitxer amb el nom «%s». Voleu reemplaçar-lo?"
+msgstr "Ja existeix un fitxer amb el nom «%s» a %s"
 
 #: src/disks/gdu-create-disk-image-dialog.c:871 src/disks/gdu-new-disk-image-dialog.c:301
-#, fuzzy
-#| msgid "_Replace"
 msgid "Replace"
-msgstr "_Reemplaça"
+msgstr "Reemplaça"
 
 #: src/disks/gdu-create-disk-image-dialog.c:923 src/disks/gdu-new-disk-image-dialog.c:256
-#, fuzzy
-#| msgid "Error allocating space for disk image file: "
 msgid "Choose a location to save the disk image."
-msgstr "S'ha produït un error en ubicar espai pel fitxer de la imatge de disc: "
+msgstr "Trieu una ubicació per a desar la imatge de disc."
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
@@ -1411,40 +1395,32 @@ msgid "Btrfs"
 msgstr "Btrfs"
 
 #: src/disks/gdu-create-other-page.c:183
-#, fuzzy
-#| msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgid "Copy-on-write Linux Filesystem, for snapshots"
-msgstr "Btrfs — Sistema de fitxers de Linux que copia en escriure, per a imatges"
+msgstr "Sistema de fitxers de Linux que copia en escriure, per a imatges"
 
 #: src/disks/gdu-create-other-page.c:184
 msgid "F2FS"
 msgstr "F2FS"
 
 #: src/disks/gdu-create-other-page.c:184
-#, fuzzy
-#| msgid "F2FS — Flash Storage Linux Filesystem"
 msgid "Flash Storage Linux Filesystem"
-msgstr "F2FS — Sistema de fitxers de Linux per a emmagatzematge flash"
+msgstr "Sistema de fitxers de Linux per a emmagatzematge flash"
 
 #: src/disks/gdu-create-other-page.c:185
 msgid "exFAT"
 msgstr "exFAT"
 
 #: src/disks/gdu-create-other-page.c:185
-#, fuzzy
-#| msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgid "Flash Storage Windows Filesystem, used on SDXC cards"
-msgstr "exFAT — Sistema de fitxers de Windows per a emmagatzematge flash, utilitzat en targetes SDXC"
+msgstr "Sistema de fitxers de Windows per a emmagatzematge flash, utilitzat en targetes SDXC"
 
 #: src/disks/gdu-create-other-page.c:186
 msgid "UDF"
 msgstr "UDF"
 
 #: src/disks/gdu-create-other-page.c:186
-#, fuzzy
-#| msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgid "Universal Disk Format, for removable devices on many systems"
-msgstr "UDF — Format de disc universal, per a dispositius extraïbles en molts sistemes"
+msgstr "Format de disc universal, per a dispositius extraïbles en molts sistemes"
 
 #: src/disks/gdu-create-other-page.c:187
 msgid "No Filesystem"
@@ -1626,11 +1602,11 @@ msgstr "Sorollós (ràpid)"
 
 #: src/disks/gdu-drive-view.c:142
 msgid "Copied drive model to clipboard"
-msgstr ""
+msgstr "S'ha copiat el model de la unitat al porta-retalls"
 
 #: src/disks/gdu-drive-view.c:151
 msgid "Copied drive serial to clipboard"
-msgstr ""
+msgstr "S'ha copiat el número de sèrie de la unitat al porta-retalls"
 
 #: src/disks/gdu-drive-view.c:290
 msgid "An error occurred when trying to put the drive into standby mode"
@@ -1683,16 +1659,12 @@ msgid "_Bootable"
 msgstr "_Arrencable"
 
 #: src/disks/gdu-edit-partition-dialog.c:313
-#, fuzzy
-#| msgid ""
-#| "A flag used by the Platform bootloader to determine where the OS should be loaded from. Sometimes the partition with this flag set "
-#| "is referred to as the <i>active</i> partition"
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be loaded from. Sometimes the partition with this flag set is "
 "referred to as the “active” partition"
 msgstr ""
 "Un senyalador que utilitza el carregador de l'arrencada de la plataforma per a decidir d'on s'ha d'iniciar el sistema operatiu. A "
-"vegades la partició que té aquest senyalador activat se l'anomena partició <i>activa</i>"
+"vegades la partició que té aquest senyalador activat se l'anomena partició «activa»"
 
 #: src/disks/gdu-encryption-options-dialog.c:135
 msgid "Error removing /etc/crypttab entry"
@@ -2057,34 +2029,28 @@ msgstr "_Inicia…"
 #: src/disks/ui/gdu-benchmark-dialog.ui:60
 msgid "Benchmarking measures the transfer rate for different areas of the disk. It also measures seek times from one area to another."
 msgstr ""
+"Els tests de referència mesuren la taxa de transferència per a diferents àrees del disc. Les mesures també busquen temps d'una zona a "
+"una altra."
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:65
-#, fuzzy
-#| msgid "Transfer Rate"
 msgid "Transfer S_amples"
-msgstr "Ràtio de transferència"
+msgstr "Mostres de tr_ansferència"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:80
-#, fuzzy
-#| msgid "Sample Size"
 msgid "Transfer Sample S_ize"
-msgstr "Mida de la mostra"
+msgstr "M_ida de les mostres de transferència"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:96
-#, fuzzy
-#| msgid "Access Time"
 msgid "_Access Time Samples"
-msgstr "Temps d'accés"
+msgstr "Mostres de temps d'_accés"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:115
-#, fuzzy
-#| msgid "_Abort Benchmark"
 msgid "_Write Benchmark"
-msgstr "Interr_omp el test de referència"
+msgstr "_Test de referència d'escriptura"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:117
 msgid "Data should be backed up before using this feature"
-msgstr ""
+msgstr "Cal fer còpies de seguretat de les dades abans d'utilitzar aquesta funcionalitat"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:142
 msgid "Sample Size"
@@ -2124,7 +2090,7 @@ msgstr "Tipus de partició"
 
 #: src/disks/ui/gdu-block-row.ui:120
 msgid "Resize…"
-msgstr "Canvia la mida..."
+msgstr "Canvia la mida…"
 
 #: src/disks/ui/gdu-block-row.ui:124
 msgid "Edit"
@@ -2153,7 +2119,7 @@ msgstr "Opcions d'encriptació…"
 
 #: src/disks/ui/gdu-block-row.ui:146
 msgid "Take Ownership…"
-msgstr "Pren la propietat..."
+msgstr "Pren la propietat…"
 
 #: src/disks/ui/gdu-block-row.ui:151
 msgid "Format Partition…"
@@ -2265,29 +2231,23 @@ msgstr "Més informació"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:42 src/disks/ui/gdu-format-disk-dialog.ui:60
 msgid "Ensures that existing data cannot be recovered. This option slows down formatting."
-msgstr ""
+msgstr "Assegura que les dades existents no es poden recuperar. Aquesta opció alenteix el format."
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:70
 msgid "For use only with Linux systems"
-msgstr ""
+msgstr "Per a ús només amb sistemes Linux"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:84
-#, fuzzy
-#| msgid "For use with _Windows (NTFS)"
 msgid "For use with Windows"
-msgstr "Per a utilitzar amb _Windows (NTFS)"
+msgstr "Per a utilitzar amb Windows"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:98
-#, fuzzy
-#| msgid "For use with all _systems and devices (FAT)"
 msgid "For use with all systems and devices"
-msgstr "Compatible amb tots els _sistemes i dispositius (FAT)"
+msgstr "Compatible amb tots els sistemes i dispositius"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:128
-#, fuzzy
-#| msgid "_Password protect volume (LUKS)"
 msgid "_Password Protect Volume"
-msgstr "Volum _protegit per contrasenya (LUKS)"
+msgstr "Volum _protegit per contrasenya"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:129 src/disks/ui/gdu-create-other-page.ui:16
 msgid "Encrypts the volume using LUKS"
@@ -2298,16 +2258,12 @@ msgid "Password Protect Volume"
 msgstr "Volum protegit per contrasenya"
 
 #: src/disks/ui/gdu-create-partition-page.ui:26
-#, fuzzy
-#| msgid "Partition _Size"
 msgid "Partition Size"
-msgstr "_Mida de la partició"
+msgstr "Mida de la partició"
 
 #: src/disks/ui/gdu-create-partition-page.ui:41
-#, fuzzy
-#| msgid "The free space following the partition"
 msgid "Space following new partition"
-msgstr "L'espai lliure contigu a la partició"
+msgstr "L'espai contigu a la nova partició"
 
 #: src/disks/ui/gdu-create-partition-page.ui:66
 msgid "Extended Partitions can contain Logical Partitions"
@@ -2368,8 +2324,6 @@ msgid "PiB"
 msgstr "PiB"
 
 #: src/disks/ui/gdu-create-password-page.ui:8
-#, fuzzy
-#| msgid "Data stored in the volume will only be accessible with the correct password. Be careful not to forget it."
 msgid "Data stored in the Volume will only be accessible with the correct password. Be careful not to forget it"
 msgstr "Les dades desades al volum només seran accessibles amb la contrasenya correcta. Aneu amb compte de no oblidar-la."
 
@@ -2530,7 +2484,7 @@ msgstr "Apaga"
 
 #: src/disks/ui/gdu-drive-view.ui:15
 msgid "Space Allocation"
-msgstr ""
+msgstr "Assignació d'espai"
 
 #: src/disks/ui/gdu-drive-view.ui:23
 msgid "Volumes"
@@ -2561,10 +2515,8 @@ msgid "This filesystem will be automatically unmounted prior to any changes."
 msgstr "Aquest sistema de fitxers es desmuntarà de forma automàtica abans de fer cap canvi."
 
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:42
-#, fuzzy
-#| msgid "_Label"
 msgid "Label"
-msgstr "_Etiqueta"
+msgstr "Etiqueta"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:4
 msgid "Edit Partition"
@@ -2572,19 +2524,15 @@ msgstr "Edita la partició"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:21 src/disks/ui/gdu-mount-options-dialog.ui:21
 msgid "_Done"
-msgstr ""
+msgstr "_Fet"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:39
-#, fuzzy
-#| msgid "Partition Type"
 msgid "_Partition Type"
-msgstr "Tipus de partició"
+msgstr "Tipus de _partició"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:41
-#, fuzzy
-#| msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgid "The partition type represented as a 32-bit GUID"
-msgstr "El tipus de partició com a identificador de 32 bits (<i>GUID</i>)"
+msgstr "El tipus de partició com a identificador GUID de 32 bits"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:48
 msgid ""
@@ -2599,38 +2547,28 @@ msgid "Flags"
 msgstr "Indicadors"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:63
-#, fuzzy
-#| msgid "Legacy BIOS _Bootable"
 msgid "_Legacy BIOS Bootable"
-msgstr "_Arrencable BIOS (llegat)"
+msgstr "_Arrencable BIOS antiga"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:78
-#, fuzzy
-#| msgid "This is equivalent to Master Boot Record <i>bootable</i> flag. It is normally only used for GPT partitions on MBR systems"
 msgid "This is equivalent to Master Boot Record “bootable” flag. It is normally only used for GPT partitions on MBR systems."
 msgstr ""
-"És equivalent al senyalador <i>arrencable</i> del registre d'arrencada mestre (MBR). Normalment només es fa servir en particions GPT "
-"de sistemes MBR"
+"És equivalent al senyalador «arrencable» del registre d'arrencada mestre (MBR). Normalment només es fa servir en particions GPT de "
+"sistemes MBR"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:104
 msgid "_System Partition"
 msgstr "Partició de _sistema"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:119
-#, fuzzy
-#| msgid ""
-#| "Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to "
-#| "not delete or overwrite the contents"
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not "
 "delete or overwrite the contents."
 msgstr ""
 "S'utilitza per a indicar que la partició i el seu contingut són necessaris perquè funcioni el sistema operatiu/plataforma. S'hauria "
-"d'anar amb precaució per no suprimir-la o sobreescriure'n el contingut"
+"d'anar amb precaució per no suprimir-la o sobreescriure'n el contingut."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:145
-#, fuzzy
-#| msgid "Hide from _Firmware"
 msgid "_Hide from Firmware"
 msgstr "Amaga del _microprogramari"
 
@@ -2659,10 +2597,8 @@ msgstr ""
 "<i>Canvia la contrasenya…</i>"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:42
-#, fuzzy
-#| msgid "Encryption Options"
 msgid "Automatic Encryption Options"
-msgstr "Opcions d'encriptació"
+msgstr "Opcions d'encriptació automàtica"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:53
 msgid "Name"
@@ -2673,22 +2609,16 @@ msgid "Passphrase"
 msgstr "Contrasenya"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:70
-#, fuzzy
-#| msgid "_Unlock at system startup"
 msgid "Unlock at System Start"
-msgstr "_Desbloqueja a l'inici del sistema"
+msgstr "Desbloqueja a l'inici del sistema"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:76
-#, fuzzy
-#| msgid "Require additional authori_zation to mount"
 msgid "Require Additional Authorization"
-msgstr "Requereix una autorit_zació addicional per a muntar-lo"
+msgstr "Requereix autorització addicional"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:82
-#, fuzzy
-#| msgid "Additional partition options"
 msgid "Additional Options"
-msgstr "Opcions de la partició addicionals"
+msgstr "Opcions addicionals"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:4 src/disks/ui/gdu-format-disk-dialog.ui:21
 msgid "Format Disk"
@@ -2696,93 +2626,75 @@ msgstr "Formata el disc"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:87
 msgid "_GUID Partition Table (GPT)"
-msgstr ""
+msgstr "Taula de particions _GUID (GPT)"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:88
-#, fuzzy
-#| msgid "Compatible with modern systems and hard disks > 2TB"
 msgid "Compatible with UEFI and disks over 2 TB"
-msgstr "Compatible amb sistemes moderns i discs durs de més de 2TB"
+msgstr "Compatible amb UEFI i discs de més de 2TB"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:101
 msgid "_Master Boot Record (MBR)"
-msgstr ""
+msgstr "_Master Boot Record (MBR)"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:102
 msgid "Legacy option with wide hardware compatibility"
-msgstr ""
+msgstr "Opció antiga amb compatibilitat de maquinari àmplia"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:115
-#, fuzzy
-#| msgid "No partitioning"
 msgid "_No Partitioning"
-msgstr "Sense particions"
+msgstr "_Sense particions"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:116
 msgid "Disk will be empty"
-msgstr ""
+msgstr "El disc estarà buit"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:4
 msgid "Mount Options"
 msgstr "Opcions de muntatge"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:36
-#, fuzzy
-#| msgid "The system may not work correctly if this entry is modified or removed."
 msgid "The system may not work correctly if this entry is modified or removed"
-msgstr "El sistema pot de deixar funcionar correctament si es modifica o s'elimina aquesta entrada."
+msgstr "El sistema pot de deixar funcionar correctament si es modifica o s'elimina aquesta entrada"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:47
-#, fuzzy
-#| msgid "Mount Options"
 msgid "_Automatic Mount Options"
-msgstr "Opcions de muntatge"
+msgstr "Opcions de muntatge _automàtic"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:56
 msgid "General"
 msgstr "General"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:60
-#, fuzzy
-#| msgid "Mount at system _startup"
 msgid "_Mount at Startup"
-msgstr "_Munta'l a l'inici del sistema"
+msgstr "_Munta'l a l'inici"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:67
 msgid "_Show in Files"
 msgstr "_Mostra al Fitxers"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:74
-#, fuzzy
-#| msgid "Require additional authori_zation to mount"
 msgid "_Require Authorization"
-msgstr "Requereix una autorit_zació addicional per a muntar-lo"
+msgstr "_Requereix autorització"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:83
 msgid "Appearance"
 msgstr "Aparença"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:87
-#, fuzzy
-#| msgid "Display _Name"
 msgid "D_isplay Name"
 msgstr "_Nom que es mostrarà"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:94
 msgid "C_olor Icon"
-msgstr ""
+msgstr "Ic_ona de color"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:101
-#, fuzzy
-#| msgid "S_ymbolic Icon Name"
 msgid "S_ymbolic Icon"
-msgstr "Nom de la icona _simbòlica"
+msgstr "Icona _simbòlica"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:110
-#, fuzzy
-#| msgid "Drive Options"
 msgid "Technical Options"
-msgstr "Paràmetres de la unitat"
+msgstr "Opcions tècniques"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:114
 msgid "_fstab Options"
@@ -2797,14 +2709,12 @@ msgid "Filesystem _Type"
 msgstr "_Tipus de sistema de fitxers"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:149
-#, fuzzy
-#| msgid "I_dentify As"
 msgid "Ide_ntify As"
-msgstr "_Identificat com"
+msgstr "Ide_ntifica com"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:161
 msgid "R_estore Default Settings"
-msgstr ""
+msgstr "R_estaura la configuració predeterminada"
 
 #: src/disks/ui/gdu-new-disk-image-dialog.ui:70
 msgid "_Size"
@@ -2821,32 +2731,28 @@ msgstr "Canvia la _mida"
 #: src/disks/ui/gdu-resize-volume-dialog.ui:36
 msgid "Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing."
 msgstr ""
+"Canviar la mida d'un sistema de fitxers pot provocar la pèrdua de dades. Es recomana fer còpies de seguretat de qualsevol dada abans "
+"de continuar."
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:57
-#, fuzzy
-#| msgid "Unallocated Space"
 msgid "Available Space"
-msgstr "Espai no ubicat"
+msgstr "Espai disponible"
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:85
-#, fuzzy
-#| msgid "Image Size"
 msgid "_New Size"
-msgstr "Mida de la imatge"
+msgstr "Mida _nova"
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:92
 msgid "_Free After Resize"
-msgstr ""
+msgstr "_Lliure després de canviar la mida"
 
 #: src/disks/ui/gdu-resize-volume-dialog.ui:109
 msgid "_Units"
 msgstr "_Unitats"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:22
-#, fuzzy
-#| msgid "_Restore"
 msgid "_Restore…"
-msgstr "_Restaura"
+msgstr "_Restaura…"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:48
 msgid "Image"
@@ -2865,26 +2771,22 @@ msgid "Destination"
 msgstr "Destinació"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:4
-#, fuzzy
-#| msgid "_Take Ownership…"
 msgid "Take Ownership?"
-msgstr "_Pren la propietat..."
+msgstr "Voleu prendre la propietat?"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:11
-#, fuzzy
-#| msgid "Enable _recursive mode"
 msgid "_Recursive Mode"
-msgstr "Habilita _el mode recursiu"
+msgstr "Mode _recursiu"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:37
-#, fuzzy
-#| msgid "_Take Ownership…"
 msgid "_Take Ownership"
-msgstr "_Pren la propietat..."
+msgstr "_Pren la propietat"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:50
 msgid "Recursive mode changes the ownership of subdirectories and files. This can cause problems if files are owned by other users."
 msgstr ""
+"El mode recursiu canvia la propietat dels subdirectoris i fitxers. Això pot causar problemes si els fitxers són propietat d'altres "
+"usuaris."
 
 #: src/disks/ui/gdu-unlock-dialog.ui:4
 msgid "Unlock Volume"
@@ -2904,39 +2806,31 @@ msgstr "Aquest volum podria ser un volum VeraCrypt, ja que conté dades aleatòr
 
 #: src/disks/ui/gdu-unlock-dialog.ui:48
 msgid "Security Credentials"
-msgstr ""
+msgstr "Credencials de seguretat"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:71
 msgid "Keyfiles"
 msgstr "Fitxers de clau"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:79
-#, fuzzy
-#| msgid "Select a Keyfile"
 msgid "Select Keyfiles"
-msgstr "Seleccioneu un fitxer de clau"
+msgstr "Seleccioneu els fitxers de clau"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:97
-#, fuzzy
-#| msgid "Error setting configuration"
 msgid "Volume Configuration"
-msgstr "S'ha produït un error en establir la configuració"
+msgstr "Configuració del volum"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:103
-#, fuzzy
-#| msgid "_Hidden"
 msgid "Hidden"
-msgstr "_Ocult"
+msgstr "Ocult"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:117
 msgid "Instead of unlocking this volume, attempt to unlock a secondary volume hidden inside."
 msgstr "En comptes de desbloquejar aquest volum, intenteu desbloquejar un volum secundari ocult dins."
 
 #: src/disks/ui/gdu-unlock-dialog.ui:144
-#, fuzzy
-#| msgid "Windows _system"
 msgid "Windows System"
-msgstr "_Sistema Windows"
+msgstr "Sistema Windows"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:158
 msgid "Unlock an encrypted Windows system partition or drive."

@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-19 17:19+0100\n"
+"PO-Revision-Date: 2026-02-22 18:31+0100\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -389,11 +389,11 @@ msgstr "Numărul de reporniri"
 #.
 #: src/disks/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
-msgstr "Numărul erorilor de citire"
+msgstr "Numărul erorilor temporare de citire"
 
 #: src/disks/gdu-ata-smart-dialog.c:246
 msgid "Frequency of errors while reading from the disk"
-msgstr "Numărul erorilor din timpul citirii de pe disc care pot fi corectate"
+msgstr "Numărul erorilor din timpul citirii de pe disc"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -573,7 +573,7 @@ msgstr ""
 #.
 #: src/disks/gdu-ata-smart-dialog.c:366
 msgid "Soft Read Error Rate"
-msgstr "Numărul erorilor de citire"
+msgstr "Numărul erorilor temporare de citire"
 
 #: src/disks/gdu-ata-smart-dialog.c:367
 msgid "Number of off-track errors"
@@ -1293,12 +1293,13 @@ msgstr "Repară"
 
 #: src/disks/gdu-block-row.c:797
 msgid "Error while taking filesystem ownership"
-msgstr "Eroare în timpul asumării apartenenței sistemului de fișiere"
+msgstr ""
+"Eroare la obținerea dreptului de proprietate asupra sistemului de fișiere"
 
 #: src/disks/gdu-block-row.c:885
 #, c-format
 msgid "Make your user and group the owner of ”%s”"
-msgstr ""
+msgstr "Stabilește utilizatorul și grupul său ca proprietar al „%s”"
 
 #: src/disks/gdu-change-passphrase-dialog.c:104
 msgid "Error updating /etc/crypttab"
@@ -1371,10 +1372,8 @@ msgstr "Eroare la crearea imaginii de disc"
 
 #. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
 #: src/disks/gdu-create-disk-image-dialog.c:325
-#, fuzzy
-#| msgid "Unrecoverable read errors while creating disk image"
 msgid "Unrecoverable Read Errors"
-msgstr "Erori la citire iremediabile în timpul creării imaginii de disc"
+msgstr "Erori iremediabile la citire"
 
 #. Translators: Body in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).

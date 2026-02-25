@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-22 18:31+0100\n"
+"PO-Revision-Date: 2026-02-25 17:56+0100\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -138,7 +138,7 @@ msgstr "Montează imaginea doar pentru citire"
 
 #: src/disk-image-mounter/window.ui:60
 msgid "Unmount Disk Image"
-msgstr "Demontează imaginea de disc"
+msgstr "Demontează imaginea discului"
 
 #: src/disk-image-mounter/window.ui:61
 msgid "Unmount the mounted image"
@@ -198,7 +198,7 @@ msgstr "Ignorat, păstrat pentru compatibilitate"
 
 #: src/disks/gdu-application.c:164
 msgid "Restore disk image"
-msgstr "Restabilește imaginea de disc"
+msgstr "Restabilește imaginea discului"
 
 #: src/disks/gdu-application.c:197
 msgid "--format-device must be used together with --block-device\n"
@@ -1307,7 +1307,7 @@ msgstr "Eroare la actualizarea /etc/crypttab"
 
 #: src/disks/gdu-change-passphrase-dialog.c:125
 msgid "Error changing passphrase"
-msgstr "Eroare la modificarea parolei tip frază"
+msgstr "Eroare la schimbarea parolei"
 
 #: src/disks/gdu-change-passphrase-dialog.c:215
 #: src/disks/gdu-encryption-options-dialog.c:389
@@ -1342,11 +1342,11 @@ msgstr "%s (%.1f%%)"
 #.
 #: src/disks/gdu-create-disk-image-dialog.c:135
 msgid "Disk image read error"
-msgstr "Eroare la citirea imaginii de disc"
+msgstr "Eroare la citirea imaginii discului"
 
 #: src/disks/gdu-create-disk-image-dialog.c:173
 msgid "Allocating Disk Image"
-msgstr "Se alocă imaginea de disc"
+msgstr "Se alocă imaginea discului"
 
 #: src/disks/gdu-create-disk-image-dialog.c:177
 msgid "Retrieving DVD keys"
@@ -1364,11 +1364,11 @@ msgstr "%s nu se pot citi (înlocuiți cu zerouri)"
 #: src/disks/gdu-create-disk-image-dialog.c:240
 #: src/disks/restore_disk_image_dialog.rs:378
 msgid "Disk image copying complete"
-msgstr "Copierea imaginii de disc este completă"
+msgstr "Copierea imaginii discului este completă"
 
 #: src/disks/gdu-create-disk-image-dialog.c:270
 msgid "Error creating disk image"
-msgstr "Eroare la crearea imaginii de disc"
+msgstr "Eroare la crearea imaginii discului"
 
 #. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
 #: src/disks/gdu-create-disk-image-dialog.c:325
@@ -1381,20 +1381,16 @@ msgstr "Erori iremediabile la citire"
 #. * The second %s is the name of the device (ex "/dev/").
 #.
 #: src/disks/gdu-create-disk-image-dialog.c:337
-#, fuzzy, c-format
-#| msgid ""
-#| "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced "
-#| "with zeroes in the created disk image file. This typically happens if the "
-#| "medium is scratched or if there is physical damage to the drive"
+#, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
 "is scratched or if there is physical damage to the drive."
 msgstr ""
-"%2.1f%% (%s) din datele de pe dispozitivul „%s” nu s-au putut citi și au "
-"fost înlocuite cu zerouri în fișierul imagine de disc creat. Aceasta se "
-"întâmplă de obicei dacă mediul este zgâriat sau dacă sunt defecte fizice la "
-"dispozitiv"
+"%2.1f%% (%s) din datele din dispozitivul „%s” nu s-au putut citi și au fost "
+"înlocuite cu zerouri în fișierul creat al imaginii discului. Aceasta se "
+"întâmplă de obicei dacă suportul este zgâriat sau dacă unitatea are defecte "
+"fizice."
 
 #: src/disks/gdu-create-disk-image-dialog.c:343
 #: src/disks/gdu-format-volume-dialog.c:197
@@ -1417,7 +1413,7 @@ msgstr "_Anulează"
 
 #: src/disks/gdu-create-disk-image-dialog.c:344
 msgid "_Delete Disk Image File"
-msgstr "Șterge fișierul imaginii de _disc"
+msgstr "Șterge fișierul imaginii _discului"
 
 #: src/disks/gdu-create-disk-image-dialog.c:566
 msgid "Error determining size of device: "
@@ -1430,7 +1426,7 @@ msgstr "Dispozitivul are dimensiunea 0"
 
 #: src/disks/gdu-create-disk-image-dialog.c:606
 msgid "Error allocating space for disk image file: "
-msgstr "Eroare la alocarea spațiului pentru fișierul de imagine de disc: "
+msgstr "Eroare la alocarea spațiului pentru fișierul imaginii discului: "
 
 #: src/disks/gdu-create-disk-image-dialog.c:765
 #: src/disks/gdu-new-disk-image-dialog.c:158
@@ -1441,12 +1437,12 @@ msgstr "Eroare la deschiderea fișierului pentru scriere"
 #: src/disks/gdu-create-disk-image-dialog.c:778
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
-msgstr "Se copiază dispozitivul la imaginea de disc"
+msgstr "Se copiază datele în imaginea discului"
 
 #. Translators: this is the description of the job
 #: src/disks/gdu-create-disk-image-dialog.c:784
 msgid "Creating Disk Image"
-msgstr "Se creează imaginea de disc"
+msgstr "Se creează imaginea discului"
 
 #: src/disks/gdu-create-disk-image-dialog.c:869
 #: src/disks/gdu-new-disk-image-dialog.c:299
@@ -1467,7 +1463,7 @@ msgstr "Înlocuiește"
 #: src/disks/gdu-create-disk-image-dialog.c:923
 #: src/disks/gdu-new-disk-image-dialog.c:256
 msgid "Choose a location to save the disk image."
-msgstr "Alege un loc pentru salvarea imaginii de disc"
+msgstr "Alege un loc pentru salvarea imaginii discului."
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The first %s is a name for the disk (e.g. 'sdb').
@@ -1476,7 +1472,7 @@ msgstr "Alege un loc pentru salvarea imaginii de disc"
 #: src/disks/gdu-create-disk-image-dialog.c:965
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr "Imaginea de disc a %s (%s).img"
+msgstr "Imaginea discului %s (%s).img"
 
 #: src/disks/gdu-create-filesystem-page.c:234
 #: src/disks/gdu-create-filesystem-page.c:244
@@ -1502,44 +1498,36 @@ msgid "Btrfs"
 msgstr "Btrfs"
 
 #: src/disks/gdu-create-other-page.c:183
-#, fuzzy
-#| msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
 msgid "Copy-on-write Linux Filesystem, for snapshots"
-msgstr "Btrfs — sistem de fișiere Linux copiază-la-scriere, pentru instantanee"
+msgstr ""
+"Sistem de fișiere Linux copiază-la-scriere, pentru instantanee de sistem"
 
 #: src/disks/gdu-create-other-page.c:184
 msgid "F2FS"
 msgstr "F2FS"
 
 #: src/disks/gdu-create-other-page.c:184
-#, fuzzy
-#| msgid "F2FS — Flash Storage Linux Filesystem"
 msgid "Flash Storage Linux Filesystem"
-msgstr "F2FS — sistem de fișiere Linux pentru stocarea flash"
+msgstr "Sistem de fișiere Linux pentru stocarea flash"
 
 #: src/disks/gdu-create-other-page.c:185
 msgid "exFAT"
 msgstr "exFAT"
 
 #: src/disks/gdu-create-other-page.c:185
-#, fuzzy
-#| msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
 msgid "Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
-"exFAT — sistem de fișiere Windows pentru stocarea flash, utilizat pe "
-"cardurile SDXC"
+"Sistem de fișiere Windows pentru stocarea flash, utilizat la memoriile SDXC"
 
 #: src/disks/gdu-create-other-page.c:186
 msgid "UDF"
 msgstr "UDF"
 
 #: src/disks/gdu-create-other-page.c:186
-#, fuzzy
-#| msgid "UDF — Universal Disk Format, for removable devices on many systems"
 msgid "Universal Disk Format, for removable devices on many systems"
 msgstr ""
-"UDF — format de disc universal, pentru dispozitivele detașabile pe multe "
-"sisteme"
+"Format universal de disc compatibil cu multe sisteme, pentru dispozitivele "
+"detașabile"
 
 #: src/disks/gdu-create-other-page.c:187
 msgid "No Filesystem"
@@ -1557,58 +1545,60 @@ msgstr "Aceasta este ultima partiție primară care poate fi creată."
 #: src/disks/gdu-create-password-page.h:33
 msgctxt "Password hint"
 msgid "Try changing some letters and numbers."
-msgstr ""
+msgstr "Trebuie schimbate unele litere sau numere."
 
 #: src/disks/gdu-create-password-page.h:35
 #: src/disks/gdu-create-password-page.h:39
 msgctxt "Password hint"
 msgid "Try changing the password a bit more."
-msgstr ""
+msgstr "Trebuie schimbată puțin parola."
 
 #: src/disks/gdu-create-password-page.h:37
 msgctxt "Password hint"
 msgid "Try to avoid some of the words included in the password."
-msgstr ""
+msgstr "Trebuie evitate unele cuvinte incluse în parolă."
 
 #: src/disks/gdu-create-password-page.h:41
 msgctxt "Password hint"
 msgid "Try to avoid common words."
-msgstr ""
+msgstr "Trebuie evitate cuvintele comune."
 
 #: src/disks/gdu-create-password-page.h:43
 msgctxt "Password hint"
 msgid "Try to avoid reordering existing words."
-msgstr ""
+msgstr "Trebuie evitată rearanjarea cuvintelor existente."
 
 #: src/disks/gdu-create-password-page.h:45
 msgctxt "Password hint"
 msgid "Try to use more numbers."
-msgstr ""
+msgstr "Trebuie folosite mai multe numere."
 
 #: src/disks/gdu-create-password-page.h:47
 msgctxt "Password hint"
 msgid "Try to use more uppercase letters."
-msgstr ""
+msgstr "Trebuie folosite mai multe litere mari."
 
 #: src/disks/gdu-create-password-page.h:49
 msgctxt "Password hint"
 msgid "Try to use more lowercase letters."
-msgstr ""
+msgstr "Trebuie folosite mai multe litere mici."
 
 #: src/disks/gdu-create-password-page.h:51
 msgctxt "Password hint"
 msgid "Try to use more special characters, like punctuation."
 msgstr ""
+"Trebuie folosite mai multe caractere speciale, cum ar fi semnele de "
+"punctuație."
 
 #: src/disks/gdu-create-password-page.h:53
 msgctxt "Password hint"
 msgid "Try to use a mixture of letters, numbers and punctuation."
-msgstr ""
+msgstr "Trebuie folosit un amestec de litere, numere și semne de punctuație."
 
 #: src/disks/gdu-create-password-page.h:55
 msgctxt "Password hint"
 msgid "Try to avoid repeating the same character."
-msgstr ""
+msgstr "Trebuie evitată repetarea aceluiași caracter."
 
 #: src/disks/gdu-create-password-page.h:57
 msgctxt "Password hint"
@@ -1616,26 +1606,26 @@ msgid ""
 "Try to avoid repeating the same type of character: you need to mix up "
 "letters, numbers and punctuation."
 msgstr ""
+"Trebuie evitată repetarea aceluiași tip de caracter: trebuie un amestec de "
+"litere, numere și semne de punctuație."
 
 #: src/disks/gdu-create-password-page.h:59
 msgctxt "Password hint"
 msgid "Try to avoid sequences like 1234 or abcd."
-msgstr ""
+msgstr "Trebuie evitate secvențe ca 1234 sau abcd."
 
 #: src/disks/gdu-create-password-page.h:61
-#, fuzzy
-#| msgid "Mix uppercase and lowercase and try to use a number or two."
 msgctxt "Password hint"
 msgid "Mix uppercase and lowercase and try to use a number or two."
-msgstr ""
-"Combinați literele majuscule cu minuscule și încercați să utilizați un număr "
-"sau două."
+msgstr "Amestecă litere mici cu majuscule și folosește un număr sau două."
 
 #: src/disks/gdu-create-password-page.h:63
 msgctxt "Password hint"
 msgid ""
 "Adding more letters, numbers and punctuation will make the password stronger."
 msgstr ""
+"Adăugând mai multe litere, numere și semne de punctuație parola va fi mai "
+"sigură."
 
 #: src/disks/gdu-disk-settings-dialog.c:293
 msgctxt "standby-value"
@@ -1790,22 +1780,17 @@ msgstr "Tipul de partiție ca un număr natural pe 8 biți"
 
 #: src/disks/gdu-edit-partition-dialog.c:311
 msgid "_Bootable"
-msgstr "_Bootabil"
+msgstr "De _pornire"
 
 #: src/disks/gdu-edit-partition-dialog.c:313
-#, fuzzy
-#| msgid ""
-#| "A flag used by the Platform bootloader to determine where the OS should "
-#| "be loaded from. Sometimes the partition with this flag set is referred to "
-#| "as the <i>active</i> partition"
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
 "the “active” partition"
 msgstr ""
-"Un fanion folosit de încărcătorul de sistem pentru a determina de unde ar "
-"trebui încărcat sistemul de operare. Uneori partiția care are acest fanion "
-"setat mai este denumită și partiția <i>activă</i>"
+"Un indicator folosit de încărcătorul de sistem pentru a determina de unde ar "
+"trebui încărcat sistemul de operare. Uneori, partiția care are acest "
+"indicator se numește partiția „activă”"
 
 #: src/disks/gdu-encryption-options-dialog.c:135
 msgid "Error removing /etc/crypttab entry"
@@ -1952,7 +1937,7 @@ msgstr "Eroare la eliminarea intrării /etc/fstab vechi"
 #: src/disks/gdu-new-disk-image-dialog.c:78
 #: src/disks/gdu-new-disk-image-dialog.c:116 src/disks/gdu-window.c:77
 msgid "Error attaching disk image"
-msgstr "Eroare la atașarea imaginii de disc"
+msgstr "Eroare la atașarea imaginii discului"
 
 #: src/disks/gdu-new-disk-image-dialog.c:172
 msgid "Error writing file"
@@ -2019,30 +2004,24 @@ msgstr "Eroare la montarea sistemului de fișiere"
 #: src/disks/gdu-unlock-dialog.c:130
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:49
 #: src/disks/ui/gdu-unlock-dialog.ui:72
-#, fuzzy
-#| msgid "No Device Selected"
 msgid "None Selected"
-msgstr "Nu există niciun dispozitiv selectat"
+msgstr "Nicio alegere"
 
 #: src/disks/gdu-unlock-dialog.c:139
-#, fuzzy
-#| msgid "Select a keyfile to unlock this volume"
 msgid "Select keyfiles to unlock this volume."
-msgstr "Selectați un fișier cheie pentru a debloca acest volum"
+msgstr "Alege fișierele-cheie pentru a debloca acest volum."
 
 #: src/disks/gdu-unlock-dialog.c:161
 msgid "Error unlocking device"
 msgstr "Eroare la deblocarea dispozitivului"
 
 #: src/disks/gdu-window.c:175
-#, fuzzy
-#| msgid "Select Disk Image to Attach"
 msgid "Select a Disk Image to Attach"
-msgstr "Selectați imaginea de disc de atașat"
+msgstr "Alege o imagine de atașat a discului"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
-msgstr "Date comprimate nevalide"
+msgstr "Date comprimate incorecte"
 
 #: src/disks/gduxzdecompressor.c:129
 msgid "Not enough memory"
@@ -2066,20 +2045,16 @@ msgid "Cannot restore image of size 0"
 msgstr "Nu se poate restabili imaginea cu mărimea 0"
 
 #: src/disks/restore_disk_image_dialog.rs:250
-#, fuzzy
-#| msgid "The disk image is %s smaller than the target device"
 msgid "The disk image is {} smaller than the target device"
-msgstr "Imaginea de disc este cu %s mai mică decât dispozitivul țintă"
+msgstr "Imaginea discului este cu {} mai mică decât dispozitivul țintă"
 
 #: src/disks/restore_disk_image_dialog.rs:255
-#, fuzzy
-#| msgid "The disk image is %s bigger than the target device"
 msgid "The disk image is {} bigger than the target device"
-msgstr "Imaginea de disc este cu %s mai mare decât dispozitivul țintă"
+msgstr "Imaginea discului este cu {} mai mare decât dispozitivul țintă"
 
 #: src/disks/restore_disk_image_dialog.rs:395
 msgid "Are you sure you want to write the disk image to the device?"
-msgstr "Sigur doriți să scrieți imaginea de disc pe dispozitiv?"
+msgstr "Se scrie imaginea discului pe dispozitiv?"
 
 #: src/disks/restore_disk_image_dialog.rs:396
 msgid "All existing data will be lost"
@@ -2100,20 +2075,20 @@ msgstr "Eroare la deschiderea fișierului pentru citire"
 #: src/disks/restore_disk_image_dialog.rs:461
 msgctxt "restore-inhibit-message"
 msgid "Copying disk image to device"
-msgstr "Se copiază imaginea de disc la dispozitiv"
+msgstr "Se copiază imaginea discului pe dispozitiv"
 
 #. Translators: this is the description of the job
 #: src/disks/restore_disk_image_dialog.rs:473
 msgid "Restoring Disk Image"
-msgstr "Se restaurează imaginea de disc"
+msgstr "Se restabilește imaginea discului"
 
 #: src/disks/restore_disk_image_dialog.rs:491
 msgid "Error restoring disk image"
-msgstr "Eroare la restaurarea imaginii de disc"
+msgstr "Eroare la restabilirea imaginii discului"
 
 #: src/disks/restore_disk_image_dialog.rs:624
 msgid "Choose a disk image to restore."
-msgstr "Alege o imaginea de disc care să fie restabilită."
+msgstr "Alege o imaginea a discului care să fie restabilită."
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -2210,50 +2185,46 @@ msgid ""
 "Benchmarking measures the transfer rate for different areas of the disk. It "
 "also measures seek times from one area to another."
 msgstr ""
+"Testul de performanță măsoară viteza de transfer în diferite zone ale "
+"discului și timpii de căutare când capul se deplasează de la o zonă la alta."
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:65
-#, fuzzy
-#| msgid "Transfer Rate"
 msgid "Transfer S_amples"
-msgstr "Rata de transfer"
+msgstr "Probe de tr_ansfer"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:80
-#, fuzzy
-#| msgid "Sample Size"
 msgid "Transfer Sample S_ize"
-msgstr "Dimensiune mostră"
+msgstr "Măr_imea datelor transferate"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:96
-#, fuzzy
-#| msgid "Access Time"
 msgid "_Access Time Samples"
-msgstr "Timp de acces"
+msgstr "Probe pentru timpii de _acces"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:115
-#, fuzzy
-#| msgid "_Abort Benchmark"
 msgid "_Write Benchmark"
-msgstr "_Anulează testul de performanță"
+msgstr "_Test de scriere"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:117
 msgid "Data should be backed up before using this feature"
 msgstr ""
+"Trebuie făcută o copie de rezervă a datelor înainte de a folosi această "
+"caracteristicsă"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:142
 msgid "Sample Size"
-msgstr "Dimensiune mostră"
+msgstr "Mărimea probei"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:151
 msgid "Average Read Rate"
-msgstr "Rată de citire medie"
+msgstr "Viteza medie de citire"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:161
 msgid "Average Write Rate"
-msgstr "Rată de scriere medie"
+msgstr "Viteza medie de scriere"
 
 #: src/disks/ui/gdu-benchmark-dialog.ui:171
 msgid "Average Access Time"
-msgstr "Timp de acces mediu"
+msgstr "Timp mediu de acces"
 
 #: src/disks/ui/gdu-block-row.ui:65
 msgid "Partition Options"
@@ -2293,10 +2264,8 @@ msgid "Filesystem…"
 msgstr "Sistem de fișiere…"
 
 #: src/disks/ui/gdu-block-row.ui:134
-#, fuzzy
-#| msgid "Change Pa_ssphrase…"
 msgid "Change Passphrase…"
-msgstr "Schimbă fraza _secretă…"
+msgstr "Schimbă parola…"
 
 #: src/disks/ui/gdu-block-row.ui:138
 msgid "Mount Options…"
@@ -2307,10 +2276,8 @@ msgid "Encryption Options…"
 msgstr "Opțiuni de cifrare…"
 
 #: src/disks/ui/gdu-block-row.ui:146
-#, fuzzy
-#| msgid "_Take Ownership…"
 msgid "Take Ownership…"
-msgstr "_Preia posesia…"
+msgstr "Preia proprietatea…"
 
 #: src/disks/ui/gdu-block-row.ui:151
 msgid "Format Partition…"
@@ -2343,7 +2310,7 @@ msgstr "Restabilește imaginea partiției…"
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:4
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:22
 msgid "Change Passphrase"
-msgstr "Modifică parola de tip frază"
+msgstr "Schimbă parola"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:29
 #: src/disks/ui/gdu-edit-filesystem-dialog.ui:20
@@ -2351,16 +2318,12 @@ msgid "Ch_ange"
 msgstr "Schimbă"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:43
-#, fuzzy
-#| msgid ""
-#| "Changing the passphrase for this device, will also update the passphrase "
-#| "referenced by the <i>/etc/crypttab</i> file"
 msgid ""
 "Changing the passphrase for this device will also update the passphrase "
 "referenced by the <i>/etc/crypttab</i> file"
 msgstr ""
-"Modificarea frazei secrete pentru acest dispozitiv, va actualiza și fraza "
-"secretă referită de fișierul <i>/etc/crypttab</i>"
+"Schimbarea parolei pentru acest dispozitiv, va actualiza și parola din "
+"fișierul <i>/etc/crypttab</i>"
 
 #: src/disks/ui/gdu-change-passphrase-dialog.ui:53
 msgid "C_urrent Password"
@@ -2467,10 +2430,8 @@ msgid "For use with all systems and devices"
 msgstr "Pentru utilizare cu toate _sistemele și dispozitivele (FAT)"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:128
-#, fuzzy
-#| msgid "_Password protect volume (LUKS)"
 msgid "_Password Protect Volume"
-msgstr "Volum protejat prin _parolă (LUKS)"
+msgstr "Volum protejat cu _parolă"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:129
 #: src/disks/ui/gdu-create-other-page.ui:16
@@ -2478,10 +2439,8 @@ msgid "Encrypts the volume using LUKS"
 msgstr ""
 
 #: src/disks/ui/gdu-create-other-page.ui:15
-#, fuzzy
-#| msgid "_Password protect volume (LUKS)"
 msgid "Password Protect Volume"
-msgstr "Volum protejat prin _parolă (LUKS)"
+msgstr "Volum protejat cu parolă"
 
 #: src/disks/ui/gdu-create-partition-page.ui:26
 msgid "Partition Size"
@@ -2569,16 +2528,12 @@ msgid "PiB"
 msgstr "PiB"
 
 #: src/disks/ui/gdu-create-password-page.ui:8
-#, fuzzy
-#| msgid ""
-#| "Data stored in the volume will only be accessible with the correct "
-#| "password. Be careful not to forget it."
 msgid ""
 "Data stored in the Volume will only be accessible with the correct password. "
 "Be careful not to forget it"
 msgstr ""
-"Datele stocate în volum vor fi accesibile doar cu parola corectă. Aveți "
-"grijă să nu o uitați."
+"Datele stocate în volum vor fi accesibile doar cu parola corectă. Nu trebuie "
+"uitată"
 
 #: src/disks/ui/gdu-create-password-page.ui:11
 msgid "Password"
@@ -2719,11 +2674,11 @@ msgstr "Formatează discul…"
 
 #: src/disks/ui/gdu-drive-header.ui:146
 msgid "Create Disk Image…"
-msgstr "Creează o imagine de disc…"
+msgstr "Creează imaginea discului…"
 
 #: src/disks/ui/gdu-drive-header.ui:150
 msgid "Restore Disk Image…"
-msgstr "Restabilește imaginea de disc…"
+msgstr "Restabilește imaginea discului…"
 
 #: src/disks/ui/gdu-drive-header.ui:156
 msgid "Benchmark Disk…"
@@ -2879,7 +2834,7 @@ msgstr ""
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:4
 msgid "Encryption Options"
-msgstr "Opțiuni de criptare"
+msgstr "Opțiuni de cifrare"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:14 src/libgdu/gduutils.rs:549
 msgid "Cancel"
@@ -2887,50 +2842,39 @@ msgstr "Anulează"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:20
 msgid "Done"
-msgstr ""
+msgstr "Gata"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:33
 msgid ""
 "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
 "changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
 msgstr ""
-"Doar parola de tip frază referită de fișierul <i>/etc/crypttab</i> va fi "
-"modificată. Pentru a modifica parola de tip frază de pe disc, utilizați "
-"<i>Modifică parola de tip frază…</i>"
+"Doar parola din fișierul <i>/etc/crypttab</i> va fi schimbată. Pentru a "
+"schimba parola de pe disc, folosește <i>Schimbă parola…</i>"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:42
-#, fuzzy
-#| msgid "_Automatic Encryption Options"
 msgid "Automatic Encryption Options"
-msgstr "Opțiuni de criptare _automate"
+msgstr "Opțiuni de cifrare automată"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:53
 msgid "Name"
 msgstr "Nume"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:59
-#, fuzzy
-#| msgid "_Passphrase"
 msgid "Passphrase"
-msgstr "Fra_za secretă"
+msgstr "Parola"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:70
-#, fuzzy
-#| msgid "_Unlock at system startup"
 msgid "Unlock at System Start"
-msgstr "Deblochează la pornirea sistem_ului"
+msgstr "Deblochează la pornirea sistemului"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:76
-#, fuzzy
-#| msgid "Require additional authori_zation to mount"
 msgid "Require Additional Authorization"
-msgstr "Necesită autorizație adițională pentru a monta"
+msgstr "Necesită autorizație suplimentară"
 
 #: src/disks/ui/gdu-encryption-options-dialog.ui:82
-#, fuzzy
-#| msgid "Additional partition options"
 msgid "Additional Options"
-msgstr "Opțiuni de partiție adiționale"
+msgstr "Opțiuni suplimentare"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:4
 #: src/disks/ui/gdu-format-disk-dialog.ui:21
@@ -3111,28 +3055,24 @@ msgid "Destination"
 msgstr "Destinația"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:4
-#, fuzzy
-#| msgid "_Take Ownership…"
 msgid "Take Ownership?"
-msgstr "_Preia posesia…"
+msgstr "Se preia proprietatea?"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:11
-#, fuzzy
-#| msgid "Enable _recursive mode"
 msgid "_Recursive Mode"
-msgstr "Activați modul _recursiv"
+msgstr "Mod _recursiv"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:37
-#, fuzzy
-#| msgid "_Take Ownership…"
 msgid "_Take Ownership"
-msgstr "_Preia posesia…"
+msgstr "_Preia proprietatea"
 
 #: src/disks/ui/gdu-take-ownership-dialog.ui:50
 msgid ""
 "Recursive mode changes the ownership of subdirectories and files. This can "
 "cause problems if files are owned by other users."
 msgstr ""
+"Modul recursiv schimbă proprietarul subdosarelor și fișierelor. Acest lucru "
+"poate cauza probleme dacă fișierele sunt deținute de alți utilizatori."
 
 #: src/disks/ui/gdu-unlock-dialog.ui:4
 msgid "Unlock Volume"
@@ -3144,7 +3084,7 @@ msgstr "_Deblochează"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:36
 msgid "The encryption passphrase was retrieved from the keyring"
-msgstr "Parola de tip frază de criptare a fost obținută din inelul de chei"
+msgstr "Parola pentru cifrare a fost obținută din inelul de chei"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:41
 msgid "This volume might be a VeraCrypt volume as it contains random data."
@@ -3158,13 +3098,11 @@ msgstr ""
 
 #: src/disks/ui/gdu-unlock-dialog.ui:71
 msgid "Keyfiles"
-msgstr "Fișiere de chei"
+msgstr "Fișiere-cheie"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:79
-#, fuzzy
-#| msgid "Select a Keyfile"
 msgid "Select Keyfiles"
-msgstr "Selectați un fișier de cheie"
+msgstr "Alege fișiere-cheie"
 
 #: src/disks/ui/gdu-unlock-dialog.ui:97
 #, fuzzy
@@ -3206,11 +3144,11 @@ msgstr "Niciun dispozitiv ales"
 
 #: src/disks/ui/gdu-window.ui:113
 msgid "_New Disk Image…"
-msgstr "Imagine de disc _nouă…"
+msgstr "Imagine _nouă a discului…"
 
 #: src/disks/ui/gdu-window.ui:117
 msgid "_Attach Disk Image…"
-msgstr "Atașează o _imagine de disc…"
+msgstr "Atașează _imaginea discului…"
 
 #: src/disks/ui/gdu-window.ui:124
 msgid "_Keyboard Shortcuts"
@@ -3261,12 +3199,12 @@ msgstr "Discuri"
 #: src/disks/ui/shortcuts-dialog.ui:38
 msgctxt "shortcuts dialog"
 msgid "Create a new empty disk image"
-msgstr "Creează o nouă imagine de disc goală"
+msgstr "Creează o nouă imagine goală a discului"
 
 #: src/disks/ui/shortcuts-dialog.ui:44
 msgctxt "shortcuts dialog"
 msgid "Attach an existing disk image"
-msgstr "Atașează o imagine de disc"
+msgstr "Atașează o imagine a discului"
 
 #: src/disks/ui/shortcuts-dialog.ui:50
 msgctxt "shortcuts dialog"

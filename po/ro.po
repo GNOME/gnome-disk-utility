@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
 "POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-25 17:56+0100\n"
+"PO-Revision-Date: 2026-02-26 17:47+0100\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -49,12 +49,11 @@ msgstr ""
 msgid ""
 "The number of samples the benchmark will include for the read/write test."
 msgstr ""
-"Numărul de eșantioane de inclus în testul de performanță pentru scriere/"
-"citire."
+"Numărul de probe de inclus în testul de performanță pentru scriere/citire."
 
 #: data/org.gnome.Disks.gschema.xml:17
 msgid "The number of MiB (1048576 bytes) to read/write for each sample."
-msgstr "Numărul de MiB (1048576 bytes) de citit/scris pentru fiecare eșantion."
+msgstr "Numărul de MiB (1048576 bytes) de citit/scris pentru fiecare probă."
 
 #: data/org.gnome.Disks.gschema.xml:21
 msgid "To enable or disable the write test."
@@ -63,8 +62,8 @@ msgstr "Activează sau dezactivează testul de scriere."
 #: data/org.gnome.Disks.gschema.xml:25
 msgid "The number of samples the benchmark will do for the access time test."
 msgstr ""
-"Numărul de eșantioane pe care testul de performanță le va face pentru timpul "
-"de accesare."
+"Numărul de probe pe care testul de performanță le va face pentru timpul de "
+"accesare."
 
 #: data/org.gnome.DiskUtility.desktop.in:2
 #: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:298
@@ -1129,21 +1128,21 @@ msgstr "Evaluare"
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
-msgstr[0] "%u mostră"
-msgstr[1] "%u mostre"
-msgstr[2] "%u de mostre"
+msgstr[0] "%u probă"
+msgstr[1] "%u probe"
+msgstr[2] "%u de probe"
 
 #: src/disks/gdu-benchmark-dialog.c:519
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
-msgstr "Eroare la încercarea de a decala %lld: %m"
+msgstr "Eroare la deplasarea în poziția %lld: %m"
 
 #: src/disks/gdu-benchmark-dialog.c:530
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
-msgstr "Eroare la citirea %lld biți de la decalajul %lld"
+msgstr "Eroare la citirea a %lld octeți din poziția %lld"
 
 #: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
 #: src/disks/ui/gdu-create-partition-page.ui:40
@@ -1733,8 +1732,7 @@ msgstr ""
 
 #: src/disks/gdu-drive-view.c:322
 msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
-"A apărut o eroare la încercarea de a aduce unitatea din modul de așteptare"
+msgstr "A apărut o eroare la reactivarea unității din modul așteptare"
 
 #: src/disks/gdu-drive-view.c:354
 msgid "Error powering off drive"
@@ -1772,11 +1770,11 @@ msgstr "Eroare la configurarea numelui partiției"
 
 #: src/disks/gdu-edit-partition-dialog.c:141
 msgid "Error setting partition flags"
-msgstr "Eroare la configurarea fanioanelor partiției"
+msgstr "Eroare la stabilirea indicatoarelor partiției"
 
 #: src/disks/gdu-edit-partition-dialog.c:310
 msgid "The partition type as a 8-bit unsigned integer"
-msgstr "Tipul de partiție ca un număr natural pe 8 biți"
+msgstr "Tipul de partiție ca un număr natural (și zero) de 8 biți"
 
 #: src/disks/gdu-edit-partition-dialog.c:311
 msgid "_Bootable"
@@ -2389,10 +2387,8 @@ msgstr "Numele _volumului"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:25
 #: src/disks/ui/gdu-format-disk-dialog.ui:43
-#, fuzzy
-#| msgid "Don’t overwrite existing data"
 msgid "_Overwrite Existing Data"
-msgstr "Nu suprascrie datele existente"
+msgstr "S_uprascrie datele existente"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:30
 #: src/disks/ui/gdu-edit-partition-dialog.ui:68
@@ -2410,24 +2406,20 @@ msgid ""
 "Ensures that existing data cannot be recovered. This option slows down "
 "formatting."
 msgstr ""
+"Garantează că datele existente nu pot fi recuperate. Această opțiune "
+"încetinește formatarea."
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:70
-#, fuzzy
-#| msgid "Compatible with Linux systems"
 msgid "For use only with Linux systems"
-msgstr "Compatibil cu sistemele Linux"
+msgstr "De folosit numai cu sisteme Linux"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:84
-#, fuzzy
-#| msgid "For use with _Windows (NTFS)"
 msgid "For use with Windows"
-msgstr "Pentru utilizare cu _Windows (NTFS)"
+msgstr "De folosit cu Windows"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:98
-#, fuzzy
-#| msgid "For use with all _systems and devices (FAT)"
 msgid "For use with all systems and devices"
-msgstr "Pentru utilizare cu toate _sistemele și dispozitivele (FAT)"
+msgstr "De folosit cu toate sistemele și aparatele"
 
 #: src/disks/ui/gdu-create-filesystem-page.ui:128
 msgid "_Password Protect Volume"
@@ -2436,7 +2428,7 @@ msgstr "Volum protejat cu _parolă"
 #: src/disks/ui/gdu-create-filesystem-page.ui:129
 #: src/disks/ui/gdu-create-other-page.ui:16
 msgid "Encrypts the volume using LUKS"
-msgstr ""
+msgstr "Cifrează volumul folosind LUKS"
 
 #: src/disks/ui/gdu-create-other-page.ui:15
 msgid "Password Protect Volume"
@@ -2447,10 +2439,8 @@ msgid "Partition Size"
 msgstr "Mărimea partiției"
 
 #: src/disks/ui/gdu-create-partition-page.ui:41
-#, fuzzy
-#| msgid "The free space following the partition"
 msgid "Space following new partition"
-msgstr "Spațiul liber care urmează partiției"
+msgstr "Spațiu după noua partiție"
 
 #: src/disks/ui/gdu-create-partition-page.ui:66
 msgid "Extended Partitions can contain Logical Partitions"
@@ -2693,24 +2683,20 @@ msgid "Drive Settings…"
 msgstr "Preferințe unitate…"
 
 #: src/disks/ui/gdu-drive-header.ui:170
-#, fuzzy
-#| msgid "_Standby"
 msgid "Standby"
-msgstr "În _așteptare"
+msgstr "Așteptare"
 
 #: src/disks/ui/gdu-drive-header.ui:174
 msgid "Wake Up"
-msgstr ""
+msgstr "Reactivare"
 
 #: src/disks/ui/gdu-drive-header.ui:178
-#, fuzzy
-#| msgid "_Power Off"
 msgid "Power Off"
-msgstr "O_prire"
+msgstr "Oprire"
 
 #: src/disks/ui/gdu-drive-view.ui:15
 msgid "Space Allocation"
-msgstr ""
+msgstr "Alocare spațiu"
 
 #: src/disks/ui/gdu-drive-view.ui:23
 msgid "Volumes"
@@ -2722,13 +2708,11 @@ msgstr "Model"
 
 #: src/disks/ui/gdu-drive-view.ui:57 src/disks/ui/gdu-drive-view.ui:77
 msgid "Copy"
-msgstr ""
+msgstr "Copiază"
 
 #: src/disks/ui/gdu-drive-view.ui:73
-#, fuzzy
-#| msgid "Serial ATA"
 msgid "Serial"
-msgstr "ATA serial"
+msgstr "Seria"
 
 #: src/disks/ui/gdu-drive-view.ui:93 src/disks/ui/gdu-format-disk-dialog.ui:84
 msgid "Partitioning"
@@ -2754,17 +2738,16 @@ msgstr "Modifică partiția"
 #: src/disks/ui/gdu-edit-partition-dialog.ui:21
 #: src/disks/ui/gdu-mount-options-dialog.ui:21
 msgid "_Done"
-msgstr ""
+msgstr "_Gata"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:39
 msgid "_Partition Type"
 msgstr "Tipul _partiției"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:41
-#, fuzzy
-#| msgid "The partition type represented as a 32-bit <i>GUID</i>"
 msgid "The partition type represented as a 32-bit GUID"
-msgstr "Tipul partiției reprezentat ca <i>GUID</i> pe 32 de biți"
+msgstr ""
+"Tipul partiției reprezentat ca GUID (identificator global unic) de 32 de biți"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:48
 msgid ""
@@ -2778,45 +2761,34 @@ msgstr ""
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:60
 msgid "Flags"
-msgstr "Fanioane"
+msgstr "Indicatoare"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:63
-#, fuzzy
-#| msgid "Legacy BIOS _Bootable"
 msgid "_Legacy BIOS Bootable"
-msgstr "_Bootabil BIOS moștenire"
+msgstr "Partiție de pornire pentru _vechiul BIOS"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:78
-#, fuzzy
-#| msgid ""
-#| "This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-#| "normally only used for GPT partitions on MBR systems"
 msgid ""
 "This is equivalent to Master Boot Record “bootable” flag. It is normally "
 "only used for GPT partitions on MBR systems."
 msgstr ""
-"Acesta este echivalent cu fanionul pentru bootabil al înregistrării de boot "
-"principale (MBR). Este de obicei utilizat doar pentru partițiile GPT pe "
-"sisteme MBR"
+"Aceasta este echivalentă cu indicatorul „de pornire” (bootable) al Master "
+"Boot Record. Se folosește în mod normal doar pentru partițiile GPT utilizate "
+"cu calculatoare care au vechiul BIOS cu partiționare MBR."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:104
 msgid "_System Partition"
 msgstr "Partiție de _sistem"
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:119
-#, fuzzy
-#| msgid ""
-#| "Used to indicate that the partition and its contents are required for the "
-#| "OS/Platform to function. Special care should be taken to not delete or "
-#| "overwrite the contents"
 msgid ""
 "Used to indicate that the partition and its contents are required for the OS/"
 "Platform to function. Special care should be taken to not delete or "
 "overwrite the contents."
 msgstr ""
-"Folosit pentru a indica faptul că partiția și conținutul acesteia sunt "
-"necesare pentru ca SO/Platforma să funcționeze. Procedați cu precauție, nu "
-"ștergeți sau suprascrieți conținutul"
+"Se folosește pentru a indica faptul că partiția și conținutul acesteia sunt "
+"necesare pentru funcționarea sistemului/platformei. Conținutul nu trebuie "
+"șters sau suprascris."
 
 #: src/disks/ui/gdu-edit-partition-dialog.ui:145
 #, fuzzy
@@ -2888,10 +2860,8 @@ msgid "_GUID Partition Table (GPT)"
 msgstr "Tabelă de partiții GUID"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:88
-#, fuzzy
-#| msgid "Compatible with modern systems and hard disks > 2TB"
 msgid "Compatible with UEFI and disks over 2 TB"
-msgstr "Compatibil cu sistemele moderne și hard discurile > 2TB"
+msgstr "Compatibil cu UEFI și hard discuri > 2TB"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:101
 #, fuzzy
@@ -2904,14 +2874,12 @@ msgid "Legacy option with wide hardware compatibility"
 msgstr ""
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:115
-#, fuzzy
-#| msgid "No partitioning"
 msgid "_No Partitioning"
-msgstr "Nicio partiționare"
+msgstr "_Nicio partiționare"
 
 #: src/disks/ui/gdu-format-disk-dialog.ui:116
 msgid "Disk will be empty"
-msgstr ""
+msgstr "Discul va fi gol"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:4
 msgid "Mount Options"
@@ -2927,24 +2895,21 @@ msgstr ""
 "modificată sau eliminată."
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:47
-#, fuzzy
-#| msgid "_Automatic Encryption Options"
 msgid "_Automatic Mount Options"
-msgstr "Opțiuni de criptare _automate"
+msgstr "Opțiuni de montare _automată"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:56
 msgid "General"
 msgstr "Generale"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:60
-#, fuzzy
-#| msgid "Mount at system _startup"
 msgid "_Mount at Startup"
-msgstr "Montează la pornirea _sistemului"
+msgstr "_Montează la pornirea sistemului"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:67
+#, fuzzy
 msgid "_Show in Files"
-msgstr ""
+msgstr "Arată în Fișiere"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:74
 #, fuzzy
@@ -2954,7 +2919,7 @@ msgstr "Necesită autorizație adițională pentru a monta"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:83
 msgid "Appearance"
-msgstr ""
+msgstr "Aspect"
 
 #: src/disks/ui/gdu-mount-options-dialog.ui:87
 #, fuzzy

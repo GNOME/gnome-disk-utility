@@ -1,17 +1,17 @@
 # Hungarian translation for gnome-disk-utility.
-# Copyright (C) 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 Free Software Foundation, Inc.
+# Copyright (C) 2009, 2010, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-disk-utility package.
 #
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2009, 2010, 2012, 2013, 2014, 2015, 2017.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2021, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2025-08-25 11:58+0000\n"
-"PO-Revision-Date: 2025-08-26 08:34+0200\n"
+"POT-Creation-Date: 2025-08-16 12:13+0000\n"
+"PO-Revision-Date: 2026-03-01 14:25+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: data/gnome-disk-image-mounter.desktop.in:2
 msgid "Disk Image Mounter"
@@ -125,29 +125,9 @@ msgstr "A GNOME projekt"
 msgid "GNOME Disk Image Mounter"
 msgstr "GNOME Lemezképcsatoló"
 
-#: src/disk-image-mounter/window.rs:113
-msgid "Compressed image files are not mountable"
-msgstr "A tömörített lemezképfájlok nem csatolhatók"
-
-#: src/disk-image-mounter/window.rs:121
-msgid "Open the mounted image"
-msgstr "A csatolt lemezkép megnyitása"
-
-#: src/disk-image-mounter/window.rs:124
-msgid "Already mounted read-only"
-msgstr "Már csatolva van csak olvashatóként"
-
-#: src/disk-image-mounter/window.rs:127
-msgid "Already mounted"
-msgstr "Már csatolva van"
-
-#: src/disk-image-mounter/window.rs:163 src/disk-image-mounter/window.ui:39
+#: src/disk-image-mounter/window.ui:39
 msgid "Open in Files"
 msgstr "Megnyitás a Fájlokban"
-
-#: src/disk-image-mounter/window.rs:240
-msgid "Failed to mount file"
-msgstr "Nem sikerült csatolni a fájlt"
 
 #: src/disk-image-mounter/window.ui:40
 msgid "Mount the image read-only"
@@ -2034,22 +2014,17 @@ msgstr "További bemenet szükséges"
 msgid "File does not appear to be XZ compressed"
 msgstr "A fájl nem tűnik XZ-vel tömörítettnek"
 
-#: src/disks/restore_disk_image_dialog.rs:237
-#| msgid "%s when compressed"
-msgid "{} when decompressed"
-msgstr "{}, ha ki van bontva"
-
 #: src/disks/restore_disk_image_dialog.rs:246
 msgid "Cannot restore image of size 0"
 msgstr "Nem állítható helyre 0 méretű lemezkép"
 
 #: src/disks/restore_disk_image_dialog.rs:250
-#| msgid "The disk image is %s smaller than the target device"
+#, rust-format
 msgid "The disk image is {} smaller than the target device"
 msgstr "A lemezkép ennyivel kisebb a céleszköznél: {}"
 
 #: src/disks/restore_disk_image_dialog.rs:255
-#| msgid "The disk image is %s bigger than the target device"
+#, rust-format
 msgid "The disk image is {} bigger than the target device"
 msgstr "A lemezkép ennyivel nagyobb a céleszköznél: {}"
 
@@ -2984,7 +2959,6 @@ msgid "_Units"
 msgstr "_Mértékegységek"
 
 #: src/disks/ui/gdu-restore-disk-image-dialog.ui:22
-#| msgid "_Restore"
 msgid "_Restore…"
 msgstr "_Helyreállítás…"
 
@@ -3116,125 +3090,91 @@ msgid "Set up _read-only loop device"
 msgstr "Csak _olvasható hurokeszköz beállítása"
 
 #: src/disks/ui/shortcuts-dialog.ui:6
-#| msgid "General"
 msgctxt "shortcuts dialog"
 msgid "General"
 msgstr "Általános"
 
 #: src/disks/ui/shortcuts-dialog.ui:9
-#| msgctxt "shortcut window"
-#| msgid "Help"
 msgctxt "shortcuts dialog"
 msgid "Help"
 msgstr "Súgó"
 
 #: src/disks/ui/shortcuts-dialog.ui:15
-#| msgctxt "shortcut window"
-#| msgid "Open the application menu"
 msgctxt "shortcuts dialog"
 msgid "Open the application menu"
 msgstr "Az alkalmazásmenü megnyitása"
 
 #: src/disks/ui/shortcuts-dialog.ui:21
-#| msgctxt "shortcut window"
-#| msgid "Keyboard shortcuts"
 msgctxt "shortcuts dialog"
 msgid "Keyboard shortcuts"
 msgstr "Gyorsbillentyűk"
 
 #: src/disks/ui/shortcuts-dialog.ui:27
-#| msgctxt "shortcut window"
-#| msgid "Quit"
 msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Kilépés"
 
 #: src/disks/ui/shortcuts-dialog.ui:35
-#| msgid "Disks"
 msgctxt "shortcuts dialog"
 msgid "Disks"
 msgstr "Lemezek"
 
 #: src/disks/ui/shortcuts-dialog.ui:38
-#| msgctxt "shortcut window"
-#| msgid "Create a new empty disk image"
 msgctxt "shortcuts dialog"
 msgid "Create a new empty disk image"
 msgstr "Új, üres lemezkép létrehozása"
 
 #: src/disks/ui/shortcuts-dialog.ui:44
-#| msgctxt "shortcut window"
-#| msgid "Attach an existing disk image"
 msgctxt "shortcuts dialog"
 msgid "Attach an existing disk image"
 msgstr "Meglévő lemezkép csatolása"
 
 #: src/disks/ui/shortcuts-dialog.ui:50
-#| msgctxt "shortcut window"
-#| msgid "Unselect current disk"
 msgctxt "shortcuts dialog"
 msgid "Unselect current disk"
 msgstr "Jelenlegi lemez kiválasztásának megszüntetése"
 
 #: src/disks/ui/shortcuts-dialog.ui:58
-#| msgctxt "shortcut window"
-#| msgid "Drive"
 msgctxt "shortcuts dialog"
 msgid "Drive"
 msgstr "Meghajtó"
 
 #: src/disks/ui/shortcuts-dialog.ui:61
-#| msgctxt "shortcut window"
-#| msgid "Open the drive menu"
 msgctxt "shortcuts dialog"
 msgid "Open the drive menu"
 msgstr "A meghajtómenü megnyitása"
 
 #: src/disks/ui/shortcuts-dialog.ui:67
-#| msgctxt "shortcut window"
-#| msgid "Format the drive"
 msgctxt "shortcuts dialog"
 msgid "Format the drive"
 msgstr "A meghajtó formázása"
 
 #: src/disks/ui/shortcuts-dialog.ui:73
-#| msgctxt "shortcut window"
-#| msgid "Restore an image to the disk"
 msgctxt "shortcuts dialog"
 msgid "Restore an image to the disk"
 msgstr "Lemezkép helyreállítása a lemezre"
 
 #: src/disks/ui/shortcuts-dialog.ui:79
-#| msgctxt "shortcut window"
-#| msgid "SMART data"
 msgctxt "shortcuts dialog"
 msgid "SMART data"
 msgstr "SMART adatok"
 
 #: src/disks/ui/shortcuts-dialog.ui:85
-#| msgctxt "shortcut window"
-#| msgid "Drive settings"
 msgctxt "shortcuts dialog"
 msgid "Drive settings"
 msgstr "Meghajtóbeállítások"
 
 #: src/disks/ui/shortcuts-dialog.ui:93
-#| msgctxt "shortcut window"
-#| msgid "Partition"
 msgctxt "shortcuts dialog"
 msgid "Partition"
 msgstr "Partíció"
 
 #: src/disks/ui/shortcuts-dialog.ui:96
-#| msgctxt "shortcut window"
-#| msgid "Open the volume menu"
 msgctxt "shortcuts dialog"
 msgid "Open the volume menu"
 msgstr "A kötetmenü megnyitása"
 
 #: src/disks/ui/shortcuts-dialog.ui:102
-#| msgctxt "shortcut window"
-#| msgid "Format the selected volume"
 msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "A kijelölt kötet formázása"
@@ -3243,7 +3183,7 @@ msgstr "A kijelölt kötet formázása"
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: src/libgdu/gduutils.c:103 src/libgdu/gduutils.rs:86
+#: src/libgdu/gduutils.c:103
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Lemezképek (*.img, *.img.xz, *.iso)"
 
@@ -3379,37 +3319,36 @@ msgstr "Hiba a hurokeszköz automatikus törlésének letiltásakor"
 
 #: src/libgdu/gduutils.rs:338
 msgid "duration-year-to-inf"
-msgstr ""
+msgstr "%s év, %s hónap és %s nap"
 
 #: src/libgdu/gduutils.rs:345
 msgid "duration-months-to-year"
-msgstr ""
+msgstr "%s hónap és %s nap"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
 #: src/libgdu/gduutils.rs:351
 msgid "duration-day-to-month"
-msgstr ""
+msgstr "%s nap és %s óra"
 
 #: src/libgdu/gduutils.rs:355
 msgid "duration-hour-to-day"
-msgstr ""
+msgstr "%s óra és %s perc"
 
 #: src/libgdu/gduutils.rs:365
 msgid "duration-minute-to-hour"
-msgstr ""
+msgstr "%s perc és %s másodperc"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
 #: src/libgdu/gduutils.rs:378
 msgid "duration-second-to-minute"
-msgstr ""
+msgstr "%s másodperc"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
 #: src/libgdu/gduutils.rs:382
 msgid "duration-zero-to-second"
-msgstr ""
+msgstr "%s ezredmásodperc"
 
 #: src/libgdu/gduutils.rs:883
-#| msgid "Failed to mount file"
 msgid "Failed to find filesystem"
 msgstr "Nem sikerült megtalálni a fájlrendszert"
 

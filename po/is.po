@@ -1,14 +1,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2017, 2019, 2022.
+# SPDX-FileCopyrightText: 2015, 2017, 2019, 2022, 2026 Sveinn í Felli <sv1@fellsnet.is>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues"
 "\n"
-"POT-Creation-Date: 2022-09-16 21:45+0000\n"
-"PO-Revision-Date: 2022-11-30 19:39+0000\n"
+"POT-Creation-Date: 2025-08-16 12:13+0000\n"
+"PO-Revision-Date: 2026-03-21 13:41+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -16,23 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 23.08.5\n"
 
-#: data/gnome-disk-image-mounter.desktop.in:3 src/disk-image-mounter/main.c:55
+#: data/gnome-disk-image-mounter.desktop.in:2
 msgid "Disk Image Mounter"
 msgstr "Diskmyndatengir"
 
-#: data/gnome-disk-image-mounter.desktop.in:4
-msgid "Mount Disk Images"
+#: data/gnome-disk-image-mounter.desktop.in:3
+#, fuzzy
+#| msgid "Mount Disk Images"
+msgid "Mount/Write Disk Images"
 msgstr "Tengja inn diskmyndir"
-
-#: data/gnome-disk-image-writer.desktop.in:3
-msgid "Disk Image Writer"
-msgstr "Diskmyndaskrifari"
-
-#: data/gnome-disk-image-writer.desktop.in:4
-msgid "Write Disk Images to Devices"
-msgstr "Skrifa diskmyndir á tæki"
 
 #: data/org.gnome.Disks.gschema.xml:6
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -61,17 +55,31 @@ msgstr ""
 msgid "The number of samples the benchmark will do for the access time test."
 msgstr ""
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:7
-#: data/org.gnome.DiskUtility.desktop.in:3 src/disks/gduwindow.c:1108
-#: src/disks/ui/about-dialog.ui:10 src/disks/ui/disks.ui:28
+#: data/org.gnome.DiskUtility.desktop.in:2
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:298
+#: src/disks/ui/gdu-window.ui:24 src/notify/gdusdmonitor.c:300
 msgid "Disks"
 msgstr "Diskar"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:8
+#: data/org.gnome.DiskUtility.desktop.in:3
+msgid "Manage Drives and Media"
+msgstr "Hafa umsjón með hörðum diskum og öðrum gagnamiðlum"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.DiskUtility.desktop.in:5
+msgid ""
+"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;resto"
+"re;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
+msgstr ""
+"diskur;drif;gagnahirsla;gagnamiðill;harður "
+"diskur;hdd;disk;cdrom;dvd;disksneið;iso;diskmynd;öryggisafrit;endurheimt;afkas"
+"taprófun;raid;luks;dulritun;S.M.A.R.T.;smart;"
+
+#: data/org.gnome.DiskUtility.metainfo.xml.in:8
 msgid "Disk management utility for GNOME"
 msgstr "Diskaumsýsla fyrir GNOME"
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:10
+#: data/org.gnome.DiskUtility.metainfo.xml.in:10
 msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
@@ -79,7 +87,7 @@ msgstr ""
 "Diskar er einföld leið til að skoða, forsníða, sneiða og setja upp diska og "
 "blokkartæki."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:14
+#: data/org.gnome.DiskUtility.metainfo.xml.in:14
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -87,147 +95,143 @@ msgstr ""
 "Með því að nota Diskar-forritið geturðu skoðað SMART-gögn, sýslað með tæki, "
 "afkastaprófað raundiska og skrifað diskmyndir á USB-minnislykla."
 
-#: data/org.gnome.DiskUtility.appdata.xml.in:45
+#: data/org.gnome.DiskUtility.metainfo.xml.in:22
+msgid "Partition and format disks"
+msgstr ""
+
+#: data/org.gnome.DiskUtility.metainfo.xml.in:26
+msgid "Inspect drive speed and health status"
+msgstr ""
+
+#: data/org.gnome.DiskUtility.metainfo.xml.in:30
+msgid "Manage your storage devices"
+msgstr ""
+
+#. developer_name tag deprecated with Appstream 1.0
+#: data/org.gnome.DiskUtility.metainfo.xml.in:44
+#: src/disks/gdu-application.c:300
 msgid "The GNOME Project"
 msgstr "GNOME-verkefnið"
 
-#: data/org.gnome.DiskUtility.desktop.in:4
-msgid "Manage Drives and Media"
-msgstr "Hafa umsjón með hörðum diskum og öðrum gagnamiðlum"
+#: src/disk-image-mounter/main.rs:20
+#| msgid "Disk Image Mounter"
+msgid "GNOME Disk Image Mounter"
+msgstr "GNOME-diskmyndatengir"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/org.gnome.DiskUtility.desktop.in:6
-msgid ""
-"disk;drive;volume;harddisk;hdd;disc;cdrom;dvd;partition;iso;image;backup;"
-"restore;benchmark;raid;luks;encryption;S.M.A.R.T.;smart;"
-msgstr ""
-"diskur;drif;gagnahirsla;gagnamiðill;harður"
-" diskur;hdd;disk;cdrom;dvd;disksneið;iso;diskmynd;öryggisafrit;"
-"endurheimt;afkastaprófun;raid;luks;dulritun;S.M.A.R.T.;smart;"
+#: src/disk-image-mounter/window.ui:39
+msgid "Open in Files"
+msgstr "Opna í skráastjóra"
 
-#: src/disk-image-mounter/main.c:53
-msgid "An error occurred"
-msgstr "Villa kom upp"
-
-#: src/disk-image-mounter/main.c:74
-msgid "Allow writing to the image"
-msgstr "Leyfa ritun í diskmyndaskrána"
-
-#: src/disk-image-mounter/main.c:89
-msgid "Select Disk Image(s) to Mount"
-msgstr "Veldu diskmynd(ir) til að tengja inn"
-
-#: src/disk-image-mounter/main.c:92 src/disks/gducreatediskimagedialog.c:936
-#: src/disks/gducreateformatdialog.c:173 src/disks/gducreateformatdialog.c:474
-#: src/disks/gdunewdiskimagedialog.c:329 src/disks/gduwindow.c:818
-#: src/disks/ui/benchmark-dialog.ui:287
-#: src/disks/ui/create-disk-image-dialog.ui:123
-#: src/disks/ui/format-disk-dialog.ui:24
-#: src/disks/ui/restore-disk-image-dialog.ui:184
-msgid "_Cancel"
-msgstr "_Hætta við"
-
-#: src/disk-image-mounter/main.c:93
-msgid "_Mount"
-msgstr "_Tengja í skráakerfi"
-
-#. Add a RO check button that defaults to RO
-#: src/disk-image-mounter/main.c:101
-msgid "Set up _read-only mount"
-msgstr "Setja tengipunkt upp skrifvarinn"
-
-#: src/disk-image-mounter/main.c:102
-msgid ""
-"If checked, the mount will be read-only. This is useful if you don’t want "
-"the underlying disk image to be modified"
+#: src/disk-image-mounter/window.ui:40
+msgid "Mount the image read-only"
 msgstr ""
 
-#: src/disk-image-mounter/main.c:143
-#, c-format
-msgid "Error connecting to udisks daemon: %s (%s, %d)"
+#: src/disk-image-mounter/window.ui:60
+#| msgid "Mount Disk Images"
+msgid "Unmount Disk Image"
+msgstr "Aftengja diskmynd"
+
+#: src/disk-image-mounter/window.ui:61
+msgid "Unmount the mounted image"
 msgstr ""
 
-#: src/disk-image-mounter/main.c:151
-msgid "Attach and mount one or more disk image files."
+#: src/disk-image-mounter/window.ui:75
+msgid "Edit Contents in Files"
 msgstr ""
 
-#: src/disk-image-mounter/main.c:199
-#, c-format
-msgid "Cannot open “%s” — maybe the volume isn’t mounted?"
+#: src/disk-image-mounter/window.ui:76
+msgid "Mount the image and allow editing"
 msgstr ""
 
-#: src/disk-image-mounter/main.c:206
-#, c-format
-msgid "Error opening “%s”: %m"
-msgstr "Villa við að opna “%s”: %m"
+#: src/disk-image-mounter/window.ui:95
+#| msgid "Fit to size"
+msgid "Write to Drive"
+msgstr "Skrifa á drif"
 
-#: src/disk-image-mounter/main.c:227
-#, c-format
-msgid "Error attaching disk image: %s (%s, %d)"
+#: src/disk-image-mounter/window.ui:96
+msgid "Open in Disks to write the image to a drive"
 msgstr ""
 
-#: src/disks/gduapplication.c:92
-msgid "Stop running jobs?"
-msgstr "Stöðva keyrslu verka?"
-
-#: src/disks/gduapplication.c:94
-msgid "Closing now stops the running jobs and leads to a corrupt result."
+#: src/disk-image-mounter/window.ui:109
+msgid "Inspect in Disks"
 msgstr ""
 
-#: src/disks/gduapplication.c:144
+#: src/disk-image-mounter/window.ui:110
+msgid "Mount the image and open in Disks"
+msgstr ""
+
+#: src/disks/gdu-application.c:120
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Villa við að opna %s: %s"
 
-#: src/disks/gduapplication.c:151
+#: src/disks/gdu-application.c:127
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Villa við að leita að blokkartæki fyrir %s"
 
-#: src/disks/gduapplication.c:173
+#: src/disks/gdu-application.c:160
 msgid "Select device"
 msgstr "Veldu tæki"
 
-#: src/disks/gduapplication.c:174
+#: src/disks/gdu-application.c:161
 msgid "Format selected device"
 msgstr "Forsníða valið tæki"
 
-#: src/disks/gduapplication.c:175
+#: src/disks/gdu-application.c:162
+msgid "Show verbose logs, specify up to four times to increase log level"
+msgstr ""
+
+#: src/disks/gdu-application.c:163
 msgid "Ignored, kept for compatibility"
 msgstr ""
 
-#: src/disks/gduapplication.c:176
+#: src/disks/gdu-application.c:164
 msgid "Restore disk image"
 msgstr "Endurheimta diskmynd"
 
-#: src/disks/gduapplication.c:208
+#: src/disks/gdu-application.c:197
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 
-#: src/disks/gduapplication.c:214
+#: src/disks/gdu-application.c:203
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 
-#. Translators: Shown in the About dialog to convey version numbers.
-#. *              The first %s is the version of Disks (for example "3.6").
-#. *              The second %s is the version of the running udisks daemon (for example "2.0.90").
-#. *              The third, fourth and fifth %d are the major, minor and micro versions of libudisks2 that was used when compiling the Disks application (for example 2, 0 and 90).
-#.
-#: src/disks/gduapplication.c:348
-#, c-format
+#: src/disks/gdu-application.c:302
 msgid ""
-"gnome-disk-utility %s\n"
-"UDisks %s (built against %d.%d.%d)"
+"© 2009 The GNOME Project\n"
+"© 2008-2013 Red Hat, Inc.\n"
+"© 2008-2013 David Zeuthen"
 msgstr ""
+"© 2009 GNOME-verkefnið\n"
+"© 2008-2013 Red Hat, Inc.\n"
+"© 2008-2013 David Zeuthen"
+
+#: src/disks/gdu-application.c:306
+msgid "translator-credits"
+msgstr "Sveinn í Felli, sv1@fellsnet.is"
+
+#: src/disks/gdu-application.c:322
+msgid "Stop running jobs?"
+msgstr "Stöðva keyrslu verka?"
+
+#: src/disks/gdu-application.c:323
+msgid "Closing now stops the running jobs and leads to a corrupt result."
+msgstr ""
+
+#: src/disks/gdu-application.c:324
+msgid "Stop"
+msgstr "Stöðva"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:145
+#: src/disks/gdu-ata-smart-dialog.c:144
 msgid "Read Error Rate"
 msgstr "Hlutfall lesvilla"
 
-#: src/disks/gduatasmartdialog.c:146
+#: src/disks/gdu-ata-smart-dialog.c:145
 msgid ""
 "Frequency of errors while reading raw data from the disk. A non-zero value "
 "indicates a problem with either the disk surface or read/write heads"
@@ -236,44 +240,44 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:155
+#: src/disks/gdu-ata-smart-dialog.c:154
 msgid "Throughput Performance"
 msgstr "Afköst gegnumstreymis"
 
-#: src/disks/gduatasmartdialog.c:156
+#: src/disks/gdu-ata-smart-dialog.c:155
 msgid "Average efficiency of the disk"
 msgstr "Meðaltalsafköst disksins"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:163
+#: src/disks/gdu-ata-smart-dialog.c:162
 msgid "Spinup Time"
 msgstr "Fullhraðatími"
 
-#: src/disks/gduatasmartdialog.c:164
+#: src/disks/gdu-ata-smart-dialog.c:163
 msgid "Time needed to spin up the disk"
 msgstr "Tíminn sem þarf til að koma disknum af stað á nothæfan hraða"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:171
+#: src/disks/gdu-ata-smart-dialog.c:170
 msgid "Start/Stop Count"
 msgstr "Fjöldi ræsinga/stöðvana"
 
-#: src/disks/gduatasmartdialog.c:172
+#: src/disks/gdu-ata-smart-dialog.c:171
 msgid "Number of spindle start/stop cycles"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:179
+#: src/disks/gdu-ata-smart-dialog.c:178
 msgid "Reallocated Sector Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:180
+#: src/disks/gdu-ata-smart-dialog.c:179
 msgid ""
 "Count of remapped sectors. When the hard drive finds a read/write/"
 "verification error, it marks the sector as “reallocated” and transfers data "
@@ -283,110 +287,110 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:189
+#: src/disks/gdu-ata-smart-dialog.c:188
 msgid "Read Channel Margin"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:190
+#: src/disks/gdu-ata-smart-dialog.c:189
 msgid "Margin of a channel while reading data."
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:197
+#: src/disks/gdu-ata-smart-dialog.c:196
 msgid "Seek Error Rate"
 msgstr "Hlutfall leitarvillna"
 
-#: src/disks/gduatasmartdialog.c:198
+#: src/disks/gdu-ata-smart-dialog.c:197
 msgid "Frequency of errors while positioning"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:205
+#: src/disks/gdu-ata-smart-dialog.c:204
 msgid "Seek Timer Performance"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:206
+#: src/disks/gdu-ata-smart-dialog.c:205
 msgid "Average efficiency of operations while positioning"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:213 src/disks/gduatasmartdialog.c:538
+#: src/disks/gdu-ata-smart-dialog.c:212 src/disks/gdu-ata-smart-dialog.c:537
 msgid "Power-On Hours"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:214 src/disks/gduatasmartdialog.c:539
+#: src/disks/gdu-ata-smart-dialog.c:213 src/disks/gdu-ata-smart-dialog.c:538
 msgid "Number of hours elapsed in the power-on state"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:221
+#: src/disks/gdu-ata-smart-dialog.c:220
 msgid "Spinup Retry Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:222
+#: src/disks/gdu-ata-smart-dialog.c:221
 msgid "Number of retry attempts to spin up"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:229
+#: src/disks/gdu-ata-smart-dialog.c:228
 msgid "Calibration Retry Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:230
+#: src/disks/gdu-ata-smart-dialog.c:229
 msgid "Number of attempts to calibrate the device"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:237
+#: src/disks/gdu-ata-smart-dialog.c:236
 msgid "Power Cycle Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:238
+#: src/disks/gdu-ata-smart-dialog.c:237
 msgid "Number of power-on events"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:245
+#: src/disks/gdu-ata-smart-dialog.c:244
 msgid "Soft read error rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:247
+#: src/disks/gdu-ata-smart-dialog.c:246
 msgid "Frequency of errors while reading from the disk"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:254
+#: src/disks/gdu-ata-smart-dialog.c:253
 msgid "Reported Uncorrectable Errors"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:255
+#: src/disks/gdu-ata-smart-dialog.c:254
 msgid "Number of errors that could not be recovered using hardware ECC"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:262
+#: src/disks/gdu-ata-smart-dialog.c:261
 msgid "High Fly Writes"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:263
+#: src/disks/gdu-ata-smart-dialog.c:262
 msgid ""
 "Number of times a recording head is flying outside its normal operating range"
 msgstr ""
@@ -394,78 +398,78 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:270
+#: src/disks/gdu-ata-smart-dialog.c:269
 msgid "Airflow Temperature"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:271
+#: src/disks/gdu-ata-smart-dialog.c:270
 msgid "Airflow temperature of the drive"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:278 src/disks/gduatasmartdialog.c:448
+#: src/disks/gdu-ata-smart-dialog.c:277 src/disks/gdu-ata-smart-dialog.c:447
 msgid "G-sense Error Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:279
+#: src/disks/gdu-ata-smart-dialog.c:278
 msgid "Frequency of mistakes as a result of impact loads"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:286 src/disks/gduatasmartdialog.c:505
+#: src/disks/gdu-ata-smart-dialog.c:285 src/disks/gdu-ata-smart-dialog.c:504
 msgid "Power-off Retract Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:287
+#: src/disks/gdu-ata-smart-dialog.c:286
 msgid "Number of power-off or emergency retract cycles"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:294 src/disks/gduatasmartdialog.c:481
+#: src/disks/gdu-ata-smart-dialog.c:293 src/disks/gdu-ata-smart-dialog.c:480
 msgid "Load/Unload Cycle Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:295
+#: src/disks/gdu-ata-smart-dialog.c:294
 msgid "Number of cycles into landing zone position"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:302 src/disks/gduatasmartdialog.c:521
-#: src/disks/ui/smart-dialog.ui:153
+#: src/disks/gdu-ata-smart-dialog.c:301 src/disks/gdu-ata-smart-dialog.c:520
+#: src/disks/ui/gdu-ata-smart-dialog.ui:80
 msgid "Temperature"
 msgstr "Hitastig"
 
-#: src/disks/gduatasmartdialog.c:303
+#: src/disks/gdu-ata-smart-dialog.c:302
 msgid "Current internal temperature of the drive"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:310
+#: src/disks/gdu-ata-smart-dialog.c:309
 msgid "Hardware ECC Recovered"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:311
+#: src/disks/gdu-ata-smart-dialog.c:310
 msgid "Number of ECC on-the-fly errors"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:318
+#: src/disks/gdu-ata-smart-dialog.c:317
 msgid "Reallocation Count"
 msgstr "Fjöldi endurúthlutana"
 
-#: src/disks/gduatasmartdialog.c:319
+#: src/disks/gdu-ata-smart-dialog.c:318
 msgid ""
 "Number of remapping operations. The raw value of this attribute shows the "
 "total number of (successful and unsuccessful) attempts to transfer data from "
@@ -475,11 +479,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:329
+#: src/disks/gdu-ata-smart-dialog.c:328
 msgid "Current Pending Sector Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:330
+#: src/disks/gdu-ata-smart-dialog.c:329
 msgid ""
 "Number of sectors waiting to be remapped. If the sector waiting to be "
 "remapped is subsequently written or read successfully, this value is "
@@ -490,11 +494,11 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:341
+#: src/disks/gdu-ata-smart-dialog.c:340
 msgid "Uncorrectable Sector Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:342
+#: src/disks/gdu-ata-smart-dialog.c:341
 msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A "
 "rise in the value of this attribute indicates defects of the disk surface "
@@ -504,22 +508,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:351
+#: src/disks/gdu-ata-smart-dialog.c:350
 msgid "UDMA CRC Error Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:352
+#: src/disks/gdu-ata-smart-dialog.c:351
 msgid "Number of CRC errors during UDMA mode"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:359
+#: src/disks/gdu-ata-smart-dialog.c:358
 msgid "Write Error Rate"
 msgstr "Hlutfall skrifvillna"
 
-#: src/disks/gduatasmartdialog.c:360
+#: src/disks/gdu-ata-smart-dialog.c:359
 msgid ""
 "Number of errors while writing to disk (or) multi-zone error rate (or) "
 "flying-height"
@@ -528,116 +532,116 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:367
+#: src/disks/gdu-ata-smart-dialog.c:366
 msgid "Soft Read Error Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:368
+#: src/disks/gdu-ata-smart-dialog.c:367
 msgid "Number of off-track errors"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:375
+#: src/disks/gdu-ata-smart-dialog.c:374
 msgid "Data Address Mark Errors"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:376
+#: src/disks/gdu-ata-smart-dialog.c:375
 msgid "Number of Data Address Mark (DAM) errors (or) vendor-specific"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:383
+#: src/disks/gdu-ata-smart-dialog.c:382
 msgid "Run Out Cancel"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:384
+#: src/disks/gdu-ata-smart-dialog.c:383
 msgid "Number of ECC errors"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:391
+#: src/disks/gdu-ata-smart-dialog.c:390
 msgid "Soft ECC correction"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:392
+#: src/disks/gdu-ata-smart-dialog.c:391
 msgid "Number of errors corrected by software ECC"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:399
+#: src/disks/gdu-ata-smart-dialog.c:398
 msgid "Thermal Asperity Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:400
+#: src/disks/gdu-ata-smart-dialog.c:399
 msgid "Number of Thermal Asperity Rate errors"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:407
+#: src/disks/gdu-ata-smart-dialog.c:406
 msgid "Flying Height"
 msgstr "Svifhæð"
 
-#: src/disks/gduatasmartdialog.c:408
+#: src/disks/gdu-ata-smart-dialog.c:407
 msgid "Height of heads above the disk surface"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:415
+#: src/disks/gdu-ata-smart-dialog.c:414
 msgid "Spin High Current"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:416
+#: src/disks/gdu-ata-smart-dialog.c:415
 msgid "Amount of high current used to spin up the drive"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:423
+#: src/disks/gdu-ata-smart-dialog.c:422
 msgid "Spin Buzz"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:424
+#: src/disks/gdu-ata-smart-dialog.c:423
 msgid "Number of buzz routines to spin up the drive"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:431
+#: src/disks/gdu-ata-smart-dialog.c:430
 msgid "Offline Seek Performance"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:432
+#: src/disks/gdu-ata-smart-dialog.c:431
 msgid "Drive’s seek performance during offline operations"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:439
+#: src/disks/gdu-ata-smart-dialog.c:438
 msgid "Disk Shift"
 msgstr "Hnikun disks"
 
-#: src/disks/gduatasmartdialog.c:440
+#: src/disks/gdu-ata-smart-dialog.c:439
 msgid ""
 "Shift of disk is possible as a result of strong shock loading in the store, "
 "as a result of falling (or) temperature"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:449
+#: src/disks/gdu-ata-smart-dialog.c:448
 msgid ""
 "Number of errors as a result of impact loads as detected by a shock sensor"
 msgstr ""
@@ -645,22 +649,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:456
+#: src/disks/gdu-ata-smart-dialog.c:455
 msgid "Loaded Hours"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:457
+#: src/disks/gdu-ata-smart-dialog.c:456
 msgid "Number of hours in general operational state"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:464
+#: src/disks/gdu-ata-smart-dialog.c:463
 msgid "Load/Unload Retry Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:465
+#: src/disks/gdu-ata-smart-dialog.c:464
 msgid ""
 "Loading on drive caused by numerous recurrences of operations, like reading, "
 "recording, positioning of heads, etc"
@@ -669,67 +673,67 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:473
+#: src/disks/gdu-ata-smart-dialog.c:472
 msgid "Load Friction"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:474
+#: src/disks/gdu-ata-smart-dialog.c:473
 msgid "Load on drive caused by friction in mechanical parts of the store"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:482
+#: src/disks/gdu-ata-smart-dialog.c:481
 msgid "Total number of load cycles"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:489
+#: src/disks/gdu-ata-smart-dialog.c:488
 msgid "Load-in Time"
 msgstr "Innhleðslutími"
 
-#: src/disks/gduatasmartdialog.c:490
+#: src/disks/gdu-ata-smart-dialog.c:489
 msgid "General time for loading in a drive"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:497
+#: src/disks/gdu-ata-smart-dialog.c:496
 msgid "Torque Amplification Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:498
+#: src/disks/gdu-ata-smart-dialog.c:497
 msgid "Quantity efforts of the rotating moment of a drive"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:506
+#: src/disks/gdu-ata-smart-dialog.c:505
 msgid "Number of power-off retract events"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:513
+#: src/disks/gdu-ata-smart-dialog.c:512
 msgid "GMR Head Amplitude"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:514
+#: src/disks/gdu-ata-smart-dialog.c:513
 msgid "Amplitude of heads trembling (GMR-head) in running mode"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:522
+#: src/disks/gdu-ata-smart-dialog.c:521
 msgid "Temperature of the drive"
 msgstr "Hitastig drifsins"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:529
+#: src/disks/gdu-ata-smart-dialog.c:528
 msgid "Endurance Remaining"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:530
+#: src/disks/gdu-ata-smart-dialog.c:529
 msgid ""
 "Number of physical erase cycles completed on the drive as a percentage of "
 "the maximum physical erase cycles the drive supports"
@@ -738,22 +742,22 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:546
+#: src/disks/gdu-ata-smart-dialog.c:545
 msgid "Uncorrectable ECC Count"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:547
+#: src/disks/gdu-ata-smart-dialog.c:546
 msgid "Number of uncorrectable ECC errors"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:554
+#: src/disks/gdu-ata-smart-dialog.c:553
 msgid "Good Block Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:555
+#: src/disks/gdu-ata-smart-dialog.c:554
 msgid ""
 "Number of available reserved blocks as a percentage of the total number of "
 "reserved blocks"
@@ -762,69 +766,69 @@ msgstr ""
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:563
+#: src/disks/gdu-ata-smart-dialog.c:562
 msgid "Head Flying Hours"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:564
+#: src/disks/gdu-ata-smart-dialog.c:563
 msgid "Time while head is positioning"
 msgstr ""
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:571
+#: src/disks/gdu-ata-smart-dialog.c:570
 msgid "Read Error Retry Rate"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:572
+#: src/disks/gdu-ata-smart-dialog.c:571
 msgid "Number of errors while reading from a disk"
 msgstr ""
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:579
+#: src/disks/gdu-ata-smart-dialog.c:578
 msgid "Total LBAs Written"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:580
+#: src/disks/gdu-ata-smart-dialog.c:579
 msgid "The amount of data written during the lifetime of the disk"
 msgstr ""
 
 #. Translators: SMART attribute, see https://en.wikipedia.org/wiki/S.M.A.R.T.#Known_ATA_S.M.A.R.T._attributes
 #. * or the next string for a longer explanation.
 #.
-#: src/disks/gduatasmartdialog.c:587
+#: src/disks/gdu-ata-smart-dialog.c:586
 msgid "Total LBAs Read"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:588
+#: src/disks/gdu-ata-smart-dialog.c:587
 msgid "The amount of data read during the lifetime of the disk"
 msgstr ""
 
-#: src/disks/gduatasmartdialog.c:647
+#: src/disks/gdu-ata-smart-dialog.c:646
 #, c-format
 msgid "No description for attribute %d"
 msgstr ""
 
 #. Translators: Shown in the treeview for a failing attribute
-#: src/disks/gduatasmartdialog.c:694
+#: src/disks/gdu-ata-smart-dialog.c:693
 msgid "FAILING"
 msgstr "BILAR"
 
 #. Translators: Shown in the treeview for an attribute that failed in the past
-#: src/disks/gduatasmartdialog.c:703
+#: src/disks/gdu-ata-smart-dialog.c:702
 msgid "Failed in the past"
 msgstr "Hefur bilað áður"
 
-#: src/disks/gduatasmartdialog.c:707
+#: src/disks/gdu-ata-smart-dialog.c:706
 msgid "OK"
 msgstr "Í lagi"
 
 #. Translators: Used in the treeview for the pretty/interpreted value of an attribute
 #. * for a sector-based unit
-#: src/disks/gduatasmartdialog.c:734
+#: src/disks/gdu-ata-smart-dialog.c:733
 #, c-format
 msgid "%d sector"
 msgid_plural "%d sectors"
@@ -838,7 +842,7 @@ msgstr[1] "%d geirar"
 #. * The first %f is the temperature in degrees Celcius and
 #. * the second %f is the temperature in degrees Fahrenheit.
 #.
-#: src/disks/gduatasmartdialog.c:746 src/disks/gduatasmartdialog.c:879
+#: src/disks/gdu-ata-smart-dialog.c:745 src/disks/gdu-ata-smart-dialog.c:878
 #, c-format
 msgid "%.0f° C / %.0f° F"
 msgstr "%.0f° C / %.0f° F"
@@ -849,113 +853,113 @@ msgstr "%.0f° C / %.0f° F"
 #. Translators: Shown for normalized values (current, worst, threshold) if the value is
 #. * not applicable, e.g. meaningless. See http://en.wikipedia.org/wiki/N/A
 #.
-#: src/disks/gduatasmartdialog.c:757 src/disks/gduatasmartdialog.c:1128
+#: src/disks/gdu-ata-smart-dialog.c:756 src/disks/gdu-ata-smart-dialog.c:1127
 msgid "N/A"
 msgstr "Ekki tiltækt"
 
-#: src/disks/gduatasmartdialog.c:777
+#: src/disks/gdu-ata-smart-dialog.c:776
 msgctxt "smart-self-test-result"
 msgid "Last self-test completed successfully"
 msgstr "Síðasta sjálfprófun tókst vel"
 
-#: src/disks/gduatasmartdialog.c:781
+#: src/disks/gdu-ata-smart-dialog.c:780
 msgctxt "smart-self-test-result"
 msgid "Last self-test was aborted"
 msgstr "Hætt var við síðustu sjálfprófun"
 
-#: src/disks/gduatasmartdialog.c:785
+#: src/disks/gdu-ata-smart-dialog.c:784
 msgctxt "smart-self-test-result"
 msgid "Last self-test was interrupted"
 msgstr "Síðasta sjálfprófun var trufluð"
 
-#: src/disks/gduatasmartdialog.c:789
+#: src/disks/gdu-ata-smart-dialog.c:788
 msgctxt "smart-self-test-result"
 msgid "Last self-test did not complete"
 msgstr "Síðustu sjálfprófun lauk ekki"
 
-#: src/disks/gduatasmartdialog.c:793
+#: src/disks/gdu-ata-smart-dialog.c:792
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed"
 msgstr "Síðasta sjálfprófun mistókst"
 
 #. Translators: shown when the last self-test failed and the problem is with the electrical subsystem
-#: src/disks/gduatasmartdialog.c:798
+#: src/disks/gdu-ata-smart-dialog.c:797
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (electrical)"
 msgstr "Síðasta sjálfprófun mistókst (rafmagn)"
 
 #. Translators: shown when the last self-test failed and the problem is with the servo subsystem - see http://en.wikipedia.org/wiki/Servomechanism
-#: src/disks/gduatasmartdialog.c:803
+#: src/disks/gdu-ata-smart-dialog.c:802
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (servo)"
 msgstr "Síðasta sjálfprófun mistókst (servo-mótor)"
 
 #. Translators: shown when the last self-test failed and the problem is with the reading subsystem -
-#: src/disks/gduatasmartdialog.c:808
+#: src/disks/gdu-ata-smart-dialog.c:807
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (read)"
 msgstr "Síðasta sjálfprófun mistókst (lesa)"
 
 #. Translators: shown when the last self-test failed and the disk is suspected of having handling damage (e.g. physical damage to the hard disk)
-#: src/disks/gduatasmartdialog.c:813
+#: src/disks/gdu-ata-smart-dialog.c:812
 msgctxt "smart-self-test-result"
 msgid "Last self-test failed (handling)"
 msgstr "Síðasta sjálfprófun mistókst (meðhöndlun)"
 
 #. Translators: shown when a self-test is in progress. The first %d is the percentage of the test remaining.
-#: src/disks/gduatasmartdialog.c:818
+#: src/disks/gdu-ata-smart-dialog.c:817
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Self-test in progress — %d%% remaining"
 msgstr "Sjálfprófun er í gangi — %d%% eftir"
 
 #. Translators: Shown when a self-test is not unknown. The %s is the result-code from the API code.
-#: src/disks/gduatasmartdialog.c:825
+#: src/disks/gdu-ata-smart-dialog.c:824
 #, c-format
 msgctxt "smart-self-test-result"
 msgid "Unknown (%s)"
 msgstr "Óþekkt (%s)"
 
-#: src/disks/gduatasmartdialog.c:850
+#: src/disks/gdu-ata-smart-dialog.c:849
 #, c-format
 msgid "%s ago"
 msgstr "%s síðan"
 
-#: src/disks/gduatasmartdialog.c:913
+#: src/disks/gdu-ata-smart-dialog.c:912
 msgid "SMART is not supported"
 msgstr "SMART er ekki stutt"
 
-#: src/disks/gduatasmartdialog.c:921
+#: src/disks/gdu-ata-smart-dialog.c:920
 msgid "SMART is not enabled"
 msgstr "SMART er óvirkt"
 
-#: src/disks/gduatasmartdialog.c:931
+#: src/disks/gdu-ata-smart-dialog.c:930
 msgid "Self-test in progress"
 msgstr "Sjálfprófun er í vinnslu"
 
-#: src/disks/gduatasmartdialog.c:944 src/disks/gduatasmartdialog.c:953
+#: src/disks/gdu-ata-smart-dialog.c:943 src/disks/gdu-ata-smart-dialog.c:952
 msgid "DISK IS LIKELY TO FAIL SOON"
 msgstr "DISKURINN ER LÍKLEGUR TIL AÐ BILA Á NÆSTUNNI"
 
-#: src/disks/gduatasmartdialog.c:976
+#: src/disks/gdu-ata-smart-dialog.c:975
 msgid "SELF-TEST FAILED"
 msgstr "SJÁLFPRÓFUN MISTÓKST"
 
-#: src/disks/gduatasmartdialog.c:985
+#: src/disks/gdu-ata-smart-dialog.c:984
 #, c-format
 msgid "Disk is OK, one failing attribute is failing"
 msgid_plural "Disk is OK, %d attributes are failing"
 msgstr[0] "Diskurinn er í lagi, eitt eigindi er að bila"
 msgstr[1] "Diskurinn er í lagi, %d eigindi eru að bila"
 
-#: src/disks/gduatasmartdialog.c:996
+#: src/disks/gdu-ata-smart-dialog.c:995
 #, c-format
 msgid "Disk is OK, one bad sector"
 msgid_plural "Disk is OK, %d bad sectors"
 msgstr[0] "Diskurinn er í lagi, einn gallaður geiri"
 msgstr[1] "Diskurinn er í lagi, %d gallaðir geirar"
 
-#: src/disks/gduatasmartdialog.c:1007
+#: src/disks/gdu-ata-smart-dialog.c:1006
 #, c-format
 msgid "Disk is OK, one attribute failed in the past"
 msgid_plural "Disk is OK, %d attributes failed in the past"
@@ -963,7 +967,7 @@ msgstr[0] "Diskurinn er í lagi, eitt eigindi hefur bilað áður"
 msgstr[1] "Diskurinn er í lagi, %d eigindi hafa bilað áður"
 
 #. Otherwise, it's all honky dory
-#: src/disks/gduatasmartdialog.c:1016
+#: src/disks/gdu-ata-smart-dialog.c:1015
 msgid "Disk is OK"
 msgstr "Diskurinn er í lagi"
 
@@ -971,664 +975,838 @@ msgstr "Diskurinn er í lagi"
 #. * The first %s is the status of the drive.
 #. * The second %s is the temperature of the drive.
 #.
-#: src/disks/gduatasmartdialog.c:1030
+#: src/disks/gdu-ata-smart-dialog.c:1029
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: src/disks/gduatasmartdialog.c:1116
+#: src/disks/gdu-ata-smart-dialog.c:1115
 msgid "Pre-Fail"
 msgstr "Frum-bilun"
 
-#: src/disks/gduatasmartdialog.c:1118
+#: src/disks/gdu-ata-smart-dialog.c:1117
 msgid "Old-Age"
 msgstr "Öldrun"
 
-#: src/disks/gduatasmartdialog.c:1121
+#: src/disks/gdu-ata-smart-dialog.c:1120
 msgid "Online"
 msgstr "Tengdur"
 
-#: src/disks/gduatasmartdialog.c:1123
+#: src/disks/gdu-ata-smart-dialog.c:1122
 msgid "Offline"
 msgstr "Ótengdur"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1232
+#: src/disks/gdu-ata-smart-dialog.c:1231
 msgid "Threshold exceeded"
 msgstr "Yfir mörkum"
 
 #. Translators: XXX
-#: src/disks/gduatasmartdialog.c:1237
+#: src/disks/gdu-ata-smart-dialog.c:1236
 msgid "Threshold not exceeded"
 msgstr "Ekki yfir mörkum"
 
-#: src/disks/gduatasmartdialog.c:1313
+#: src/disks/gdu-ata-smart-dialog.c:1312
 msgid "Error refreshing SMART data"
 msgstr "Villa við að endurlesa SMART-gögn"
 
-#: src/disks/gduatasmartdialog.c:1345
+#: src/disks/gdu-ata-smart-dialog.c:1344
 msgid "Error aborting SMART self-test"
 msgstr "Villa þegar hætt var í SMART sjálfprófun"
 
-#: src/disks/gduatasmartdialog.c:1364
+#: src/disks/gdu-ata-smart-dialog.c:1363
 msgid "Error starting SMART self-test"
 msgstr "Villa við að ræsa SMART sjálfprófun"
 
-#: src/disks/gduatasmartdialog.c:1446
+#: src/disks/gdu-ata-smart-dialog.c:1445
 msgid "An error occurred when trying to toggle whether SMART is enabled"
 msgstr "Villa kom upp þegar reynt var að víxla SMART af/á"
 
 #. Translators: This string is used as the column title in the treeview for the Attribute ID (0-255)
-#: src/disks/gduatasmartdialog.c:1566
+#: src/disks/gdu-ata-smart-dialog.c:1564
 msgid "ID"
 msgstr "Auðkenni (ID)"
 
 #. Translators: This string is used as the column title in the treeview for the attribute name and description
-#: src/disks/gduatasmartdialog.c:1578
+#: src/disks/gdu-ata-smart-dialog.c:1576
 msgid "Attribute"
 msgstr "Eigindi"
 
 #. Translators: This string is used as the column title in the treeview for the value
-#: src/disks/gduatasmartdialog.c:1592
+#: src/disks/gdu-ata-smart-dialog.c:1590
 msgid "Value"
 msgstr "Gildi"
 
 #. Translators: This string is used as the column title in the treeview for the normalized value
-#: src/disks/gduatasmartdialog.c:1604
+#: src/disks/gdu-ata-smart-dialog.c:1602
 msgid "Normalized"
 msgstr "Samræmt"
 
 #. Translators: This string is used as the column title in the treeview for the threshold value
-#: src/disks/gduatasmartdialog.c:1616
+#: src/disks/gdu-ata-smart-dialog.c:1614
 msgid "Threshold"
 msgstr "Takmörk"
 
 #. Translators: This string is used as the column title in the treeview for the worst value
-#: src/disks/gduatasmartdialog.c:1628
+#: src/disks/gdu-ata-smart-dialog.c:1626
 msgid "Worst"
 msgstr "Verst"
 
 #. Translators: This string is used as the column title in the treeview for the type
-#: src/disks/gduatasmartdialog.c:1640
-#: src/disks/ui/create-filesystem-page.ui:105
+#: src/disks/gdu-ata-smart-dialog.c:1638
+#: src/disks/ui/gdu-create-filesystem-page.ui:66
+#: src/disks/ui/gdu-create-other-page.ui:8
 msgid "Type"
 msgstr "Tegund"
 
 #. Translators: This string is used as the column title in the treeview for the update type (Online / Offline)
-#: src/disks/gduatasmartdialog.c:1652
+#: src/disks/gdu-ata-smart-dialog.c:1650
 msgid "Updates"
 msgstr "Uppfærslur"
 
 #. Translators: This string is used as the column title in the treeview for the assessment of the attribute
-#: src/disks/gduatasmartdialog.c:1664 src/disks/ui/disks.ui:355
+#: src/disks/gdu-ata-smart-dialog.c:1662
 msgid "Assessment"
 msgstr "Metið ástand"
 
-#. Translators: This is used in the benchmark graph - %d is megabytes per second
-#: src/disks/gdubenchmarkdialog.c:332
-#, c-format
-msgctxt "benchmark-graph"
-msgid "%d MB/s"
-msgstr "%d MB/sek"
-
-#. Translators: This is used in the benchmark graph - %g is number of milliseconds
-#: src/disks/gdubenchmarkdialog.c:337
-#, c-format
-msgctxt "benchmark-graph"
-msgid "%3g ms"
-msgstr "%3g msek"
-
-#. Translators: %s is the formatted size, e.g. "42 MB" and the trailing "/s" means per second
-#: src/disks/gdubenchmarkdialog.c:661
-#, c-format
-msgctxt "benchmark-transfer-rate"
-msgid "%s/s"
-msgstr "%s/sek"
-
-#: src/disks/gdubenchmarkdialog.c:676 src/disks/gdubenchmarkdialog.c:888
+#: src/disks/gdu-benchmark-dialog.c:172
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
 msgstr[0] "%u sýni"
 msgstr[1] "%u sýni"
 
-#. Translators: The first %s is the date and time the benchmark took place in the preferred
-#. * format for the locale (e.g. "%c" for strftime()/g_date_time_format()), for example
-#. * "Tue 12 Jun 2012 03:57:08 PM EDT". The second %s is how long ago that is from right
-#. * now, for example "3 days" or "2 hours" or "12 minutes".
-#.
-#: src/disks/gdubenchmarkdialog.c:717
-#, c-format
-msgctxt "benchmark-updated"
-msgid "%s (%s ago)"
-msgstr "%s (%s síðan)"
-
-#: src/disks/gdubenchmarkdialog.c:729
-msgctxt "benchmark-updated"
-msgid "No benchmark data available"
-msgstr "Engin prófunargögn tiltæk"
-
-#: src/disks/gdubenchmarkdialog.c:734
-msgctxt "benchmark-updated"
-msgid "Opening Device…"
-msgstr "Opna tæki..."
-
-#: src/disks/gdubenchmarkdialog.c:738
-#, c-format
-msgctxt "benchmark-updated"
-msgid "Measuring transfer rate (%2.1f%% complete)…"
-msgstr "Mæli flutningsgetu (%2.1f%% lokið)…"
-
-#: src/disks/gdubenchmarkdialog.c:745
-#, c-format
-msgctxt "benchmark-updated"
-msgid "Measuring access time (%2.1f%% complete)…"
-msgstr "Mæli opnunartíma (%2.1f%% lokið)…"
-
-#: src/disks/gdubenchmarkdialog.c:811
-msgctxt "benchmarking"
-msgid "An error occurred"
-msgstr "Villa kom upp"
-
-#. Translators: %d is number of milliseconds and msec means "milli-second"
-#: src/disks/gdubenchmarkdialog.c:886
-#, c-format
-msgctxt "benchmark-access-time"
-msgid "%.2f msec"
-msgstr "%.2f msek"
-
-#. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdubenchmarkdialog.c:1180
-msgctxt "create-inhibit-message"
-msgid "Benchmarking device"
-msgstr "Afkastaprófa tæki"
-
-#: src/disks/gdubenchmarkdialog.c:1206
-#, c-format
-msgctxt "benchmarking"
-msgid "Error getting size of device: %m"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1216
-#, c-format
-msgctxt "benchmarking"
-msgid "Error getting page size: %m\n"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1250 src/disks/gdubenchmarkdialog.c:1313
-#: src/disks/gdubenchmarkdialog.c:1332
-#, c-format
-msgctxt "benchmarking"
-msgid "Error seeking to offset %lld"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1261
-#, c-format
-msgctxt "benchmarking"
-msgid "Error pre-reading %s from offset %s"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1273
-#, c-format
-msgctxt "benchmarking"
-msgid "Error seeking to offset %s"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1287
-#, c-format
-msgctxt "benchmarking"
-msgid "Error reading %s from offset %s"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1322
-#, c-format
-msgctxt "benchmarking"
-msgid "Error pre-reading %lld bytes from offset %lld"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1343
-#, c-format
-msgctxt "benchmarking"
-msgid "Error writing %lld bytes at offset %lld: %m"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1353
-#, c-format
-msgctxt "benchmarking"
-msgid "Expected to write %lld bytes, only wrote %lld: %m"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1363
-#, c-format
-msgctxt "benchmarking"
-msgid "Error syncing (at offset %lld): %m"
-msgstr ""
-
-#: src/disks/gdubenchmarkdialog.c:1403
+#: src/disks/gdu-benchmark-dialog.c:519
 #, c-format
 msgctxt "benchmarking"
 msgid "Error seeking to offset %lld: %m"
 msgstr ""
 
-#: src/disks/gdubenchmarkdialog.c:1415
+#: src/disks/gdu-benchmark-dialog.c:530
 #, c-format
 msgctxt "benchmarking"
 msgid "Error reading %lld bytes from offset %lld"
 msgstr ""
 
-#: src/disks/gduchangepassphrasedialog.c:120
-msgid "The passphrases do not match"
-msgstr "Lykilorðin stemma ekki"
+#: src/disks/gdu-block.c:84 src/disks/gdu-block.c:137
+#: src/disks/ui/gdu-create-partition-page.ui:40
+#| msgctxt "volume-grid"
+#| msgid "Free Space"
+msgid "Free Space"
+msgstr "Laust pláss"
 
-#: src/disks/gduchangepassphrasedialog.c:129
-msgid "The passphrase matches the existing passphrase"
-msgstr "Lykilorðið samsvarar fyrirliggjandi lykilorði"
+#: src/disks/gdu-block.c:97 src/disks/ui/gdu-create-partition-page.ui:65
+msgid "Extended Partition"
+msgstr "Útvíkkuð disksneið"
 
-#: src/disks/gduchangepassphrasedialog.c:189
+#. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
+#. *              space.
+#. *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
+#. *              The second %s is a short string with the space free (e.g. '43 GB').
+#. *              The %f is the percentage in use (e.g. 62.2).
+#.
+#: src/disks/gdu-block.c:577
+#, c-format
+msgid "%s — %s free (%.1f%% full)"
+msgstr "%s — %s laust (%.1f%% full)"
+
+#: src/disks/gdu-block-row.c:142
+#, fuzzy
+#| msgid "_Mount"
+msgid "Mount"
+msgstr "_Tengja í skráakerfi"
+
+#: src/disks/gdu-block-row.c:144
+#, fuzzy
+#| msgid "_Mount"
+msgid "Unmount"
+msgstr "_Tengja í skráakerfi"
+
+#: src/disks/gdu-block-row.c:146
+#, fuzzy
+#| msgctxt "volume-content-crypto"
+#| msgid "Locked"
+msgid "Lock"
+msgstr "Læst"
+
+#: src/disks/gdu-block-row.c:148
+#, fuzzy
+#| msgid "_Unlock"
+msgid "Unlock"
+msgstr "_Aflæsa"
+
+#: src/disks/gdu-block-row.c:363
+msgid "Error mounting filesystem"
+msgstr "Villa við að tengja skráakerfi"
+
+#: src/disks/gdu-block-row.c:417
+msgid "Error deleting partition"
+msgstr "Villa við að eyða disksneið"
+
+#: src/disks/gdu-block-row.c:484
+#, fuzzy
+#| msgid "Create Partition"
+msgid "Delete Partition?"
+msgstr "Búa til disksneið"
+
+#: src/disks/gdu-block-row.c:485
+msgid "All data on the partition will be lost"
+msgstr "Öll gögn á þessari disksneið tapast"
+
+#: src/disks/gdu-block-row.c:486
+#, fuzzy
+#| msgid "_Delete"
+msgid "Delete"
+msgstr "_Eyða"
+
+#: src/disks/gdu-block-row.c:529
+#, c-format
+msgid "The utility “%s” is required to resize a %s partition."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:533
+#, fuzzy
+#| msgid "Error while repairing filesystem"
+msgid "Error while resizing filesystem"
+msgstr "Villa við að gera við skráakerfi"
+
+#: src/disks/gdu-block-row.c:567
+msgid "Error while checking filesystem"
+msgstr "Villa við að yfirfara skráakerfi"
+
+#: src/disks/gdu-block-row.c:580
+msgid "Filesystem intact"
+msgstr "Skráakerfi óskemmt"
+
+#: src/disks/gdu-block-row.c:580
+msgid "Filesystem damaged"
+msgstr "Skráakerfi er skemmt"
+
+#: src/disks/gdu-block-row.c:582
+#, c-format
+msgid "Filesystem %s on %s is undamaged."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:583
+#, c-format
+msgid "Filesystem %s on %s needs repairing."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:650
+#, fuzzy
+#| msgid "Confirm Check"
+msgid "Confirm Check?"
+msgstr "Staðfesta yfirferð"
+
+#: src/disks/gdu-block-row.c:651
+msgid ""
+"The check may take a long time, especially if the partition contains a lot "
+"of data."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:652
+msgid "Check"
+msgstr ""
+
+#: src/disks/gdu-block-row.c:683
+msgid "Error while repairing filesystem"
+msgstr "Villa við að gera við skráakerfi"
+
+#: src/disks/gdu-block-row.c:699
+msgid "Repair successful"
+msgstr "Viðgerð tókst"
+
+#: src/disks/gdu-block-row.c:699
+msgid "Repair failed"
+msgstr "Viðgerð mistókst"
+
+#: src/disks/gdu-block-row.c:701
+#, c-format
+msgid "Filesystem %s on %s has been repaired."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:702
+#, c-format
+msgid "Filesystem %s on %s could not be repaired."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:770
+#, fuzzy
+#| msgid "Rep_air Filesystem…"
+msgid "Repair Filesystem?"
+msgstr "Ger_a við skráakerfi…"
+
+#: src/disks/gdu-block-row.c:771
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider "
+"backing it up first in order to use forensic recovery tools that retrieve "
+"lost files. The operation may take a long time, especially if the partition "
+"contains a lot of data."
+msgstr ""
+
+#: src/disks/gdu-block-row.c:775
+#, fuzzy
+#| msgid "Repair failed"
+msgid "Repair"
+msgstr "Viðgerð mistókst"
+
+#: src/disks/gdu-block-row.c:797
+msgid "Error while taking filesystem ownership"
+msgstr "Villa við að yfirtaka eignarhald skráakerfis"
+
+#: src/disks/gdu-block-row.c:885
+#, c-format
+msgid "Make your user and group the owner of ”%s”"
+msgstr ""
+
+#: src/disks/gdu-change-passphrase-dialog.c:104
 msgid "Error updating /etc/crypttab"
 msgstr "Villa við að uppfæra /etc/crypttab"
 
-#: src/disks/gduchangepassphrasedialog.c:208
+#: src/disks/gdu-change-passphrase-dialog.c:125
 msgid "Error changing passphrase"
 msgstr "Villa við að breyta lykilorði"
 
-#: src/disks/gduchangepassphrasedialog.c:295 src/disks/gducrypttabdialog.c:408
+#: src/disks/gdu-change-passphrase-dialog.c:215
+#: src/disks/gdu-encryption-options-dialog.c:389
 msgid "Error retrieving configuration data"
 msgstr "Villa við að sækja uppsetningargögn"
 
-#: src/disks/gduchangepassphrasedialog.c:321
+#: src/disks/gdu-change-passphrase-dialog.c:244
 msgid "/etc/crypttab configuration data is malformed"
 msgstr ""
-
-#: src/disks/gduchangepassphrasedialog.c:354
-msgid ""
-"Changing the passphrase for this device, will also update the passphrase "
-"referenced by the <i>/etc/crypttab</i> file"
-msgstr ""
-
-#: src/disks/gduchangepassphrasedialog.c:373
-msgid "The strength of the passphrase"
-msgstr "Styrkur lykilorðsins"
 
 #. Translators: In most cases this should not need translation unless the
 #. *              separation character '—' is not appropriate. The strings come
 #. *              from UDisks, first is description, second the name:
 #. *              "Partition 1 of 32 GB Flash Disk — /dev/sdb1".
 #.
-#: src/disks/gducreateconfirmpage.c:110
+#: src/disks/gdu-create-confirm-page.c:50
 #, c-format
 msgid "%s — %s"
 msgstr "%s — %s"
 
-#. Translators: Disk usage in the format '3 GB (7%)', unit string comes from UDisks.
+#. Translators: Disk usage in the format '3 GB (7%)', unit string comes
+#. * from UDisks.
 #.
-#: src/disks/gducreateconfirmpage.c:128
+#: src/disks/gdu-create-confirm-page.c:98
 #, c-format
 msgid "%s (%.1f%%)"
 msgstr "%s (%.1f%%)"
-
-#. Translators: The suggested name for the disk image to create.
-#. *              The first %s is a name for the disk (e.g. 'sdb').
-#. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
-#.
-#: src/disks/gducreatediskimagedialog.c:274
-#, c-format
-msgid "Disk Image of %s (%s).img"
-msgstr "Diskmynd af %s (%s).img"
 
 #. Translators: A descriptive string for the sound played when
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gducreatediskimagedialog.c:307
+#: src/disks/gdu-create-disk-image-dialog.c:135
 msgid "Disk image read error"
 msgstr "Villa við lestur diskmyndar"
 
-#: src/disks/gducreatediskimagedialog.c:343
+#: src/disks/gdu-create-disk-image-dialog.c:173
 msgid "Allocating Disk Image"
 msgstr "Úthluta diskmynd"
 
-#: src/disks/gducreatediskimagedialog.c:347
+#: src/disks/gdu-create-disk-image-dialog.c:177
 msgid "Retrieving DVD keys"
 msgstr "Sæki DVD-lykla"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gducreatediskimagedialog.c:356
+#: src/disks/gdu-create-disk-image-dialog.c:186
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr ""
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gducreatediskimagedialog.c:410
-#: src/disks/gdurestorediskimagedialog.c:613
+#: src/disks/gdu-create-disk-image-dialog.c:240
+#: src/disks/restore_disk_image_dialog.rs:378
 msgid "Disk image copying complete"
 msgstr "Afritun diskmyndar lokið"
 
-#: src/disks/gducreatediskimagedialog.c:439
+#: src/disks/gdu-create-disk-image-dialog.c:270
 msgid "Error creating disk image"
 msgstr "Villa við að búa til diskmynd"
 
-#. Translators: Primary message in dialog shown if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:498
-msgid "Unrecoverable read errors while creating disk image"
+#. Translators: Heading in dialog shown if some data was unreadable while creating a disk image
+#: src/disks/gdu-create-disk-image-dialog.c:325
+msgid "Unrecoverable Read Errors"
 msgstr ""
 
-#. Translators: Secondary message in dialog shown if some data was unreadable while creating a disk image.
+#. Translators: Body in dialog shown if some data was unreadable while creating a disk image.
 #. * The %f is the percentage of unreadable data (ex. 13.0).
 #. * The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gducreatediskimagedialog.c:507
+#: src/disks/gdu-create-disk-image-dialog.c:337
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
 "zeroes in the created disk image file. This typically happens if the medium "
-"is scratched or if there is physical damage to the drive"
+"is scratched or if there is physical damage to the drive."
 msgstr ""
 
-#. Translators: Label of secondary button in dialog if some data was unreadable while creating a disk image
-#: src/disks/gducreatediskimagedialog.c:513
+#: src/disks/gdu-create-disk-image-dialog.c:343
+#: src/disks/gdu-format-volume-dialog.c:197
+#: src/disks/ui/gdu-benchmark-dialog.ui:15
+#: src/disks/ui/gdu-benchmark-dialog.ui:22
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:16
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:16
+#: src/disks/ui/gdu-disk-settings-dialog.ui:15
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:13
+#: src/disks/ui/gdu-edit-partition-dialog.ui:14
+#: src/disks/ui/gdu-format-disk-dialog.ui:14
+#: src/disks/ui/gdu-mount-options-dialog.ui:14
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:16
+#: src/disks/ui/gdu-resize-volume-dialog.ui:13
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:15
+#: src/disks/ui/gdu-take-ownership-dialog.ui:36
+#: src/disks/ui/gdu-unlock-dialog.ui:13 src/libgdu/gduutils.c:738
+msgid "_Cancel"
+msgstr "_Hætta við"
+
+#: src/disks/gdu-create-disk-image-dialog.c:344
 msgid "_Delete Disk Image File"
 msgstr "_Eyða diskmyndaskrá"
 
-#: src/disks/gducreatediskimagedialog.c:515 src/disks/ui/benchmark-dialog.ui:49
-msgid "_Close"
-msgstr "_Loka"
-
-#: src/disks/gducreatediskimagedialog.c:731
-#: src/disks/gdurestorediskimagedialog.c:731
+#: src/disks/gdu-create-disk-image-dialog.c:566
 msgid "Error determining size of device: "
 msgstr ""
 
-#: src/disks/gducreatediskimagedialog.c:738
-#: src/disks/gdurestorediskimagedialog.c:738
+#: src/disks/gdu-create-disk-image-dialog.c:573
 #, c-format
 msgid "Device is size 0"
 msgstr "Stærð tækis er 0"
 
-#: src/disks/gducreatediskimagedialog.c:771
+#: src/disks/gdu-create-disk-image-dialog.c:606
 msgid "Error allocating space for disk image file: "
 msgstr ""
 
-#: src/disks/gducreatediskimagedialog.c:931
-#: src/disks/gdunewdiskimagedialog.c:324
-#, c-format
-msgid "A file named “%s” already exists.  Do you want to replace it?"
-msgstr "Það er þegar til skrá sem heitir „%s“. Viltu skipta henni út?"
-
-#: src/disks/gducreatediskimagedialog.c:934
-#: src/disks/gdunewdiskimagedialog.c:327
-#, c-format
-msgid ""
-"The file already exists in “%s”.  Replacing it will overwrite its contents."
-msgstr ""
-"Þessi skrá er þegar til í „%s”. Verði henni skipt út verður skrifað yfir "
-"innihaldið."
-
-#: src/disks/gducreatediskimagedialog.c:937
-#: src/disks/gdunewdiskimagedialog.c:330
-msgid "_Replace"
-msgstr "_Skipta út"
-
-#: src/disks/gducreatediskimagedialog.c:987
-#: src/disks/gdunewdiskimagedialog.c:247
+#: src/disks/gdu-create-disk-image-dialog.c:765
+#: src/disks/gdu-new-disk-image-dialog.c:158
 msgid "Error opening file for writing"
 msgstr "Tókst ekki að opna skrána til skriftar"
 
 #. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gducreatediskimagedialog.c:1003
+#: src/disks/gdu-create-disk-image-dialog.c:778
 msgctxt "create-inhibit-message"
 msgid "Copying device to disk image"
 msgstr "Afrita tæki á diskmynd"
 
 #. Translators: this is the description of the job
-#: src/disks/gducreatediskimagedialog.c:1009
+#: src/disks/gdu-create-disk-image-dialog.c:784
 msgid "Creating Disk Image"
 msgstr "Bý til diskmynd"
 
-#: src/disks/gducreatefilesystempage.c:217
-#: src/disks/gducreatefilesystempage.c:229 src/disks/gducreateotherpage.c:203
+#: src/disks/gdu-create-disk-image-dialog.c:869
+#: src/disks/gdu-new-disk-image-dialog.c:299
+#, fuzzy
+#| msgid "_Replace"
+msgid "Replace File?"
+msgstr "_Skipta út"
+
+#: src/disks/gdu-create-disk-image-dialog.c:870
+#: src/disks/gdu-new-disk-image-dialog.c:300
+#, fuzzy, c-format
+#| msgid "A file named “%s” already exists.  Do you want to replace it?"
+msgid "A file named “%s” already exists in %s"
+msgstr "Það er þegar til skrá sem heitir „%s“. Viltu skipta henni út?"
+
+#: src/disks/gdu-create-disk-image-dialog.c:871
+#: src/disks/gdu-new-disk-image-dialog.c:301
+#, fuzzy
+#| msgid "_Replace"
+msgid "Replace"
+msgstr "_Skipta út"
+
+#: src/disks/gdu-create-disk-image-dialog.c:923
+#: src/disks/gdu-new-disk-image-dialog.c:256
+msgid "Choose a location to save the disk image."
+msgstr ""
+
+#. Translators: The suggested name for the disk image to create.
+#. *              The first %s is a name for the disk (e.g. 'sdb').
+#. *              The second %s is today's date and time, e.g. "March 2, 1976 6:25AM".
+#.
+#: src/disks/gdu-create-disk-image-dialog.c:965
+#, c-format
+msgid "Disk Image of %s (%s).img"
+msgstr "Diskmynd af %s (%s).img"
+
+#: src/disks/gdu-create-filesystem-page.c:234
+#: src/disks/gdu-create-filesystem-page.c:244
+#: src/disks/gdu-create-other-page.c:67
 #, c-format
 msgid "The utility %s is missing."
 msgstr "Hjálparforritið %s vantar."
 
-#: src/disks/gducreateformatdialog.c:175
-msgid "_Previous"
-msgstr "_Fyrra"
+#: src/disks/gdu-create-other-page.c:181
+msgid "XFS"
+msgstr "XFS"
 
-#: src/disks/gducreateformatdialog.c:181
-msgid "Cre_ate"
-msgstr "Bú_a til"
-
-#: src/disks/gducreateformatdialog.c:187
-msgid "Form_at"
-msgstr "Forsníð_a"
-
-#: src/disks/gducreateformatdialog.c:194
-msgid "N_ext"
-msgstr "Næst_a"
-
-#: src/disks/gducreateformatdialog.c:221
-msgid "Error formatting volume"
-msgstr "Það tókst ekki að strauja gagnamiðilinn"
-
-#: src/disks/gducreateformatdialog.c:292
-msgid "Error creating partition"
-msgstr "Villa við að búa til disksneið"
-
-#: src/disks/gducreateformatdialog.c:454
-msgid "Create Partition"
-msgstr "Búa til disksneið"
-
-#: src/disks/gducreateformatdialog.c:463
-msgid "Format Volume"
-msgstr "Forsníða gagnamiðil"
-
-#: src/disks/gducreateformatdialog.c:466
-msgid "Custom Format"
-msgstr "Sérsnið"
-
-#: src/disks/gducreateformatdialog.c:469
-msgid "Set Password"
-msgstr "Stilla lykilorð"
-
-#: src/disks/gducreateformatdialog.c:472
-msgid "Confirm Details"
-msgstr ""
-
-#: src/disks/gducreateformatdialog.c:475 src/disks/gduformatdiskdialog.c:410
-msgid "_Format"
-msgstr "_Forsníða"
-
-#: src/disks/gducreateotherpage.c:115
-msgid "XFS — Linux Filesystem"
+#: src/disks/gdu-create-other-page.c:181
+#, fuzzy
+#| msgid "XFS — Linux Filesystem"
+msgid "Linux Filesystem"
 msgstr "XFS — Linux skráakerfi"
 
-#: src/disks/gducreateotherpage.c:117
+#: src/disks/gdu-create-other-page.c:182
 msgid "Linux Swap Partition"
 msgstr "Linux SWAP-diskminnisneið"
 
-#: src/disks/gducreateotherpage.c:119
-msgid "Btrfs — Copy-on-write Linux Filesystem, for snapshots"
+#: src/disks/gdu-create-other-page.c:183
+msgid "Btrfs"
+msgstr "Btrfs"
+
+#: src/disks/gdu-create-other-page.c:183
+msgid "Copy-on-write Linux Filesystem, for snapshots"
 msgstr ""
 
-#: src/disks/gducreateotherpage.c:121
-msgid "F2FS — Flash Storage Linux Filesystem"
+#: src/disks/gdu-create-other-page.c:184
+msgid "F2FS"
+msgstr "F2FS"
+
+#: src/disks/gdu-create-other-page.c:184
+#, fuzzy
+#| msgid "XFS — Linux Filesystem"
+msgid "Flash Storage Linux Filesystem"
+msgstr "XFS — Linux skráakerfi"
+
+#: src/disks/gdu-create-other-page.c:185
+msgid "exFAT"
+msgstr "exFAT"
+
+#: src/disks/gdu-create-other-page.c:185
+msgid "Flash Storage Windows Filesystem, used on SDXC cards"
 msgstr ""
 
-#: src/disks/gducreateotherpage.c:123
-msgid "exFAT — Flash Storage Windows Filesystem, used on SDXC cards"
-msgstr ""
+#: src/disks/gdu-create-other-page.c:186
+msgid "UDF"
+msgstr "UDF"
 
-#: src/disks/gducreateotherpage.c:125
-msgid "UDF — Universal Disk Format, for removable devices on many systems"
+#: src/disks/gdu-create-other-page.c:186
+#, fuzzy
+#| msgid "UDF — Universal Disk Format, for removable devices on many systems"
+msgid "Universal Disk Format, for removable devices on many systems"
 msgstr "UDF — Universal Disk Format, fyrir útskiptanleg tæki á mörgum kerfum"
 
-#: src/disks/gducreateotherpage.c:127
+#: src/disks/gdu-create-other-page.c:187
 msgid "No Filesystem"
 msgstr "Ekkert skráakerfi"
 
-#: src/disks/gducreatepartitionpage.c:320
+#: src/disks/gdu-create-partition-page.c:84
 msgid ""
 "Cannot create a new partition. There are already four primary partitions."
 msgstr ""
 
-#: src/disks/gducreatepartitionpage.c:324
+#: src/disks/gdu-create-partition-page.c:90
 msgid "This is the last primary partition that can be created."
 msgstr ""
 
-#: src/disks/gducreatepasswordpage.c:124
-msgid "The passwords do not match"
-msgstr "Lykilorðin stemma ekki"
-
-#: src/disks/gducrypttabdialog.c:108 src/disks/gducrypttabdialog.c:128
-msgid "Will be created"
-msgstr "Verður útbúin"
-
-#: src/disks/gducrypttabdialog.c:110 src/disks/gducrypttabdialog.c:135
-msgid "None"
-msgstr "Ekkert"
-
-#: src/disks/gducrypttabdialog.c:137
-msgid "Will be deleted"
-msgstr "Verður eytt"
-
-#: src/disks/gducrypttabdialog.c:263
-msgid "Error removing /etc/crypttab entry"
+#: src/disks/gdu-create-password-page.h:33
+msgctxt "Password hint"
+msgid "Try changing some letters and numbers."
 msgstr ""
 
-#: src/disks/gducrypttabdialog.c:347
-msgid "Error adding /etc/crypttab entry"
+#: src/disks/gdu-create-password-page.h:35
+#: src/disks/gdu-create-password-page.h:39
+msgctxt "Password hint"
+msgid "Try changing the password a bit more."
 msgstr ""
 
-#: src/disks/gducrypttabdialog.c:370
-msgid "Error updating /etc/crypttab entry"
+#: src/disks/gdu-create-password-page.h:37
+msgctxt "Password hint"
+msgid "Try to avoid some of the words included in the password."
 msgstr ""
 
-#: src/disks/gducrypttabdialog.c:493
+#: src/disks/gdu-create-password-page.h:41
+msgctxt "Password hint"
+msgid "Try to avoid common words."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:43
+msgctxt "Password hint"
+msgid "Try to avoid reordering existing words."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:45
+msgctxt "Password hint"
+msgid "Try to use more numbers."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:47
+msgctxt "Password hint"
+msgid "Try to use more uppercase letters."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:49
+msgctxt "Password hint"
+msgid "Try to use more lowercase letters."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:51
+msgctxt "Password hint"
+msgid "Try to use more special characters, like punctuation."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:53
+msgctxt "Password hint"
+msgid "Try to use a mixture of letters, numbers and punctuation."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:55
+msgctxt "Password hint"
+msgid "Try to avoid repeating the same character."
+msgstr ""
+
+#: src/disks/gdu-create-password-page.h:57
+msgctxt "Password hint"
 msgid ""
-"Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
-"changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
+"Try to avoid repeating the same type of character: you need to mix up "
+"letters, numbers and punctuation."
 msgstr ""
 
-#: src/disks/gdudevicetreemodel.c:496
-msgid "(None)"
-msgstr "(Ekkert)"
+#: src/disks/gdu-create-password-page.h:59
+msgctxt "Password hint"
+msgid "Try to avoid sequences like 1234 or abcd."
+msgstr ""
 
-#: src/disks/gdudevicetreemodel.c:611
-msgid "Disk Drives"
-msgstr "Diskadrif"
+#: src/disks/gdu-create-password-page.h:61
+msgctxt "Password hint"
+msgid "Mix uppercase and lowercase and try to use a number or two."
+msgstr ""
 
-#: src/disks/gdudevicetreemodel.c:1025
-msgid "Other Devices"
-msgstr "Önnur tæki"
+#: src/disks/gdu-create-password-page.h:63
+msgctxt "Password hint"
+msgid ""
+"Adding more letters, numbers and punctuation will make the password stronger."
+msgstr ""
 
-#: src/disks/gdudisksettingsdialog.c:288
+#: src/disks/gdu-disk-settings-dialog.c:293
 msgctxt "standby-value"
 msgid "Never"
 msgstr "Aldrei"
 
-#: src/disks/gdudisksettingsdialog.c:307
+#: src/disks/gdu-disk-settings-dialog.c:312
 msgctxt "standby-value"
 msgid "Vendor-defined"
 msgstr "Skilgreint af framleiðanda"
 
-#: src/disks/gdudisksettingsdialog.c:311
+#: src/disks/gdu-disk-settings-dialog.c:316
 msgctxt "standby-value"
 msgid "Reserved"
 msgstr "Frátekið"
 
-#: src/disks/gdudisksettingsdialog.c:332
+#: src/disks/gdu-disk-settings-dialog.c:337
 msgctxt "apm-level"
 msgid "255 (Disabled)"
 msgstr "255 (óvirkt)"
 
-#: src/disks/gdudisksettingsdialog.c:336
+#: src/disks/gdu-disk-settings-dialog.c:341
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down permitted)"
 msgstr ""
 
-#: src/disks/gdudisksettingsdialog.c:340
+#: src/disks/gdu-disk-settings-dialog.c:345
 #, c-format
 msgctxt "apm-level"
 msgid "%d (Spin-down not permitted)"
 msgstr ""
 
-#: src/disks/gdudisksettingsdialog.c:355
+#: src/disks/gdu-disk-settings-dialog.c:360
 msgctxt "aam-level"
 msgid "0 (Disabled)"
 msgstr "0 (óvirkt)"
 
-#: src/disks/gdudisksettingsdialog.c:384
+#: src/disks/gdu-disk-settings-dialog.c:398
 msgid "Error setting configuration"
 msgstr "Villa við að stilla uppsetningu"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:414
+#: src/disks/gdu-disk-settings-dialog.c:451
 msgid "Never"
 msgstr "Aldrei"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:416
+#: src/disks/gdu-disk-settings-dialog.c:453
 msgid "5 minutes"
 msgstr "5 mínútur"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:418
+#: src/disks/gdu-disk-settings-dialog.c:455
 msgid "10 minutes"
 msgstr "10 mínútur"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:420
+#: src/disks/gdu-disk-settings-dialog.c:457
 msgid "15 minutes"
 msgstr "15 mínútur"
 
 #. Translators: This is a mark on the Standby scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:422
+#: src/disks/gdu-disk-settings-dialog.c:459
 msgid "3 hours"
 msgstr "3 klukkustundir"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:426
+#: src/disks/gdu-disk-settings-dialog.c:463
 msgid "Save Power"
 msgstr "Spara orku"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible. The left arrow ("←") is to signify that the left part of the scale offers spindown. In RTL locales, please use a right arrow ("→") instead.
-#: src/disks/gdudisksettingsdialog.c:428
+#: src/disks/gdu-disk-settings-dialog.c:465
 msgid "← Spindown"
 msgstr "← Spinna niður"
 
 #. Translators: This is a mark on the APM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:430
+#: src/disks/gdu-disk-settings-dialog.c:467
 msgid "Perform Better"
 msgstr "Aukin afköst"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:434
+#: src/disks/gdu-disk-settings-dialog.c:471
 msgid "Quiet (Slow)"
 msgstr "Hljóðlátt (hægvirkt)"
 
 #. Translators: This is a mark on the AAM scale. The string should be as short as possible
-#: src/disks/gdudisksettingsdialog.c:436
+#: src/disks/gdu-disk-settings-dialog.c:473
 msgid "Loud (Fast)"
 msgstr "Hávært (hraðvirkt)"
 
-#: src/disks/gdufilesystemdialog.c:86
-msgid "The label matches the existing label"
+#: src/disks/gdu-drive-view.c:142
+msgid "Copied drive model to clipboard"
 msgstr ""
 
-#: src/disks/gdufilesystemdialog.c:108
+#: src/disks/gdu-drive-view.c:151
+msgid "Copied drive serial to clipboard"
+msgstr ""
+
+#: src/disks/gdu-drive-view.c:290
+msgid "An error occurred when trying to put the drive into standby mode"
+msgstr ""
+
+#: src/disks/gdu-drive-view.c:322
+msgid "An error occurred when trying to wake up the drive from standby mode"
+msgstr ""
+
+#: src/disks/gdu-drive-view.c:354
+msgid "Error powering off drive"
+msgstr ""
+
+#. Translators: Heading for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:411
+msgid "Are you sure you want to power off the drives?"
+msgstr ""
+
+#. Translators: Message for powering off a device with multiple drives
+#: src/disks/gdu-drive-view.c:413
+msgid ""
+"This operation will prepare the system for the following drives to be "
+"powered down and removed."
+msgstr ""
+
+#: src/disks/gdu-drive-view.c:414
+msgid "_Power Off"
+msgstr "Slö_kkva"
+
+#: src/disks/gdu-edit-filesystem-dialog.c:51
 msgid "Error setting label"
 msgstr ""
+
+#: src/disks/gdu-edit-partition-dialog.c:115
+msgid "Error setting partition type"
+msgstr ""
+
+#: src/disks/gdu-edit-partition-dialog.c:128
+msgid "Error setting partition name"
+msgstr ""
+
+#: src/disks/gdu-edit-partition-dialog.c:141
+msgid "Error setting partition flags"
+msgstr ""
+
+#: src/disks/gdu-edit-partition-dialog.c:310
+msgid "The partition type as a 8-bit unsigned integer"
+msgstr ""
+
+#: src/disks/gdu-edit-partition-dialog.c:311
+msgid "_Bootable"
+msgstr "_Ræsanlegt"
+
+#: src/disks/gdu-edit-partition-dialog.c:313
+msgid ""
+"A flag used by the Platform bootloader to determine where the OS should be "
+"loaded from. Sometimes the partition with this flag set is referred to as "
+"the “active” partition"
+msgstr ""
+
+#: src/disks/gdu-encryption-options-dialog.c:135
+msgid "Error removing /etc/crypttab entry"
+msgstr ""
+
+#: src/disks/gdu-encryption-options-dialog.c:152
+msgid "Error adding /etc/crypttab entry"
+msgstr ""
+
+#: src/disks/gdu-encryption-options-dialog.c:172
+msgid "Error updating /etc/crypttab entry"
+msgstr ""
+
+#: src/disks/gdu-encryption-options-dialog.c:215
+#: src/disks/gdu-encryption-options-dialog.c:230
+msgid "Will be created"
+msgstr "Verður útbúin"
+
+#: src/disks/gdu-encryption-options-dialog.c:217
+#: src/disks/gdu-encryption-options-dialog.c:237
+msgid "None"
+msgstr "Ekkert"
+
+#: src/disks/gdu-encryption-options-dialog.c:239
+msgid "Will be deleted"
+msgstr "Verður eytt"
+
+#: src/disks/gdu-format-disk-dialog.c:95
+msgid "Error formatting disk"
+msgstr "Villa við að forsníða disk"
+
+#. Translators: warning used for quick format
+#: src/disks/gdu-format-disk-dialog.c:174
+msgid ""
+"All data on the disk will be lost but may still be recoverable by data "
+"recovery services"
+msgstr ""
+
+#: src/disks/gdu-format-disk-dialog.c:177
+msgid ""
+"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
+"computer or disk, you should use a more thorough erase type to keep your "
+"private information from falling into the wrong hands"
+msgstr ""
+
+#. Translators: warning used when overwriting data
+#: src/disks/gdu-format-disk-dialog.c:184
+msgid ""
+"All data on the disk will be overwritten and will likely not be recoverable "
+"by data recovery services"
+msgstr ""
+
+#: src/disks/gdu-format-disk-dialog.c:204
+#, fuzzy
+#| msgid "Format Disk"
+msgid "Format Disk?"
+msgstr "Forsníða disk"
+
+#: src/disks/gdu-format-disk-dialog.c:206
+#: src/disks/ui/gdu-format-disk-dialog.ui:26
+msgid "_Format"
+msgstr "_Forsníða"
 
 #. Translators: Used to convey that something takes at least
 #. * some specificed duration but may take longer. The %s is a
 #. * time duration e.g. "8 hours and 28 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:104
+#: src/disks/gdu-format-disk-dialog.c:240
 #, c-format
 msgid "At least %s"
 msgstr "Að minnsta kosti %s"
@@ -1637,683 +1815,156 @@ msgstr "Að minnsta kosti %s"
 #. * approximately some specificed duration. The %s is a time
 #. * duration e.g. "2 hours and 2 minutes"
 #.
-#: src/disks/gduformatdiskdialog.c:115
+#: src/disks/gdu-format-disk-dialog.c:250
 #, c-format
 msgid "Approximately %s"
 msgstr "Um það bil %s"
 
-#: src/disks/gduformatdiskdialog.c:150
-msgid "Don’t overwrite existing data"
-msgstr "Ekki yfirskrifa fyrirliggjandi gögn"
+#: src/disks/gdu-format-volume-dialog.c:198
+msgid "_Previous"
+msgstr "_Fyrra"
 
-#: src/disks/gduformatdiskdialog.c:151
-msgid "Quick"
-msgstr "Fjótt"
+#: src/disks/gdu-format-volume-dialog.c:203
+msgid "Cre_ate"
+msgstr "Bú_a til"
 
-#: src/disks/gduformatdiskdialog.c:161
-msgid "Overwrite existing data with zeroes"
-msgstr "Yfirskrifa fyrirliggjandi gögn með núllum"
+#: src/disks/gdu-format-volume-dialog.c:204
+msgid "Form_at"
+msgstr "Forsníð_a"
 
-#: src/disks/gduformatdiskdialog.c:162
-msgid "Slow"
-msgstr "Hægt"
+#: src/disks/gdu-format-volume-dialog.c:211
+msgid "N_ext"
+msgstr "Næst_a"
 
-#: src/disks/gduformatdiskdialog.c:194
-msgid "ATA Secure Erase"
-msgstr "ATA Secure Erase"
+#: src/disks/gdu-format-volume-dialog.c:234
+msgid "Error formatting volume"
+msgstr "Það tókst ekki að strauja gagnamiðilinn"
 
-#: src/disks/gduformatdiskdialog.c:209
-msgid "ATA Enhanced Secure Erase"
-msgstr "ATA Enhanced Secure Erase"
+#: src/disks/gdu-format-volume-dialog.c:398
+msgid "Error creating partition"
+msgstr "Villa við að búa til disksneið"
 
-#: src/disks/gduformatdiskdialog.c:253
-msgid "Compatible with all systems and devices"
-msgstr "Virkar með öllum kerfum og tækjum"
+#: src/disks/gdu-format-volume-dialog.c:530 src/disks/ui/gdu-block-row.ui:53
+msgid "Create Partition"
+msgstr "Búa til disksneið"
 
-#: src/disks/gduformatdiskdialog.c:254
-msgid "MBR / DOS"
-msgstr "MBR / DOS"
+#: src/disks/gdu-format-volume-dialog.c:537
+msgid "Format Volume"
+msgstr "Forsníða gagnamiðil"
 
-#: src/disks/gduformatdiskdialog.c:264
-msgid "Compatible with modern systems and hard disks > 2TB"
-msgstr "Virkar með öllum nútímalegum kerfum og tækjum > 2TB"
+#: src/disks/gdu-format-volume-dialog.c:543
+msgid "Custom Format"
+msgstr "Sérsnið"
 
-#: src/disks/gduformatdiskdialog.c:265
-msgid "GPT"
-msgstr "GPT"
+#: src/disks/gdu-format-volume-dialog.c:549
+msgid "Set Password"
+msgstr "Stilla lykilorð"
 
-#: src/disks/gduformatdiskdialog.c:282
-msgid "No partitioning"
-msgstr "Engin disksneiðing"
-
-#: src/disks/gduformatdiskdialog.c:283
-msgid "Empty"
-msgstr "Tómt"
-
-#: src/disks/gduformatdiskdialog.c:327
-msgid "Error formatting disk"
-msgstr "Villa við að forsníða disk"
-
-#: src/disks/gduformatdiskdialog.c:383
-msgid "Are you sure you want to format the disk?"
-msgstr "Ertu viss um að þú viljir forsníða diskinn?"
-
-#. Translators: warning used for quick format
-#: src/disks/gduformatdiskdialog.c:387
-msgid ""
-"All data on the disk will be lost but may still be recoverable by data "
-"recovery services"
+#: src/disks/gdu-format-volume-dialog.c:557
+msgid "Confirm Details"
 msgstr ""
 
-#: src/disks/gduformatdiskdialog.c:389
-msgid ""
-"<b>Tip</b>: If you are planning to recycle, sell or give away your old "
-"computer or disk, you should use a more thorough erase type to keep your "
-"private information from falling into the wrong hands"
-msgstr ""
+#: src/disks/gdu-mount-options-dialog.c:328
+msgid "Error updating /etc/fstab entry"
+msgstr "Villa við að uppfæra /etc/fstab færslu"
 
-#. Translators: warning used when overwriting data
-#: src/disks/gduformatdiskdialog.c:394
-msgid ""
-"All data on the disk will be overwritten and will likely not be recoverable "
-"by data recovery services"
-msgstr ""
-
-#: src/disks/gduformatdiskdialog.c:402
-msgid ""
-"<b>WARNING</b>: The Secure Erase command may take a very long time to "
-"complete, can’t be canceled and may not work properly with some hardware. In "
-"the worst case, your drive may be rendered unusable or your system may crash "
-"or lock up. Before proceeding, please read the article about <a "
-"href='https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase'>ATA Secure "
-"Erase</a> and make sure you understand the risks"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:155
-#, c-format
-msgid "Matches partition %u of the device with the given vital product data"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:158
-msgid "Matches the whole disk of the device with the given vital product data"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:163
-#, c-format
-msgid ""
-"Matches partition %u of any device connected at the given port or address"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:166
-msgid ""
-"Matches the whole disk of any device connected at the given port or address"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:170
-msgid "Matches any device with the given label"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:174
-msgid "Matches the device with the given UUID"
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:178
-msgid "Matches the given device"
-msgstr "Samsvarar uppgefnu tæki"
-
-#: src/disks/gdufstabdialog.c:481
-msgid "The system may not work correctly if this entry is modified or removed."
-msgstr ""
-
-#: src/disks/gdufstabdialog.c:542
-msgid "Error removing old /etc/fstab entry"
-msgstr "Villa við að fjarlægja /etc/fstab færslu"
-
-#: src/disks/gdufstabdialog.c:598
+#: src/disks/gdu-mount-options-dialog.c:351
 msgid "Error adding new /etc/fstab entry"
 msgstr "Villa við að bæta við nýrri /etc/fstab færslu"
 
-#: src/disks/gdufstabdialog.c:622
-msgid "Error updating /etc/fstab entry"
-msgstr "Villa við að uppfæra /etc/fstab færslu"
+#: src/disks/gdu-mount-options-dialog.c:374
+msgid "Error removing old /etc/fstab entry"
+msgstr "Villa við að fjarlægja /etc/fstab færslu"
+
+#: src/disks/gdu-new-disk-image-dialog.c:78
+#: src/disks/gdu-new-disk-image-dialog.c:116 src/disks/gdu-window.c:77
+msgid "Error attaching disk image"
+msgstr ""
+
+#: src/disks/gdu-new-disk-image-dialog.c:172
+msgid "Error writing file"
+msgstr "Villa við ritun skráar"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
 #.
-#: src/disks/gdunewdiskimagedialog.c:192
+#: src/disks/gdu-new-disk-image-dialog.c:325
 #, c-format
 msgid "Unnamed (%s).img"
 msgstr "Nafnlaus (%s).img"
 
-#: src/disks/gdunewdiskimagedialog.c:267
-msgid "Error writing file"
-msgstr "Villa við ritun skráar"
-
-#: src/disks/gdupartitiondialog.c:351
-msgid "Error setting partition type"
-msgstr ""
-
-#: src/disks/gdupartitiondialog.c:365
-msgid "Error setting partition name"
-msgstr ""
-
-#: src/disks/gdupartitiondialog.c:379
-msgid "Error setting partition flags"
-msgstr ""
-
-#: src/disks/gdupasswordstrengthwidget.c:126
-msgctxt "Password strength"
-msgid "Weak"
-msgstr "Veikt"
-
-#: src/disks/gdupasswordstrengthwidget.c:127
-msgctxt "Password strength"
-msgid "Fair"
-msgstr "Þokkalegt"
-
-#: src/disks/gdupasswordstrengthwidget.c:128
-msgctxt "Password strength"
-msgid "Good"
-msgstr "Gott"
-
-#: src/disks/gdupasswordstrengthwidget.c:129
-msgctxt "Password strength"
-msgid "Strong"
-msgstr "Sterkt"
-
-#: src/disks/gduresizedialog.c:188
-msgid "Current Size"
-msgstr "Núverandi stærð"
-
-#: src/disks/gduresizedialog.c:199
-msgid "Minimal Size"
-msgstr "Lágmarksstærð"
-
-#: src/disks/gduresizedialog.c:249
-msgid "_Resize"
-msgstr "B_reyta stærð"
-
-#: src/disks/gduresizedialog.c:352 src/disks/gduresizedialog.c:431
-#: src/disks/gduresizedialog.c:602 src/disks/gduresizedialog.c:625
-msgid "Error resizing filesystem"
-msgstr "Villa við að breyta stærð skráakerfis"
-
-#: src/disks/gduresizedialog.c:370 src/disks/gduresizedialog.c:500
-#: src/disks/gduresizedialog.c:576
-msgid "Error resizing partition"
-msgstr "Villa við að breyta stærð disksneiðar"
-
-#: src/disks/gduresizedialog.c:389 src/disks/gduresizedialog.c:413
-msgid "Error repairing filesystem after resize"
-msgstr "Villa við að gera við skráakerfi eftir stærðarbreytingu"
-
-#: src/disks/gduresizedialog.c:471
-msgid "Resizing not ready"
-msgstr ""
-
-#: src/disks/gduresizedialog.c:473
-msgid "Waited too long for the filesystem"
-msgstr "Beið of lengi eftir skráakerfi"
-
-#: src/disks/gduresizedialog.c:533 src/disks/gduresizedialog.c:649
-msgid "Error repairing filesystem"
-msgstr "Villa við að gera við skráakerfi"
-
-#: src/disks/gduresizedialog.c:755
-msgid "Error mounting the filesystem"
-msgstr "Villa við að tengja skráakerfið"
-
-#: src/disks/gduresizedialog.c:797
-msgid "Fit to size"
-msgstr "Laga að stærð"
-
-#: src/disks/gduresizedialog.c:832
+#: src/disks/gdu-resize-volume-dialog.c:160
 msgid "Error mounting filesystem to calculate minimum size"
 msgstr "Villa við að tengja skráakerfið svo hægt sé að reikna lágmarksstærð"
 
-#: src/disks/gdurestorediskimagedialog.c:277
-msgid "File does not appear to be XZ compressed"
+#: src/disks/gdu-resize-volume-dialog.c:211
+#: src/disks/ui/gdu-resize-volume-dialog.ui:65
+msgid "Current Size"
+msgstr "Núverandi stærð"
+
+#: src/disks/gdu-resize-volume-dialog.c:214
+#: src/disks/ui/gdu-resize-volume-dialog.ui:73
+#, fuzzy
+#| msgid "Minimal Size"
+msgid "Minimum Size"
+msgstr "Lágmarksstærð"
+
+#: src/disks/gdu-resize-volume-dialog.c:240
+#: src/disks/gdu-resize-volume-dialog.c:360
+#: src/disks/gdu-resize-volume-dialog.c:507
+msgid "Error resizing partition"
+msgstr "Villa við að breyta stærð disksneiðar"
+
+#: src/disks/gdu-resize-volume-dialog.c:258
+#: src/disks/gdu-resize-volume-dialog.c:296
+#: src/disks/gdu-resize-volume-dialog.c:410
+#: src/disks/gdu-resize-volume-dialog.c:457
+msgid "Error resizing filesystem"
+msgstr "Villa við að breyta stærð skráakerfis"
+
+#: src/disks/gdu-resize-volume-dialog.c:277
+#: src/disks/gdu-resize-volume-dialog.c:386
+msgid "Error repairing filesystem after resize"
+msgstr "Villa við að gera við skráakerfi eftir stærðarbreytingu"
+
+#: src/disks/gdu-resize-volume-dialog.c:319
+#: src/disks/gdu-resize-volume-dialog.c:433
+msgid "Error repairing filesystem"
+msgstr "Villa við að gera við skráakerfi"
+
+#: src/disks/gdu-resize-volume-dialog.c:481
+msgid "Resizing not ready"
 msgstr ""
 
-#. Translators: Shown for a compressed disk image in the "Size" field.
-#. *              The %s is the uncompressed size as a long string, e.g. "4.2 MB (4,300,123 bytes)".
-#.
-#: src/disks/gdurestorediskimagedialog.c:286
-#, c-format
-msgid "%s when decompressed"
+#: src/disks/gdu-resize-volume-dialog.c:482
+msgid "Waited too long for the filesystem"
+msgstr "Beið of lengi eftir skráakerfi"
+
+#: src/disks/gdu-resize-volume-dialog.c:613
+msgid "Error mounting the filesystem"
+msgstr "Villa við að tengja skráakerfið"
+
+#: src/disks/gdu-unlock-dialog.c:130
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:49
+#: src/disks/ui/gdu-unlock-dialog.ui:72
+#, fuzzy
+#| msgid "No Device Selected"
+msgid "None Selected"
+msgstr "Ekkert tæki er valið"
+
+#: src/disks/gdu-unlock-dialog.c:139
+msgid "Select keyfiles to unlock this volume."
 msgstr ""
 
-#: src/disks/gdurestorediskimagedialog.c:302
-msgid "Cannot restore image of size 0"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:311
-#, c-format
-msgid "The disk image is %s smaller than the target device"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:320
-#, c-format
-msgid "The disk image is %s bigger than the target device"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:650
-msgid "Error restoring disk image"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:930
-msgid "Error opening file for reading"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:945
-msgid "Error determining size of file"
-msgstr ""
-
-#. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdurestorediskimagedialog.c:973
-msgctxt "restore-inhibit-message"
-msgid "Copying disk image to device"
-msgstr ""
-
-#. Translators: this is the description of the job
-#: src/disks/gdurestorediskimagedialog.c:979
-msgid "Restoring Disk Image"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:1035
-msgid "Are you sure you want to write the disk image to the device?"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:1036
-msgid "All existing data will be lost"
-msgstr ""
-
-#: src/disks/gdurestorediskimagedialog.c:1037
-msgid "_Restore"
-msgstr "Endu_rheimta"
-
-#: src/disks/gduunlockdialog.c:112 src/disks/ui/unlock-device-dialog.ui:209
-msgid "Select a Keyfile"
-msgstr "Veldu lykilskrá"
-
-#: src/disks/gduunlockdialog.c:147 src/disks/gduunlockdialog.c:226
+#: src/disks/gdu-unlock-dialog.c:161
 msgid "Error unlocking device"
 msgstr "Villa við að aflæsa tæki"
 
-#: src/disks/gduunlockdialog.c:224
-#, c-format
-msgid "Invalid PIM"
-msgstr ""
-
-#: src/disks/gduunlockdialog.c:261
-msgid "The encryption passphrase was retrieved from the keyring"
-msgstr ""
-
-#: src/disks/gduunlockdialog.c:305
-msgid "Set options to unlock"
-msgstr ""
-
-#: src/disks/gduvolumegrid.c:262
-msgid "Volumes Grid"
-msgstr ""
-
-#: src/disks/gduvolumegrid.c:566 src/disks/gduwindow.c:2031
-msgid "No Media"
-msgstr "Enginn miðill"
-
-#: src/disks/gduvolumegrid.c:1666
-msgctxt "volume-grid"
-msgid "Filesystem"
-msgstr "Skráakerfi"
-
-#: src/disks/gduvolumegrid.c:1676
-msgctxt "volume-grid"
-msgid "Swap"
-msgstr "Swap diskminni"
-
-#. Translators: This is shown in the volume grid for a partition with a name/label.
-#. *              The %d is the partition number. The %s is the name
-#.
-#: src/disks/gduvolumegrid.c:1699
-#, c-format
-msgctxt "volume-grid"
-msgid "Partition %u: %s"
-msgstr "Disksneið %u: %s"
-
-#. Translators: This is shown in the volume grid for a partition with no name/label.
-#. *              The %d is the partition number
-#.
-#: src/disks/gduvolumegrid.c:1706
-#, c-format
-msgctxt "volume-grid"
-msgid "Partition %u"
-msgstr "Disksneið %u"
-
-#: src/disks/gduvolumegrid.c:1763
-msgctxt "volume-grid"
-msgid "Extended Partition"
-msgstr "Útvíkkuð disksneið"
-
-#: src/disks/gduvolumegrid.c:1838
-msgctxt "volume-grid"
-msgid "Free Space"
-msgstr "Laust pláss"
-
-#: src/disks/gduwindow.c:642
-msgid "Error deleting loop device"
-msgstr ""
-
-#: src/disks/gduwindow.c:742 src/disks/gduwindow.c:785
-msgid "Error attaching disk image"
-msgstr ""
-
-#: src/disks/gduwindow.c:815
-msgid "Select Disk Image to Attach"
-msgstr ""
-
-#: src/disks/gduwindow.c:819
-msgid "_Attach"
-msgstr "Hengj_a við"
-
-#. set file types
-#. allow_compressed
-#. Add a RO check button that defaults to RO
-#: src/disks/gduwindow.c:826
-msgid "Set up _read-only loop device"
-msgstr ""
-
-#: src/disks/gduwindow.c:827
-msgid ""
-"If checked, the loop device will be read-only. This is useful if you don’t "
-"want the underlying file to be modified"
-msgstr ""
-
-#. Translators: Shown for a read-only device. The %s is the device file, e.g. /dev/sdb1
-#: src/disks/gduwindow.c:1674
-#, c-format
-msgid "%s (Read-Only)"
-msgstr "%s (skrifvarið)"
-
-#. Translators: Used for job progress.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#. *              The second %s is the average amount of bytes transfered per second (ex. "8.9 MB").
-#.
-#: src/disks/gduwindow.c:1712
-#, c-format
-msgctxt "job-remaining-with-rate"
-msgid "%s remaining (%s/sec)"
-msgstr "%s eftir (%s/sek)"
-
-#. Translators: Used for job progress.
-#. *              The first %s is the estimated amount of time remaining (ex. "1 minute" or "5 minutes").
-#.
-#: src/disks/gduwindow.c:1720
-#, c-format
-msgctxt "job-remaining"
-msgid "%s remaining"
-msgstr "%s eftir"
-
-#. Translators: Used to convey job progress where the amount of bytes to process is known.
-#. *              The first %s is the amount of bytes processed (ex. "650 MB").
-#. *              The second %s is the total amount of bytes to process (ex. "8.5 GB").
-#. *              The third %s is the estimated amount of time remaining including speed (if known) (ex. "1 minute remaining", "5 minutes remaining (42.3 MB/s)", "Less than a minute remaining").
-#.
-#: src/disks/gduwindow.c:1735
-#, c-format
-msgid "%s of %s — %s"
-msgstr "%s af %s – %s"
-
-#. Translators: Used in job progress bar.
-#. *              The %s is the job description (e.g. "Erasing Device").
-#. *              The %f is the completion percentage (between 0.0 and 100.0).
-#.
-#: src/disks/gduwindow.c:1860
-#, c-format
-msgid "%s: %2.1f%%"
-msgstr "%s: %2.1f%%"
-
-#: src/disks/gduwindow.c:1940 src/disks/gduwindow.c:2323
-msgid "Block device is empty"
-msgstr "Blokkartæki er tómt"
-
-#. Translators: Shown for unknown partitioning type. The first %s is the low-level type.
-#: src/disks/gduwindow.c:1963
-#, c-format
-msgctxt "partitioning"
-msgid "Unknown (%s)"
-msgstr "Óþekkt (%s)"
-
-#. Translators: Shown in "Location" when drive is connected to another seat than where
-#. * our application is running.
-#.
-#: src/disks/gduwindow.c:2122
-msgid "Connected to another seat"
-msgstr ""
-
-#: src/disks/gduwindow.c:2267
-msgid "Loop device is empty"
-msgstr ""
-
-#. Translators: Shown in 'Size' field for a filesystem where we know the amount of unused
-#. *              space.
-#. *              The first %s is a short string with the size (e.g. '69 GB (68,719,476,736 bytes)').
-#. *              The second %s is a short string with the space free (e.g. '43 GB').
-#. *              The %f is the percentage in use (e.g. 62.2).
-#.
-#: src/disks/gduwindow.c:2484
-#, c-format
-msgid "%s — %s free (%.1f%% full)"
-msgstr "%s — %s laust (%.1f%% full)"
-
-#: src/disks/gduwindow.c:2514
-msgctxt "partition type"
-msgid "Unknown"
-msgstr "Óþekkt"
-
-#. Translators: Use for mount point '/' simply because '/' is too small to hit as a hyperlink
-#.
-#: src/disks/gduwindow.c:2552
-msgctxt "volume-content-fs"
-msgid "Filesystem Root"
-msgstr "Rót skráakerfis"
-
-#. Translators: Shown as in-use part of 'Contents'. The first %s is the mount point, e.g. /media/foobar
-#: src/disks/gduwindow.c:2560
-#, c-format
-msgctxt "volume-content-fs"
-msgid "Mounted at %s"
-msgstr "Tengd í %s"
-
-#. Translators: Shown when the device is not mounted next to the "In Use" label
-#: src/disks/gduwindow.c:2566
-msgctxt "volume-content-fs"
-msgid "Not Mounted"
-msgstr "Ekki tengd"
-
-#. Translators: Shown as in-use part of 'Contents' if the swap device is in use
-#: src/disks/gduwindow.c:2589
-msgctxt "volume-content-swap"
-msgid "Active"
-msgstr "Virk"
-
-#. Translators: Shown as in-use part of 'Contents' if the swap device is not in use
-#: src/disks/gduwindow.c:2595
-msgctxt "volume-content-swap"
-msgid "Not Active"
-msgstr "Ekki virk"
-
-#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2610
-msgctxt "volume-content-crypto"
-msgid "Unlocked"
-msgstr "Ólæst"
-
-#. Translators: Shown as in-use part of 'Contents' if the encrypted device is unlocked
-#: src/disks/gduwindow.c:2616
-msgctxt "volume-content-crypto"
-msgid "Locked"
-msgstr "Læst"
-
-#: src/disks/gduwindow.c:2630
-msgctxt "volume-contents-msdos-ext"
-msgid "Extended Partition"
-msgstr "Útvíkkuð disksneið"
-
-#. Translators: Shown in 'Contents' field for a member that can be "mounted" (e.g. filesystem or swap area).
-#. *              The first %s is the usual contents string e.g. "Swapspace" or "Ext4 (version 1.0)".
-#. *              The second %s is either "Mounted at /path/to/fs", "Not Mounted, "Active", "Not Active", "Unlocked" or "Locked".
-#.
-#: src/disks/gduwindow.c:2650
-#, c-format
-msgctxt "volume-contents-combiner"
-msgid "%s — %s"
-msgstr "%s — %s"
-
-#. Translators: used to convey free space for partitions
-#: src/disks/gduwindow.c:2773
-msgid "Unallocated Space"
-msgstr "Óúthlutað pláss"
-
-#: src/disks/gduwindow.c:2982
-msgid "Error while repairing filesystem"
-msgstr "Villa við að gera við skráakerfi"
-
-#: src/disks/gduwindow.c:3009
-msgid "Repair successful"
-msgstr "Viðgerð tókst"
-
-#: src/disks/gduwindow.c:3009
-msgid "Repair failed"
-msgstr "Viðgerð mistókst"
-
-#: src/disks/gduwindow.c:3012
-#, c-format
-msgid "Filesystem %s on %s has been repaired."
-msgstr ""
-
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3018
-#, c-format
-msgid "Filesystem %s on %s could not be repaired."
-msgstr ""
-
-#: src/disks/gduwindow.c:3088
-msgid "Confirm Repair"
-msgstr "Staðfesta viðgerð"
-
-#: src/disks/gduwindow.c:3091
-msgid ""
-"A filesystem repair is not always possible and can cause data loss. Consider "
-"backing it up first in order to use forensic recovery tools that retrieve "
-"lost files. The operation may take a long time, especially if the partition "
-"contains a lot of data."
-msgstr ""
-
-#: src/disks/gduwindow.c:3133
-#| msgid "Error while checking filesystem"
-msgid "Error while taking filesystem ownership"
-msgstr "Villa við að yfirtaka eignarhald skráakerfis"
-
-#: src/disks/gduwindow.c:3205
-msgid "Error while checking filesystem"
-msgstr "Villa við að yfirfara skráakerfi"
-
-#: src/disks/gduwindow.c:3232
-msgid "Filesystem intact"
-msgstr "Skráakerfi óskemmt"
-
-#: src/disks/gduwindow.c:3232
-msgid "Filesystem damaged"
-msgstr "Skráakerfi er skemmt"
-
-#: src/disks/gduwindow.c:3235
-#, c-format
-msgid "Filesystem %s on %s is undamaged."
-msgstr ""
-
-#. show as result and not error message, because it's not a malfunction of GDU
-#: src/disks/gduwindow.c:3241
-#, c-format
-msgid "Filesystem %s on %s needs repairing."
-msgstr ""
-
-#: src/disks/gduwindow.c:3309
-msgid "Confirm Check"
-msgstr "Staðfesta yfirferð"
-
-#: src/disks/gduwindow.c:3312
-msgid ""
-"The check may take a long time, especially if the partition contains a lot "
-"of data."
-msgstr ""
-
-#: src/disks/gduwindow.c:3589
-msgid "An error occurred when trying to put the drive into standby mode"
-msgstr ""
-
-#: src/disks/gduwindow.c:3636
-msgid "An error occurred when trying to wake up the drive from standby mode"
-msgstr ""
-
-#: src/disks/gduwindow.c:3682
-msgid "Error powering off drive"
-msgstr ""
-
-#. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3734
-msgid "Are you sure you want to power off the drives?"
-msgstr ""
-
-#. Translators: Message for powering off a device with multiple drives
-#: src/disks/gduwindow.c:3736
-msgid ""
-"This operation will prepare the system for the following drives to be "
-"powered down and removed."
-msgstr ""
-
-#: src/disks/gduwindow.c:3740 src/disks/ui/drive-menu.ui:44
-msgid "_Power Off"
-msgstr "Slö_kkva"
-
-#: src/disks/gduwindow.c:3820
-msgid "Error mounting filesystem"
-msgstr "Villa við að tengja skráakerfi"
-
-#: src/disks/gduwindow.c:3905
-msgid "Error deleting partition"
-msgstr "Villa við að eyða disksneið"
-
-#: src/disks/gduwindow.c:3942
-msgid "Are you sure you want to delete the partition?"
-msgstr "Ertu viss um að þú viljir eyða disksneiðinni?"
-
-#: src/disks/gduwindow.c:3943
-msgid "All data on the partition will be lost"
-msgstr "Öll gögn á þessari disksneið tapast"
-
-#: src/disks/gduwindow.c:3944
-msgid "_Delete"
-msgstr "_Eyða"
-
-#: src/disks/gduwindow.c:3975
-msgid "Error ejecting media"
-msgstr ""
-
-#: src/disks/gduwindow.c:4058
-msgid "Error starting swap"
-msgstr ""
-
-#: src/disks/gduwindow.c:4095
-msgid "Error stopping swap"
-msgstr ""
-
-#: src/disks/gduwindow.c:4137
-msgid "Error setting autoclear flag"
-msgstr ""
-
-#: src/disks/gduwindow.c:4190 src/disks/gduwindow.c:4254
-msgid "Error canceling job"
-msgstr ""
+#: src/disks/gdu-window.c:175
+#, fuzzy
+#| msgid "Select Disk Image to Restore"
+msgid "Select a Disk Image to Attach"
+msgstr "Veldu diskmynd sem á að endurheimta"
 
 #: src/disks/gduxzdecompressor.c:122
 msgid "Invalid compressed data"
@@ -2332,928 +1983,65 @@ msgstr "Innri villa"
 msgid "Need more input"
 msgstr ""
 
-#: src/disks/ui/about-dialog.ui:11
-msgid ""
-"Copyright © 2008-2013 Red Hat, Inc.\n"
-"Copyright © 2008-2013 David Zeuthen\n"
-"Copyright © 2009-2017 The GNOME Project\n"
+#: src/disks/restore_disk_image_dialog.rs:226
+msgid "File does not appear to be XZ compressed"
 msgstr ""
-"Höfundarréttur © 2008-2013 Red Hat, Inc.\n"
-"Höfundarréttur © 2008-2013 David Zeuthen\n"
-"Höfundarréttur © 2009-2017 GNOME-verkefnið\n"
 
-#: src/disks/ui/about-dialog.ui:15
-msgid "View, modify and configure disks and media"
+#: src/disks/restore_disk_image_dialog.rs:246
+msgid "Cannot restore image of size 0"
 msgstr ""
 
-#: src/disks/ui/about-dialog.ui:18
-msgid "translator-credits"
-msgstr "Sveinn í Felli, sv1@fellsnet.is"
-
-#: src/disks/ui/app-menu.ui:6
-msgid "_New Disk Image…"
-msgstr "_Ný diskmynd…"
-
-#: src/disks/ui/app-menu.ui:10
-msgid "_Attach Disk Image… (.iso, .img)"
-msgstr "Hengj_a við diskmynd (*.iso, *.img)"
-
-#: src/disks/ui/app-menu.ui:17
-msgid "_Keyboard Shortcuts"
-msgstr "Flýtily_klar"
-
-#: src/disks/ui/app-menu.ui:21
-msgid "_Help"
-msgstr "_Aðstoð"
-
-#: src/disks/ui/app-menu.ui:24
-msgid "_About Disks"
-msgstr "_Um Disks-hugbúnaðinn"
-
-#: src/disks/ui/benchmark-dialog.ui:6
-msgid "Benchmark"
-msgstr "Afkastaprófun"
-
-#: src/disks/ui/benchmark-dialog.ui:25
-msgid "_Start Benchmark…"
-msgstr "_Ræsa afkastaprófun…"
-
-#: src/disks/ui/benchmark-dialog.ui:37
-msgid "_Abort Benchmark"
-msgstr "_Hætta við afkastaprófun"
-
-#: src/disks/ui/benchmark-dialog.ui:85
-msgid "Last Benchmarked"
-msgstr "Síðast afkastaprófað"
-
-#: src/disks/ui/benchmark-dialog.ui:100
-msgid "Average Read Rate"
-msgstr "Meðal-leshraði"
-
-#: src/disks/ui/benchmark-dialog.ui:115
-msgid "Average Write Rate"
-msgstr "Meðal-skrifhraði"
-
-#: src/disks/ui/benchmark-dialog.ui:130
-msgid "Average Access Time"
-msgstr "Meðal-opnunartími"
-
-#: src/disks/ui/benchmark-dialog.ui:201
-msgid "Disk or Device"
-msgstr "Diskur eða tæki"
-
-#: src/disks/ui/benchmark-dialog.ui:230
-msgid "Sample Size"
-msgstr "Stærð sýnis"
-
-#: src/disks/ui/benchmark-dialog.ui:268
-msgid "Benchmark Settings"
-msgstr "Stillingar afkastaprófunar"
-
-#: src/disks/ui/benchmark-dialog.ui:296
-msgid "_Start Benchmarking…"
-msgstr "_Ræsa afkastaprófun"
-
-#: src/disks/ui/benchmark-dialog.ui:317
-msgid ""
-"Benchmarking involves measuring the transfer rate on various area of the "
-"device as well as measuring how long it takes to seek from one random area "
-"to another. Please back up important data before using the write benchmark."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:328
-msgid "Transfer Rate"
-msgstr "Flutningshraði"
-
-#: src/disks/ui/benchmark-dialog.ui:346
-msgid "Number of S_amples"
-msgstr "Fjöldi sýn_a"
-
-#: src/disks/ui/benchmark-dialog.ui:363
-msgid "Sample S_ize (MiB)"
-msgstr "Stærð sýn_is (MiB)"
-
-#: src/disks/ui/benchmark-dialog.ui:377
-msgid "Perform _write-benchmark"
-msgstr "Gera afkastaprófun fyrir s_krifun"
-
-#: src/disks/ui/benchmark-dialog.ui:381
-msgid ""
-"Benchmarking the write-rate of a disk requires exclusive access to the disk "
-"(e.g. the disk or its partitions cannot be mounted or in use) and involves "
-"reading data and then writing it back. As a result, the contents of the disk "
-"is not changed.\n"
-"\n"
-"If not checked, the write-part of the benchmark will not be done but on the "
-"other hand exclusive access to the device is not needed (e.g. the disk or "
-"device can be in use)."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:398
-msgid ""
-"Number of samples. Bigger number produces more smooth graphs but the "
-"benchmark will take more time."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:413
-msgid ""
-"The number of MiB (1048576 bytes) to read/write for each sample. Big sample "
-"sizes tend to produce more accurate benchmarks at the cost of the benchmark "
-"taking more time."
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:442
-msgid "Access Time"
-msgstr "Opnunartími"
-
-#: src/disks/ui/benchmark-dialog.ui:460
-msgid "Number of Sampl_es"
-msgstr ""
-
-#: src/disks/ui/benchmark-dialog.ui:477
-msgid ""
-"Number of samples. Bigger number produces a more accurate picture of access "
-"time patterns but takes more time."
-msgstr ""
-
-#: src/disks/ui/change-passphrase-dialog.ui:7
-msgid "Change Passphrase"
-msgstr "Breyta lykilorði"
-
-#: src/disks/ui/change-passphrase-dialog.ui:32
-#: src/disks/ui/edit-dos-partition-dialog.ui:36
-#: src/disks/ui/edit-filesystem-dialog.ui:36
-#: src/disks/ui/edit-gpt-partition-dialog.ui:36
-#: src/disks/ui/edit-partition-dialog.ui:36
-msgid "C_hange"
-msgstr "Bre_yta"
-
-#: src/disks/ui/change-passphrase-dialog.ui:68
-msgid "Curr_ent Passphrase"
-msgstr "Núv_erandi lykilorð"
-
-#: src/disks/ui/change-passphrase-dialog.ui:88
-#: src/disks/ui/change-passphrase-dialog.ui:89
-msgid "Enter current passphrase used to protect the data"
-msgstr ""
-
-#: src/disks/ui/change-passphrase-dialog.ui:105
-msgid "Sho_w Passphrases"
-msgstr "Sýna l_ykilorð"
-
-#: src/disks/ui/change-passphrase-dialog.ui:111
-#: src/disks/ui/change-passphrase-dialog.ui:112
-#: src/disks/ui/create-password-page.ui:101
-msgid "Check this box to see the passphrases entered above"
-msgstr "Hakaðu í þennan reit til að sjá lykilorðin hér fyrir ofan"
-
-#: src/disks/ui/change-passphrase-dialog.ui:146
-#: src/disks/ui/change-passphrase-dialog.ui:147
-#: src/disks/ui/create-password-page.ui:81
-msgid "Confirm passphrase entered above"
-msgstr "Staðfestu lykilorðið hér fyrir ofan"
-
-#: src/disks/ui/change-passphrase-dialog.ui:167
-#: src/disks/ui/change-passphrase-dialog.ui:168
-msgid "Enter new passphrase used to protect the data"
-msgstr "Settu inn nýja lykilsetningu (passphrase) sem á að venda gögnin"
-
-#: src/disks/ui/change-passphrase-dialog.ui:188
-msgid "C_onfirm Passphrase"
-msgstr "St_aðfesta lykilorð"
-
-#: src/disks/ui/change-passphrase-dialog.ui:208
-msgid "New _Passphrase"
-msgstr "Nýtt _lykilorð"
-
-#: src/disks/ui/create-confirm-page.ui:17
-msgid "Warning: all data on the volume will be lost"
-msgstr "Aðvörun: öll gögn á þessum gagnamiðli tapast"
-
-#: src/disks/ui/create-confirm-page.ui:33
-msgid "Confirm the details of the current volume before proceeding."
-msgstr ""
-
-#: src/disks/ui/create-confirm-page.ui:46 src/disks/ui/disks.ui:910
-msgid "Device"
-msgstr "Tæki"
-
-#: src/disks/ui/create-confirm-page.ui:72
-msgid "Volume"
-msgstr "Gagnamiðill"
-
-#: src/disks/ui/create-confirm-page.ui:98
-msgid "Used"
-msgstr "Notað"
-
-#. The physical location of the drive, could be 'Connected to another seat'  or 'Bay 11 of Promise VTrak' or 'USB connector II'
-#: src/disks/ui/create-confirm-page.ui:113 src/disks/ui/disks.ui:297
-msgid "Location"
-msgstr "Staðsetning"
-
-#: src/disks/ui/create-disk-image-dialog.ui:7
-msgid "Create Disk Image"
-msgstr "Búa til diskmynd"
-
-#: src/disks/ui/create-disk-image-dialog.ui:31
-#: src/disks/ui/edit-crypttab-dialog.ui:104
-#: src/disks/ui/edit-gpt-partition-dialog.ui:91
-#: src/disks/ui/new-disk-image-dialog.ui:48
-msgid "_Name"
-msgstr "_Heiti"
-
-#: src/disks/ui/create-disk-image-dialog.ui:48
-#: src/disks/ui/new-disk-image-dialog.ui:67
-msgid "Save in _Folder"
-msgstr "Vista í _möppu:"
-
-#: src/disks/ui/create-disk-image-dialog.ui:81
-#: src/disks/ui/new-disk-image-dialog.ui:123
-msgid "Select a Folder"
-msgstr "Veldu möppu"
-
-#: src/disks/ui/create-disk-image-dialog.ui:93
-msgid "Source"
-msgstr "Uppruni"
-
-#: src/disks/ui/create-disk-image-dialog.ui:132
-msgid "_Start Creating…"
-msgstr "_Hefja gerð..."
-
-#: src/disks/ui/create-filesystem-page.ui:19
-msgid "Volume _Name"
-msgstr "Heiti gag_namiðils"
-
-#: src/disks/ui/create-filesystem-page.ui:33
-msgid ""
-"The name to use for the filesystem. This is useful if you want to refer to "
-"the device via a symlink in the /dev/disk/by-label directory."
-msgstr ""
-
-#: src/disks/ui/create-filesystem-page.ui:47
-msgid "For example: “Angela’s Files” or “Backup”."
-msgstr "Til dæmis, “Gögnin mín” eða “Afritunargögn”"
-
-#: src/disks/ui/create-filesystem-page.ui:74
-#: src/disks/ui/format-disk-dialog.ui:84
-msgid "_Erase"
-msgstr "_Eyða"
-
-#: src/disks/ui/create-filesystem-page.ui:89
-msgid "Overwrites existing data, but takes longer."
-msgstr "Yfirskrifar fyrirliggjandi gögn, en tekur lengri tíma."
-
-#: src/disks/ui/create-filesystem-page.ui:115
-msgid "_Internal disk for use with Linux systems only (Ext4)"
-msgstr ""
-
-#: src/disks/ui/create-filesystem-page.ui:131
-#: src/disks/ui/create-other-page.ui:36
-msgid "_Password protect volume (LUKS)"
-msgstr ""
-
-#: src/disks/ui/create-filesystem-page.ui:147
-msgid "For use with _Windows (NTFS)"
-msgstr ""
-
-#: src/disks/ui/create-filesystem-page.ui:163
-msgid "For use with all _systems and devices (FAT)"
-msgstr "Virkar með öllum _kerfum og tækjum (FAT)"
-
-#: src/disks/ui/create-filesystem-page.ui:179
-msgid "_Other"
-msgstr "_Annað"
-
-#: src/disks/ui/create-other-page.ui:17
-msgid ""
-"In case that the default options do not fit your needs select one of the "
-"following filesystems. Be aware of the technical differences and do research "
-"about your use case."
-msgstr ""
-
-#: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
-msgid "Partition _Size"
-msgstr "_Stærð disksneiðar"
-
-#: src/disks/ui/create-partition-page.ui:85 src/disks/ui/resize-dialog.ui:101
-msgid "The size of the partition to create"
-msgstr "Stærð nýju disksneiðarinnar"
-
-#: src/disks/ui/create-partition-page.ui:103
-#: src/disks/ui/new-disk-image-dialog.ui:140 src/disks/ui/resize-dialog.ui:119
-msgid "bytes"
-msgstr "bæti"
-
-#: src/disks/ui/create-partition-page.ui:104
-#: src/disks/ui/new-disk-image-dialog.ui:141 src/disks/ui/resize-dialog.ui:120
-msgid "kB"
-msgstr "kB"
-
-#: src/disks/ui/create-partition-page.ui:105
-#: src/disks/ui/new-disk-image-dialog.ui:142 src/disks/ui/resize-dialog.ui:121
-msgid "MB"
-msgstr "MB"
-
-#: src/disks/ui/create-partition-page.ui:106
-#: src/disks/ui/new-disk-image-dialog.ui:143 src/disks/ui/resize-dialog.ui:122
-msgid "GB"
-msgstr "GB"
-
-#: src/disks/ui/create-partition-page.ui:107
-#: src/disks/ui/new-disk-image-dialog.ui:144 src/disks/ui/resize-dialog.ui:123
-msgid "TB"
-msgstr "TB"
-
-#: src/disks/ui/create-partition-page.ui:108
-#: src/disks/ui/new-disk-image-dialog.ui:145 src/disks/ui/resize-dialog.ui:124
-msgid "PB"
-msgstr "PB"
-
-#: src/disks/ui/create-partition-page.ui:109
-#: src/disks/ui/new-disk-image-dialog.ui:146 src/disks/ui/resize-dialog.ui:125
-msgid "KiB"
-msgstr "KiB"
-
-#: src/disks/ui/create-partition-page.ui:110
-#: src/disks/ui/new-disk-image-dialog.ui:147 src/disks/ui/resize-dialog.ui:126
-msgid "MiB"
-msgstr "MiB"
-
-#: src/disks/ui/create-partition-page.ui:111
-#: src/disks/ui/new-disk-image-dialog.ui:148 src/disks/ui/resize-dialog.ui:127
-msgid "GiB"
-msgstr "GiB"
-
-#: src/disks/ui/create-partition-page.ui:112
-#: src/disks/ui/new-disk-image-dialog.ui:149 src/disks/ui/resize-dialog.ui:128
-msgid "TiB"
-msgstr "TiB"
-
-#: src/disks/ui/create-partition-page.ui:113
-#: src/disks/ui/new-disk-image-dialog.ui:150 src/disks/ui/resize-dialog.ui:129
-msgid "PiB"
-msgstr "PiB"
-
-#: src/disks/ui/create-partition-page.ui:127 src/disks/ui/resize-dialog.ui:143
-msgid "Free Space _Following"
-msgstr "Laust pláss á e_ftir"
-
-#: src/disks/ui/create-partition-page.ui:140 src/disks/ui/resize-dialog.ui:160
-msgid "The free space following the partition"
-msgstr "Laust pláss strax á eftir disksneiðinni"
-
-#: src/disks/ui/create-partition-page.ui:165
-msgid "Extended Partition"
-msgstr "Útvíkkuð disksneið"
-
-#: src/disks/ui/create-partition-page.ui:169
-msgid "Extended Partitions can contain Logical Partitions"
-msgstr ""
-
-#: src/disks/ui/create-password-page.ui:18
-msgid ""
-"Data stored in the volume will only be accessible with the correct password. "
-"Be careful not to forget it."
-msgstr ""
-
-#: src/disks/ui/create-password-page.ui:34
-msgid "_Password"
-msgstr "_Lykilorð"
-
-#: src/disks/ui/create-password-page.ui:48
-msgid "_Confirm"
-msgstr "Stað_festa"
-
-#: src/disks/ui/create-password-page.ui:63
-msgid "Enter passphrase used to protect the data"
-msgstr "Settu inn lykilsetningu (passphrase) sem á að venda gögnin"
-
-#: src/disks/ui/create-password-page.ui:95
-msgid "Sh_ow Password"
-msgstr "_Birta lykilorð"
-
-#: src/disks/ui/create-password-page.ui:134
-msgid "Mix uppercase and lowercase and try to use a number or two."
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:23
-msgid "Drive Settings"
-msgstr "Stillingar drifs"
-
-#: src/disks/ui/disk-settings-dialog.ui:54
-msgid "Apply Standby Timeout Settings"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:71
-msgid ""
-"Turn on to configure Standby Timeout at startup and when the disk is "
-"connected"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:104
-msgid "Enter Standby After"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:159
-msgid "_Standby"
-msgstr "Í _bið"
-
-#: src/disks/ui/disk-settings-dialog.ui:182
-msgid "Apply Advanced Power Management Settings"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:199
-msgid "Turn on to configure APM at startup and when the disk is connected"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:232
-msgid "APM Level"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:280
-msgid ""
-"Aggressive spin-down may wear out the drive faster than anticipated. Please "
-"check the “Start/Stop Count” SMART attribute from time to time"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:308
-msgid "A_PM"
-msgstr "A_PM"
-
-#: src/disks/ui/disk-settings-dialog.ui:333
-msgid "Apply Automatic Acoustic Management Settings"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:350
-msgid "Turn on to configure AAM at startup and when the disk is connected"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:384
-msgid "Vendor Recommended"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:401
-msgid "AAM Level"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:473
-msgid "_AAM"
-msgstr "_AAM"
-
-#: src/disks/ui/disk-settings-dialog.ui:498
-msgid "Apply Write Cache Settings"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:515
-msgid ""
-"Turn on to configure Write Cache setting at startup and when the disk is "
-"connected"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:549
-msgid "S_etting"
-msgstr "St_illing"
-
-#: src/disks/ui/disk-settings-dialog.ui:570
-msgid "Enable Write Cache"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:571
-msgid "Disable Write Cache"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:594
-msgid ""
-"Performance is increased by enabling write caching, but leaves the system "
-"susceptible to data loss in the event of a power failure"
-msgstr ""
-
-#: src/disks/ui/disk-settings-dialog.ui:622
-msgid "Wr_ite Cache"
-msgstr "Skr_ifa í skyndiminni"
-
-#: src/disks/ui/disks.ui:34
-msgid "Application Menu"
-msgstr "Forritavalmynd"
-
-#: src/disks/ui/disks.ui:94
-msgid "Go back to main view"
-msgstr "Fara til baka í aðalsýn"
-
-#: src/disks/ui/disks.ui:106
-msgid "Drive Options"
-msgstr "Valkostir drifs"
-
-#: src/disks/ui/disks.ui:121
-msgid "Power off this disk"
-msgstr "Slökkva á þessum diski"
-
-#: src/disks/ui/disks.ui:136
-msgid "Eject this disk"
-msgstr "Spýta út þessum diski"
-
-#: src/disks/ui/disks.ui:151
-msgid "Detach this loop device"
-msgstr ""
-
-#: src/disks/ui/disks.ui:174
-msgid "No Device Selected"
-msgstr "Ekkert tæki er valið"
-
-#: src/disks/ui/disks.ui:175
-#| msgid "Select a device"
-msgid "Select a device to manage."
-msgstr "Veldu tæki til að stjórna."
-
-#: src/disks/ui/disks.ui:210
-msgid "Model"
-msgstr "Gerð"
-
-#: src/disks/ui/disks.ui:239
-msgid "Serial Number"
-msgstr "Raðnúmer"
-
-#: src/disks/ui/disks.ui:268
-msgid "World Wide Name"
-msgstr ""
-
-#: src/disks/ui/disks.ui:326
-msgid "Media"
-msgstr "Miðill"
-
-#: src/disks/ui/disks.ui:385 src/disks/ui/disks.ui:998
-msgid "Job"
-msgstr "Verk"
-
-#: src/disks/ui/disks.ui:484
-msgid "Name"
-msgstr "Heiti"
-
-#: src/disks/ui/disks.ui:513 src/disks/ui/disks.ui:852
-msgid "Size"
-msgstr "Stærð"
-
-#: src/disks/ui/disks.ui:542
-msgid "Auto-clear"
-msgstr ""
-
-#: src/disks/ui/disks.ui:560
-msgid "Detach loop device after unmount action"
-msgstr ""
-
-#. The filename or URI of the file that is used as backing store for the loop device.
-#: src/disks/ui/disks.ui:574
-msgid "Backing File"
-msgstr ""
-
-#: src/disks/ui/disks.ui:603
-msgid "Partitioning"
-msgstr "Disksneiðing"
-
-#: src/disks/ui/disks.ui:634
-msgid "_Volumes"
-msgstr "_Gagnamiðlar"
-
-#: src/disks/ui/disks.ui:675
-msgid "Mount selected partition"
-msgstr "Tengja valda disksneið"
-
-#: src/disks/ui/disks.ui:692
-msgid "Unmount selected partition"
-msgstr "Aftengja valda disksneið"
-
-#: src/disks/ui/disks.ui:709
-msgid "Activate selected swap partition"
-msgstr "Virkja valda SWAP-disksneið"
-
-#: src/disks/ui/disks.ui:726
-msgid "Deactivate selected swap partition"
-msgstr "Gera valda SWAP-disksneið óvirka"
-
-#: src/disks/ui/disks.ui:743
-msgid "Unlock selected encrypted partition"
-msgstr "Aflæsa valinni dulritaðri disksneið"
-
-#: src/disks/ui/disks.ui:760
-msgid "Lock selected encrypted partition"
-msgstr "Læsa valinni dulritaðri disksneið"
-
-#: src/disks/ui/disks.ui:777
-msgid "Create partition in unallocated space"
-msgstr "Búa til disksneið í óúthlutuðu svæði"
-
-#: src/disks/ui/disks.ui:794
-msgid "Additional partition options"
-msgstr "Fleiri valkostir disksneiða"
-
-#: src/disks/ui/disks.ui:821
-msgid "Delete selected partition"
-msgstr "Eyða valinni disksneið"
-
-#. The contents of the device, for example 'Unknown', 'FAT (32-bit version)', 'Ext4 (version 1.0)', 'Swap (version 2)'
-#: src/disks/ui/disks.ui:881
-msgid "Contents"
-msgstr "Innihald"
-
-#: src/disks/ui/disks.ui:939
-msgid "UUID"
-msgstr "UUID"
-
-#: src/disks/ui/disks.ui:968
-msgid "Partition Type"
-msgstr "Tegund disksneiðar"
-
-#: src/disks/ui/drive-menu.ui:6
-msgid "Format _Disk…"
-msgstr "Forsníða _disk…"
-
-#: src/disks/ui/drive-menu.ui:12
-msgid "_Create Disk Image…"
-msgstr "_Búa til diskmynd…"
-
-#: src/disks/ui/drive-menu.ui:16
-msgid "_Restore Disk Image…"
-msgstr "Endu_rheimta diskmynd…"
-
-#: src/disks/ui/drive-menu.ui:22
-msgid "_Benchmark Disk…"
-msgstr "_Afkastaprófa disk…"
-
-#: src/disks/ui/drive-menu.ui:26
-msgid "_SMART Data & Self-Tests…"
-msgstr "_SMART-gögn og sjálfprófanir…"
-
-#: src/disks/ui/drive-menu.ui:30
-msgid "Drive S_ettings…"
-msgstr "Stillin_gar drifs…"
-
-#: src/disks/ui/drive-menu.ui:36
-msgid "S_tandby Now"
-msgstr "Núna í _bið"
-
-#: src/disks/ui/drive-menu.ui:40
-msgid "_Wake-Up from Standby"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:11
-msgid "Encryption Options"
-msgstr "Valkostir dulritunar"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:71 src/disks/ui/edit-fstab-dialog.ui:41
-msgid "Us_er Session Defaults"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:86
-msgid ""
-"Switch off <i>User Session Defaults</i> to manage encryption options and "
-"passphrase for the device. The options correspond to an entry in the <b>/etc/"
-"crypttab</b> file"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:124
-msgid "Opt_ions"
-msgstr "_Valkostir"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:143
-msgid ""
-"The name to use for the unlocked device — the device is set up as the name "
-"prefixed with <b>/dev/mapper</b>/"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:160
-msgid "Options to use when unlocking the device"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:177
-msgid "Passphrase File"
-msgstr "Lykilorðaskrá"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:207
-#: src/disks/ui/unlock-device-dialog.ui:87
-msgid "Sho_w passphrase"
-msgstr "Birta lykilorð"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:229
-msgid ""
-"Passphrase of the device or empty to request from user when setting up the "
-"device"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:246
-#: src/disks/ui/unlock-device-dialog.ui:53
-msgid "_Passphrase"
-msgstr "Ly_kilorð"
-
-#: src/disks/ui/edit-crypttab-dialog.ui:268
-msgid "_Unlock at system startup"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:274
-msgid "If checked, the device will be unlocked at system startup [!noauto]"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:289
-msgid "Require additional authori_zation to unlock"
-msgstr ""
-
-#: src/disks/ui/edit-crypttab-dialog.ui:295
-msgid ""
-"If checked, additional authorization is required to unlock the device [x-"
-"udisks-auth]"
-msgstr ""
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:7
-#: src/disks/ui/edit-gpt-partition-dialog.ui:8
-#: src/disks/ui/edit-partition-dialog.ui:7
-msgid "Edit Partition"
-msgstr "Breyta disksneið"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:60
-#: src/disks/ui/edit-gpt-partition-dialog.ui:59
-#: src/disks/ui/edit-partition-dialog.ui:59
-msgid "_Type"
-msgstr "_Tegund"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:76
-msgid "The partition type as a 8-bit unsigned integer"
-msgstr ""
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:87
-msgid "_Bootable"
-msgstr "_Ræsanlegt"
-
-#: src/disks/ui/edit-dos-partition-dialog.ui:92
-msgid ""
-"A flag used by the Platform bootloader to determine where the OS should be "
-"loaded from. Sometimes the partition with this flag set is referred to as "
-"the <i>active</i> partition"
-msgstr ""
-
-#: src/disks/ui/edit-filesystem-dialog.ui:7
-msgid "Change Filesystem Label"
-msgstr "Breyta nafni skráakerfis"
-
-#: src/disks/ui/edit-filesystem-dialog.ui:56
-msgid "This filesystem will be automatically unmounted prior to any changes."
-msgstr ""
-
-#: src/disks/ui/edit-filesystem-dialog.ui:71
-msgid "_Label"
-msgstr "_Merking"
-
-#: src/disks/ui/edit-fstab-dialog.ui:7
-msgid "Mount Options"
-msgstr "Tengistillingar"
-
-#: src/disks/ui/edit-fstab-dialog.ui:54
-msgid ""
-"Switch off <i>User Session Defaults</i> to manage mount point and mount "
-"options for the device. The options correspond to an entry in the <b>/etc/"
-"fstab</b> file"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:71
-msgid "I_dentify As"
-msgstr "Auð_kenna sem"
-
-#: src/disks/ui/edit-fstab-dialog.ui:90
-msgid ""
-"The <b>special device file</b> — use symlinks in the <b>/dev/disk</b> "
-"hierarchy to control the scope of the entry"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:91
-msgid ""
-"The special device file — use symlinks in the /dev/disk hierarchy to control "
-"the scope of the entry"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:121
-msgid "Mount _Point"
-msgstr "Tengi_punktur"
-
-#: src/disks/ui/edit-fstab-dialog.ui:140
-msgid "Filesystem _Type"
-msgstr "_Tegund skráakerfis"
-
-#: src/disks/ui/edit-fstab-dialog.ui:159 src/disks/ui/edit-fstab-dialog.ui:160
-msgid "The directory to mount the device in"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:176 src/disks/ui/edit-fstab-dialog.ui:177
-msgid "The filesystem type to use"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:199
-msgid "Display _Name"
-msgstr "Birta _heiti"
-
-#: src/disks/ui/edit-fstab-dialog.ui:218
-msgid ""
-"If set, the name to use for the device in the user interface [x-gvfs-name=]"
+#: src/disks/restore_disk_image_dialog.rs:250
+#, rust-format
+msgid "The disk image is {} smaller than the target device"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:235
-msgid "Icon Na_me"
-msgstr "Heiti tákn_myndar"
-
-#: src/disks/ui/edit-fstab-dialog.ui:254
-msgid ""
-"If set, the name of the icon to use in the device in the user interface [x-"
-"gvfs-icon=]"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:268
-msgid "Sho_w in user interface"
-msgstr "_Birta í notandaviðmóti"
-
-#: src/disks/ui/edit-fstab-dialog.ui:273 src/disks/ui/edit-fstab-dialog.ui:274
-msgid ""
-"If checked, the device is always shown in the user interface no matter what "
-"its directory is [x-gvfs-show]"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:288
-msgid "Require additional authori_zation to mount"
-msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:293 src/disks/ui/edit-fstab-dialog.ui:294
-msgid ""
-"If checked, additional authorization is required to mount the device [x-"
-"udisks-auth]"
+#: src/disks/restore_disk_image_dialog.rs:255
+#, rust-format
+msgid "The disk image is {} bigger than the target device"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:308
-msgid "Mount at system _startup"
-msgstr "Tengja inn við ræ_singu kerfis"
-
-#: src/disks/ui/edit-fstab-dialog.ui:313
-msgid "If checked, the device will be mounted at system startup [!noauto]"
+#: src/disks/restore_disk_image_dialog.rs:395
+msgid "Are you sure you want to write the disk image to the device?"
 msgstr ""
-
-#: src/disks/ui/edit-fstab-dialog.ui:330
-msgid "S_ymbolic Icon Name"
-msgstr "_Heiti táknrænnar táknmyndar"
 
-#: src/disks/ui/edit-fstab-dialog.ui:349 src/disks/ui/edit-fstab-dialog.ui:350
-msgid ""
-"If set, the name of the symbolic icon to use in the device in the user "
-"interface [x-gvfs-symbolic-icon=]"
+#: src/disks/restore_disk_image_dialog.rs:396
+msgid "All existing data will be lost"
 msgstr ""
 
-#: src/disks/ui/edit-fstab-dialog.ui:376
-msgid "Mount Opt_ions"
-msgstr "Teng_istillingar"
-
-#: src/disks/ui/edit-fstab-dialog.ui:395
-msgid "The mount options stored in the <b>/etc/fstab</b> file"
-msgstr ""
+#: src/disks/restore_disk_image_dialog.rs:397
+#, fuzzy
+#| msgid "_Restore"
+msgid "Restore"
+msgstr "Endu_rheimta"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:77
-msgid "The partition type represented as a 32-bit <i>GUID</i>"
+#: src/disks/restore_disk_image_dialog.rs:427
+msgid "Error determining size of file"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:109
-msgid ""
-"The partition name (up to 36 unicode characters). This is useful if you want "
-"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
-"directory"
+#: src/disks/restore_disk_image_dialog.rs:437
+msgid "Error opening file for reading"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:122
-msgid "_System Partition"
-msgstr "_Kerfisdisksneið"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:127
-msgid ""
-"Used to indicate that the partition and its contents are required for the OS/"
-"Platform to function. Special care should be taken to not delete or "
-"overwrite the contents"
+#: src/disks/restore_disk_image_dialog.rs:461
+msgctxt "restore-inhibit-message"
+msgid "Copying disk image to device"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:141
-msgid "Legacy BIOS _Bootable"
+#. Translators: this is the description of the job
+#: src/disks/restore_disk_image_dialog.rs:473
+msgid "Restoring Disk Image"
 msgstr ""
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:146
-msgid ""
-"This is equivalent to Master Boot Record <i>bootable</i> flag. It is "
-"normally only used for GPT partitions on MBR systems"
+#: src/disks/restore_disk_image_dialog.rs:491
+msgid "Error restoring disk image"
 msgstr ""
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:163
-msgid "Flags"
-msgstr "Flögg"
 
-#: src/disks/ui/edit-gpt-partition-dialog.ui:179
-msgid "Hide from _Firmware"
-msgstr "_Fela fyrir grunnhugbúnaði (firmware)"
-
-#: src/disks/ui/edit-gpt-partition-dialog.ui:184
-msgid ""
-"Indicates that EFI firmware should ignore the content of the partition and "
-"not try to read from it"
-msgstr ""
+#: src/disks/restore_disk_image_dialog.rs:624
+#, fuzzy
+#| msgid "Select Disk Image to Restore"
+msgid "Choose a disk image to restore."
+msgstr "Veldu diskmynd sem á að endurheimta"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3267,396 +2055,1285 @@ msgstr "St_roka út…"
 msgid "Erase _Type"
 msgstr ""
 
-#: src/disks/ui/format-disk-dialog.ui:6
-msgid "Format Disk"
-msgstr "Forsníða disk"
-
-#: src/disks/ui/format-disk-dialog.ui:33
-msgid "_Format…"
-msgstr "_Forsníða…"
-
-#: src/disks/ui/format-disk-dialog.ui:67
-msgid "_Partitioning"
-msgstr "_Disksneiðing"
-
-#: src/disks/ui/new-disk-image-dialog.ui:8
-msgid "New Disk Image"
-msgstr "Ný diskmynd"
-
-#: src/disks/ui/new-disk-image-dialog.ui:29
-msgid "Image _Size"
-msgstr "_Stærð diskmyndar"
-
-#: src/disks/ui/new-disk-image-dialog.ui:86
-msgid "The size of the image to create"
-msgstr "Stærð nýju diskmyndarinnar"
-
-#: src/disks/ui/new-disk-image-dialog.ui:177
-msgid "Attach new _Image…"
-msgstr "Heng_ja við nýja diskmynd…"
-
-#: src/disks/ui/resize-dialog.ui:19
-msgid "Resize Volume"
-msgstr ""
-
-#: src/disks/ui/resize-dialog.ui:48
-msgid ""
-"Resizing a filesystem can lead to data loss. You are advised to backup your "
-"data before. The resize operation will take longer if a lot of data has to "
-"be moved. The minimal size is calculated according to the current content. "
-"Keep additional free space for the filesystem to work fast and reliably."
-msgstr ""
-
-#: src/disks/ui/resize-dialog.ui:189
-msgid "_Difference"
-msgstr "_Mismunur"
-
-#: src/disks/ui/resize-dialog.ui:206
-msgid "The difference to the previous partition size"
-msgstr ""
-
-#: src/disks/ui/restore-disk-image-dialog.ui:8
-msgid "Restore Disk Image"
-msgstr "Endurheimta diskmynd"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:38
-msgid "_Image to Restore"
-msgstr "D_iskmynd sem á að endurheimta"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:55
-msgid "Select Disk Image to Restore"
-msgstr "Veldu diskmynd sem á að endurheimta"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:67
-msgid "Destination"
-msgstr "Áfangastaður"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:96
-msgid "_Destination"
-msgstr "Á_fangastaður"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:123
-msgid "Image to Restore"
-msgstr "Diskmynd sem á að endurheimta"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:152
-msgid "Image Size"
-msgstr "Stærð myndar"
-
-#: src/disks/ui/restore-disk-image-dialog.ui:193
-msgid "_Start Restoring…"
-msgstr "_Hefja endurheimt..."
-
-#: src/disks/ui/shortcuts.ui:13
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Almennt"
-
-#: src/disks/ui/shortcuts.ui:17
-msgctxt "shortcut window"
-msgid "Help"
-msgstr "Hjálp"
-
-#: src/disks/ui/shortcuts.ui:24
-msgctxt "shortcut window"
-msgid "Open the application menu"
-msgstr ""
-
-#: src/disks/ui/shortcuts.ui:31
-#| msgid "_Keyboard Shortcuts"
-msgctxt "shortcut window"
-msgid "Keyboard shortcuts"
-msgstr "Flýtilyklar"
-
-#: src/disks/ui/shortcuts.ui:38
-msgctxt "shortcut window"
-msgid "Quit"
-msgstr "Hætta"
-
-#: src/disks/ui/shortcuts.ui:47
-#| msgid "Disks"
-msgctxt "shortcut window"
-msgid "Disks"
-msgstr "Diskar"
-
-#: src/disks/ui/shortcuts.ui:51
-msgctxt "shortcut window"
-msgid "Create a new empty disk image"
-msgstr "Búa til nýja tóma diskmynd"
-
-#: src/disks/ui/shortcuts.ui:58
-msgctxt "shortcut window"
-msgid "Attach an existing disk image"
-msgstr ""
-
-#: src/disks/ui/shortcuts.ui:65
-msgctxt "shortcut window"
-msgid "Unselect current disk"
-msgstr ""
-
-#: src/disks/ui/shortcuts.ui:74
-msgctxt "shortcut window"
-msgid "Drive"
-msgstr "Drif"
-
-#: src/disks/ui/shortcuts.ui:78
-msgctxt "shortcut window"
-msgid "Open the drive menu"
-msgstr ""
-
-#: src/disks/ui/shortcuts.ui:85
-msgctxt "shortcut window"
-msgid "Format the drive"
-msgstr "Forsníða drifið"
-
-#: src/disks/ui/shortcuts.ui:92
-msgctxt "shortcut window"
-msgid "Restore an image to the disk"
-msgstr "Endurheimta diskmynd yfir á diskinn"
-
-#: src/disks/ui/shortcuts.ui:99
-msgctxt "shortcut window"
-msgid "SMART data"
-msgstr "SMART-gögn"
-
-#: src/disks/ui/shortcuts.ui:106
-msgctxt "shortcut window"
-msgid "Drive settings"
-msgstr "Stillingar drifs"
-
-#: src/disks/ui/shortcuts.ui:115
-msgctxt "shortcut window"
-msgid "Partition"
-msgstr "Disksneiðing"
-
-#: src/disks/ui/shortcuts.ui:119
-msgctxt "shortcut window"
-msgid "Open the volume menu"
-msgstr ""
-
-#: src/disks/ui/shortcuts.ui:126
-msgctxt "shortcut window"
-msgid "Format the selected volume"
-msgstr "Forsníða valinn gagnamiðil"
-
-#: src/disks/ui/smart-dialog.ui:6
+#: src/disks/ui/gdu-ata-smart-dialog.ui:4
 msgid "SMART Data & Self-Tests"
 msgstr "SMART-gögn og sjálfprófanir"
 
-#: src/disks/ui/smart-dialog.ui:25
-msgid "_Start Self-test"
-msgstr "Hefja sjálfprófun"
-
-#: src/disks/ui/smart-dialog.ui:29
-msgid "Click to start a SMART self-test"
-msgstr "Smelltu til að byrja SMART-sjálfprófun"
-
-#: src/disks/ui/smart-dialog.ui:38
-msgid "_Stop Self-test"
-msgstr "_Stöðva sjálfprófun"
-
-#: src/disks/ui/smart-dialog.ui:42
-msgid "Click to stop the SMART self-test currently in progress"
-msgstr ""
-
-#: src/disks/ui/smart-dialog.ui:51
-#| msgid "_Close"
-msgid "Close"
-msgstr "Loka"
-
-#: src/disks/ui/smart-dialog.ui:59
-msgid "Refresh"
-msgstr "Endurlesa"
-
-#: src/disks/ui/smart-dialog.ui:63
-msgid "Click to force re-reading SMART data from the hard disk"
-msgstr "Smelltu til að þvinga fram endurlestur á SMART-gögnum af harða disknum"
-
-#: src/disks/ui/smart-dialog.ui:95
+#: src/disks/ui/gdu-ata-smart-dialog.ui:30
 msgid "Powered On"
 msgstr "Kveikt á"
 
-#: src/disks/ui/smart-dialog.ui:124
+#: src/disks/ui/gdu-ata-smart-dialog.ui:55
 msgid "Updated"
 msgstr "Uppfært"
 
-#: src/disks/ui/smart-dialog.ui:182
+#: src/disks/ui/gdu-ata-smart-dialog.ui:105
 msgid "Self-test Result"
 msgstr "Niðurstöður sjálfprófunar"
 
-#: src/disks/ui/smart-dialog.ui:197
+#: src/disks/ui/gdu-ata-smart-dialog.ui:118
 msgid "Self-assessment"
 msgstr "Sjálf-mat"
 
-#: src/disks/ui/smart-dialog.ui:212
+#: src/disks/ui/gdu-ata-smart-dialog.ui:131
 msgid "Overall Assessment"
 msgstr "Heildarmat ástands"
 
-#: src/disks/ui/smart-dialog.ui:270
+#: src/disks/ui/gdu-ata-smart-dialog.ui:181
 msgid "Click to toggle whether SMART is enabled for the hard disk"
 msgstr "Smelltu til að víxla af/á hvort SMART sé virkjað á harða disknum"
 
-#: src/disks/ui/smart-dialog.ui:281
+#: src/disks/ui/gdu-ata-smart-dialog.ui:190
 msgid "SMART _Attributes"
 msgstr "SMART _eigindi"
 
-#: src/disks/ui/smart-dialog.ui:334
-#| msgid "Short"
+#: src/disks/ui/gdu-ata-smart-dialog.ui:232
+msgid "_Start Self-test"
+msgstr "Hefja sjálfprófun"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:233
+msgid "Click to start a SMART self-test"
+msgstr "Smelltu til að byrja SMART-sjálfprófun"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:242
+msgid "_Stop Self-test"
+msgstr "_Stöðva sjálfprófun"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:243
+msgid "Click to stop the SMART self-test currently in progress"
+msgstr ""
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:249
+msgid "Refresh"
+msgstr "Endurlesa"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:250
+msgid "Click to force re-reading SMART data from the hard disk"
+msgstr "Smelltu til að þvinga fram endurlestur á SMART-gögnum af harða disknum"
+
+#: src/disks/ui/gdu-ata-smart-dialog.ui:263
 msgid "_Short"
 msgstr "_Stutt"
 
-#: src/disks/ui/smart-dialog.ui:338
-#| msgid "Extended"
+#: src/disks/ui/gdu-ata-smart-dialog.ui:267
 msgid "_Extended"
 msgstr "Ítarl_egt"
 
-#: src/disks/ui/smart-dialog.ui:342
+#: src/disks/ui/gdu-ata-smart-dialog.ui:271
 #, fuzzy
 #| msgid "_Cancel"
 msgid "_Conveyance"
 msgstr "_Hætta við"
 
-#: src/disks/ui/take-ownership-dialog.ui:4
-msgid "Confirm Taking Ownership"
-msgstr "Staðfestu yfirtöku eignarhalds"
+#: src/disks/ui/gdu-benchmark-dialog.ui:4
+#: src/disks/ui/gdu-benchmark-dialog.ui:47
+msgid "Benchmark"
+msgstr "Afkastaprófun"
 
-#: src/disks/ui/take-ownership-dialog.ui:5
+#: src/disks/ui/gdu-benchmark-dialog.ui:33
+#, fuzzy
+#| msgid "_Start Creating…"
+msgid "_Start…"
+msgstr "_Hefja gerð..."
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:60
 msgid ""
-"Changes ownership of the filesystem to your user and group. The recursive "
-"mode does also change the ownership of all subdirectories and files, this "
-"can lead to destructive results when the filesystem contains a directory "
-"structure where ownership should belong to different users (e.g., a system "
-"backup or a filesystem that is accessed by multiple users)."
+"Benchmarking measures the transfer rate for different areas of the disk. It "
+"also measures seek times from one area to another."
 msgstr ""
 
-#: src/disks/ui/take-ownership-dialog.ui:13
-msgid "Enable _recursive mode"
+#: src/disks/ui/gdu-benchmark-dialog.ui:65
+#, fuzzy
+#| msgid "Transfer Rate"
+msgid "Transfer S_amples"
+msgstr "Flutningshraði"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:80
+#, fuzzy
+#| msgid "Sample Size"
+msgid "Transfer Sample S_ize"
+msgstr "Stærð sýnis"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:96
+#, fuzzy
+#| msgid "Access Time"
+msgid "_Access Time Samples"
+msgstr "Opnunartími"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:115
+#, fuzzy
+#| msgid "_Abort Benchmark"
+msgid "_Write Benchmark"
+msgstr "_Hætta við afkastaprófun"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:117
+msgid "Data should be backed up before using this feature"
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:8
-msgid "Enter passphrase to unlock"
-msgstr "Settu inn lykilorð til að aflæsa"
+#: src/disks/ui/gdu-benchmark-dialog.ui:142
+msgid "Sample Size"
+msgstr "Stærð sýnis"
 
-#: src/disks/ui/unlock-device-dialog.ui:36
+#: src/disks/ui/gdu-benchmark-dialog.ui:151
+msgid "Average Read Rate"
+msgstr "Meðal-leshraði"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:161
+msgid "Average Write Rate"
+msgstr "Meðal-skrifhraði"
+
+#: src/disks/ui/gdu-benchmark-dialog.ui:171
+msgid "Average Access Time"
+msgstr "Meðal-opnunartími"
+
+#: src/disks/ui/gdu-block-row.ui:65
+#, fuzzy
+#| msgid "Partitioning"
+msgid "Partition Options"
+msgstr "Disksneiðing"
+
+#: src/disks/ui/gdu-block-row.ui:80 src/disks/ui/gdu-drive-view.ui:102
+msgid "Size"
+msgstr "Stærð"
+
+#: src/disks/ui/gdu-block-row.ui:89
+#, fuzzy
+#| msgid "Device"
+msgid "Device ID"
+msgstr "Tæki"
+
+#: src/disks/ui/gdu-block-row.ui:98
+msgid "UUID"
+msgstr "UUID"
+
+#: src/disks/ui/gdu-block-row.ui:107
+msgid "Partition Type"
+msgstr "Tegund disksneiðar"
+
+#: src/disks/ui/gdu-block-row.ui:120
+#, fuzzy
+#| msgid "Resi_ze…"
+msgid "Resize…"
+msgstr "Bre_yta stærð…"
+
+#: src/disks/ui/gdu-block-row.ui:124
+msgid "Edit"
+msgstr ""
+
+#. TRANSLATORS: this should be phrased as a noun.
+#: src/disks/ui/gdu-block-row.ui:126
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Partition"
+msgid "Partition…"
+msgstr "Disksneiðing"
+
+#: src/disks/ui/gdu-block-row.ui:130
+#, fuzzy
+#| msgctxt "volume-grid"
+#| msgid "Filesystem"
+msgid "Filesystem…"
+msgstr "Skráakerfi"
+
+#: src/disks/ui/gdu-block-row.ui:134
+#, fuzzy
+#| msgid "Change Pa_ssphrase…"
+msgid "Change Passphrase…"
+msgstr "Breyta ly_kilorði…"
+
+#: src/disks/ui/gdu-block-row.ui:138
+#, fuzzy
+#| msgid "Mount Options"
+msgid "Mount Options…"
+msgstr "Tengistillingar"
+
+#: src/disks/ui/gdu-block-row.ui:142
+#, fuzzy
+#| msgid "Encryption Options"
+msgid "Encryption Options…"
+msgstr "Valkostir dulritunar"
+
+#: src/disks/ui/gdu-block-row.ui:146
+#, fuzzy
+#| msgid "_Take Ownership…"
+msgid "Take Ownership…"
+msgstr "_Taka yfir eignarhald…"
+
+#: src/disks/ui/gdu-block-row.ui:151
+#, fuzzy
+#| msgid "Format _Partition…"
+msgid "Format Partition…"
+msgstr "Forsníða _disksneið…"
+
+#: src/disks/ui/gdu-block-row.ui:155
+#, fuzzy
+#| msgid "_Delete"
+msgid "Delete…"
+msgstr "_Eyða"
+
+#: src/disks/ui/gdu-block-row.ui:161
+#, fuzzy
+#| msgid "C_heck Filesystem…"
+msgid "Check Filesystem…"
+msgstr "_Yfirfara skráakerfi…"
+
+#: src/disks/ui/gdu-block-row.ui:165
+#, fuzzy
+#| msgid "Rep_air Filesystem…"
+msgid "Repair Filesystem…"
+msgstr "Ger_a við skráakerfi…"
+
+#: src/disks/ui/gdu-block-row.ui:169
+#, fuzzy
+#| msgid "_Benchmark Partition…"
+msgid "Benchmark Partition…"
+msgstr "_Afkastaprófa disksneið…"
+
+#: src/disks/ui/gdu-block-row.ui:175
+#, fuzzy
+#| msgid "_Create Partition Image…"
+msgid "Create Partition Image…"
+msgstr "_Búa til diskmynd…"
+
+#: src/disks/ui/gdu-block-row.ui:179
+#, fuzzy
+#| msgid "_Restore Partition Image…"
+msgid "Restore Partition Image…"
+msgstr "Endu_rheimta diskmynd…"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:4
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:22
+msgid "Change Passphrase"
+msgstr "Breyta lykilorði"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:29
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:20
+#, fuzzy
+#| msgid "C_hange"
+msgid "Ch_ange"
+msgstr "Bre_yta"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:43
+msgid ""
+"Changing the passphrase for this device will also update the passphrase "
+"referenced by the <i>/etc/crypttab</i> file"
+msgstr ""
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:53
+#, fuzzy
+#| msgid "Set Password"
+msgid "C_urrent Password"
+msgstr "Stilla lykilorð"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:60
+#, fuzzy
+#| msgid "_Password"
+msgid "_New Password"
+msgstr "_Lykilorð"
+
+#: src/disks/ui/gdu-change-passphrase-dialog.ui:67
+#, fuzzy
+#| msgid "C_onfirm Passphrase"
+msgid "C_onfirm Password"
+msgstr "St_aðfesta lykilorð"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:11
+#, fuzzy
+#| msgid "Warning: all data on the volume will be lost"
+msgid "Warning: All the data on the volume will be lost"
+msgstr "Aðvörun: öll gögn á þessum gagnamiðli tapast"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:17
+msgid "Confirm the details of the current volume before proceeding."
+msgstr ""
+
+#: src/disks/ui/gdu-create-confirm-page.ui:27
+msgid "Device"
+msgstr "Tæki"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:35
+msgid "Volume"
+msgstr "Gagnamiðill"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:43
+msgid "Used"
+msgstr "Notað"
+
+#: src/disks/ui/gdu-create-confirm-page.ui:52
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:48
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:50
+msgid "Location"
+msgstr "Staðsetning"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:23
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:23
+msgid "C_reate"
+msgstr "_Búa til"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:42
+#: src/disks/ui/gdu-edit-partition-dialog.ui:46
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:42
+msgid "_Name"
+msgstr "_Heiti"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:51
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:53
+#, fuzzy
+#| msgid "Location"
+msgid "Select Location"
+msgstr "Staðsetning"
+
+#: src/disks/ui/gdu-create-disk-image-dialog.ui:68
+msgid "Source"
+msgstr "Uppruni"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:14
+#, fuzzy
+#| msgid "Volume _Name"
+msgid "_Volume Name"
+msgstr "Heiti gag_namiðils"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:25
+#: src/disks/ui/gdu-format-disk-dialog.ui:43
+#, fuzzy
+#| msgid "Don’t overwrite existing data"
+msgid "_Overwrite Existing Data"
+msgstr "Ekki yfirskrifa fyrirliggjandi gögn"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:30
+#: src/disks/ui/gdu-edit-partition-dialog.ui:68
+#: src/disks/ui/gdu-edit-partition-dialog.ui:109
+#: src/disks/ui/gdu-edit-partition-dialog.ui:150
+#: src/disks/ui/gdu-format-disk-dialog.ui:48
+#: src/disks/ui/gdu-take-ownership-dialog.ui:17
+#: src/disks/ui/gdu-unlock-dialog.ui:107 src/disks/ui/gdu-unlock-dialog.ui:148
+msgid "More Information"
+msgstr ""
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:42
+#: src/disks/ui/gdu-format-disk-dialog.ui:60
+msgid ""
+"Ensures that existing data cannot be recovered. This option slows down "
+"formatting."
+msgstr ""
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:70
+#, fuzzy
+#| msgid "Compatible with Linux systems"
+msgid "For use only with Linux systems"
+msgstr "Virkar með Linux-kerfum"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:84
+msgid "For use with Windows"
+msgstr ""
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:98
+#, fuzzy
+#| msgid "For use with all _systems and devices (FAT)"
+msgid "For use with all systems and devices"
+msgstr "Virkar með öllum _kerfum og tækjum (FAT)"
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:128
+msgid "_Password Protect Volume"
+msgstr ""
+
+#: src/disks/ui/gdu-create-filesystem-page.ui:129
+#: src/disks/ui/gdu-create-other-page.ui:16
+msgid "Encrypts the volume using LUKS"
+msgstr ""
+
+#: src/disks/ui/gdu-create-other-page.ui:15
+msgid "Password Protect Volume"
+msgstr ""
+
+#: src/disks/ui/gdu-create-partition-page.ui:26
+#, fuzzy
+#| msgid "Partition _Size"
+msgid "Partition Size"
+msgstr "_Stærð disksneiðar"
+
+#: src/disks/ui/gdu-create-partition-page.ui:41
+#, fuzzy
+#| msgid "The free space following the partition"
+msgid "Space following new partition"
+msgstr "Laust pláss strax á eftir disksneiðinni"
+
+#: src/disks/ui/gdu-create-partition-page.ui:66
+msgid "Extended Partitions can contain Logical Partitions"
+msgstr ""
+
+#: src/disks/ui/gdu-create-partition-page.ui:78
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:90
+msgid "Units"
+msgstr ""
+
+#: src/disks/ui/gdu-create-partition-page.ui:84
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:95
+#: src/disks/ui/gdu-resize-volume-dialog.ui:116
+msgid "bytes"
+msgstr "bæti"
+
+#: src/disks/ui/gdu-create-partition-page.ui:85
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:96
+#: src/disks/ui/gdu-resize-volume-dialog.ui:117
+msgid "kB"
+msgstr "kB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:86
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:97
+#: src/disks/ui/gdu-resize-volume-dialog.ui:118
+msgid "MB"
+msgstr "MB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:87
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:98
+#: src/disks/ui/gdu-resize-volume-dialog.ui:119
+msgid "GB"
+msgstr "GB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:88
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:99
+#: src/disks/ui/gdu-resize-volume-dialog.ui:120
+msgid "TB"
+msgstr "TB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:89
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:100
+#: src/disks/ui/gdu-resize-volume-dialog.ui:121
+msgid "PB"
+msgstr "PB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:90
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:101
+#: src/disks/ui/gdu-resize-volume-dialog.ui:122
+msgid "KiB"
+msgstr "KiB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:91
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:102
+#: src/disks/ui/gdu-resize-volume-dialog.ui:123
+msgid "MiB"
+msgstr "MiB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:92
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:103
+#: src/disks/ui/gdu-resize-volume-dialog.ui:124
+msgid "GiB"
+msgstr "GiB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:93
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:104
+#: src/disks/ui/gdu-resize-volume-dialog.ui:125
+msgid "TiB"
+msgstr "TiB"
+
+#: src/disks/ui/gdu-create-partition-page.ui:94
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:105
+#: src/disks/ui/gdu-resize-volume-dialog.ui:126
+msgid "PiB"
+msgstr "PiB"
+
+#: src/disks/ui/gdu-create-password-page.ui:8
+msgid ""
+"Data stored in the Volume will only be accessible with the correct password. "
+"Be careful not to forget it"
+msgstr ""
+
+#: src/disks/ui/gdu-create-password-page.ui:11
+#, fuzzy
+#| msgid "_Password"
+msgid "Password"
+msgstr "_Lykilorð"
+
+#: src/disks/ui/gdu-create-password-page.ui:17
+#, fuzzy
+#| msgid "C_onfirm Passphrase"
+msgid "Confirm Password"
+msgstr "St_aðfesta lykilorð"
+
+#: src/disks/ui/gdu-create-password-page.ui:24
+#, fuzzy
+#| msgid "The passwords do not match"
+msgid "The passwords do not match."
+msgstr "Lykilorðin stemma ekki"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:4
+#: src/disks/ui/gdu-disk-settings-dialog.ui:24
+msgid "Drive Settings"
+msgstr "Stillingar drifs"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:29
+msgid "Sa_ve"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:57
+msgid "Apply Standby Timeout Settings"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:69
+msgid ""
+"Turn on to configure Standby Timeout at startup and when the disk is "
+"connected"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:84
+msgid "Enter Standby After"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:117
+msgid "_Standby"
+msgstr "Í _bið"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:134
+msgid "Apply Advanced Power Management Settings"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:146
+msgid "Turn on to configure APM at startup and when the disk is connected"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:161
+msgid "APM Level"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:192
+msgid ""
+"Aggressive spin-down may wear out the drive faster than anticipated. Please "
+"check the “Start/Stop Count” SMART attribute from time to time"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:205
+msgid "A_PM"
+msgstr "A_PM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:223
+msgid "Apply Automatic Acoustic Management Settings"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:235
+msgid "Turn on to configure AAM at startup and when the disk is connected"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:251
+msgid "Vendor Recommended"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:264
+msgid "AAM Level"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:314
+msgid "_AAM"
+msgstr "_AAM"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:332
+msgid "Apply Write Cache Settings"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:344
+msgid ""
+"Turn on to configure Write Cache setting at startup and when the disk is "
+"connected"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:359
+msgid "S_etting"
+msgstr "St_illing"
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:373
+msgid "Enable Write Cache"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:374
+msgid "Disable Write Cache"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:383
+msgid ""
+"Performance is increased by enabling write caching, but leaves the system "
+"susceptible to data loss in the event of a power failure"
+msgstr ""
+
+#: src/disks/ui/gdu-disk-settings-dialog.ui:396
+msgid "Wr_ite Cache"
+msgstr "Skr_ifa í skyndiminni"
+
+#: src/disks/ui/gdu-drive-header.ui:119 src/disks/ui/gdu-drive-view.ui:38
+#, fuzzy
+#| msgid "Drive Options"
+msgid "Drive Information"
+msgstr "Valkostir drifs"
+
+#: src/disks/ui/gdu-drive-header.ui:128
+msgid "Drive Options"
+msgstr "Valkostir drifs"
+
+#: src/disks/ui/gdu-drive-header.ui:142
+#, fuzzy
+#| msgid "Format _Disk…"
+msgid "Format Disk…"
+msgstr "Forsníða _disk…"
+
+#: src/disks/ui/gdu-drive-header.ui:146
+#, fuzzy
+#| msgid "_Create Disk Image…"
+msgid "Create Disk Image…"
+msgstr "_Búa til diskmynd…"
+
+#: src/disks/ui/gdu-drive-header.ui:150
+#, fuzzy
+#| msgid "_Restore Disk Image…"
+msgid "Restore Disk Image…"
+msgstr "Endu_rheimta diskmynd…"
+
+#: src/disks/ui/gdu-drive-header.ui:156
+#, fuzzy
+#| msgid "_Benchmark Disk…"
+msgid "Benchmark Disk…"
+msgstr "_Afkastaprófa disk…"
+
+#: src/disks/ui/gdu-drive-header.ui:160
+#, fuzzy
+#| msgid "_SMART Data & Self-Tests…"
+msgid "SMART Data & Self-Tests…"
+msgstr "_SMART-gögn og sjálfprófanir…"
+
+#: src/disks/ui/gdu-drive-header.ui:164
+#, fuzzy
+#| msgid "Drive S_ettings…"
+msgid "Drive Settings…"
+msgstr "Stillin_gar drifs…"
+
+#: src/disks/ui/gdu-drive-header.ui:170
+#, fuzzy
+#| msgid "_Standby"
+msgid "Standby"
+msgstr "Í _bið"
+
+#: src/disks/ui/gdu-drive-header.ui:174
+msgid "Wake Up"
+msgstr ""
+
+#: src/disks/ui/gdu-drive-header.ui:178
+#, fuzzy
+#| msgid "_Power Off"
+msgid "Power Off"
+msgstr "Slö_kkva"
+
+#: src/disks/ui/gdu-drive-view.ui:15
+msgid "Space Allocation"
+msgstr ""
+
+#: src/disks/ui/gdu-drive-view.ui:23
+#, fuzzy
+#| msgid "_Volumes"
+msgid "Volumes"
+msgstr "_Gagnamiðlar"
+
+#: src/disks/ui/gdu-drive-view.ui:53
+msgid "Model"
+msgstr "Gerð"
+
+#: src/disks/ui/gdu-drive-view.ui:57 src/disks/ui/gdu-drive-view.ui:77
+msgid "Copy"
+msgstr ""
+
+#: src/disks/ui/gdu-drive-view.ui:73
+#, fuzzy
+#| msgid "Serial Number"
+msgid "Serial"
+msgstr "Raðnúmer"
+
+#: src/disks/ui/gdu-drive-view.ui:93 src/disks/ui/gdu-format-disk-dialog.ui:84
+msgid "Partitioning"
+msgstr "Disksneiðing"
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:4
+#, fuzzy
+#| msgid "Edit _Filesystem…"
+msgid "Edit Filesystem"
+msgstr "Breyta skráaker_fi…"
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:33
+msgid "This filesystem will be automatically unmounted prior to any changes."
+msgstr ""
+
+#: src/disks/ui/gdu-edit-filesystem-dialog.ui:42
+#, fuzzy
+#| msgid "_Label"
+msgid "Label"
+msgstr "_Merking"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:4
+msgid "Edit Partition"
+msgstr "Breyta disksneið"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:21
+#: src/disks/ui/gdu-mount-options-dialog.ui:21
+msgid "_Done"
+msgstr ""
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:39
+#, fuzzy
+#| msgid "Partition Type"
+msgid "_Partition Type"
+msgstr "Tegund disksneiðar"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:41
+msgid "The partition type represented as a 32-bit GUID"
+msgstr ""
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:48
+msgid ""
+"The partition name (up to 36 unicode characters). This is useful if you want "
+"to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> "
+"directory"
+msgstr ""
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:60
+msgid "Flags"
+msgstr "Flögg"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:63
+#, fuzzy
+#| msgid "_Bootable"
+msgid "_Legacy BIOS Bootable"
+msgstr "_Ræsanlegt"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:78
+msgid ""
+"This is equivalent to Master Boot Record “bootable” flag. It is normally "
+"only used for GPT partitions on MBR systems."
+msgstr ""
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:104
+msgid "_System Partition"
+msgstr "_Kerfisdisksneið"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:119
+msgid ""
+"Used to indicate that the partition and its contents are required for the OS/"
+"Platform to function. Special care should be taken to not delete or "
+"overwrite the contents."
+msgstr ""
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:145
+#, fuzzy
+#| msgid "Hide from _Firmware"
+msgid "_Hide from Firmware"
+msgstr "_Fela fyrir grunnhugbúnaði (firmware)"
+
+#: src/disks/ui/gdu-edit-partition-dialog.ui:160
+msgid ""
+"Indicates that EFI firmware should ignore the content of the partition and "
+"not try to read from it"
+msgstr ""
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:4
+msgid "Encryption Options"
+msgstr "Valkostir dulritunar"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:14 src/libgdu/gduutils.rs:549
+#, fuzzy
+#| msgid "_Cancel"
+msgid "Cancel"
+msgstr "_Hætta við"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:20
+msgid "Done"
+msgstr ""
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:33
+msgid ""
+"Only the passphrase referenced by the <i>/etc/crypttab</i> file will be "
+"changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
+msgstr ""
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:42
+#, fuzzy
+#| msgid "Encryption Options"
+msgid "Automatic Encryption Options"
+msgstr "Valkostir dulritunar"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:53
+msgid "Name"
+msgstr "Heiti"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:59
+#, fuzzy
+#| msgid "_Passphrase"
+msgid "Passphrase"
+msgstr "Ly_kilorð"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:70
+#, fuzzy
+#| msgid "Mount at system _startup"
+msgid "Unlock at System Start"
+msgstr "Tengja inn við ræ_singu kerfis"
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:76
+msgid "Require Additional Authorization"
+msgstr ""
+
+#: src/disks/ui/gdu-encryption-options-dialog.ui:82
+#, fuzzy
+#| msgid "Additional partition options"
+msgid "Additional Options"
+msgstr "Fleiri valkostir disksneiða"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:4
+#: src/disks/ui/gdu-format-disk-dialog.ui:21
+msgid "Format Disk"
+msgstr "Forsníða disk"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:87
+msgid "_GUID Partition Table (GPT)"
+msgstr ""
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:88
+#, fuzzy
+#| msgid "Compatible with modern systems and hard disks > 2TB"
+msgid "Compatible with UEFI and disks over 2 TB"
+msgstr "Virkar með öllum nútímalegum kerfum og tækjum > 2TB"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:101
+msgid "_Master Boot Record (MBR)"
+msgstr ""
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:102
+msgid "Legacy option with wide hardware compatibility"
+msgstr ""
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:115
+#, fuzzy
+#| msgid "No partitioning"
+msgid "_No Partitioning"
+msgstr "Engin disksneiðing"
+
+#: src/disks/ui/gdu-format-disk-dialog.ui:116
+msgid "Disk will be empty"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:4
+msgid "Mount Options"
+msgstr "Tengistillingar"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:36
+msgid "The system may not work correctly if this entry is modified or removed"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:47
+msgid "_Automatic Mount Options"
+msgstr "Sjálfvirk_ar tengistillingar"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:56
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "General"
+msgid "General"
+msgstr "Almennt"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:60
+#, fuzzy
+#| msgid "Mount at system _startup"
+msgid "_Mount at Startup"
+msgstr "Tengja inn við ræ_singu kerfis"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:67
+msgid "_Show in Files"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:74
+msgid "_Require Authorization"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:83
+msgid "Appearance"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:87
+#, fuzzy
+#| msgid "Display _Name"
+msgid "D_isplay Name"
+msgstr "Birta _heiti"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:94
+msgid "C_olor Icon"
+msgstr ""
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:101
+#, fuzzy
+#| msgid "S_ymbolic Icon Name"
+msgid "S_ymbolic Icon"
+msgstr "_Heiti táknrænnar táknmyndar"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:110
+#, fuzzy
+#| msgid "Drive Options"
+msgid "Technical Options"
+msgstr "Valkostir drifs"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:114
+#, fuzzy
+#| msgid "Mount Options"
+msgid "_fstab Options"
+msgstr "Tengistillingar"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:124
+msgid "Mount _Point"
+msgstr "Tengi_punktur"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:134
+msgid "Filesystem _Type"
+msgstr "_Tegund skráakerfis"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:149
+#, fuzzy
+#| msgid "I_dentify As"
+msgid "Ide_ntify As"
+msgstr "Auð_kenna sem"
+
+#: src/disks/ui/gdu-mount-options-dialog.ui:161
+msgid "R_estore Default Settings"
+msgstr ""
+
+#: src/disks/ui/gdu-new-disk-image-dialog.ui:70
+#, fuzzy
+#| msgid "Size"
+msgid "_Size"
+msgstr "Stærð"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:4
+msgid "Resize Volume"
+msgstr ""
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:20
+msgid "_Resize"
+msgstr "B_reyta stærð"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:36
+msgid ""
+"Resizing a filesystem can result in data loss. It is recommended to backup "
+"any data before continuing."
+msgstr ""
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:57
+#, fuzzy
+#| msgid "Unallocated Space"
+msgid "Available Space"
+msgstr "Óúthlutað pláss"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:85
+#, fuzzy
+#| msgid "Image Size"
+msgid "_New Size"
+msgstr "Stærð myndar"
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:92
+msgid "_Free After Resize"
+msgstr ""
+
+#: src/disks/ui/gdu-resize-volume-dialog.ui:109
+msgid "_Units"
+msgstr ""
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:22
+#, fuzzy
+#| msgid "_Restore"
+msgid "_Restore…"
+msgstr "Endu_rheimta"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:48
+#, fuzzy
+#| msgid "Image Size"
+msgid "Image"
+msgstr "Stærð myndar"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:55
+#, fuzzy
+#| msgid "Select a Folder"
+msgid "Select Image"
+msgstr "Veldu möppu"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:68
+msgid "Image Size"
+msgstr "Stærð myndar"
+
+#: src/disks/ui/gdu-restore-disk-image-dialog.ui:77
+msgid "Destination"
+msgstr "Áfangastaður"
+
+#: src/disks/ui/gdu-take-ownership-dialog.ui:4
+#, fuzzy
+#| msgid "_Take Ownership…"
+msgid "Take Ownership?"
+msgstr "_Taka yfir eignarhald…"
+
+#: src/disks/ui/gdu-take-ownership-dialog.ui:11
+msgid "_Recursive Mode"
+msgstr ""
+
+#: src/disks/ui/gdu-take-ownership-dialog.ui:37
+#, fuzzy
+#| msgid "_Take Ownership…"
+msgid "_Take Ownership"
+msgstr "_Taka yfir eignarhald…"
+
+#: src/disks/ui/gdu-take-ownership-dialog.ui:50
+msgid ""
+"Recursive mode changes the ownership of subdirectories and files. This can "
+"cause problems if files are owned by other users."
+msgstr ""
+
+#: src/disks/ui/gdu-unlock-dialog.ui:4
+#, fuzzy
+#| msgctxt "volume-content-crypto"
+#| msgid "Unlocked"
+msgid "Unlock Volume"
+msgstr "Ólæst"
+
+#: src/disks/ui/gdu-unlock-dialog.ui:20
+msgid "_Unlock"
+msgstr "_Aflæsa"
+
+#: src/disks/ui/gdu-unlock-dialog.ui:36
+msgid "The encryption passphrase was retrieved from the keyring"
+msgstr ""
+
+#: src/disks/ui/gdu-unlock-dialog.ui:41
 msgid "This volume might be a VeraCrypt volume as it contains random data."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:69
-#: src/disks/ui/unlock-device-dialog.ui:176
-msgid "If specified"
-msgstr "Ef tilgreint"
+#: src/disks/ui/gdu-unlock-dialog.ui:48
+msgid "Security Credentials"
+msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:107
-msgid "Volume type"
-msgstr "Gerð gagnamiðils"
+#: src/disks/ui/gdu-unlock-dialog.ui:71
+#, fuzzy
+#| msgid "_Keyfiles"
+msgid "Keyfiles"
+msgstr "Ly_klaskrár"
 
-#: src/disks/ui/unlock-device-dialog.ui:126
-msgid "_Hidden"
+#: src/disks/ui/gdu-unlock-dialog.ui:79
+#, fuzzy
+#| msgid "Select a Keyfile"
+msgid "Select Keyfiles"
+msgstr "Veldu lykilskrá"
+
+#: src/disks/ui/gdu-unlock-dialog.ui:97
+#, fuzzy
+#| msgid "Error setting configuration"
+msgid "Volume Configuration"
+msgstr "Villa við að stilla uppsetningu"
+
+#: src/disks/ui/gdu-unlock-dialog.ui:103
+#, fuzzy
+#| msgid "_Hidden"
+msgid "Hidden"
 msgstr "_Falið"
 
-#: src/disks/ui/unlock-device-dialog.ui:127
+#: src/disks/ui/gdu-unlock-dialog.ui:117
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:139
-msgid "Windows _system"
+#: src/disks/ui/gdu-unlock-dialog.ui:144
+#, fuzzy
+#| msgid "Windows _system"
+msgid "Windows System"
 msgstr "Windows _stýrikerfi"
 
-#: src/disks/ui/unlock-device-dialog.ui:140
+#: src/disks/ui/gdu-unlock-dialog.ui:158
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:161
-msgid "PI_M"
-msgstr "PI_M"
+#: src/disks/ui/gdu-window.ui:33
+#, fuzzy
+#| msgid "Application Menu"
+msgid "Main Menu"
+msgstr "Forritavalmynd"
 
-#: src/disks/ui/unlock-device-dialog.ui:177
-msgid ""
-"If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
-"use for this volume."
+#: src/disks/ui/gdu-window.ui:71
+msgid "Show Sidebar"
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:194
-#| msgid "Keyfiles"
-msgid "_Keyfiles"
-msgstr "Ly_klaskrár"
+#: src/disks/ui/gdu-window.ui:84
+msgid "No Device Selected"
+msgstr "Ekkert tæki er valið"
 
-#: src/disks/ui/unlock-device-dialog.ui:211
-msgid "Select a keyfile to unlock this volume"
+#: src/disks/ui/gdu-window.ui:113
+msgid "_New Disk Image…"
+msgstr "_Ný diskmynd…"
+
+#: src/disks/ui/gdu-window.ui:117
+#, fuzzy
+#| msgid "Attach new _Image…"
+msgid "_Attach Disk Image…"
+msgstr "Heng_ja við nýja diskmynd…"
+
+#: src/disks/ui/gdu-window.ui:124
+msgid "_Keyboard Shortcuts"
+msgstr "Flýtily_klar"
+
+#: src/disks/ui/gdu-window.ui:128
+msgid "_Help"
+msgstr "_Aðstoð"
+
+#: src/disks/ui/gdu-window.ui:131
+msgid "_About Disks"
+msgstr "_Um Disks-hugbúnaðinn"
+
+#: src/disks/ui/gdu-window.ui:138
+msgid "Set up _read-only loop device"
 msgstr ""
 
-#: src/disks/ui/unlock-device-dialog.ui:240
-msgid "_Unlock"
-msgstr "_Aflæsa"
+#: src/disks/ui/shortcuts-dialog.ui:6
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "General"
+msgctxt "shortcuts dialog"
+msgid "General"
+msgstr "Almennt"
 
-#: src/disks/ui/volume-menu.ui:6
-msgid "Format _Partition…"
-msgstr "Forsníða _disksneið…"
+#: src/disks/ui/shortcuts-dialog.ui:9
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Help"
+msgctxt "shortcuts dialog"
+msgid "Help"
+msgstr "Hjálp"
 
-#: src/disks/ui/volume-menu.ui:12
-msgid "_Edit Partition…"
-msgstr "Br_eyta disksneið…"
+#: src/disks/ui/shortcuts-dialog.ui:15
+#, fuzzy
+#| msgid "Application Menu"
+msgctxt "shortcuts dialog"
+msgid "Open the application menu"
+msgstr "Forritavalmynd"
 
-#: src/disks/ui/volume-menu.ui:16
-msgid "Edit _Filesystem…"
-msgstr "Breyta skráaker_fi…"
+#: src/disks/ui/shortcuts-dialog.ui:21
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Keyboard shortcuts"
+msgctxt "shortcuts dialog"
+msgid "Keyboard shortcuts"
+msgstr "Flýtilyklar"
 
-#: src/disks/ui/volume-menu.ui:20
-msgid "Change Pa_ssphrase…"
-msgstr "Breyta ly_kilorði…"
+#: src/disks/ui/shortcuts-dialog.ui:27
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Quit"
+msgctxt "shortcuts dialog"
+msgid "Quit"
+msgstr "Hætta"
 
-#: src/disks/ui/volume-menu.ui:26
-msgid "Resi_ze…"
-msgstr "Bre_yta stærð…"
+#: src/disks/ui/shortcuts-dialog.ui:35
+#, fuzzy
+#| msgid "Disks"
+msgctxt "shortcuts dialog"
+msgid "Disks"
+msgstr "Diskar"
 
-#: src/disks/ui/volume-menu.ui:30
-msgid "C_heck Filesystem…"
-msgstr "_Yfirfara skráakerfi…"
+#: src/disks/ui/shortcuts-dialog.ui:38
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Create a new empty disk image"
+msgctxt "shortcuts dialog"
+msgid "Create a new empty disk image"
+msgstr "Búa til nýja tóma diskmynd"
 
-#: src/disks/ui/volume-menu.ui:34
-msgid "Rep_air Filesystem…"
-msgstr "Ger_a við skráakerfi…"
+#: src/disks/ui/shortcuts-dialog.ui:44
+#, fuzzy
+#| msgid "Allocating Disk Image"
+msgctxt "shortcuts dialog"
+msgid "Attach an existing disk image"
+msgstr "Úthluta diskmynd"
 
-#: src/disks/ui/volume-menu.ui:38
-msgid "_Take Ownership…"
-msgstr "_Taka yfir eignarhald…"
+#: src/disks/ui/shortcuts-dialog.ui:50
+msgctxt "shortcuts dialog"
+msgid "Unselect current disk"
+msgstr ""
 
-#: src/disks/ui/volume-menu.ui:44
-msgid "Edit _Mount Options…"
-msgstr "Breyta tengistillingu_m…"
+#: src/disks/ui/shortcuts-dialog.ui:58
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Drive"
+msgctxt "shortcuts dialog"
+msgid "Drive"
+msgstr "Drif"
 
-#: src/disks/ui/volume-menu.ui:48
-msgid "Edit Encr_yption Options…"
-msgstr "Bre_yta valkostum dulritunar…"
+#: src/disks/ui/shortcuts-dialog.ui:61
+msgctxt "shortcuts dialog"
+msgid "Open the drive menu"
+msgstr ""
 
-#: src/disks/ui/volume-menu.ui:54
-msgid "_Create Partition Image…"
-msgstr "_Búa til diskmynd…"
+#: src/disks/ui/shortcuts-dialog.ui:67
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Format the drive"
+msgctxt "shortcuts dialog"
+msgid "Format the drive"
+msgstr "Forsníða drifið"
 
-#: src/disks/ui/volume-menu.ui:58
-msgid "_Restore Partition Image…"
-msgstr "Endu_rheimta diskmynd…"
+#: src/disks/ui/shortcuts-dialog.ui:73
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Restore an image to the disk"
+msgctxt "shortcuts dialog"
+msgid "Restore an image to the disk"
+msgstr "Endurheimta diskmynd yfir á diskinn"
 
-#: src/disks/ui/volume-menu.ui:62
-msgid "_Benchmark Partition…"
-msgstr "_Afkastaprófa disksneið…"
+#: src/disks/ui/shortcuts-dialog.ui:79
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "SMART data"
+msgctxt "shortcuts dialog"
+msgid "SMART data"
+msgstr "SMART-gögn"
 
-#: src/libgdu/gduutils.c:107
+#: src/disks/ui/shortcuts-dialog.ui:85
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Drive settings"
+msgctxt "shortcuts dialog"
+msgid "Drive settings"
+msgstr "Stillingar drifs"
+
+#: src/disks/ui/shortcuts-dialog.ui:93
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Partition"
+msgctxt "shortcuts dialog"
+msgid "Partition"
+msgstr "Disksneiðing"
+
+#: src/disks/ui/shortcuts-dialog.ui:96
+msgctxt "shortcuts dialog"
+msgid "Open the volume menu"
+msgstr ""
+
+#: src/disks/ui/shortcuts-dialog.ui:102
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Format the selected volume"
+msgctxt "shortcuts dialog"
+msgid "Format the selected volume"
+msgstr "Forsníða valinn gagnamiðil"
+
+#: src/libgdu/gduutils.c:98 src/libgdu/gduutils.rs:80
 msgid "All Files"
 msgstr "Allar skrár"
 
-#: src/libgdu/gduutils.c:112
+#: src/libgdu/gduutils.c:103
 msgid "Disk Images (*.img, *.img.xz, *.iso)"
 msgstr "Diskmyndir (*.img, *.img.xz, *.iso)"
 
-#: src/libgdu/gduutils.c:114
+#: src/libgdu/gduutils.c:105
 msgid "Disk Images (*.img, *.iso)"
 msgstr "Diskmyndir (*.img, *.iso)"
 
 #. Translators: Used for number of years
-#: src/libgdu/gduutils.c:443
+#: src/libgdu/gduutils.c:371 src/libgdu/gduutils.rs:256
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
@@ -3664,7 +3341,7 @@ msgstr[0] "%d ár"
 msgstr[1] "%d ár"
 
 #. Translators: Used for number of months
-#: src/libgdu/gduutils.c:450
+#: src/libgdu/gduutils.c:378 src/libgdu/gduutils.rs:261
 #, c-format
 msgid "%d month"
 msgid_plural "%d months"
@@ -3672,7 +3349,7 @@ msgstr[0] "%d mánuður"
 msgstr[1] "%d mánuðir"
 
 #. Translators: Used for number of days
-#: src/libgdu/gduutils.c:457
+#: src/libgdu/gduutils.c:385 src/libgdu/gduutils.rs:266
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
@@ -3680,7 +3357,7 @@ msgstr[0] "%d dagur"
 msgstr[1] "%d dagar"
 
 #. Translators: Used for number of hours
-#: src/libgdu/gduutils.c:464
+#: src/libgdu/gduutils.c:392 src/libgdu/gduutils.rs:271
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
@@ -3688,7 +3365,7 @@ msgstr[0] "%d klukkustund"
 msgstr[1] "%d klukkustundir"
 
 #. Translators: Used for number of minutes
-#: src/libgdu/gduutils.c:471
+#: src/libgdu/gduutils.c:399 src/libgdu/gduutils.rs:276
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
@@ -3696,7 +3373,7 @@ msgstr[0] "%d mínúta"
 msgstr[1] "%d mínútur"
 
 #. Translators: Used for number of seconds
-#: src/libgdu/gduutils.c:478
+#: src/libgdu/gduutils.c:406 src/libgdu/gduutils.rs:281
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
@@ -3704,7 +3381,7 @@ msgstr[0] "%d sekúnda"
 msgstr[1] "%d sekúndur"
 
 #. Translators: Used for number of milli-seconds
-#: src/libgdu/gduutils.c:485
+#: src/libgdu/gduutils.c:413 src/libgdu/gduutils.rs:288
 #, c-format
 msgid "%d milli-second"
 msgid_plural "%d milli-seconds"
@@ -3712,76 +3389,111 @@ msgstr[0] "%d millísekúnda"
 msgstr[1] "%d millísekúndur"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:549
+#: src/libgdu/gduutils.c:477
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s, %s og %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:554
+#: src/libgdu/gduutils.c:482
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:559
+#: src/libgdu/gduutils.c:487
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:564
+#: src/libgdu/gduutils.c:492
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s og %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:575
+#: src/libgdu/gduutils.c:503
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
 msgstr "%s og %s"
 
-#: src/libgdu/gduutils.c:584
+#: src/libgdu/gduutils.c:512 src/libgdu/gduutils.rs:375
 msgctxt "duration"
 msgid "Less than a minute"
 msgstr "Minna en mínúta"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:589
+#: src/libgdu/gduutils.c:517
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:595
+#: src/libgdu/gduutils.c:523
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
 msgstr "%s"
 
-#. Translators: Shown in confirmation dialogs with a list of devices that will be affected by the action
-#: src/libgdu/gduutils.c:840
-msgctxt "confirmation-list-of-devices"
-msgid "Affected Devices"
-msgstr "Tæki á við"
+#: src/libgdu/gduutils.c:652 src/libgdu/gduutils.rs:442
+msgid "_Close"
+msgstr "_Loka"
 
-#: src/libgdu/gduutils.c:1443
+#: src/libgdu/gduutils.c:1316 src/libgdu/gduutils.rs:910
 msgid "Error unmounting filesystem"
 msgstr "Villa við að aftengja skráakerfi"
 
-#: src/libgdu/gduutils.c:1475
+#: src/libgdu/gduutils.c:1348 src/libgdu/gduutils.rs:916
 msgid "Error locking device"
 msgstr "Villa við að læsa tæki"
 
-#: src/libgdu/gduutils.c:1496
+#: src/libgdu/gduutils.c:1369 src/libgdu/gduutils.rs:897
 msgid "Error disabling autoclear for loop device"
 msgstr ""
+
+#: src/libgdu/gduutils.rs:338
+msgid "duration-year-to-inf"
+msgstr ""
+
+#: src/libgdu/gduutils.rs:345
+msgid "duration-months-to-year"
+msgstr ""
+
+#. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
+#: src/libgdu/gduutils.rs:351
+msgid "duration-day-to-month"
+msgstr ""
+
+#: src/libgdu/gduutils.rs:355
+msgid "duration-hour-to-day"
+msgstr ""
+
+#: src/libgdu/gduutils.rs:365
+msgid "duration-minute-to-hour"
+msgstr ""
+
+#. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
+#: src/libgdu/gduutils.rs:378
+msgid "duration-second-to-minute"
+msgstr ""
+
+#. Translators: Used for durations less than one second. First %s is number of milli-seconds
+#: src/libgdu/gduutils.rs:382
+msgid "duration-zero-to-second"
+msgstr ""
+
+#: src/libgdu/gduutils.rs:883
+#, fuzzy
+#| msgid "Waited too long for the filesystem"
+msgid "Failed to find filesystem"
+msgstr "Beið of lengi eftir skráakerfi"
 
 #. Translators: This is used as the title of the SMART failure notification
 #: src/notify/gdusdmonitor.c:356
@@ -3801,6 +3513,478 @@ msgctxt "notify-smart"
 msgid "Examine"
 msgstr "Athuga"
 
+#~ msgid "Disk Image Writer"
+#~ msgstr "Diskmyndaskrifari"
+
+#~ msgid "Write Disk Images to Devices"
+#~ msgstr "Skrifa diskmyndir á tæki"
+
+#~ msgid "An error occurred"
+#~ msgstr "Villa kom upp"
+
+#~ msgid "Allow writing to the image"
+#~ msgstr "Leyfa ritun í diskmyndaskrána"
+
+#~ msgid "Select Disk Image(s) to Mount"
+#~ msgstr "Veldu diskmynd(ir) til að tengja inn"
+
+#~ msgid "Set up _read-only mount"
+#~ msgstr "Setja tengipunkt upp skrifvarinn"
+
+#, c-format
+#~ msgid "Error opening “%s”: %m"
+#~ msgstr "Villa við að opna “%s”: %m"
+
+#, c-format
+#~ msgctxt "benchmark-graph"
+#~ msgid "%d MB/s"
+#~ msgstr "%d MB/sek"
+
+#, c-format
+#~ msgctxt "benchmark-graph"
+#~ msgid "%3g ms"
+#~ msgstr "%3g msek"
+
+#, c-format
+#~ msgctxt "benchmark-transfer-rate"
+#~ msgid "%s/s"
+#~ msgstr "%s/sek"
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "%s (%s ago)"
+#~ msgstr "%s (%s síðan)"
+
+#~ msgctxt "benchmark-updated"
+#~ msgid "No benchmark data available"
+#~ msgstr "Engin prófunargögn tiltæk"
+
+#~ msgctxt "benchmark-updated"
+#~ msgid "Opening Device…"
+#~ msgstr "Opna tæki..."
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "Measuring transfer rate (%2.1f%% complete)…"
+#~ msgstr "Mæli flutningsgetu (%2.1f%% lokið)…"
+
+#, c-format
+#~ msgctxt "benchmark-updated"
+#~ msgid "Measuring access time (%2.1f%% complete)…"
+#~ msgstr "Mæli opnunartíma (%2.1f%% lokið)…"
+
+#~ msgctxt "benchmarking"
+#~ msgid "An error occurred"
+#~ msgstr "Villa kom upp"
+
+#, c-format
+#~ msgctxt "benchmark-access-time"
+#~ msgid "%.2f msec"
+#~ msgstr "%.2f msek"
+
+#~ msgctxt "create-inhibit-message"
+#~ msgid "Benchmarking device"
+#~ msgstr "Afkastaprófa tæki"
+
+#~ msgid "The passphrases do not match"
+#~ msgstr "Lykilorðin stemma ekki"
+
+#~ msgid "The passphrase matches the existing passphrase"
+#~ msgstr "Lykilorðið samsvarar fyrirliggjandi lykilorði"
+
+#~ msgid "The strength of the passphrase"
+#~ msgstr "Styrkur lykilorðsins"
+
+#, c-format
+#~ msgid ""
+#~ "The file already exists in “%s”.  Replacing it will overwrite its "
+#~ "contents."
+#~ msgstr ""
+#~ "Þessi skrá er þegar til í „%s”. Verði henni skipt út verður skrifað yfir "
+#~ "innihaldið."
+
+#~ msgid "(None)"
+#~ msgstr "(Ekkert)"
+
+#~ msgid "Disk Drives"
+#~ msgstr "Diskadrif"
+
+#~ msgid "Other Devices"
+#~ msgstr "Önnur tæki"
+
+#~ msgid "Quick"
+#~ msgstr "Fjótt"
+
+#~ msgid "Overwrite existing data with zeroes"
+#~ msgstr "Yfirskrifa fyrirliggjandi gögn með núllum"
+
+#~ msgid "Slow"
+#~ msgstr "Hægt"
+
+#~ msgid "ATA Secure Erase"
+#~ msgstr "ATA Secure Erase"
+
+#~ msgid "ATA Enhanced Secure Erase"
+#~ msgstr "ATA Enhanced Secure Erase"
+
+#~ msgid "Compatible with all systems and devices"
+#~ msgstr "Virkar með öllum kerfum og tækjum"
+
+#~ msgid "MBR / DOS"
+#~ msgstr "MBR / DOS"
+
+#~ msgid "GPT"
+#~ msgstr "GPT"
+
+#~ msgid "Empty"
+#~ msgstr "Tómt"
+
+#~ msgid "Are you sure you want to format the disk?"
+#~ msgstr "Ertu viss um að þú viljir forsníða diskinn?"
+
+#~ msgid "Matches the given device"
+#~ msgstr "Samsvarar uppgefnu tæki"
+
+#~ msgctxt "Password strength"
+#~ msgid "Weak"
+#~ msgstr "Veikt"
+
+#~ msgctxt "Password strength"
+#~ msgid "Fair"
+#~ msgstr "Þokkalegt"
+
+#~ msgctxt "Password strength"
+#~ msgid "Good"
+#~ msgstr "Gott"
+
+#~ msgctxt "Password strength"
+#~ msgid "Strong"
+#~ msgstr "Sterkt"
+
+#~ msgid "No Media"
+#~ msgstr "Enginn miðill"
+
+#~ msgctxt "volume-grid"
+#~ msgid "Swap"
+#~ msgstr "Swap diskminni"
+
+#, c-format
+#~ msgctxt "volume-grid"
+#~ msgid "Partition %u: %s"
+#~ msgstr "Disksneið %u: %s"
+
+#, c-format
+#~ msgctxt "volume-grid"
+#~ msgid "Partition %u"
+#~ msgstr "Disksneið %u"
+
+#~ msgctxt "volume-grid"
+#~ msgid "Extended Partition"
+#~ msgstr "Útvíkkuð disksneið"
+
+#~ msgid "_Attach"
+#~ msgstr "Hengj_a við"
+
+#, c-format
+#~ msgid "%s (Read-Only)"
+#~ msgstr "%s (skrifvarið)"
+
+#, c-format
+#~ msgctxt "job-remaining-with-rate"
+#~ msgid "%s remaining (%s/sec)"
+#~ msgstr "%s eftir (%s/sek)"
+
+#, c-format
+#~ msgctxt "job-remaining"
+#~ msgid "%s remaining"
+#~ msgstr "%s eftir"
+
+#, c-format
+#~ msgid "%s of %s — %s"
+#~ msgstr "%s af %s – %s"
+
+#, c-format
+#~ msgid "%s: %2.1f%%"
+#~ msgstr "%s: %2.1f%%"
+
+#~ msgid "Block device is empty"
+#~ msgstr "Blokkartæki er tómt"
+
+#, c-format
+#~ msgctxt "partitioning"
+#~ msgid "Unknown (%s)"
+#~ msgstr "Óþekkt (%s)"
+
+#~ msgctxt "partition type"
+#~ msgid "Unknown"
+#~ msgstr "Óþekkt"
+
+#~ msgctxt "volume-content-fs"
+#~ msgid "Filesystem Root"
+#~ msgstr "Rót skráakerfis"
+
+#, c-format
+#~ msgctxt "volume-content-fs"
+#~ msgid "Mounted at %s"
+#~ msgstr "Tengd í %s"
+
+#~ msgctxt "volume-content-fs"
+#~ msgid "Not Mounted"
+#~ msgstr "Ekki tengd"
+
+#~ msgctxt "volume-content-swap"
+#~ msgid "Active"
+#~ msgstr "Virk"
+
+#~ msgctxt "volume-content-swap"
+#~ msgid "Not Active"
+#~ msgstr "Ekki virk"
+
+#~ msgctxt "volume-contents-msdos-ext"
+#~ msgid "Extended Partition"
+#~ msgstr "Útvíkkuð disksneið"
+
+#, c-format
+#~ msgctxt "volume-contents-combiner"
+#~ msgid "%s — %s"
+#~ msgstr "%s — %s"
+
+#~ msgid "Confirm Repair"
+#~ msgstr "Staðfesta viðgerð"
+
+#~ msgid "Are you sure you want to delete the partition?"
+#~ msgstr "Ertu viss um að þú viljir eyða disksneiðinni?"
+
+#~ msgid ""
+#~ "Copyright © 2008-2013 Red Hat, Inc.\n"
+#~ "Copyright © 2008-2013 David Zeuthen\n"
+#~ "Copyright © 2009-2017 The GNOME Project\n"
+#~ msgstr ""
+#~ "Höfundarréttur © 2008-2013 Red Hat, Inc.\n"
+#~ "Höfundarréttur © 2008-2013 David Zeuthen\n"
+#~ "Höfundarréttur © 2009-2017 GNOME-verkefnið\n"
+
+#~ msgid "_Attach Disk Image… (.iso, .img)"
+#~ msgstr "Hengj_a við diskmynd (*.iso, *.img)"
+
+#~ msgid "_Start Benchmark…"
+#~ msgstr "_Ræsa afkastaprófun…"
+
+#~ msgid "Last Benchmarked"
+#~ msgstr "Síðast afkastaprófað"
+
+#~ msgid "Disk or Device"
+#~ msgstr "Diskur eða tæki"
+
+#~ msgid "Benchmark Settings"
+#~ msgstr "Stillingar afkastaprófunar"
+
+#~ msgid "_Start Benchmarking…"
+#~ msgstr "_Ræsa afkastaprófun"
+
+#~ msgid "Number of S_amples"
+#~ msgstr "Fjöldi sýn_a"
+
+#~ msgid "Sample S_ize (MiB)"
+#~ msgstr "Stærð sýn_is (MiB)"
+
+#~ msgid "Perform _write-benchmark"
+#~ msgstr "Gera afkastaprófun fyrir s_krifun"
+
+#~ msgid "Curr_ent Passphrase"
+#~ msgstr "Núv_erandi lykilorð"
+
+#~ msgid "Sho_w Passphrases"
+#~ msgstr "Sýna l_ykilorð"
+
+#~ msgid "Check this box to see the passphrases entered above"
+#~ msgstr "Hakaðu í þennan reit til að sjá lykilorðin hér fyrir ofan"
+
+#~ msgid "Confirm passphrase entered above"
+#~ msgstr "Staðfestu lykilorðið hér fyrir ofan"
+
+#~ msgid "Enter new passphrase used to protect the data"
+#~ msgstr "Settu inn nýja lykilsetningu (passphrase) sem á að venda gögnin"
+
+#~ msgid "New _Passphrase"
+#~ msgstr "Nýtt _lykilorð"
+
+#~ msgid "Create Disk Image"
+#~ msgstr "Búa til diskmynd"
+
+#~ msgid "Save in _Folder"
+#~ msgstr "Vista í _möppu:"
+
+#~ msgid "For example: “Angela’s Files” or “Backup”."
+#~ msgstr "Til dæmis, “Gögnin mín” eða “Afritunargögn”"
+
+#~ msgid "_Erase"
+#~ msgstr "_Eyða"
+
+#~ msgid "Overwrites existing data, but takes longer."
+#~ msgstr "Yfirskrifar fyrirliggjandi gögn, en tekur lengri tíma."
+
+#~ msgid "_Other"
+#~ msgstr "_Annað"
+
+#~ msgid "The size of the partition to create"
+#~ msgstr "Stærð nýju disksneiðarinnar"
+
+#~ msgid "Free Space _Following"
+#~ msgstr "Laust pláss á e_ftir"
+
+#~ msgid "_Confirm"
+#~ msgstr "Stað_festa"
+
+#~ msgid "Enter passphrase used to protect the data"
+#~ msgstr "Settu inn lykilsetningu (passphrase) sem á að venda gögnin"
+
+#~ msgid "Sh_ow Password"
+#~ msgstr "_Birta lykilorð"
+
+#~ msgid "Go back to main view"
+#~ msgstr "Fara til baka í aðalsýn"
+
+#~ msgid "Power off this disk"
+#~ msgstr "Slökkva á þessum diski"
+
+#~ msgid "Eject this disk"
+#~ msgstr "Spýta út þessum diski"
+
+#~| msgid "Select a device"
+#~ msgid "Select a device to manage."
+#~ msgstr "Veldu tæki til að stjórna."
+
+#~ msgid "Media"
+#~ msgstr "Miðill"
+
+#~ msgid "Job"
+#~ msgstr "Verk"
+
+#~ msgid "Mount selected partition"
+#~ msgstr "Tengja valda disksneið"
+
+#~ msgid "Unmount selected partition"
+#~ msgstr "Aftengja valda disksneið"
+
+#~ msgid "Activate selected swap partition"
+#~ msgstr "Virkja valda SWAP-disksneið"
+
+#~ msgid "Deactivate selected swap partition"
+#~ msgstr "Gera valda SWAP-disksneið óvirka"
+
+#~ msgid "Unlock selected encrypted partition"
+#~ msgstr "Aflæsa valinni dulritaðri disksneið"
+
+#~ msgid "Lock selected encrypted partition"
+#~ msgstr "Læsa valinni dulritaðri disksneið"
+
+#~ msgid "Create partition in unallocated space"
+#~ msgstr "Búa til disksneið í óúthlutuðu svæði"
+
+#~ msgid "Delete selected partition"
+#~ msgstr "Eyða valinni disksneið"
+
+#~ msgid "Contents"
+#~ msgstr "Innihald"
+
+#~ msgid "S_tandby Now"
+#~ msgstr "Núna í _bið"
+
+#~ msgid "Opt_ions"
+#~ msgstr "_Valkostir"
+
+#~ msgid "Passphrase File"
+#~ msgstr "Lykilorðaskrá"
+
+#~ msgid "Sho_w passphrase"
+#~ msgstr "Birta lykilorð"
+
+#~ msgid "_Type"
+#~ msgstr "_Tegund"
+
+#~ msgid "Change Filesystem Label"
+#~ msgstr "Breyta nafni skráakerfis"
+
+#~ msgid "Icon Na_me"
+#~ msgstr "Heiti tákn_myndar"
+
+#~ msgid "Sho_w in user interface"
+#~ msgstr "_Birta í notandaviðmóti"
+
+#~ msgid "Mount Opt_ions"
+#~ msgstr "Teng_istillingar"
+
+#~ msgid "_Format…"
+#~ msgstr "_Forsníða…"
+
+#~ msgid "_Partitioning"
+#~ msgstr "_Disksneiðing"
+
+#~ msgid "New Disk Image"
+#~ msgstr "Ný diskmynd"
+
+#~ msgid "Image _Size"
+#~ msgstr "_Stærð diskmyndar"
+
+#~ msgid "The size of the image to create"
+#~ msgstr "Stærð nýju diskmyndarinnar"
+
+#~ msgid "_Difference"
+#~ msgstr "_Mismunur"
+
+#~ msgid "Restore Disk Image"
+#~ msgstr "Endurheimta diskmynd"
+
+#~ msgid "_Image to Restore"
+#~ msgstr "D_iskmynd sem á að endurheimta"
+
+#~ msgid "_Destination"
+#~ msgstr "Á_fangastaður"
+
+#~ msgid "Image to Restore"
+#~ msgstr "Diskmynd sem á að endurheimta"
+
+#~ msgid "_Start Restoring…"
+#~ msgstr "_Hefja endurheimt..."
+
+#~| msgid "Disks"
+#~ msgctxt "shortcut window"
+#~ msgid "Disks"
+#~ msgstr "Diskar"
+
+#~| msgid "_Close"
+#~ msgid "Close"
+#~ msgstr "Loka"
+
+#~ msgid "Confirm Taking Ownership"
+#~ msgstr "Staðfestu yfirtöku eignarhalds"
+
+#~ msgid "Enter passphrase to unlock"
+#~ msgstr "Settu inn lykilorð til að aflæsa"
+
+#~ msgid "If specified"
+#~ msgstr "Ef tilgreint"
+
+#~ msgid "Volume type"
+#~ msgstr "Gerð gagnamiðils"
+
+#~ msgid "PI_M"
+#~ msgstr "PI_M"
+
+#~ msgid "_Edit Partition…"
+#~ msgstr "Br_eyta disksneið…"
+
+#~ msgid "Edit _Mount Options…"
+#~ msgstr "Breyta tengistillingu_m…"
+
+#~ msgid "Edit Encr_yption Options…"
+#~ msgstr "Bre_yta valkostum dulritunar…"
+
+#~ msgctxt "confirmation-list-of-devices"
+#~ msgid "Affected Devices"
+#~ msgstr "Tæki á við"
+
 #~ msgid "GNOME Disks"
 #~ msgstr "GNOME Diskar"
 
@@ -3818,9 +4002,6 @@ msgstr "Athuga"
 
 #~ msgid "NTFS"
 #~ msgstr "NTFS"
-
-#~ msgid "Compatible with Linux systems"
-#~ msgstr "Virkar með Linux-kerfum"
 
 #~ msgid "Ext4"
 #~ msgstr "Ext4"
@@ -3870,14 +4051,8 @@ msgstr "Athuga"
 #~ msgid "<Shift><Ctrl>F"
 #~ msgstr "<Shift><Ctrl>F"
 
-#~ msgid "C_reate"
-#~ msgstr "_Búa til"
-
 #~ msgid "Power Off…"
 #~ msgstr "Slökkva..."
-
-#~ msgid "_Automatic Mount Options"
-#~ msgstr "Sjálfvirk_ar tengistillingar"
 
 #~ msgid "F_ilesystem"
 #~ msgstr "S_kráakerfi"
@@ -3887,3 +4062,4 @@ msgstr "Athuga"
 
 #~ msgid "Priority to use for this plugin"
 #~ msgstr "Forgangur við notkun þessarar viðbótar"
+

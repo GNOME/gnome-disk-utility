@@ -20,46 +20,80 @@ levelbar .strength-high {
 }
 
 .space-allocation-bar {
-   border-radius: 6px;
+  border-radius: 6px;
 }
 
 .partition-row {
-    background: var(--main-color);
-    border-radius: 100%;
+  background: var(--main-color);
+  border-radius: 100%;
 }
 
 .partition-bin {
-    background: linear-gradient(to top, var(--main-color), oklch(from var(--main-color) calc(l + 0.1) c h));
+  background: linear-gradient(to top, var(--main-color), oklch(from var(--main-color) calc(l + 0.1) c h));
 }
 
 .grey {
-    --main-color: #afafaf;
+  --main-color: #afafaf;
 }
 
 .blue {
-    --main-color: var(--blue-4);
+  --main-color: var(--blue-4);
 }
 
 .green {
-    --main-color: var(--green-4);
+  --main-color: var(--green-4);
 }
 
 .yellow {
-    --main-color: var(--yellow-4);
+  --main-color: var(--yellow-4);
 }
 
 .orange {
-    --main-color: var(--orange-4);
+  --main-color: var(--orange-4);
 }
 
 .red {
-    --main-color: var(--red-4);
+  --main-color: var(--red-4);
 }
 
 .purple {
-    --main-color: var(--purple-4);
+  --main-color: var(--purple-4);
 }
 
 .brown {
-    --main-color: var(--brown-4);
+  --main-color: var(--brown-4);
+}
+
+@media (prefers-color-scheme: dark) {
+  .grey {
+    --main-color: #808080;
+  }
+
+  .blue {
+    --main-color: var(--blue-5);
+  }
+
+  .green {
+    --main-color: var(--green-5);
+  }
+
+  .yellow {
+    --main-color: var(--yellow-5);
+  }
+
+  .orange {
+    --main-color: var(--orange-5);
+  }
+
+  .red {
+    --main-color: var(--red-5);
+  }
+
+  .purple {
+    --main-color: var(--purple-5);
+  }
+
+  .brown {
+    --main-color: var(--brown-5);
+  }
 }

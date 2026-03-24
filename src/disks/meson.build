@@ -145,7 +145,6 @@ resource_data = files(
   'ui/gdu-format-disk-dialog.ui',
   'ui/gdu-unlock-dialog.ui',
   'ui/style.css',
-  'ui/style-dark.css',
   'ui/gdu-new-disk-image-dialog.ui',
   'ui/gdu-resize-volume-dialog.ui',
   'ui/gdu-restore-disk-image-dialog.ui',

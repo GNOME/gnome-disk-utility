@@ -246,7 +246,8 @@ object_removed_cb (GduManager *self,
   g_assert (GDU_IS_MANAGER (self));
   g_assert (UDISKS_IS_OBJECT (object));
 
-  if (udisks_object_peek_drive(object) != NULL &&
+  if ((udisks_object_peek_drive (object) != NULL ||
+       udisks_object_peek_loop (object) != NULL) &&
       drive_in_manager (self, object, &position))
     {
       g_autoptr(GduItem) item = NULL;
@@ -256,6 +257,40 @@ object_removed_cb (GduManager *self,
 
       g_list_store_remove (self->drives, position);
     }
+}
+
+static void
+interface_properties_changed_cb (GduManager        *self,
+                                 GDBusObjectProxy  *object_proxy,
+                                 GDBusProxy        *interface_proxy,
+                                 GVariant          *changed_properties,
+                                 char             **invalidated_properties)
+{
+  UDisksBlock *block;
+  UDisksLoop *loop;
+
+  g_return_if_fail (UDISKS_IS_OBJECT (object_proxy));
+
+  loop = udisks_object_get_loop ((gpointer)object_proxy);
+  block = udisks_object_get_block ((gpointer)object_proxy);
+
+  if (loop)
+    {
+      const char *file;
+      gint64 size;
+
+      file = udisks_loop_get_backing_file (loop);
+      size = udisks_block_get_size (block);
+
+      if (file && *file && size)
+        object_added_cb (self, (gpointer)object_proxy);
+      else if ((!file || !*file) && !size)
+        object_removed_cb (self, (gpointer)object_proxy);
+
+      return;
+    }
+
+  object_added_cb (self, (gpointer)object_proxy);
 }
 
 static int
@@ -319,7 +354,7 @@ manager_load_drives (GduManager *self)
                                                    self, G_CONNECT_SWAPPED);
   self->properties_changed_id = g_signal_connect_object (object_manager,
                                                          "interface-proxy-properties-changed",
-                                                         G_CALLBACK (object_added_cb),
+                                                         G_CALLBACK (interface_properties_changed_cb),
                                                          self, G_CONNECT_SWAPPED);
   objects = g_dbus_object_manager_get_objects (object_manager);
   objects = g_list_sort (objects, (GCompareFunc)sort_objects);

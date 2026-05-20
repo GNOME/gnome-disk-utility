@@ -5,7 +5,10 @@ use std::{
     sync::{LazyLock, Mutex},
 };
 
-use gtk::glib::{self, translate::FromGlibPtrBorrow};
+use gtk::glib::{
+    self,
+    translate::{FromGlibPtrBorrow, IntoGlib},
+};
 use udisks::zbus::zvariant::OwnedObjectPath;
 
 use crate::{GduRestoreDiskImageDialog, localjob::LocalJob};
@@ -35,10 +38,10 @@ pub fn destroy_local_job(job: Rc<LocalJob>) {
 }
 
 #[unsafe(no_mangle)]
-pub extern "C" fn gdu_rs_has_local_jobs() -> bool {
+pub extern "C" fn gdu_rs_has_local_jobs() -> glib::ffi::gboolean {
     GLOBAL_MAP.with(|map| {
         let map = map.lock().expect("poisoned lock");
-        map.is_empty()
+        (!map.is_empty()).into_glib()
     })
 }
 

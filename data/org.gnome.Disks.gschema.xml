@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist>
-  <schema id="org.gnome.Disks" path="/org/gnome/Disks/" gettext-domain="gnome-disk-utility">
+<schemalist gettext-domain="gnome-disk-utility">
+  <schema id="org.gnome.Disks" path="/org/gnome/Disks/">
     <key name="image-dir-uri" type="s">
       <default>''</default>
       <summary>Default location for the Create/Restore disk image dialogs</summary>
       <description>Default location for the Create/Restore disk image dialogs. If blank the ~/Documents folder is used.</description>
     </key>
   </schema>
-  <schema id="org.gnome.Disks.benchmark" path="/org/gnome/Disks/benchmark/" gettext-domain="gnome-disk-utility">
+	<schema id="org.gnome.Disks.window-state" path="/org/gnome/Disks/window-state/">
+    <key name="window-state" type="(iib)">
+      <default>(-1, -1, false)</default>
+      <summary>Initial state of the window</summary>
+      <description>A tuple containing the initial width, height and maximize state of the app window.</description>
+    </key>
+	</schema>
+  <schema id="org.gnome.Disks.benchmark" path="/org/gnome/Disks/benchmark/">
     <key name="num-samples" type="i">
      <default>100</default>
       <summary>The number of samples the benchmark will include for the read/write test.</summary>

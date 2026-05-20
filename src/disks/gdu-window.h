@@ -23,8 +23,11 @@ G_BEGIN_DECLS
 #define GDU_TYPE_WINDOW (gdu_window_get_type ())
 G_DECLARE_FINAL_TYPE (GduWindow, gdu_window, GDU, WINDOW, AdwApplicationWindow)
 
+#define GDU_WINDOW_INITIAL_STATE                   "window-state"
+
 GduWindow   *gdu_window_new                        (GApplication    *application,
                                                     GduManager      *manager);
 void          gdu_window_show_attach_disk_image    (GduWindow      *self);
 
 G_END_DECLS
+

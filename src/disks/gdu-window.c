@@ -44,6 +44,8 @@ struct _GduWindow
 
 G_DEFINE_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW)
 
+GSettings *gdu_window_state;
+
 static void
 drive_list_row_selection_changed_cb (GduWindow *self)
 {
@@ -105,6 +107,61 @@ file_dialog_open_cb (GObject      *source_object,
 }
 
 static void
+gdu_window_unmap (GtkWidget *widget)
+{
+  GtkWindow *window = GTK_WINDOW (widget);
+  GVariant *initial_state;
+  gint width;
+  gint height;
+  gboolean is_maximized;
+
+  is_maximized = gtk_window_is_maximized (window);
+
+  gtk_window_get_default_size (window, &width, &height);
+  initial_state = g_variant_new_parsed ("(%i, %i, %b)",
+                                        width,
+                                        height,
+                                        is_maximized);
+
+  g_settings_set_value (gdu_window_state,
+                        GDU_WINDOW_INITIAL_STATE,
+                        initial_state);
+
+  GTK_WIDGET_CLASS (gdu_window_parent_class)->unmap (widget);
+}
+
+static void
+gdu_window_load_state (GduWindow *self)
+{
+  g_autoptr (GVariant) default_size = NULL;
+  gboolean maximized = FALSE;
+  gint current_width = -1;
+  gint current_height = -1;
+
+  default_size = g_settings_get_value (gdu_window_state,
+                                       GDU_WINDOW_INITIAL_STATE);
+
+  g_variant_get (default_size,
+                 "(iib)",
+                 &current_width,
+                 &current_height,
+                 &maximized);
+
+  if (current_width == -1)
+      current_width = 980;
+
+  if (current_height == -1)
+      current_height = 640;
+
+  gtk_window_set_default_size (GTK_WINDOW (self),
+                               current_width,
+                               current_height);
+
+  if (maximized)
+      gtk_window_maximize (GTK_WINDOW (self));
+}
+
+static void
 gdu_window_finalize (GObject *object)
 {
   GduWindow *self = (GduWindow *)object;
@@ -121,6 +178,7 @@ gdu_window_class_init (GduWindowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize = gdu_window_finalize;
+  widget_class->unmap = gdu_window_unmap;
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/DiskUtility/ui/"
@@ -139,6 +197,9 @@ gdu_window_class_init (GduWindowClass *klass)
 static void
 gdu_window_init (GduWindow *self)
 {
+  gdu_window_state = g_settings_new ("org.gnome.Disks.window-state");
+
+  gdu_window_load_state (self);
   gtk_widget_init_template (GTK_WIDGET (self));
 }
 
@@ -185,3 +246,4 @@ gdu_window_show_attach_disk_image (GduWindow *self)
                         file_dialog_open_cb,
                         self);
 }
+

@@ -57,6 +57,18 @@ struct _GduDrive
 
 G_DEFINE_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
 
+#define NUM_PARTITION_COLORS 7
+
+static const char *partition_colors[NUM_PARTITION_COLORS] = {
+  "blue",
+  "green",
+  "yellow",
+  "orange",
+  "red",
+  "purple",
+  "brown",
+};
+
 static void
 gdu_drive_set_block_color(GduDrive *self,
                           GduBlock *block)

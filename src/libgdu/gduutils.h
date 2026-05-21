@@ -168,18 +168,6 @@ gint64 gdu_utils_get_unused_for_block (UDisksClient *client,
 gint64 gdu_utils_get_total_size_for_block (UDisksClient *client,
                                            UDisksBlock  *block);
 
-#define NUM_PARTITION_COLORS 7
-
-static const char * partition_colors[NUM_PARTITION_COLORS] = {
-  "blue",
-  "green",
-  "yellow",
-  "orange",
-  "red",
-  "purple",
-  "brown",
-};
-
 #define NUM_UNITS 11
 
 typedef enum {

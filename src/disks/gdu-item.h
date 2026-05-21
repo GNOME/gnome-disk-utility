@@ -43,6 +43,7 @@ typedef enum GduFeature {
   GDU_FEATURE_WAKEUP             = 1 << 24,
   GDU_FEATURE_POWEROFF           = 1 << 25,
   GDU_FEATURE_EJECT              = 1 << 26,
+  GDU_FEATURE_DETACH             = 1 << 27,
 } GduFeature;
 
 #define GDU_TYPE_ITEM (gdu_item_get_type ())

@@ -37,6 +37,7 @@ struct _GduDrive
   UDisksObject         *object;
   UDisksDrive          *drive;
   UDisksDriveAta       *ata;
+  UDisksLoop           *loop;
 
   GduBlock             *extended_partition;
   UDisksObjectInfo     *info;
@@ -192,8 +193,16 @@ gdu_drive_get_features (GduItem *item)
 
   if (self->drive)
     {
+      if (udisks_drive_get_ejectable (self->drive) && udisks_drive_get_media_removable (self->drive))
+        features |= GDU_FEATURE_EJECT;
+
       if (udisks_drive_get_can_power_off (self->drive))
         features |= GDU_FEATURE_POWEROFF;
+    }
+
+  if (self->loop)
+    {
+      features |= GDU_FEATURE_DETACH;
     }
 
   block = self->block;
@@ -365,6 +374,7 @@ gdu_drive_new (gpointer  udisk_client,
 
   g_set_object (&self->block, udisks_object_peek_block (self->object));
   g_set_object (&self->drive, udisks_object_peek_drive (self->object));
+  g_set_object (&self->loop, udisks_object_peek_loop (self->object));
 
   if (self->block == NULL && self->drive != NULL)
     self->block = udisks_client_get_block_for_drive (self->client,
@@ -857,6 +867,179 @@ gboolean
 gdu_drive_wakeup_finish (GduDrive      *self,
                          GAsyncResult  *result,
                          GError       **error)
+{
+  g_return_val_if_fail (GDU_IS_DRIVE (self), FALSE);
+  g_return_val_if_fail (G_IS_TASK (result), FALSE);
+
+  return g_task_propagate_boolean (G_TASK (result), error);
+}
+
+static void
+detach_cb (GObject      *object,
+           GAsyncResult *result,
+           gpointer      user_data)
+{
+  g_autoptr(GTask) task = user_data;
+  GduDrive *self;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+
+  self = g_task_get_source_object (task);
+  g_assert (GDU_IS_DRIVE (self));
+
+  if (udisks_loop_call_delete_finish (self->loop, result, &error))
+    g_task_return_boolean (task, TRUE);
+  else
+    g_task_return_error (task, error);
+}
+
+static void
+detach_ensure_unused_cb (GObject      *object,
+                         GAsyncResult *result,
+                         gpointer      user_data)
+{
+  g_autoptr(GTask) task = user_data;
+  GCancellable *cancellable;
+  GduDrive *self;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+
+  cancellable = g_task_get_cancellable (task);
+  self = g_task_get_source_object (task);
+  g_assert (GDU_IS_DRIVE (self));
+
+  if (gdu_utils_ensure_unused_finish (self->client, result, &error))
+  {
+    GVariantBuilder options_builder;
+    g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
+
+    udisks_loop_call_delete (self->loop,
+                             g_variant_builder_end (&options_builder),
+                             cancellable,
+                             detach_cb,
+                             g_steal_pointer (&task));
+  }
+  else
+  {
+    g_task_return_error (task, error);
+  }
+}
+
+void
+gdu_drive_detach_async (GduDrive            *self,
+                        gpointer             parent_window,
+                        GCancellable        *cancellable,
+                        GAsyncReadyCallback  callback,
+                        gpointer             user_data)
+{
+  g_autoptr(GTask) task = NULL;
+
+  g_return_if_fail (GDU_IS_DRIVE (self));
+  g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+
+  gdu_utils_ensure_unused (self->client,
+                           parent_window,
+                           self->object,
+                           detach_ensure_unused_cb,
+                           cancellable,
+                           g_steal_pointer (&task));
+}
+
+gboolean
+gdu_drive_detach_finish (GduDrive      *self,
+                         GAsyncResult  *result,
+                         GError       **error)
+{
+  g_return_val_if_fail (GDU_IS_DRIVE (self), FALSE);
+  g_return_val_if_fail (G_IS_TASK (result), FALSE);
+
+  return g_task_propagate_boolean (G_TASK (result), error);
+}
+
+static void
+eject_cb (GObject      *object,
+          GAsyncResult *result,
+          gpointer      user_data)
+{
+  g_autoptr(GTask) task = user_data;
+  GduDrive *self;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+
+  self = g_task_get_source_object (task);
+  g_assert (GDU_IS_DRIVE (self));
+
+  if (udisks_drive_call_eject_finish (self->drive, result, &error))
+    g_task_return_boolean (task, TRUE);
+  else
+    g_task_return_error (task, error);
+}
+
+static void
+eject_ensure_unused_cb (GObject      *object,
+                        GAsyncResult *result,
+                        gpointer      user_data)
+{
+  g_autoptr(GTask) task = user_data;
+  GCancellable *cancellable;
+  GduDrive *self;
+  GError *error = NULL;
+
+  g_assert (G_IS_TASK (task));
+
+  cancellable = g_task_get_cancellable (task);
+  self = g_task_get_source_object (task);
+  g_assert (GDU_IS_DRIVE (self));
+
+  if (gdu_utils_ensure_unused_list_finish (self->client, result, &error))
+  {
+    udisks_drive_call_eject (self->drive,
+                             g_variant_new ("a{sv}", NULL), /* options */
+                             cancellable,
+                             eject_cb,
+                             g_steal_pointer (&task));
+  }
+  else
+  {
+    g_task_return_error (task, error);
+  }
+}
+
+void
+gdu_drive_eject_async (GduDrive            *self,
+                       gpointer             parent_window,
+                       GCancellable        *cancellable,
+                       GAsyncReadyCallback  callback,
+                       gpointer             user_data)
+{
+  g_autoptr(GList) objects = NULL;
+  g_autoptr(GTask) task = NULL;
+
+  g_return_if_fail (GDU_IS_DRIVE (self));
+  g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
+
+  task = g_task_new (self, cancellable, callback, user_data);
+  objects = g_list_append (NULL, self->object);
+  /* include other drives this will affect */
+  objects = g_list_concat (objects, gdu_drive_get_siblings (self));
+
+  gdu_utils_ensure_unused_list (self->client,
+                                parent_window,
+                                objects,
+                                eject_ensure_unused_cb,
+                                cancellable,
+                                g_steal_pointer (&task));
+}
+
+gboolean
+gdu_drive_eject_finish (GduDrive      *self,
+                        GAsyncResult  *result,
+                        GError       **error)
 {
   g_return_val_if_fail (GDU_IS_DRIVE (self), FALSE);
   g_return_val_if_fail (G_IS_TASK (result), FALSE);

@@ -128,6 +128,8 @@ update_drive_view (GduDriveView *self)
   ENABLE ("view.settings", GDU_FEATURE_SETTINGS);
   ENABLE ("view.standby", GDU_FEATURE_STANDBY);
   ENABLE ("view.wakeup", GDU_FEATURE_WAKEUP);
+  ENABLE ("view.detach", GDU_FEATURE_DETACH);
+  ENABLE ("view.eject", GDU_FEATURE_EJECT);
   ENABLE ("view.poweroff", GDU_FEATURE_POWEROFF);
 
   #undef ENABLE
@@ -339,6 +341,123 @@ wakeup_drive_clicked_cb (GtkWidget  *widget,
 }
 
 static void
+drive_view_detach_cb (GObject      *object,
+                      GAsyncResult *result,
+                      gpointer      user_data)
+{
+  g_autoptr(GduDriveView) self = user_data;
+  g_autoptr(GError) error = NULL;
+
+  g_assert (GDU_IS_DRIVE_VIEW (self));
+
+  if (!gdu_drive_detach_finish (self->drive, result, &error))
+  {
+    gdu_utils_show_error (drive_view_get_window (self),
+                          _("Error detaching loop device"),
+                          error);
+  }
+}
+
+static void
+detach_loop_device_clicked_cb (GtkWidget  *widget,
+                               const char *action_name,
+                               GVariant   *parameter)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
+
+  g_assert (GDU_IS_DRIVE_VIEW (self));
+
+  gdu_drive_detach_async (self->drive,
+                          drive_view_get_window (self),
+                          NULL,
+                          drive_view_detach_cb,
+                          g_object_ref (self));
+}
+
+static void
+drive_view_eject_cb (GObject      *object,
+                     GAsyncResult *result,
+                     gpointer      user_data)
+{
+  g_autoptr(GduDriveView) self = user_data;
+  g_autoptr(GError) error = NULL;
+
+  g_assert (GDU_IS_DRIVE_VIEW (self));
+
+  if (!gdu_drive_eject_finish (self->drive, result, &error))
+  {
+    gdu_utils_show_error (drive_view_get_window (self),
+                          _("Error ejecting drive"),
+                          error);
+  }
+}
+
+
+static void
+eject_confirmation_response_cb (GObject      *object,
+                                GAsyncResult *response,
+                                gpointer      user_data)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (user_data);
+  AdwAlertDialog *dialog = ADW_ALERT_DIALOG (object);
+
+  if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
+    return;
+
+  gdu_drive_eject_async (self->drive,
+                         drive_view_get_window (self),
+                         NULL,
+                         drive_view_eject_cb,
+                         g_object_ref (self));
+}
+
+static void
+eject_drive_clicked_cb (GtkWidget  *widget,
+                        const char *action_name,
+                        GVariant   *parameter)
+{
+  GduDriveView *self = GDU_DRIVE_VIEW (widget);
+  GList *siblings;
+  g_autoptr(GList) objects = NULL;
+  ConfirmationDialogData *data;
+  GtkWidget *affected_devices_widget;
+
+  g_assert (GDU_IS_DRIVE_VIEW (self));
+
+  siblings = gdu_drive_get_siblings (self->drive);
+
+  if (siblings == NULL)
+  {
+    gdu_drive_eject_async (self->drive,
+                           drive_view_get_window (self),
+                           NULL,
+                           drive_view_eject_cb,
+                           g_object_ref (self));
+    return;
+  }
+
+  objects = g_list_append (NULL, gdu_drive_get_object (self->drive));
+  objects = g_list_concat (objects, siblings);
+
+  affected_devices_widget = gdu_util_create_widget_from_objects (drive_view_get_client (),
+                                                                 objects);
+
+  data = g_new0 (ConfirmationDialogData, 1);
+  /* Translators: Heading for ejecting a device with multiple drives */
+  data->message = _("Are you sure you want to eject the drives?");
+  /* Translators: Message for ejecting a device with multiple drives */
+  data->description = _("This operation will prepare the system for the following drives to be ejected.");
+  data->response_verb = _("_Eject");
+  data->response_appearance = ADW_RESPONSE_DEFAULT;
+  data->callback = eject_confirmation_response_cb;
+  data->user_data = self;
+
+  gdu_utils_show_confirmation (drive_view_get_window (self),
+                               data,
+                               affected_devices_widget);
+}
+
+static void
 drive_view_power_off_cb (GObject      *object,
                          GAsyncResult *result,
                          gpointer      user_data)
@@ -529,6 +648,8 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
 
   gtk_widget_class_install_action (widget_class, "view.standby", NULL, standby_drive_clicked_cb);
   gtk_widget_class_install_action (widget_class, "view.wakeup", NULL, wakeup_drive_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.detach", NULL, detach_loop_device_clicked_cb);
+  gtk_widget_class_install_action (widget_class, "view.eject", NULL, eject_drive_clicked_cb);
   gtk_widget_class_install_action (widget_class, "view.poweroff", NULL, poweroff_drive_clicked_cb);
 
   gtk_widget_class_install_action (widget_class, "view.show-drive-dialog", NULL, show_drive_dialog_clicked_cb);

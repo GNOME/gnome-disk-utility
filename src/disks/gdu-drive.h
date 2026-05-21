@@ -45,6 +45,22 @@ void          gdu_drive_wakeup_async                  (GduDrive              *se
 gboolean      gdu_drive_wakeup_finish                 (GduDrive              *self,
                                                        GAsyncResult          *result,
                                                        GError               **error);
+void          gdu_drive_detach_async                  (GduDrive              *self,
+                                                       gpointer               parent_window,
+                                                       GCancellable          *cancellable,
+                                                       GAsyncReadyCallback    callback,
+                                                       gpointer               user_data);
+gboolean      gdu_drive_detach_finish                 (GduDrive              *self,
+                                                       GAsyncResult          *result,
+                                                       GError               **error);
+void          gdu_drive_eject_async                   (GduDrive              *self,
+                                                       gpointer               parent_window,
+                                                       GCancellable          *cancellable,
+                                                       GAsyncReadyCallback    callback,
+                                                       gpointer               user_data);
+gboolean      gdu_drive_eject_finish                  (GduDrive              *self,
+                                                       GAsyncResult          *result,
+                                                       GError               **error);
 void          gdu_drive_power_off_async               (GduDrive              *self,
                                                        gpointer               parent_window,
                                                        GCancellable          *cancellable,
@@ -61,3 +77,4 @@ gpointer      gdu_drive_get_object                    (GduDrive              *se
 gpointer      gdu_drive_get_object_for_format         (GduDrive              *self);
 
 G_END_DECLS
+

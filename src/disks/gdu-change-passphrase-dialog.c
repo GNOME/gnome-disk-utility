@@ -57,7 +57,7 @@ update_password_strength (GduChangePassphraseDialog *self)
 
   password = gtk_editable_get_text (GTK_EDITABLE (self->new_pass_row));
 
-  pw_strength (password, &hint, &strength_level);
+  gdu_password_strength (password, &hint, &strength_level);
 
   gtk_level_bar_set_value (GTK_LEVEL_BAR (self->strength_indicator), strength_level);
   gtk_label_set_label (GTK_LABEL (self->strength_hint_label), hint);

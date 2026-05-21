@@ -630,14 +630,6 @@ gdu_utils_is_inside_dos_extended (UDisksClient         *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static void
-response_cb (AdwMessageDialog *dialog,
-             gchar            *response,
-             gpointer         *user_data)
-{
-  gtk_window_close (GTK_WINDOW (dialog));
-}
-
 void
 gdu_utils_show_message (const char *title,
                         const char *message,

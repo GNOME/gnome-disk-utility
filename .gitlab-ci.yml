@@ -12,10 +12,10 @@ stages:
 
 variables:
   DEPENDENCIES: glib-devel libdvdread-devel gtk4-devel libadwaita-devel
-                libnotify-devel libsecret-devel libpwquality-devel
-                libudisks2-devel xz-devel systemd-devel meson gcc
-                glibc-devel libhandy1-devel gettext git gobject-introspection-devel
-                vala desktop-file-utils gtk4-devel libadwaita-devel rust cargo
+    libnotify-devel libsecret-devel libpwquality-devel
+    libudisks2-devel xz-devel systemd-devel meson gcc
+    glibc-devel libhandy1-devel gettext git gobject-introspection-devel
+    vala desktop-file-utils gtk4-devel libadwaita-devel rust cargo blueprint-compiler
   OPTIONS: -Dman=false
 
 flatpak:
@@ -27,7 +27,6 @@ flatpak:
     APP_ID: "org.gnome.DiskUtility"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
   extends: .flatpak
-
 
 build:
   image: fedora:rawhide

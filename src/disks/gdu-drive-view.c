@@ -199,15 +199,11 @@ restore_disk_image_clicked_cb (GtkWidget  *widget,
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
   UDisksObject *object;
-  GduManager *manager;
   const gchar *object_path;
 
   g_assert (GDU_IS_DRIVE_VIEW (self));
 
   object = gdu_drive_get_object_for_format (self->drive);
-  manager = gdu_manager_get_default (NULL);
-  g_assert (object != NULL);
-
   g_assert (object != NULL);
   object_path = g_dbus_object_get_object_path (G_DBUS_OBJECT (object));
   gdu_rs_restore_disk_image_dialog_show (drive_view_get_window (self),

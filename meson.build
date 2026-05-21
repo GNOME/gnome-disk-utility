@@ -1,7 +1,7 @@
 project(
   'gnome-disk-utility',
   ['c', 'rust'],
-  version: '47.alpha',
+  version: '51.alpha',
   license: 'GPL2.0',
   default_options: 'buildtype=debugoptimized',
   meson_version: '>= 0.59.0',

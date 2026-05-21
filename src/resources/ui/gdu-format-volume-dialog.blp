@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduFormatVolumeDialog: Adw.Dialog {
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button back_button {
+        use-underline: true;
+        clicked => $on_back_button_clicked_cb() swapped;
+      }
+
+      [end]
+      Button forward_button {
+        use-underline: true;
+        clicked => $on_forward_button_clicked_cb() swapped;
+      }
+    }
+
+    content: Stack pages_stack {
+      transition-type: crossfade;
+    };
+  }
+}

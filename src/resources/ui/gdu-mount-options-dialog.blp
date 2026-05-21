@@ -1,0 +1,163 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduMountOptionsDialog: Adw.Dialog {
+  title: _("Mount Options");
+  content-height: 600;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button save_button {
+        label: _("_Done");
+        use-underline: true;
+        clicked => $on_done_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Box {
+      orientation: vertical;
+
+      Adw.Banner info_banner {
+        title: _("The system may not work correctly if this entry is modified or removed");
+      }
+
+      Overlay overlay {
+        child: Adw.PreferencesPage {
+          Adw.PreferencesGroup {
+            Adw.SwitchRow automount_switch_row {
+              title: _("_Automatic Mount Options");
+              use-underline: true;
+              notify::active => $on_property_changed();
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("General");
+            sensitive: bind automount_switch_row.active inverted;
+
+            Adw.SwitchRow startup_mount_switch {
+              title: _("_Mount at Startup");
+              use-underline: true;
+              notify::active => $on_property_changed();
+            }
+
+            Adw.SwitchRow show_in_files_switch {
+              title: _("_Show in Files");
+              use-underline: true;
+              notify::active => $on_property_changed();
+            }
+
+            Adw.SwitchRow require_auth_switch {
+              title: _("_Require Authorization");
+              use-underline: true;
+              notify::active => $on_property_changed();
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("Appearance");
+            sensitive: bind automount_switch_row.active inverted;
+
+            Adw.EntryRow name_row {
+              title: _("D_isplay Name");
+              use-underline: true;
+              notify::text => $on_property_changed();
+            }
+
+            Adw.EntryRow icon_row {
+              title: _("C_olor Icon");
+              use-underline: true;
+              notify::text => $on_property_changed();
+            }
+
+            Adw.EntryRow symbolic_icon_row {
+              title: _("S_ymbolic Icon");
+              use-underline: true;
+              notify::text => $on_property_changed();
+            }
+          }
+
+          Adw.PreferencesGroup {
+            title: _("Technical Options");
+            sensitive: bind automount_switch_row.active inverted;
+
+            Adw.EntryRow mount_options_row {
+              title: _("_fstab Options");
+              use-underline: true;
+              notify::text => $on_property_changed();
+
+              styles [
+                "property",
+              ]
+            }
+
+            Adw.EntryRow mount_point_row {
+              title: _("Mount _Point");
+              use-underline: true;
+              notify::text => $on_property_changed();
+
+              styles [
+                "property",
+              ]
+            }
+
+            Adw.EntryRow filesystem_type_row {
+              title: _("Filesystem _Type");
+              use-underline: true;
+              notify::text => $on_property_changed();
+
+              styles [
+                "property",
+              ]
+            }
+          }
+
+          Adw.PreferencesGroup {
+            sensitive: bind automount_switch_row.active inverted;
+
+            Adw.ComboRow device_combo_row {
+              title: _("Ide_ntify As");
+              use-underline: true;
+              notify::selected => $fstab_on_device_combo_row_changed();
+            }
+          }
+
+          Adw.PreferencesGroup {
+            sensitive: bind automount_switch_row.active inverted;
+
+            Adw.ButtonRow {
+              title: _("R_estore Default Settings");
+              use-underline: true;
+              activated => $on_restore_default_clicked_cb() swapped;
+
+              styles [
+                "destructive-action",
+              ]
+            }
+          }
+        };
+
+        [overlay]
+        Adw.Spinner spinner {
+          visible: false;
+        }
+      }
+    };
+  }
+}

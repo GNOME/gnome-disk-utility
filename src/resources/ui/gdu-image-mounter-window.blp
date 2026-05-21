@@ -1,0 +1,123 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $ImageMounterWindow: Adw.ApplicationWindow {
+  default-width: 500;
+  default-height: 730;
+  width-request: 360;
+  height-request: 640;
+
+  content: Adw.ToolbarView {
+    top-bar-style: flat;
+
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+    }
+
+    content: Adw.ToastOverlay toast_overlay {
+      child: Adw.StatusPage status_page {
+        icon-name: "media-optical-symbolic";
+        title: bind $window_title(template.file);
+
+        child: Adw.Clamp {
+          maximum-size: 400;
+          tightening-threshold: 300;
+
+          child: Box {
+            orientation: vertical;
+            spacing: 12;
+
+            Adw.PreferencesGroup {
+              Adw.ActionRow open_files_row {
+                activatable-widget: radio_button_open_files;
+                title: _("Open in Files");
+                subtitle: _("Mount the image read-only");
+                sensitive: bind $mountable(template.file);
+
+                [prefix]
+                CheckButton radio_button_open_files {
+                  valign: center;
+                  active: true;
+                  action-name: "win.action";
+                  action-target: "\"open-in-files\"";
+                }
+              }
+
+              Adw.ActionRow unmount_row {
+                visible: false;
+                activatable-widget: radio_button_open_unmount;
+                title: _("Unmount Disk Image");
+                subtitle: _("Unmount the mounted image");
+
+                [prefix]
+                CheckButton radio_button_open_unmount {
+                  group: radio_button_open_files;
+                  valign: center;
+                  action-name: "win.action";
+                  action-target: "\"unmount\"";
+                }
+              }
+
+              Adw.ActionRow open_files_edit_row {
+                activatable-widget: radio_button_open_files_edit;
+                title: _("Edit Contents in Files");
+                subtitle: _("Mount the image and allow editing");
+                sensitive: bind $mountable(template.file);
+
+                [prefix]
+                CheckButton radio_button_open_files_edit {
+                  group: radio_button_open_files;
+                  valign: center;
+                  action-name: "win.action";
+                  action-target: "\"open-in-files-writable\"";
+                }
+              }
+
+              Adw.ActionRow {
+                activatable-widget: radio_button_write_drive;
+                title: _("Write to Drive");
+                subtitle: _("Open in Disks to write the image to a drive");
+
+                [prefix]
+                CheckButton radio_button_write_drive {
+                  group: radio_button_open_files;
+                  valign: center;
+                  action-name: "win.action";
+                  action-target: "\"write\"";
+                }
+              }
+
+              Adw.ActionRow {
+                title: _("Inspect in Disks");
+                subtitle: _("Mount the image and open in Disks");
+                activatable-widget: radio_button_inspect;
+                sensitive: bind $mountable(template.file);
+
+                [prefix]
+                CheckButton radio_button_inspect {
+                  group: radio_button_open_files;
+                  valign: center;
+                  action-name: "win.action";
+                  action-target: "\"inspect\"";
+                }
+              }
+            }
+
+            Button {
+              label: bind $button_label(template.continue-action);
+              use-underline: true;
+              halign: center;
+              clicked => $on_continue_button() swapped;
+
+              styles [
+                "pill",
+                "suggested-action",
+              ]
+            }
+          };
+        };
+      };
+    };
+  };
+}

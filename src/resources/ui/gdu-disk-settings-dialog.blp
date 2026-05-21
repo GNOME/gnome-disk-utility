@@ -1,0 +1,380 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Dialog disk-settings-dialog {
+  title: _("Drive Settings");
+  content-width: 500;
+  content-height: 300;
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        halign: start;
+        hexpand: true;
+        action-name: "window.close";
+      }
+
+      title-widget: Adw.WindowTitle window_title {
+        title: _("Drive Settings");
+      };
+
+      [end]
+      Button ok-button {
+        label: _("Sa_ve");
+        use-underline: true;
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    Notebook notebook1 {
+      margin-start: 12;
+      margin-end: 12;
+      margin-top: 12;
+      margin-bottom: 12;
+
+      Box standby-box {
+        orientation: vertical;
+        spacing: 6;
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
+
+        Box {
+          spacing: 12;
+
+          Label {
+            label: _("Apply Standby Timeout Settings");
+            hexpand: true;
+            xalign: 0;
+            ellipsize: end;
+
+            styles [
+              "heading",
+            ]
+          }
+
+          Switch standby-switch {
+            has-tooltip: true;
+            tooltip-text: _("Turn on to configure Standby Timeout at startup and when the disk is connected");
+          }
+        }
+
+        Box standby-widgets-box {
+          orientation: vertical;
+          spacing: 6;
+
+          Box {
+            spacing: 6;
+
+            Label {
+              xalign: 1;
+              label: _("Enter Standby After");
+
+              styles [
+                "dim-label",
+              ]
+            }
+
+            Label standby-value-label {}
+          }
+
+          Scale standby-scale {
+            margin-start: 24;
+            margin-end: 24;
+
+            adjustment: Adjustment standby-adjustment {
+              upper: 255;
+              value: 60;
+              step-increment: 1;
+              page-increment: 10;
+            };
+
+            draw-value: false;
+          }
+        }
+      }
+
+      [tab]
+      Label {
+        label: _("_Standby");
+        use-underline: true;
+      }
+
+      Box apm-box {
+        orientation: vertical;
+        spacing: 6;
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
+
+        Box {
+          spacing: 12;
+
+          Label {
+            label: _("Apply Advanced Power Management Settings");
+            hexpand: true;
+            xalign: 0;
+            ellipsize: end;
+
+            styles [
+              "heading",
+            ]
+          }
+
+          Switch apm-switch {
+            has-tooltip: true;
+            tooltip-text: _("Turn on to configure APM at startup and when the disk is connected");
+          }
+        }
+
+        Box apm-widgets-box {
+          orientation: vertical;
+          spacing: 6;
+
+          Box {
+            spacing: 6;
+
+            Label apm-label {
+              xalign: 1;
+              label: _("APM Level");
+
+              styles [
+                "dim-label",
+              ]
+            }
+
+            Label apm-value-label {}
+          }
+
+          Scale apm-scale {
+            margin-start: 24;
+            margin-end: 24;
+
+            adjustment: Adjustment apm-adjustment {
+              lower: 1;
+              upper: 255;
+              value: 127;
+              step-increment: 1;
+              page-increment: 10;
+            };
+
+            draw-value: false;
+          }
+
+          Label {
+            xalign: 0;
+            label: _(
+              "Aggressive spin-down may wear out the drive faster than anticipated. Please check the “Start/Stop Count” SMART attribute from time to time"
+            );
+            wrap: true;
+
+            styles [
+              "caption",
+            ]
+          }
+        }
+      }
+
+      [tab]
+      Label {
+        label: _("A_PM");
+        use-underline: true;
+        mnemonic-widget: apm-box;
+      }
+
+      Box aam-box {
+        orientation: vertical;
+        spacing: 6;
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
+
+        Box {
+          spacing: 12;
+
+          Label {
+            label: _("Apply Automatic Acoustic Management Settings");
+            hexpand: true;
+            xalign: 0;
+            ellipsize: end;
+
+            styles [
+              "heading",
+            ]
+          }
+
+          Switch aam-switch {
+            has-tooltip: true;
+            tooltip-text: _("Turn on to configure AAM at startup and when the disk is connected");
+          }
+        }
+
+        Box aam-widgets-box {
+          orientation: vertical;
+          spacing: 6;
+
+          Grid {
+            row-spacing: 6;
+            column-spacing: 12;
+
+            Label aam-vendor-recommended-label {
+              xalign: 1;
+              label: _("Vendor Recommended");
+
+              styles [
+                "dim-label",
+              ]
+
+              layout {
+                column: "0";
+                row: "0";
+              }
+            }
+
+            Label aam-label {
+              xalign: 1;
+              label: _("AAM Level");
+
+              styles [
+                "dim-label",
+              ]
+
+              layout {
+                column: "0";
+                row: "1";
+              }
+            }
+
+            Label aam-value-label {
+              layout {
+                column: "1";
+                row: "1";
+              }
+            }
+
+            Label aam-vendor-recommended-value-label {
+              layout {
+                column: "1";
+                row: "0";
+              }
+            }
+          }
+
+          Scale aam-scale {
+            margin-start: 24;
+            margin-end: 24;
+
+            adjustment: Adjustment aam-adjustment {
+              lower: 127;
+              upper: 254;
+              value: 128;
+              step-increment: 1;
+              page-increment: 10;
+            };
+
+            draw-value: false;
+          }
+        }
+      }
+
+      [tab]
+      Label {
+        label: _("_AAM");
+        use-underline: true;
+        mnemonic-widget: aam-box;
+      }
+
+      Box write-cache-box {
+        orientation: vertical;
+        spacing: 6;
+        margin-start: 12;
+        margin-end: 12;
+        margin-top: 12;
+        margin-bottom: 12;
+
+        Box {
+          spacing: 12;
+
+          Label {
+            label: _("Apply Write Cache Settings");
+            hexpand: true;
+            xalign: 0;
+            ellipsize: end;
+
+            styles [
+              "heading",
+            ]
+          }
+
+          Switch write-cache-switch {
+            has-tooltip: true;
+            tooltip-text: _("Turn on to configure Write Cache setting at startup and when the disk is connected");
+          }
+        }
+
+        Box write-cache-widgets-box {
+          orientation: vertical;
+          spacing: 6;
+
+          Box {
+            spacing: 12;
+
+            Label {
+              xalign: 0;
+              label: _("S_etting");
+              use-underline: true;
+              mnemonic-widget: write-cache-comboboxtext;
+              hexpand: true;
+
+              styles [
+                "dim-label",
+              ]
+            }
+
+            ComboBoxText write-cache-comboboxtext {
+              entry-text-column: 0;
+              id-column: 1;
+
+              items [
+                _("Enable Write Cache"),
+                _("Disable Write Cache"),
+              ]
+            }
+          }
+
+          Label {
+            xalign: 0;
+            label: _(
+              "Performance is increased by enabling write caching, but leaves the system susceptible to data loss in the event of a power failure"
+            );
+            wrap: true;
+
+            styles [
+              "caption",
+            ]
+          }
+        }
+      }
+
+      [tab]
+      Label {
+        label: _("Wr_ite Cache");
+        use-underline: true;
+        mnemonic-widget: write-cache-box;
+      }
+    }
+  };
+}

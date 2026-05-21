@@ -1,0 +1,47 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduEditFilesystemDialog: Adw.Dialog {
+  title: _("Edit Filesystem");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button change_button {
+        label: _("Ch_ange");
+        use-underline: true;
+        sensitive: false;
+        clicked => $on_change_button_clicked(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    [top]
+    Adw.Banner warning_banner {
+      title: _("This filesystem will be automatically unmounted prior to any changes.");
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.EntryRow fs_label_row {
+          title: _("Label");
+          notify::text => $on_fs_label_row_changed_cb(template);
+        }
+      }
+    };
+  }
+}

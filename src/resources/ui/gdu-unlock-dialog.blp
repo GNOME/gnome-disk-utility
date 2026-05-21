@@ -1,0 +1,165 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduUnlockDialog: Adw.Dialog {
+  title: _("Unlock Volume");
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+      show-start-title-buttons: false;
+
+      [start]
+      Button close_button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button unlock_button {
+        label: _("_Unlock");
+        use-underline: true;
+        sensitive: false;
+        clicked => $on_unlock_clicked_cb() swapped;
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Box {
+      orientation: vertical;
+
+      Adw.Banner keyring_banner {
+        title: _("The encryption passphrase was retrieved from the keyring");
+      }
+
+      Adw.Banner veracrypt_banner {
+        title: _("This volume might be a VeraCrypt volume as it contains random data.");
+      }
+
+      Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          title: _("Security Credentials");
+
+          Adw.PasswordEntryRow passphrase_entry {
+            title: "Passphrase (If specified)";
+            notify::text => $unlock_dialog_update_unlock_button_cb() swapped;
+          }
+
+          Adw.EntryRow pim_entry_row {
+            title: "PIM (If specified)";
+            tooltip-text: "If provided, this specifies the numeric value for the VeraCrypt PIM (Personal Iterations Multiplier) to use for this volume.";
+            visible: bind keyfile_chooser.visible;
+            notify::text => $unlock_dialog_update_unlock_button_cb() swapped;
+          }
+
+          Adw.ActionRow keyfile_row {
+            title: _("Keyfiles");
+            subtitle: _("None Selected");
+            visible: bind keyfile_chooser.visible;
+
+            [suffix]
+            Button keyfile_chooser {
+              tooltip-text: _("Select Keyfiles");
+              icon-name: "folder-open-symbolic";
+              valign: center;
+              visible: false;
+              clicked => $on_keyfile_chooser_clicked_cb(template);
+
+              styles [
+                "flat",
+              ]
+            }
+          }
+        }
+
+        Adw.PreferencesGroup {
+          title: _("Volume Configuration");
+          visible: bind keyfile_chooser.visible;
+
+          Adw.ActionRow {
+            title: _("Hidden");
+            activatable-widget: tcrypt_hidden_switch_row;
+
+            [suffix]
+            MenuButton {
+              tooltip-text: _("More Information");
+              icon-name: "help-about-symbolic";
+              valign: center;
+
+              styles [
+                "flat",
+              ]
+
+              popover: Popover {
+                Label {
+                  label: _("Instead of unlocking this volume, attempt to unlock a secondary volume hidden inside.");
+                  halign: center;
+                  margin-bottom: 6;
+                  margin-end: 6;
+                  margin-start: 6;
+                  margin-top: 6;
+                  max-width-chars: 50;
+                  valign: center;
+                  wrap: true;
+                }
+              };
+            }
+
+            [suffix]
+            Switch tcrypt_hidden_switch_row {
+              valign: center;
+
+              styles [
+                "flat",
+              ]
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Windows System");
+            activatable-widget: tcrypt_system_switch_row;
+
+            [suffix]
+            MenuButton {
+              tooltip-text: _("More Information");
+              icon-name: "help-about-symbolic";
+              valign: center;
+
+              styles [
+                "flat",
+              ]
+
+              popover: Popover {
+                Label {
+                  label: _("Unlock an encrypted Windows system partition or drive.");
+                  halign: center;
+                  margin-bottom: 6;
+                  margin-end: 6;
+                  margin-start: 6;
+                  margin-top: 6;
+                  max-width-chars: 50;
+                  valign: center;
+                  wrap: true;
+                }
+              };
+            }
+
+            [suffix]
+            Switch tcrypt_system_switch_row {
+              valign: center;
+
+              styles [
+                "flat",
+              ]
+            }
+          }
+        }
+      }
+    };
+  };
+}

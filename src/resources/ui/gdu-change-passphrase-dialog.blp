@@ -1,0 +1,97 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduChangePassphraseDialog: Adw.Dialog {
+  title: _("Change Passphrase");
+  content-width: 590;
+  content-height: 320;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        use-underline: true;
+        label: _("_Cancel");
+        action-name: "window.close";
+      }
+
+      title-widget: Adw.WindowTitle window_title {
+        title: _("Change Passphrase");
+      };
+
+      [end]
+      Button change_pass_button {
+        use-underline: true;
+        sensitive: false;
+        label: _("Ch_ange");
+        clicked => $on_change_passphrase_clicked() swapped;
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Box {
+      orientation: vertical;
+
+      Adw.Banner banner {
+        title: _(
+          "Changing the passphrase for this device will also update the passphrase referenced by the <i>/etc/crypttab</i> file"
+        );
+        use-markup: true;
+      }
+
+      Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          Adw.PasswordEntryRow curr_pass_row {
+            title: _("C_urrent Password");
+            use-underline: true;
+            notify::text => $on_dialog_entry_changed() swapped;
+          }
+
+          Adw.PasswordEntryRow new_pass_row {
+            title: _("_New Password");
+            use-underline: true;
+            notify::text => $on_dialog_entry_changed() swapped;
+          }
+
+          Adw.PasswordEntryRow confirm_pass_row {
+            title: _("C_onfirm Password");
+            use-underline: true;
+            notify::text => $on_dialog_entry_changed() swapped;
+          }
+
+          LevelBar strength_indicator {
+            mode: continuous;
+            max-value: 5;
+            margin-top: 12;
+
+            offsets [
+              offset ("strength-weak", 1),
+              offset ("strength-low", 2),
+              offset ("strength-medium", 3),
+              offset ("strength-good", 4),
+              offset ("strength-high", 5),
+            ]
+          }
+
+          Label strength_hint_label {
+            margin-top: 6;
+            wrap: true;
+            natural-wrap-mode: none;
+
+            styles [
+              "dim-label",
+              "explanation-label",
+            ]
+          }
+        }
+      }
+    };
+  }
+}

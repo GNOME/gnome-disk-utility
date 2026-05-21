@@ -1,0 +1,55 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.AlertDialog ownership_dialog {
+  heading: _("Take Ownership?");
+  default-response: "cancel";
+  close-response: "cancel";
+
+  extra-child: Adw.PreferencesGroup {
+    Adw.ActionRow {
+      title: _("_Recursive Mode");
+      use-underline: true;
+      activatable-widget: recursive_switch;
+
+      [suffix]
+      MenuButton {
+        valign: center;
+        tooltip-text: _("More Information");
+        icon-name: "help-about-symbolic";
+        popover: info_popover;
+
+        styles [
+          "flat",
+        ]
+      }
+
+      [suffix]
+      Switch recursive_switch {
+        valign: center;
+        notify::active => $on_recursive_switch_cb(ownership_dialog);
+      }
+    }
+  };
+
+  responses [
+    cancel: _("_Cancel"),
+    confirm: _("_Take Ownership") suggested,
+  ]
+}
+
+Popover info_popover {
+  child: Label {
+    margin-top: 6;
+    margin-bottom: 6;
+    margin-start: 6;
+    margin-end: 6;
+    wrap: true;
+    max-width-chars: 50;
+    justify: left;
+    label: _(
+      "Recursive mode changes the ownership of subdirectories and files. This can cause problems if files are owned by other users."
+    );
+    xalign: 0;
+  };
+}

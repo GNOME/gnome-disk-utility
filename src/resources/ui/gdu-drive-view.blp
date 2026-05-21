@@ -1,0 +1,104 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduDriveView: Adw.Bin {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      $GduDriveHeader drive_header {}
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Space Allocation");
+
+      $GduSpaceAllocationBar space_allocation_bar {}
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Volumes");
+
+      ListBox drive_partitions_listbox {
+        selection-mode: none;
+
+        styles [
+          "boxed-list",
+        ]
+      }
+    }
+  }
+}
+
+Adw.Dialog drive_info_dialog {
+  title: _("Drive Information");
+  content-width: 480;
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    content: Adw.ToastOverlay drive_info_dialog_toast_overlay {
+      child: Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          Adw.ActionRow drive_model_row {
+            title: _("Model");
+            subtitle-selectable: true;
+
+            [suffix]
+            Button {
+              tooltip-text: _("Copy");
+              icon-name: "edit-copy-symbolic";
+              valign: center;
+              clicked => $on_copy_drive_model_clicked(template);
+
+              styles [
+                "flat",
+              ]
+            }
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow drive_serial_row {
+            title: _("Serial");
+            subtitle-selectable: true;
+
+            [suffix]
+            Button {
+              tooltip-text: _("Copy");
+              icon-name: "edit-copy-symbolic";
+              valign: center;
+              clicked => $on_copy_drive_serial_clicked(template);
+
+              styles [
+                "flat",
+              ]
+            }
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow drive_part_type_row {
+            title: _("Partitioning");
+            subtitle-selectable: true;
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow drive_size_row {
+            title: _("Size");
+            subtitle-selectable: true;
+
+            styles [
+              "property",
+            ]
+          }
+        }
+      };
+    };
+  };
+}

@@ -1,0 +1,82 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduEncryptionOptionsDialog: Adw.Dialog {
+  title: _("Encryption Options");
+  content-width: 560;
+  content-height: 500;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button done_button {
+        label: _("Done");
+        sensitive: false;
+        clicked => $on_done_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    [top]
+    Adw.Banner infobar {
+      use-markup: true;
+      title: _(
+        "Only the passphrase referenced by the <i>/etc/crypttab</i> file will be changed. To change the on-disk passphrase, use <i>Change Passphrase…</i>"
+      );
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.SwitchRow use_defaults_switch {
+          title: _("Automatic Encryption Options");
+          notify::active => $on_property_changed_cb(template);
+        }
+      }
+
+      Adw.PreferencesGroup {
+        sensitive: bind use_defaults_switch.active inverted;
+
+        Adw.EntryRow name_entry {
+          title: _("Name");
+          apply => $on_property_changed_cb(template);
+        }
+
+        Adw.EntryRow passphrase_entry {
+          title: _("Passphrase");
+          apply => $on_property_changed_cb(template);
+        }
+      }
+
+      Adw.PreferencesGroup {
+        sensitive: bind use_defaults_switch.active inverted;
+
+        Adw.SwitchRow unlock_at_startup_switch {
+          title: _("Unlock at System Start");
+          notify::active => $on_property_changed_cb(template);
+        }
+
+        Adw.SwitchRow require_auth_switch {
+          title: _("Require Additional Authorization");
+          notify::active => $on_property_changed_cb(template);
+        }
+
+        Adw.EntryRow options_entry {
+          title: _("Additional Options");
+          apply => $on_property_changed_cb(template);
+        }
+      }
+    };
+  }
+}

@@ -1,0 +1,70 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduCreateDiskImageDialog: Adw.Dialog {
+  content-width: 440;
+  title: "Create Disk Image";
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button create_image_button {
+        label: _("C_reate");
+        use-underline: true;
+        clicked => $on_create_image_button_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.EntryRow name_entry {
+          title: _("_Name");
+          use-underline: true;
+        }
+
+        Adw.ActionRow location_entry {
+          title: _("Location");
+
+          [suffix]
+          Button {
+            tooltip-text: _("Select Location");
+            valign: center;
+            icon-name: "folder-open-symbolic";
+            clicked => $on_choose_folder_button_clicked_cb(template);
+
+            styles [
+              "flat",
+            ]
+          }
+
+          styles [
+            "property",
+          ]
+        }
+
+        Adw.ActionRow source_label {
+          title: _("Source");
+
+          styles [
+            "property",
+          ]
+        }
+      }
+    };
+  }
+}

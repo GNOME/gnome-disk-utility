@@ -1,0 +1,188 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduBlockRow: Adw.ExpanderRow {
+  [prefix]
+  Box button {
+    Label partition_depth_label {
+      visible: false;
+    }
+
+    Image partition_image {
+      halign: center;
+      valign: center;
+      margin-start: 6;
+      margin-end: 6;
+      width-request: 20;
+      height-request: 20;
+
+      styles [
+        "partition-row",
+      ]
+    }
+  }
+
+  [suffix]
+  Box {
+    spacing: 12;
+
+    Spinner job_indicator_spinner {}
+
+    Adw.Clamp {
+      halign: end;
+      maximum-size: 160;
+      tightening-threshold: 160;
+
+      child: LevelBar space_level_bar {
+        visible: false;
+        valign: center;
+        hexpand: true;
+        width-request: 80;
+        height-request: 18;
+      };
+    }
+
+    Button create_partition_button {
+      tooltip-text: _("Create Partition");
+      valign: center;
+      icon-name: "list-add-symbolic";
+      action-name: "row.create_partition";
+      visible: false;
+
+      styles [
+        "flat",
+      ]
+    }
+
+    MenuButton block_menu_button {
+      tooltip-text: _("Partition Options");
+      valign: center;
+      menu-model: block_menu;
+      icon-name: "view-more-symbolic";
+      visible: bind create_partition_button.visible inverted;
+
+      styles [
+        "flat",
+      ]
+    }
+  }
+
+  Adw.ActionRow size_row {
+    title: _("Size");
+    subtitle-selectable: true;
+
+    styles [
+      "property",
+    ]
+  }
+
+  Adw.ActionRow device_id_row {
+    title: _("Device ID");
+    subtitle-selectable: true;
+
+    styles [
+      "property",
+    ]
+  }
+
+  Adw.ActionRow uuid_row {
+    title: _("UUID");
+    subtitle-selectable: true;
+
+    styles [
+      "property",
+    ]
+  }
+
+  Adw.ActionRow partition_type_row {
+    title: _("Partition Type");
+    subtitle-selectable: true;
+
+    styles [
+      "property",
+    ]
+  }
+}
+
+menu block_menu {
+  section volume_actions_submenu {
+    item {
+      label: _("Resize…");
+      action: "row.resize";
+    }
+
+    submenu {
+      label: _("Edit");
+
+      item {
+        /* Translators: TRANSLATORS: this should be phrased as a noun. */
+        label: _("Partition…");
+        action: "row.edit_partition";
+      }
+
+      item {
+        label: _("Filesystem…");
+        action: "row.edit_filesystem";
+      }
+
+      item {
+        label: _("Change Passphrase…");
+        action: "row.change_passphrase";
+      }
+
+      item {
+        label: _("Mount Options…");
+        action: "row.configure_fstab";
+      }
+
+      item {
+        label: _("Encryption Options…");
+        action: "row.configure_crypttab";
+      }
+
+      item {
+        label: _("Take Ownership…");
+        action: "row.take_ownership";
+      }
+    }
+
+    item {
+      label: _("Format Partition…");
+      action: "row.format_partition";
+    }
+
+    item {
+      label: _("Delete…");
+      action: "row.delete";
+    }
+  }
+
+  section {
+    item {
+      label: _("Check Filesystem…");
+      action: "row.check_fs";
+    }
+
+    item {
+      label: _("Repair Filesystem…");
+      action: "row.repair_fs";
+    }
+
+    item {
+      label: _("Benchmark Partition…");
+      action: "row.benchmark_partition";
+    }
+  }
+
+  section {
+    item {
+      label: _("Create Partition Image…");
+      action: "row.create_partition_image";
+    }
+
+    item {
+      label: _("Restore Partition Image…");
+      action: "row.restore_partition_image";
+    }
+  }
+}

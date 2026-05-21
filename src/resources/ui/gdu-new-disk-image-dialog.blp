@@ -1,0 +1,100 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduNewDiskImageDialog: Adw.Dialog {
+  title: "Create Disk Image";
+  content-width: 440;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        action-name: "window.close";
+        use-underline: true;
+      }
+
+      [end]
+      Button create_image_button {
+        label: _("C_reate");
+        use-underline: true;
+        clicked => $on_create_image_button_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.EntryRow name_entry {
+          title: _("_Name");
+          use-underline: true;
+          changed => $new_disk_image_details_changed_cb(template);
+        }
+
+        Adw.ActionRow location_entry {
+          title: _("Location");
+
+          [suffix]
+          Button {
+            tooltip-text: _("Select Location");
+
+            styles [
+              "flat",
+            ]
+
+            valign: center;
+            icon-name: "folder-open-symbolic";
+            clicked => $on_choose_folder_button_clicked_cb(template);
+          }
+
+          styles [
+            "property",
+          ]
+        }
+
+        Adw.SpinRow size_entry {
+          title: _("_Size");
+          use-underline: true;
+          output => $set_size_entry_unit_cb();
+          changed => $new_disk_image_details_changed_cb(template);
+
+          adjustment: Adjustment {
+            upper: 10000000000000;
+            step-increment: 1;
+            page-increment: 10;
+          };
+        }
+      }
+
+      Adw.PreferencesGroup {
+        Adw.ComboRow size_unit_combo {
+          title: _("Units");
+          notify::selected => $on_size_unit_changed_cb(template);
+
+          model: StringList {
+            strings [
+              _("bytes"),
+              _("kB"),
+              _("MB"),
+              _("GB"),
+              _("TB"),
+              _("PB"),
+              _("KiB"),
+              _("MiB"),
+              _("GiB"),
+              _("TiB"),
+              _("PiB"),
+            ]
+          };
+        }
+      }
+    };
+  }
+}

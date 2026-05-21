@@ -55,7 +55,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate, glib::Properties)]
-    #[template(file = "../resources/ui/gdu-image-mounter-window.ui")]
+    #[template(resource = "/org/gnome/DiskUtility/ui/gdu-image-mounter-window.ui")]
     #[properties(wrapper_type = super::ImageMounterWindow)]
     pub struct ImageMounterWindow {
         #[template_child]

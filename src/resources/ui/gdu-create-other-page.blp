@@ -1,0 +1,18 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduCreateOtherPage: Adw.Bin {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup fs_types_group {
+      title: _("Type");
+    }
+
+    Adw.PreferencesGroup {
+      Adw.SwitchRow encrypt_switch {
+        title: _("Password Protect Volume");
+        subtitle: _("Encrypts the volume using LUKS");
+        notify::active => $on_fs_type_changed(template);
+      }
+    }
+  }
+}

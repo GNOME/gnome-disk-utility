@@ -113,6 +113,9 @@ systemd_user_unit_dir = systemd.get_variable(
 # configure rust
 cargo = find_program('cargo', required: true)
 
+# blueprint
+blueprint_cmd = find_program('blueprint-compiler', required : true, version : '>= 0.19.0')
+
 iv_prefix = get_option('prefix')
 iv_bindir = iv_prefix / get_option('bindir')
 iv_localedir = iv_prefix / get_option('localedir')

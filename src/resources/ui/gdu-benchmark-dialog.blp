@@ -1,0 +1,159 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduBenchmarkDialog: Adw.Dialog {
+  title: _("Benchmark");
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: bind close_button.visible inverted;
+
+      [start]
+      Button close_button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [start]
+      Button cancel_button {
+        label: _("_Cancel");
+        use-underline: true;
+        visible: bind close_button.visible inverted;
+        clicked => $on_cancel_clicked_cb() swapped;
+      }
+
+      [end]
+      Button {
+        label: _("_Start…");
+        use-underline: true;
+        clicked => $on_start_clicked_cb() swapped;
+        visible: bind close_button.visible bidirectional;
+
+        styles [
+          "suggested-action",
+        ]
+      }
+
+      title-widget: Adw.WindowTitle window_title {
+        title: _("Benchmark");
+      };
+    }
+
+    content: Stack pages_stack {
+      transition-type: crossfade;
+
+      StackPage {
+        name: "options";
+
+        child: Adw.PreferencesPage {
+          description: _(
+            "Benchmarking measures the transfer rate for different areas of the disk. It also measures seek times from one area to another."
+          );
+
+          Adw.PreferencesGroup {
+            Adw.SpinRow sample_row {
+              title: _("Transfer S_amples");
+              use-underline: true;
+
+              adjustment: Adjustment {
+                lower: 2;
+                upper: 1000;
+                value: 100;
+                step-increment: 1;
+                page-increment: 10;
+              };
+            }
+
+            Adw.SpinRow sample_size_row {
+              title: _("Transfer Sample S_ize");
+              use-underline: true;
+              output => $set_sample_size_unit_cb();
+
+              adjustment: Adjustment {
+                lower: 2;
+                upper: 1000;
+                value: 100;
+                step-increment: 1;
+                page-increment: 10;
+              };
+            }
+
+            Adw.SpinRow access_samples_row {
+              title: _("_Access Time Samples");
+              use-underline: true;
+
+              adjustment: Adjustment {
+                lower: 2;
+                upper: 10000;
+                value: 100;
+                step-increment: 1;
+                page-increment: 10;
+              };
+            }
+          }
+
+          Adw.PreferencesGroup {
+            Adw.SwitchRow write_bench_switch {
+              title: _("_Write Benchmark");
+              use-underline: true;
+              subtitle: _("Data should be backed up before using this feature");
+            }
+          }
+        };
+      }
+
+      StackPage {
+        name: "results";
+
+        child: Adw.PreferencesPage {
+          Adw.PreferencesGroup {
+            $GduBenchmarkGraph benchmark_graph {}
+          }
+
+          Adw.PreferencesGroup {
+            Adw.ActionRow sample_size_action_row {
+              title: _("Sample Size");
+              subtitle: "-";
+
+              styles [
+                "property",
+              ]
+            }
+
+            Adw.ActionRow read_rate_row {
+              title: _("Average Read Rate");
+              subtitle: "-";
+              use-markup: true;
+
+              styles [
+                "property",
+              ]
+            }
+
+            Adw.ActionRow write_rate_row {
+              title: _("Average Write Rate");
+              subtitle: "-";
+              use-markup: true;
+
+              styles [
+                "property",
+              ]
+            }
+
+            Adw.ActionRow access_time_row {
+              title: _("Average Access Time");
+              subtitle: "-";
+              use-markup: true;
+
+              styles [
+                "property",
+              ]
+            }
+          }
+        };
+      }
+    };
+  };
+}

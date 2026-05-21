@@ -1,0 +1,55 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduCreateConfirmPage: Adw.Bin {
+  width-request: 400;
+
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      Adw.Banner {
+        title: _("Warning: All the data on the volume will be lost");
+        revealed: true;
+      }
+
+      Label {
+        label: _("Confirm the details of the current volume before proceeding.");
+        margin-top: 6;
+      }
+    }
+
+    Adw.PreferencesGroup {
+      Adw.ActionRow device_row {
+        title: _("Device");
+
+        styles [
+          "property",
+        ]
+      }
+
+      Adw.ActionRow volume_row {
+        title: _("Volume");
+
+        styles [
+          "property",
+        ]
+      }
+
+      Adw.ActionRow usage_row {
+        title: _("Used");
+        visible: false;
+
+        styles [
+          "property",
+        ]
+      }
+
+      Adw.ActionRow location_row {
+        title: _("Location");
+
+        styles [
+          "property",
+        ]
+      }
+    }
+  }
+}

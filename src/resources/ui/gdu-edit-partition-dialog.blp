@@ -1,0 +1,178 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduEditPartitionDialog: Adw.Dialog {
+  title: _("Edit Partition");
+  content-width: 500;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button confirm_button {
+        label: _("_Done");
+        use-underline: true;
+        sensitive: false;
+        clicked => $on_confirm_button_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.ComboRow type_row {
+          title: _("_Partition Type");
+          use-underline: true;
+          subtitle: _("The partition type represented as a 32-bit GUID");
+        }
+
+        Adw.EntryRow name_entry {
+          title: _("_Name");
+          use-underline: true;
+          tooltip-markup: _(
+            "The partition name (up to 36 unicode characters). This is useful if you want to refer to the device via a symlink in the <b>/dev/disk/by-partlabel</b> directory"
+          );
+          notify::text => $on_property_changed_cb(template);
+
+          styles [
+            "property",
+          ]
+        }
+      }
+
+      Adw.PreferencesGroup {
+        title: _("Flags");
+
+        Adw.ActionRow bootable_row {
+          title: _("_Legacy BIOS Bootable");
+          use-underline: true;
+          activatable-widget: bootable_switch;
+
+          [suffix]
+          MenuButton {
+            tooltip-text: _("More Information");
+            icon-name: "help-about-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+            ]
+
+            popover: Popover {
+              Label bootable_info_label {
+                label: _(
+                  "This is equivalent to Master Boot Record “bootable” flag. It is normally only used for GPT partitions on MBR systems."
+                );
+                halign: center;
+                margin-bottom: 6;
+                margin-end: 6;
+                margin-start: 6;
+                margin-top: 6;
+                max-width-chars: 50;
+                valign: center;
+                wrap: true;
+              }
+            };
+          }
+
+          [suffix]
+          Switch bootable_switch {
+            valign: center;
+            notify::active => $on_property_changed_cb(template);
+          }
+        }
+
+        Adw.ActionRow system_partition_row {
+          title: _("_System Partition");
+          use-underline: true;
+          activatable-widget: system_partition_switch;
+
+          [suffix]
+          MenuButton {
+            tooltip-text: _("More Information");
+            icon-name: "help-about-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+            ]
+
+            popover: Popover {
+              Label {
+                label: _(
+                  "Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents."
+                );
+                halign: center;
+                margin-bottom: 6;
+                margin-end: 6;
+                margin-start: 6;
+                margin-top: 6;
+                max-width-chars: 50;
+                valign: center;
+                wrap: true;
+              }
+            };
+          }
+
+          [suffix]
+          Switch system_partition_switch {
+            valign: center;
+            notify::active => $on_property_changed_cb(template);
+          }
+        }
+
+        Adw.ActionRow firmware_hide_row {
+          title: _("_Hide from Firmware");
+          use-underline: true;
+          activatable-widget: firmware_hide_switch;
+
+          [suffix]
+          MenuButton {
+            tooltip-text: _("More Information");
+            icon-name: "help-about-symbolic";
+            valign: center;
+
+            styles [
+              "flat",
+            ]
+
+            popover: Popover {
+              Label {
+                label: _(
+                  "Indicates that EFI firmware should ignore the content of the partition and not try to read from it"
+                );
+                halign: center;
+                margin-bottom: 6;
+                margin-end: 6;
+                margin-start: 6;
+                margin-top: 6;
+                max-width-chars: 50;
+                valign: center;
+                wrap: true;
+              }
+            };
+          }
+
+          [suffix]
+          Switch firmware_hide_switch {
+            valign: center;
+            notify::active => $on_property_changed_cb(template);
+          }
+        }
+      }
+    };
+  }
+}

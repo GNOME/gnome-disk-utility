@@ -1,0 +1,120 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduFormatDiskDialog: Adw.Dialog {
+  title: _("Format Disk");
+  content-width: 400;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        action-name: "window.close";
+        use-underline: true;
+      }
+
+      title-widget: Adw.WindowTitle window_title {
+        title: _("Format Disk");
+      };
+
+      [end]
+      Button {
+        label: _("_Format");
+        use-underline: true;
+        clicked => $on_format_clicked_cb(template);
+
+        styles [
+          "destructive-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.ActionRow {
+          title: _("_Overwrite Existing Data");
+          use-underline: true;
+          activatable-widget: erase_switch;
+
+          [suffix]
+          MenuButton {
+            tooltip-text: _("More Information");
+            icon-name: "help-about-symbolic";
+            valign: center;
+
+            popover: Popover {
+              child: Label {
+                halign: center;
+                margin-start: 6;
+                margin-end: 6;
+                margin-top: 6;
+                margin-bottom: 6;
+                label: _("Ensures that existing data cannot be recovered. This option slows down formatting.");
+                wrap: true;
+                max-width-chars: 50;
+                valign: center;
+              };
+            };
+
+            styles [
+              "flat",
+            ]
+          }
+
+          [suffix]
+          Switch erase_switch {
+            valign: center;
+          }
+        }
+      }
+
+      Adw.PreferencesGroup {
+        title: _("Partitioning");
+
+        Adw.ActionRow partitioning_gpt_row {
+          title: _("_GUID Partition Table (GPT)");
+          subtitle: _("Compatible with UEFI and disks over 2 TB");
+          activatable-widget: gpt_checkbox;
+          use-underline: true;
+
+          [prefix]
+          CheckButton gpt_checkbox {
+            action-name: "format.update_part_type";
+            action-target: "'gpt'";
+          }
+        }
+
+        Adw.ActionRow partitioning_mbr_row {
+          title: _("_Master Boot Record (MBR)");
+          subtitle: _("Legacy option with wide hardware compatibility");
+          activatable-widget: mbr_checkbox;
+          use-underline: true;
+
+          [prefix]
+          CheckButton mbr_checkbox {
+            action-name: "format.update_part_type";
+            action-target: "'dos'";
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("_No Partitioning");
+          subtitle: _("Disk will be empty");
+          activatable-widget: none_checkbox;
+          use-underline: true;
+
+          [prefix]
+          CheckButton none_checkbox {
+            action-name: "format.update_part_type";
+            action-target: "'empty'";
+          }
+        }
+      }
+    };
+  }
+}

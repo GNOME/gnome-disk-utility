@@ -1,0 +1,179 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduDriveHeader: Adw.Bin {
+  child: Adw.MultiLayoutView layout_view {
+    Adw.Layout {
+      name: "horizontal";
+
+      content: Grid {
+        column-spacing: 12;
+
+        Adw.LayoutSlot {
+          id: "icon";
+
+          layout {
+            column: "0";
+            row: "0";
+          }
+        }
+
+        Adw.LayoutSlot {
+          id: "labels";
+
+          layout {
+            column: "1";
+            row: "0";
+          }
+        }
+
+        Adw.LayoutSlot {
+          id: "buttons";
+
+          layout {
+            column: "2";
+            row: "0";
+          }
+        }
+      };
+    }
+
+    Adw.Layout {
+      name: "vertical";
+
+      content: Box {
+        orientation: vertical;
+        hexpand: true;
+        spacing: 12;
+
+        Adw.LayoutSlot {
+          id: "icon";
+        }
+
+        Adw.LayoutSlot {
+          id: "labels";
+        }
+
+        Adw.LayoutSlot {
+          id: "buttons";
+          halign: center;
+        }
+      };
+    }
+
+    [icon]
+    Image drive_image {
+      pixel-size: 96;
+
+      styles [
+        "icon-dropshadow",
+      ]
+    }
+
+    [labels]
+    Box {
+      orientation: vertical;
+      hexpand: true;
+      valign: center;
+
+      Label {
+        halign: bind $get_alignment_from_layout_name(layout_view.layout-name);
+        wrap: true;
+        label: bind template.drive-name;
+
+        styles [
+          "title-1",
+        ]
+      }
+
+      Label {
+        halign: bind $get_alignment_from_layout_name(layout_view.layout-name);
+        wrap: true;
+        label: bind template.drive-path;
+      }
+    }
+
+    [buttons]
+    Box {
+      valign: center;
+      spacing: 12;
+
+      Button {
+        tooltip-text: _("Drive Information");
+        icon-name: "help-about-symbolic";
+        action-name: "view.show-drive-dialog";
+      }
+
+      MenuButton {
+        tooltip-text: _("Drive Options");
+        menu-model: drive_menu;
+        icon-name: "view-more-symbolic";
+      }
+    }
+  };
+}
+
+menu drive_menu {
+  section {
+    item {
+      label: _("Format Disk…");
+      action: "view.format";
+    }
+
+    item {
+      label: _("Create Disk Image…");
+      action: "view.create-image";
+    }
+
+    item {
+      label: _("Restore Disk Image…");
+      action: "view.restore-image";
+    }
+  }
+
+  section {
+    item {
+      label: _("Benchmark Disk…");
+      action: "view.benchmark";
+    }
+
+    item {
+      label: _("SMART Data & Self-Tests…");
+      action: "view.smart";
+    }
+
+    item {
+      label: _("Drive Settings…");
+      action: "view.settings";
+    }
+  }
+
+  section {
+    item {
+      label: _("Standby");
+      action: "view.standby";
+    }
+
+    item {
+      label: _("Wake Up");
+      action: "view.wakeup";
+    }
+
+    item {
+      label: _("Detach");
+      action: "view.detach";
+      hidden-when: "action-disabled";
+    }
+
+    item {
+      label: _("Eject");
+      action: "view.eject";
+      hidden-when: "action-disabled";
+    }
+
+    item {
+      label: _("Power Off");
+      action: "view.poweroff";
+    }
+  }
+}

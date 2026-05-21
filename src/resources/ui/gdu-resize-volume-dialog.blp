@@ -1,0 +1,127 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduResizeVolumeDialog: Adw.Dialog {
+  title: _("Resize Volume");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button {
+        label: _("_Resize");
+        use-underline: true;
+        clicked => $on_resize_clicked_cb(template);
+
+        styles [
+          "destructive-action",
+        ]
+      }
+    }
+
+    content: Overlay {
+      child: Adw.PreferencesPage {
+        sensitive: bind spinner.visible inverted;
+        description: _(
+          "Resizing a filesystem can result in data loss. It is recommended to backup any data before continuing."
+        );
+
+        Adw.PreferencesGroup {
+          Scale size_scale {
+            adjustment: Adjustment size_adjustment {
+              upper: 100;
+              step-increment: 1;
+              page-increment: 10;
+            };
+
+            hexpand: true;
+          }
+        }
+
+        Adw.PreferencesGroup {
+          Adw.ActionRow max_size_row {
+            title: _("Available Space");
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow current_size_row {
+            title: _("Current Size");
+
+            styles [
+              "property",
+            ]
+          }
+
+          Adw.ActionRow min_size_row {
+            title: _("Minimum Size");
+
+            styles [
+              "property",
+            ]
+          }
+        }
+
+        Adw.PreferencesGroup {
+          Adw.SpinRow {
+            title: _("_New Size");
+            use-underline: true;
+            adjustment: size_adjustment;
+          }
+
+          Adw.SpinRow {
+            title: _("_Free After Resize");
+            use-underline: true;
+
+            adjustment: Adjustment free_size_adjustment {
+              upper: 100;
+              step-increment: 1;
+              page-increment: 10;
+            };
+          }
+        }
+
+        Adw.PreferencesGroup {
+          Adw.ComboRow size_unit_combo {
+            title: _("_Units");
+            use-underline: true;
+            notify::selected => $on_size_unit_changed_cb(template);
+
+            model: StringList {
+              strings [
+                _("bytes"),
+                _("kB"),
+                _("MB"),
+                _("GB"),
+                _("TB"),
+                _("PB"),
+                _("KiB"),
+                _("MiB"),
+                _("GiB"),
+                _("TiB"),
+                _("PiB"),
+              ]
+            };
+          }
+        }
+      };
+
+      [overlay]
+      Adw.Spinner spinner {
+        visible: false;
+      }
+    };
+  }
+}

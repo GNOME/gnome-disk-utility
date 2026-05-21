@@ -1,0 +1,78 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduCreatePartitionPage: Adw.Bin {
+  Box {
+    orientation: vertical;
+
+    Adw.Banner top_banner {}
+
+    Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Scale {
+          adjustment: size_adjustment;
+        }
+      }
+
+      Adw.PreferencesGroup {
+        Adw.SpinRow size_row {
+          title: _("Partition Size");
+          output => $set_size_entry_unit_cb();
+
+          adjustment: Adjustment size_adjustment {
+            upper: 100;
+            step-increment: 1;
+            page-increment: 10;
+            value-changed => $on_size_changed_cb() swapped;
+          };
+        }
+
+        Adw.SpinRow free_space_row {
+          title: _("Free Space");
+          subtitle: _("Space following new partition");
+          output => $set_size_entry_unit_cb();
+
+          adjustment: Adjustment free_following_adjustment {
+            step-increment: 1;
+            page-increment: 10;
+            upper: bind size_adjustment.upper;
+          };
+        }
+      }
+
+      Adw.PreferencesGroup {
+        visible: bind dos_extended_row.visible;
+
+        Adw.SwitchRow dos_extended_row {
+          title: _("Extended Partition");
+          subtitle: _("Extended Partitions can contain Logical Partitions");
+          visible: false;
+          notify::active => $on_part_type_changed(template);
+        }
+      }
+
+      Adw.PreferencesGroup {
+        Adw.ComboRow size_unit_combo {
+          title: _("Units");
+          notify::selected => $on_size_unit_changed_cb(template);
+
+          model: StringList {
+            strings [
+              _("bytes"),
+              _("kB"),
+              _("MB"),
+              _("GB"),
+              _("TB"),
+              _("PB"),
+              _("KiB"),
+              _("MiB"),
+              _("GiB"),
+              _("TiB"),
+              _("PiB"),
+            ]
+          };
+        }
+      }
+    }
+  }
+}

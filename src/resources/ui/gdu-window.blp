@@ -1,0 +1,122 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduWindow: Adw.ApplicationWindow {
+  Adw.Breakpoint {
+    condition ("max-width: 682sp")
+
+    setters {
+      split_view.collapsed: true;
+      drive_view.mobile: "true";
+    }
+  }
+
+  Adw.OverlaySplitView split_view {
+    sidebar-width-fraction: 0.3;
+
+    sidebar: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        title-widget: Adw.WindowTitle {
+          title: _("Disks");
+        };
+
+        [end]
+        MenuButton sidebar_menu {
+          primary: true;
+          icon-name: "open-menu-symbolic";
+          menu-model: main_menu;
+          tooltip-text: _("Main Menu");
+        }
+      }
+
+      content: ScrolledWindow {
+        hscrollbar-policy: never;
+
+        ListBox drives_listbox {
+          vexpand: true;
+          selection-mode: single;
+          selected-rows-changed => $drive_list_row_selection_changed_cb() swapped;
+
+          styles [
+            "navigation-sidebar",
+          ]
+        }
+      };
+    };
+
+    content: Adw.ToolbarView {
+      [top]
+      Adw.HeaderBar {
+        show-title: false;
+
+        styles [
+          "flat",
+        ]
+
+        [start]
+        ToggleButton show_sidebar_button {
+          visible: bind split_view.collapsed bidirectional;
+          active: bind split_view.show-sidebar bidirectional;
+          icon-name: "sidebar-show-symbolic";
+          tooltip-text: _("Show Sidebar");
+        }
+      }
+
+      content: Stack main_stack {
+        StackPage {
+          name: "empty_page";
+
+          child: Adw.StatusPage {
+            title: _("No Device Selected");
+            icon-name: "drive-multidisk-symbolic";
+          };
+        }
+
+        StackPage {
+          name: "drive_page";
+
+          child: $GduDriveView drive_view {};
+        }
+      };
+    };
+  }
+}
+
+menu main_menu {
+  section {
+    item {
+      label: _("_New Disk Image…");
+      action: "app.new_disk_image";
+    }
+
+    item {
+      label: _("_Attach Disk Image…");
+      action: "app.attach_disk_image";
+    }
+  }
+
+  section {
+    item {
+      action: "app.shortcuts";
+      label: _("_Keyboard Shortcuts");
+    }
+
+    item {
+      action: "app.help";
+      label: _("_Help");
+    }
+
+    item {
+      label: _("_About Disks");
+      action: "app.about";
+    }
+  }
+}
+
+CheckButton readonly_check_button {
+  label: _("Set up _read-only loop device");
+  tooltip-markup: "If checked, the loop device will be read-only. This is useful if you don’t want the underlying file to be modified";
+  use-underline: true;
+  active: true;
+}

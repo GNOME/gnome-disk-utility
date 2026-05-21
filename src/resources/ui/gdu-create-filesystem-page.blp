@@ -1,0 +1,119 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduCreateFilesystemPage: Adw.Bin {
+  notify::fs-type => $on_fs_type_changed(template);
+
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      Adw.EntryRow name_entry {
+        title: _("_Volume Name");
+        use-underline: true;
+        apply => $on_fs_name_changed(template);
+      }
+    }
+
+    Adw.PreferencesGroup {
+      Adw.ActionRow {
+        title: _("_Overwrite Existing Data");
+        use-underline: true;
+        activatable-widget: erase_switch;
+
+        [suffix]
+        MenuButton {
+          tooltip-text: _("More Information");
+          icon-name: "help-about-symbolic";
+          valign: center;
+
+          popover: Popover {
+            child: Label {
+              halign: center;
+              margin-start: 6;
+              margin-end: 6;
+              margin-top: 6;
+              margin-bottom: 6;
+              label: _("Ensures that existing data cannot be recovered. This option slows down formatting.");
+              wrap: true;
+              max-width-chars: 50;
+              valign: center;
+            };
+          };
+
+          styles [
+            "flat",
+          ]
+        }
+
+        [suffix]
+        Switch erase_switch {
+          valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Type");
+
+      Adw.ActionRow {
+        title: "E_xt4";
+        subtitle: _("For use only with Linux systems");
+        use-underline: true;
+        activatable-widget: ext4_checkbutton;
+
+        [prefix]
+        CheckButton ext4_checkbutton {
+          action-name: "update_fs_type";
+          action-target: "'ext4'";
+        }
+      }
+
+      Adw.ActionRow {
+        title: "N_TFS";
+        subtitle: _("For use with Windows");
+        use-underline: true;
+        activatable-widget: ntfs_checkbutton;
+
+        [prefix]
+        CheckButton ntfs_checkbutton {
+          action-name: "update_fs_type";
+          action-target: "'ntfs'";
+        }
+      }
+
+      Adw.ActionRow {
+        title: "_FAT";
+        subtitle: _("For use with all systems and devices");
+        use-underline: true;
+        activatable-widget: fat_checkbutton;
+
+        [prefix]
+        CheckButton fat_checkbutton {
+          action-name: "update_fs_type";
+          action-target: "'vfat'";
+        }
+      }
+
+      Adw.ActionRow {
+        title: "Ot_her";
+        use-underline: true;
+        activatable-widget: other_checkbutton;
+
+        [prefix]
+        CheckButton other_checkbutton {
+          action-name: "update_fs_type";
+          action-target: "'other'";
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      Adw.SwitchRow encrypt_switch {
+        title: _("_Password Protect Volume");
+        subtitle: _("Encrypts the volume using LUKS");
+        use-underline: true;
+        notify::active => $on_fs_type_changed(template);
+        sensitive: bind ext4_checkbutton.active;
+      }
+    }
+  }
+}

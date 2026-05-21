@@ -1,0 +1,85 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduRestoreDiskImageDialog: Adw.Dialog {
+  content-width: 440;
+  title: "Restore Disk Image";
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button start_restore_button {
+        label: _("_Restore…");
+        use-underline: true;
+        sensitive: false;
+        clicked => $on_start_restore_button_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Box {
+      orientation: vertical;
+
+      Adw.Banner error_banner {}
+
+      Adw.Banner warning_banner {}
+
+      Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+          Adw.ActionRow image_row {
+            title: _("Image");
+            subtitle: _("None Selected");
+
+            styles [
+              "property",
+            ]
+
+            [suffix]
+            Button file_chooser_button {
+              tooltip-text: _("Select Image");
+              icon-name: "folder-open-symbolic";
+              valign: center;
+              clicked => $on_file_chooser_button_clicked_cb(template);
+
+              styles [
+                "flat",
+              ]
+            }
+          }
+
+          Adw.ActionRow size_row {
+            title: _("Image Size");
+            subtitle: "—";
+
+            styles [
+              "property",
+            ]
+          }
+
+          $GduComboRow destination_row {
+            title: _("Destination");
+            notify::selected => $destination_row_selected_cb() swapped;
+
+            styles [
+              "property",
+            ]
+          }
+        }
+      }
+    };
+  }
+}

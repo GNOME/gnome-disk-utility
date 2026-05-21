@@ -106,83 +106,32 @@ template $GduBlockRow: Adw.ExpanderRow {
 
 menu block_menu {
   section volume_actions_submenu {
-    item {
-      label: _("Resize…");
-      action: "row.resize";
-    }
+    item (_("Resize…"), "row.resize")
 
     submenu {
       label: _("Edit");
 
-      item {
-        /* Translators: TRANSLATORS: this should be phrased as a noun. */
-        label: _("Partition…");
-        action: "row.edit_partition";
-      }
-
-      item {
-        label: _("Filesystem…");
-        action: "row.edit_filesystem";
-      }
-
-      item {
-        label: _("Change Passphrase…");
-        action: "row.change_passphrase";
-      }
-
-      item {
-        label: _("Mount Options…");
-        action: "row.configure_fstab";
-      }
-
-      item {
-        label: _("Encryption Options…");
-        action: "row.configure_crypttab";
-      }
-
-      item {
-        label: _("Take Ownership…");
-        action: "row.take_ownership";
-      }
+      /* Translators: TRANSLATORS: this should be phrased as a noun. */
+      item (_("Partition…"), "row.edit_partition")
+      item (_("Filesystem…"), "row.edit_filesystem")
+      item (_("Change Passphrase…"), "row.change_passphrase")
+      item (_("Mount Options…"), "row.configure_fstab")
+      item (_("Encryption Options…"), "row.configure_crypttab")
+      item (_("Take Ownership…"), "row.take_ownership")
     }
 
-    item {
-      label: _("Format Partition…");
-      action: "row.format_partition";
-    }
-
-    item {
-      label: _("Delete…");
-      action: "row.delete";
-    }
+    item (_("Format Partition…"), "row.format_partition")
+    item (_("Delete…"), "row.delete")
   }
 
   section {
-    item {
-      label: _("Check Filesystem…");
-      action: "row.check_fs";
-    }
-
-    item {
-      label: _("Repair Filesystem…");
-      action: "row.repair_fs";
-    }
-
-    item {
-      label: _("Benchmark Partition…");
-      action: "row.benchmark_partition";
-    }
+    item (_("Check Filesystem…"), "row.check_fs")
+    item (_("Repair Filesystem…"), "row.repair_fs")
+    item (_("Benchmark Partition…"), "row.benchmark_partition")
   }
 
   section {
-    item {
-      label: _("Create Partition Image…");
-      action: "row.create_partition_image";
-    }
-
-    item {
-      label: _("Restore Partition Image…");
-      action: "row.restore_partition_image";
-    }
+    item (_("Create Partition Image…"), "row.create_partition_image")
+    item (_("Restore Partition Image…"), "row.restore_partition_image")
   }
 }

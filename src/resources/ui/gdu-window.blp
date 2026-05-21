@@ -85,32 +85,14 @@ template $GduWindow: Adw.ApplicationWindow {
 
 menu main_menu {
   section {
-    item {
-      label: _("_New Disk Image…");
-      action: "app.new_disk_image";
-    }
-
-    item {
-      label: _("_Attach Disk Image…");
-      action: "app.attach_disk_image";
-    }
+    item (_("_New Disk Image…"), "app.new_disk_image")
+    item (_("_Attach Disk Image…"), "app.attach_disk_image")
   }
 
   section {
-    item {
-      action: "app.shortcuts";
-      label: _("_Keyboard Shortcuts");
-    }
-
-    item {
-      action: "app.help";
-      label: _("_Help");
-    }
-
-    item {
-      label: _("_About Disks");
-      action: "app.about";
-    }
+    item (_("_Keyboard Shortcuts"), "app.shortcuts")
+    item (_("_Help"), "app.help")
+    item (_("_About Disks"), "app.about")
   }
 }
 

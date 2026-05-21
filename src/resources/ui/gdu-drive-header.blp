@@ -115,49 +115,20 @@ template $GduDriveHeader: Adw.Bin {
 
 menu drive_menu {
   section {
-    item {
-      label: _("Format Disk…");
-      action: "view.format";
-    }
-
-    item {
-      label: _("Create Disk Image…");
-      action: "view.create-image";
-    }
-
-    item {
-      label: _("Restore Disk Image…");
-      action: "view.restore-image";
-    }
+    item (_("Format Disk…"), "view.format")
+    item (_("Create Disk Image…"), "view.create-image")
+    item (_("Restore Disk Image…"), "view.restore-image")
   }
 
   section {
-    item {
-      label: _("Benchmark Disk…");
-      action: "view.benchmark";
-    }
-
-    item {
-      label: _("SMART Data & Self-Tests…");
-      action: "view.smart";
-    }
-
-    item {
-      label: _("Drive Settings…");
-      action: "view.settings";
-    }
+    item (_("Benchmark Disk…"), "view.benchmark")
+    item (_("SMART Data & Self-Tests…"), "view.smart")
+    item (_("Drive Settings…"), "view.settings")
   }
 
   section {
-    item {
-      label: _("Standby");
-      action: "view.standby";
-    }
-
-    item {
-      label: _("Wake Up");
-      action: "view.wakeup";
-    }
+    item (_("Standby"), "view.standby")
+    item (_("Wake Up"), "view.wakeup")
 
     item {
       label: _("Detach");
@@ -171,9 +142,6 @@ menu drive_menu {
       hidden-when: "action-disabled";
     }
 
-    item {
-      label: _("Power Off");
-      action: "view.poweroff";
-    }
+    item (_("Power Off"), "view.poweroff")
   }
 }

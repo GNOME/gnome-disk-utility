@@ -487,6 +487,7 @@ gdu_create_format_show (UDisksClient  *client,
                         guint64        add_partition_maxsize)
 {
   GduFormatVolumeDialog *self;
+  UDisksObject *block_object;
 
   g_return_if_fail (UDISKS_IS_CLIENT (client));
   g_return_if_fail (GTK_IS_WINDOW (parent_window));
@@ -509,7 +510,7 @@ gdu_create_format_show (UDisksClient  *client,
   self->udisks_drive = udisks_client_get_drive_for_block (client, self->udisks_block);
 
   // get dbus inteface for the block
-  UDisksObject* block_object = (gpointer) g_dbus_interface_get_object ((gpointer) self->udisks_block);
+  block_object = (gpointer) g_dbus_interface_get_object ((gpointer) self->udisks_block);
   self->udisks_table = udisks_object_get_partition_table (block_object);
   g_assert (self->udisks_block != NULL);
 

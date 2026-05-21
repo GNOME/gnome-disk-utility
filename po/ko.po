@@ -23,9 +23,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2025-08-16 12:13+0000\n"
-"PO-Revision-Date: 2026-02-22 21:49+0900\n"
-"Last-Translator: Seong-ho Cho <shcho@gnome.org>\n"
+"POT-Creation-Date: 2026-04-04 04:04+0000\n"
+"PO-Revision-Date: 2026-04-25 14:04+0900\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: GNOME Korea <gnome-kr@googlegroups.com>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
@@ -1091,7 +1091,7 @@ msgstr "확장 분할 영역"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:577
+#: src/disks/gdu-block.c:587
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s 남음(%.1f%% 찼음)"
@@ -1374,7 +1374,7 @@ msgstr "디스크 이미지를 저장할 위치를 선택하십시오."
 #: src/disks/gdu-create-disk-image-dialog.c:965
 #, c-format
 msgid "Disk Image of %s (%s).img"
-msgstr "%s (%s).img의 디스크 이미지"
+msgstr "%s (%s)의 디스크 이미지.img"
 
 #: src/disks/gdu-create-filesystem-page.c:234 src/disks/gdu-create-filesystem-page.c:244 src/disks/gdu-create-other-page.c:67
 #, c-format
@@ -3017,35 +3017,35 @@ msgid_plural "%d milli-seconds"
 msgstr[0] "%d밀리초"
 
 #. Translators: Used for duration greater than one year. First %s is number of years, second %s is months, third %s is days
-#: src/libgdu/gduutils.c:477
+#: src/libgdu/gduutils.c:477 src/libgdu/gduutils.rs:339
 #, c-format
 msgctxt "duration-year-to-inf"
 msgid "%s, %s and %s"
 msgstr "%s %s %s"
 
 #. Translators: Used for durations less than one year but greater than one month. First %s is number of months, second %s is days
-#: src/libgdu/gduutils.c:482
+#: src/libgdu/gduutils.c:482 src/libgdu/gduutils.rs:346
 #, c-format
 msgctxt "duration-months-to-year"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.c:487
+#: src/libgdu/gduutils.c:487 src/libgdu/gduutils.rs:351
 #, c-format
 msgctxt "duration-day-to-month"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one day but greater than one hour. First %s is number of hours, second %s is minutes
-#: src/libgdu/gduutils.c:492
+#: src/libgdu/gduutils.c:492 src/libgdu/gduutils.rs:356
 #, c-format
 msgctxt "duration-hour-to-day"
 msgid "%s and %s"
 msgstr "%s %s"
 
 #. Translators: Used for durations less than one hour but greater than one minute. First %s is number of minutes, second %s is seconds
-#: src/libgdu/gduutils.c:503
+#: src/libgdu/gduutils.c:503 src/libgdu/gduutils.rs:366
 #, c-format
 msgctxt "duration-minute-to-hour"
 msgid "%s and %s"
@@ -3057,14 +3057,14 @@ msgid "Less than a minute"
 msgstr "1분 미만"
 
 #. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.c:517
+#: src/libgdu/gduutils.c:517 src/libgdu/gduutils.rs:378
 #, c-format
 msgctxt "duration-second-to-minute"
 msgid "%s"
 msgstr "%s"
 
 #. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.c:523
+#: src/libgdu/gduutils.c:523 src/libgdu/gduutils.rs:382
 #, c-format
 msgctxt "duration-zero-to-second"
 msgid "%s"
@@ -3085,37 +3085,6 @@ msgstr "장치를 잠그는 중 오류"
 #: src/libgdu/gduutils.c:1369 src/libgdu/gduutils.rs:897
 msgid "Error disabling autoclear for loop device"
 msgstr "루프 장치 자동소거 비활성화 중 오류"
-
-#: src/libgdu/gduutils.rs:338
-msgid "duration-year-to-inf"
-msgstr "%s년 %s개월 %s일"
-
-#: src/libgdu/gduutils.rs:345
-msgid "duration-months-to-year"
-msgstr "%s개월 %s일"
-
-#. Translators: Used for durations less than one month but greater than one day. First %s is number of days, second %s is hours
-#: src/libgdu/gduutils.rs:351
-msgid "duration-day-to-month"
-msgstr "%s일 %s시간"
-
-#: src/libgdu/gduutils.rs:355
-msgid "duration-hour-to-day"
-msgstr "%s시간 %s분"
-
-#: src/libgdu/gduutils.rs:365
-msgid "duration-minute-to-hour"
-msgstr "%s분"
-
-#. Translators: Used for durations less than one minute byte greater than one second. First %s is number of seconds
-#: src/libgdu/gduutils.rs:378
-msgid "duration-second-to-minute"
-msgstr "%s초"
-
-#. Translators: Used for durations less than one second. First %s is number of milli-seconds
-#: src/libgdu/gduutils.rs:382
-msgid "duration-zero-to-second"
-msgstr "%s밀리초"
 
 #: src/libgdu/gduutils.rs:883
 msgid "Failed to find filesystem"
@@ -3138,3 +3107,24 @@ msgstr "하드 디스크가 곧 실패할 것 같습니다."
 msgctxt "notify-smart"
 msgid "Examine"
 msgstr "검사"
+
+#~ msgid "duration-year-to-inf"
+#~ msgstr "%s년 %s개월 %s일"
+
+#~ msgid "duration-months-to-year"
+#~ msgstr "%s개월 %s일"
+
+#~ msgid "duration-day-to-month"
+#~ msgstr "%s일 %s시간"
+
+#~ msgid "duration-hour-to-day"
+#~ msgstr "%s시간 %s분"
+
+#~ msgid "duration-minute-to-hour"
+#~ msgstr "%s분"
+
+#~ msgid "duration-second-to-minute"
+#~ msgstr "%s초"
+
+#~ msgid "duration-zero-to-second"
+#~ msgstr "%s밀리초"

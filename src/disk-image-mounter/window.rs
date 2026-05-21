@@ -5,8 +5,8 @@ use std::os::fd::AsFd;
 use std::path::PathBuf;
 
 use adw::prelude::AdwDialogExt;
-use anyhow::anyhow;
 use anyhow::Context;
+use anyhow::anyhow;
 use gettextrs::gettext;
 use gtk::prelude::FileExt;
 use gtk::prelude::GtkWindowExt;
@@ -55,7 +55,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate, glib::Properties)]
-    #[template(file = "window.ui")]
+    #[template(file = "../resources/ui/gdu-image-mounter-window.ui")]
     #[properties(wrapper_type = super::ImageMounterWindow)]
     pub struct ImageMounterWindow {
         #[template_child]

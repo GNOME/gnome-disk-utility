@@ -125,38 +125,7 @@ sources = files(
   'main.c',
 )
 
-resource_data = files(
-  'ui/gdu-ata-smart-dialog.ui',
-  'ui/gdu-benchmark-dialog.ui',
-  'ui/gdu-change-passphrase-dialog.ui',
-  'ui/gdu-create-confirm-page.ui',
-  'ui/gdu-create-disk-image-dialog.ui',
-  'ui/gdu-create-filesystem-page.ui',
-  'ui/gdu-format-volume-dialog.ui',
-  'ui/gdu-create-other-page.ui',
-  'ui/gdu-create-partition-page.ui',
-  'ui/gdu-create-password-page.ui',
-  'ui/gdu-disk-settings-dialog.ui',
-  'ui/gdu-edit-filesystem-dialog.ui',
-  'ui/gdu-encryption-options-dialog.ui',
-  'ui/gdu-mount-options-dialog.ui',
-  'ui/gdu-edit-partition-dialog.ui',
-  'ui/erase-multiple-disks-dialog.ui',
-  'ui/gdu-format-disk-dialog.ui',
-  'ui/gdu-unlock-dialog.ui',
-  'ui/style.css',
-  'ui/gdu-new-disk-image-dialog.ui',
-  'ui/gdu-resize-volume-dialog.ui',
-  'ui/gdu-restore-disk-image-dialog.ui',
-  'ui/gdu-take-ownership-dialog.ui',
-)
-
-sources += gnome.compile_resources(
-  'resources',
-  'gnome-disks.gresource.xml',
-  dependencies: resource_data,
-  export: true,
-)
+sources += gdu_resources
 
 enum = 'gduenumtypes'
 

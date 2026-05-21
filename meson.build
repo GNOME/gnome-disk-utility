@@ -163,6 +163,7 @@ configure_file(
 )
 
 subdir('src/libgdu')
+subdir('src/resources')
 subdir('src/disks')
 subdir('src/disk-image-mounter')
 

@@ -49,7 +49,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, gtk::CompositeTemplate)]
-    #[template(file = "ui/gdu-restore-disk-image-dialog.ui")]
+    #[template(file = "../resources/ui/gdu-restore-disk-image-dialog.ui")]
     pub struct GduRestoreDiskImageDialog {
         pub(super) restore_file: RefCell<Option<gio::File>>,
         pub(super) block_size: Cell<u64>,

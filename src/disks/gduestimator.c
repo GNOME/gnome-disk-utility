@@ -10,8 +10,6 @@
 #include <glib/gi18n.h>
 
 #include <math.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/x11/gdkx.h>
 #include <stdlib.h>
 
 #include "gduestimator.h"

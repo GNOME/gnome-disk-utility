@@ -119,7 +119,7 @@ update_drive_view (GduDriveView *self)
                            NULL, NULL);
 
   features = gdu_item_get_features (GDU_ITEM (self->drive));
-  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
+  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), (_action), (features & (_feature)) != 0)
   ENABLE ("view.format", GDU_FEATURE_FORMAT);
   ENABLE ("view.create-image", GDU_FEATURE_CREATE_IMAGE);
   ENABLE ("view.restore-image", GDU_FEATURE_RESTORE_IMAGE);

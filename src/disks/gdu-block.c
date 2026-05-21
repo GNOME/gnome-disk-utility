@@ -59,9 +59,9 @@ struct _GduBlock
 G_DEFINE_TYPE (GduBlock, gdu_block, GDU_TYPE_ITEM)
 
 #define return_if_progress(self, task) do {                             \
-    if (self->in_progress)                                              \
+    if ((self)->in_progress)                                            \
       {                                                                 \
-        g_task_return_new_error (task,                                  \
+        g_task_return_new_error ((task),                                \
                                  G_IO_ERROR,                            \
                                  G_IO_ERROR_PENDING,                    \
                                  "A Process is already in progress");   \

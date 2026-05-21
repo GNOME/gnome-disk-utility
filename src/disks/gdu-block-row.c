@@ -147,7 +147,7 @@ gdu_block_row_update_features (GduBlockRow *self)
   else if (features & GDU_FEATURE_CAN_UNLOCK)
     g_menu_prepend (G_MENU (self->volume_actions_submenu), _("Unlock"), "row.unlock");
 
-  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), _action, (features & _feature) != 0)
+  #define ENABLE(_action, _feature) gtk_widget_action_set_enabled (GTK_WIDGET (self), (_action), (features & (_feature)) != 0)
   ENABLE ("row.create_partition", GDU_FEATURE_CREATE_PARTITION);
   ENABLE ("row.mount", GDU_FEATURE_CAN_MOUNT);
   ENABLE ("row.unmount", GDU_FEATURE_CAN_UNMOUNT);

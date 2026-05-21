@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2026-05-20 06:52+0000\n"
-"PO-Revision-Date: 2026-05-20 14:41+0100\n"
+"POT-Creation-Date: 2026-05-21 08:52+0000\n"
+"PO-Revision-Date: 2026-05-21 09:28+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
 "Language: pt\n"
@@ -32,7 +32,7 @@ msgstr "Montador de imagens de disco"
 
 #: data/gnome-disk-image-mounter.desktop.in:3
 msgid "Mount/Write Disk Images"
-msgstr "Montar/Escrever imagens de disco"
+msgstr "Montar/Gravar imagens de disco"
 
 #: data/org.gnome.Disks.gschema.xml:6
 msgid "Default location for the Create/Restore disk image dialogs"
@@ -505,8 +505,8 @@ msgid ""
 "The total number of uncorrectable errors when reading/writing a sector. A rise in the value of this attribute indicates defects of the disk "
 "surface and/or problems in the mechanical subsystem"
 msgstr ""
-"O número total de erros não corrigíveis ao ler/escrever um sector. Um aumento do valor deste atributo indica defeitos na superfície do disco e/"
-"ou problemas no subsistema mecânico"
+"O número total de erros não corrigíveis ao ler/gravar um sector. Um aumento do valor deste atributo indica defeitos na superfície do disco e/ou "
+"problemas no subsistema mecânico"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -528,7 +528,7 @@ msgstr "Taxa de erros de escrita"
 
 #: src/disks/gdu-ata-smart-dialog.c:359
 msgid "Number of errors while writing to disk (or) multi-zone error rate (or) flying-height"
-msgstr "Número de erros ao escrever no disco (ou) taxa de erros multi-zona (ou) altura de elevação"
+msgstr "Número de erros ao gravar no disco (ou) taxa de erros multi-zona (ou) altura de elevação"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1624,37 +1624,59 @@ msgstr "Silencioso (lento)"
 msgid "Loud (Fast)"
 msgstr "Ruidoso (rápido)"
 
-#: src/disks/gdu-drive-view.c:142
+#: src/disks/gdu-drive-view.c:144
 msgid "Copied drive model to clipboard"
 msgstr "Modelo de unidade copiado para a área de transferência"
 
-#: src/disks/gdu-drive-view.c:151
+#: src/disks/gdu-drive-view.c:153
 msgid "Copied drive serial to clipboard"
 msgstr "Copiou o número de série da unidade para a área de transferência"
 
-#: src/disks/gdu-drive-view.c:290
+#: src/disks/gdu-drive-view.c:292
 msgid "An error occurred when trying to put the drive into standby mode"
 msgstr "Ocorreu um erro ao tentar colocar a unidade em modo de espera"
 
-#: src/disks/gdu-drive-view.c:322
+#: src/disks/gdu-drive-view.c:324
 msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ocorreu um erro ao tentar retirar a unidade do modo de espera"
 
-#: src/disks/gdu-drive-view.c:354
+#: src/disks/gdu-drive-view.c:356
+msgid "Error detaching loop device"
+msgstr "Erro ao desligar o dispositivo de loop"
+
+#: src/disks/gdu-drive-view.c:390
+msgid "Error ejecting drive"
+msgstr "Erro ao ejetar a unidade"
+
+#. Translators: Heading for ejecting a device with multiple drives
+#: src/disks/gdu-drive-view.c:447
+msgid "Are you sure you want to eject the drives?"
+msgstr "Tem a certeza que pretende ejetar as unidades?"
+
+#. Translators: Message for ejecting a device with multiple drives
+#: src/disks/gdu-drive-view.c:449
+msgid "This operation will prepare the system for the following drives to be ejected."
+msgstr "Esta operação irá preparar o sistema para a ejeção das unidades seguintes."
+
+#: src/disks/gdu-drive-view.c:450
+msgid "_Eject"
+msgstr "_Ejetar"
+
+#: src/disks/gdu-drive-view.c:473
 msgid "Error powering off drive"
 msgstr "Erro ao desligar unidade"
 
 #. Translators: Heading for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:411
+#: src/disks/gdu-drive-view.c:530
 msgid "Are you sure you want to power off the drives?"
 msgstr "Tem a certeza que deseja desligar as unidades?"
 
 #. Translators: Message for powering off a device with multiple drives
-#: src/disks/gdu-drive-view.c:413
+#: src/disks/gdu-drive-view.c:532
 msgid "This operation will prepare the system for the following drives to be powered down and removed."
 msgstr "Esta operação irá preparar o sistema para que os seguintes dispositivos sejam desligados e removidos."
 
-#: src/disks/gdu-drive-view.c:414
+#: src/disks/gdu-drive-view.c:533
 msgid "_Power Off"
 msgstr "_Desligar"
 
@@ -1712,7 +1734,7 @@ msgstr "Nenhum"
 
 #: src/disks/gdu-encryption-options-dialog.c:239
 msgid "Will be deleted"
-msgstr "Será apagada"
+msgstr "Será eliminada"
 
 #: src/disks/gdu-format-disk-dialog.c:95
 msgid "Error formatting disk"
@@ -1776,7 +1798,7 @@ msgstr "_Formatar"
 
 #: src/disks/gdu-format-volume-dialog.c:211
 msgid "N_ext"
-msgstr "_Próximo"
+msgstr "S_eguinte"
 
 #: src/disks/gdu-format-volume-dialog.c:234
 msgid "Error formatting volume"
@@ -1824,7 +1846,7 @@ msgstr "Erro ao anexar imagem de disco"
 
 #: src/disks/gdu-new-disk-image-dialog.c:172
 msgid "Error writing file"
-msgstr "Erro ao escrever o ficheiro"
+msgstr "Erro ao gravar o ficheiro"
 
 #. Translators: The suggested name for the disk image to create.
 #. *              The %s is today's date and time, e.g. "March 2, 1976 6:25AM".
@@ -2490,6 +2512,14 @@ msgid "Wake Up"
 msgstr "Acordar"
 
 #: src/disks/ui/gdu-drive-header.ui:178
+msgid "Detach"
+msgstr "Desligar"
+
+#: src/disks/ui/gdu-drive-header.ui:183
+msgid "Eject"
+msgstr "Ejetar"
+
+#: src/disks/ui/gdu-drive-header.ui:188
 msgid "Power Off"
 msgstr "Desligar"
 

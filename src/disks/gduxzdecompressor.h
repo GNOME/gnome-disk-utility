@@ -9,8 +9,7 @@
  *         Alexander Larsson <alexl@redhat.com>
  */
 
-#ifndef __GDU_XZ_DECOMPRESSOR_H__
-#define __GDU_XZ_DECOMPRESSOR_H__
+#pragma once
 
 #include "gdutypes.h"
 
@@ -35,6 +34,5 @@ GduXzDecompressor *gdu_xz_decompressor_new           (void);
 
 gsize              gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GduXzDecompressor, g_object_unref)
 G_END_DECLS
-
-#endif /* __GDU_XZ_DECOMPRESSOR_H__ */

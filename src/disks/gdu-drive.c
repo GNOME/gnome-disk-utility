@@ -17,15 +17,16 @@
 # include "config.h"
 #endif
 
-#include <udisks/udisks.h>
+#include "gdu-drive.h"
+
 #include <glib/gi18n.h>
+#include <udisks/udisks.h>
 
 #include "gdu-ata-smart-dialog.h"
+#include "gdu-block.h"
 #include "gdu-disk-settings-dialog.h"
 #include "gdu-item.h"
 #include "gduutils.h"
-#include "gdu-block.h"
-#include "gdu-drive.h"
 
 struct _GduDrive
 {
@@ -47,7 +48,7 @@ struct _GduDrive
   UDisksFilesystem     *file_system;
   GString              *model;
 
-  int                   partition_color_index;
+  gint                   partition_color_index;
   GListStore           *partitions;
 
   GduFeature            features;
@@ -55,11 +56,11 @@ struct _GduDrive
 };
 
 
-G_DEFINE_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
+G_DEFINE_FINAL_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
 
 #define NUM_PARTITION_COLORS 7
 
-static const char *partition_colors[NUM_PARTITION_COLORS] = {
+static const gchar *partition_colors[NUM_PARTITION_COLORS] = {
   "blue",
   "green",
   "yellow",
@@ -107,7 +108,7 @@ gdu_drive_add_decrypted (GduDrive     *self,
 }
 
 
-static const char *
+static const gchar *
 gdu_drive_get_description (GduItem *item)
 {
   GduDrive *self = (GduDrive *) item;
@@ -117,7 +118,7 @@ gdu_drive_get_description (GduItem *item)
   return udisks_object_info_get_description (self->info);
 }
 
-static const char *
+static const gchar *
 gdu_drive_get_partition_type (GduItem *item)
 {
   GduDrive *self = (GduDrive *) item;
@@ -127,7 +128,7 @@ gdu_drive_get_partition_type (GduItem *item)
   if (self->partition_table)
     {
       UDisksPartitionTable *table;
-      const char *type;
+      const gchar *type;
 
       table = udisks_object_peek_partition_table (self->partition_table);
       type = udisks_partition_table_get_type_ (table);
@@ -482,7 +483,7 @@ gdu_drive_matches_object (GduDrive *self,
   return FALSE;
 }
 
-const char *
+const gchar *
 gdu_drive_get_name (GduDrive *self)
 {
   g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -490,7 +491,7 @@ gdu_drive_get_name (GduDrive *self)
   return udisks_object_info_get_name (self->info);
 }
 
-const char *
+const gchar *
 gdu_drive_get_model (GduDrive *self)
 {
   g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -500,7 +501,7 @@ gdu_drive_get_model (GduDrive *self)
 
   if (!self->model->len && self->drive)
     {
-      const char *vendor, *model, *revision;
+      const gchar *vendor, *model, *revision;
 
       vendor = udisks_drive_get_vendor (self->drive);
       model = udisks_drive_get_model (self->drive);
@@ -521,7 +522,7 @@ gdu_drive_get_model (GduDrive *self)
   return self->model->str;
 }
 
-const char *
+const gchar *
 gdu_drive_get_serial (GduDrive *self)
 {
   g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -564,7 +565,7 @@ gdu_drive_get_siblings (GduDrive *self)
   return objects;
 }
 
-static int
+static gint
 partition_cmp (gpointer a,
                gpointer b)
 {
@@ -654,7 +655,7 @@ gdu_drive_set_child (GduDrive *self,
   if (self->partition_table)
     {
       UDisksPartitionTable *table;
-      GList *partitions;
+      g_autolist(UDisksObject) partitions = NULL;
       guint64 begin = 0, prev_end = 0, end = 0;
       guint64 free_space_slack;
       guint64 extended_partition_end_offset = 0;
@@ -752,7 +753,7 @@ gdu_drive_set_child (GduDrive *self,
           }
       }
 
-      g_list_free_full (partitions, g_object_unref);
+
     }
 }
 
@@ -792,6 +793,7 @@ gdu_drive_standby_async (GduDrive            *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
   task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gdu_drive_standby_async);
   ata = udisks_object_peek_drive_ata (self->object);
 
   if (ata != NULL)
@@ -857,6 +859,7 @@ gdu_drive_wakeup_async (GduDrive            *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
   task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gdu_drive_wakeup_async);
   ata = udisks_object_peek_drive_ata (self->object);
 
   if (ata != NULL)
@@ -952,6 +955,7 @@ gdu_drive_detach_async (GduDrive            *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
   task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gdu_drive_detach_async);
 
   gdu_utils_ensure_unused (self->client,
                            parent_window,
@@ -1036,6 +1040,7 @@ gdu_drive_eject_async (GduDrive            *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
   task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gdu_drive_eject_async);
   objects = g_list_append (NULL, self->object);
   /* include other drives this will affect */
   objects = g_list_concat (objects, gdu_drive_get_siblings (self));
@@ -1123,6 +1128,7 @@ gdu_drive_power_off_async (GduDrive            *self,
   g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
   task = g_task_new (self, cancellable, callback, user_data);
+  g_task_set_source_tag (task, gdu_drive_power_off_async);
   objects = g_list_append (NULL, self->object);
   /* include other drives this will affect */
   objects = g_list_concat (objects, gdu_drive_get_siblings (self));

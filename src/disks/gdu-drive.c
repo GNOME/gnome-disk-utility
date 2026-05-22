@@ -10,6 +10,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include <stdbool.h>
 #undef G_LOG_DOMAIN
 #define G_LOG_DOMAIN "gdu-drive"
 
@@ -187,6 +188,35 @@ gdu_drive_get_partitions (GduItem *item)
   return G_LIST_MODEL (self->partitions);
 }
 
+
+static bool
+gdu_drive_supports_disk_settings (GduDrive *self)
+{
+  UDisksObject *object;
+  UDisksDrive *drive;
+  UDisksDriveAta *ata;
+  gboolean is_ssd = FALSE;
+
+  g_assert (GDU_IS_DRIVE (self));
+
+  object = self->object;
+
+  drive = udisks_object_peek_drive (object);
+  if (drive == NULL)
+    return FALSE;
+
+  is_ssd = (udisks_drive_get_rotation_rate (drive) == 0);
+
+  ata = udisks_object_peek_drive_ata (object);
+  if (ata == NULL)
+    return FALSE;
+
+  return (udisks_drive_ata_get_pm_supported (ata) && !is_ssd) ||
+         udisks_drive_ata_get_apm_supported (ata) ||
+         udisks_drive_ata_get_aam_supported (ata) ||
+         udisks_drive_ata_get_write_cache_supported (ata);
+}
+
 static GduFeature
 gdu_drive_get_features (GduItem *item)
 {
@@ -234,7 +264,7 @@ gdu_drive_get_features (GduItem *item)
         features |= GDU_FEATURE_SMART;
     }
 
-  if (gdu_disk_settings_dialog_should_show (object))
+  if (gdu_drive_supports_disk_settings (self))
     features |= GDU_FEATURE_SETTINGS;
 
   if (block == NULL)
@@ -703,14 +733,14 @@ gdu_drive_set_child (GduDrive *self,
           if (udisks_object_peek_encrypted (object))
             gdu_drive_add_decrypted (self, object, GDU_ITEM (partition));
 
-          /* Keep track of current block end offset to be used in the next iteration 
+          /* Keep track of current block end offset to be used in the next iteration
            * if the current block is extended partition then don't use end offset */
           if(gdu_block_is_extended(partition))
             {
               prev_end = begin;
               extended_partition_end_offset = end;
             }
-          else 
+          else
             {
               prev_end = end;
             }
@@ -718,7 +748,7 @@ gdu_drive_set_child (GduDrive *self,
           g_clear_object (&partition);
         }
 
-      /* If we still have some blocks left, add it as a free space at the end 
+      /* If we still have some blocks left, add it as a free space at the end
        * Also check if any extended partition is still remaining */
       {
         guint64 size, disk_end_offset;
@@ -726,7 +756,7 @@ gdu_drive_set_child (GduDrive *self,
         size = gdu_item_get_size (GDU_ITEM (self));
         disk_end_offset = size;
 
-        if (extended_partition_end_offset > prev_end 
+        if (extended_partition_end_offset > prev_end
             && extended_partition_end_offset - prev_end > free_space_slack)
           {
             g_autoptr(GduBlock) partition = NULL;

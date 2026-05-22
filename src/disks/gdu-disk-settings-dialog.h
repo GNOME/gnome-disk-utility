@@ -6,20 +6,19 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_DISK_SETTINGS_DIALOG_H__
-#define __GDU_DISK_SETTINGS_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
+#include "gdu-drive.h"
 #include "gdutypes.h"
 
 G_BEGIN_DECLS
 
-void   gdu_disk_settings_dialog_show (GtkWindow    *window,
-                                      UDisksObject *object,
-                                      UDisksClient *client);
+#define GDU_TYPE_DISK_SETTINGS_DIALOG (gdu_disk_settings_dialog_get_type ())
+G_DECLARE_FINAL_TYPE (GduDiskSettingsDialog, gdu_disk_settings_dialog, GDU, DISK_SETTINGS_DIALOG, AdwDialog)
 
-gboolean gdu_disk_settings_dialog_should_show (UDisksObject *object);
+
+void   gdu_disk_settings_dialog_show (GtkWindow    *window,
+                                      GduDrive     *drive);
 
 G_END_DECLS
-
-#endif /* __GDU_DISK_SETTINGS_DIALOG_H__ */

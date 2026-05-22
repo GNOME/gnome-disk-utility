@@ -8,19 +8,17 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-
 #include "gdu-create-other-page.h"
 
-enum
-{
-  PROP_0,
-  PROP_COMPLETE,
-  PROP_FS_TYPE,
-  N_PROPS
-};
+#include <glib/gi18n.h>
 
-static GParamSpec *properties[N_PROPS];
+typedef enum
+{
+  PROP_COMPLETE = 1,
+  PROP_FS_TYPE,
+} GduCreateOtherPageProps;
+
+static GParamSpec *properties[PROP_FS_TYPE + 1];
 
 struct _GduCreateOtherPage
 {
@@ -33,7 +31,7 @@ struct _GduCreateOtherPage
   GduOtherFsType   fs_type;
 };
 
-G_DEFINE_TYPE (GduCreateOtherPage, gdu_create_other_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateOtherPage, gdu_create_other_page, ADW_TYPE_BIN);
 
 G_DEFINE_ENUM_TYPE (GduOtherFsType, gdu_other_fs_type,
                     G_DEFINE_ENUM_VALUE (GDU_OTHER_FS_TYPE_XFS,   "xfs"),
@@ -92,7 +90,7 @@ gdu_create_other_page_is_encrypted (GduCreateOtherPage *self)
 static void
 on_fs_type_changed (GduCreateOtherPage *self)
 {
-  g_object_notify (G_OBJECT (self), "complete");
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_COMPLETE]);
 }
 
 static void
@@ -103,13 +101,14 @@ gdu_create_other_page_set_property (GObject      *object,
 {
   GduCreateOtherPage *self = GDU_CREATE_OTHER_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreateOtherPageProps) property_id)
     {
     case PROP_FS_TYPE:
       self->fs_type = g_value_get_enum (value);
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_COMPLETE:
+      g_assert_not_reached ();
+      break;
     }
 }
 
@@ -121,16 +120,13 @@ gdu_create_other_page_get_property (GObject    *object,
 {
   GduCreateOtherPage *self = GDU_CREATE_OTHER_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreateOtherPageProps) property_id)
     {
     case PROP_COMPLETE:
       g_value_set_boolean (value, TRUE);
       break;
     case PROP_FS_TYPE:
       g_value_set_enum (value, self->fs_type);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -163,7 +159,7 @@ gdu_create_other_page_class_init (GduCreateOtherPageClass *klass)
                         GDU_OTHER_FS_TYPE_EMPTY,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_properties (object_class, N_PROPS, properties);
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
   gtk_widget_class_install_property_action (widget_class, "update_fs_type", "fs-type");
 }
 
@@ -177,7 +173,7 @@ GduCreateOtherPage *
 gdu_create_other_page_new (UDisksClient *client)
 {
   GduCreateOtherPage *self;
-  const char *other_fs_title_desc[N_OTHER_FS][2] = {
+  const gchar *other_fs_title_desc[N_OTHER_FS][2] = {
     { N_ ("XFS"), N_ ("Linux Filesystem") },
     { N_ ("Linux Swap Partition"), NULL },
     { N_ ("Btrfs"), N_ ("Copy-on-write Linux Filesystem, for snapshots") },

@@ -7,14 +7,15 @@
  */
 
 #include "config.h"
-#include <glib/gi18n.h>
-
-#include <math.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/x11/gdkx.h>
-#include <stdlib.h>
 
 #include "gduestimator.h"
+
+#include <math.h>
+#include <stdlib.h>
+
+#include <gdk/gdkkeysyms.h>
+#include <gdk/x11/gdkx.h>
+#include <glib/gi18n.h>
 
 //#define MAX_SAMPLES 100
 #define MAX_SAMPLES 50
@@ -38,16 +39,17 @@ struct _GduEstimator
   guint num_samples;
 };
 
-enum
+typedef enum
 {
-  PROP_0,
-  PROP_TARGET_BYTES,
+  PROP_TARGET_BYTES = 1,
   PROP_COMPLETED_BYTES,
   PROP_BYTES_PER_SEC,
   PROP_USEC_REMAINING,
-};
+} GduEstimatorProps;
 
-G_DEFINE_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
+static GParamSpec *props[PROP_USEC_REMAINING + 1] = { NULL, };
+
+G_DEFINE_FINAL_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
 static void
 gdu_estimator_get_property (GObject    *object,
@@ -57,7 +59,7 @@ gdu_estimator_get_property (GObject    *object,
 {
   GduEstimator *estimator = GDU_ESTIMATOR (object);
 
-  switch (property_id)
+  switch ((GduEstimatorProps) property_id)
     {
     case PROP_TARGET_BYTES:
       g_value_set_uint64 (value, gdu_estimator_get_target_bytes (estimator));
@@ -74,10 +76,6 @@ gdu_estimator_get_property (GObject    *object,
     case PROP_USEC_REMAINING:
       g_value_set_uint64 (value, gdu_estimator_get_usec_remaining (estimator));
       break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
     }
 }
 
@@ -89,14 +87,15 @@ gdu_estimator_set_property (GObject      *object,
 {
   GduEstimator *estimator = GDU_ESTIMATOR (object);
 
-  switch (property_id)
+  switch ((GduEstimatorProps) property_id)
     {
     case PROP_TARGET_BYTES:
       estimator->target_bytes = g_value_get_uint64 (value);
       break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_COMPLETED_BYTES:
+    case PROP_BYTES_PER_SEC:
+    case PROP_USEC_REMAINING:
+      g_assert_not_reached ();
       break;
     }
 }
@@ -136,8 +135,8 @@ update (GduEstimator *estimator)
     }
 
   g_object_freeze_notify (G_OBJECT (estimator));
-  g_object_notify (G_OBJECT (estimator), "bytes-per-sec");
-  g_object_notify (G_OBJECT (estimator), "usec-remaining");
+  g_object_notify_by_pspec (G_OBJECT (estimator), props[PROP_BYTES_PER_SEC]);
+  g_object_notify_by_pspec (G_OBJECT (estimator), props[PROP_USEC_REMAINING]);
   g_object_thaw_notify (G_OBJECT (estimator));
 }
 
@@ -150,31 +149,29 @@ gdu_estimator_class_init (GduEstimatorClass *klass)
   gobject_class->get_property = gdu_estimator_get_property;
   gobject_class->set_property = gdu_estimator_set_property;
 
-  g_object_class_install_property (gobject_class, PROP_TARGET_BYTES,
-                                   g_param_spec_uint64 ("target-bytes", NULL, NULL,
-                                                        0, G_MAXUINT64, 0,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_TARGET_BYTES] = g_param_spec_uint64 ("target-bytes", NULL, NULL,
+                                                  0, G_MAXUINT64, 0,
+                                                  G_PARAM_READABLE |
+                                                  G_PARAM_WRITABLE |
+                                                  G_PARAM_CONSTRUCT_ONLY |
+                                                  G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (gobject_class, PROP_COMPLETED_BYTES,
-                                   g_param_spec_uint64 ("completed-bytes", NULL, NULL,
-                                                        0, G_MAXUINT64, 0,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_COMPLETED_BYTES] = g_param_spec_uint64 ("completed-bytes", NULL, NULL,
+                                                     0, G_MAXUINT64, 0,
+                                                     G_PARAM_READABLE |
+                                                     G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (gobject_class, PROP_BYTES_PER_SEC,
-                                   g_param_spec_uint64 ("bytes-per-sec", NULL, NULL,
-                                                        0, G_MAXUINT64, 0,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_BYTES_PER_SEC] = g_param_spec_uint64 ("bytes-per-sec", NULL, NULL,
+                                                   0, G_MAXUINT64, 0,
+                                                   G_PARAM_READABLE |
+                                                   G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (gobject_class, PROP_USEC_REMAINING,
-                                   g_param_spec_uint64 ("usec-remaining", NULL, NULL,
-                                                        0, G_MAXUINT64, 0,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_USEC_REMAINING] = g_param_spec_uint64 ("usec-remaining", NULL, NULL,
+                                                    0, G_MAXUINT64, 0,
+                                                    G_PARAM_READABLE |
+                                                    G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (gobject_class, G_N_ELEMENTS (props), props);
 }
 
 static void

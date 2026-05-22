@@ -15,6 +15,9 @@
 #include "config.h"
 #endif
 
+#include "gdu-format-volume-dialog.h"
+#include "gdu-format-volume-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
@@ -23,15 +26,12 @@
 #include "gdu-create-other-page.h"
 #include "gdu-create-partition-page.h"
 #include "gdu-create-password-page.h"
-#include "gdu-format-volume-dialog.h"
 
 #define PARTITION_PAGE "partition"
 #define FORMAT_PAGE "format"
 #define OTHER_PAGE "other"
 #define PASSWORD_PAGE "password"
 #define CONFIRM_PAGE "confirm"
-
-#include "gdu-format-volume-dialog.h"
 
 struct _GduFormatVolumeDialog
 {
@@ -53,16 +53,16 @@ struct _GduFormatVolumeDialog
   UDisksDrive             *udisks_drive;
   UDisksPartitionTable    *udisks_table;
 
-  const char              *current; /* page names */
-  const char              *prev;
-  const char              *next;
+  const gchar              *current; /* page names */
+  const gchar              *prev;
+  const gchar              *next;
 
   gboolean                 add_partition; /* mode: format vs add partition and format */
   guint64                  add_partition_offset;
   guint64                  add_partition_maxsize;
 };
 
-G_DEFINE_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_format_volume_dialog_get_window (GduFormatVolumeDialog *self)
@@ -94,7 +94,7 @@ gdu_format_volume_dialog_get_encrypt (GduFormatVolumeDialog *self)
 static void
 gdu_format_volume_dialog_set_dialog_title (GduFormatVolumeDialog *self)
 {
-  const char *title;
+  const gchar *title;
   GtkWidget *child;
   GtkStackPage *page;
 
@@ -302,7 +302,7 @@ on_forward_button_clicked_cb (GduFormatVolumeDialog *self,
                               GtkWidget             *widget)
 {
   guint64 size;
-  const char *partition_type = "";
+  const gchar *partition_type = "";
   GVariantBuilder options_builder;
 
   /* step to next page */

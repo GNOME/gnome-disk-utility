@@ -10,8 +10,9 @@
 
 #pragma once
 
-#include <gio/gio.h>
 #include <stdbool.h>
+
+#include <gio/gio.h>
 
 #include "gdu-item.h"
 
@@ -31,15 +32,15 @@ guint64            gdu_block_get_offset               (GduBlock             *sel
 guint64            gdu_block_get_number               (GduBlock             *self);
 guint64            gdu_block_get_unused_size          (GduBlock             *self);
 bool               gdu_block_is_extended              (GduBlock             *self);
-char              *gdu_block_get_size_str             (GduBlock             *self);
-const char        *gdu_block_get_uuid                 (GduBlock             *self);
-const char        *gdu_block_get_device_id            (GduBlock             *self);
-const char        *gdu_block_get_fs_label             (GduBlock             *self);
-const char        *gdu_block_get_fs_type              (GduBlock             *self);
-const char *const *gdu_block_get_mount_points         (GduBlock             *self);
+gchar              *gdu_block_get_size_str             (GduBlock             *self);
+const gchar        *gdu_block_get_uuid                 (GduBlock             *self);
+const gchar        *gdu_block_get_device_id            (GduBlock             *self);
+const gchar        *gdu_block_get_fs_label             (GduBlock             *self);
+const gchar        *gdu_block_get_fs_type              (GduBlock             *self);
+const gchar *const *gdu_block_get_mount_points         (GduBlock             *self);
 bool               gdu_block_needs_unmount            (GduBlock             *self);
 void               gdu_block_set_fs_label_async       (GduBlock             *self,
-                                                       const char           *label,
+                                                       const gchar           *label,
                                                        GAsyncReadyCallback   callback,
                                                        gpointer              user_data);
 gboolean           gdu_block_set_fs_label_finish      (GduBlock             *self,

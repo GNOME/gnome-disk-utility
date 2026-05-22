@@ -6,13 +6,11 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_TYPES_H__
-#define __GDU_TYPES_H__
+#pragma once
 
 #include <gtk/gtk.h>
-#include <udisks/udisks.h>
-
 #include <libgdu/libgdu.h>
+#include <udisks/udisks.h>
 
 #include "gduenums.h"
 
@@ -34,5 +32,3 @@ struct GduXzDecompressor;
 typedef struct GduXzDecompressor GduXzDecompressor;
 
 G_END_DECLS
-
-#endif /* __GDU_TYPES_H__ */

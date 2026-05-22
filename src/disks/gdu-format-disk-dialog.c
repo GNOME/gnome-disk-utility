@@ -13,21 +13,20 @@
 # include "config.h"
 #endif
 
+#include "gdu-format-disk-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-format-disk-dialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-enum
+typedef enum
 {
-  PROP_0,
-  PROP_PARTITIONING_TYPE,
-  N_PROPS
-};
+  PROP_PARTITIONING_TYPE = 1,
+} GduFormatDiskDialogProps;
 
-static GParamSpec *properties [N_PROPS];
+static GParamSpec *properties [PROP_PARTITIONING_TYPE + 1];
 
 struct _GduFormatDiskDialog
 {
@@ -45,7 +44,7 @@ struct _GduFormatDiskDialog
   GduPartitioningType    partitioning_type;
 };
 
-G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_DIALOG)
 
 G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type,
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_GPT, "gpt"),
@@ -105,7 +104,7 @@ ensure_unused_cb (GtkWindow    *parent_window,
                   gpointer      user_data)
 {
   GduFormatDiskDialog *self = user_data;
-  const char *erase_type;
+  const gchar *erase_type;
   GVariantBuilder options_builder;
 
   if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL))
@@ -227,7 +226,7 @@ enum
 static gchar *
 get_erase_duration_string (gint minutes)
 {
-  char *s;
+  gchar *s;
 
   if (minutes == 510)
     {
@@ -317,13 +316,10 @@ gdu_format_disk_dialog_get_property (GObject    *object,
 {
   GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
 
-  switch (property_id)
+  switch ((GduFormatDiskDialogProps) property_id)
     {
     case PROP_PARTITIONING_TYPE:
       g_value_set_enum (value, self->partitioning_type);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -336,13 +332,11 @@ gdu_format_disk_dialog_set_property (GObject      *object,
 {
   GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
 
-  switch (property_id)
+  switch ((GduFormatDiskDialogProps) property_id)
     {
     case PROP_PARTITIONING_TYPE:
       self->partitioning_type = g_value_get_enum (value);
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     }
 }
 
@@ -386,7 +380,7 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
                         GDU_PARTITIONING_TYPE_GPT,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_properties (object_class, N_PROPS, properties);
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
   gtk_widget_class_install_property_action (widget_class, "format.update_part_type", "part-type");
 }
 

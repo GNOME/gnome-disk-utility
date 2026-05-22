@@ -6,26 +6,26 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
+#define _GNU_SOURCE
+
 #include "config.h"
 
-#define _GNU_SOURCE
+#include "gdu-create-disk-image-dialog.h"
+
 #include <fcntl.h>
 
-#include <glib/gi18n.h>
+#include <gio/gfiledescriptorbased.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
-#include <gio/gfiledescriptorbased.h>
-
 #include <glib-unix.h>
-#include <sys/ioctl.h>
+#include <glib/gi18n.h>
 #include <linux/fs.h>
+#include <sys/ioctl.h>
 
 #include "gdu-application.h"
-#include "gdu-create-disk-image-dialog.h"
+#include "gdudvdsupport.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
-
-#include "gdudvdsupport.h"
 
 /* TODOs / ideas for Disk Image creation
  *
@@ -70,6 +70,7 @@ struct _GduCreateDiskImageDialog
   gboolean played_read_error_sound;
 
   guint update_id;
+  guint completion_id;
   GError *copy_error;
 
   gulong response_signal_handler_id;
@@ -80,7 +81,7 @@ struct _GduCreateDiskImageDialog
   GduLocalJob *local_job;
 };
 
-G_DEFINE_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gpointer
@@ -147,14 +148,15 @@ static void
 update_job (GduCreateDiskImageDialog *self,
             gboolean    done)
 {
-  gchar *extra_markup = NULL;
+  g_autofree gchar *extra_markup = NULL;
   guint64 bytes_completed = 0;
   guint64 bytes_target = 0;
   guint64 bytes_per_sec = 0;
   guint64 usec_remaining = 0;
   guint64 num_error_bytes = 0;
   gdouble progress = 0.0;
-  gchar *s2, *s3;
+  g_autofree gchar *s2 = NULL;
+  g_autofree gchar *s3 = NULL;
 
   g_mutex_lock (&self->copy_lock);
   if (self->estimator != NULL)
@@ -187,10 +189,8 @@ update_job (GduCreateDiskImageDialog *self,
       /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
        * of hard-coding the color
        */
-      g_free (extra_markup);
+      g_clear_pointer (&extra_markup, g_free);
       extra_markup = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>", s3);
-      g_free (s3);
-      g_free (s2);
     }
 
   if (self->local_job != NULL)
@@ -226,7 +226,6 @@ update_job (GduCreateDiskImageDialog *self,
       self->played_read_error_sound = TRUE;
     }
 
-  g_free (extra_markup);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -253,7 +252,7 @@ on_update_job (gpointer user_data)
 {
   GduCreateDiskImageDialog *self = user_data;
   update_job (self, FALSE);
-  return FALSE; /* remove source */
+  return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -263,6 +262,7 @@ on_show_error (gpointer user_data)
 {
   GduCreateDiskImageDialog *self = user_data;
 
+  self->completion_id = 0;
   dialog_data_uninhibit (self);
 
   g_assert (self->copy_error != NULL);
@@ -273,7 +273,7 @@ on_show_error (gpointer user_data)
 
   dialog_data_complete_and_unref (self);
 
-  return FALSE; /* remove source */
+  return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -287,7 +287,7 @@ on_delete_response (GObject       *object,
   GduCreateDiskImageDialog *self = userdata;
   g_autoptr(GError) error = NULL;
   g_autoptr(GFile) file = NULL;
-  const char *name;
+  const gchar *name;
 
   if (g_strcmp0 (adw_alert_dialog_choose_finish(dialog, response), "cancel") == 0)
     return;
@@ -309,6 +309,7 @@ on_success (gpointer user_data)
   g_autofree gchar *s = NULL;
   GduCreateDiskImageDialog *self = user_data;
 
+  self->completion_id = 0;
   update_job (self, TRUE);
 
   play_complete_sound (self);
@@ -356,7 +357,7 @@ on_success (gpointer user_data)
                                self);
     }
 
-  return FALSE; /* remove source */
+  return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -369,7 +370,7 @@ on_success (gpointer user_data)
  * Returns: Number of bytes actually read (e.g. not include padding) -1 if @error is set.
  */
 static gssize
-copy_span (int              fd,
+copy_span (gint              fd,
            GOutputStream   *output_stream,
            guint64          offset,
            guint64          size,
@@ -380,7 +381,7 @@ copy_span (int              fd,
            GError         **error)
 {
   gint64 ret = -1;
-  ssize_t num_bytes_read;
+  gssize num_bytes_read;
   gsize num_bytes_to_write;
 
   g_return_val_if_fail (-1, buffer != NULL);
@@ -476,11 +477,11 @@ static gpointer
 copy_thread_func (gpointer user_data)
 {
   GduCreateDiskImageDialog *self = user_data;
-  GduDVDSupport *dvd_support = NULL;
-  guchar *buffer_unaligned = NULL;
+  g_autoptr(GduDVDSupport) dvd_support = NULL;
+  g_autofree guchar *buffer_unaligned = NULL;
   guchar *buffer = NULL;
   guint64 block_device_size = 0;
-  long page_size;
+  glong page_size;
   GError *error = NULL;
   GError *error2 = NULL;
   gint64 last_update_usec = -1;
@@ -514,15 +515,23 @@ copy_thread_func (gpointer user_data)
         {
           g_mutex_lock (&self->copy_lock);
           self->retrieving_dvd_keys = TRUE;
+          if (self->update_id == 0)
+            self->update_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                               on_update_job,
+                                               g_object_ref (self),
+                                               g_object_unref);
           g_mutex_unlock (&self->copy_lock);
-          g_idle_add (on_update_job, self);
 
           dvd_support = gdu_dvd_support_new (device_file, udisks_block_get_size (self->block));
 
           g_mutex_lock (&self->copy_lock);
           self->retrieving_dvd_keys = FALSE;
+          if (self->update_id == 0)
+            self->update_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                               on_update_job,
+                                               g_object_ref (self),
+                                               g_object_unref);
           g_mutex_unlock (&self->copy_lock);
-          g_idle_add (on_update_job, self);
         }
     }
 
@@ -584,8 +593,12 @@ copy_thread_func (gpointer user_data)
 
       g_mutex_lock (&self->copy_lock);
       self->allocating_file = TRUE;
+      if (self->update_id == 0)
+        self->update_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                           on_update_job,
+                                           g_object_ref (self),
+                                           g_object_unref);
       g_mutex_unlock (&self->copy_lock);
-      g_idle_add (on_update_job, self);
 
       rc = fallocate (output_fd,
                       0, /* mode */
@@ -610,8 +623,12 @@ copy_thread_func (gpointer user_data)
 
       g_mutex_lock (&self->copy_lock);
       self->allocating_file = FALSE;
+      if (self->update_id == 0)
+        self->update_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                           on_update_job,
+                                           g_object_ref (self),
+                                           g_object_unref);
       g_mutex_unlock (&self->copy_lock);
-      g_idle_add (on_update_job, self);
     }
 
   page_size = sysconf (_SC_PAGESIZE);
@@ -647,7 +664,10 @@ copy_thread_func (gpointer user_data)
           if (num_bytes_completed > 0)
             gdu_estimator_add_sample (self->estimator, num_bytes_completed);
           if (self->update_id == 0)
-            self->update_id = g_idle_add (on_update_job, self);
+            self->update_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                               on_update_job,
+                                               g_object_ref (self),
+                                               g_object_unref);
           last_update_usec = now_usec;
         }
       g_mutex_unlock (&self->copy_lock);
@@ -680,9 +700,6 @@ copy_thread_func (gpointer user_data)
     }
 
  out:
-  if (dvd_support != NULL)
-    gdu_dvd_support_free (dvd_support);
-
   self->end_time_usec = g_get_real_time ();
 
   /* in either case, close the stream */
@@ -701,8 +718,11 @@ copy_thread_func (gpointer user_data)
       /* show error in GUI */
       if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED))
         {
-          self->copy_error = error; error = NULL;
-          g_idle_add (on_show_error, self);
+          self->copy_error = g_steal_pointer (&error);
+          self->completion_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                                 on_show_error,
+                                                 g_object_ref (self),
+                                                 g_object_unref);
         }
       g_clear_error (&error);
 
@@ -717,15 +737,16 @@ copy_thread_func (gpointer user_data)
   else
     {
       /* success */
-      g_idle_add (on_success, self);
+      self->completion_id = g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                                             on_success,
+                                             g_object_ref (self),
+                                             g_object_unref);
     }
   if (fd != -1 )
     {
       if (close (fd) != 0)
         g_warning ("Error closing fd: %m");
     }
-
-  g_free (buffer_unaligned);
 
   return NULL;
 }
@@ -980,9 +1001,14 @@ create_disk_image_set_source_label (GduCreateDiskImageDialog *self)
 }
 
 static void
-gdu_create_disk_image_dialog_finalize (GObject *object)
+gdu_create_disk_image_dialog_dispose (GObject *object)
 {
-  G_OBJECT_CLASS (gdu_create_disk_image_dialog_parent_class)->finalize (object);
+  GduCreateDiskImageDialog *self = GDU_CREATE_DISK_IMAGE_DIALOG (object);
+
+  g_clear_handle_id (&self->update_id, g_source_remove);
+  g_clear_handle_id (&self->completion_id, g_source_remove);
+
+  G_OBJECT_CLASS (gdu_create_disk_image_dialog_parent_class)->dispose (object);
 }
 
 void
@@ -991,7 +1017,7 @@ gdu_create_disk_image_dialog_class_init (GduCreateDiskImageDialogClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize = gdu_create_disk_image_dialog_finalize;
+  object_class->dispose = gdu_create_disk_image_dialog_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/DiskUtility/ui/"

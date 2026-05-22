@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_DVD_SUPPORT_H__
-#define __GDU_DVD_SUPPORT_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
@@ -19,12 +18,12 @@ GduDVDSupport *gdu_dvd_support_new  (const gchar *device_file,
 
 void           gdu_dvd_support_free (GduDVDSupport *support);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GduDVDSupport, gdu_dvd_support_free)
+
 gssize gdu_dvd_support_read (GduDVDSupport *support,
-                             int            fd,
+                             gint            fd,
                              guchar        *buffer,
                              guint64        offset,
                              guint64        size);
 
 G_END_DECLS
-
-#endif /* __GDU_DVD_SUPPORT_H__ */

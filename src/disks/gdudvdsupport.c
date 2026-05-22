@@ -8,15 +8,14 @@
 
 #include "config.h"
 
-#include <gmodule.h>
-#include <glib-unix.h>
-#include <sys/ioctl.h>
-#include <linux/fs.h>
+#include "gdudvdsupport.h"
 
 #include <dvdread/dvd_reader.h>
 #include <dvdread/dvd_udf.h>
-
-#include "gdudvdsupport.h"
+#include <glib-unix.h>
+#include <gmodule.h>
+#include <linux/fs.h>
+#include <sys/ioctl.h>
 
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -29,20 +28,20 @@
 struct dvdcss_s;
 typedef struct dvdcss_s* dvdcss_t;
 
-static dvdcss_t (*dvdcss_open)         (const char *psz_target) = NULL;
-static int      (*dvdcss_close)        (dvdcss_t ctx) = NULL;
-static int      (*dvdcss_seek)         (dvdcss_t ctx,
-                                        int i_blocks,
-                                        int i_flags ) = NULL;
-static int      (*dvdcss_read)         (dvdcss_t ctx,
+static dvdcss_t (*dvdcss_open)         (const gchar *psz_target) = NULL;
+static gint      (*dvdcss_close)        (dvdcss_t ctx) = NULL;
+static gint      (*dvdcss_seek)         (dvdcss_t ctx,
+                                        gint i_blocks,
+                                        gint i_flags ) = NULL;
+static gint      (*dvdcss_read)         (dvdcss_t ctx,
                                         void *p_buffer,
-                                        int i_blocks,
-                                        int i_flags ) = NULL;
-static int      (*dvdcss_readv)        (dvdcss_t ctx,
+                                        gint i_blocks,
+                                        gint i_flags ) = NULL;
+static gint      (*dvdcss_readv)        (dvdcss_t ctx,
                                         void *p_iovec,
-                                        int   i_blocks,
-                                        int   i_flags ) = NULL;
-static char *   (*dvdcss_error)        (dvdcss_t ctx) = NULL;
+                                        gint   i_blocks,
+                                        gint   i_flags ) = NULL;
+static gchar *   (*dvdcss_error)        (dvdcss_t ctx) = NULL;
 
 static gboolean
 have_dvdcss (void)
@@ -130,6 +129,7 @@ gdu_dvd_support_new  (const gchar *device_file,
   GList *l;
   guint64 pos;
   GArray *a;
+  /* gobject-linter-ignore-next-line: use_auto_cleanup */
   Range *prev_range;
 
   /* We use dlopen() to access libdvdcss since it's normally not
@@ -194,8 +194,8 @@ gdu_dvd_support_new  (const gchar *device_file,
       for (part = 0; part <= 9; part++)
         {
           gchar vob_filename[64];
-          uint32_t vob_sector_offset;
-          uint32_t vob_size;
+          guint32 vob_sector_offset;
+          guint32 vob_size;
           guint64 rounded_vob_size;
 
           if (title == 0)
@@ -311,6 +311,7 @@ gdu_dvd_support_new  (const gchar *device_file,
       guint n;
       for (n = 0; n < support->num_ranges; n++)
         {
+          /* gobject-linter-ignore-next-line: use_auto_cleanup */
           Range *range = support->ranges + n;
           g_print ("range %02u: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n",
                    n, range->start, range->end, range->scrambled);
@@ -342,7 +343,7 @@ gdu_dvd_support_free (GduDVDSupport *support)
 
 gssize
 gdu_dvd_support_read (GduDVDSupport *support,
-                      int            fd,
+                      gint            fd,
                       guchar        *buffer,
                       guint64        offset,
                       guint64        size)
@@ -386,7 +387,7 @@ gdu_dvd_support_read (GduDVDSupport *support,
       Range *r;
       guint64 num_left_in_range;
       guint64 num_to_read_in_range;
-      ssize_t num_bytes_read;
+      gssize num_bytes_read;
 
       if (G_UNLIKELY (n == support->num_ranges))
         {
@@ -411,10 +412,10 @@ gdu_dvd_support_read (GduDVDSupport *support,
       /* now read @num_to_read_in_range from @cur_offset into @cur_buffer */
       if (r->scrambled)
         {
-          int flags = 0;
-          int block_offset = cur_offset / 2048;
-          int num_blocks_to_request = num_to_read_in_range / 2048;
-          int num_blocks_read;
+          gint flags = 0;
+          gint block_offset = cur_offset / 2048;
+          gint num_blocks_to_request = num_to_read_in_range / 2048;
+          gint num_blocks_read;
 
           g_assert ((cur_offset & 0x7ff) == 0);
           g_assert ((num_to_read_in_range & 0x7ff) == 0);

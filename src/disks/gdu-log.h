@@ -49,18 +49,18 @@
 
 void         gdu_log_init               (void);
 void         gdu_log_increase_verbosity (void);
-int          gdu_log_get_verbosity      (void);
-void         gdu_log_to_file            (const char     *file_path,
+gint          gdu_log_get_verbosity      (void);
+void         gdu_log_to_file            (const gchar     *file_path,
                                          gboolean        append);
-const char  *gdu_log_bool_str           (gboolean        value,
+const gchar  *gdu_log_bool_str           (gboolean        value,
                                          gboolean        use_success);
-void         gdu_log                    (const char     *domain,
+void         gdu_log                    (const gchar     *domain,
                                          GLogLevelFlags  log_level,
-                                         const char     *value,
-                                         const char     *file,
-                                         const char     *line,
-                                         const char     *func,
-                                         const char     *message_format,
+                                         const gchar     *value,
+                                         const gchar     *file,
+                                         const gchar     *line,
+                                         const gchar     *func,
+                                         const gchar     *message_format,
                                          ...) G_GNUC_PRINTF (7, 8);
 void         gdu_log_anonymize_value    (GString        *str,
-                                         const char     *value);
+                                         const gchar     *value);

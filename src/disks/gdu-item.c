@@ -26,7 +26,7 @@ enum {
 
 static guint signals[N_SIGNALS];
 
-static const char *
+static const gchar *
 gdu_item_real_get_description (GduItem *self)
 {
   g_assert (GDU_IS_ITEM (self));
@@ -34,7 +34,7 @@ gdu_item_real_get_description (GduItem *self)
   return "—";
 }
 
-static const char *
+static const gchar *
 gdu_item_real_get_partition_type (GduItem *self)
 {
   g_assert (GDU_IS_ITEM (self));
@@ -105,7 +105,7 @@ gdu_item_init (GduItem *self)
 {
 }
 
-const char *
+const gchar *
 gdu_item_get_description (GduItem *self)
 {
   g_return_val_if_fail (GDU_IS_ITEM (self), NULL);
@@ -113,7 +113,7 @@ gdu_item_get_description (GduItem *self)
   return GDU_ITEM_GET_CLASS (self)->get_description (self);
 }
 
-const char *
+const gchar *
 gdu_item_get_partition_type (GduItem *self)
 {
   g_return_val_if_fail (GDU_IS_ITEM (self), NULL);

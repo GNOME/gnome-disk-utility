@@ -11,10 +11,11 @@
 
 #include "config.h"
 
+#include "gdu-edit-filesystem-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gduutils.h"
-#include "gdu-edit-filesystem-dialog.h"
 
 struct _GduEditFilesystemDialog
 {
@@ -27,7 +28,7 @@ struct _GduEditFilesystemDialog
   GduBlock           *drive_block;
 };
 
-G_DEFINE_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_edit_filesystem_dialog_get_window (GduEditFilesystemDialog *self)
@@ -58,7 +59,7 @@ change_filesystem_label_cb (GObject      *object,
 static void
 on_change_button_clicked (GduEditFilesystemDialog *self)
 {
-  const char *label;
+  const gchar *label;
 
   label = gtk_editable_get_text (GTK_EDITABLE (self->fs_label_row));
 
@@ -130,8 +131,8 @@ gdu_edit_filesystem_dialog_show (GtkWindow    *parent_window,
   GduEditFilesystemDialog *self;
   guint max_len;
   GtkText *text;
-  const char *label;
-  const char *fs_type;
+  const gchar *label;
+  const gchar *fs_type;
 
   g_return_if_fail (GDU_IS_BLOCK (block));
 

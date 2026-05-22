@@ -9,8 +9,9 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include "gdutypes.h"
+
 #include "gdu-block.h"
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

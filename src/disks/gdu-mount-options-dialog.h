@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_FSTAB_DIALOG_H_H__
-#define __GDU_FSTAB_DIALOG_H_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
@@ -22,5 +21,3 @@ void   gdu_mount_options_dialog_show (GtkWindow    *parent_window,
                               UDisksClient *client);
 
 G_END_DECLS
-
-#endif /* __GDU_FSTAB_DIALOG_H__ */

@@ -231,16 +231,10 @@ static void
 drive_settings_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
-    UDisksObject *object;
-    GduManager *manager;
 
     g_assert (GDU_IS_DRIVE_VIEW (self));
 
-    object = gdu_drive_get_object (self->drive);
-    manager = gdu_manager_get_default (NULL);
-    g_assert (object != NULL);
-
-    gdu_disk_settings_dialog_show (drive_view_get_window (self), object, gdu_manager_get_client (manager));
+    gdu_disk_settings_dialog_show (drive_view_get_window (self), self->drive);
 }
 
 static void

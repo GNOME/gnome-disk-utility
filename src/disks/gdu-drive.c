@@ -175,6 +175,29 @@ gdu_drive_get_partitions (GduItem *item)
     return G_LIST_MODEL (self->partitions);
 }
 
+static bool
+gdu_drive_supports_disk_settings (GduDrive *self)
+{
+    UDisksDrive *drive;
+    UDisksDriveAta *ata;
+    gboolean is_ssd;
+
+    g_assert (GDU_IS_DRIVE (self));
+
+    drive = udisks_object_peek_drive (self->object);
+    if (drive == NULL)
+        return false;
+
+    ata = udisks_object_peek_drive_ata (self->object);
+    if (ata == NULL)
+        return false;
+
+    is_ssd = udisks_drive_get_rotation_rate (drive) == 0;
+
+    return (udisks_drive_ata_get_pm_supported (ata) && !is_ssd) || udisks_drive_ata_get_apm_supported (ata)
+           || udisks_drive_ata_get_aam_supported (ata) || udisks_drive_ata_get_write_cache_supported (ata);
+}
+
 static GduFeature
 gdu_drive_get_features (GduItem *item)
 {
@@ -218,7 +241,7 @@ gdu_drive_get_features (GduItem *item)
             features |= GDU_FEATURE_SMART;
     }
 
-    if (gdu_disk_settings_dialog_should_show (object))
+    if (gdu_drive_supports_disk_settings (self))
         features |= GDU_FEATURE_SETTINGS;
 
     if (block == NULL)

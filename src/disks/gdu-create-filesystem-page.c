@@ -8,19 +8,17 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-
 #include "gdu-create-filesystem-page.h"
 
-enum
-{
-  PROP_0,
-  PROP_COMPLETE,
-  PROP_FS_TYPE,
-  N_PROPS
-};
+#include <glib/gi18n.h>
 
-static GParamSpec *properties[N_PROPS];
+typedef enum
+{
+  PROP_COMPLETE = 1,
+  PROP_FS_TYPE,
+} GduCreateFilesystemPageProps;
+
+static GParamSpec *properties[PROP_FS_TYPE + 1];
 
 struct _GduCreateFilesystemPage
 {
@@ -36,7 +34,7 @@ struct _GduCreateFilesystemPage
   GduFsType  fs_type;
 };
 
-G_DEFINE_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, ADW_TYPE_BIN);
 
 G_DEFINE_ENUM_TYPE (GduFsType, gdu_fs_type,
                     G_DEFINE_ENUM_VALUE (GDU_FS_TYPE_EXT4,  "ext4"),
@@ -113,7 +111,7 @@ on_fs_type_changed (GduCreateFilesystemPage *self)
 {
   update_text_entry (self);
 
-  g_object_notify (G_OBJECT (self), "complete");
+  g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_COMPLETE]);
 }
 
 static void
@@ -124,16 +122,13 @@ gdu_create_filesystem_page_get_property (GObject    *object,
 {
   GduCreateFilesystemPage *self = GDU_CREATE_FILESYSTEM_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreateFilesystemPageProps) property_id)
     {
     case PROP_COMPLETE:
       g_value_set_boolean (value, TRUE);
       break;
     case PROP_FS_TYPE:
       g_value_set_enum (value, self->fs_type);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -146,13 +141,14 @@ gdu_create_filesystem_page_set_property (GObject      *object,
 {
   GduCreateFilesystemPage *self = GDU_CREATE_FILESYSTEM_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreateFilesystemPageProps) property_id)
     {
     case PROP_FS_TYPE:
       self->fs_type = g_value_get_enum (value);
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_COMPLETE:
+      g_assert_not_reached ();
+      break;
     }
 }
 
@@ -197,7 +193,7 @@ gdu_create_filesystem_page_class_init (GduCreateFilesystemPageClass *klass)
                         GDU_FS_TYPE_EXT4,
                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_properties (object_class, N_PROPS, properties);
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
   gtk_widget_class_install_property_action (widget_class, "update_fs_type", "fs-type");
 }
 
@@ -205,8 +201,8 @@ GduCreateFilesystemPage *
 gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
 {
   GduCreateFilesystemPage *self;
-  char *s;
-  char *missing_util;
+  g_autofree char *s = NULL;
+  g_autofree char *missing_util = NULL;
 
   self = g_object_new (GDU_TYPE_CREATE_FILESYSTEM_PAGE, NULL);
 
@@ -233,9 +229,8 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
       gtk_widget_set_sensitive (GTK_WIDGET (self->ntfs_checkbutton), FALSE);
       s = g_strdup_printf (_ ("The utility %s is missing."), missing_util);
       gtk_widget_set_tooltip_text (GTK_WIDGET (self->ntfs_checkbutton), s);
-
-      g_free (s);
-      g_free (missing_util);
+      g_clear_pointer (&s, g_free);
+      g_clear_pointer (&missing_util, g_free);
     }
 
   if (!gdu_utils_can_format (client, "vfat", FALSE, &missing_util))
@@ -243,8 +238,8 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
       gtk_widget_set_sensitive (GTK_WIDGET (self->fat_checkbutton), FALSE);
       s = g_strdup_printf (_ ("The utility %s is missing."), missing_util);
       gtk_widget_set_tooltip_text (GTK_WIDGET (self->fat_checkbutton), s);
-      g_free (s);
-      g_free (missing_util);
+      g_clear_pointer (&s, g_free);
+      g_clear_pointer (&missing_util, g_free);
     }
 
   return self;

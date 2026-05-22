@@ -8,21 +8,22 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
+#include "gdu-application.h"
 
 #include <errno.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-#include "gdu-manager.h"
-#include "gdu-application.h"
+#include <glib/gi18n.h>
+
 #include "gdu-format-volume-dialog.h"
+#include "gdu-log.h"
+#include "gdu-manager.h"
 #include "gdu-new-disk-image-dialog.h"
+#include "gdu-rust.h"
 #include "gdu-window.h"
 #include "gdulocaljob.h"
-#include "gdu-log.h"
-#include "gdu-rust.h"
 
 struct _GduApplication
 {
@@ -36,7 +37,7 @@ struct _GduApplication
   GHashTable     *local_jobs;
 };
 
-G_DEFINE_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
+G_DEFINE_FINAL_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
 
 static void gdu_application_set_options (GduApplication *app);
 
@@ -146,8 +147,8 @@ gdu_application_object_from_block_device (GduApplication *app,
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-cmd_verbose_cb (const char  *option_name,
-                const char  *value,
+cmd_verbose_cb (const gchar  *option_name,
+                const gchar  *value,
                 gpointer     data,
                 GError     **error)
 {
@@ -432,9 +433,9 @@ gdu_application_new_widget (GduApplication  *application,
                             GtkBuilder     **out_builder)
 {
   GObject *ret = NULL;
-  GtkBuilder *builder = NULL;
-  gchar *path = NULL;
-  GError *error;
+  g_autoptr(GtkBuilder) builder = NULL;
+  g_autofree gchar *path = NULL;
+  g_autoptr(GError) error = NULL;
 
   g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
   g_return_val_if_fail (ui_file != NULL, NULL);
@@ -443,28 +444,18 @@ gdu_application_new_widget (GduApplication  *application,
 
   path = g_strdup_printf ("/org/gnome/DiskUtility/ui/%s", ui_file);
 
-  error = NULL;
   if (gtk_builder_add_from_resource (builder, path, &error) == 0)
     {
       g_error ("Error loading UI file %s: %s", path, error->message);
-      g_error_free (error);
-      goto out;
+      return NULL;
     }
 
   if (name != NULL)
     ret = G_OBJECT (gtk_builder_get_object (builder, name));
 
- out:
   if (out_builder != NULL)
-    {
-      *out_builder = builder;
-      builder = NULL;
-    }
-  if (builder != NULL)
-    {
-      g_object_unref (builder);
-    }
-  g_free (path);
+    *out_builder = g_steal_pointer (&builder);
+
   return ret;
 }
 

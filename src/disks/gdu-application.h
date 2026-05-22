@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_APPLICATION_H__
-#define __GDU_APPLICATION_H__
+#pragma once
 
 #include <adwaita.h>
 #include <gtk/gtk.h>
@@ -25,7 +24,7 @@ GObject         *gdu_application_new_widget                 (GduApplication  *ap
                                                              const gchar     *ui_file,
                                                              const gchar     *name,
                                                              GtkBuilder     **out_builder);
-gboolean         gdu_application_should_exit                (GduApplication *application);
+
 GduLocalJob     *gdu_application_create_local_job           (GduApplication *application,
                                                              UDisksObject   *object);
 void             gdu_application_destroy_local_job          (GduApplication *application,
@@ -33,5 +32,3 @@ void             gdu_application_destroy_local_job          (GduApplication *app
 
 
 G_END_DECLS
-
-#endif /* __GDU_APPLICATION_H__ */

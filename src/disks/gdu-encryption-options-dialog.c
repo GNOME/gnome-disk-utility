@@ -13,9 +13,9 @@
 # include "config.h"
 #endif
 
-#include <glib/gi18n.h>
-
 #include "gdu-encryption-options-dialog.h"
+
+#include <glib/gi18n.h>
 
 struct _GduEncryptionOptionsDialog
 {
@@ -43,7 +43,7 @@ struct _GduEncryptionOptionsDialog
 };
 
 
-G_DEFINE_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_encryption_options_dialog_get_window (GduEncryptionOptionsDialog *self)
@@ -55,8 +55,8 @@ static GVariant *
 gdu_encryption_options_dialog_get_new_crypttab (GduEncryptionOptionsDialog *self)
 {
   GVariantBuilder builder;
-  const char *name, *options, *passphrase;
-  const char *old_passphrase_path = NULL;
+  const gchar *name, *options, *passphrase;
+  const gchar *old_passphrase_path = NULL;
   g_autofree char *s;
 
   name = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
@@ -65,7 +65,7 @@ gdu_encryption_options_dialog_get_new_crypttab (GduEncryptionOptionsDialog *self
 
   if (self->crypttab_config != NULL)
     {
-      const char *path;
+      const gchar *path;
       if (g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &path))
         if (path && *path && !g_str_has_prefix (path, "/dev"))
           old_passphrase_path = path;
@@ -179,9 +179,9 @@ on_done_clicked_cb (GduEncryptionOptionsDialog *self)
 static void
 on_property_changed_cb (GduEncryptionOptionsDialog *self)
 {
-  const char *new_name, *new_options, *new_passphrase_contents;
-  const char *old_name, *old_options, *old_passphrase_contents;
-  const char *passphrase_path;
+  const gchar *new_name, *new_options, *new_passphrase_contents;
+  const gchar *old_name, *old_options, *old_passphrase_contents;
+  const gchar *passphrase_path;
   g_autofree char *s = NULL;
   gboolean use_defaults;
   gboolean can_ok;
@@ -269,7 +269,7 @@ static void
 gdu_encryption_options_dialog_update (GduEncryptionOptionsDialog *self)
 {
   g_autofree char *name = NULL;
-  const char *options, *passphrase_contents;
+  const gchar *options, *passphrase_contents;
 
   g_assert (GDU_IS_ENCRYPTION_OPTIONS_DIALOG (self));
 
@@ -372,7 +372,7 @@ gdu_encryption_options_dialog_show (GtkWindow    *parent_window,
   adw_switch_row_set_active (ADW_SWITCH_ROW (self->use_defaults_switch), self->crypttab_config == NULL);
   if (self->crypttab_config != NULL)
     {
-      const char *passphrase_path;
+      const gchar *passphrase_path;
       g_variant_lookup (self->crypttab_config, "passphrase-path", "^&ay", &passphrase_path);
       /* fetch contents of passphrase file, if it exists (unless special file)
        * and get the actual passphrase as well (involves polkit dialog)

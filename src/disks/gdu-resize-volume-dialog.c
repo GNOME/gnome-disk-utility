@@ -8,9 +8,10 @@
 
 #include "config.h"
 
+#include "gdu-resize-volume-dialog.h"
+
 #include <glib/gi18n.h>
 
-#include "gdu-resize-volume-dialog.h"
 #include "gduutils.h"
 
 #define FILESYSTEM_WAIT_STEP_MS 500
@@ -48,9 +49,10 @@ struct _GduResizeVolumeDialog
   GCancellable          *mount_cancellable;
   guint                  running_id;
   guint                  wait_for_filesystem;
+  guint                  filesystem_wait_timeout_id;
 };
 
-G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_DIALOG)
 
 static void set_unit_num (GduResizeVolumeDialog *self, gint unit_num);
 
@@ -64,7 +66,7 @@ static void
 gdu_resize_volume_dialog_update (GduResizeVolumeDialog *self)
 {
   GObject *object;
-  const char *unit;
+  const gchar *unit;
 
   object = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->size_unit_combo));
   unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
@@ -148,11 +150,7 @@ resize_get_usage_mount_cb (GObject *source_object,
   if (udisks_filesystem_call_mount_finish (filesystem, NULL, res, &error))
     return;
 
-  if (self->running_id)
-    {
-      g_source_remove (self->running_id);
-      self->running_id = 0;
-    }
+  g_clear_handle_id (&self->running_id, g_source_remove);
 
   g_clear_object (&self->mount_cancellable);
 
@@ -476,6 +474,8 @@ resize_filesystem_waiter (gpointer user_data)
       return G_SOURCE_CONTINUE;
     }
 
+  self->filesystem_wait_timeout_id = 0;
+
   if (udisks_object_peek_filesystem (self->object) == NULL)
     {
       gdu_utils_show_message (_("Resizing not ready"),
@@ -519,7 +519,11 @@ part_resize_cb_online_next_fs_resize (GObject      *object,
   udisks_client_settle (self->client);
   if (resize_filesystem_waiter (self) == G_SOURCE_CONTINUE)
     {
-      g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, self);
+      self->filesystem_wait_timeout_id = g_timeout_add_full (G_PRIORITY_DEFAULT,
+                                                              FILESYSTEM_WAIT_STEP_MS,
+                                                              resize_filesystem_waiter,
+                                                              g_object_ref (self),
+                                                              g_object_unref);
     }
 }
 
@@ -622,7 +626,7 @@ static void
 on_resize_clicked_cb (GduResizeVolumeDialog *self)
 {
   gboolean offline_shrink;
-  const char *const *mount_points;
+  const gchar *const *mount_points;
 
   if (self->filesystem == NULL)
     {
@@ -649,9 +653,13 @@ on_resize_clicked_cb (GduResizeVolumeDialog *self)
 }
 
 static void
-gdu_resize_volume_dialog_finalize (GObject *object)
+gdu_resize_volume_dialog_dispose (GObject *object)
 {
-  G_OBJECT_CLASS (gdu_resize_volume_dialog_parent_class)->finalize (object);
+  GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (object);
+
+  g_clear_handle_id (&self->filesystem_wait_timeout_id, g_source_remove);
+
+  G_OBJECT_CLASS (gdu_resize_volume_dialog_parent_class)->dispose (object);
 }
 
 void
@@ -660,7 +668,7 @@ gdu_resize_volume_dialog_class_init (GduResizeVolumeDialogClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->finalize = gdu_resize_volume_dialog_finalize;
+  object_class->dispose = gdu_resize_volume_dialog_dispose;
 
   gtk_widget_class_set_template_from_resource (widget_class,
                                                "/org/gnome/DiskUtility/ui/"
@@ -703,7 +711,7 @@ gdu_resize_dialog_show (GtkWindow    *parent_window,
                         UDisksClient *client)
 {
   GduResizeVolumeDialog *self;
-  const char *const *mount_points;
+  const gchar *const *mount_points;
 
   self = g_object_new (GDU_TYPE_RESIZE_VOLUME_DIALOG,
                        NULL);

@@ -8,15 +8,16 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-
 #include "gdu-create-confirm-page.h"
 
-enum
+#include <glib/gi18n.h>
+
+typedef enum
 {
-  PROP_0,
-  PROP_COMPLETE
-};
+  PROP_COMPLETE,
+} GduCreateConfirmPageProps;
+
+static GParamSpec *props[PROP_COMPLETE + 1] = { NULL, };
 
 struct _GduCreateConfirmPage
 {
@@ -32,7 +33,7 @@ struct _GduCreateConfirmPage
   UDisksBlock   *block;
 };
 
-G_DEFINE_TYPE (GduCreateConfirmPage, gdu_create_confirm_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateConfirmPage, gdu_create_confirm_page, ADW_TYPE_BIN);
 
 static void
 gdu_create_confirm_page_set_device_name (GduCreateConfirmPage *self)
@@ -106,14 +107,10 @@ gdu_create_confirm_page_get_property (GObject    *object,
                                       GValue     *value,
                                       GParamSpec *pspec)
 {
-  switch (property_id)
+  switch ((GduCreateConfirmPageProps) property_id)
     {
     case PROP_COMPLETE:
       g_value_set_boolean (value, TRUE);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -142,11 +139,12 @@ gdu_create_confirm_page_class_init (GduCreateConfirmPageClass *klass)
   gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, usage_row);
   gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, location_row);
 
-  g_object_class_install_property (object_class, PROP_COMPLETE,
-                                   g_param_spec_boolean ("complete",
-                                                         NULL, NULL, TRUE,
-                                                         G_PARAM_READABLE |
-                                                         G_PARAM_STATIC_STRINGS));
+  props[PROP_COMPLETE] = g_param_spec_boolean ("complete",
+                                               NULL, NULL, TRUE,
+                                               G_PARAM_READABLE |
+                                               G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }
 
 GduCreateConfirmPage *

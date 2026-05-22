@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_UTILS_H__
-#define __GDU_UTILS_H__
+#pragma once
 
 #include <adwaita.h>
 #include "libgdutypes.h"
@@ -58,8 +57,8 @@ gboolean gdu_utils_is_inside_dos_extended    (UDisksClient         *client,
                                               UDisksPartitionTable *table,
                                               guint64               offset);
 
-void            gdu_utils_show_message    (const char *title,
-                                           const char *message,
+void            gdu_utils_show_message    (const gchar *title,
+                                           const gchar *message,
                                            GtkWidget  *parent_window);
 
 void            gdu_utils_show_error      (GtkWindow      *parent_window,
@@ -69,9 +68,9 @@ void            gdu_utils_show_error      (GtkWindow      *parent_window,
 
 
 typedef struct {
-  const char            *message;
-  const char            *description;
-  const char            *response_verb;
+  const gchar            *message;
+  const gchar            *description;
+  const gchar            *response_verb;
   AdwResponseAppearance  response_appearance;
   GAsyncReadyCallback    callback;
   gpointer               user_data;
@@ -92,7 +91,7 @@ typedef enum {
   OFFLINE_GROW = 1 << 2,
   ONLINE_SHRINK = 1 << 3,
   ONLINE_GROW = 1 << 4
-} ResizeFlags;
+} G_GNUC_FLAG_ENUM ResizeFlags;
 
 gboolean gdu_utils_can_resize (UDisksClient *client,
                                const gchar  *fstype,
@@ -202,5 +201,3 @@ static const guint64 unit_sizes[NUM_UNITS] = {
 gint gdu_utils_get_default_unit (guint64 size);
 
 G_END_DECLS
-
-#endif /* __GDU_UTILS_H__ */

@@ -7,12 +7,14 @@
  */
 /* NOTE: Keep this file in sync with gduutils.rs */
 #include "config.h"
-#include <glib/gi18n.h>
-#include <math.h>
-#include <sys/statvfs.h>
-#include <adwaita.h>
 
 #include "gduutils.h"
+
+#include <math.h>
+#include <sys/statvfs.h>
+
+#include <adwaita.h>
+#include <glib/gi18n.h>
 
 /* For __GNUC_PREREQ usage below */
 #ifdef __GNUC__
@@ -136,8 +138,8 @@ gchar *
 gdu_utils_unfuse_path (const gchar *path)
 {
   gchar *ret;
-  GFile *file;
-  gchar *uri;
+  g_autoptr(GFile) file = NULL;
+  g_autofree gchar *uri = NULL;
   const gchar *home;
 
   /* Map GVfs FUSE paths to GVfs URIs */
@@ -151,14 +153,12 @@ gdu_utils_unfuse_path (const gchar *path)
     {
       ret = g_uri_unescape_string (uri, NULL);
     }
-  g_object_unref (file);
-  g_free (uri);
 
   /* Replace $HOME with ~ */
   home = g_get_home_dir ();
   if (g_str_has_prefix (ret, home))
     {
-      size_t home_len = strlen (home);
+      gsize home_len = strlen (home);
       if (home_len > 2)
         {
           if (home[home_len - 1] == '/')
@@ -220,7 +220,7 @@ add_option (GtkWidget       *options_entry,
             const gchar     *option,
             gboolean         add_to_front)
 {
-  gchar *s;
+  g_autofree gchar *s = NULL;
   const gchar *text;
   text = gtk_editable_get_text (GTK_EDITABLE (options_entry));
   s = g_strdup_printf ("%s%s%s%s",
@@ -229,7 +229,6 @@ add_option (GtkWidget       *options_entry,
                        prefix,
                        add_to_front ? text : option);
   gtk_editable_set_text (GTK_EDITABLE (options_entry), s);
-  g_free (s);
 }
 
 static void
@@ -237,9 +236,9 @@ remove_option (GtkWidget       *options_entry,
                const gchar     *option,
                gboolean         check_prefix)
 {
-  GString *str;
+  g_autoptr(GString) str = NULL;
   guint n;
-  gchar **options;
+  g_auto(GStrv) options = NULL;
 
   str = g_string_new (NULL);
   options = g_strsplit (gtk_editable_get_text (GTK_EDITABLE (options_entry)), ",", 0);
@@ -260,7 +259,6 @@ remove_option (GtkWidget       *options_entry,
       g_string_append (str, options[n]);
     }
   gtk_editable_set_text (GTK_EDITABLE (options_entry), str->str);
-  g_string_free (str, TRUE);
 }
 
 void
@@ -299,9 +297,9 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
                                  GtkWidget       *widget,
                                  GtkWidget       *entry)
 {
-  gchar *opts = NULL;
+  g_autofree gchar *opts = NULL;
   const gchar *ui;
-  gchar *ui_escaped;
+  g_autofree gchar *ui_escaped = NULL;
   has_option (options_entry, option, TRUE, &opts);
   if (opts == NULL)
     opts = g_strdup ("");
@@ -324,13 +322,11 @@ gdu_options_update_entry_option (GtkWidget       *options_entry,
         }
       else
         {
-          gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
+          g_autofree gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
           gtk_editable_set_text (GTK_EDITABLE (entry), opts_unescaped);
-          g_free (opts_unescaped);
         }
     }
-  g_free (ui_escaped);
-  g_free (opts);
+
 }
 
 #if defined(HAVE_LOGIND)
@@ -339,11 +335,11 @@ const gchar *
 gdu_utils_get_seat (void)
 {
   static gsize once = 0;
-  static char *seat = NULL;
+  static gchar *seat = NULL;
 
   if (g_once_init_enter (&once))
     {
-      char *session = NULL;
+      gchar *session = NULL;
       if (sd_pid_get_session (getpid (), &session) == 0)
         {
           sd_session_get_seat (session, &seat);
@@ -630,9 +626,17 @@ gdu_utils_is_inside_dos_extended (UDisksClient         *client,
 
 /* ---------------------------------------------------------------------------------------------------- */
 
+static void
+response_cb (AdwMessageDialog *dialog,
+             gchar            *response,
+             gpointer         *user_data)
+{
+  gtk_window_close (GTK_WINDOW (dialog));
+}
+
 void
-gdu_utils_show_message (const char *title,
-                        const char *message,
+gdu_utils_show_message (const gchar *title,
+                        const gchar *message,
                         GtkWidget  *parent_window)
 {
 
@@ -659,7 +663,7 @@ gdu_utils_show_error (GtkWindow   *parent_window,
                       GError      *error)
 {
   g_autoptr(GError) fixed_up_error = NULL;
-  const char *message;
+  const gchar *message;
   /* Never show an error if it's because the user dismissed the
    * authentication dialog himself
    *
@@ -1165,7 +1169,7 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
   UDisksFilesystem *filesystem_to_unmount = NULL;
   UDisksEncrypted *encrypted_to_lock = NULL;
   GList *l;
-  GList *objects_to_check = NULL;
+  g_autolist(UDisksObject) objects_to_check = NULL;
   gboolean ret = FALSE;
   gboolean last = TRUE;
 
@@ -1236,7 +1240,6 @@ gdu_utils_is_in_use_full (UDisksClient      *client,
   if (last_out != NULL)
     *last_out = last;
 
-  g_list_free_full (objects_to_check, g_object_unref);
   g_clear_object (&encrypted_to_lock);
   g_clear_object (&filesystem_to_unmount);
 
@@ -1299,13 +1302,13 @@ unuse_unmount_cb (UDisksFilesystem *filesystem,
                   gpointer          user_data)
 {
   UnuseData *data = user_data;
-  GError *error = NULL;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_filesystem_call_unmount_finish (filesystem,
                                               res,
                                               &error))
     {
-      unuse_data_complete (data, _("Error unmounting filesystem"), error);
+      unuse_data_complete (data, _("Error unmounting filesystem"), g_steal_pointer (&error));
     }
   else
     {
@@ -1331,13 +1334,13 @@ unuse_lock_cb (UDisksEncrypted  *encrypted,
                gpointer          user_data)
 {
   UnuseData *data = user_data;
-  GError *error = NULL;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_encrypted_call_lock_finish (encrypted,
                                           res,
                                           &error))
     {
-      unuse_data_complete (data, _("Error locking device"), error);
+      unuse_data_complete (data, _("Error locking device"), g_steal_pointer (&error));
     }
   else
     {
@@ -1351,7 +1354,7 @@ unuse_set_autoclear_cb (UDisksLoop   *loop,
                         gpointer      user_data)
 {
   UnuseData *data = user_data;
-  GError *error = NULL;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_loop_call_set_autoclear_finish (loop,
                                               res,
@@ -1359,7 +1362,7 @@ unuse_set_autoclear_cb (UDisksLoop   *loop,
     {
       unuse_data_complete (data,
                            _("Error disabling autoclear for loop device"),
-                           error);
+                           g_steal_pointer (&error));
     }
   else
     {
@@ -1475,6 +1478,7 @@ gdu_utils_ensure_unused_list (UDisksClient         *client,
                            cancellable,
                            callback,
                            user_data);
+  g_task_set_source_tag (data->task, gdu_utils_ensure_unused_list);
 
   unuse_data_iterate (data);
 }

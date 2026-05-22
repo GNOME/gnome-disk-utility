@@ -14,33 +14,31 @@
 # include "config.h"
 #endif
 
+#include "gdu-drive-view.h"
+
 #include <adwaita.h>
-#include <udisks/udisks.h>
 #include <glib/gi18n.h>
+#include <udisks/udisks.h>
 
 #include "gdu-ata-smart-dialog.h"
-#include "gdu-block-row.h"
-#include "gdu-item.h"
-#include "gdu-manager.h"
 #include "gdu-benchmark-dialog.h"
+#include "gdu-block-row.h"
 #include "gdu-create-disk-image-dialog.h"
 #include "gdu-disk-settings-dialog.h"
-#include "gdu-format-disk-dialog.h"
 #include "gdu-drive-header.h"
-#include "gdu-drive-view.h"
+#include "gdu-format-disk-dialog.h"
+#include "gdu-item.h"
+#include "gdu-manager.h"
+#include "gdu-rust.h"
 #include "gdu-space-allocation-bar.h"
 
-enum
+
+typedef enum
 {
-  PROP_0,
-  PROP_MOBILE,
-  N_PROPS
-};
+  PROP_MOBILE = 1,
+} GduDriveViewProps;
 
-static GParamSpec *properties[N_PROPS];
-
-#include "gdu-rust.h"
-
+static GParamSpec *properties[PROP_MOBILE + 1];
 
 struct _GduDriveView
 {
@@ -64,7 +62,7 @@ struct _GduDriveView
 };
 
 
-G_DEFINE_TYPE (GduDriveView, gdu_drive_view, ADW_TYPE_BIN)
+G_DEFINE_FINAL_TYPE (GduDriveView, gdu_drive_view, ADW_TYPE_BIN)
 
 static gpointer
 drive_view_get_window (GduDriveView *self)
@@ -84,7 +82,7 @@ drive_view_get_client (void)
 static void
 update_drive_view (GduDriveView *self)
 {
-  const char *description, *name, *model, *serial, *partition;
+  const gchar *description, *name, *model, *serial, *partition;
   g_autofree char *size_str = NULL;
   GListModel *partitions;
   GIcon *icon;
@@ -155,7 +153,7 @@ on_copy_drive_serial_clicked (GduDriveView *self)
 
 static void
 format_disk_clicked_cb (GtkWidget  *widget,
-                        const char *action_name,
+                        const gchar *action_name,
                         GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -174,7 +172,7 @@ format_disk_clicked_cb (GtkWidget  *widget,
 
 static void
 create_disk_image_clicked_cb (GtkWidget  *widget,
-                              const char *action_name,
+                              const gchar *action_name,
                               GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -194,7 +192,7 @@ create_disk_image_clicked_cb (GtkWidget  *widget,
 
 static void
 restore_disk_image_clicked_cb (GtkWidget  *widget,
-                               const char *action_name,
+                               const gchar *action_name,
                                GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -213,7 +211,7 @@ restore_disk_image_clicked_cb (GtkWidget  *widget,
 
 static void
 benchmark_disk_clicked_cb (GtkWidget  *widget,
-                           const char *action_name,
+                           const gchar *action_name,
                            GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -234,7 +232,7 @@ benchmark_disk_clicked_cb (GtkWidget  *widget,
 
 static void
 smart_disk_clicked_cb (GtkWidget  *widget,
-                       const char *action_name,
+                       const gchar *action_name,
                        GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -254,7 +252,7 @@ smart_disk_clicked_cb (GtkWidget  *widget,
 
 static void
 drive_settings_clicked_cb (GtkWidget  *widget,
-                           const char *action_name,
+                           const gchar *action_name,
                            GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -293,7 +291,7 @@ drive_view_standby_cb (GObject      *object,
 
 static void
 standby_drive_clicked_cb (GtkWidget  *widget,
-                          const char *action_name,
+                          const gchar *action_name,
                           GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -325,7 +323,7 @@ drive_view_wakeup_cb (GObject      *object,
 
 static void
 wakeup_drive_clicked_cb (GtkWidget  *widget,
-                         const char *action_name,
+                         const gchar *action_name,
                          GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -356,7 +354,7 @@ drive_view_detach_cb (GObject      *object,
 
 static void
 detach_loop_device_clicked_cb (GtkWidget  *widget,
-                               const char *action_name,
+                               const gchar *action_name,
                                GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -409,7 +407,7 @@ eject_confirmation_response_cb (GObject      *object,
 
 static void
 eject_drive_clicked_cb (GtkWidget  *widget,
-                        const char *action_name,
+                        const gchar *action_name,
                         GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -492,7 +490,7 @@ poweroff_confirmation_response_cb (GObject      *object,
 
 static void
 poweroff_drive_clicked_cb (GtkWidget  *widget,
-                           const char *action_name,
+                           const gchar *action_name,
                            GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -538,7 +536,7 @@ poweroff_drive_clicked_cb (GtkWidget  *widget,
 
 static void
 show_drive_dialog_clicked_cb (GtkWidget  *widget,
-                              const char *action_name,
+                              const gchar *action_name,
                               GVariant   *parameter)
 {
   GduDriveView *self = GDU_DRIVE_VIEW (widget);
@@ -580,13 +578,11 @@ gdu_drive_view_set_property (GObject      *object,
 {
   GduDriveView *self = GDU_DRIVE_VIEW (object);
 
-  switch (prop_id)
+  switch ((GduDriveViewProps) prop_id)
     {
     case PROP_MOBILE:
       gdu_drive_view_set_mobile (self, g_value_get_boolean (value));
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -598,13 +594,11 @@ gdu_drive_view_get_property (GObject    *object,
 {
   GduDriveView *self = GDU_DRIVE_VIEW (object);
 
-  switch (prop_id)
+  switch ((GduDriveViewProps) prop_id)
     {
     case PROP_MOBILE:
       g_value_set_boolean (value, self->mobile);
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -660,7 +654,7 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
                            G_PARAM_EXPLICIT_NOTIFY |
                            G_PARAM_STATIC_STRINGS));
 
-  g_object_class_install_properties (object_class, N_PROPS, properties);
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
 }
 
 static void

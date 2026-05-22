@@ -8,16 +8,17 @@
 
 #include "config.h"
 
+#include "gdu-create-password-page.h"
+
 #include <glib/gi18n.h>
 #include <pwquality.h>
 
-#include "gdu-create-password-page.h"
-
-enum
+typedef enum
 {
-  PROP_0,
-  PROP_COMPLETE
-};
+  PROP_COMPLETE,
+} GduCreatePasswordPageProps;
+
+static GParamSpec *props[PROP_COMPLETE + 1] = { NULL, };
 
 struct _GduCreatePasswordPage
 {
@@ -32,7 +33,7 @@ struct _GduCreatePasswordPage
   gboolean complete;
 };
 
-G_DEFINE_TYPE (GduCreatePasswordPage, gdu_create_password_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreatePasswordPage, gdu_create_password_page, ADW_TYPE_BIN);
 
 static const gchar *
 pw_error_hint (gint error)
@@ -197,7 +198,7 @@ on_password_changed (GduCreatePasswordPage *self)
   update_password_strength (self);
 
   self->complete = can_proceed;
-  g_object_notify (G_OBJECT (self), "complete");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COMPLETE]);
 }
 
 static void
@@ -208,14 +209,10 @@ gdu_create_password_page_get_property (GObject    *object,
 {
   GduCreatePasswordPage *self = GDU_CREATE_PASSWORD_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreatePasswordPageProps) property_id)
     {
     case PROP_COMPLETE:
       g_value_set_boolean (value, self->complete);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -246,11 +243,12 @@ gdu_create_password_page_class_init (GduCreatePasswordPageClass *klass)
 
   gtk_widget_class_bind_template_callback (widget_class, on_password_changed);
 
-  g_object_class_install_property (object_class, PROP_COMPLETE,
-                                   g_param_spec_boolean ("complete",
-                                                         NULL, NULL, FALSE,
-                                                         G_PARAM_READABLE |
-                                                         G_PARAM_STATIC_STRINGS));
+  props[PROP_COMPLETE] = g_param_spec_boolean ("complete",
+                                               NULL, NULL, FALSE,
+                                               G_PARAM_READABLE |
+                                               G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }
 
 GduCreatePasswordPage *

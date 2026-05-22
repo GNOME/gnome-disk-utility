@@ -7,10 +7,12 @@
  */
 
 #include "config.h"
+
+#include "gdulocaljob.h"
+
 #include <glib/gi18n.h>
 
 #include "gduenums.h"
-#include "gdulocaljob.h"
 
 typedef struct GduLocalJobClass GduLocalJobClass;
 
@@ -31,13 +33,14 @@ struct GduLocalJobClass
   void (*canceled) (GduLocalJob *job);
 };
 
-enum
+typedef enum
 {
-  PROP_0,
-  PROP_OBJECT,
+  PROP_OBJECT = 1,
   PROP_DESCRIPTION,
   PROP_EXTRA_MARKUP,
-};
+} GduLocalJobProps;
+
+static GParamSpec *props[PROP_EXTRA_MARKUP + 1] = { NULL, };
 
 enum
 {
@@ -69,7 +72,7 @@ gdu_local_job_get_property (GObject    *object,
 {
   GduLocalJob *job = GDU_LOCAL_JOB (object);
 
-  switch (property_id)
+  switch ((GduLocalJobProps) property_id)
     {
     case PROP_OBJECT:
       g_value_set_object (value, gdu_local_job_get_object (job));
@@ -82,10 +85,6 @@ gdu_local_job_get_property (GObject    *object,
     case PROP_EXTRA_MARKUP:
       g_value_set_string (value, gdu_local_job_get_extra_markup (job));
       break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
     }
 }
 
@@ -97,7 +96,7 @@ gdu_local_job_set_property (GObject      *object,
 {
   GduLocalJob *job = GDU_LOCAL_JOB (object);
 
-  switch (property_id)
+  switch ((GduLocalJobProps) property_id)
     {
     case PROP_OBJECT:
       g_assert (job->object == NULL);
@@ -110,10 +109,6 @@ gdu_local_job_set_property (GObject      *object,
 
     case PROP_EXTRA_MARKUP:
       gdu_local_job_set_extra_markup (job, g_value_get_string (value));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -128,25 +123,24 @@ gdu_local_job_class_init (GduLocalJobClass *klass)
   gobject_class->set_property = gdu_local_job_set_property;
   gobject_class->finalize     = gdu_local_job_finalize;
 
-  g_object_class_install_property (gobject_class, PROP_DESCRIPTION,
-                                   g_param_spec_string ("description", NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_DESCRIPTION] = g_param_spec_string ("description", NULL, NULL,
+                                                 NULL,
+                                                 G_PARAM_READABLE |
+                                                 G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (gobject_class, PROP_EXTRA_MARKUP,
-                                   g_param_spec_string ("extra-markup", NULL, NULL,
-                                                        NULL,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_EXTRA_MARKUP] = g_param_spec_string ("extra-markup", NULL, NULL,
+                                                  NULL,
+                                                  G_PARAM_READABLE |
+                                                  G_PARAM_STATIC_STRINGS);
 
-  g_object_class_install_property (gobject_class, PROP_OBJECT,
-                                   g_param_spec_object ("object", NULL, NULL,
-                                                        UDISKS_TYPE_OBJECT,
-                                                        G_PARAM_READABLE |
-                                                        G_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY |
-                                                        G_PARAM_STATIC_STRINGS));
+  props[PROP_OBJECT] = g_param_spec_object ("object", NULL, NULL,
+                                            UDISKS_TYPE_OBJECT,
+                                            G_PARAM_READABLE |
+                                            G_PARAM_WRITABLE |
+                                            G_PARAM_CONSTRUCT_ONLY |
+                                            G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (gobject_class, G_N_ELEMENTS (props), props);
 
   signals[CANCELED_SIGNAL] = g_signal_new ("canceled",
                                            G_TYPE_FROM_CLASS (klass),
@@ -177,9 +171,8 @@ gdu_local_job_set_description (GduLocalJob *job,
                                const gchar *description)
 {
   g_return_if_fail (GDU_IS_LOCAL_JOB (job));
-  g_free (job->description);
-  job->description = g_strdup (description);
-  g_object_notify (G_OBJECT (job), "description");
+  g_set_str (&job->description, description);
+  g_object_notify_by_pspec (G_OBJECT (job), props[PROP_DESCRIPTION]);
 }
 
 const gchar *
@@ -194,9 +187,8 @@ gdu_local_job_set_extra_markup (GduLocalJob *job,
                                 const gchar *markup)
 {
   g_return_if_fail (GDU_IS_LOCAL_JOB (job));
-  g_free (job->extra_markup);
-  job->extra_markup = g_strdup (markup);
-  g_object_notify (G_OBJECT (job), "extra-markup");
+  g_set_str (&job->extra_markup, markup);
+  g_object_notify_by_pspec (G_OBJECT (job), props[PROP_EXTRA_MARKUP]);
 }
 
 const gchar *

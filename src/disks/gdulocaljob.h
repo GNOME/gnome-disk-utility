@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_LOCAL_JOB_H__
-#define __GDU_LOCAL_JOB_H__
+#pragma once
 
 #include <gtk/gtk.h>
 #include "gdutypes.h"
@@ -29,6 +28,5 @@ void          gdu_local_job_set_extra_markup    (GduLocalJob  *job,
 const gchar  *gdu_local_job_get_extra_markup    (GduLocalJob  *job);
 void          gdu_local_job_canceled            (GduLocalJob  *job);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GduLocalJob, g_object_unref)
 G_END_DECLS
-
-#endif /* __GDU_LOCAL_JOB_H__ */

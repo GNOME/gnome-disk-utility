@@ -13,10 +13,11 @@
 # include "config.h"
 #endif
 
+#include "gdu-edit-partition-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-edit-partition-dialog.h"
 
 struct _GduEditPartitionDialog
 {
@@ -40,18 +41,18 @@ struct _GduEditPartitionDialog
   UDisksClient         *client;
   UDisksPartition      *udisks_partition;
   UDisksPartitionTable *udisks_partition_table;
-  char                 *partition_table_type;
+  gchar                 *partition_table_type;
   GListModel           *model;
 };
 
 
-G_DEFINE_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_DIALOG)
 
-static char *
+static gchar *
 gdu_edit_partition_dialog_get_new_type (GduEditPartitionDialog  *self)
 {
   GObject *item;
-  char *type;
+  gchar *type;
 
   item = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->type_row));
   type = g_strdup (g_object_get_data (G_OBJECT (item), "type"));
@@ -80,7 +81,7 @@ gdu_edit_partition_dialog_get_new_flags (GduEditPartitionDialog *self)
   return flags;
 }
 
-static char *
+static gchar *
 gdu_edit_partition_dialog_get_new_name (GduEditPartitionDialog *self)
 {
   if (g_strcmp0 (self->partition_table_type, "dos") == 0)

@@ -8,6 +8,10 @@
 
 #pragma once
 
+#include <adwaita.h>
+
+#include "gdutypes.h"
+
 G_BEGIN_DECLS
 
 #define GDU_TYPE_EDIT_PARTITION_DIALOG (gdu_edit_partition_dialog_get_type ())

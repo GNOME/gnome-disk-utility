@@ -17,15 +17,17 @@
 # include "config.h"
 #endif
 
-#include <udisks/udisks.h>
+#include "gdu-manager.h"
+
+#include <fcntl.h>
 #include <stdbool.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 
-#include "gduutils.h"
+#include <udisks/udisks.h>
+
 #include "gdu-block.h"
 #include "gdu-drive.h"
-#include "gdu-manager.h"
+#include "gduutils.h"
 
 struct _GduManager
 {
@@ -43,7 +45,7 @@ struct _GduManager
 };
 
 
-G_DEFINE_TYPE (GduManager, gdu_manager, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (GduManager, gdu_manager, G_TYPE_OBJECT)
 
 static bool
 drive_in_manager (GduManager *self,
@@ -78,9 +80,9 @@ should_include_block (UDisksObject *object)
 {
   UDisksBlock *block;
   UDisksLoop *loop;
-  const char *device;
-  const char *drive;
-  const char *crypto_backing_device;
+  const gchar *device;
+  const gchar *drive;
+  const gchar *crypto_backing_device;
   guint64 size;
 
   block = udisks_object_peek_block (object);
@@ -123,7 +125,7 @@ should_include_block (UDisksObject *object)
   return true;
 }
 
-static int
+static gint
 compare_drive_path (GduDrive *drive_a,
                     GduDrive *drive_b)
 {
@@ -264,7 +266,7 @@ interface_properties_changed_cb (GduManager        *self,
                                  GDBusObjectProxy  *object_proxy,
                                  GDBusProxy        *interface_proxy,
                                  GVariant          *changed_properties,
-                                 char             **invalidated_properties)
+                                 gchar             **invalidated_properties)
 {
   UDisksBlock *block;
   UDisksLoop *loop;
@@ -276,7 +278,7 @@ interface_properties_changed_cb (GduManager        *self,
 
   if (loop)
     {
-      const char *file;
+      const gchar *file;
       gint64 size;
 
       file = udisks_loop_get_backing_file (loop);
@@ -293,7 +295,7 @@ interface_properties_changed_cb (GduManager        *self,
   object_added_cb (self, (gpointer)object_proxy);
 }
 
-static int
+static gint
 sort_objects (gpointer a,
               gpointer b)
 {
@@ -316,7 +318,7 @@ static void
 manager_load_drives (GduManager *self)
 {
   GDBusObjectManager *object_manager;
-  GList *objects;
+  g_autolist(GDBusObject) objects = NULL;
 
   g_assert (GDU_IS_MANAGER (self));
 
@@ -362,7 +364,7 @@ manager_load_drives (GduManager *self)
   for (GList *item = objects; item && item->data; item = item->next)
     object_added_cb (self, item->data);
 
-  g_list_free_full (objects, g_object_unref);
+
 }
 
 static void
@@ -457,7 +459,7 @@ gdu_manager_open_loop_async (GduManager          *self,
   g_autoptr(GUnixFDList) fd_list = NULL;
   GVariantBuilder options_builder;
   g_autoptr(GTask) task = NULL;
-  int fd = -1;
+  gint fd = -1;
   g_autofree char *path = NULL;
   g_return_if_fail (GDU_IS_MANAGER (self));
 
@@ -465,6 +467,7 @@ gdu_manager_open_loop_async (GduManager          *self,
   g_return_if_fail (path && *path);
 
   task = g_task_new (self, NULL, callback, user_data);
+  g_task_set_source_tag (task, gdu_manager_open_loop_async);
   g_task_set_task_data (task, g_strdup (path), g_free);
   g_object_set_data (G_OBJECT (task), "read-only", GINT_TO_POINTER (read_only));
 

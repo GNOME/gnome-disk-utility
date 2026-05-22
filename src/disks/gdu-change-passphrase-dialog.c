@@ -10,10 +10,11 @@
 # include "config.h"
 #endif
 
+#include "gdu-change-passphrase-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-change-passphrase-dialog.h"
 #include "gdu-create-password-page.h"
 
 struct _GduChangePassphraseDialog
@@ -40,7 +41,7 @@ struct _GduChangePassphraseDialog
 };
 
 
-G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_change_passphrase_dialog_get_window (GduChangePassphraseDialog *self)
@@ -75,7 +76,7 @@ gdu_change_passphrase_dialog_set_title (GduChangePassphraseDialog *self)
 static void
 on_dialog_entry_changed (GduChangePassphraseDialog *self)
 {
-  const char *curr_pass, *new_pass, *confirm_pass;
+  const gchar *curr_pass, *new_pass, *confirm_pass;
   gboolean can_proceed = FALSE;
 
   curr_pass = gtk_editable_get_text (GTK_EDITABLE (self->curr_pass_row));
@@ -204,7 +205,7 @@ on_get_secret_configuration_cb (GObject      *source_object,
   const gchar *type;
   GVariant *details;
   g_autoptr(GVariant) configuration = NULL;
-  GError *error;
+  g_autoptr(GError) error = NULL;
 
   if (!udisks_block_call_get_secret_configuration_finish (self->udisks_block,
                                                           &configuration,

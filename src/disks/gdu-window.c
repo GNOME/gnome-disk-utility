@@ -18,13 +18,14 @@
 # include "config.h"
 #endif
 
+#include "gdu-window.h"
+
 #include <glib/gi18n.h>
 
-#include "gduutils.h"
-#include "gdu-new-disk-image-dialog.h"
 #include "gdu-drive-row.h"
 #include "gdu-drive-view.h"
-#include "gdu-window.h"
+#include "gdu-new-disk-image-dialog.h"
+#include "gduutils.h"
 
 struct _GduWindow
 {
@@ -42,7 +43,7 @@ struct _GduWindow
 };
 
 
-G_DEFINE_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW)
+G_DEFINE_FINAL_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW)
 
 GSettings *gdu_window_state;
 

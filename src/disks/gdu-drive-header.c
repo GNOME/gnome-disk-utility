@@ -8,9 +8,10 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include "gdu-drive-header.h"
+
 #include <adwaita.h>
 
-#include "gdu-drive-header.h"
 #include "glib.h"
 #include "gtk/gtk.h"
 
@@ -22,26 +23,24 @@ struct _GduDriveHeader
 
   GtkImage      *drive_image;
 
-  char *drive_name;
-  char *drive_path;
+  gchar *drive_name;
+  gchar *drive_path;
 };
 
 G_DEFINE_FINAL_TYPE (GduDriveHeader, gdu_drive_header, ADW_TYPE_BIN)
 
-enum {
-  PROP_0,
-  PROP_ICON,
+typedef enum {
+  PROP_ICON = 1,
   PROP_DRIVE_NAME,
   PROP_DRIVE_PATH,
-  N_PROPS
-};
+} GduDriveHeaderProps;
 
-static GParamSpec *properties [N_PROPS];
+static GParamSpec *properties [PROP_DRIVE_PATH + 1];
 
 
 static GtkAlign
 get_alignment_from_layout_name (GduDriveHeader     *self,
-                                const char         *layout_name)
+                                const gchar         *layout_name)
 {
   if (g_strcmp0 (layout_name, "horizontal") == 0)
     return GTK_ALIGN_START;
@@ -57,7 +56,7 @@ gdu_drive_header_set_property (GObject      *object,
 {
   GduDriveHeader *self = GDU_DRIVE_HEADER (object);
 
-  switch (prop_id)
+  switch ((GduDriveHeaderProps) prop_id)
     {
     case PROP_ICON:
       gdu_drive_header_set_icon (self, G_ICON (g_value_get_object (value)));
@@ -68,8 +67,6 @@ gdu_drive_header_set_property (GObject      *object,
     case PROP_DRIVE_PATH:
       gdu_drive_header_set_drive_path (self, g_value_get_string (value));
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -81,7 +78,7 @@ gdu_drive_header_get_property (GObject    *object,
 {
   GduDriveHeader *self = GDU_DRIVE_HEADER (object);
 
-  switch (prop_id)
+  switch ((GduDriveHeaderProps) prop_id)
     {
     case PROP_ICON:
       g_value_set_object (value, gtk_image_get_gicon (self->drive_image));
@@ -92,8 +89,6 @@ gdu_drive_header_get_property (GObject    *object,
     case PROP_DRIVE_PATH:
       g_value_set_string (value, self->drive_path);
       break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -132,7 +127,7 @@ gdu_drive_header_class_init (GduDriveHeaderClass *klass)
                           G_PARAM_EXPLICIT_NOTIFY |
                           G_PARAM_STATIC_STRINGS));
   
-  g_object_class_install_properties (object_class, N_PROPS, properties);
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
 }
 
 static void
@@ -143,7 +138,7 @@ gdu_drive_header_init (GduDriveHeader *self)
 
 void
 gdu_drive_header_set_layout_name (GduDriveHeader *self,
-                                  const char     *name)
+                                  const gchar     *name)
 {
   adw_multi_layout_view_set_layout_name (self->layout_view, name);
 }
@@ -162,7 +157,7 @@ gdu_drive_header_set_icon (GduDriveHeader *self,
 
 void
 gdu_drive_header_set_drive_name (GduDriveHeader *self,
-                                 const char     *name)
+                                 const gchar     *name)
 {
   g_assert (GDU_IS_DRIVE_HEADER (self));
 
@@ -172,7 +167,7 @@ gdu_drive_header_set_drive_name (GduDriveHeader *self,
 
 void
 gdu_drive_header_set_drive_path (GduDriveHeader *self,
-                                 const char     *path)
+                                 const gchar     *path)
 {
   g_assert (GDU_IS_DRIVE_HEADER (self));
 

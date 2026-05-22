@@ -17,12 +17,13 @@
 #include "config.h"
 #endif
 
+#include "gdu-space-allocation-bar.h"
+
 #include <glib/gi18n.h>
 
-#include "gdu-item.h"
 #include "gdu-block.h"
 #include "gdu-drive.h"
-#include "gdu-space-allocation-bar.h"
+#include "gdu-item.h"
 #include "gduutils.h"
 
 struct _GduSpaceAllocationBar
@@ -32,7 +33,7 @@ struct _GduSpaceAllocationBar
   GduDrive    *drive;
 };
 
-G_DEFINE_TYPE (GduSpaceAllocationBar, gdu_space_allocation_bar, GTK_TYPE_WIDGET)
+G_DEFINE_FINAL_TYPE (GduSpaceAllocationBar, gdu_space_allocation_bar, GTK_TYPE_WIDGET)
 
 static void
 update_space_allocation_bar (GduSpaceAllocationBar *self) {
@@ -62,18 +63,18 @@ update_space_allocation_bar (GduSpaceAllocationBar *self) {
 static void
 gdu_space_allocation_bar_measure (GtkWidget *widget,
                                   GtkOrientation orientation,
-                                  int for_size,
-                                  int *minimum,
-                                  int *natural,
-                                  int *minimum_baseline,
-                                  int *natural_baseline)
+                                  gint for_size,
+                                  gint *minimum,
+                                  gint *natural,
+                                  gint *minimum_baseline,
+                                  gint *natural_baseline)
 {
   GtkWidget *child;
 
   for (child = gtk_widget_get_first_child (widget); child;
        child = gtk_widget_get_next_sibling (child))
     {
-      int child_min, child_nat;
+      gint child_min, child_nat;
 
       gtk_widget_measure (child, orientation, for_size, &child_min, &child_nat,
                           NULL, NULL);
@@ -85,9 +86,9 @@ gdu_space_allocation_bar_measure (GtkWidget *widget,
 
 static void
 gdu_space_allocation_bar_size_allocate (GtkWidget *widget,
-                                        int width,
-                                        int height,
-                                        int baseline)
+                                        gint width,
+                                        gint height,
+                                        gint baseline)
 {
   guint i;
   GtkWidget *child;
@@ -102,8 +103,8 @@ gdu_space_allocation_bar_size_allocate (GtkWidget *widget,
        child = gtk_widget_get_next_sibling (child), i++)
     {
       GduBlock *block;
-      int size;
-      int position_offset;
+      gint size;
+      gint position_offset;
 
       block = g_list_model_get_item (partitions, i);
       /* Add 128KB to the size to account for floating point errors */

@@ -13,8 +13,10 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <adwaita.h>
+#include <gtk/gtk.h>
+
+#include "gdu-drive.h"
 
 G_BEGIN_DECLS
 

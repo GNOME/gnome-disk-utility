@@ -8,16 +8,18 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-#include <math.h>
-
 #include "gdu-create-partition-page.h"
 
-enum
+#include <math.h>
+
+#include <glib/gi18n.h>
+
+typedef enum
 {
-  PROP_0,
-  PROP_COMPLETE
-};
+  PROP_COMPLETE,
+} GduCreatePartitionPageProps;
+
+static GParamSpec *props[PROP_COMPLETE + 1] = { NULL, };
 
 struct _GduCreatePartitionPage
 {
@@ -39,7 +41,7 @@ struct _GduCreatePartitionPage
   gboolean               complete;
 };
 
-G_DEFINE_TYPE (GduCreatePartitionPage, gdu_create_partition_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreatePartitionPage, gdu_create_partition_page, ADW_TYPE_BIN);
 
 gboolean
 gdu_create_partition_page_is_extended (GduCreatePartitionPage *self)
@@ -98,7 +100,7 @@ create_partition_update (GduCreatePartitionPage *self)
     can_proceed = TRUE;
 
   self->complete = can_proceed;
-  g_object_notify (G_OBJECT (self), "complete");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COMPLETE]);
 }
 
 static void
@@ -115,7 +117,7 @@ set_size_entry_unit_cb (AdwSpinRow *spin_row,
   GtkAdjustment *adjustment;
   GObject *object = NULL;
   g_autofree char *s = NULL;
-  const char *unit = NULL;
+  const gchar *unit = NULL;
 
   adjustment = adw_spin_row_get_adjustment (spin_row);
 
@@ -192,7 +194,7 @@ size_binding_func (GBinding     *binding,
 static void
 on_part_type_changed (GduCreatePartitionPage *self)
 {
-  g_object_notify (G_OBJECT (self), "complete");
+  g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COMPLETE]);
 }
 
 static void
@@ -203,14 +205,10 @@ gdu_create_partition_page_get_property (GObject     *object,
 {
   GduCreatePartitionPage *self = GDU_CREATE_PARTITION_PAGE (object);
 
-  switch (property_id)
+  switch ((GduCreatePartitionPageProps) property_id)
     {
     case PROP_COMPLETE:
       g_value_set_boolean (value, self->complete);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -245,11 +243,12 @@ gdu_create_partition_page_class_init (GduCreatePartitionPageClass *klass)
   gtk_widget_class_bind_template_callback (widget_class, set_size_entry_unit_cb);
   gtk_widget_class_bind_template_callback (widget_class, on_size_changed_cb);
 
-  g_object_class_install_property (object_class , PROP_COMPLETE,
-                                   g_param_spec_boolean ("complete", NULL, NULL,
-                                                         FALSE,
-                                                         G_PARAM_READABLE |
-                                                         G_PARAM_STATIC_STRINGS));
+  props[PROP_COMPLETE] = g_param_spec_boolean ("complete", NULL, NULL,
+                                               FALSE,
+                                               G_PARAM_READABLE |
+                                               G_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }
 
 GduCreatePartitionPage *

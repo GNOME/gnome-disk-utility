@@ -12,16 +12,17 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE
+#include "gdu-new-disk-image-dialog.h"
+
 #include <fcntl.h>
-#include <glib/gi18n.h>
 #include <math.h>
 
+#include <glib/gi18n.h>
 #include <linux/fs.h>
 
-#include "gdu-new-disk-image-dialog.h"
 #include "gduutils.h"
 
+#define _GNU_SOURCE
 /* TODOs: ideas for New Disk Image creation
  * include a radio toggle to create either
  * - a full disk image with a partition table or
@@ -46,7 +47,7 @@ struct _GduNewDiskImageDialog
   gint           cur_unit_num;
 };
 
-G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_new_disk_image_dialog_get_window (GduNewDiskImageDialog *self)
@@ -65,7 +66,7 @@ loop_setup_cb (UDisksManager *manager, GAsyncResult *res, gpointer user_data)
   g_autoptr(GError) error = NULL;
   g_autofree char *uri = NULL;
   g_autofree char *out_loop_device_object_path = NULL;
-  char *filename;
+  gchar *filename;
 
   self = g_task_get_source_object (task);
   filename = g_task_get_task_data (task);
@@ -90,7 +91,7 @@ loop_setup_cb (UDisksManager *manager, GAsyncResult *res, gpointer user_data)
 
 static gboolean
 dialog_attach_disk_image_helper (GduNewDiskImageDialog *self,
-                                 char *filename,
+                                 gchar *filename,
                                  gboolean readonly)
 {
   g_autoptr(GTask) task = NULL;
@@ -99,6 +100,7 @@ dialog_attach_disk_image_helper (GduNewDiskImageDialog *self,
   gint fd = -1;
 
   task = g_task_new (self, NULL, NULL, NULL);
+  g_task_set_source_tag (task, dialog_attach_disk_image_helper);
   g_task_set_task_data (task, g_strdup (filename), g_free);
 
   fd = open (filename, O_RDWR);
@@ -142,7 +144,7 @@ create_new_disk (GduNewDiskImageDialog *self)
   g_autoptr(GFile) out_file = NULL;
   g_autoptr(GError) error = NULL;
   g_autofree char *out_filename = NULL;
-  const char *filename;
+  const gchar *filename;
   guint64 size;
 
   filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
@@ -224,7 +226,7 @@ set_size_entry_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
   GduNewDiskImageDialog *self = GDU_NEW_DISK_IMAGE_DIALOG (user_data);
   GtkAdjustment *adjustment;
   GObject *object = NULL;
-  const char *unit = NULL;
+  const gchar *unit = NULL;
   g_autofree char *s = NULL;
 
   adjustment = adw_spin_row_get_adjustment (spin_row);
@@ -282,7 +284,7 @@ new_disk_image_confirm_response_cb (GObject      *object,
 static void
 on_create_image_button_clicked_cb (GduNewDiskImageDialog *self)
 {
-  const char *filename = NULL;
+  const gchar *filename = NULL;
   g_autoptr(GFile) file = NULL;
   ConfirmationDialogData *data;
 
@@ -329,9 +331,9 @@ new_disk_image_set_default_name (GduNewDiskImageDialog *self)
 static void
 new_disk_image_details_changed_cb (GduNewDiskImageDialog *self)
 {
-  const char *filename;
+  const gchar *filename;
   gboolean can_proceed = FALSE;
-  double size_value;
+  gdouble size_value;
 
   filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
   size_value = adw_spin_row_get_value (ADW_SPIN_ROW (self->size_entry));

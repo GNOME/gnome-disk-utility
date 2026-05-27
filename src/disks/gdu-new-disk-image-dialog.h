@@ -8,9 +8,9 @@
 
 #pragma once
 
+#include "gdutypes.h"
 #include <adwaita.h>
 #include <gtk/gtk.h>
-#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

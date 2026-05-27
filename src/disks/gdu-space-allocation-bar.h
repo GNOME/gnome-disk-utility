@@ -13,16 +13,14 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
 #include <adwaita.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 #define GDU_TYPE_SPACE_ALLOCATION_BAR (gdu_space_allocation_bar_get_type ())
 G_DECLARE_FINAL_TYPE (GduSpaceAllocationBar, gdu_space_allocation_bar, GDU, SPACE_ALLOCATION_BAR, GtkWidget)
 
-void
-gdu_space_allocation_bar_set_drive (GduSpaceAllocationBar *self,
-                                    GduDrive             *drive);
+void gdu_space_allocation_bar_set_drive (GduSpaceAllocationBar *self, GduDrive *drive);
 
 G_END_DECLS

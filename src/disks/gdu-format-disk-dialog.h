@@ -8,9 +8,9 @@
 
 #pragma once
 
-#include <gtk/gtk.h>
-#include <adwaita.h>
 #include "gdutypes.h"
+#include <adwaita.h>
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
@@ -20,15 +20,12 @@ G_DECLARE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, GDU, FORMAT_D
 GType gdu_partitioning_type_get_type (void) G_GNUC_CONST;
 #define GDU_TYPE_PARTITIONING_TYPE (gdu_partitioning_type_get_type ())
 
-typedef enum
-{
-  GDU_PARTITIONING_TYPE_GPT,
-  GDU_PARTITIONING_TYPE_DOS,
-  GDU_PARTITIONING_TYPE_EMPTY,
+typedef enum {
+    GDU_PARTITIONING_TYPE_GPT,
+    GDU_PARTITIONING_TYPE_DOS,
+    GDU_PARTITIONING_TYPE_EMPTY,
 } GduPartitioningType;
 
-void     gdu_format_disk_dialog_show (GtkWindow    *parent,
-                                      UDisksObject *object,
-                                      UDisksClient *client);
+void gdu_format_disk_dialog_show (GtkWindow *parent, UDisksObject *object, UDisksClient *client);
 
 G_END_DECLS

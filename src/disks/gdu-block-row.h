@@ -19,10 +19,7 @@ G_BEGIN_DECLS
 #define GDU_TYPE_BLOCK_ROW (gdu_block_row_get_type ())
 G_DECLARE_FINAL_TYPE (GduBlockRow, gdu_block_row, GDU, BLOCK_ROW, AdwExpanderRow)
 
-GduBlockRow *gdu_block_row_new       (GduBlock    *block);
+GduBlockRow *gdu_block_row_new (GduBlock *block);
 
-void
-on_recursive_switch_cb (GObject     *source_object,
-                        GParamSpec  *pspec,
-                        gpointer     user_data);
+void on_recursive_switch_cb (GObject *source_object, GParamSpec *pspec, gpointer user_data);
 G_END_DECLS

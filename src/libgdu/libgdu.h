@@ -9,9 +9,9 @@
 #ifndef __LIB_GDU_H__
 #define __LIB_GDU_H__
 
-#include "libgdutypes.h"
+#include "gduutils.h"
 #include "libgduenums.h"
 #include "libgduenumtypes.h"
-#include "gduutils.h"
+#include "libgdutypes.h"
 
 #endif /* __LIB_GDU_H__ */

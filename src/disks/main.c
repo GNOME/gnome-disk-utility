@@ -17,16 +17,16 @@
 int
 main (int argc, char *argv[])
 {
-  g_autoptr(GtkApplication) app = NULL;
+    g_autoptr(GtkApplication) app = NULL;
 
-  gdu_log_init ();
+    gdu_log_init ();
 
-  /* Initialize gettext support */
-  bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
-  bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
-  textdomain (GETTEXT_PACKAGE);
+    /* Initialize gettext support */
+    bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+    bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+    textdomain (GETTEXT_PACKAGE);
 
-  app = gdu_application_new ();
+    app = gdu_application_new ();
 
-  return g_application_run (G_APPLICATION (app), argc, argv);
+    return g_application_run (G_APPLICATION (app), argc, argv);
 }

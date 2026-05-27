@@ -9,14 +9,12 @@
 #ifndef __GDU_DISK_SETTINGS_DIALOG_H__
 #define __GDU_DISK_SETTINGS_DIALOG_H__
 
-#include <gtk/gtk.h>
 #include "gdutypes.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-void   gdu_disk_settings_dialog_show (GtkWindow    *window,
-                                      UDisksObject *object,
-                                      UDisksClient *client);
+void gdu_disk_settings_dialog_show (GtkWindow *window, UDisksObject *object, UDisksClient *client);
 
 gboolean gdu_disk_settings_dialog_should_show (UDisksObject *object);
 

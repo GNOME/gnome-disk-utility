@@ -9,9 +9,9 @@
 #ifndef __GDU_APPLICATION_H__
 #define __GDU_APPLICATION_H__
 
+#include "gdutypes.h"
 #include <adwaita.h>
 #include <gtk/gtk.h>
-#include "gdutypes.h"
 
 G_BEGIN_DECLS
 
@@ -19,18 +19,13 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GduApplication, gdu_application, GDU, APPLICATION, AdwApplication)
 
-GtkApplication  *gdu_application_new                        (void);
-UDisksClient    *gdu_application_get_client                 (GduApplication  *application);
-GObject         *gdu_application_new_widget                 (GduApplication  *application,
-                                                             const gchar     *ui_file,
-                                                             const gchar     *name,
-                                                             GtkBuilder     **out_builder);
-gboolean         gdu_application_should_exit                (GduApplication *application);
-GduLocalJob     *gdu_application_create_local_job           (GduApplication *application,
-                                                             UDisksObject   *object);
-void             gdu_application_destroy_local_job          (GduApplication *application,
-                                                             GduLocalJob    *job);
-
+GtkApplication *gdu_application_new (void);
+UDisksClient *gdu_application_get_client (GduApplication *application);
+GObject *gdu_application_new_widget (GduApplication *application, const gchar *ui_file, const gchar *name,
+                                     GtkBuilder **out_builder);
+gboolean gdu_application_should_exit (GduApplication *application);
+GduLocalJob *gdu_application_create_local_job (GduApplication *application, UDisksObject *object);
+void gdu_application_destroy_local_job (GduApplication *application, GduLocalJob *job);
 
 G_END_DECLS
 

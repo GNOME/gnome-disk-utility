@@ -25,8 +25,11 @@ typedef struct _GduEstimator GduEstimator;
 struct GduDVDSupport;
 typedef struct GduDVDSupport GduDVDSupport;
 
-struct GduLocalJob;
-typedef struct GduLocalJob GduLocalJob;
+struct _GduLocalJob;
+typedef struct _GduLocalJob GduLocalJob;
+
+struct _GduJobManager;
+typedef struct _GduJobManager GduJobManager;
 
 struct GduXzDecompressor;
 typedef struct GduXzDecompressor GduXzDecompressor;

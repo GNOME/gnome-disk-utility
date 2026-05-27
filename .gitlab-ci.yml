@@ -18,6 +18,15 @@ variables:
     vala desktop-file-utils gtk4-devel libadwaita-devel rust cargo blueprint-compiler
   OPTIONS: -Dman=false
 
+style-check-diff:
+  image: fedora:rawhide
+  stage: test
+  when: always
+  before_script:
+    - dnf install -y --nogpgcheck git python3 clang-tools-extra glibc-langpack-en
+  script:
+    - .gitlab-ci/run-style-check-diff.sh
+
 flatpak:
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
   variables:

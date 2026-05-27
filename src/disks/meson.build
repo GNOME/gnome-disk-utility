@@ -106,6 +106,7 @@ sources = files(
   'gdu-new-disk-image-dialog.c',
   'gdu-window.c',
   'gdu-item.c',
+  'gdu-job-manager.c',
   'gdu-block.c',
   'gdu-drive.c',
   'gdu-manager.c',

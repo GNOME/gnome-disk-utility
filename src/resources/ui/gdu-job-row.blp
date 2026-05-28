@@ -1,0 +1,50 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduJobRow: Adw.PreferencesRow {
+  hexpand: true;
+  valign: center;
+  halign: center;
+  focusable: false;
+
+  child: Box {
+    margin-end: 24;
+    margin-bottom: 12;
+    margin-top: 12;
+    margin-start: 18;
+    orientation: vertical;
+
+    Label {
+      label: bind template.title;
+      halign: start;
+    }
+
+    Box {
+      spacing: 12;
+
+      ProgressBar progress_bar {
+        valign: center;
+        hexpand: true;
+      }
+
+      Button {
+        icon-name: "process-stop-symbolic";
+        focusable: false;
+        action-name: "job.cancel";
+
+        styles [
+          "circular",
+          "raised",
+        ]
+      }
+    }
+
+    Label status_label {
+      halign: start;
+
+      styles [
+        "dimmed",
+      ]
+    }
+  };
+}

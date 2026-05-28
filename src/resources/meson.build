@@ -20,6 +20,7 @@ ui_sources = files(
   'ui/gdu-format-disk-dialog.blp',
   'ui/gdu-format-volume-dialog.blp',
   'ui/gdu-image-mounter-window.blp',
+  'ui/gdu-job-row.blp',
   'ui/gdu-mount-options-dialog.blp',
   'ui/gdu-new-disk-image-dialog.blp',
   'ui/gdu-resize-volume-dialog.blp',

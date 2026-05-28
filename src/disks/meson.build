@@ -107,6 +107,7 @@ sources = files(
   'gdu-window.c',
   'gdu-item.c',
   'gdu-job-manager.c',
+  'gdu-job-row.c',
   'gdu-block.c',
   'gdu-drive.c',
   'gdu-manager.c',

@@ -24,8 +24,7 @@ UDisksClient *gdu_application_get_client (GduApplication *application);
 GObject *gdu_application_new_widget (GduApplication *application, const gchar *ui_file, const gchar *name,
                                      GtkBuilder **out_builder);
 gboolean gdu_application_should_exit (GduApplication *application);
-GduLocalJob *gdu_application_create_local_job (GduApplication *application, UDisksObject *object);
-void gdu_application_destroy_local_job (GduApplication *application, GduLocalJob *job);
+GduJobManager *gdu_application_get_job_manager (void);
 
 G_END_DECLS
 

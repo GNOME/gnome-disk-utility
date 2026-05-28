@@ -21,6 +21,23 @@ template $GduWindow: Adw.ApplicationWindow {
           title: _("Disks");
         };
 
+        [start]
+        MenuButton job_progress_button {
+          visible: false;
+          // TODO: Repalce with DrawingArea and animate
+          icon-name: "process-working-symbolic";
+
+          popover: Popover jobs_popover {
+            child: ListBox jobs_listbox {
+              selection-mode: none;
+
+              styles [
+                "boxed-list",
+              ]
+            };
+          };
+        }
+
         [end]
         MenuButton sidebar_menu {
           primary: true;

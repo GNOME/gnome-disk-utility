@@ -93,7 +93,8 @@ static void
 dialog_data_terminate_job (GduCreateDiskImageDialog *self)
 {
     if (self->local_job != NULL) {
-        gdu_application_destroy_local_job ((gpointer) g_application_get_default (), self->local_job);
+        // TODO: Port to new API
+        // gdu_application_destroy_local_job ((gpointer) g_application_get_default (), self->local_job);
         self->local_job = NULL;
     }
 }
@@ -685,7 +686,8 @@ start_copying (GduCreateDiskImageDialog *self)
                                  /* Translators: Reason why suspend/logout is being inhibited */
                                  C_("create-inhibit-message", "Copying device to disk image"));
 
-    self->local_job = gdu_application_create_local_job ((gpointer) g_application_get_default (), self->object);
+    // TODO: Port to new API
+    // self->local_job = gdu_application_create_local_job ((gpointer) g_application_get_default (), self->object);
     udisks_job_set_operation (UDISKS_JOB (self->local_job), "x-gdu-create-disk-image");
     /* Translators: this is the description of the job */
     gdu_local_job_set_description (self->local_job, _("Creating Disk Image"));

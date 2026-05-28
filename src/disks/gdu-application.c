@@ -18,12 +18,14 @@
 #include <glib/gi18n.h>
 
 #include "gdu-format-volume-dialog.h"
+#include "gdu-job-manager.h"
 #include "gdu-log.h"
 #include "gdu-manager.h"
 #include "gdu-new-disk-image-dialog.h"
 #include "gdu-rust.h"
 #include "gdu-window.h"
 #include "gdulocaljob.h"
+#include "gdutypes.h"
 
 struct _GduApplication {
     AdwApplication parent_instance;
@@ -32,8 +34,7 @@ struct _GduApplication {
     UDisksClient *client;
     GduWindow *window;
 
-    /* Maps from UDisksObject* -> GList<GduLocalJob*> */
-    GHashTable *local_jobs;
+    GduJobManager *job_manager;
 };
 
 G_DEFINE_FINAL_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
@@ -43,8 +44,6 @@ static void gdu_application_set_options (GduApplication *app);
 static void
 gdu_application_init (GduApplication *app)
 {
-    app->local_jobs = g_hash_table_new (g_direct_hash, g_direct_equal);
-
     gdu_application_set_options (app);
 }
 
@@ -53,18 +52,7 @@ gdu_application_finalize (GObject *object)
 {
     GduApplication *app = GDU_APPLICATION (object);
 
-    if (app->local_jobs != NULL) {
-        GHashTableIter iter;
-        GList *local_jobs, *jobs_to_destroy = NULL, *l;
-
-        g_hash_table_iter_init (&iter, app->local_jobs);
-        while (g_hash_table_iter_next (&iter, NULL /* object*/, (gpointer) &local_jobs))
-            jobs_to_destroy = g_list_concat (jobs_to_destroy, g_list_copy (local_jobs));
-        for (l = jobs_to_destroy; l != NULL; l = l->next)
-            gdu_application_destroy_local_job (app, GDU_LOCAL_JOB (l->data));
-        g_list_free (jobs_to_destroy);
-        g_hash_table_destroy (app->local_jobs);
-    }
+    g_clear_object (&app->job_manager);
 
     if (gdu_rs_has_local_jobs ())
         gdu_rs_local_jobs_clear ();
@@ -73,6 +61,16 @@ gdu_application_finalize (GObject *object)
         g_object_unref (app->client);
 
     G_OBJECT_CLASS (gdu_application_parent_class)->finalize (object);
+}
+
+static gboolean
+application_has_jobs (GduApplication *self)
+{
+    if (self->job_manager != NULL && gdu_job_manager_has_jobs (self->job_manager))
+        return TRUE;
+
+    /* Temporary bridge until Rust restore jobs are migrated to GduJobManager. */
+    return gdu_rs_has_local_jobs ();
 }
 
 static void
@@ -84,20 +82,52 @@ application_quit_response_cb (GObject *source_object, GAsyncResult *response, gp
     if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
         return;
 
-    gtk_window_close (GTK_WINDOW (self->window));
+    if (self->job_manager != NULL && gdu_job_manager_has_jobs (self->job_manager))
+        gdu_job_manager_cancel_all (self->job_manager);
+
+    g_application_quit (G_APPLICATION (self));
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
+static void
+application_show_close_confirmation (GduApplication *self)
+{
+    ConfirmationDialogData *data;
+
+    data = g_new0 (ConfirmationDialogData, 1);
+    data->message = _("Cancel running operations?");
+    data->description = _("Disks is performing one or more operations. Closing the app will cancel them.");
+    data->response_verb = _("Close");
+    data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
+    data->callback = application_quit_response_cb;
+    data->user_data = self;
+
+    gdu_utils_show_confirmation (GTK_WIDGET (self->window), data, NULL);
+}
+
+static gboolean
+application_window_close_request_cb (GtkWindow *window, GduApplication *self)
+{
+    if (!application_has_jobs (self))
+        return FALSE;
+
+    application_show_close_confirmation (self);
+    return TRUE;
+}
 
 static void
 gdu_application_ensure_client (GduApplication *app)
 {
     g_autoptr(GError) error = NULL;
 
+    if (app->client != NULL)
+        return;
+
     app->disk_manager = gdu_manager_get_default (&error);
-    app->client = gdu_manager_get_client (app->disk_manager);
-    if (error)
+    if (error != NULL)
         g_error ("Error getting udisks client: %s", error->message);
+
+    app->client = gdu_manager_get_client (app->disk_manager);
+    app->job_manager = gdu_job_manager_new (app->client);
 }
 
 static UDisksObject *
@@ -241,8 +271,10 @@ gdu_application_activate (GApplication *_app)
 
     gdu_application_ensure_client (app);
 
-    if (app->window == NULL)
+    if (app->window == NULL) {
         app->window = gdu_window_new (_app, app->disk_manager);
+        g_signal_connect (app->window, "close-request", G_CALLBACK (application_window_close_request_cb), app);
+    }
 
     gtk_window_present (GTK_WINDOW (app->window));
 }
@@ -282,20 +314,24 @@ static void
 gdu_application_quit (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
     GduApplication *app = GDU_APPLICATION (user_data);
-    ConfirmationDialogData *data;
 
-    if ((app->local_jobs == NULL || g_hash_table_size (app->local_jobs) == 0) && !gdu_rs_has_local_jobs ())
+    if (app->window == NULL)
+        return;
+
+    if (!application_has_jobs (app)) {
         gtk_window_close (GTK_WINDOW (app->window));
+        return;
+    }
 
-    data = g_new0 (ConfirmationDialogData, 1);
-    data->message = _("Stop running jobs?");
-    data->description = _("Closing now stops the running jobs and leads to a corrupt result.");
-    data->response_verb = _("Stop");
-    data->response_appearance = ADW_RESPONSE_DESTRUCTIVE;
-    data->callback = application_quit_response_cb;
-    data->user_data = app;
+    application_show_close_confirmation (app);
+}
 
-    gdu_utils_show_confirmation (GTK_WIDGET (app->window), data, NULL);
+GduJobManager *
+gdu_application_get_job_manager (void)
+{
+    GduApplication *application = GDU_APPLICATION (g_application_get_default ());
+    gdu_application_ensure_client (application);
+    return application->job_manager;
 }
 
 static void
@@ -436,64 +472,4 @@ out:
     if (out_builder != NULL)
         *out_builder = g_steal_pointer (&builder);
     return ret;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-static void
-on_local_job_notify (GObject *object, GParamSpec *pspec, gpointer user_data)
-{
-    GduApplication *app = GDU_APPLICATION (user_data);
-    udisks_client_queue_changed (app->client);
-}
-
-GduLocalJob *
-gdu_application_create_local_job (GduApplication *application, UDisksObject *object)
-{
-    GduLocalJob *job = NULL;
-    GList *local_jobs;
-
-    g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
-    g_return_val_if_fail (UDISKS_IS_OBJECT (object), NULL);
-
-  // TODO: Migrate to new API
-  // job = gdu_local_job_new (object);
-
-    local_jobs = g_hash_table_lookup (application->local_jobs, object);
-    local_jobs = g_list_prepend (local_jobs, job);
-    g_hash_table_insert (application->local_jobs, object, local_jobs);
-
-    g_signal_connect (job, "notify", G_CALLBACK (on_local_job_notify), application);
-
-    udisks_client_queue_changed (application->client);
-
-    return job;
-}
-
-/* ---------------------------------------------------------------------------------------------------- */
-
-void
-gdu_application_destroy_local_job (GduApplication *application, GduLocalJob *job)
-{
-    GList *local_jobs;
-    UDisksObject *object;
-
-    g_return_if_fail (GDU_IS_APPLICATION (application));
-    g_return_if_fail (GDU_IS_LOCAL_JOB (job));
-
-    object = gdu_local_job_get_object (job);
-
-    local_jobs = g_hash_table_lookup (application->local_jobs, object);
-    g_warn_if_fail (g_list_find (local_jobs, job) != NULL);
-    local_jobs = g_list_remove (local_jobs, job);
-    g_signal_handlers_disconnect_by_func (job, G_CALLBACK (on_local_job_notify), application);
-
-    if (local_jobs != NULL)
-        g_hash_table_insert (application->local_jobs, object, local_jobs);
-    else
-        g_hash_table_remove (application->local_jobs, object);
-
-    g_object_unref (job);
-
-    udisks_client_queue_changed (application->client);
 }

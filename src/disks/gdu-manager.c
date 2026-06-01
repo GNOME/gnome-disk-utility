@@ -221,15 +221,14 @@ object_added_cb (GduManager *self, UDisksObject *object)
 }
 
 static void
-object_removed_cb (GduManager *self, UDisksObject *object)
+manager_remove_drive (GduManager *self, UDisksObject *object)
 {
     guint position;
 
     g_assert (GDU_IS_MANAGER (self));
     g_assert (UDISKS_IS_OBJECT (object));
 
-    if ((udisks_object_peek_drive (object) != NULL || udisks_object_peek_loop (object) != NULL)
-        && drive_in_manager (self, object, &position)) {
+    if (drive_in_manager (self, object, &position)) {
         g_autoptr(GduItem) item = NULL;
 
         item = g_list_model_get_item (G_LIST_MODEL (self->drives), position);
@@ -237,6 +236,36 @@ object_removed_cb (GduManager *self, UDisksObject *object)
 
         g_list_store_remove (self->drives, position);
     }
+}
+
+static void
+object_removed_cb (GduManager *self, UDisksObject *object)
+{
+    g_assert (GDU_IS_MANAGER (self));
+    g_assert (UDISKS_IS_OBJECT (object));
+
+    if (g_object_get_data (G_OBJECT (object), "gdu-drive") != NULL)
+        manager_remove_drive (self, object);
+}
+
+static void
+interface_removed_cb (GduManager *self, UDisksObject *object, GDBusInterface *interface)
+{
+    GduDrive *drive;
+
+    g_assert (GDU_IS_MANAGER (self));
+    g_assert (UDISKS_IS_OBJECT (object));
+    g_assert (G_IS_DBUS_INTERFACE (interface));
+
+    if ((UDISKS_IS_BLOCK (interface) || UDISKS_IS_DRIVE (interface) || UDISKS_IS_LOOP (interface))
+        && g_object_get_data (G_OBJECT (object), "gdu-drive") != NULL) {
+        manager_remove_drive (self, object);
+        return;
+    }
+
+    drive = manager_get_object_drive (self, object);
+    if (drive != NULL)
+        gdu_item_changed (GDU_ITEM (drive));
 }
 
 static void
@@ -318,7 +347,7 @@ manager_load_drives (GduManager *self)
     self->iface_add_id = g_signal_connect_object (object_manager, "interface-added", G_CALLBACK (object_added_cb), self,
                                                   G_CONNECT_SWAPPED);
     self->iface_remove_id = g_signal_connect_object (object_manager, "interface-removed",
-                                                     G_CALLBACK (object_removed_cb), self, G_CONNECT_SWAPPED);
+                                                     G_CALLBACK (interface_removed_cb), self, G_CONNECT_SWAPPED);
     self->properties_changed_id =
         g_signal_connect_object (object_manager, "interface-proxy-properties-changed",
                                  G_CALLBACK (interface_properties_changed_cb), self, G_CONNECT_SWAPPED);

@@ -33,7 +33,7 @@ struct _GduLocalJob {
     GTask *task;
 
     GMutex update_lock;
-    guint update_id;
+    GSource *update_source;
 };
 
 G_DEFINE_FINAL_TYPE (GduLocalJob, gdu_local_job, UDISKS_TYPE_JOB_SKELETON)
@@ -352,9 +352,10 @@ queued_update_cb (gpointer user_data)
     GTask *task = G_TASK (user_data);
     GduLocalJob *job = g_task_get_source_object (task);
     GduLocalJobUpdateFunc update_func;
+    g_autoptr(GSource) source = NULL;
 
     g_mutex_lock (&job->update_lock);
-    job->update_id = 0;
+    source = g_steal_pointer (&job->update_source);
     update_func = job->update_func;
     g_mutex_unlock (&job->update_lock);
 
@@ -373,7 +374,7 @@ gdu_local_job_queue_update (GduLocalJob *job)
     g_return_if_fail (GDU_IS_LOCAL_JOB (job));
 
     g_mutex_lock (&job->update_lock);
-    if (job->update_func == NULL || job->update_id != 0 || job->task == NULL) {
+    if (job->update_func == NULL || job->update_source != NULL || job->task == NULL) {
         g_mutex_unlock (&job->update_lock);
         return;
     }
@@ -381,8 +382,8 @@ gdu_local_job_queue_update (GduLocalJob *job)
     task = g_object_ref (job->task);
     source = g_idle_source_new ();
     g_source_set_priority (source, G_PRIORITY_DEFAULT_IDLE);
+    job->update_source = g_source_ref (source);
     g_task_attach_source (task, source, queued_update_cb);
-    job->update_id = g_source_get_id (source);
 
     g_mutex_unlock (&job->update_lock);
 }
@@ -390,36 +391,30 @@ gdu_local_job_queue_update (GduLocalJob *job)
 static void
 gdu_local_job_clear_queued_update (GduLocalJob *job)
 {
-    guint update_id = 0;
+    g_autoptr(GSource) source = NULL;
 
     g_return_if_fail (GDU_IS_LOCAL_JOB (job));
 
     g_mutex_lock (&job->update_lock);
-    if (job->update_id != 0) {
-        update_id = job->update_id;
-        job->update_id = 0;
-    }
+    source = g_steal_pointer (&job->update_source);
     g_mutex_unlock (&job->update_lock);
 
-    if (update_id != 0)
-        g_source_remove (update_id);
+    if (source != NULL)
+        g_source_destroy (source);
 }
 
 static void
 gdu_local_job_cancel_updates (GduLocalJob *job)
 {
-    guint update_id = 0;
+    g_autoptr(GSource) source = NULL;
 
     g_mutex_lock (&job->update_lock);
     job->update_func = NULL;
-    if (job->update_id != 0) {
-        update_id = job->update_id;
-        job->update_id = 0;
-    }
+    source = g_steal_pointer (&job->update_source);
     g_mutex_unlock (&job->update_lock);
 
-    if (update_id != 0)
-        g_source_remove (update_id);
+    if (source != NULL)
+        g_source_destroy (source);
 }
 
 static void

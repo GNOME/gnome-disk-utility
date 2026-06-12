@@ -277,7 +277,7 @@ gdu_local_job_task_thread_func (GTask *task, gpointer source_object, gpointer ta
     if (g_task_return_error_if_cancelled (task))
         return;
 
-    result = job->run_func (job, cancellable, job->user_data, &error);
+    result = job->run_func (job, cancellable, &error);
 
     if (result == GDU_LOCAL_JOB_RESULT_ERROR) {
         if (error != NULL)

@@ -420,9 +420,9 @@ out:
 }
 
 static GduLocalJobResult
-create_disk_image_job_run (GduLocalJob *job, GCancellable *cancellable, gpointer user_data, GError **out_error)
+create_disk_image_job_run (GduLocalJob *job, GCancellable *cancellable, GError **out_error)
 {
-    CreateDiskImageJobData *data = user_data;
+    CreateDiskImageJobData *data = gdu_local_job_get_user_data (job);
     GduDVDSupport *dvd_support = NULL;
     guchar *buffer_unaligned = NULL;
     guchar *buffer = NULL;

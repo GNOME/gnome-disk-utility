@@ -27,6 +27,15 @@ style-check-diff:
   script:
     - .gitlab-ci/run-style-check-diff.sh
 
+check-potfiles:
+  image: fedora:rawhide
+  stage: test
+  when: always
+  before_script:
+    - dnf install -y --nogpgcheck glibc-langpack-en
+  script:
+    - bash .gitlab-ci/check-potfiles.sh
+
 flatpak:
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
   variables:

@@ -988,7 +988,7 @@ benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, int fd, long pa
 
         if (lseek (fd, offset, SEEK_SET) != offset) {
             g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
-                         C_ ("benchmarking", "Error seeking to offset %lld: %m"), (long long int) offset);
+                         C_("benchmarking", "Error seeking to offset %lld: %m"), (long long int) offset);
             return error;
         }
 
@@ -996,7 +996,7 @@ benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, int fd, long pa
         num_read = read (fd, buffer, page_size);
         if (G_UNLIKELY (num_read < 0)) {
             g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno),
-                         C_ ("benchmarking", "Error reading %lld bytes from offset %lld"), (long long int) page_size,
+                         C_("benchmarking", "Error reading %lld bytes from offset %lld"), (long long int) page_size,
                             (long long int) offset);
             return error;
         }

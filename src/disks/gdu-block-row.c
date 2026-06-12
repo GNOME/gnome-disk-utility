@@ -492,10 +492,10 @@ fs_check_cb (GObject *obj, GAsyncResult *result, gpointer user_data)
         name = udisks_block_get_id_type (block);
 
     gdu_utils_show_message (consistent
-                            ? _ ("Filesystem intact")
-                            : _ ("Filesystem damaged"),
-                                g_strdup_printf (consistent     ? _ ("Filesystem %s on %s is undamaged.")
-                                                                : _ ("Filesystem %s on %s needs repairing."), name,
+                            ? _("Filesystem intact")
+                            : _("Filesystem damaged"),
+                                g_strdup_printf (consistent     ? _("Filesystem %s on %s is undamaged.")
+                                                                : _("Filesystem %s on %s needs repairing."), name,
                                                                     udisks_object_info_get_name (info)),
                                                  block_row_get_window (self));
 

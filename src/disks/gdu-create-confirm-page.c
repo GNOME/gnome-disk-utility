@@ -86,7 +86,7 @@ gdu_create_confirm_page_set_usage (GduCreateConfirmPage *self)
         /* Translators: Disk usage in the format '3 GB (7%)', unit string comes
          * from UDisks.
          */
-        s2 = g_strdup_printf (_ ("%s (%.1f%%)"), s1, 100.0 * (size - unused_space) / size);
+        s2 = g_strdup_printf (_("%s (%.1f%%)"), s1, 100.0 * (size - unused_space) / size);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->usage_row), s2);
     }
 }

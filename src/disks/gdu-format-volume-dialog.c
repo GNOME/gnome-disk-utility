@@ -171,14 +171,14 @@ update_dialog (GtkWidget *widget, GParamSpec *child_property, GduFormatVolumeDia
 
     page = gdu_format_volume_dialog_update_stack (self);
 
-    gtk_button_set_label (GTK_BUTTON (self->back_button), (self->prev == NULL) ? _ ("_Cancel") : _ ("_Previous"));
+    gtk_button_set_label (GTK_BUTTON (self->back_button), (self->prev == NULL) ? _("_Cancel") : _("_Previous"));
 
     if (self->next == NULL) {
-        gtk_button_set_label (GTK_BUTTON (self->forward_button), self->add_partition ? _ ("Cre_ate") : _ ("Form_at"));
+        gtk_button_set_label (GTK_BUTTON (self->forward_button), self->add_partition ? _("Cre_ate") : _("Form_at"));
         gtk_widget_add_css_class (self->forward_button,
                                   self->add_partition ? "suggested-action" : "destructive-action");
     } else {
-        gtk_button_set_label (GTK_BUTTON (self->forward_button), _ ("N_ext"));
+        gtk_button_set_label (GTK_BUTTON (self->forward_button), _("N_ext"));
         gtk_widget_remove_css_class (self->forward_button, "suggested-action");
         gtk_widget_remove_css_class (self->forward_button, "destructive-action");
     }

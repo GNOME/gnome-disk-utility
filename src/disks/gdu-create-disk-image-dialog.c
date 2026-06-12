@@ -677,7 +677,7 @@ start_copying (GduCreateDiskImageDialog *self)
     const gchar *name;
     CreateDiskImageJobData *data;
     GduJobManager *job_manager;
-    GduLocalJob *job;
+    g_autoptr(GduLocalJob) job = NULL;
     g_autoptr(GError) error = NULL;
     g_autoptr(GFile) output_file = NULL;
     g_autoptr(GFileOutputStream) output_file_stream = NULL;
@@ -711,10 +711,8 @@ start_copying (GduCreateDiskImageDialog *self)
     gdu_local_job_set_cancelable (job, TRUE);
 
     job_manager = gdu_application_get_job_manager ();
-    if (gdu_job_manager_enqueue (job_manager, job) == NULL)
+    if (!gdu_job_manager_enqueue (job_manager, g_steal_pointer (&job)))
         g_warning ("Failed to enqueue create disk image job");
-
-    g_object_unref (job);
 }
 
 static void

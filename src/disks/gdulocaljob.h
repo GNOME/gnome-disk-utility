@@ -30,9 +30,9 @@ typedef enum {
 } GduLocalJobResult;
 
 /* Called in a worker thread when the job is started by GduJobManager.
- * Use gdu_local_job_queue_update() to refresh main-thread job properties. */
-typedef GduLocalJobResult (*GduLocalJobRunFunc) (GduLocalJob *job, GCancellable *cancellable, gpointer user_data,
-                                                 GError **error);
+ * Use gdu_local_job_get_user_data() to access borrowed job-specific data and
+ * gdu_local_job_queue_update() to refresh main-thread job properties. */
+typedef GduLocalJobResult (*GduLocalJobRunFunc) (GduLocalJob *job, GCancellable *cancellable, GError **error);
 typedef void (*GduLocalJobUpdateFunc) (GduLocalJob *job);
 typedef void (*GduLocalJobCompletedFunc) (GduLocalJob *job, GduLocalJobResult result, GError *error);
 

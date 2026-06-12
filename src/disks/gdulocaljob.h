@@ -56,7 +56,6 @@ void gdu_local_job_set_description (GduLocalJob *job, const gchar *description);
 const gchar *gdu_local_job_get_extra_markup (GduLocalJob *job);
 void gdu_local_job_set_extra_markup (GduLocalJob *job, const gchar *markup);
 GduLocalJobState gdu_local_job_get_state (GduLocalJob *job);
-GCancellable *gdu_local_job_get_cancellable (GduLocalJob *job);
 gboolean gdu_local_job_get_cancelable (GduLocalJob *job);
 void gdu_local_job_set_cancelable (GduLocalJob *job, gboolean cancelable);
 gboolean gdu_local_job_get_progress_valid (GduLocalJob *job);

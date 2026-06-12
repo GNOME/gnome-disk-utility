@@ -69,7 +69,7 @@ gdu_window_set_job_manager (GduWindow *self, GduJobManager *job_manager)
     gtk_list_box_bind_model (self->jobs_listbox, gdu_job_manager_get_jobs (job_manager), gdu_window_create_job_row_cb,
                              g_object_ref (job_manager), g_object_unref);
 
-    g_object_bind_property (self->job_manager, "has-jobs", self->job_progress_button, "visible", G_BINDING_SYNC_CREATE);
+    g_object_bind_property (self->job_manager, "n-jobs", self->job_progress_button, "visible", G_BINDING_SYNC_CREATE);
 }
 
 static void

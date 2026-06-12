@@ -10,7 +10,7 @@ xmldirs=$srcdirs
 files=$(grep -ElRs --include='*.c' 'gettext2? ?\(("|GETTEXT_PACKAGE,)' $srcdirs)
 
 # find source files that contain gettext macros
-files="$files "$(grep -lRs --include='*.c' --include='*.h' '[^I_)]_(' $srcdirs)
+files="$files "$(grep -ElRs --include='*.c' --include='*.h' '(^|[^[:alnum:]_])(N_|C_|NC_|_) *\(' $srcdirs)
 
 # find Rust source files that contain gettext calls
 files="$files "$(grep -lRs --include='*.rs' \

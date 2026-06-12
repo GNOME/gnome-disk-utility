@@ -50,17 +50,10 @@ enum {
     PROP_DESCRIPTION,
     PROP_EXTRA_MARKUP,
     PROP_STATE,
-    PROP_CANCELLABLE,
     N_PROPS
 };
 
-enum {
-    CANCEL_REQUESTED_SIGNAL,
-    LAST_SIGNAL
-};
-
 static GParamSpec *props[N_PROPS];
-static guint signals[LAST_SIGNAL];
 
 static void gdu_local_job_set_state (GduLocalJob *job, GduLocalJobState state);
 static void gdu_local_job_clear_queued_update (GduLocalJob *job);
@@ -121,10 +114,6 @@ gdu_local_job_get_property (GObject *object, guint property_id, GValue *value, G
 
     case PROP_STATE:
         g_value_set_enum (value, self->state);
-        break;
-
-    case PROP_CANCELLABLE:
-        g_value_set_object (value, self->cancellable);
         break;
 
     default:
@@ -226,13 +215,7 @@ gdu_local_job_class_init (GduLocalJobClass *klass)
     props[PROP_STATE] = g_param_spec_enum ("state", NULL, NULL, GDU_TYPE_LOCAL_JOB_STATE, GDU_LOCAL_JOB_STATE_QUEUED,
                                            G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
-    props[PROP_CANCELLABLE] =
-        g_param_spec_object ("cancellable", NULL, NULL, G_TYPE_CANCELLABLE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
-
     g_object_class_install_properties (object_class, N_PROPS, props);
-
-    signals[CANCEL_REQUESTED_SIGNAL] = g_signal_new ("cancel-requested", G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST,
-                                                     0, NULL, NULL, g_cclosure_marshal_VOID__VOID, G_TYPE_NONE, 0);
 }
 
 static void
@@ -536,14 +519,6 @@ gdu_local_job_set_state (GduLocalJob *job, GduLocalJobState state)
     g_object_notify_by_pspec (G_OBJECT (job), props[PROP_STATE]);
 }
 
-GCancellable *
-gdu_local_job_get_cancellable (GduLocalJob *job)
-{
-    g_return_val_if_fail (GDU_IS_LOCAL_JOB (job), NULL);
-
-    return job->cancellable;
-}
-
 gboolean
 gdu_local_job_get_cancelable (GduLocalJob *job)
 {
@@ -674,7 +649,6 @@ gdu_local_job_request_cancel (GduLocalJob *job)
     previous_state = job->state;
     gdu_local_job_set_state (job, GDU_LOCAL_JOB_STATE_CANCELING);
     g_cancellable_cancel (job->cancellable);
-    g_signal_emit (job, signals[CANCEL_REQUESTED_SIGNAL], 0);
 
     if (previous_state == GDU_LOCAL_JOB_STATE_QUEUED)
         gdu_local_job_complete (job, GDU_LOCAL_JOB_RESULT_CANCELLED, NULL);

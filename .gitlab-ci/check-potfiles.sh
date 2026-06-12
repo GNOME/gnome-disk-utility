@@ -12,6 +12,16 @@ files=$(grep -ElRs --include='*.c' 'gettext2? ?\(("|GETTEXT_PACKAGE,)' $srcdirs)
 # find source files that contain gettext macros
 files="$files "$(grep -lRs --include='*.c' --include='*.h' '[^I_)]_(' $srcdirs)
 
+# find Rust source files that contain gettext calls
+files="$files "$(grep -lRs --include='*.rs' \
+  -e 'gettext(' \
+  -e 'pgettext(' \
+  -e 'ngettext(' \
+  -e 'dngettext(' \
+  -e 'gettext_f(' \
+  -e 'pgettext_f(' \
+  $srcdirs)
+
 # find ui files that contain translatable string
 files="$files "$(grep -lRis --include='*.ui' 'translatable="[ty1]' $uidirs)
 

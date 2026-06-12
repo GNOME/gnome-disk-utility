@@ -20,7 +20,8 @@ GduJobManager *gdu_job_manager_new (void);
 GListModel *gdu_job_manager_get_jobs (GduJobManager *self);
 guint gdu_job_manager_get_n_jobs (GduJobManager *self);
 
-GduLocalJob *gdu_job_manager_enqueue (GduJobManager *self, GduLocalJob *job);
+/* Takes ownership of @job, regardless of whether enqueueing succeeds. */
+gboolean gdu_job_manager_enqueue (GduJobManager *self, GduLocalJob *job);
 void gdu_job_manager_cancel_job (GduJobManager *self, GduLocalJob *job);
 void gdu_job_manager_cancel_all (GduJobManager *self);
 

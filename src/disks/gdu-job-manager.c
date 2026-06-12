@@ -85,22 +85,27 @@ notify_job_count (GduJobManager *self)
     g_object_notify_by_pspec (G_OBJECT (self), props[PROP_N_JOBS]);
 }
 
-GduLocalJob *
+gboolean
 gdu_job_manager_enqueue (GduJobManager *self, GduLocalJob *job)
 {
+    g_autoptr(GduLocalJob) owned_job = NULL;
     g_autofree gchar *object_path = NULL;
     GQueue *queue;
 
-    g_return_val_if_fail (GDU_IS_JOB_MANAGER (self), NULL);
-    g_return_val_if_fail (GDU_IS_LOCAL_JOB (job), NULL);
-    g_return_val_if_fail (gdu_local_job_get_state (job) == GDU_LOCAL_JOB_STATE_QUEUED, NULL);
+    g_return_val_if_fail (GDU_IS_LOCAL_JOB (job), FALSE);
+    owned_job = job;
+
+    g_return_val_if_fail (GDU_IS_JOB_MANAGER (self), FALSE);
+
+    if (gdu_local_job_get_state (job) != GDU_LOCAL_JOB_STATE_QUEUED)
+        return FALSE;
 
     object_path = g_strdup (gdu_local_job_get_object_path (job));
     if (object_path == NULL)
-        return NULL;
+        return FALSE;
 
     if (gdu_job_manager_has_job (self, job))
-        return NULL;
+        return FALSE;
 
     queue = g_hash_table_lookup (self->jobs_by_object_path, object_path);
     if (queue == NULL) {
@@ -108,14 +113,14 @@ gdu_job_manager_enqueue (GduJobManager *self, GduLocalJob *job)
         g_hash_table_insert (self->jobs_by_object_path, g_strdup (object_path), queue);
     }
 
-    g_queue_push_tail (queue, g_object_ref (job));
+    g_queue_push_tail (queue, g_steal_pointer (&owned_job));
     g_list_store_append (self->jobs, job);
     g_signal_connect_object (job, "notify::state", G_CALLBACK (job_state_changed_cb), self, 0);
 
     notify_job_count (self);
     start_next_job_for_object_path (self, object_path);
 
-    return job;
+    return TRUE;
 }
 
 static gboolean

@@ -65,7 +65,7 @@ gdu_application_finalize (GObject *object)
 static gboolean
 application_has_jobs (GduApplication *self)
 {
-    if (self->job_manager != NULL && gdu_job_manager_has_jobs (self->job_manager))
+    if (self->job_manager != NULL && gdu_job_manager_get_n_jobs (self->job_manager) > 0)
         return TRUE;
 
     /* Temporary bridge until Rust restore jobs are migrated to GduJobManager. */
@@ -81,7 +81,7 @@ application_quit_response_cb (GObject *source_object, GAsyncResult *response, gp
     if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
         return;
 
-    if (self->job_manager != NULL && gdu_job_manager_has_jobs (self->job_manager))
+    if (self->job_manager != NULL && gdu_job_manager_get_n_jobs (self->job_manager) > 0)
         gdu_job_manager_cancel_all (self->job_manager);
 
     g_application_quit (G_APPLICATION (self));
@@ -126,7 +126,7 @@ gdu_application_ensure_client (GduApplication *app)
         g_error ("Error getting udisks client: %s", error->message);
 
     app->client = gdu_manager_get_client (app->disk_manager);
-    app->job_manager = gdu_job_manager_new (app->client);
+    app->job_manager = gdu_job_manager_new ();
 }
 
 static UDisksObject *

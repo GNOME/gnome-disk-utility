@@ -15,11 +15,10 @@ G_BEGIN_DECLS
 #define GDU_TYPE_JOB_MANAGER (gdu_job_manager_get_type ())
 G_DECLARE_FINAL_TYPE (GduJobManager, gdu_job_manager, GDU, JOB_MANAGER, GObject)
 
-GduJobManager *gdu_job_manager_new (UDisksClient *client);
+GduJobManager *gdu_job_manager_new (void);
 
 GListModel *gdu_job_manager_get_jobs (GduJobManager *self);
 guint gdu_job_manager_get_n_jobs (GduJobManager *self);
-gboolean gdu_job_manager_has_jobs (GduJobManager *self);
 
 GduLocalJob *gdu_job_manager_enqueue (GduJobManager *self, GduLocalJob *job);
 void gdu_job_manager_cancel_job (GduJobManager *self, GduLocalJob *job);

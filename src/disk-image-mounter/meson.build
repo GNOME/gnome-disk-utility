@@ -3,9 +3,10 @@ name = 'gnome-disk-image-mounter'
 mounter_conf = configuration_data()
 mounter_conf.merge_from(conf_rs)
 mounter_conf.set_quoted('APP_ID', 'org.gnome.DiskImageMounter')
+config_rs = 'config.rs'
 configure_file(
     input: 'config.rs.in',
-    output: 'config.rs',
+    output: config_rs,
     configuration: mounter_conf,
 )
 
@@ -15,8 +16,8 @@ source_root = meson.project_source_root()
 # Copy the config.rs output to the source directory.
 run_command(
   'cp',
-  build_root / 'src/disk-image-mounter' / 'config.rs',
-  source_root / 'src/disk-image-mounter' / 'config.rs',
+  meson.current_build_dir() / config_rs,
+  meson.current_source_dir() / config_rs,
   check: true
 )
 

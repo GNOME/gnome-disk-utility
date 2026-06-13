@@ -45,9 +45,11 @@ libgdu_dep = declare_dependency(
 
 # Build a Rust version
 
+config_rs = 'config.rs'
+
 configure_file(
   input: 'config.rs.in',
-  output: 'config.rs',
+  output: config_rs,
   configuration: conf_rs,
 )
 
@@ -57,8 +59,8 @@ source_root = meson.project_source_root()
 # Copy the config.rs output to the source directory.
 run_command(
   'cp',
-  build_root / 'src/libgdu' / 'config.rs',
-  source_root / 'src/libgdu' / 'config.rs',
+  meson.current_build_dir() / config_rs,
+  meson.current_source_dir() / config_rs,
   check: true,
 )
 

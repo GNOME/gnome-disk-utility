@@ -29,6 +29,7 @@ include:
       meson-options: "-Dman=false $MESON_SETUP_ARGS"
       meson-test-options: "--verbose --no-stdsplit"
       lsan-options: "suppressions=${CI_PROJECT_DIR}/build-aux/ci/lsan.supp"
+      grcov-c: "disabled"
   - component: "gitlab.gnome.org/GNOME/citemplates/gnomeos-basic-ci@master"
     inputs:
       job-name: "build-gnomeos-default-options"

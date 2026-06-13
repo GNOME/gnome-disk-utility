@@ -94,6 +94,7 @@ stages:
     FDO_REPO_SUFFIX: "${BRANCH_NAME}"
     FDO_DISTRIBUTION_TAG: "${CONTAINER_TAG}-fedora-${FEDORA_VERSION}"
     FDO_DISTRIBUTION_VERSION: "${FEDORA_VERSION}"
+    FDO_DISTRIBUTION_POST_EXEC: "bash .gitlab-ci/retag-toolbox-image.sh"
 
 #############################################
 #          Create CI Docker Images          #

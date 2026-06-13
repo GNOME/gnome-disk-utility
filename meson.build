@@ -186,20 +186,25 @@ meson.add_dist_script(
   meson.project_source_root(),
 )
 
-output = '\n        gnome-disk-utility ' + gdu_version + '\n'
-output += '        =========================\n\n'
-output += '        prefix:                     ' + gdu_prefix + '\n'
-output += '        bindir:                     ' + gdu_bindir + '\n'
-output += '        datadir:                    ' + gdu_datadir + '\n'
-output += '        libexecdir:                 ' + gdu_libexecdir + '\n'
-output += '        localedir:                  ' + gdu_localedir + '\n'
-output += '        mandir:                     ' + gdu_mandir + '\n'
-output += '        sysconfdir:                 ' + gdu_sysconfdir + '\n\n'
-output += '        Use logind:                 ' + logind + '\n'
-output += '        Build g-s-d plug-in:        ' + enable_gsd_plugin.to_string() + '\n\n'
-output += '        compiler:                   ' + cc.get_id() + '\n'
-output += '        cflags:                     ' + ' '.join(compiler_flags) + '\n\n'
-output += '        C buildtype:                ' + get_option('buildtype') + '\n\n'
-output += '        Rust profile:               ' + get_option('profile') + '\n\n'
-output += '        (Change with: meson configure BUILDDIR -D profile=release|development -D logind=libsystemd|libelogind|none -D gsd_plugin=true|false)\n\n'
-message(output)
+summary({
+  'prefix': gdu_prefix,
+  'bindir': gdu_bindir,
+  'datadir': gdu_datadir,
+  'libexecdir': gdu_libexecdir,
+  'localedir': gdu_localedir,
+  'mandir': gdu_mandir,
+  'sysconfdir': gdu_sysconfdir,
+}, section: 'Directories')
+
+summary({
+  'logind': logind,
+  'gnome-settings-daemon plug-in': enable_gsd_plugin,
+  'man pages': enable_man,
+}, section: 'Features', bool_yn: true)
+
+summary({
+  'compiler': cc.get_id(),
+  'cflags': ' '.join(compiler_flags),
+  'C buildtype': get_option('buildtype'),
+  'Rust profile': get_option('profile'),
+}, section: 'Build')

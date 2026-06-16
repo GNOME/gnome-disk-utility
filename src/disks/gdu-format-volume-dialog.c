@@ -16,7 +16,6 @@
 #endif
 
 #include "gdu-format-volume-dialog.h"
-#include "gdu-format-volume-dialog.h"
 
 #include <glib/gi18n.h>
 

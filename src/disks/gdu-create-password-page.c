@@ -17,7 +17,9 @@ typedef enum {
     PROP_COMPLETE = 1,
 } GduCreatePasswordPageProps;
 
-static GParamSpec *props[PROP_COMPLETE + 1] = { NULL, };
+static GParamSpec *props[PROP_COMPLETE + 1] = {
+    NULL,
+};
 
 struct _GduCreatePasswordPage {
     AdwBin parent_instance;
@@ -221,7 +223,8 @@ gdu_create_password_page_class_init (GduCreatePasswordPageClass *klass)
 
     gtk_widget_class_bind_template_callback (widget_class, on_password_changed);
 
-    props[PROP_COMPLETE] = g_param_spec_boolean ("complete", NULL, NULL, FALSE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+    props[PROP_COMPLETE] =
+        g_param_spec_boolean ("complete", NULL, NULL, FALSE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
     g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }

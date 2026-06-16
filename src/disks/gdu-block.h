@@ -34,7 +34,8 @@ const gchar *gdu_block_get_fs_label (GduBlock *self);
 const gchar *gdu_block_get_fs_type (GduBlock *self);
 const gchar *const *gdu_block_get_mount_points (GduBlock *self);
 bool gdu_block_needs_unmount (GduBlock *self);
-void gdu_block_set_fs_label_async (GduBlock *self, const gchar *label, GAsyncReadyCallback callback, gpointer user_data);
+void gdu_block_set_fs_label_async (GduBlock *self, const gchar *label, GAsyncReadyCallback callback,
+                                   gpointer user_data);
 gboolean gdu_block_set_fs_label_finish (GduBlock *self, GAsyncResult *result, GError **error);
 void gdu_block_emit_updated (GduBlock *self);
 

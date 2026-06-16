@@ -16,7 +16,9 @@ typedef enum {
     PROP_COMPLETE = 1,
 } GduCreateConfirmPageProps;
 
-static GParamSpec *props[PROP_COMPLETE + 1] = { NULL, };
+static GParamSpec *props[PROP_COMPLETE + 1] = {
+    NULL,
+};
 
 struct _GduCreateConfirmPage {
     AdwBin parent_instance;
@@ -125,7 +127,8 @@ gdu_create_confirm_page_class_init (GduCreateConfirmPageClass *klass)
     gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, usage_row);
     gtk_widget_class_bind_template_child (widget_class, GduCreateConfirmPage, location_row);
 
-    props[PROP_COMPLETE] = g_param_spec_boolean ("complete", NULL, NULL, TRUE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+    props[PROP_COMPLETE] =
+        g_param_spec_boolean ("complete", NULL, NULL, TRUE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
     g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }

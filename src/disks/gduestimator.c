@@ -42,7 +42,9 @@ typedef enum {
     PROP_USEC_REMAINING,
 } GduEstimatorProps;
 
-static GParamSpec *props[PROP_USEC_REMAINING + 1] = { NULL, };
+static GParamSpec *props[PROP_USEC_REMAINING + 1] = {
+    NULL,
+};
 
 G_DEFINE_FINAL_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
@@ -133,14 +135,15 @@ gdu_estimator_class_init (GduEstimatorClass *klass)
     gobject_class->get_property = gdu_estimator_get_property;
     gobject_class->set_property = gdu_estimator_set_property;
 
-    props[PROP_TARGET_BYTES] = g_param_spec_uint64 ("target-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
-                                                    G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
+    props[PROP_TARGET_BYTES] =
+        g_param_spec_uint64 ("target-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
+                             G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
     props[PROP_COMPLETED_BYTES] = g_param_spec_uint64 ("completed-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
                                                        G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    props[PROP_BYTES_PER_SEC] = g_param_spec_uint64 ("bytes-per-sec", NULL, NULL, 0, G_MAXUINT64, 0,
-                                                     G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+    props[PROP_BYTES_PER_SEC] =
+        g_param_spec_uint64 ("bytes-per-sec", NULL, NULL, 0, G_MAXUINT64, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
     props[PROP_USEC_REMAINING] = g_param_spec_uint64 ("usec-remaining", NULL, NULL, 0, G_MAXUINT64, 0,
                                                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);

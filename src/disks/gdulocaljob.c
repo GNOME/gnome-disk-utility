@@ -37,7 +37,9 @@ typedef enum {
     PROP_EXTRA_MARKUP,
 } GduLocalJobProps;
 
-static GParamSpec *props[PROP_EXTRA_MARKUP + 1] = { NULL, };
+static GParamSpec *props[PROP_EXTRA_MARKUP + 1] = {
+    NULL,
+};
 
 enum {
     CANCELED_SIGNAL,
@@ -111,12 +113,15 @@ gdu_local_job_class_init (GduLocalJobClass *klass)
     gobject_class->set_property = gdu_local_job_set_property;
     gobject_class->finalize = gdu_local_job_finalize;
 
-    props[PROP_DESCRIPTION] = g_param_spec_string ("description", NULL, NULL, NULL, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+    props[PROP_DESCRIPTION] =
+        g_param_spec_string ("description", NULL, NULL, NULL, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    props[PROP_EXTRA_MARKUP] = g_param_spec_string ("extra-markup", NULL, NULL, NULL, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+    props[PROP_EXTRA_MARKUP] =
+        g_param_spec_string ("extra-markup", NULL, NULL, NULL, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    props[PROP_OBJECT] = g_param_spec_object ("object", NULL, NULL, UDISKS_TYPE_OBJECT,
-                                              G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
+    props[PROP_OBJECT] =
+        g_param_spec_object ("object", NULL, NULL, UDISKS_TYPE_OBJECT,
+                             G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
     g_object_class_install_properties (gobject_class, G_N_ELEMENTS (props), props);
 

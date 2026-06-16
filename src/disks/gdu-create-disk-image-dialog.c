@@ -600,8 +600,7 @@ out:
     if (error != NULL) {
         /* show error in GUI */
         if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED)) {
-            self->copy_error = error;
-            error = NULL;
+            self->copy_error = g_steal_pointer (&error);
             g_idle_add (on_show_error, self);
         }
         g_clear_error (&error);

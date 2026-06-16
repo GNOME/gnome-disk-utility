@@ -894,8 +894,7 @@ gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata, gboolean one_liner, g
      * on the one-liner
      */
     if (one_liner && selftest != NULL) {
-        ret = selftest;
-        selftest = NULL;
+        ret = g_steal_pointer (&selftest);
         goto out;
     }
 

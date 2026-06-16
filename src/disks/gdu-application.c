@@ -435,10 +435,7 @@ gdu_application_new_widget (GduApplication *application, const gchar *ui_file, c
         ret = G_OBJECT (gtk_builder_get_object (builder, name));
 
 out:
-    if (out_builder != NULL) {
-        *out_builder = builder;
-        builder = NULL;
-    }
+    if (out_builder != NULL) *out_builder = g_steal_pointer (&builder);
     if (builder != NULL) {
         g_object_unref (builder);
     }

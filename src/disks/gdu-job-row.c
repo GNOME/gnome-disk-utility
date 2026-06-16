@@ -156,10 +156,7 @@ gdu_job_row_dispose (GObject *object)
 {
     GduJobRow *self = GDU_JOB_ROW (object);
 
-    if (self->job != NULL && self->job_notify_id != 0) {
-        g_signal_handler_disconnect (self->job, self->job_notify_id);
-        self->job_notify_id = 0;
-    }
+    g_clear_signal_handler (&self->job_notify_id, self->job);
 
     g_clear_object (&self->job);
     g_clear_object (&self->job_manager);

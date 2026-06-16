@@ -32,13 +32,11 @@
 #include "gdu-rust.h"
 #include "gdu-space-allocation-bar.h"
 
-enum {
-    PROP_0,
-    PROP_MOBILE,
-    N_PROPS
-};
+typedef enum {
+    PROP_MOBILE = 1,
+} GduDriveViewProps;
 
-static GParamSpec *properties[N_PROPS];
+static GParamSpec *properties[PROP_MOBILE + 1];
 
 struct _GduDriveView {
     AdwBin parent_instance;
@@ -479,7 +477,7 @@ gdu_drive_view_set_property (GObject *object, guint prop_id, const GValue *value
 {
     GduDriveView *self = GDU_DRIVE_VIEW (object);
 
-    switch (prop_id) {
+    switch ((GduDriveViewProps) prop_id) {
     case PROP_MOBILE:
         gdu_drive_view_set_mobile (self, g_value_get_boolean (value));
         break;
@@ -493,7 +491,7 @@ gdu_drive_view_get_property (GObject *object, guint prop_id, GValue *value, GPar
 {
     GduDriveView *self = GDU_DRIVE_VIEW (object);
 
-    switch (prop_id) {
+    switch ((GduDriveViewProps) prop_id) {
     case PROP_MOBILE:
         g_value_set_boolean (value, self->mobile);
         break;
@@ -549,7 +547,7 @@ gdu_drive_view_class_init (GduDriveViewClass *klass)
     properties[PROP_MOBILE] = g_param_spec_boolean (
         "mobile", NULL, NULL, FALSE, (G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS));
 
-    g_object_class_install_properties (object_class, N_PROPS, properties);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
 }
 
 static void

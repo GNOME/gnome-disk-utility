@@ -12,10 +12,9 @@
 
 #include <glib/gi18n.h>
 
-enum {
-    PROP_0,
-    PROP_COMPLETE
-};
+typedef enum {
+    PROP_COMPLETE = 1
+} GduCreateConfirmPageProps;
 
 struct _GduCreateConfirmPage {
     AdwBin parent_instance;
@@ -94,7 +93,7 @@ gdu_create_confirm_page_set_usage (GduCreateConfirmPage *self)
 static void
 gdu_create_confirm_page_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)
 {
-    switch (property_id) {
+    switch ((GduCreateConfirmPageProps) property_id) {
     case PROP_COMPLETE:
         g_value_set_boolean (value, TRUE);
         break;

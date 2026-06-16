@@ -28,15 +28,13 @@ struct _GduDriveHeader {
 
 G_DEFINE_FINAL_TYPE (GduDriveHeader, gdu_drive_header, ADW_TYPE_BIN)
 
-enum {
-    PROP_0,
-    PROP_ICON,
+typedef enum {
+    PROP_ICON = 1,
     PROP_DRIVE_NAME,
     PROP_DRIVE_PATH,
-    N_PROPS
-};
+} GduDriveHeaderProps;
 
-static GParamSpec *properties[N_PROPS];
+static GParamSpec *properties[PROP_DRIVE_PATH + 1];
 
 static GtkAlign
 get_alignment_from_layout_name (GduDriveHeader *self, const gchar *layout_name)
@@ -52,7 +50,7 @@ gdu_drive_header_set_property (GObject *object, guint prop_id, const GValue *val
 {
     GduDriveHeader *self = GDU_DRIVE_HEADER (object);
 
-    switch (prop_id) {
+    switch ((GduDriveHeaderProps) prop_id) {
     case PROP_ICON:
         gdu_drive_header_set_icon (self, G_ICON (g_value_get_object (value)));
         break;
@@ -72,7 +70,7 @@ gdu_drive_header_get_property (GObject *object, guint prop_id, GValue *value, GP
 {
     GduDriveHeader *self = GDU_DRIVE_HEADER (object);
 
-    switch (prop_id) {
+    switch ((GduDriveHeaderProps) prop_id) {
     case PROP_ICON:
         g_value_set_object (value, gtk_image_get_gicon (self->drive_image));
         break;
@@ -111,7 +109,7 @@ gdu_drive_header_class_init (GduDriveHeaderClass *klass)
     properties[PROP_DRIVE_PATH] = g_param_spec_string (
         "drive-path", NULL, NULL, "", (G_PARAM_READWRITE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS));
 
-    g_object_class_install_properties (object_class, N_PROPS, properties);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
 }
 
 static void

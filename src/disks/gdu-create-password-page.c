@@ -13,10 +13,9 @@
 #include <glib/gi18n.h>
 #include <pwquality.h>
 
-enum {
-    PROP_0,
-    PROP_COMPLETE
-};
+typedef enum {
+    PROP_COMPLETE = 1
+} GduCreatePasswordPageProps;
 
 struct _GduCreatePasswordPage {
     AdwBin parent_instance;
@@ -188,7 +187,7 @@ gdu_create_password_page_get_property (GObject *object, guint property_id, GValu
 {
     GduCreatePasswordPage *self = GDU_CREATE_PASSWORD_PAGE (object);
 
-    switch (property_id) {
+    switch ((GduCreatePasswordPageProps) property_id) {
     case PROP_COMPLETE:
         g_value_set_boolean (value, self->complete);
         break;

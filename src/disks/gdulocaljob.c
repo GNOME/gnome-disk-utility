@@ -31,12 +31,11 @@ struct GduLocalJobClass {
     void (*canceled) (GduLocalJob *job);
 };
 
-enum {
-    PROP_0,
-    PROP_OBJECT,
+typedef enum {
+    PROP_OBJECT = 1,
     PROP_DESCRIPTION,
     PROP_EXTRA_MARKUP,
-};
+} GduLocalJobProps;
 
 enum {
     CANCELED_SIGNAL,
@@ -64,7 +63,7 @@ gdu_local_job_get_property (GObject *object, guint property_id, GValue *value, G
 {
     GduLocalJob *job = GDU_LOCAL_JOB (object);
 
-    switch (property_id) {
+    switch ((GduLocalJobProps) property_id) {
     case PROP_OBJECT:
         g_value_set_object (value, gdu_local_job_get_object (job));
         break;
@@ -88,7 +87,7 @@ gdu_local_job_set_property (GObject *object, guint property_id, const GValue *va
 {
     GduLocalJob *job = GDU_LOCAL_JOB (object);
 
-    switch (property_id) {
+    switch ((GduLocalJobProps) property_id) {
     case PROP_OBJECT:
         g_assert (job->object == NULL);
         job->object = g_value_dup_object (value);

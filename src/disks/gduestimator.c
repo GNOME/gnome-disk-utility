@@ -35,13 +35,12 @@ struct _GduEstimator {
     guint num_samples;
 };
 
-enum {
-    PROP_0,
-    PROP_TARGET_BYTES,
+typedef enum {
+    PROP_TARGET_BYTES = 1,
     PROP_COMPLETED_BYTES,
     PROP_BYTES_PER_SEC,
     PROP_USEC_REMAINING,
-};
+} GduEstimatorProps;
 
 G_DEFINE_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
@@ -50,7 +49,7 @@ gdu_estimator_get_property (GObject *object, guint property_id, GValue *value, G
 {
     GduEstimator *estimator = GDU_ESTIMATOR (object);
 
-    switch (property_id) {
+    switch ((GduEstimatorProps) property_id) {
     case PROP_TARGET_BYTES:
         g_value_set_uint64 (value, gdu_estimator_get_target_bytes (estimator));
         break;
@@ -78,7 +77,7 @@ gdu_estimator_set_property (GObject *object, guint property_id, const GValue *va
 {
     GduEstimator *estimator = GDU_ESTIMATOR (object);
 
-    switch (property_id) {
+    switch ((GduEstimatorProps) property_id) {
     case PROP_TARGET_BYTES:
         estimator->target_bytes = g_value_get_uint64 (value);
         break;

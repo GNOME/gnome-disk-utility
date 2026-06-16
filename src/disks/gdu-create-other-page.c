@@ -12,14 +12,12 @@
 
 #include <glib/gi18n.h>
 
-enum {
-    PROP_0,
-    PROP_COMPLETE,
+typedef enum {
+    PROP_COMPLETE = 1,
     PROP_FS_TYPE,
-    N_PROPS
-};
+} GduCreateOtherPageProps;
 
-static GParamSpec *properties[N_PROPS];
+static GParamSpec *properties[PROP_FS_TYPE + 1];
 
 struct _GduCreateOtherPage {
     AdwBin parent_instance;
@@ -93,7 +91,7 @@ gdu_create_other_page_set_property (GObject *object, guint property_id, const GV
 {
     GduCreateOtherPage *self = GDU_CREATE_OTHER_PAGE (object);
 
-    switch (property_id) {
+    switch ((GduCreateOtherPageProps) property_id) {
     case PROP_FS_TYPE:
         self->fs_type = g_value_get_enum (value);
         break;
@@ -107,7 +105,7 @@ gdu_create_other_page_get_property (GObject *object, guint property_id, GValue *
 {
     GduCreateOtherPage *self = GDU_CREATE_OTHER_PAGE (object);
 
-    switch (property_id) {
+    switch ((GduCreateOtherPageProps) property_id) {
     case PROP_COMPLETE:
         g_value_set_boolean (value, TRUE);
         break;
@@ -140,7 +138,7 @@ gdu_create_other_page_class_init (GduCreateOtherPageClass *klass)
     properties[PROP_FS_TYPE] = g_param_spec_enum ("fs-type", NULL, NULL, GDU_TYPE_OTHER_FS_TYPE,
                                                   GDU_OTHER_FS_TYPE_EMPTY, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (object_class, N_PROPS, properties);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
     gtk_widget_class_install_property_action (widget_class, "update_fs_type", "fs-type");
 }
 

@@ -21,13 +21,11 @@
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-enum {
-    PROP_0,
-    PROP_PARTITIONING_TYPE,
-    N_PROPS
-};
+typedef enum {
+    PROP_PARTITIONING_TYPE = 1,
+} GduFormatDiskDialogProps;
 
-static GParamSpec *properties[N_PROPS];
+static GParamSpec *properties[PROP_PARTITIONING_TYPE + 1];
 
 struct _GduFormatDiskDialog {
     AdwDialog parent_instance;
@@ -284,7 +282,7 @@ gdu_format_disk_dialog_get_property (GObject *object, guint property_id, GValue 
 {
     GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
 
-    switch (property_id) {
+    switch ((GduFormatDiskDialogProps) property_id) {
     case PROP_PARTITIONING_TYPE:
         g_value_set_enum (value, self->partitioning_type);
         break;
@@ -299,7 +297,7 @@ gdu_format_disk_dialog_set_property (GObject *object, guint property_id, const G
 {
     GduFormatDiskDialog *self = GDU_FORMAT_DISK_DIALOG (object);
 
-    switch (property_id) {
+    switch ((GduFormatDiskDialogProps) property_id) {
     case PROP_PARTITIONING_TYPE:
         self->partitioning_type = g_value_get_enum (value);
         break;
@@ -343,7 +341,7 @@ gdu_format_disk_dialog_class_init (GduFormatDiskDialogClass *klass)
         g_param_spec_enum ("part-type", NULL, NULL, GDU_TYPE_PARTITIONING_TYPE, GDU_PARTITIONING_TYPE_GPT,
                            G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (object_class, N_PROPS, properties);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (properties), properties);
     gtk_widget_class_install_property_action (widget_class, "format.update_part_type", "part-type");
 }
 

@@ -14,10 +14,9 @@
 
 #include <glib/gi18n.h>
 
-enum {
-    PROP_0,
-    PROP_COMPLETE
-};
+typedef enum {
+    PROP_COMPLETE = 1
+} GduCreatePartitionPageProps;
 
 struct _GduCreatePartitionPage {
     AdwBin parent_instance;
@@ -184,7 +183,7 @@ gdu_create_partition_page_get_property (GObject *object, guint property_id, GVal
 {
     GduCreatePartitionPage *self = GDU_CREATE_PARTITION_PAGE (object);
 
-    switch (property_id) {
+    switch ((GduCreatePartitionPageProps) property_id) {
     case PROP_COMPLETE:
         g_value_set_boolean (value, self->complete);
         break;

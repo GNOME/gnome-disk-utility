@@ -82,6 +82,7 @@ struct _GduBenchmarkDialog {
     GCancellable *benchmark_cancellable;
     gboolean benchmark_in_progress;
     gboolean benchmark_update_timeout_pending;
+    guint benchmark_update_timeout_id;
 
     GSettings *settings;
     UDisksClient *client;
@@ -767,6 +768,7 @@ bmt_on_timeout (gpointer user_data)
     update_dialog (self);
     G_LOCK (benchmark_lock);
     self->benchmark_update_timeout_pending = FALSE;
+    self->benchmark_update_timeout_id = 0;
     G_UNLOCK (benchmark_lock);
     return FALSE; /* don't run again */
 }
@@ -777,8 +779,8 @@ bmt_schedule_update (GduBenchmarkDialog *self)
     /* rate-limit updates */
     G_LOCK (benchmark_lock);
     if (!self->benchmark_update_timeout_pending) {
-        g_timeout_add (200, /* ms */
-                       bmt_on_timeout, self);
+        self->benchmark_update_timeout_id = g_timeout_add (200, /* ms */
+                                                           bmt_on_timeout, self);
         self->benchmark_update_timeout_pending = TRUE;
     }
     G_UNLOCK (benchmark_lock);
@@ -1192,6 +1194,12 @@ gdu_benchmark_sample_class_init (GduBenchmarkSampleClass *self)
 static void
 gdu_benchmark_graph_dispose (GObject *object)
 {
+    GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (object);
+
+    g_clear_object (&self->read_samples);
+    g_clear_object (&self->write_samples);
+    g_clear_object (&self->atime_samples);
+
     G_OBJECT_CLASS (gdu_benchmark_graph_parent_class)->dispose (object);
 }
 
@@ -1219,11 +1227,9 @@ gdu_benchmark_graph_class_init (GduBenchmarkGraphClass *klass)
 static void
 gdu_benchmark_dialog_finalize (GObject *object)
 {
-    GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (object);
+    GduBenchmarkDialog *self = GDU_BENCHMARK_DIALOG (object);
 
-    g_clear_object (&self->read_samples);
-    g_clear_object (&self->write_samples);
-    g_clear_object (&self->atime_samples);
+    g_clear_handle_id (&self->benchmark_update_timeout_id, g_source_remove);
 
     G_OBJECT_CLASS (gdu_benchmark_dialog_parent_class)->finalize (object);
 }

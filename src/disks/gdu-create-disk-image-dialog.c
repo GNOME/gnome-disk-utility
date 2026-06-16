@@ -68,6 +68,7 @@ struct _GduCreateDiskImageDialog {
     gboolean played_read_error_sound;
 
     guint update_id;
+    guint completion_id;
     GError *copy_error;
 
     gulong response_signal_handler_id;
@@ -239,7 +240,12 @@ on_update_job (gpointer user_data)
     return G_SOURCE_REMOVE; /* remove source */
 }
 
-/* ---------------------------------------------------------------------------------------------------- */
+static void
+schedule_update_job (GduCreateDiskImageDialog *self)
+{
+    if (self->update_id == 0)
+        self->update_id = g_idle_add (on_update_job, self);
+}
 
 static void
 on_show_error (gpointer user_data)
@@ -276,6 +282,17 @@ on_delete_response (GObject *object, GAsyncResult *response, gpointer userdata)
     if (!g_file_delete (file, NULL, &error)) {
         g_warning ("Error deleting file: %s (%s, %d)", error->message, g_quark_to_string (error->domain), error->code);
     }
+}
+
+static gboolean
+on_show_error_cb (gpointer user_data)
+{
+    GduCreateDiskImageDialog *self = user_data;
+
+    self->completion_id = 0;
+    on_show_error (user_data);
+
+    return G_SOURCE_REMOVE;
 }
 
 static void
@@ -327,6 +344,17 @@ on_success (gpointer user_data)
     return; /* remove source */
 }
 
+static gboolean
+on_success_cb (gpointer user_data)
+{
+    GduCreateDiskImageDialog *self = user_data;
+
+    self->completion_id = 0;
+    on_success (user_data);
+
+    return G_SOURCE_REMOVE;
+}
+
 /* ---------------------------------------------------------------------------------------------------- */
 
 /* Note that error on reading is *not* considered an error - instead 0
@@ -337,8 +365,8 @@ on_success (gpointer user_data)
  * Returns: Number of bytes actually read (e.g. not include padding) -1 if @error is set.
  */
 static gssize
-copy_span (gint fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer, gboolean pad_with_zeroes,
-           GduDVDSupport *dvd_support, GCancellable *cancellable, GError **error)
+copy_span (gint fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer,
+           gboolean pad_with_zeroes, GduDVDSupport *dvd_support, GCancellable *cancellable, GError **error)
 {
     gint64 ret = -1;
     gssize num_bytes_read;
@@ -445,15 +473,15 @@ copy_thread_func (gpointer user_data)
             && g_str_has_prefix (udisks_drive_get_media (self->drive), "optical_dvd")) {
             g_mutex_lock (&self->copy_lock);
             self->retrieving_dvd_keys = TRUE;
+            schedule_update_job (self);
             g_mutex_unlock (&self->copy_lock);
-            g_idle_add (on_update_job, self);
 
             dvd_support = gdu_dvd_support_new (device_file, udisks_block_get_size (self->block));
 
             g_mutex_lock (&self->copy_lock);
             self->retrieving_dvd_keys = FALSE;
+            schedule_update_job (self);
             g_mutex_unlock (&self->copy_lock);
-            g_idle_add (on_update_job, self);
         }
     }
 
@@ -504,8 +532,8 @@ copy_thread_func (gpointer user_data)
 
         g_mutex_lock (&self->copy_lock);
         self->allocating_file = TRUE;
+        schedule_update_job (self);
         g_mutex_unlock (&self->copy_lock);
-        g_idle_add (on_update_job, self);
 
         rc = fallocate (output_fd, 0, /* mode */
                         (off_t) 0, (off_t) block_device_size);
@@ -524,8 +552,8 @@ copy_thread_func (gpointer user_data)
 
         g_mutex_lock (&self->copy_lock);
         self->allocating_file = FALSE;
+        schedule_update_job (self);
         g_mutex_unlock (&self->copy_lock);
-        g_idle_add (on_update_job, self);
     }
 
     page_size = sysconf (_SC_PAGESIZE);
@@ -558,8 +586,7 @@ copy_thread_func (gpointer user_data)
         if (now_usec - last_update_usec > 200 * G_USEC_PER_SEC / 1000 || last_update_usec < 0) {
             if (num_bytes_completed > 0)
                 gdu_estimator_add_sample (self->estimator, num_bytes_completed);
-            if (self->update_id == 0)
-                self->update_id = g_idle_add (on_update_job, self);
+            schedule_update_job (self);
             last_update_usec = now_usec;
         }
         g_mutex_unlock (&self->copy_lock);
@@ -601,7 +628,7 @@ out:
         /* show error in GUI */
         if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED)) {
             self->copy_error = g_steal_pointer (&error);
-            g_idle_add_once (on_show_error, self);
+            self->completion_id = g_idle_add (on_show_error_cb, self);
         }
         g_clear_error (&error);
 
@@ -613,7 +640,7 @@ out:
         }
     } else {
         /* success */
-        g_idle_add_once (on_success, self);
+        self->completion_id = g_idle_add (on_success_cb, self);
     }
     if (fd != -1) {
         if (close (fd) != 0)
@@ -841,6 +868,11 @@ create_disk_image_set_source_label (GduCreateDiskImageDialog *self)
 static void
 gdu_create_disk_image_dialog_finalize (GObject *object)
 {
+    GduCreateDiskImageDialog *self = GDU_CREATE_DISK_IMAGE_DIALOG (object);
+
+    g_clear_handle_id (&self->update_id, g_source_remove);
+    g_clear_handle_id (&self->completion_id, g_source_remove);
+
     G_OBJECT_CLASS (gdu_create_disk_image_dialog_parent_class)->finalize (object);
 }
 

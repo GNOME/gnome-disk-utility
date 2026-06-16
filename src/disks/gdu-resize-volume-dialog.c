@@ -405,6 +405,8 @@ resize_filesystem_waiter (gpointer user_data)
         return G_SOURCE_CONTINUE;
     }
 
+    self->running_id = 0;
+
     if (udisks_object_peek_filesystem (self->object) == NULL) {
         gdu_utils_show_message (_("Resizing not ready"), _("Waited too long for the filesystem"),
                                                            gdu_resize_volume_dialog_get_window (self));
@@ -439,9 +441,8 @@ part_resize_cb_online_next_fs_resize (GObject *object, GAsyncResult *res, gpoint
      * inclusion of https://github.com/storaged-project/libblockdev/pull/264
      */
     udisks_client_settle (self->client);
-    if (resize_filesystem_waiter (self) == G_SOURCE_CONTINUE) {
-        g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, self);
-    }
+    if (resize_filesystem_waiter (self) == G_SOURCE_CONTINUE)
+        self->running_id = g_timeout_add (FILESYSTEM_WAIT_STEP_MS, resize_filesystem_waiter, self);
 }
 
 static void
@@ -547,6 +548,10 @@ on_resize_clicked_cb (GduResizeVolumeDialog *self)
 static void
 gdu_resize_volume_dialog_finalize (GObject *object)
 {
+    GduResizeVolumeDialog *self = GDU_RESIZE_VOLUME_DIALOG (object);
+
+    g_clear_handle_id (&self->running_id, g_source_remove);
+
     G_OBJECT_CLASS (gdu_resize_volume_dialog_parent_class)->finalize (object);
 }
 

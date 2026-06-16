@@ -731,6 +731,7 @@ gdu_drive_standby_async (GduDrive *self, GCancellable *cancellable, GAsyncReadyC
     g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
     task = g_task_new (self, cancellable, callback, user_data);
+    g_task_set_source_tag (task, gdu_drive_standby_async);
     ata = udisks_object_peek_drive_ata (self->object);
 
     if (ata != NULL) {
@@ -781,6 +782,7 @@ gdu_drive_wakeup_async (GduDrive *self, GCancellable *cancellable, GAsyncReadyCa
     g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
     task = g_task_new (self, cancellable, callback, user_data);
+    g_task_set_source_tag (task, gdu_drive_wakeup_async);
     ata = udisks_object_peek_drive_ata (self->object);
 
     if (ata != NULL) {
@@ -853,6 +855,7 @@ gdu_drive_detach_async (GduDrive *self, gpointer parent_window, GCancellable *ca
     g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
     task = g_task_new (self, cancellable, callback, user_data);
+    g_task_set_source_tag (task, gdu_drive_detach_async);
 
     gdu_utils_ensure_unused (self->client, parent_window, self->object, detach_ensure_unused_cb, cancellable,
                              g_steal_pointer (&task));
@@ -918,6 +921,7 @@ gdu_drive_eject_async (GduDrive *self, gpointer parent_window, GCancellable *can
     g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
     task = g_task_new (self, cancellable, callback, user_data);
+    g_task_set_source_tag (task, gdu_drive_eject_async);
     objects = g_list_append (NULL, self->object);
     /* include other drives this will affect */
     objects = g_list_concat (objects, gdu_drive_get_siblings (self));
@@ -986,6 +990,7 @@ gdu_drive_power_off_async (GduDrive *self, gpointer parent_window, GCancellable 
     g_return_if_fail (!cancellable || G_IS_CANCELLABLE (cancellable));
 
     task = g_task_new (self, cancellable, callback, user_data);
+    g_task_set_source_tag (task, gdu_drive_power_off_async);
     objects = g_list_append (NULL, self->object);
     /* include other drives this will affect */
     objects = g_list_concat (objects, gdu_drive_get_siblings (self));

@@ -423,6 +423,7 @@ gdu_manager_open_loop_async (GduManager *self, GFile *file, gboolean read_only, 
     g_return_if_fail (path && *path);
 
     task = g_task_new (self, NULL, callback, user_data);
+    g_task_set_source_tag (task, gdu_manager_open_loop_async);
     g_task_set_task_data (task, g_strdup (path), g_free);
     g_object_set_data (G_OBJECT (task), "read-only", GINT_TO_POINTER (read_only));
 

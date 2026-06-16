@@ -92,6 +92,7 @@ dialog_attach_disk_image_helper (GduNewDiskImageDialog *self, gchar *filename, g
     gint fd = -1;
 
     task = g_task_new (self, NULL, NULL, NULL);
+    g_task_set_source_tag (task, dialog_attach_disk_image_helper);
     g_task_set_task_data (task, g_strdup (filename), g_free);
 
     fd = open (filename, O_RDWR);

@@ -1240,6 +1240,7 @@ gdu_utils_ensure_unused_list (UDisksClient *client, GtkWindow *parent_window, GL
     data->object_iter = data->objects;
     data->cancellable = cancellable;
     data->task = g_task_new (G_OBJECT (client), cancellable, callback, user_data);
+    g_task_set_source_tag (data->task, gdu_utils_ensure_unused_list);
 
     unuse_data_iterate (data);
 }

@@ -683,6 +683,7 @@ gdu_block_set_fs_label_async (GduBlock *self, const gchar *label, GAsyncReadyCal
     g_debug ("Setting fs label to '%s'", label);
 
     task = g_task_new (self, NULL, callback, user_data);
+    g_task_set_source_tag (task, gdu_block_set_fs_label_async);
     g_task_set_task_data (task, g_strdup (label), g_free);
     return_if_progress (self, task);
 

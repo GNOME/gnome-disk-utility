@@ -179,8 +179,8 @@ GduCreateFilesystemPage *
 gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
 {
     GduCreateFilesystemPage *self;
-    gchar *s;
-    gchar *missing_util;
+    g_autofree gchar *s = NULL;
+    g_autofree gchar *missing_util = NULL;
 
     self = g_object_new (GDU_TYPE_CREATE_FILESYSTEM_PAGE, NULL);
 
@@ -201,17 +201,14 @@ gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
         gtk_widget_set_sensitive (GTK_WIDGET (self->ntfs_checkbutton), FALSE);
         s = g_strdup_printf (_("The utility %s is missing."), missing_util);
         gtk_widget_set_tooltip_text (GTK_WIDGET (self->ntfs_checkbutton), s);
-
-        g_free (s);
-        g_free (missing_util);
+        g_clear_pointer (&s, g_free);
+        g_clear_pointer (&missing_util, g_free);
     }
 
     if (!gdu_utils_can_format (client, "vfat", FALSE, &missing_util)) {
         gtk_widget_set_sensitive (GTK_WIDGET (self->fat_checkbutton), FALSE);
         s = g_strdup_printf (_("The utility %s is missing."), missing_util);
         gtk_widget_set_tooltip_text (GTK_WIDGET (self->fat_checkbutton), s);
-        g_free (s);
-        g_free (missing_util);
     }
 
     return self;

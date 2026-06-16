@@ -787,22 +787,20 @@ calculate_self_test (UDisksDriveAta *ata, gboolean *out_selftest_running)
 static void
 update_updated_label (DialogData *data)
 {
-    gchar *s = NULL;
+    g_autofree gchar *s = NULL;
     if (udisks_drive_ata_get_smart_enabled (data->ata)) {
         time_t now;
         time_t updated;
-        gchar *s2;
+        g_autofree gchar *s2 = NULL;
 
         now = time (NULL);
         updated = udisks_drive_ata_get_smart_updated (data->ata);
         s2 = gdu_utils_format_duration_usec ((now - updated) * G_USEC_PER_SEC, GDU_FORMAT_DURATION_FLAGS_NO_SECONDS);
         s = g_strdup_printf (_("%s ago"), s2);
-        g_free (s2);
     } else {
         s = g_strdup ("—");
     }
     gtk_label_set_text (GTK_LABEL (data->updated_label), s);
-    g_free (s);
 }
 
 static gchar *
@@ -843,13 +841,13 @@ static gchar *
 gdu_ata_smart_get_overall_assessment (UDisksDriveAta *ata, gboolean one_liner, gboolean *out_smart_is_supported,
                                       gboolean *out_warn)
 {
-    gchar *ret;
+    g_autofree gchar *ret = NULL;
     gint num_failing;
     gint num_failed_in_the_past;
     gint num_bad_sectors;
     gboolean smart_is_supported = FALSE;
     gboolean warn = FALSE;
-    gchar *selftest = NULL;
+    g_autofree gchar *selftest = NULL;
 
     if (!udisks_drive_ata_get_smart_supported (ata)) {
         ret = g_strdup (_("SMART is not supported"));
@@ -948,18 +946,17 @@ out:
              */
             s1 = g_strdup_printf (_("%s (%s)"), ret, s);
             g_free (s);
-            g_free (ret);
+            g_clear_pointer (&ret, g_free);
             ret = s1;
         }
     }
 
 out_no_smart:
-    g_free (selftest);
     if (out_smart_is_supported != NULL)
         *out_smart_is_supported = smart_is_supported;
     if (out_warn != NULL)
         *out_warn = warn;
-    return ret;
+    return g_steal_pointer (&ret);
 }
 
 gchar *
@@ -1074,15 +1071,15 @@ update_attributes_list (DialogData *data, GVariant *attributes)
 static void
 update_dialog (DialogData *data)
 {
-    gchar *s;
+    g_autofree gchar *s = NULL;
     gboolean enabled = FALSE;
 
     enabled = udisks_drive_ata_get_smart_enabled (data->ata);
     gtk_switch_set_active (GTK_SWITCH (data->enabled_switch), enabled);
 
     if (enabled) {
-        GVariant *attributes = NULL;
-        GError *error = NULL;
+        g_autoptr(GVariant) attributes = NULL;
+        g_autoptr(GError) error = NULL;
         gboolean selftest_running = FALSE;
 
         /* TODO: do it async and show spinner while call is pending */
@@ -1092,12 +1089,11 @@ update_dialog (DialogData *data)
                                                               &error)) {
             g_warning ("Error getting ATA SMART information: %s (%s, %d)", error->message,
                        g_quark_to_string (error->domain), error->code);
-            g_error_free (error);
         }
 
         s = calculate_self_test (data->ata, &selftest_running);
         gtk_label_set_text (GTK_LABEL (data->self_test_label), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
 
         if (selftest_running) {
             gtk_widget_set_visible (data->start_selftest_button, FALSE);
@@ -1119,26 +1115,23 @@ update_dialog (DialogData *data)
             s = g_strdup (_("Threshold not exceeded"));
         }
         gtk_label_set_markup (GTK_LABEL (data->self_assessment_label), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
 
         s = format_powered_on (data->ata);
         if (s == NULL)
             s = g_strdup ("—");
         gtk_label_set_markup (GTK_LABEL (data->powered_on_label), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
 
         s = format_temp (data->ata);
         if (s == NULL)
             s = g_strdup ("—");
         gtk_label_set_markup (GTK_LABEL (data->temperature_label), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
 
         s = gdu_ata_smart_get_overall_assessment (data->ata, FALSE, NULL, NULL);
         gtk_label_set_markup (GTK_LABEL (data->overall_assessment_label), s);
-        g_free (s);
-
-        if (attributes != NULL)
-            g_variant_unref (attributes);
+        g_clear_pointer (&s, g_free);
     } else {
         gtk_widget_set_visible (data->start_selftest_button, FALSE);
         gtk_widget_set_visible (data->stop_selftest_button, FALSE);
@@ -1179,13 +1172,10 @@ static void
 refresh_cb (UDisksDriveAta *ata, GAsyncResult *res, gpointer user_data)
 {
     GduWindow *window = GDU_WINDOW (user_data);
-    GError *error;
+    g_autoptr(GError) error = NULL;
 
-    error = NULL;
-    if (!udisks_drive_ata_call_smart_update_finish (ata, res, &error)) {
+    if (!udisks_drive_ata_call_smart_update_finish (ata, res, &error))
         gdu_utils_show_error (GTK_WINDOW (window), _("Error refreshing SMART data"), error);
-        g_error_free (error);
-    }
     g_object_unref (window);
 }
 
@@ -1203,13 +1193,10 @@ static void
 smart_cancel_cb (UDisksDriveAta *ata, GAsyncResult *res, gpointer user_data)
 {
     GduWindow *window = GDU_WINDOW (user_data);
-    GError *error;
+    g_autoptr(GError) error = NULL;
 
-    error = NULL;
-    if (!udisks_drive_ata_call_smart_selftest_abort_finish (ata, res, &error)) {
+    if (!udisks_drive_ata_call_smart_selftest_abort_finish (ata, res, &error))
         gdu_utils_show_error (GTK_WINDOW (window), _("Error aborting SMART self-test"), error);
-        g_error_free (error);
-    }
     g_object_unref (window);
 }
 
@@ -1217,13 +1204,10 @@ static void
 smart_start_cb (UDisksDriveAta *ata, GAsyncResult *res, gpointer user_data)
 {
     GduWindow *window = GDU_WINDOW (user_data);
-    GError *error;
+    g_autoptr(GError) error = NULL;
 
-    error = NULL;
-    if (!udisks_drive_ata_call_smart_selftest_start_finish (ata, res, &error)) {
+    if (!udisks_drive_ata_call_smart_selftest_start_finish (ata, res, &error))
         gdu_utils_show_error (GTK_WINDOW (window), _("Error starting SMART self-test"), error);
-        g_error_free (error);
-    }
     g_object_unref (window);
 }
 

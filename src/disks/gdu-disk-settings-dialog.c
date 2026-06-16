@@ -265,7 +265,7 @@ static void
 update_standby_label (DialogData *data)
 {
     gint64 value;
-    gchar *s = NULL;
+    g_autofree gchar *s = NULL;
 
     value = gtk_adjustment_get_value (data->standby_adjustment);
     if (value == 0) {
@@ -284,14 +284,13 @@ update_standby_label (DialogData *data)
         s = gdu_utils_format_duration_usec ((21 * 60 + 15) * G_USEC_PER_SEC, GDU_FORMAT_DURATION_FLAGS_NONE);
     }
     gtk_label_set_text (GTK_LABEL (data->standby_value_label), s);
-    g_free (s);
 }
 
 static void
 update_apm_label (DialogData *data)
 {
     gint value;
-    gchar *s = NULL;
+    g_autofree gchar *s = NULL;
 
     value = gtk_adjustment_get_value (data->apm_adjustment);
     if (value == 255) {
@@ -302,14 +301,13 @@ update_apm_label (DialogData *data)
         s = g_strdup_printf (C_("apm-level", "%d (Spin-down not permitted)"), value);
     }
     gtk_label_set_text (GTK_LABEL (data->apm_value_label), s);
-    g_free (s);
 }
 
 static void
 update_aam_label (DialogData *data)
 {
     gint value;
-    gchar *s = NULL;
+    g_autofree gchar *s = NULL;
 
     value = gtk_adjustment_get_value (data->aam_adjustment);
     if (value == 127) {
@@ -318,11 +316,10 @@ update_aam_label (DialogData *data)
         s = g_strdup_printf ("%d", value);
     }
     gtk_label_set_text (GTK_LABEL (data->aam_value_label), s);
-    g_free (s);
+    g_clear_pointer (&s, g_free);
 
     s = g_strdup_printf ("%d", udisks_drive_ata_get_aam_vendor_recommended_value (data->ata));
     gtk_label_set_text (GTK_LABEL (data->aam_vendor_recommended_value_label), s);
-    g_free (s);
 }
 
 static void
@@ -432,21 +429,18 @@ gdu_disk_settings_dialog_show (GtkWindow *window, UDisksObject *object, UDisksCl
     /* add marks on Standby, APM and AAM scales */
     for (n = 0; n < G_N_ELEMENTS (standby_marks); n++) {
         Mark *mark = &standby_marks[n];
-        gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
+        g_autofree gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
         gtk_scale_add_mark (GTK_SCALE (data->standby_scale), mark->pos, GTK_POS_BOTTOM, s);
-        g_free (s);
     }
     for (n = 0; n < G_N_ELEMENTS (apm_marks); n++) {
         Mark *mark = &apm_marks[n];
-        gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
+        g_autofree gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
         gtk_scale_add_mark (GTK_SCALE (data->apm_scale), mark->pos, GTK_POS_BOTTOM, s);
-        g_free (s);
     }
     for (n = 0; n < G_N_ELEMENTS (aam_marks); n++) {
         Mark *mark = &aam_marks[n];
-        gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
+        g_autofree gchar *s = g_strdup_printf ("<small>%s</small>", _(mark->str));
         gtk_scale_add_mark (GTK_SCALE (data->aam_scale), mark->pos, GTK_POS_BOTTOM, s);
-        g_free (s);
     }
 
 #if 0

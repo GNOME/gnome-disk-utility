@@ -279,7 +279,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     g_autoptr(PangoFontDescription) axis_title_font_desc = NULL;
     PangoContext *pango_context = NULL;
     gint font_size;
-    gchar *label;
+    g_autofree gchar *label = NULL;
     const GdkRGBA *text_color;
     const GdkRGBA *grid_line_color;
     gint text_width, text_height;
@@ -706,7 +706,7 @@ update_dialog (GduBenchmarkDialog *self)
     BenchmarkStats read_stats;
     BenchmarkStats write_stats;
     BenchmarkStats atime_stats;
-    gchar *s = NULL;
+    g_autofree gchar *s = NULL;
 
     G_LOCK (benchmark_lock);
     if (self->benchmark_error != NULL)
@@ -722,7 +722,6 @@ update_dialog (GduBenchmarkDialog *self)
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
-        g_free (s);
         return;
     }
 
@@ -737,7 +736,7 @@ update_dialog (GduBenchmarkDialog *self)
             read_stats.avg,
             g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples)), FALSE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
     }
 
     if (write_stats.avg != 0.0) {
@@ -746,7 +745,7 @@ update_dialog (GduBenchmarkDialog *self)
             g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples)),
             FALSE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
     }
 
     if (atime_stats.avg != 0.0) {
@@ -754,7 +753,7 @@ update_dialog (GduBenchmarkDialog *self)
             atime_stats.avg,
             g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples)), TRUE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
-        g_free (s);
+        g_clear_pointer (&s, g_free);
     }
 
     gtk_widget_queue_draw (GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));

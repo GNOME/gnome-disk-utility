@@ -291,7 +291,7 @@ static void
 manager_load_drives (GduManager *self)
 {
     GDBusObjectManager *object_manager;
-    GList *objects;
+    g_autolist(GDBusObject) objects = NULL;
 
     g_assert (GDU_IS_MANAGER (self));
 
@@ -327,8 +327,6 @@ manager_load_drives (GduManager *self)
 
     for (GList *item = objects; item && item->data; item = item->next)
         object_added_cb (self, item->data);
-
-    g_list_free_full (objects, g_object_unref);
 }
 
 static void

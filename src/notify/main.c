@@ -34,7 +34,7 @@ name_lost_handler (GDBusConnection *connection, const gchar *name, gpointer user
 gint
 main (gint argc, gchar *argv[])
 {
-    GMainLoop *loop = NULL;
+    g_autoptr(GMainLoop) loop = NULL;
     guint name_owner_id = 0;
     GduSdMonitor *monitor = NULL;
 
@@ -55,7 +55,6 @@ main (gint argc, gchar *argv[])
     g_main_loop_run (loop);
 
     g_bus_unown_name (name_owner_id);
-    g_main_loop_unref (loop);
     g_object_unref (monitor);
 
     return 0;

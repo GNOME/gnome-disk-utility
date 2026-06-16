@@ -606,7 +606,7 @@ gdu_drive_set_child (GduDrive *self, gpointer udisk_object)
 
     if (self->partition_table) {
         UDisksPartitionTable *table;
-        GList *partitions;
+        g_autolist(UDisksPartition) partitions = NULL;
         guint64 begin = 0, prev_end = 0, end = 0;
         guint64 free_space_slack;
         guint64 extended_partition_end_offset = 0;
@@ -695,8 +695,6 @@ gdu_drive_set_child (GduDrive *self, gpointer udisk_object)
                 g_list_store_append (self->partitions, partition);
             }
         }
-
-        g_list_free_full (partitions, g_object_unref);
     }
 }
 

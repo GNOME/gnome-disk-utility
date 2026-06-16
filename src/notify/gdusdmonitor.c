@@ -148,7 +148,7 @@ update_problems (GduSdMonitor *monitor, GList **problem_list, CheckProblemFunc c
     GList *want = NULL;
     GList *added = NULL;
     GList *removed = NULL;
-    GList *objects;
+    g_autolist(UDisksObject) objects = NULL;
     GList *l;
 
     objects = g_dbus_object_manager_get_objects (udisks_client_get_object_manager (monitor->client));
@@ -176,7 +176,6 @@ update_problems (GduSdMonitor *monitor, GList **problem_list, CheckProblemFunc c
     g_list_free (removed);
     g_list_free (added);
     g_list_free (want);
-    g_list_free_full (objects, g_object_unref);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -186,7 +185,7 @@ on_examine_action_clicked (NotifyNotification *notification, const gchar *action
 {
     GduSdMonitor *monitor = GDU_SD_MONITOR (user_data);
     const gchar *device_file = NULL;
-    gchar *command_line = NULL;
+    g_autofree gchar *command_line = NULL;
     GAppInfo *app_info = NULL;
     GError *error = NULL;
 
@@ -222,7 +221,6 @@ on_examine_action_clicked (NotifyNotification *notification, const gchar *action
         g_clear_error (&error);
     }
     g_clear_object (&app_info);
-    g_free (command_line);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

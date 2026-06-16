@@ -413,9 +413,9 @@ gdu_application_new_widget (GduApplication *application, const gchar *ui_file, c
                             GtkBuilder **out_builder)
 {
     GObject *ret = NULL;
-    GtkBuilder *builder = NULL;
-    gchar *path = NULL;
-    GError *error;
+    g_autoptr(GtkBuilder) builder = NULL;
+    g_autofree gchar *path = NULL;
+    g_autoptr(GError) error = NULL;
 
     g_return_val_if_fail (GDU_IS_APPLICATION (application), NULL);
     g_return_val_if_fail (ui_file != NULL, NULL);
@@ -424,10 +424,8 @@ gdu_application_new_widget (GduApplication *application, const gchar *ui_file, c
 
     path = g_strdup_printf ("/org/gnome/DiskUtility/ui/%s", ui_file);
 
-    error = NULL;
     if (gtk_builder_add_from_resource (builder, path, &error) == 0) {
         g_error ("Error loading UI file %s: %s", path, error->message);
-        g_error_free (error);
         goto out;
     }
 
@@ -435,11 +433,8 @@ gdu_application_new_widget (GduApplication *application, const gchar *ui_file, c
         ret = G_OBJECT (gtk_builder_get_object (builder, name));
 
 out:
-    if (out_builder != NULL) *out_builder = g_steal_pointer (&builder);
-    if (builder != NULL) {
-        g_object_unref (builder);
-    }
-    g_free (path);
+    if (out_builder != NULL)
+        *out_builder = g_steal_pointer (&builder);
     return ret;
 }
 

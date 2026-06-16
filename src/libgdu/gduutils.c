@@ -127,9 +127,9 @@ gdu_utils_file_chooser_for_disk_images_set_default_folder (GFile *folder)
 gchar *
 gdu_utils_unfuse_path (const gchar *path)
 {
-    gchar *ret;
-    GFile *file;
-    gchar *uri;
+    g_autofree gchar *ret = NULL;
+    g_autoptr(GFile) file = NULL;
+    g_autofree gchar *uri = NULL;
     const gchar *home;
 
     /* Map GVfs FUSE paths to GVfs URIs */
@@ -140,8 +140,6 @@ gdu_utils_unfuse_path (const gchar *path)
     } else {
         ret = g_uri_unescape_string (uri, NULL);
     }
-    g_object_unref (file);
-    g_free (uri);
 
     /* Replace $HOME with ~ */
     home = g_get_home_dir ();
@@ -151,14 +149,14 @@ gdu_utils_unfuse_path (const gchar *path)
             if (home[home_len - 1] == '/')
                 home_len--;
             if (ret[home_len] == '/') {
-                gchar *tmp = ret;
-                ret = g_strdup_printf ("~/%s", ret + home_len + 1);
+                gchar *tmp = g_steal_pointer (&ret);
+                ret = g_strdup_printf ("~/%s", tmp + home_len + 1);
                 g_free (tmp);
             }
         }
     }
 
-    return ret;
+    return g_steal_pointer (&ret);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -194,19 +192,18 @@ out:
 static void
 add_option (GtkWidget *options_entry, const gchar *prefix, const gchar *option, gboolean add_to_front)
 {
-    gchar *s;
+    g_autofree gchar *s = NULL;
     const gchar *text;
     text = gtk_editable_get_text (GTK_EDITABLE (options_entry));
     s = g_strdup_printf ("%s%s%s%s", add_to_front ? option : text, strlen (text) > 0 ? "," : "", prefix,
                          add_to_front ? text : option);
     gtk_editable_set_text (GTK_EDITABLE (options_entry), s);
-    g_free (s);
 }
 
 static void
 remove_option (GtkWidget *options_entry, const gchar *option, gboolean check_prefix)
 {
-    GString *str;
+    g_autoptr(GString) str = NULL;
     guint n;
     gchar **options;
 
@@ -225,7 +222,6 @@ remove_option (GtkWidget *options_entry, const gchar *option, gboolean check_pre
         g_string_append (str, options[n]);
     }
     gtk_editable_set_text (GTK_EDITABLE (options_entry), str->str);
-    g_string_free (str, TRUE);
 }
 
 void
@@ -253,9 +249,9 @@ gdu_options_update_check_option (GtkWidget *options_entry, const gchar *option, 
 void
 gdu_options_update_entry_option (GtkWidget *options_entry, const gchar *option, GtkWidget *widget, GtkWidget *entry)
 {
-    gchar *opts = NULL;
+    g_autofree gchar *opts = NULL;
     const gchar *ui;
-    gchar *ui_escaped;
+    g_autofree gchar *ui_escaped = NULL;
     has_option (options_entry, option, TRUE, &opts);
     if (opts == NULL)
         opts = g_strdup ("");
@@ -271,13 +267,10 @@ gdu_options_update_entry_option (GtkWidget *options_entry, const gchar *option, 
                 remove_option (options_entry, option, TRUE);
             }
         } else {
-            gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
+            g_autofree gchar *opts_unescaped = g_uri_unescape_string (opts, NULL);
             gtk_editable_set_text (GTK_EDITABLE (entry), opts_unescaped);
-            g_free (opts_unescaped);
         }
     }
-    g_free (ui_escaped);
-    g_free (opts);
 }
 
 #if defined(HAVE_LOGIND)
@@ -1002,7 +995,7 @@ gdu_utils_is_in_use_full (UDisksClient *client, UDisksObject *object, UDisksFile
     UDisksFilesystem *filesystem_to_unmount = NULL;
     UDisksEncrypted *encrypted_to_lock = NULL;
     GList *l;
-    GList *objects_to_check = NULL;
+    g_autolist(UDisksObject) objects_to_check = NULL;
     gboolean ret = FALSE;
     gboolean last = TRUE;
 
@@ -1062,7 +1055,6 @@ gdu_utils_is_in_use_full (UDisksClient *client, UDisksObject *object, UDisksFile
     if (last_out != NULL)
         *last_out = last;
 
-    g_list_free_full (objects_to_check, g_object_unref);
     g_clear_object (&encrypted_to_lock);
     g_clear_object (&filesystem_to_unmount);
 

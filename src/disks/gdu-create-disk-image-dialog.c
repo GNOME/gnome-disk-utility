@@ -6,6 +6,8 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
+#define _GNU_SOURCE
+
 #include "config.h"
 
 #include "gdu-create-disk-image-dialog.h"
@@ -25,7 +27,6 @@
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 
-#define _GNU_SOURCE
 /* TODOs / ideas for Disk Image creation
  *
  * - Be tolerant of I/O errors like dd_rescue(1), see http://www.gnu.org/s/ddrescue/ddrescue.html
@@ -141,14 +142,15 @@ play_read_error_sound (GduCreateDiskImageDialog *self)
 static void
 update_job (GduCreateDiskImageDialog *self, gboolean done)
 {
-    gchar *extra_markup = NULL;
+    g_autofree gchar *extra_markup = NULL;
     guint64 bytes_completed = 0;
     guint64 bytes_target = 0;
     guint64 bytes_per_sec = 0;
     guint64 usec_remaining = 0;
     guint64 num_error_bytes = 0;
     gdouble progress = 0.0;
-    gchar *s2, *s3;
+    g_autofree gchar *s2 = NULL;
+    g_autofree gchar *s3 = NULL;
 
     g_mutex_lock (&self->copy_lock);
     if (self->estimator != NULL) {
@@ -176,10 +178,8 @@ update_job (GduCreateDiskImageDialog *self, gboolean done)
         /* TODO: once https://bugzilla.gnome.org/show_bug.cgi?id=657194 is resolved, use that instead
          * of hard-coding the color
          */
-        g_free (extra_markup);
+        g_clear_pointer (&extra_markup, g_free);
         extra_markup = g_strdup_printf ("<span foreground=\"#ff0000\">%s</span>", s3);
-        g_free (s3);
-        g_free (s2);
     }
 
     if (self->local_job != NULL) {
@@ -209,8 +209,6 @@ update_job (GduCreateDiskImageDialog *self, gboolean done)
         play_read_error_sound (self);
         self->played_read_error_sound = TRUE;
     }
-
-    g_free (extra_markup);
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -437,8 +435,8 @@ static gpointer
 copy_thread_func (gpointer user_data)
 {
     GduCreateDiskImageDialog *self = user_data;
-    GduDVDSupport *dvd_support = NULL;
-    guchar *buffer_unaligned = NULL;
+    g_autoptr(GduDVDSupport) dvd_support = NULL;
+    g_autofree guchar *buffer_unaligned = NULL;
     guchar *buffer = NULL;
     guint64 block_device_size = 0;
     glong page_size;
@@ -610,9 +608,6 @@ copy_thread_func (gpointer user_data)
     }
 
 out:
-    if (dvd_support != NULL)
-        gdu_dvd_support_free (dvd_support);
-
     self->end_time_usec = g_get_real_time ();
 
     /* in either case, close the stream */
@@ -646,8 +641,6 @@ out:
         if (close (fd) != 0)
             g_warning ("Error closing fd: %m");
     }
-
-    g_free (buffer_unaligned);
 
     return NULL;
 }

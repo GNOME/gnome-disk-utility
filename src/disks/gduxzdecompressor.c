@@ -153,9 +153,9 @@ gdu_xz_decompressor_iface_init (GConverterIface *iface)
 gsize
 gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file)
 {
-    gchar *path = NULL;
+    g_autofree gchar *path = NULL;
     gsize ret = 0;
-    GMappedFile *mapped_file = NULL;
+    g_autoptr(GMappedFile) mapped_file = NULL;
     gsize bufpos = 0;
     guint64 memlimit = UINT64_MAX;
     lzma_index *index_object = NULL;
@@ -168,10 +168,9 @@ gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file)
 
     path = g_file_get_path (compressed_file);
     if (path == NULL) {
-        gchar *uri;
+        g_autofree gchar *uri = NULL;
         uri = g_file_get_uri (compressed_file);
         g_warning ("No path for URI '%s'. Maybe you need to enable FUSE.", uri);
-        g_free (uri);
         goto out;
     }
 
@@ -203,8 +202,5 @@ gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file)
 out:
     if (index_object != NULL)
         lzma_index_end (index_object, NULL);
-    if (mapped_file != NULL)
-        g_mapped_file_unref (mapped_file);
-    g_free (path);
     return ret;
 }

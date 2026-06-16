@@ -114,7 +114,7 @@ gdu_dvd_support_new (const gchar *device_file, guint64 device_size)
     GList *l;
     guint64 pos;
     GArray *a;
-    Range *prev_range;
+    GList *prev_link;
 
     /* We use dlopen() to access libdvdcss since it's normally not
      * shipped (so we can't hard-depend on it) but it may be installed
@@ -224,26 +224,28 @@ gdu_dvd_support_new (const gchar *device_file, guint64 device_size)
     scrambled_ranges = g_list_sort (scrambled_ranges, (GCompareFunc) range_compare_func);
 
     /* ... remove overlapping ranges ... */
-    prev_range = NULL;
+    prev_link = NULL;
     l = scrambled_ranges;
     while (l != NULL) {
-        Range *range = l->data;
+        g_autofree Range *range = l->data;
         GList *next = l->next;
 
-        if (prev_range != NULL) {
-            if (range->start >= prev_range->end) {
-                prev_range = range;
+        if (prev_link != NULL) {
+            if (range->start >= ((Range *) prev_link->data)->end) {
+                prev_link = l;
+                g_steal_pointer (&range);
             } else {
                 if (G_UNLIKELY (support->debug)) {
                     g_print ("Skipping overlapping range %" G_GUINT64_FORMAT " -> %" G_GUINT64_FORMAT " "
                              "(Prev %" G_GUINT64_FORMAT " -> %" G_GUINT64_FORMAT ")\n",
-                             range->start, range->end, prev_range->start, prev_range->end);
+                             range->start, range->end, ((Range *) prev_link->data)->start,
+                             ((Range *) prev_link->data)->end);
                 }
                 scrambled_ranges = g_list_delete_link (scrambled_ranges, l);
-                g_free (range);
             }
         } else {
-            prev_range = range;
+            prev_link = l;
+            g_steal_pointer (&range);
         }
         l = next;
     }
@@ -254,15 +256,15 @@ gdu_dvd_support_new (const gchar *device_file, guint64 device_size)
                      sizeof (Range));
     pos = 0;
     for (l = scrambled_ranges; l != NULL; l = l->next) {
-        Range *range = l->data;
-        if (pos < range->start) {
+        Range range = *(Range *) l->data;
+        if (pos < range.start) {
             Range unscrambled_range = { 0 };
             unscrambled_range.start = pos;
-            unscrambled_range.end = range->start;
+            unscrambled_range.end = range.start;
             g_array_append_val (a, unscrambled_range);
         }
-        g_array_append_val (a, *range);
-        pos = range->end;
+        g_array_append_val (a, range);
+        pos = range.end;
     }
     if (pos < device_size) {
         Range unscrambled_range = { 0 };
@@ -276,9 +278,8 @@ gdu_dvd_support_new (const gchar *device_file, guint64 device_size)
     if (G_UNLIKELY (support->debug)) {
         guint n;
         for (n = 0; n < support->num_ranges; n++) {
-            Range *range = support->ranges + n;
-            g_print ("range %02u: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n", n, range->start,
-                     range->end, range->scrambled);
+            g_print ("range %02u: %10" G_GUINT64_FORMAT " -> %10" G_GUINT64_FORMAT ": scrambled=%d\n", n,
+                     support->ranges[n].start, support->ranges[n].end, support->ranges[n].scrambled);
         }
     }
 

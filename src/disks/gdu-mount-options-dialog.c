@@ -211,7 +211,7 @@ gdu_mount_options_dialog_populate_device_combo_row (GduMountOptionsDialog *self)
         /* if the device is using removable media, prefer
          * by-id / by-path to by-uuid / by-label
          */
-        int order[2][4] = {
+        gint order[2][4] = {
             { by_id, by_path, by_uuid, by_label }, /* for removable */
             { by_uuid, by_label, by_id, by_path }  /* for non-removable */
         };

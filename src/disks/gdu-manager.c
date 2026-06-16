@@ -74,9 +74,9 @@ should_include_block (UDisksObject *object)
 {
     UDisksBlock *block;
     UDisksLoop *loop;
-    const char *device;
-    const char *drive;
-    const char *crypto_backing_device;
+    const gchar *device;
+    const gchar *drive;
+    const gchar *crypto_backing_device;
     guint64 size;
 
     block = udisks_object_peek_block (object);
@@ -119,7 +119,7 @@ should_include_block (UDisksObject *object)
     return true;
 }
 
-static int
+static gint
 compare_drive_path (GduDrive *drive_a, GduDrive *drive_b)
 {
     gpointer obj_a, obj_b;
@@ -239,7 +239,7 @@ object_removed_cb (GduManager *self, UDisksObject *object)
 
 static void
 interface_properties_changed_cb (GduManager *self, GDBusObjectProxy *object_proxy, GDBusProxy *interface_proxy,
-                                 GVariant *changed_properties, char **invalidated_properties)
+                                 GVariant *changed_properties, gchar **invalidated_properties)
 {
     UDisksBlock *block;
     UDisksLoop *loop;
@@ -250,7 +250,7 @@ interface_properties_changed_cb (GduManager *self, GDBusObjectProxy *object_prox
     block = udisks_object_get_block ((gpointer) object_proxy);
 
     if (loop) {
-        const char *file;
+        const gchar *file;
         gint64 size;
 
         file = udisks_loop_get_backing_file (loop);
@@ -267,7 +267,7 @@ interface_properties_changed_cb (GduManager *self, GDBusObjectProxy *object_prox
     object_added_cb (self, (gpointer) object_proxy);
 }
 
-static int
+static gint
 sort_objects (gpointer a, gpointer b)
 {
     UDisksBlock *block;
@@ -413,7 +413,7 @@ gdu_manager_open_loop_async (GduManager *self, GFile *file, gboolean read_only, 
     g_autoptr(GUnixFDList) fd_list = NULL;
     GVariantBuilder options_builder;
     g_autoptr(GTask) task = NULL;
-    int fd = -1;
+    gint fd = -1;
     g_autofree char *path = NULL;
     g_return_if_fail (GDU_IS_MANAGER (self));
 

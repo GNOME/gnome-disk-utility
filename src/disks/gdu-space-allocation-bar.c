@@ -59,13 +59,13 @@ update_space_allocation_bar (GduSpaceAllocationBar *self)
 }
 
 static void
-gdu_space_allocation_bar_measure (GtkWidget *widget, GtkOrientation orientation, int for_size, int *minimum,
-                                  int *natural, int *minimum_baseline, int *natural_baseline)
+gdu_space_allocation_bar_measure (GtkWidget *widget, GtkOrientation orientation, gint for_size, gint *minimum,
+                                  gint *natural, gint *minimum_baseline, gint *natural_baseline)
 {
     GtkWidget *child;
 
     for (child = gtk_widget_get_first_child (widget); child; child = gtk_widget_get_next_sibling (child)) {
-        int child_min, child_nat;
+        gint child_min, child_nat;
 
         gtk_widget_measure (child, orientation, for_size, &child_min, &child_nat, NULL, NULL);
 
@@ -75,7 +75,7 @@ gdu_space_allocation_bar_measure (GtkWidget *widget, GtkOrientation orientation,
 }
 
 static void
-gdu_space_allocation_bar_size_allocate (GtkWidget *widget, int width, int height, int baseline)
+gdu_space_allocation_bar_size_allocate (GtkWidget *widget, gint width, gint height, gint baseline)
 {
     guint i;
     GtkWidget *child;
@@ -88,8 +88,8 @@ gdu_space_allocation_bar_size_allocate (GtkWidget *widget, int width, int height
     for (i = 0, child = gtk_widget_get_first_child (widget); child && i < g_list_model_get_n_items (partitions);
          child = gtk_widget_get_next_sibling (child), i++) {
         GduBlock *block;
-        int size;
-        int position_offset;
+        gint size;
+        gint position_offset;
 
         block = g_list_model_get_item (partitions, i);
         /* Add 128KB to the size to account for floating point errors */

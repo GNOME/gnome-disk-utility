@@ -21,8 +21,8 @@ struct _GduDriveHeader {
 
     GtkImage *drive_image;
 
-    char *drive_name;
-    char *drive_path;
+    gchar *drive_name;
+    gchar *drive_path;
 };
 
 G_DEFINE_FINAL_TYPE (GduDriveHeader, gdu_drive_header, ADW_TYPE_BIN)
@@ -38,7 +38,7 @@ enum {
 static GParamSpec *properties[N_PROPS];
 
 static GtkAlign
-get_alignment_from_layout_name (GduDriveHeader *self, const char *layout_name)
+get_alignment_from_layout_name (GduDriveHeader *self, const gchar *layout_name)
 {
     if (g_strcmp0 (layout_name, "horizontal") == 0)
         return GTK_ALIGN_START;
@@ -120,7 +120,7 @@ gdu_drive_header_init (GduDriveHeader *self)
 }
 
 void
-gdu_drive_header_set_layout_name (GduDriveHeader *self, const char *name)
+gdu_drive_header_set_layout_name (GduDriveHeader *self, const gchar *name)
 {
     adw_multi_layout_view_set_layout_name (self->layout_view, name);
 }
@@ -136,7 +136,7 @@ gdu_drive_header_set_icon (GduDriveHeader *self, GIcon *icon)
 }
 
 void
-gdu_drive_header_set_drive_name (GduDriveHeader *self, const char *name)
+gdu_drive_header_set_drive_name (GduDriveHeader *self, const gchar *name)
 {
     g_assert (GDU_IS_DRIVE_HEADER (self));
 
@@ -145,7 +145,7 @@ gdu_drive_header_set_drive_name (GduDriveHeader *self, const char *name)
 }
 
 void
-gdu_drive_header_set_drive_path (GduDriveHeader *self, const char *path)
+gdu_drive_header_set_drive_path (GduDriveHeader *self, const gchar *path)
 {
     g_assert (GDU_IS_DRIVE_HEADER (self));
 

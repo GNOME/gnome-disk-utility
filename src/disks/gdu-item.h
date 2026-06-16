@@ -52,8 +52,8 @@ G_DECLARE_DERIVABLE_TYPE (GduItem, gdu_item, GDU, ITEM, GObject)
 struct _GduItemClass {
     GObjectClass parent_class;
 
-    const char *(*get_description) (GduItem *self);
-    const char *(*get_partition_type) (GduItem *self);
+    const gchar *(*get_description) (GduItem *self);
+    const gchar *(*get_partition_type) (GduItem *self);
     GIcon *(*get_icon) (GduItem *self);
     guint64 (*get_size) (GduItem *self);
     GListModel *(*get_partitions) (GduItem *self);
@@ -63,8 +63,8 @@ struct _GduItemClass {
     void (*changed) (GduItem *self);
 };
 
-const char *gdu_item_get_description (GduItem *self);
-const char *gdu_item_get_partition_type (GduItem *self);
+const gchar *gdu_item_get_description (GduItem *self);
+const gchar *gdu_item_get_partition_type (GduItem *self);
 GIcon *gdu_item_get_icon (GduItem *self);
 guint64 gdu_item_get_size (GduItem *self);
 GListModel *gdu_item_get_partitions (GduItem *self);

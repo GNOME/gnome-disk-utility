@@ -82,7 +82,7 @@ block_row_get_client (void)
 static void
 gdu_block_row_update_label (GduBlockRow *self)
 {
-    const char *label;
+    const gchar *label;
 
     label = gdu_item_get_description (GDU_ITEM (self->block));
 
@@ -92,7 +92,7 @@ gdu_block_row_update_label (GduBlockRow *self)
 static void
 gdu_block_row_update_information (GduBlockRow *self)
 {
-    const char *partition, *uuid, *device_id;
+    const gchar *partition, *uuid, *device_id;
     g_autofree char *size_str = NULL;
 
     partition = gdu_item_get_partition_type (GDU_ITEM (self->block));
@@ -170,7 +170,7 @@ static void
 gdu_block_row_update_depth_label (GduBlockRow *self)
 {
     GduItem *parent;
-    int depth = 0;
+    gint depth = 0;
 
     parent = gdu_item_get_parent (GDU_ITEM (self->block));
     while ((parent = gdu_item_get_parent (parent)) != NULL) {
@@ -195,7 +195,7 @@ static void
 gdu_block_row_update_mount_point_label (GduBlockRow *self)
 {
     guint64 size, free_space;
-    const char *const *mount_points;
+    const gchar *const *mount_points;
     gboolean is_mounted;
 
     mount_points = gdu_block_get_mount_points (self->block);
@@ -245,7 +245,7 @@ gdu_block_row_update (GduBlockRow *self)
 }
 
 static void
-format_partition_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+format_partition_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -258,7 +258,7 @@ format_partition_cb (GtkWidget *widget, const char *action_name, GVariant *param
 }
 
 static void
-edit_partition_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+edit_partition_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -269,7 +269,7 @@ edit_partition_cb (GtkWidget *widget, const char *action_name, GVariant *paramet
 }
 
 static void
-edit_filesystem_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+edit_filesystem_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -281,7 +281,7 @@ edit_filesystem_cb (GtkWidget *widget, const char *action_name, GVariant *parame
 }
 
 static void
-create_partition_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+create_partition_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     GduItem *drive = NULL;
@@ -301,7 +301,7 @@ create_partition_cb (GtkWidget *widget, const char *action_name, GVariant *param
 }
 
 static void
-unmount_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+unmount_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -325,7 +325,7 @@ mount_complete_cb (GObject *source_object, GAsyncResult *res, gpointer user_data
 }
 
 static void
-mount_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+mount_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -340,7 +340,7 @@ mount_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
 }
 
 static void
-unlock_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+unlock_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -397,7 +397,7 @@ delete_response_cb (GObject *source_object, GAsyncResult *response, gpointer use
 }
 
 static void
-delete_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+delete_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -422,7 +422,7 @@ delete_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
 }
 
 static void
-change_passphrase_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+change_passphrase_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -434,7 +434,7 @@ change_passphrase_cb (GtkWidget *widget, const char *action_name, GVariant *para
 }
 
 static void
-resize_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+resize_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -471,7 +471,7 @@ fs_check_cb (GObject *obj, GAsyncResult *result, gpointer user_data)
     UDisksObjectInfo *info;
     UDisksFilesystem *filesystem;
     gboolean consistent;
-    const char *name;
+    const gchar *name;
 
     g_assert (GDU_IS_BLOCK_ROW (self));
 
@@ -541,7 +541,7 @@ on_check_message_dialog_response (GObject *obj, GAsyncResult *response, gpointer
 }
 
 static void
-check_fs_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+check_fs_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     ConfirmationDialogData *data;
@@ -566,7 +566,7 @@ fs_repair_cb (GObject *obj, GAsyncResult *result, gpointer user_data)
     UDisksObject *object;
     UDisksObjectInfo *info;
     UDisksFilesystem *filesystem;
-    const char *name;
+    const gchar *name;
     gboolean success;
 
     g_assert (GDU_IS_BLOCK_ROW (self));
@@ -639,7 +639,7 @@ on_repair_message_dialog_response (GObject *source_object, GAsyncResult *respons
 }
 
 static void
-repair_fs_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+repair_fs_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     ConfirmationDialogData *data;
@@ -728,7 +728,7 @@ on_take_ownership_dialog_response_cb (GObject *source_object, GAsyncResult *resp
 }
 
 static void
-take_ownership_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+take_ownership_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     GtkBuilder *builder;
@@ -753,7 +753,7 @@ take_ownership_cb (GtkWidget *widget, const char *action_name, GVariant *paramet
 }
 
 static void
-configure_fstab_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+configure_fstab_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -765,7 +765,7 @@ configure_fstab_cb (GtkWidget *widget, const char *action_name, GVariant *parame
 }
 
 static void
-configure_crypttab_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+configure_crypttab_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -777,7 +777,7 @@ configure_crypttab_cb (GtkWidget *widget, const char *action_name, GVariant *par
 }
 
 static void
-create_partition_image_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+create_partition_image_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -788,7 +788,7 @@ create_partition_image_cb (GtkWidget *widget, const char *action_name, GVariant 
 }
 
 static void
-restore_partition_image_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+restore_partition_image_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;
@@ -801,7 +801,7 @@ restore_partition_image_cb (GtkWidget *widget, const char *action_name, GVariant
 }
 
 static void
-benchmark_partition_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+benchmark_partition_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduBlockRow *self = GDU_BLOCK_ROW (widget);
     UDisksObject *object;

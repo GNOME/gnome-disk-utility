@@ -144,7 +144,7 @@ gdu_utils_unfuse_path (const gchar *path)
     /* Replace $HOME with ~ */
     home = g_get_home_dir ();
     if (g_str_has_prefix (ret, home)) {
-        size_t home_len = strlen (home);
+        gsize home_len = strlen (home);
         if (home_len > 2) {
             if (home[home_len - 1] == '/')
                 home_len--;
@@ -284,10 +284,10 @@ const gchar *
 gdu_utils_get_seat (void)
 {
     static gsize once = 0;
-    static char *seat = NULL;
+    static gchar *seat = NULL;
 
     if (g_once_init_enter (&once)) {
-        char *session = NULL;
+        gchar *session = NULL;
         if (sd_pid_get_session (getpid (), &session) == 0) {
             sd_session_get_seat (session, &seat);
             /* we intentionally leak seat here... */
@@ -547,7 +547,7 @@ gdu_utils_is_inside_dos_extended (UDisksClient *client, UDisksPartitionTable *ta
 /* ---------------------------------------------------------------------------------------------------- */
 
 void
-gdu_utils_show_message (const char *title, const char *message, GtkWidget *parent_window)
+gdu_utils_show_message (const gchar *title, const gchar *message, GtkWidget *parent_window)
 {
 
     AdwDialog *dialog;
@@ -567,7 +567,7 @@ void
 gdu_utils_show_error (GtkWindow *parent_window, const gchar *title, GError *error)
 {
     g_autoptr(GError) fixed_up_error = NULL;
-    const char *message;
+    const gchar *message;
     /* Never show an error if it's because the user dismissed the
      * authentication dialog himself
      *

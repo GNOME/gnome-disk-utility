@@ -64,7 +64,7 @@ loop_setup_cb (UDisksManager *manager, GAsyncResult *res, gpointer user_data)
     g_autoptr(GError) error = NULL;
     g_autofree char *uri = NULL;
     g_autofree char *out_loop_device_object_path = NULL;
-    char *filename;
+    gchar *filename;
 
     self = g_task_get_source_object (task);
     filename = g_task_get_task_data (task);
@@ -83,7 +83,7 @@ loop_setup_cb (UDisksManager *manager, GAsyncResult *res, gpointer user_data)
 }
 
 static gboolean
-dialog_attach_disk_image_helper (GduNewDiskImageDialog *self, char *filename, gboolean readonly)
+dialog_attach_disk_image_helper (GduNewDiskImageDialog *self, gchar *filename, gboolean readonly)
 {
     g_autoptr(GTask) task = NULL;
     g_autoptr(GUnixFDList) fd_list = NULL;
@@ -124,7 +124,7 @@ create_new_disk (GduNewDiskImageDialog *self)
     g_autoptr(GFile) out_file = NULL;
     g_autoptr(GError) error = NULL;
     g_autofree char *out_filename = NULL;
-    const char *filename;
+    const gchar *filename;
     guint64 size;
 
     filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
@@ -197,7 +197,7 @@ set_size_entry_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
     GduNewDiskImageDialog *self = GDU_NEW_DISK_IMAGE_DIALOG (user_data);
     GtkAdjustment *adjustment;
     GObject *object = NULL;
-    const char *unit = NULL;
+    const gchar *unit = NULL;
     g_autofree char *s = NULL;
 
     adjustment = adw_spin_row_get_adjustment (spin_row);
@@ -248,7 +248,7 @@ new_disk_image_confirm_response_cb (GObject *object, GAsyncResult *response, gpo
 static void
 on_create_image_button_clicked_cb (GduNewDiskImageDialog *self)
 {
-    const char *filename = NULL;
+    const gchar *filename = NULL;
     g_autoptr(GFile) file = NULL;
     ConfirmationDialogData *data;
 
@@ -294,9 +294,9 @@ new_disk_image_set_default_name (GduNewDiskImageDialog *self)
 static void
 new_disk_image_details_changed_cb (GduNewDiskImageDialog *self)
 {
-    const char *filename;
+    const gchar *filename;
     gboolean can_proceed = FALSE;
-    double size_value;
+    gdouble size_value;
 
     filename = gtk_editable_get_text (GTK_EDITABLE (self->name_entry));
     size_value = adw_spin_row_get_value (ADW_SPIN_ROW (self->size_entry));

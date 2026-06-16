@@ -31,8 +31,8 @@ name_lost_handler (GDBusConnection *connection, const gchar *name, gpointer user
     g_clear_object (monitor);
 }
 
-int
-main (int argc, char *argv[])
+gint
+main (gint argc, gchar *argv[])
 {
     GMainLoop *loop = NULL;
     guint name_owner_id = 0;

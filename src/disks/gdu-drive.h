@@ -21,9 +21,9 @@ G_DECLARE_FINAL_TYPE (GduDrive, gdu_drive, GDU, DRIVE, GduItem)
 
 GduDrive *gdu_drive_new (gpointer udisk_client, gpointer udisk_object, GduItem *parent);
 gboolean gdu_drive_matches_object (GduDrive *self, gpointer udrive_object);
-const char *gdu_drive_get_name (GduDrive *self);
-const char *gdu_drive_get_model (GduDrive *self);
-const char *gdu_drive_get_serial (GduDrive *self);
+const gchar *gdu_drive_get_name (GduDrive *self);
+const gchar *gdu_drive_get_model (GduDrive *self);
+const gchar *gdu_drive_get_serial (GduDrive *self);
 GList *gdu_drive_get_siblings (GduDrive *self);
 void gdu_drive_set_child (GduDrive *self, gpointer udisk_object);
 

@@ -80,7 +80,7 @@ drive_view_get_client (void)
 static void
 update_drive_view (GduDriveView *self)
 {
-    const char *description, *name, *model, *serial, *partition;
+    const gchar *description, *name, *model, *serial, *partition;
     g_autofree char *size_str = NULL;
     GListModel *partitions;
     GIcon *icon;
@@ -151,7 +151,7 @@ on_copy_drive_serial_clicked (GduDriveView *self)
 }
 
 static void
-format_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+format_disk_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -166,7 +166,7 @@ format_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *pa
 }
 
 static void
-create_disk_image_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+create_disk_image_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -182,7 +182,7 @@ create_disk_image_clicked_cb (GtkWidget *widget, const char *action_name, GVaria
 }
 
 static void
-restore_disk_image_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+restore_disk_image_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -197,7 +197,7 @@ restore_disk_image_clicked_cb (GtkWidget *widget, const char *action_name, GVari
 }
 
 static void
-benchmark_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+benchmark_disk_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -214,7 +214,7 @@ benchmark_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant 
 }
 
 static void
-smart_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+smart_disk_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -230,7 +230,7 @@ smart_disk_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *par
 }
 
 static void
-drive_settings_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+drive_settings_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     UDisksObject *object;
@@ -261,7 +261,7 @@ drive_view_standby_cb (GObject *object, GAsyncResult *result, gpointer user_data
 }
 
 static void
-standby_drive_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+standby_drive_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     g_assert (GDU_IS_DRIVE_VIEW (self));
@@ -285,7 +285,7 @@ drive_view_wakeup_cb (GObject *object, GAsyncResult *result, gpointer user_data)
 }
 
 static void
-wakeup_drive_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+wakeup_drive_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     g_assert (GDU_IS_DRIVE_VIEW (self));
@@ -307,7 +307,7 @@ drive_view_detach_cb (GObject *object, GAsyncResult *result, gpointer user_data)
 }
 
 static void
-detach_loop_device_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+detach_loop_device_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
 
@@ -342,7 +342,7 @@ eject_confirmation_response_cb (GObject *object, GAsyncResult *response, gpointe
 }
 
 static void
-eject_drive_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+eject_drive_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     GList *siblings;
@@ -405,7 +405,7 @@ poweroff_confirmation_response_cb (GObject *object, GAsyncResult *response, gpoi
 }
 
 static void
-poweroff_drive_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+poweroff_drive_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
     GList *siblings;
@@ -443,7 +443,7 @@ poweroff_drive_clicked_cb (GtkWidget *widget, const char *action_name, GVariant 
 }
 
 static void
-show_drive_dialog_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+show_drive_dialog_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduDriveView *self = GDU_DRIVE_VIEW (widget);
 

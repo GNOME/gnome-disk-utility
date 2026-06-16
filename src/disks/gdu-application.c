@@ -137,7 +137,7 @@ out:
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gboolean
-cmd_verbose_cb (const char *option_name, const char *value, gpointer data, GError **error)
+cmd_verbose_cb (const gchar *option_name, const gchar *value, gpointer data, GError **error)
 {
     gdu_log_increase_verbosity ();
 

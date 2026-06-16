@@ -52,9 +52,9 @@ struct _GduFormatVolumeDialog {
     UDisksDrive *udisks_drive;
     UDisksPartitionTable *udisks_table;
 
-    const char *current; /* page names */
-    const char *prev;
-    const char *next;
+    const gchar *current; /* page names */
+    const gchar *prev;
+    const gchar *next;
 
     gboolean add_partition; /* mode: format vs add partition and format */
     guint64 add_partition_offset;
@@ -92,7 +92,7 @@ gdu_format_volume_dialog_get_encrypt (GduFormatVolumeDialog *self)
 static void
 gdu_format_volume_dialog_set_dialog_title (GduFormatVolumeDialog *self)
 {
-    const char *title;
+    const gchar *title;
     GtkWidget *child;
     GtkStackPage *page;
 
@@ -248,7 +248,7 @@ static void
 on_forward_button_clicked_cb (GduFormatVolumeDialog *self, GtkWidget *widget)
 {
     guint64 size;
-    const char *partition_type = "";
+    const gchar *partition_type = "";
     GVariantBuilder options_builder;
 
     /* step to next page */

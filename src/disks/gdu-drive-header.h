@@ -18,12 +18,12 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (GduDriveHeader, gdu_drive_header, GDU, DRIVE_HEADER, AdwBin)
 
-void gdu_drive_header_set_layout_name (GduDriveHeader *self, const char *name);
+void gdu_drive_header_set_layout_name (GduDriveHeader *self, const gchar *name);
 
 void gdu_drive_header_set_icon (GduDriveHeader *self, GIcon *icon);
 
-void gdu_drive_header_set_drive_name (GduDriveHeader *self, const char *name);
+void gdu_drive_header_set_drive_name (GduDriveHeader *self, const gchar *name);
 
-void gdu_drive_header_set_drive_path (GduDriveHeader *self, const char *path);
+void gdu_drive_header_set_drive_path (GduDriveHeader *self, const gchar *path);
 
 G_END_DECLS

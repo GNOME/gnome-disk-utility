@@ -105,7 +105,7 @@ set_size_entry_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
     GtkAdjustment *adjustment;
     GObject *object = NULL;
     g_autofree char *s = NULL;
-    const char *unit = NULL;
+    const gchar *unit = NULL;
 
     adjustment = adw_spin_row_get_adjustment (spin_row);
 

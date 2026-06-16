@@ -183,8 +183,8 @@ GduCreateFilesystemPage *
 gdu_create_filesystem_page_new (UDisksClient *client, UDisksDrive *drive)
 {
     GduCreateFilesystemPage *self;
-    char *s;
-    char *missing_util;
+    gchar *s;
+    gchar *missing_util;
 
     self = g_object_new (GDU_TYPE_CREATE_FILESYSTEM_PAGE, NULL);
 

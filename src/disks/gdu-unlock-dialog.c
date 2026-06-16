@@ -55,7 +55,7 @@ G_DEFINE_TYPE (GduUnlockDialog, gdu_unlock_dialog, ADW_TYPE_DIALOG)
 static void
 unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)
 {
-    const char *passphrase, *pim_str;
+    const gchar *passphrase, *pim_str;
     guint n_items;
     gboolean can_unlock;
 
@@ -69,7 +69,7 @@ unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)
 
     pim_str = gtk_editable_get_text (GTK_EDITABLE (self->pim_entry_row));
     if (gtk_widget_is_visible (GTK_WIDGET (self->pim_entry_row)) && pim_str && *pim_str) {
-        char *end;
+        gchar *end;
 
         errno = 0;
         self->pim = strtoul (pim_str, &end, 10);
@@ -93,7 +93,7 @@ unlock_dialog_keyfiles_set_cb (GObject *source_object, GAsyncResult *res, gpoint
     GduUnlockDialog *self = GDU_UNLOCK_DIALOG (user_data);
     GtkFileDialog *dialog = GTK_FILE_DIALOG (source_object);
     GFile *keyfile;
-    unsigned int n_items;
+    guint n_items;
     g_autoptr(GString) new_label = NULL;
     g_return_if_fail (GDU_IS_UNLOCK_DIALOG (self));
     g_return_if_fail (GTK_IS_FILE_DIALOG (dialog));
@@ -105,7 +105,7 @@ unlock_dialog_keyfiles_set_cb (GObject *source_object, GAsyncResult *res, gpoint
 
     new_label = g_string_new (NULL);
     n_items = g_list_model_get_n_items (G_LIST_MODEL (self->key_files_store));
-    for (unsigned int i = 0; i < n_items; i++) {
+    for (guint i = 0; i < n_items; i++) {
         keyfile = g_list_model_get_item (G_LIST_MODEL (self->key_files_store), i);
         if (i > 0)
             g_string_append_c (new_label, ',');
@@ -144,7 +144,7 @@ static void
 do_unlock (GduUnlockDialog *self)
 {
     GVariantBuilder options_builder;
-    const char *passphrase;
+    const gchar *passphrase;
     gboolean is_hidden, is_system;
 
     is_hidden = gtk_switch_get_active (GTK_SWITCH (self->tcrypt_hidden_switch_row));
@@ -169,7 +169,7 @@ do_unlock (GduUnlockDialog *self)
 static void
 on_unlock_clicked_cb (GduUnlockDialog *self)
 {
-    const char *type;
+    const gchar *type;
 
     type = udisks_block_get_id_type (self->udisks_block);
     if (g_strcmp0 (type, "crypto_TCRYPT") == 0 || g_strcmp0 (type, "crypto_unknown") == 0) {
@@ -201,7 +201,7 @@ static void
 luks_find_passphrase_cb (GObject *source, GAsyncResult *result, gpointer user_data)
 {
     GduUnlockDialog *self = user_data;
-    const char *passphrase;
+    const gchar *passphrase;
 
     g_assert (GDU_IS_UNLOCK_DIALOG (self));
 
@@ -269,7 +269,7 @@ gdu_unlock_dialog_show (GtkWindow *parent_window, UDisksObject *object)
 {
     GduUnlockDialog *self;
     gboolean password_in_crypttab;
-    const char *type;
+    const gchar *type;
 
     g_return_if_fail (UDISKS_IS_OBJECT (object));
 

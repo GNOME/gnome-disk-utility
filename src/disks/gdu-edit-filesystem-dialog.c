@@ -52,7 +52,7 @@ change_filesystem_label_cb (GObject *object, GAsyncResult *result, gpointer user
 static void
 on_change_button_clicked (GduEditFilesystemDialog *self)
 {
-    const char *label;
+    const gchar *label;
 
     label = gtk_editable_get_text (GTK_EDITABLE (self->fs_label_row));
 
@@ -117,8 +117,8 @@ gdu_edit_filesystem_dialog_show (GtkWindow *parent_window, GduBlock *block)
     GduEditFilesystemDialog *self;
     guint max_len;
     GtkText *text;
-    const char *label;
-    const char *fs_type;
+    const gchar *label;
+    const gchar *fs_type;
 
     g_return_if_fail (GDU_IS_BLOCK (block));
 

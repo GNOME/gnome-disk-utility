@@ -43,14 +43,14 @@ gboolean gdu_utils_have_dos_extended (UDisksClient *client, UDisksPartitionTable
 
 gboolean gdu_utils_is_inside_dos_extended (UDisksClient *client, UDisksPartitionTable *table, guint64 offset);
 
-void gdu_utils_show_message (const char *title, const char *message, GtkWidget *parent_window);
+void gdu_utils_show_message (const gchar *title, const gchar *message, GtkWidget *parent_window);
 
 void gdu_utils_show_error (GtkWindow *parent_window, const gchar *message, GError *error);
 
 typedef struct {
-    const char *message;
-    const char *description;
-    const char *response_verb;
+    const gchar *message;
+    const gchar *description;
+    const gchar *response_verb;
     AdwResponseAppearance response_appearance;
     GAsyncReadyCallback callback;
     gpointer user_data;

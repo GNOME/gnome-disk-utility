@@ -267,7 +267,7 @@ on_delete_response (GObject *object, GAsyncResult *response, gpointer userdata)
     GduCreateDiskImageDialog *self = userdata;
     g_autoptr(GError) error = NULL;
     g_autoptr(GFile) file = NULL;
-    const char *name;
+    const gchar *name;
 
     if (g_strcmp0 (adw_alert_dialog_choose_finish (dialog, response), "cancel") == 0)
         return;
@@ -338,11 +338,11 @@ on_success (gpointer user_data)
  * Returns: Number of bytes actually read (e.g. not include padding) -1 if @error is set.
  */
 static gssize
-copy_span (int fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer, gboolean pad_with_zeroes,
+copy_span (gint fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer, gboolean pad_with_zeroes,
            GduDVDSupport *dvd_support, GCancellable *cancellable, GError **error)
 {
     gint64 ret = -1;
-    ssize_t num_bytes_read;
+    gssize num_bytes_read;
     gsize num_bytes_to_write;
 
     g_return_val_if_fail (-1, buffer != NULL);
@@ -414,7 +414,7 @@ copy_thread_func (gpointer user_data)
     guchar *buffer_unaligned = NULL;
     guchar *buffer = NULL;
     guint64 block_device_size = 0;
-    long page_size;
+    glong page_size;
     GError *error = NULL;
     GError *error2 = NULL;
     gint64 last_update_usec = -1;

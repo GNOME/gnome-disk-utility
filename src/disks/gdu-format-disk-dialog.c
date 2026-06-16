@@ -95,7 +95,7 @@ static void
 ensure_unused_cb (GtkWindow *parent_window, GAsyncResult *res, gpointer user_data)
 {
     GduFormatDiskDialog *self = user_data;
-    const char *erase_type;
+    const gchar *erase_type;
     GVariantBuilder options_builder;
 
     if (!gdu_utils_ensure_unused_finish (self->udisks_client, res, NULL)) {
@@ -199,7 +199,7 @@ enum {
 static gchar *
 get_erase_duration_string (gint minutes)
 {
-    char *s;
+    gchar *s;
 
     if (minutes == 510) {
         g_autofree char *s2 =

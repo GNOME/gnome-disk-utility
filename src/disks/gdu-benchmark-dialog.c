@@ -202,12 +202,12 @@ get_max_time (GduBenchmarkGraph *self)
 }
 
 typedef struct {
-    int width;
-    int height;
-    int graph_width;
-    int graph_height;
-    int graph_x;
-    int graph_y;
+    gint width;
+    gint height;
+    gint graph_width;
+    gint graph_height;
+    gint graph_x;
+    gint graph_y;
     const GdkRGBA *color;
     GListStore *samples;
     guint total_samples;
@@ -277,11 +277,11 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     g_autoptr(PangoFontDescription) axis_title_font_desc = NULL;
     PangoContext *pango_context = NULL;
     gint font_size;
-    char *label;
+    gchar *label;
     const GdkRGBA *text_color;
     const GdkRGBA *grid_line_color;
-    int text_width, text_height;
-    int max_left_label_width = 0, max_right_label_width = 0;
+    gint text_width, text_height;
+    gint max_left_label_width = 0, max_right_label_width = 0;
     gdouble max_visible_speed, max_speed, max_time;
     gdouble speed_step, time_step;
     guint num_hlines;
@@ -347,7 +347,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
 
     builder = gsk_path_builder_new ();
     for (guint j = 0; j <= num_hlines; j++) {
-        double x, y;
+        gdouble x, y;
 
         y = graph_data->graph_height - ((float) j * graph_data->graph_height / num_hlines);
 
@@ -386,7 +386,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     gdu_benchmark_graph_draw_box (widget, snapshot, graph_data);
 
     for (guint j = 0; j <= num_hlines; j++) {
-        double x, y;
+        gdouble x, y;
 
         y = graph_data->graph_height - ((float) j * graph_data->graph_height / num_hlines);
         x = graph_data->graph_x;
@@ -443,7 +443,7 @@ draw_vertical_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, GraphDa
     g_autofree char *label = NULL;
     const GdkRGBA *text_color;
     const GdkRGBA *grid_line_color;
-    int text_width, text_height;
+    gint text_width, text_height;
 
     grid_line_color =
         get_color_hc (widget, &GRID_LINE_COLOR, &GRID_LINE_COLOR_DARK, &GRID_LINE_COLOR_HC, &GRID_LINE_COLOR_HC_DARK);
@@ -458,9 +458,9 @@ draw_vertical_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, GraphDa
     pango_font_description_set_absolute_size (axis_title_font_desc, font_size * PANGO_SCALE_SMALL);
 
     builder = gsk_path_builder_new ();
-    for (int i = 0; i <= 10; i++) {
-        double x = graph_data->graph_x + (i * graph_data->graph_width / 10.0);
-        double y = graph_data->height;
+    for (gint i = 0; i <= 10; i++) {
+        gdouble x = graph_data->graph_x + (i * graph_data->graph_width / 10.0);
+        gdouble y = graph_data->height;
 
         gsk_path_builder_move_to (builder, x, 0);
         if (i != 0 && i != 10)
@@ -549,7 +549,7 @@ draw_curve (GdkSnapshot *snapshot, GraphData *graph_data)
     g_autoptr(GskPath) path = NULL;
     g_autoptr(GskStroke) stroke = NULL;
     g_autoptr(GskPathBuilder) builder = NULL;
-    double x, y;
+    gdouble x, y;
     guint n, n_samples, total_samples;
     gdouble maximum_value = graph_data->max_speed;
     gdouble prev_slope = 0, prev_m = 0;
@@ -593,9 +593,9 @@ draw_curve (GdkSnapshot *snapshot, GraphData *graph_data)
     for (n = 0; n < n_samples - 1; n++) {
         GduBenchmarkSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
         GduBenchmarkSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n + 1);
-        double x0, x1, x2, x3, y0, y1, y2, y3;
-        double slope, m;
-        double a, b, r;
+        gdouble x0, x1, x2, x3, y0, y1, y2, y3;
+        gdouble slope, m;
+        gdouble a, b, r;
 
         x0 = graph_data->graph_x + (((double) n / total_samples) * graph_data->graph_width);
         x3 = graph_data->graph_x + ((((double) (n + 1)) / total_samples) * graph_data->graph_width);
@@ -704,7 +704,7 @@ update_dialog (GduBenchmarkDialog *self)
     BenchmarkStats read_stats;
     BenchmarkStats write_stats;
     BenchmarkStats atime_stats;
-    char *s = NULL;
+    gchar *s = NULL;
 
     G_LOCK (benchmark_lock);
     if (self->benchmark_error != NULL)
@@ -784,7 +784,7 @@ bmt_schedule_update (GduBenchmarkDialog *self)
 }
 
 static gpointer
-end_benchmark (GduBenchmarkDialog *self, GError *error, int fd, guint inhibit_cookie)
+end_benchmark (GduBenchmarkDialog *self, GError *error, gint fd, guint inhibit_cookie)
 {
     if (fd != -1)
         close (fd);
@@ -806,7 +806,7 @@ end_benchmark (GduBenchmarkDialog *self, GError *error, int fd, guint inhibit_co
 }
 
 static GError *
-open_for_benchmark (GduBenchmarkDialog *self, int *fd)
+open_for_benchmark (GduBenchmarkDialog *self, gint *fd)
 {
     GVariantBuilder options_builder;
     GError *error = NULL;
@@ -832,7 +832,7 @@ open_for_benchmark (GduBenchmarkDialog *self, int *fd)
 }
 
 static GError *
-benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, int fd, long page_size, guint64 disk_size)
+benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, gint fd, glong page_size, guint64 disk_size)
 {
     guint n;
     guint num_samples = 0;
@@ -854,7 +854,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, int fd, long 
         gint64 begin_usec;
         gint64 end_usec;
         gint64 offset;
-        ssize_t num_read;
+        gssize num_read;
         GduBenchmarkSample *sample;
 
         if (g_cancellable_set_error_if_cancelled (self->benchmark_cancellable, &error))
@@ -901,7 +901,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, int fd, long 
         G_UNLOCK (benchmark_lock);
 
         if (write_benchmark) {
-            ssize_t num_written;
+            gssize num_written;
 
             /* and now write the same block again... */
             if (lseek (fd, offset, SEEK_SET) != offset) {
@@ -958,7 +958,7 @@ benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, int fd, long 
 }
 
 static GError *
-benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, int fd, long page_size, guint64 disk_size)
+benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, gint fd, glong page_size, guint64 disk_size)
 {
     guint n;
     GError *error = NULL;
@@ -976,7 +976,7 @@ benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, int fd, long pa
         gint64 begin_usec;
         gint64 end_usec;
         gint64 offset;
-        ssize_t num_read;
+        gssize num_read;
         GduBenchmarkSample *sample;
 
         if (g_cancellable_set_error_if_cancelled (self->benchmark_cancellable, &error)) {
@@ -1028,8 +1028,8 @@ benchmark_thread (gpointer user_data)
     GError *error = NULL;
     guchar *buffer = NULL;
     g_autofree guchar *buffer_unaligned = NULL;
-    int fd = -1;
-    long page_size;
+    gint fd = -1;
+    glong page_size;
     guint64 disk_size;
     guint inhibit_cookie;
     gint sample_size_mib = 0;

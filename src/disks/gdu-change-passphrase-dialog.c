@@ -73,7 +73,7 @@ gdu_change_passphrase_dialog_set_title (GduChangePassphraseDialog *self)
 static void
 on_dialog_entry_changed (GduChangePassphraseDialog *self)
 {
-    const char *curr_pass, *new_pass, *confirm_pass;
+    const gchar *curr_pass, *new_pass, *confirm_pass;
     gboolean can_proceed = FALSE;
 
     curr_pass = gtk_editable_get_text (GTK_EDITABLE (self->curr_pass_row));

@@ -19,8 +19,8 @@
 #define DEFAULT_DOMAIN_PREFIX "gdu"
 
 FILE *ostream;
-char *domains;
-static int verbosity;
+gchar *domains;
+static gint verbosity;
 gboolean any_domain;
 gboolean enable_trace;
 gboolean no_anonymize;
@@ -56,7 +56,7 @@ _g_log_abort (gboolean breakpoint)
 }
 
 static gboolean
-should_show_log_for_level (GLogLevelFlags log_level, int verbosity_level)
+should_show_log_for_level (GLogLevelFlags log_level, gint verbosity_level)
 {
     if (verbosity_level >= 3)
         return TRUE;
@@ -77,7 +77,7 @@ should_show_log_for_level (GLogLevelFlags log_level, int verbosity_level)
 }
 
 static gboolean
-matches_domain (const char *log_domains, const char *domain)
+matches_domain (const gchar *log_domains, const gchar *domain)
 {
     g_auto(GStrv) domain_list = NULL;
 
@@ -95,7 +95,7 @@ matches_domain (const char *log_domains, const char *domain)
 }
 
 static gboolean
-should_log (const char *log_domain, GLogLevelFlags log_level)
+should_log (const gchar *log_domain, GLogLevelFlags log_level)
 {
     g_assert (log_domain);
 
@@ -137,9 +137,9 @@ should_log (const char *log_domain, GLogLevelFlags log_level)
 }
 
 static void
-log_str_append_log_domain (GString *log_str, const char *log_domain, gboolean color)
+log_str_append_log_domain (GString *log_str, const gchar *log_domain, gboolean color)
 {
-    static const char *colors[] = {
+    static const gchar *colors[] = {
         "\033[1;32m", "\033[1;33m", "\033[1;35m", "\033[1;36m", "\033[1;91m",
         "\033[1;92m", "\033[1;93m", "\033[1;94m", "\033[1;95m", "\033[1;96m",
     };
@@ -157,7 +157,7 @@ log_str_append_log_domain (GString *log_str, const char *log_domain, gboolean co
         g_string_append (log_str, "\033[0m");
 }
 
-static const char *
+static const gchar *
 get_log_level_prefix (GLogLevelFlags log_level, gboolean use_color)
 {
     /* Ignore custom flags set */
@@ -206,7 +206,7 @@ get_log_level_prefix (GLogLevelFlags log_level, gboolean use_color)
 }
 
 static GLogWriterOutput
-gdu_log_write (GLogLevelFlags log_level, const char *log_domain, const char *log_message, const GLogField *fields,
+gdu_log_write (GLogLevelFlags log_level, const gchar *log_domain, const gchar *log_message, const GLogField *fields,
                gsize n_fields, gpointer user_data)
 {
     g_autoptr(GString) log_str = NULL;
@@ -229,7 +229,7 @@ gdu_log_write (GLogLevelFlags log_level, const char *log_domain, const char *log
 
     /* Add local time */
     {
-        char buffer[32];
+        gchar buffer[32];
         struct tm tm_now;
         time_t sec_now;
         gint64 now;
@@ -249,7 +249,7 @@ gdu_log_write (GLogLevelFlags log_level, const char *log_domain, const char *log
     g_string_append_printf (log_str, "%s: ", get_log_level_prefix (log_level, can_color));
 
     if (log_level & GDU_LOG_DETAILED) {
-        const char *code_func = NULL, *code_line = NULL;
+        const gchar *code_func = NULL, *code_line = NULL;
         for (guint i = 0; i < n_fields; i++) {
             const GLogField *field = &fields[i];
 
@@ -290,8 +290,8 @@ gdu_log_write (GLogLevelFlags log_level, const char *log_domain, const char *log
 static GLogWriterOutput
 gdu_log_handler (GLogLevelFlags log_level, const GLogField *fields, gsize n_fields, gpointer user_data)
 {
-    const char *log_domain = NULL;
-    const char *log_message = NULL;
+    const gchar *log_domain = NULL;
+    const gchar *log_message = NULL;
 
     for (guint i = 0; (!log_domain || !log_message) && i < n_fields; i++) {
         const GLogField *field = &fields[i];
@@ -321,7 +321,7 @@ gdu_log_finalize (void)
 }
 
 static void
-show_backtrace (int signum)
+show_backtrace (gint signum)
 {
     /* Log only if we have set some verbosity so that the trace
      * shall be shown only if the user have explicitly asked for.
@@ -345,7 +345,7 @@ show_backtrace (int signum)
 static void
 enable_backtrace (void)
 {
-    const char *env;
+    const gchar *env;
 
     env = g_getenv ("LD_PRELOAD");
 
@@ -423,14 +423,14 @@ gdu_log_increase_verbosity (void)
     enable_backtrace ();
 }
 
-int
+gint
 gdu_log_get_verbosity (void)
 {
     return verbosity;
 }
 
 void
-gdu_log_to_file (const char *file_path, gboolean append)
+gdu_log_to_file (const gchar *file_path, gboolean append)
 {
     gboolean file_exists;
 
@@ -447,7 +447,7 @@ gdu_log_to_file (const char *file_path, gboolean append)
     }
 }
 
-const char *
+const gchar *
 gdu_log_bool_str (gboolean value, gboolean use_success)
 {
     if (!g_log_writer_supports_color (fileno (stdout)) || stderr_is_journal) {
@@ -479,8 +479,8 @@ gdu_log_bool_str (gboolean value, gboolean use_success)
 }
 
 void
-gdu_log (const char *domain, GLogLevelFlags log_level, const char *value, const char *file, const char *line,
-         const char *func, const char *message_format, ...)
+gdu_log (const gchar *domain, GLogLevelFlags log_level, const gchar *value, const gchar *file, const gchar *line,
+         const gchar *func, const gchar *message_format, ...)
 {
     g_autoptr(GString) str = NULL;
     va_list args;
@@ -502,7 +502,7 @@ gdu_log (const char *domain, GLogLevelFlags log_level, const char *value, const 
 }
 
 void
-gdu_log_anonymize_value (GString *str, const char *value)
+gdu_log_anonymize_value (GString *str, const gchar *value)
 {
     gunichar c, next_c, prev_c;
 

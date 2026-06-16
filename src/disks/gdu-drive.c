@@ -46,7 +46,7 @@ struct _GduDrive {
     UDisksFilesystem *file_system;
     GString *model;
 
-    int partition_color_index;
+    gint partition_color_index;
     GListStore *partitions;
 
     GduFeature features;
@@ -57,7 +57,7 @@ G_DEFINE_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
 
 #define NUM_PARTITION_COLORS 7
 
-static const char *partition_colors[NUM_PARTITION_COLORS] = {
+static const gchar *partition_colors[NUM_PARTITION_COLORS] = {
     "blue", "green", "yellow", "orange", "red", "purple", "brown",
 };
 
@@ -95,7 +95,7 @@ gdu_drive_add_decrypted (GduDrive *self, UDisksObject *object, GduItem *parent)
     }
 }
 
-static const char *
+static const gchar *
 gdu_drive_get_description (GduItem *item)
 {
     GduDrive *self = (GduDrive *) item;
@@ -105,7 +105,7 @@ gdu_drive_get_description (GduItem *item)
     return udisks_object_info_get_description (self->info);
 }
 
-static const char *
+static const gchar *
 gdu_drive_get_partition_type (GduItem *item)
 {
     GduDrive *self = (GduDrive *) item;
@@ -114,7 +114,7 @@ gdu_drive_get_partition_type (GduItem *item)
 
     if (self->partition_table) {
         UDisksPartitionTable *table;
-        const char *type;
+        const gchar *type;
 
         table = udisks_object_peek_partition_table (self->partition_table);
         type = udisks_partition_table_get_type_ (table);
@@ -446,7 +446,7 @@ gdu_drive_matches_object (GduDrive *self, gpointer udisk_object)
     return FALSE;
 }
 
-const char *
+const gchar *
 gdu_drive_get_name (GduDrive *self)
 {
     g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -454,7 +454,7 @@ gdu_drive_get_name (GduDrive *self)
     return udisks_object_info_get_name (self->info);
 }
 
-const char *
+const gchar *
 gdu_drive_get_model (GduDrive *self)
 {
     g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -463,7 +463,7 @@ gdu_drive_get_model (GduDrive *self)
         return self->model->str;
 
     if (!self->model->len && self->drive) {
-        const char *vendor, *model, *revision;
+        const gchar *vendor, *model, *revision;
 
         vendor = udisks_drive_get_vendor (self->drive);
         model = udisks_drive_get_model (self->drive);
@@ -483,7 +483,7 @@ gdu_drive_get_model (GduDrive *self)
     return self->model->str;
 }
 
-const char *
+const gchar *
 gdu_drive_get_serial (GduDrive *self)
 {
     g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
@@ -525,7 +525,7 @@ gdu_drive_get_siblings (GduDrive *self)
     return objects;
 }
 
-static int
+static gint
 partition_cmp (gpointer a, gpointer b)
 {
     gint64 offset_a, offset_b;

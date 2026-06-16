@@ -158,15 +158,15 @@ gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file)
     gchar *path = NULL;
     gsize ret = 0;
     GMappedFile *mapped_file = NULL;
-    size_t bufpos = 0;
-    uint64_t memlimit = UINT64_MAX;
+    gsize bufpos = 0;
+    guint64 memlimit = UINT64_MAX;
     lzma_index *index_object = NULL;
     lzma_ret res;
     GError *error = NULL;
-    uint8_t *buf;
+    guint8 *buf;
     gsize len;
     lzma_stream_flags stream_flags;
-    uint8_t *footer, *index;
+    guint8 *footer, *index;
 
     path = g_file_get_path (compressed_file);
     if (path == NULL) {

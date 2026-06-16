@@ -63,7 +63,7 @@ static void
 gdu_resize_volume_dialog_update (GduResizeVolumeDialog *self)
 {
     GObject *object;
-    const char *unit;
+    const gchar *unit;
 
     object = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->size_unit_combo));
     unit = gtk_string_object_get_string (GTK_STRING_OBJECT (object));
@@ -525,7 +525,7 @@ static void
 on_resize_clicked_cb (GduResizeVolumeDialog *self)
 {
     gboolean offline_shrink;
-    const char *const *mount_points;
+    const gchar *const *mount_points;
 
     if (self->filesystem == NULL) {
         /* no filesystem present, just resize partition */
@@ -593,7 +593,7 @@ void
 gdu_resize_dialog_show (GtkWindow *parent_window, UDisksObject *object, UDisksClient *client)
 {
     GduResizeVolumeDialog *self;
-    const char *const *mount_points;
+    const gchar *const *mount_points;
 
     self = g_object_new (GDU_TYPE_RESIZE_VOLUME_DIALOG, NULL);
 

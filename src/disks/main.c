@@ -14,8 +14,8 @@
 #include "gdu-application.h"
 #include "gdu-log.h"
 
-int
-main (int argc, char *argv[])
+gint
+main (gint argc, gchar *argv[])
 {
     g_autoptr(GtkApplication) app = NULL;
 

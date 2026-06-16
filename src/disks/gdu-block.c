@@ -45,8 +45,8 @@ struct _GduBlock {
     UDisksPartition *partition;
     UDisksFilesystem *file_system;
 
-    char *partition_type;
-    char *description;
+    gchar *partition_type;
+    gchar *description;
     guint64 start_offset;
     guint64 size;
     GduFeature features;
@@ -64,7 +64,7 @@ G_DEFINE_TYPE (GduBlock, gdu_block, GDU_TYPE_ITEM)
         }                                                                                                              \
     } while (0)
 
-static const char *
+static const gchar *
 gdu_block_get_description (GduItem *item)
 {
     GduBlock *self = (GduBlock *) item;
@@ -77,7 +77,7 @@ gdu_block_get_description (GduItem *item)
         size_str = g_format_size (self->size);
         self->description = g_strdup_printf ("%s %s", size_str ?: "", _("Free Space"));
     } else if (!self->description) {
-        const char *id_label;
+        const gchar *id_label;
 
         id_label = udisks_block_get_id_label (self->block);
         if (id_label && *id_label) {
@@ -85,7 +85,7 @@ gdu_block_get_description (GduItem *item)
         } else if (gdu_block_is_extended (self)) {
             self->description = g_strdup (_("Extended Partition"));
         } else {
-            const char *usage, *type, *version;
+            const gchar *usage, *type, *version;
             g_autofree char *size_str = NULL;
             g_autofree char *id = NULL;
             guint64 size;
@@ -106,13 +106,13 @@ gdu_block_get_description (GduItem *item)
     return self->description;
 }
 
-static const char *
+static const gchar *
 gdu_block_get_partition_type (GduItem *item)
 {
     GduBlock *self = (GduBlock *) item;
     g_autoptr(UDisksPartitionTable) table = NULL;
     g_autoptr(UDisksPartition) partition = NULL;
-    const char *type, *table_type;
+    const gchar *type, *table_type;
 
     g_assert (GDU_IS_BLOCK (self));
 
@@ -124,7 +124,7 @@ gdu_block_get_partition_type (GduItem *item)
 
     partition = udisks_object_get_partition (self->object);
     if (partition == NULL) {
-        const char *usage, *version;
+        const gchar *usage, *version;
 
         usage = udisks_block_get_id_usage (self->block);
         type = udisks_block_get_id_type (self->block);
@@ -178,7 +178,7 @@ gdu_block_get_size (GduItem *item)
 /* https://gitlab.gnome.org/GNOME/gnome-disk-utility/-/blob/3f153fa62e1c2c2c881d747565004341de4ef094/src/disks/gduwindow.c#L2343
  */
 static UDisksObject *
-lookup_cleartext_device_for_crypto_device (UDisksClient *client, const char *object_path)
+lookup_cleartext_device_for_crypto_device (UDisksClient *client, const gchar *object_path)
 {
     GDBusObjectManager *object_manager;
     UDisksObject *ret;
@@ -277,7 +277,7 @@ gdu_block_get_features (GduItem *item)
     }
 
     if (udisks_object_peek_filesystem (object) != NULL) {
-        const char *const *mount_points;
+        const gchar *const *mount_points;
 
         mount_points = gdu_block_get_mount_points (self);
 
@@ -323,7 +323,7 @@ gdu_block_get_features (GduItem *item)
         /* allow partition resize if no known structured data was found on the device */
         features |= GDU_FEATURE_RESIZE_PARTITION;
     } else if (udisks_object_peek_filesystem (object) != NULL) {
-        const char *type;
+        const gchar *type;
 
         type = udisks_block_get_id_type (block);
         /* for now the filesystem resize on just any block device is not shown, see resize_dialog_show */
@@ -492,7 +492,7 @@ gdu_block_is_extended (GduBlock *self)
     return partition && udisks_partition_get_is_container (partition);
 }
 
-const char *
+const gchar *
 gdu_block_get_uuid (GduBlock *self)
 {
     g_return_val_if_fail (GDU_IS_BLOCK (self), NULL);
@@ -503,12 +503,12 @@ gdu_block_get_uuid (GduBlock *self)
     return "—";
 }
 
-char *
+gchar *
 gdu_block_get_size_str (GduBlock *self)
 {
     g_autofree char *unused_str = NULL;
     g_autofree char *size_str = NULL;
-    const char *const *mount_points;
+    const gchar *const *mount_points;
     guint64 size, unused;
 
     g_assert (GDU_IS_BLOCK (self));
@@ -540,7 +540,7 @@ gdu_block_get_size_str (GduBlock *self)
     return g_strdup_printf (_("%s — %s free (%.1f%% full)"), size_str, unused_str, 100.0 * (size - unused) / size);
 }
 
-const char *
+const gchar *
 gdu_block_get_device_id (GduBlock *self)
 {
     g_return_val_if_fail (GDU_IS_BLOCK (self), NULL);
@@ -551,7 +551,7 @@ gdu_block_get_device_id (GduBlock *self)
     return "—";
 }
 
-const char *
+const gchar *
 gdu_block_get_fs_label (GduBlock *self)
 {
     g_return_val_if_fail (GDU_IS_BLOCK (self), NULL);
@@ -562,7 +562,7 @@ gdu_block_get_fs_label (GduBlock *self)
     return udisks_block_get_id_label (self->block);
 }
 
-const char *
+const gchar *
 gdu_block_get_fs_type (GduBlock *self)
 {
     g_return_val_if_fail (GDU_IS_BLOCK (self), NULL);
@@ -573,7 +573,7 @@ gdu_block_get_fs_type (GduBlock *self)
     return udisks_block_get_id_type (self->block);
 }
 
-const char *const *
+const gchar *const *
 gdu_block_get_mount_points (GduBlock *self)
 {
     UDisksFilesystem *file_system;
@@ -594,8 +594,8 @@ gdu_block_get_mount_points (GduBlock *self)
 bool
 gdu_block_needs_unmount (GduBlock *self)
 {
-    const char *const *mount_points;
-    const char *fs_type;
+    const gchar *const *mount_points;
+    const gchar *fs_type;
     bool needs_unmount = false;
 
     g_return_val_if_fail (GDU_IS_BLOCK (self), false);
@@ -647,7 +647,7 @@ unmount_fs_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     GduBlock *self;
     g_autoptr(GTask) task = user_data;
     GError *error = NULL;
-    const char *label;
+    const gchar *label;
 
     g_assert (G_IS_TASK (task));
 
@@ -670,7 +670,7 @@ unmount_fs_cb (GObject *object, GAsyncResult *result, gpointer user_data)
 }
 
 void
-gdu_block_set_fs_label_async (GduBlock *self, const char *label, GAsyncReadyCallback callback, gpointer user_data)
+gdu_block_set_fs_label_async (GduBlock *self, const gchar *label, GAsyncReadyCallback callback, gpointer user_data)
 {
     g_autoptr(GTask) task = NULL;
 

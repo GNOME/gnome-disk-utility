@@ -100,7 +100,7 @@ gdu_sd_monitor_new (void)
 static void
 diff_sorted_lists (GList *list1, GList *list2, GCompareFunc compare, GList **added, GList **removed)
 {
-    int order;
+    gint order;
 
     *added = *removed = NULL;
 

@@ -154,7 +154,7 @@ GduCreateOtherPage *
 gdu_create_other_page_new (UDisksClient *client)
 {
     GduCreateOtherPage *self;
-    const char *other_fs_title_desc[N_OTHER_FS][2] = {
+    const gchar *other_fs_title_desc[N_OTHER_FS][2] = {
         { N_("XFS"), N_("Linux Filesystem") },
           { N_("Linux Swap Partition"), NULL },
             { N_("Btrfs"), N_("Copy-on-write Linux Filesystem, for snapshots") },

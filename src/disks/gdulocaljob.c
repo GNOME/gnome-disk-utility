@@ -35,10 +35,9 @@ typedef enum {
     PROP_OBJECT = 1,
     PROP_DESCRIPTION,
     PROP_EXTRA_MARKUP,
-    N_PROPS
 } GduLocalJobProps;
 
-static GParamSpec *props[N_PROPS] = { NULL, };
+static GParamSpec *props[PROP_EXTRA_MARKUP + 1] = { NULL, };
 
 enum {
     CANCELED_SIGNAL,
@@ -119,7 +118,7 @@ gdu_local_job_class_init (GduLocalJobClass *klass)
     props[PROP_OBJECT] = g_param_spec_object ("object", NULL, NULL, UDISKS_TYPE_OBJECT,
                                               G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (gobject_class, N_PROPS, props);
+    g_object_class_install_properties (gobject_class, G_N_ELEMENTS (props), props);
 
     signals[CANCELED_SIGNAL] = g_signal_new ("canceled", G_TYPE_FROM_CLASS (klass), G_SIGNAL_RUN_LAST,
                                              G_STRUCT_OFFSET (GduLocalJobClass, canceled), NULL, NULL,

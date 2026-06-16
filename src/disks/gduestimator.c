@@ -40,10 +40,9 @@ typedef enum {
     PROP_COMPLETED_BYTES,
     PROP_BYTES_PER_SEC,
     PROP_USEC_REMAINING,
-    N_PROPS
 } GduEstimatorProps;
 
-static GParamSpec *props[N_PROPS] = { NULL, };
+static GParamSpec *props[PROP_USEC_REMAINING + 1] = { NULL, };
 
 G_DEFINE_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
@@ -146,7 +145,7 @@ gdu_estimator_class_init (GduEstimatorClass *klass)
     props[PROP_USEC_REMAINING] = g_param_spec_uint64 ("usec-remaining", NULL, NULL, 0, G_MAXUINT64, 0,
                                                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (gobject_class, N_PROPS, props);
+    g_object_class_install_properties (gobject_class, G_N_ELEMENTS (props), props);
 }
 
 static void

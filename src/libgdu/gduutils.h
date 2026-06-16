@@ -66,7 +66,7 @@ typedef enum {
     OFFLINE_GROW = 1 << 2,
     ONLINE_SHRINK = 1 << 3,
     ONLINE_GROW = 1 << 4
-} ResizeFlags;
+} G_GNUC_FLAG_ENUM ResizeFlags;
 
 gboolean gdu_utils_can_resize (UDisksClient *client, const gchar *fstype, gboolean flush, ResizeFlags *mode_out,
                                gchar **missing_util_out);

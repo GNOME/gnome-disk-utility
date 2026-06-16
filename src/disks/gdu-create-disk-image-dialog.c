@@ -236,7 +236,7 @@ on_update_job (gpointer user_data)
 {
     GduCreateDiskImageDialog *self = user_data;
     update_job (self, FALSE);
-    return FALSE; /* remove source */
+    return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -254,7 +254,7 @@ on_show_error (gpointer user_data)
 
     dialog_data_complete_and_unref (self);
 
-    return FALSE; /* remove source */
+    return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -324,7 +324,7 @@ on_success (gpointer user_data)
         adw_alert_dialog_choose (ADW_ALERT_DIALOG (dialog), NULL, NULL, on_delete_response, self);
     }
 
-    return FALSE; /* remove source */
+    return G_SOURCE_REMOVE; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

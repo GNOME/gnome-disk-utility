@@ -1171,7 +1171,7 @@ on_timeout (gpointer user_data)
 {
     DialogData *data = user_data;
     update_updated_label (data);
-    return TRUE; /* keep timeout around */
+    return G_SOURCE_CONTINUE; /* keep timeout around */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */

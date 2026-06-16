@@ -1114,10 +1114,10 @@ static void
 unuse_unmount_cb (UDisksFilesystem *filesystem, GAsyncResult *res, gpointer user_data)
 {
     UnuseData *data = user_data;
-    GError *error = NULL;
+    g_autoptr(GError) error = NULL;
 
     if (!udisks_filesystem_call_unmount_finish (filesystem, res, &error)) {
-        unuse_data_complete (data, _("Error unmounting filesystem"), error);
+        unuse_data_complete (data, _("Error unmounting filesystem"), g_steal_pointer (&error));
     } else {
         gint64 end_usec;
         const gchar *const *mount_points;
@@ -1138,10 +1138,10 @@ static void
 unuse_lock_cb (UDisksEncrypted *encrypted, GAsyncResult *res, gpointer user_data)
 {
     UnuseData *data = user_data;
-    GError *error = NULL;
+    g_autoptr(GError) error = NULL;
 
     if (!udisks_encrypted_call_lock_finish (encrypted, res, &error)) {
-        unuse_data_complete (data, _("Error locking device"), error);
+        unuse_data_complete (data, _("Error locking device"), g_steal_pointer (&error));
     } else {
         unuse_data_iterate (data);
     }
@@ -1151,10 +1151,10 @@ static void
 unuse_set_autoclear_cb (UDisksLoop *loop, GAsyncResult *res, gpointer user_data)
 {
     UnuseData *data = user_data;
-    GError *error = NULL;
+    g_autoptr(GError) error = NULL;
 
     if (!udisks_loop_call_set_autoclear_finish (loop, res, &error)) {
-        unuse_data_complete (data, _("Error disabling autoclear for loop device"), error);
+        unuse_data_complete (data, _("Error disabling autoclear for loop device"), g_steal_pointer (&error));
     } else {
         unuse_data_iterate (data);
     }

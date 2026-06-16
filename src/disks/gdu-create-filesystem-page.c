@@ -105,7 +105,7 @@ on_fs_type_changed (GduCreateFilesystemPage *self)
 {
     update_text_entry (self);
 
-    g_object_notify (G_OBJECT (self), "complete");
+    g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_COMPLETE]);
 }
 
 static void

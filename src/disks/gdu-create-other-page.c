@@ -83,7 +83,7 @@ gdu_create_other_page_is_encrypted (GduCreateOtherPage *self)
 static void
 on_fs_type_changed (GduCreateOtherPage *self)
 {
-    g_object_notify (G_OBJECT (self), "complete");
+    g_object_notify_by_pspec (G_OBJECT (self), properties[PROP_COMPLETE]);
 }
 
 static void

@@ -120,8 +120,8 @@ update (GduEstimator *estimator)
     }
 
     g_object_freeze_notify (G_OBJECT (estimator));
-    g_object_notify (G_OBJECT (estimator), "bytes-per-sec");
-    g_object_notify (G_OBJECT (estimator), "usec-remaining");
+    g_object_notify_by_pspec (G_OBJECT (estimator), props[PROP_BYTES_PER_SEC]);
+    g_object_notify_by_pspec (G_OBJECT (estimator), props[PROP_USEC_REMAINING]);
     g_object_thaw_notify (G_OBJECT (estimator));
 }
 

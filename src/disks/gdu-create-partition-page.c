@@ -92,7 +92,7 @@ create_partition_update (GduCreatePartitionPage *self)
         can_proceed = TRUE;
 
     self->complete = can_proceed;
-    g_object_notify (G_OBJECT (self), "complete");
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COMPLETE]);
 }
 
 static void
@@ -178,7 +178,7 @@ size_binding_func (GBinding *binding, const GValue *source_value, GValue *target
 static void
 on_part_type_changed (GduCreatePartitionPage *self)
 {
-    g_object_notify (G_OBJECT (self), "complete");
+    g_object_notify_by_pspec (G_OBJECT (self), props[PROP_COMPLETE]);
 }
 
 static void

@@ -141,8 +141,7 @@ void
 gdu_local_job_set_description (GduLocalJob *job, const gchar *description)
 {
     g_return_if_fail (GDU_IS_LOCAL_JOB (job));
-    g_free (job->description);
-    job->description = g_strdup (description);
+    g_set_str (&job->description, description);
     g_object_notify_by_pspec (G_OBJECT (job), props[PROP_DESCRIPTION]);
 }
 
@@ -157,8 +156,7 @@ void
 gdu_local_job_set_extra_markup (GduLocalJob *job, const gchar *markup)
 {
     g_return_if_fail (GDU_IS_LOCAL_JOB (job));
-    g_free (job->extra_markup);
-    job->extra_markup = g_strdup (markup);
+    g_set_str (&job->extra_markup, markup);
     g_object_notify_by_pspec (G_OBJECT (job), props[PROP_EXTRA_MARKUP]);
 }
 

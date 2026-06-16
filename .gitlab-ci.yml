@@ -1,46 +1,224 @@
+.Show Info: &environment_information build-aux/ci/ci-helper.sh "INFO" &&
+  build-aux/ci/ci-helper.sh "GIT_INFO"
+
+.GNOME OS Before Script:
+  &gnomeos_before_script export RUSTUP_HOME="${CI_PROJECT_DIR}/.rustup" &&
+  export CARGO_HOME="${CI_PROJECT_DIR}/.cargo" &&
+  export PATH="${CARGO_HOME}/bin:${PATH}" &&
+  if ! command -v rustc >/dev/null 2>&1; then
+  curl --proto '=https' --tlsv1.2 --silent --show-error --fail https://sh.rustup.rs |
+  sh -s -- -y --profile minimal --default-toolchain stable;
+  fi &&
+  rustc --version &&
+  cargo --version &&
+  build-aux/ci/ci-helper.sh "INFO" &&
+  build-aux/ci/ci-helper.sh "GIT_INFO"
+
 include:
+  - project: Infrastructure/freedesktop-ci-templates
+    file: templates/fedora.yml
+    ref: aec7a6ce7bb38902c70641526f6611e27141784a
+  - component: gitlab.gnome.org/GNOME/citemplates/release-service@master
+    inputs:
+      dist-job-name: build-gnomeos
+  - project: GNOME/citemplates
+    file: templates/default-rules.yml
+  - component: "gitlab.gnome.org/GNOME/citemplates/gnomeos-basic-ci@master"
+    inputs:
+      before-script: *gnomeos_before_script
+      meson-options: "-Dman=false $MESON_SETUP_ARGS"
+      meson-test-options: "--verbose --no-stdsplit"
+      lsan-options: "suppressions=${CI_PROJECT_DIR}/build-aux/ci/lsan.supp"
+  - component: "gitlab.gnome.org/GNOME/citemplates/gnomeos-basic-ci@master"
+    inputs:
+      job-name: "build-gnomeos-default-options"
+      before-script: *gnomeos_before_script
+      meson-options: "-Dman=false $MESON_SETUP_ARGS"
+      run-tests: "no"
+      grcov-c: "disabled"
+      scan-build: "disabled"
+      goblint: "disabled"
   - project: "gnome/citemplates"
     file: "flatpak/flatpak_ci_initiative.yml"
-  - component: "gitlab.gnome.org/GNOME/citemplates/goblint@master"
-    inputs:
-      source-directory: "."
-  - component: "gitlab.gnome.org/GNOME/citemplates/release-service@master"
-    inputs:
-      dist-job-name: "flatpak"
-
-stages:
-  - build
-  - test
-  - deploy
 
 variables:
-  DEPENDENCIES: glib-devel libdvdread-devel gtk4-devel libadwaita-devel
-    libnotify-devel libsecret-devel libpwquality-devel
-    libudisks2-devel xz-devel systemd-devel meson gcc
-    glibc-devel libhandy1-devel gettext git gobject-introspection-devel
-    vala desktop-file-utils gtk4-devel libadwaita-devel rust cargo blueprint-compiler
-  OPTIONS: -Dman=false
+  FDO_UPSTREAM_REPO: gnome/gnome-disk-utility
+  MESON_BUILD_DIR: _build
+  MESON_SETUP_ARGS: "--fatal-meson-warnings -Dwarning_level=2"
 
+stages:
+  - prepare
+  - build
+  - test
+  - manual
+  - deploy
+
+.Build Logs: &build_logs
+  name: build_logs
+  when: always
+  paths:
+    - ./*.log
+    - $MESON_BUILD_DIR/meson-logs/
+
+.Build Output: &build_output
+  artifacts:
+    name: build_output
+    when: always
+    paths:
+      - ./*.log
+      - $MESON_BUILD_DIR/
+      - src/libgdu/config.rs
+      - src/disks/config.rs
+      - src/disk-image-mounter/config.rs
+    expire_in: 3h30min
+
+.Build Procedure: &build_procedure echo "== Building ==" &&
+  meson setup $MESON_BUILD_DIR ${BUILD_OPTS} $MESON_SETUP_ARGS -Dman=false &&
+  meson compile -C $MESON_BUILD_DIR 2>&1 | tee compilation.log
+
+.Run Tests: &run_tests echo "== Testing ==" &&
+  meson test -C $MESON_BUILD_DIR --verbose --no-stdsplit --no-rebuild
+
+.fedora.container.common:
+  variables:
+    # When branching a stable release, change 'main' to the
+    # release branch name to ensure that a new image will
+    # be created, tailored for the stable branch.
+    # Should probably also switch away from 'rawhide',
+    # to stable fedora branch as well.
+    BRANCH_NAME: "main"
+    CONTAINER_TAG: "2026-06-13"
+    FEDORA_VERSION: rawhide
+    # Derive FDO variables from this automatically.
+    # DO NOT edit, instead change the variables above.
+    FDO_REPO_SUFFIX: "${BRANCH_NAME}"
+    FDO_DISTRIBUTION_TAG: "${CONTAINER_TAG}-fedora-${FEDORA_VERSION}"
+    FDO_DISTRIBUTION_VERSION: "${FEDORA_VERSION}"
+
+#############################################
+#          Create CI Docker Images          #
+#############################################
+
+# See also https://gitlab.gnome.org/Infrastructure/freedesktop-ci-templates
+build.container.fedora@x86_64:
+  extends:
+    - ".fdo.container-build@fedora"
+    - ".fedora.container.common"
+  stage: prepare
+  variables:
+    # No need to pull the whole tree for rebuilding the image.
+    GIT_STRATEGY: none
+    # Expiry sets fdo.expires on the image.
+    FDO_EXPIRES_AFTER: 8w
+    # glibc-langpack-en is needed for sorting in run-style-check-diff.sh.
+    FDO_DISTRIBUTION_PACKAGES: >-
+      appstream
+      blueprint-compiler
+      cargo
+      clang-tools-extra
+      desktop-file-utils
+      dnf5-plugins
+      gcc
+      gettext
+      git
+      glib2-devel
+      glibc-devel
+      glibc-langpack-en
+      gobject-introspection-devel
+      gtk4-devel
+      libadwaita-devel
+      libdvdread-devel
+      libnotify-devel
+      libpwquality-devel
+      libsecret-devel
+      libudisks2-devel
+      meson
+      python3
+      rust
+      systemd-devel
+      vala
+      xz-devel
+    FDO_DISTRIBUTION_EXEC: |-
+      dnf remove -y systemtap-runtime
+
+##
+# Stage: Build
+#
+# Checks if GNOME Disks builds and installs.
+##
+build:
+  extends:
+    - ".fdo.suffixed-image@fedora"
+    - ".fedora.container.common"
+  stage: build
+  needs:
+    - build.container.fedora@x86_64
+  script:
+    - *environment_information
+    - *build_procedure
+
+    - echo "== Installing =="
+    - meson install -C $MESON_BUILD_DIR
+
+    - echo "== Report =="
+    - build-aux/ci/ci-helper.sh "WARNINGS"
+
+  <<: *build_output
+
+  except:
+    variables:
+      - $CI_PIPELINE_SOURCE == "schedule"
+
+##
+# Stage: Test
+#
+# Runs static checks and unit tests.
+##
 style-check-diff:
-  image: fedora:rawhide
+  extends:
+    - ".fdo.suffixed-image@fedora"
+    - ".fedora.container.common"
+  needs:
+    - build.container.fedora@x86_64
   stage: test
   when: always
-  before_script:
-    - dnf install -y --nogpgcheck git python3 clang-tools-extra glibc-langpack-en
   script:
     - .gitlab-ci/run-style-check-diff.sh
 
 check-potfiles:
-  image: fedora:rawhide
+  extends:
+    - ".fdo.suffixed-image@fedora"
+    - ".fedora.container.common"
+  needs:
+    - build.container.fedora@x86_64
   stage: test
   when: always
-  before_script:
-    - dnf install -y --nogpgcheck glibc-langpack-en
   script:
-    - bash .gitlab-ci/check-potfiles.sh
+    - .gitlab-ci/check-potfiles.sh
+
+test:
+  extends:
+    - ".fdo.suffixed-image@fedora"
+    - ".fedora.container.common"
+  stage: test
+  needs:
+    - job: build
+      artifacts: true
+  script:
+    - *environment_information
+    - *run_tests
+  artifacts:
+    <<: *build_logs
+    reports:
+      junit: "$MESON_BUILD_DIR/meson-logs/testlog.junit.xml"
+  except:
+    variables:
+      - $CI_PIPELINE_SOURCE == "schedule"
+      - $CI_COMMIT_TITLE =~ /^Update.*translation$/
 
 flatpak:
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master
+  stage: build
   variables:
     BUNDLE: "org.gnome.DiskUtility.flatpak"
     MANIFEST_PATH: "flatpak/org.gnome.DiskUtility.json"
@@ -48,13 +226,3 @@ flatpak:
     APP_ID: "org.gnome.DiskUtility"
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
   extends: .flatpak
-
-build:
-  image: fedora:rawhide
-  stage: build
-  before_script:
-    - dnf update -y --nogpgcheck && dnf install -y --nogpgcheck $DEPENDENCIES
-  script:
-    - meson . _build $OPTIONS
-    - ninja -C _build
-    - ninja -C _build install

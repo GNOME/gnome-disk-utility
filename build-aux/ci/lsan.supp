@@ -1,0 +1,12 @@
+# https://bugs.freedesktop.org/show_bug.cgi?id=105466
+# Ignore fontconfig leaks
+leak:libfontconfig.so.1
+
+# Unknown and unreported bugs
+leak:libglib-2.0.so.0
+
+# Ignore mesa leaks
+leak:mesa_cache_db_open
+
+# Ignore EGL leaks
+leak:eglInitialize

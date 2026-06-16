@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_ATA_SMART_DIALOG_H_H__
-#define __GDU_ATA_SMART_DIALOG_H_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -21,5 +20,3 @@ gchar *gdu_ata_smart_get_one_liner_assessment (UDisksDriveAta *ata, gboolean *ou
                                                gboolean *out_warn);
 
 G_END_DECLS
-
-#endif /* __GDU_ATA_SMART_DIALOG_H__ */

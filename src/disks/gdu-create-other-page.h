@@ -6,8 +6,7 @@
  * Author: Kai Lüke <kailueke@riseup.net>
  */
 
-#ifndef __GDU_CREATE_OTHER_PAGE_H__
-#define __GDU_CREATE_OTHER_PAGE_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -39,5 +38,3 @@ gboolean gdu_create_other_page_is_encrypted (GduCreateOtherPage *page);
 const gchar *gdu_create_other_page_get_fs (GduCreateOtherPage *page);
 
 G_END_DECLS
-
-#endif /* __GDU_CREATE_OTHER_PAGE_H__ */

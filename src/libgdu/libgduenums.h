@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __LIB_GDU_ENUMS_H__
-#define __LIB_GDU_ENUMS_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -20,5 +19,3 @@ typedef enum {
 } GduFormatDurationFlags;
 
 G_END_DECLS
-
-#endif /* __LIB_GDU_ENUMS_H__ */

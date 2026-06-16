@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_UTILS_H__
-#define __GDU_UTILS_H__
+#pragma once
 
 #include <adwaita.h>
 
@@ -143,5 +142,3 @@ static const guint64 unit_sizes[NUM_UNITS] = {
 gint gdu_utils_get_default_unit (guint64 size);
 
 G_END_DECLS
-
-#endif /* __GDU_UTILS_H__ */

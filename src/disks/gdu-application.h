@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_APPLICATION_H__
-#define __GDU_APPLICATION_H__
+#pragma once
 
 #include <adwaita.h>
 #include <gtk/gtk.h>
@@ -29,5 +28,3 @@ GduLocalJob *gdu_application_create_local_job (GduApplication *application, UDis
 void gdu_application_destroy_local_job (GduApplication *application, GduLocalJob *job);
 
 G_END_DECLS
-
-#endif /* __GDU_APPLICATION_H__ */

@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_SD_MONITOR_H__
-#define __GDU_SD_MONITOR_H__
+#pragma once
 
 #include <glib-object.h>
 #include <glib.h>
@@ -26,5 +25,3 @@ GType gdu_sd_monitor_get_type (void) G_GNUC_CONST;
 GduSdMonitor *gdu_sd_monitor_new (void);
 
 G_END_DECLS
-
-#endif /* __GDU_SD_MONITOR_H__ */

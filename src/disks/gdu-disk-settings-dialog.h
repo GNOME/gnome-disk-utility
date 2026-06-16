@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_DISK_SETTINGS_DIALOG_H__
-#define __GDU_DISK_SETTINGS_DIALOG_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -20,5 +19,3 @@ void gdu_disk_settings_dialog_show (GtkWindow *window, UDisksObject *object, UDi
 gboolean gdu_disk_settings_dialog_should_show (UDisksObject *object);
 
 G_END_DECLS
-
-#endif /* __GDU_DISK_SETTINGS_DIALOG_H__ */

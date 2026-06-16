@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_ENUMS_H__
-#define __GDU_ENUMS_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -31,5 +30,3 @@ typedef enum {
 } GduDeviceTreeModelFlags;
 
 G_END_DECLS
-
-#endif /* __GDU_ENUMS_H__ */

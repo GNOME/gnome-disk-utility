@@ -6,8 +6,7 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __GDU_ESTIMATOR_H__
-#define __GDU_ESTIMATOR_H__
+#pragma once
 
 #include <gtk/gtk.h>
 
@@ -27,5 +26,3 @@ guint64 gdu_estimator_get_bytes_per_sec (GduEstimator *estimator);
 guint64 gdu_estimator_get_usec_remaining (GduEstimator *estimator);
 
 G_END_DECLS
-
-#endif /* __GDU_ESTIMATOR_H__ */

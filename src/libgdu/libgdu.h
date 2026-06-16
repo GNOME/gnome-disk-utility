@@ -6,12 +6,9 @@
  * Author: David Zeuthen <zeuthen@gmail.com>
  */
 
-#ifndef __LIB_GDU_H__
-#define __LIB_GDU_H__
+#pragma once
 
 #include "gduutils.h"
 #include "libgduenums.h"
 #include "libgduenumtypes.h"
 #include "libgdutypes.h"
-
-#endif /* __LIB_GDU_H__ */

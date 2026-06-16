@@ -9,24 +9,24 @@
 #include "config.h"
 
 #define _GNU_SOURCE
+
+#include "gdu-create-disk-image-dialog.h"
+
 #include <fcntl.h>
 
 #include <gio/gfiledescriptorbased.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
-#include <glib/gi18n.h>
-
 #include <glib-unix.h>
+#include <glib/gi18n.h>
 #include <linux/fs.h>
 #include <sys/ioctl.h>
 
 #include "gdu-application.h"
-#include "gdu-create-disk-image-dialog.h"
 #include "gdu-job-manager.h"
+#include "gdudvdsupport.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
-
-#include "gdudvdsupport.h"
 
 /* TODOs / ideas for Disk Image creation
  *
@@ -76,6 +76,10 @@ typedef struct {
 
     guint inhibit_cookie;
 } CreateDiskImageJobData;
+
+static void create_disk_image_job_data_free (gpointer user_data);
+
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (CreateDiskImageJobData, create_disk_image_job_data_free)
 
 G_DEFINE_FINAL_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
 
@@ -353,11 +357,11 @@ on_create_disk_image_job_completed (GduLocalJob *job, GduLocalJobResult result, 
  * Returns: Number of bytes actually read (e.g. not include padding) -1 if @error is set.
  */
 static gssize
-copy_span (int fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer, gboolean pad_with_zeroes,
-           GduDVDSupport *dvd_support, GCancellable *cancellable, GError **error)
+copy_span (gint fd, GOutputStream *output_stream, guint64 offset, guint64 size, guchar *buffer,
+           gboolean pad_with_zeroes, GduDVDSupport *dvd_support, GCancellable *cancellable, GError **error)
 {
     gint64 ret = -1;
-    ssize_t num_bytes_read;
+    gssize num_bytes_read;
     gsize num_bytes_to_write;
 
     g_return_val_if_fail (-1, buffer != NULL);
@@ -423,11 +427,11 @@ static GduLocalJobResult
 create_disk_image_job_run (GduLocalJob *job, GCancellable *cancellable, GError **out_error)
 {
     CreateDiskImageJobData *data = gdu_local_job_get_user_data (job);
-    GduDVDSupport *dvd_support = NULL;
-    guchar *buffer_unaligned = NULL;
-    guchar *buffer = NULL;
+    g_autoptr(GduDVDSupport) dvd_support = NULL;
+    g_autofree guchar *buffer_unaligned = NULL;
+    guchar *buffer;
     guint64 block_device_size = 0;
-    long page_size;
+    glong page_size;
     GError *error = NULL;
     GError *error2 = NULL;
     gint64 last_update_usec = -1;
@@ -596,9 +600,6 @@ create_disk_image_job_run (GduLocalJob *job, GCancellable *cancellable, GError *
     }
 
 out:
-    if (dvd_support != NULL)
-        gdu_dvd_support_free (dvd_support);
-
     /* in either case, close the stream */
     if (!g_output_stream_close (G_OUTPUT_STREAM (data->output_file_stream), NULL, /* cancellable */
                                 &error2)) {
@@ -620,8 +621,6 @@ out:
         if (close (fd) != 0)
             g_warning ("Error closing fd: %m");
     }
-
-    g_free (buffer_unaligned);
 
     if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
         g_clear_error (&error);
@@ -675,7 +674,7 @@ static void
 start_copying (GduCreateDiskImageDialog *self)
 {
     const gchar *name;
-    CreateDiskImageJobData *data;
+    g_autoptr(CreateDiskImageJobData) data = NULL;
     GduJobManager *job_manager;
     g_autoptr(GduLocalJob) job = NULL;
     g_autoptr(GError) error = NULL;
@@ -701,11 +700,10 @@ start_copying (GduCreateDiskImageDialog *self)
     data = create_disk_image_job_data_new (self, output_file, output_file_stream);
     job = gdu_local_job_new (self->object, "x-gdu-create-disk-image",
                              _("Creating Disk Image"), create_disk_image_job_run, create_disk_image_job_update,
-                               on_create_disk_image_job_completed, data, create_disk_image_job_data_free);
-    if (job == NULL) {
-        create_disk_image_job_data_free (data);
+                               on_create_disk_image_job_completed, g_steal_pointer (&data),
+                               create_disk_image_job_data_free);
+    if (job == NULL)
         return;
-    }
 
     gdu_local_job_set_progress_valid (job, TRUE);
     gdu_local_job_set_cancelable (job, TRUE);

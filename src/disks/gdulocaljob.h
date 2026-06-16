@@ -8,8 +8,9 @@
 
 #pragma once
 
-#include "gdutypes.h"
 #include <gio/gio.h>
+
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

@@ -11,9 +11,9 @@
 
 #include "config.h"
 
-#include <unistd.h>
-
 #include "gdulocaljob.h"
+
+#include <unistd.h>
 
 struct _GduLocalJob {
     UDisksJobSkeleton parent_instance;
@@ -43,17 +43,15 @@ G_DEFINE_ENUM_TYPE (GduLocalJobState, gdu_local_job_state, G_DEFINE_ENUM_VALUE (
                     G_DEFINE_ENUM_VALUE (GDU_LOCAL_JOB_STATE_CANCELING, "canceling"),
                     G_DEFINE_ENUM_VALUE (GDU_LOCAL_JOB_STATE_FINISHED, "finished"));
 
-enum {
-    PROP_0,
-    PROP_OBJECT,
+typedef enum {
+    PROP_OBJECT = 1,
     PROP_OBJECT_PATH,
     PROP_DESCRIPTION,
     PROP_EXTRA_MARKUP,
     PROP_STATE,
-    N_PROPS
-};
+} GduLocalJobProps;
 
-static GParamSpec *props[N_PROPS];
+static GParamSpec *props[PROP_STATE + 1];
 
 static void gdu_local_job_set_state (GduLocalJob *job, GduLocalJobState state);
 static void gdu_local_job_clear_queued_update (GduLocalJob *job);
@@ -95,7 +93,7 @@ gdu_local_job_get_property (GObject *object, guint property_id, GValue *value, G
 {
     GduLocalJob *self = GDU_LOCAL_JOB (object);
 
-    switch (property_id) {
+    switch ((GduLocalJobProps) property_id) {
     case PROP_OBJECT:
         g_value_set_object (value, self->object);
         break;
@@ -115,10 +113,6 @@ gdu_local_job_get_property (GObject *object, guint property_id, GValue *value, G
     case PROP_STATE:
         g_value_set_enum (value, self->state);
         break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
     }
 }
 
@@ -127,7 +121,7 @@ gdu_local_job_set_property (GObject *object, guint property_id, const GValue *va
 {
     GduLocalJob *self = GDU_LOCAL_JOB (object);
 
-    switch (property_id) {
+    switch ((GduLocalJobProps) property_id) {
     case PROP_OBJECT:
         gdu_local_job_set_object (self, g_value_get_object (value));
         break;
@@ -139,9 +133,9 @@ gdu_local_job_set_property (GObject *object, guint property_id, const GValue *va
     case PROP_EXTRA_MARKUP:
         gdu_local_job_set_extra_markup (self, g_value_get_string (value));
         break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_OBJECT_PATH:
+    case PROP_STATE:
+        g_assert_not_reached ();
         break;
     }
 }
@@ -151,8 +145,7 @@ gdu_local_job_call_completed_func (GduLocalJob *job, GduLocalJobResult result, G
 {
     GduLocalJobCompletedFunc completed_func;
 
-    completed_func = job->completed_func;
-    job->completed_func = NULL;
+    completed_func = g_steal_pointer (&job->completed_func);
 
     if (completed_func != NULL)
         completed_func (job, result, error);
@@ -215,7 +208,7 @@ gdu_local_job_class_init (GduLocalJobClass *klass)
     props[PROP_STATE] = g_param_spec_enum ("state", NULL, NULL, GDU_TYPE_LOCAL_JOB_STATE, GDU_LOCAL_JOB_STATE_QUEUED,
                                            G_PARAM_READABLE | G_PARAM_EXPLICIT_NOTIFY | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (object_class, N_PROPS, props);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }
 
 static void

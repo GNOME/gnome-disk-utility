@@ -9,8 +9,9 @@
 #ifndef __GDU_UTILS_H__
 #define __GDU_UTILS_H__
 
-#include "libgdutypes.h"
 #include <adwaita.h>
+
+#include "libgdutypes.h"
 
 G_BEGIN_DECLS
 

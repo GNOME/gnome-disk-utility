@@ -9,8 +9,9 @@
 #ifndef __GDU_ATA_SMART_DIALOG_H_H__
 #define __GDU_ATA_SMART_DIALOG_H_H__
 
-#include "gdutypes.h"
 #include <gtk/gtk.h>
+
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

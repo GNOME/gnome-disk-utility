@@ -17,14 +17,16 @@
 #include "config.h"
 #endif
 
+#include "gdu-manager.h"
+
 #include <fcntl.h>
 #include <stdbool.h>
 #include <sys/stat.h>
+
 #include <udisks/udisks.h>
 
 #include "gdu-block.h"
 #include "gdu-drive.h"
-#include "gdu-manager.h"
 #include "gduutils.h"
 
 struct _GduManager {

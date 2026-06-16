@@ -10,9 +10,8 @@
 #define __GDU_TYPES_H__
 
 #include <gtk/gtk.h>
-#include <udisks/udisks.h>
-
 #include <libgdu/libgdu.h>
+#include <udisks/udisks.h>
 
 #include "gduenums.h"
 

@@ -9,8 +9,9 @@
 #ifndef __GDU_LOCAL_JOB_H__
 #define __GDU_LOCAL_JOB_H__
 
-#include "gdutypes.h"
 #include <gtk/gtk.h>
+
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

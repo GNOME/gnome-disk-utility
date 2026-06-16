@@ -8,15 +8,14 @@
 
 #include "config.h"
 
+#include "gdudvdsupport.h"
+
+#include <dvdread/dvd_reader.h>
+#include <dvdread/dvd_udf.h>
 #include <glib-unix.h>
 #include <gmodule.h>
 #include <linux/fs.h>
 #include <sys/ioctl.h>
-
-#include <dvdread/dvd_reader.h>
-#include <dvdread/dvd_udf.h>
-
-#include "gdudvdsupport.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* libdvdcss support - see http://www.videolan.org/developers/libdvdcss.html */

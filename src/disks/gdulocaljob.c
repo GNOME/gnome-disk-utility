@@ -7,10 +7,12 @@
  */
 
 #include "config.h"
+
+#include "gdulocaljob.h"
+
 #include <glib/gi18n.h>
 
 #include "gduenums.h"
-#include "gdulocaljob.h"
 
 typedef struct GduLocalJobClass GduLocalJobClass;
 

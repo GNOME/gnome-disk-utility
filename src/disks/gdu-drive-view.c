@@ -14,6 +14,8 @@
 #include "config.h"
 #endif
 
+#include "gdu-drive-view.h"
+
 #include <adwaita.h>
 #include <glib/gi18n.h>
 #include <udisks/udisks.h>
@@ -24,10 +26,10 @@
 #include "gdu-create-disk-image-dialog.h"
 #include "gdu-disk-settings-dialog.h"
 #include "gdu-drive-header.h"
-#include "gdu-drive-view.h"
 #include "gdu-format-disk-dialog.h"
 #include "gdu-item.h"
 #include "gdu-manager.h"
+#include "gdu-rust.h"
 #include "gdu-space-allocation-bar.h"
 
 enum {
@@ -37,8 +39,6 @@ enum {
 };
 
 static GParamSpec *properties[N_PROPS];
-
-#include "gdu-rust.h"
 
 struct _GduDriveView {
     AdwBin parent_instance;

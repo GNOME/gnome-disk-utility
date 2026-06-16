@@ -7,6 +7,15 @@
  */
 
 #include "config.h"
+
+#include "gdu-benchmark-dialog.h"
+
+#include <math.h>
+
+#include <glib/gi18n.h>
+#include <linux/fs.h>
+#include <sys/ioctl.h>
+
 #include "gdk/gdk.h"
 #include "gio/gio.h"
 #include "glib-object.h"
@@ -15,14 +24,6 @@
 #include "graphene.h"
 #include "gsk/gsk.h"
 #include "gtk/gtk.h"
-
-#include <glib/gi18n.h>
-
-#include <linux/fs.h>
-#include <math.h>
-#include <sys/ioctl.h>
-
-#include "gdu-benchmark-dialog.h"
 
 struct _GduBenchmarkSample {
     GObject parent_instance;

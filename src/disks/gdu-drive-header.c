@@ -8,9 +8,10 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include "gdu-drive-header.h"
+
 #include <adwaita.h>
 
-#include "gdu-drive-header.h"
 #include "glib.h"
 #include "gtk/gtk.h"
 

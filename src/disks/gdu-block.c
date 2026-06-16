@@ -16,10 +16,11 @@
 #include "config.h"
 #endif
 
+#include "gdu-block.h"
+
 #include <glib/gi18n.h>
 #include <udisks/udisks.h>
 
-#include "gdu-block.h"
 #include "gdu-drive.h"
 #include "gdu-item.h"
 #include "gdu-log.h"

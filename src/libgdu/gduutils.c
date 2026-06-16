@@ -7,12 +7,14 @@
  */
 /* NOTE: Keep this file in sync with gduutils.rs */
 #include "config.h"
-#include <adwaita.h>
-#include <glib/gi18n.h>
+
+#include "gduutils.h"
+
 #include <math.h>
 #include <sys/statvfs.h>
 
-#include "gduutils.h"
+#include <adwaita.h>
+#include <glib/gi18n.h>
 
 /* For __GNUC_PREREQ usage below */
 #ifdef __GNUC__

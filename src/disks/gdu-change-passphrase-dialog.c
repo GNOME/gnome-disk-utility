@@ -10,10 +10,11 @@
 #include "config.h"
 #endif
 
+#include "gdu-change-passphrase-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-change-passphrase-dialog.h"
 #include "gdu-create-password-page.h"
 
 struct _GduChangePassphraseDialog {

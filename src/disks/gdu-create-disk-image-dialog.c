@@ -8,25 +8,24 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE
+#include "gdu-create-disk-image-dialog.h"
+
 #include <fcntl.h>
 
 #include <gio/gfiledescriptorbased.h>
 #include <gio/gunixfdlist.h>
 #include <gio/gunixinputstream.h>
-#include <glib/gi18n.h>
-
 #include <glib-unix.h>
+#include <glib/gi18n.h>
 #include <linux/fs.h>
 #include <sys/ioctl.h>
 
 #include "gdu-application.h"
-#include "gdu-create-disk-image-dialog.h"
+#include "gdudvdsupport.h"
 #include "gduestimator.h"
 #include "gdulocaljob.h"
 
-#include "gdudvdsupport.h"
-
+#define _GNU_SOURCE
 /* TODOs / ideas for Disk Image creation
  *
  * - Be tolerant of I/O errors like dd_rescue(1), see http://www.gnu.org/s/ddrescue/ddrescue.html

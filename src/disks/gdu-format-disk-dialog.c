@@ -13,10 +13,11 @@
 #include "config.h"
 #endif
 
+#include "gdu-format-disk-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-format-disk-dialog.h"
 
 /* ---------------------------------------------------------------------------------------------------- */
 

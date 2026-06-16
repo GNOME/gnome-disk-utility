@@ -17,13 +17,14 @@
 #include "config.h"
 #endif
 
+#include "gdu-drive.h"
+
 #include <glib/gi18n.h>
 #include <udisks/udisks.h>
 
 #include "gdu-ata-smart-dialog.h"
 #include "gdu-block.h"
 #include "gdu-disk-settings-dialog.h"
-#include "gdu-drive.h"
 #include "gdu-item.h"
 #include "gduutils.h"
 

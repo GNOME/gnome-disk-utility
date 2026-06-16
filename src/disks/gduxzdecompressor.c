@@ -11,19 +11,17 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-
 #include "gduxzdecompressor.h"
 
+#include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <errno.h>
-#include <string.h>
-
+#include <glib/gi18n.h>
 #include <lzma.h>
 
 static void gdu_xz_decompressor_iface_init (GConverterIface *iface);

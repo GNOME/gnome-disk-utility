@@ -10,8 +10,9 @@
 
 #pragma once
 
-#include <gio/gio.h>
 #include <stdbool.h>
+
+#include <gio/gio.h>
 
 #include "gdu-item.h"
 

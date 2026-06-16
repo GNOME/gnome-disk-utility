@@ -7,12 +7,13 @@
  */
 
 #include "config.h"
-#include <glib/gi18n.h>
+
+#include "gduestimator.h"
 
 #include <math.h>
 #include <stdlib.h>
 
-#include "gduestimator.h"
+#include <glib/gi18n.h>
 
 // #define MAX_SAMPLES 100
 #define MAX_SAMPLES 50

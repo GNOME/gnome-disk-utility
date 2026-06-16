@@ -12,16 +12,17 @@
 
 #include "config.h"
 
-#define _GNU_SOURCE
+#include "gdu-new-disk-image-dialog.h"
+
 #include <fcntl.h>
-#include <glib/gi18n.h>
 #include <math.h>
 
+#include <glib/gi18n.h>
 #include <linux/fs.h>
 
-#include "gdu-new-disk-image-dialog.h"
 #include "gduutils.h"
 
+#define _GNU_SOURCE
 /* TODOs: ideas for New Disk Image creation
  * include a radio toggle to create either
  * - a full disk image with a partition table or

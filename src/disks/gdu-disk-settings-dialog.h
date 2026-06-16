@@ -9,8 +9,9 @@
 #ifndef __GDU_DISK_SETTINGS_DIALOG_H__
 #define __GDU_DISK_SETTINGS_DIALOG_H__
 
-#include "gdutypes.h"
 #include <gtk/gtk.h>
+
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

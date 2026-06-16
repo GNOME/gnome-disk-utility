@@ -11,9 +11,10 @@
 
 #include "config.h"
 
+#include "gdu-edit-filesystem-dialog.h"
+
 #include <glib/gi18n.h>
 
-#include "gdu-edit-filesystem-dialog.h"
 #include "gduutils.h"
 
 struct _GduEditFilesystemDialog {

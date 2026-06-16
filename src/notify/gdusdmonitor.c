@@ -8,14 +8,13 @@
 
 #include "config.h"
 
+#include "gdusdmonitor.h"
+
 #include <gio/gio.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <libnotify/notify.h>
-
 #include <udisks/udisks.h>
-
-#include "gdusdmonitor.h"
 
 struct GduSdMonitorClass;
 typedef struct GduSdMonitorClass GduSdMonitorClass;

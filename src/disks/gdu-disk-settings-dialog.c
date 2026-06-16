@@ -8,12 +8,13 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
+#include "gdu-disk-settings-dialog.h"
 
 #include <math.h>
 
+#include <glib/gi18n.h>
+
 #include "gdu-application.h"
-#include "gdu-disk-settings-dialog.h"
 #include "gdu-window.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

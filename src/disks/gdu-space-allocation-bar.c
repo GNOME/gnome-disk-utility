@@ -17,12 +17,13 @@
 #include "config.h"
 #endif
 
+#include "gdu-space-allocation-bar.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-block.h"
 #include "gdu-drive.h"
 #include "gdu-item.h"
-#include "gdu-space-allocation-bar.h"
 #include "gduutils.h"
 
 struct _GduSpaceAllocationBar {

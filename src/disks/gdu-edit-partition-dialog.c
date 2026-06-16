@@ -13,10 +13,11 @@
 #include "config.h"
 #endif
 
+#include "gdu-edit-partition-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-edit-partition-dialog.h"
 
 struct _GduEditPartitionDialog {
     AdwDialog parent_instance;

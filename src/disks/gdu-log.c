@@ -8,13 +8,14 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
+#include "gdu-log.h"
+
 #include <ctype.h>
-#include <glib.h>
-#include <glib/gstdio.h>
 #include <stdio.h>
 #include <unistd.h>
 
-#include "gdu-log.h"
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #define DEFAULT_DOMAIN_PREFIX "gdu"
 

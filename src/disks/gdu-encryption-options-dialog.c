@@ -13,9 +13,9 @@
 #include "config.h"
 #endif
 
-#include <glib/gi18n.h>
-
 #include "gdu-encryption-options-dialog.h"
+
+#include <glib/gi18n.h>
 
 struct _GduEncryptionOptionsDialog {
     AdwDialog parent_instance;

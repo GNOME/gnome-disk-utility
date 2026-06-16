@@ -8,10 +8,11 @@
 
 #include "config.h"
 
+#include "gdu-ata-smart-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-ata-smart-dialog.h"
 #include "gdu-window.h"
 
 enum {

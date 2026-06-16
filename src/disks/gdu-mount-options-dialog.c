@@ -8,10 +8,11 @@
 
 #include "config.h"
 
+#include "gdu-mount-options-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
-#include "gdu-mount-options-dialog.h"
 #include "gdu-window.h"
 
 /* ---------------------------------------------------------------------------------------------------- */

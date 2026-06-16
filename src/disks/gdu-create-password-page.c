@@ -8,10 +8,10 @@
 
 #include "config.h"
 
+#include "gdu-create-password-page.h"
+
 #include <glib/gi18n.h>
 #include <pwquality.h>
-
-#include "gdu-create-password-page.h"
 
 enum {
     PROP_0,

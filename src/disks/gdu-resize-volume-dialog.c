@@ -8,9 +8,10 @@
 
 #include "config.h"
 
+#include "gdu-resize-volume-dialog.h"
+
 #include <glib/gi18n.h>
 
-#include "gdu-resize-volume-dialog.h"
 #include "gduutils.h"
 
 #define FILESYSTEM_WAIT_STEP_MS 500

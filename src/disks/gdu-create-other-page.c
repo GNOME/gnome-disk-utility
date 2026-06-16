@@ -8,9 +8,9 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
-
 #include "gdu-create-other-page.h"
+
+#include <glib/gi18n.h>
 
 enum {
     PROP_0,

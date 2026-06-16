@@ -15,6 +15,9 @@
 #include "config.h"
 #endif
 
+#include "gdu-format-volume-dialog.h"
+#include "gdu-format-volume-dialog.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-application.h"
@@ -23,15 +26,12 @@
 #include "gdu-create-other-page.h"
 #include "gdu-create-partition-page.h"
 #include "gdu-create-password-page.h"
-#include "gdu-format-volume-dialog.h"
 
 #define PARTITION_PAGE "partition"
 #define FORMAT_PAGE "format"
 #define OTHER_PAGE "other"
 #define PASSWORD_PAGE "password"
 #define CONFIRM_PAGE "confirm"
-
-#include "gdu-format-volume-dialog.h"
 
 struct _GduFormatVolumeDialog {
     AdwDialog parent_instance;

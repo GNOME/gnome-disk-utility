@@ -11,12 +11,13 @@
 
 #include "config.h"
 
+#include "gdu-unlock-dialog.h"
+
 #include <errno.h>
-#include <glib/gi18n.h>
-#include <libsecret/secret.h>
 #include <stdlib.h>
 
-#include "gdu-unlock-dialog.h"
+#include <glib/gi18n.h>
+#include <libsecret/secret.h>
 
 /* From GVfs's monitor/udisks2/gvfsudisks2volume.c */
 static const SecretSchema luks_passphrase_schema = { "org.gnome.GVfs.Luks.Password",

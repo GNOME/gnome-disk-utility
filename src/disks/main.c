@@ -7,9 +7,9 @@
  */
 
 #include "config.h"
-#include <glib/gi18n.h>
 
 #include <adwaita.h>
+#include <glib/gi18n.h>
 
 #include "gdu-application.h"
 #include "gdu-log.h"

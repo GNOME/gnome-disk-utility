@@ -9,8 +9,9 @@
 #ifndef __GDU_CREATE_OTHER_PAGE_H__
 #define __GDU_CREATE_OTHER_PAGE_H__
 
-#include "gdutypes.h"
 #include <gtk/gtk.h>
+
+#include "gdutypes.h"
 
 G_BEGIN_DECLS
 

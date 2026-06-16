@@ -8,14 +8,15 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
+#include "gdu-application.h"
 
 #include <errno.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "gdu-application.h"
+#include <glib/gi18n.h>
+
 #include "gdu-format-volume-dialog.h"
 #include "gdu-log.h"
 #include "gdu-manager.h"

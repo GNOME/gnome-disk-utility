@@ -18,12 +18,13 @@
 #include "config.h"
 #endif
 
+#include "gdu-window.h"
+
 #include <glib/gi18n.h>
 
 #include "gdu-drive-row.h"
 #include "gdu-drive-view.h"
 #include "gdu-new-disk-image-dialog.h"
-#include "gdu-window.h"
 #include "gduutils.h"
 
 struct _GduWindow {

@@ -16,11 +16,12 @@
 #include "config.h"
 #endif
 
+#include "gdu-block-row.h"
+
 #include <glib/gi18n.h>
 #include <udisks/udisks.h>
 
 #include "gdu-benchmark-dialog.h"
-#include "gdu-block-row.h"
 #include "gdu-change-passphrase-dialog.h"
 #include "gdu-create-disk-image-dialog.h"
 #include "gdu-drive.h"

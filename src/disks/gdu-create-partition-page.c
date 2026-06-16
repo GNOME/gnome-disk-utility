@@ -8,10 +8,11 @@
 
 #include "config.h"
 
-#include <glib/gi18n.h>
+#include "gdu-create-partition-page.h"
+
 #include <math.h>
 
-#include "gdu-create-partition-page.h"
+#include <glib/gi18n.h>
 
 enum {
     PROP_0,

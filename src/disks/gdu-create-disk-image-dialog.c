@@ -623,12 +623,12 @@ out:
 
     g_free (buffer_unaligned);
 
-    if (error != NULL) {
-        if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
-            g_clear_error (&error);
-            return GDU_LOCAL_JOB_RESULT_CANCELLED;
-        }
+    if (g_error_matches (error, G_IO_ERROR, G_IO_ERROR_CANCELLED)) {
+        g_clear_error (&error);
+        return GDU_LOCAL_JOB_RESULT_CANCELLED;
+    }
 
+    if (error != NULL) {
         g_propagate_error (out_error, g_steal_pointer (&error));
         return GDU_LOCAL_JOB_RESULT_ERROR;
     }

@@ -183,7 +183,7 @@ on_get_secret_configuration_cb (GObject *source_object, GAsyncResult *res, gpoin
     const gchar *type;
     GVariant *details;
     g_autoptr(GVariant) configuration = NULL;
-    GError *error;
+    GError *error = NULL;
 
     if (!udisks_block_call_get_secret_configuration_finish (self->udisks_block, &configuration, res, &error)) {
         gdu_utils_show_error (gdu_change_passphrase_dialog_get_window (self), _("Error retrieving configuration data"),

@@ -16,6 +16,8 @@
 #include <adwaita.h>
 #include <gtk/gtk.h>
 
+#include "gdu-drive.h"
+
 G_BEGIN_DECLS
 
 #define GDU_TYPE_SPACE_ALLOCATION_BAR (gdu_space_allocation_bar_get_type ())

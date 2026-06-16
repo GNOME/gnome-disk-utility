@@ -15,8 +15,11 @@
 #include <glib/gi18n.h>
 
 typedef enum {
-    PROP_COMPLETE = 1
+    PROP_COMPLETE = 1,
+    N_PROPS
 } GduCreatePartitionPageProps;
+
+static GParamSpec *props[N_PROPS] = { NULL, };
 
 struct _GduCreatePartitionPage {
     AdwBin parent_instance;
@@ -223,9 +226,9 @@ gdu_create_partition_page_class_init (GduCreatePartitionPageClass *klass)
     gtk_widget_class_bind_template_callback (widget_class, set_size_entry_unit_cb);
     gtk_widget_class_bind_template_callback (widget_class, on_size_changed_cb);
 
-    g_object_class_install_property (
-        object_class, PROP_COMPLETE,
-        g_param_spec_boolean ("complete", NULL, NULL, FALSE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+    props[PROP_COMPLETE] = g_param_spec_boolean ("complete", NULL, NULL, FALSE, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+    g_object_class_install_properties (object_class, N_PROPS, props);
 }
 
 GduCreatePartitionPage *

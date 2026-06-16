@@ -40,7 +40,10 @@ typedef enum {
     PROP_COMPLETED_BYTES,
     PROP_BYTES_PER_SEC,
     PROP_USEC_REMAINING,
+    N_PROPS
 } GduEstimatorProps;
+
+static GParamSpec *props[N_PROPS] = { NULL, };
 
 G_DEFINE_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
@@ -134,22 +137,19 @@ gdu_estimator_class_init (GduEstimatorClass *klass)
     gobject_class->get_property = gdu_estimator_get_property;
     gobject_class->set_property = gdu_estimator_set_property;
 
-    g_object_class_install_property (
-        gobject_class, PROP_TARGET_BYTES,
-        g_param_spec_uint64 ("target-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
-                             G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS));
+    props[PROP_TARGET_BYTES] = g_param_spec_uint64 ("target-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
+                                                    G_PARAM_READABLE | G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_property (gobject_class, PROP_COMPLETED_BYTES,
-                                     g_param_spec_uint64 ("completed-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
-                                                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+    props[PROP_COMPLETED_BYTES] = g_param_spec_uint64 ("completed-bytes", NULL, NULL, 0, G_MAXUINT64, 0,
+                                                       G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_property (gobject_class, PROP_BYTES_PER_SEC,
-                                     g_param_spec_uint64 ("bytes-per-sec", NULL, NULL, 0, G_MAXUINT64, 0,
-                                                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+    props[PROP_BYTES_PER_SEC] = g_param_spec_uint64 ("bytes-per-sec", NULL, NULL, 0, G_MAXUINT64, 0,
+                                                     G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_property (gobject_class, PROP_USEC_REMAINING,
-                                     g_param_spec_uint64 ("usec-remaining", NULL, NULL, 0, G_MAXUINT64, 0,
-                                                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+    props[PROP_USEC_REMAINING] = g_param_spec_uint64 ("usec-remaining", NULL, NULL, 0, G_MAXUINT64, 0,
+                                                      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
+
+    g_object_class_install_properties (gobject_class, N_PROPS, props);
 }
 
 static void

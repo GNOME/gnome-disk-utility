@@ -241,7 +241,7 @@ on_update_job (gpointer user_data)
 
 /* ---------------------------------------------------------------------------------------------------- */
 
-static gboolean
+static void
 on_show_error (gpointer user_data)
 {
     GduCreateDiskImageDialog *self = user_data;
@@ -254,7 +254,7 @@ on_show_error (gpointer user_data)
 
     dialog_data_complete_and_unref (self);
 
-    return G_SOURCE_REMOVE; /* remove source */
+    return; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -278,7 +278,7 @@ on_delete_response (GObject *object, GAsyncResult *response, gpointer userdata)
     }
 }
 
-static gboolean
+static void
 on_success (gpointer user_data)
 {
     AdwDialog *dialog;
@@ -324,7 +324,7 @@ on_success (gpointer user_data)
         adw_alert_dialog_choose (ADW_ALERT_DIALOG (dialog), NULL, NULL, on_delete_response, self);
     }
 
-    return G_SOURCE_REMOVE; /* remove source */
+    return; /* remove source */
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -601,7 +601,7 @@ out:
         /* show error in GUI */
         if (!(error->domain == G_IO_ERROR && error->code == G_IO_ERROR_CANCELLED)) {
             self->copy_error = g_steal_pointer (&error);
-            g_idle_add (on_show_error, self);
+            g_idle_add_once (on_show_error, self);
         }
         g_clear_error (&error);
 
@@ -613,7 +613,7 @@ out:
         }
     } else {
         /* success */
-        g_idle_add (on_success, self);
+        g_idle_add_once (on_success, self);
     }
     if (fd != -1) {
         if (close (fd) != 0)

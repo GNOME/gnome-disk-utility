@@ -143,10 +143,7 @@ resize_get_usage_mount_cb (GObject *source_object, GAsyncResult *res, gpointer u
     if (udisks_filesystem_call_mount_finish (filesystem, NULL, res, &error))
         return;
 
-    if (self->running_id) {
-        g_source_remove (self->running_id);
-        self->running_id = 0;
-    }
+    g_clear_handle_id (&self->running_id, g_source_remove);
 
     g_clear_object (&self->mount_cancellable);
 

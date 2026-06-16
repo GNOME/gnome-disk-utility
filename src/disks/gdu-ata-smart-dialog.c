@@ -1326,14 +1326,8 @@ on_dialog_closed (AdwDialog *dialog, gpointer user_data)
 
     adw_dialog_close (dialog);
 
-    if (data->timeout_id) {
-        g_source_remove (data->timeout_id);
-        data->timeout_id = 0;
-    }
-    if (data->notify_id) {
-        g_signal_handler_disconnect (data->ata, data->notify_id);
-        data->notify_id = 0;
-    }
+    g_clear_handle_id (&data->timeout_id, g_source_remove);
+    g_clear_signal_handler (&data->notify_id, data->ata);
     dialog_data_unref (data);
 }
 

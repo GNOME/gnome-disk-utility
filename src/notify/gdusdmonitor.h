@@ -24,4 +24,5 @@ typedef struct GduSdMonitor GduSdMonitor;
 GType gdu_sd_monitor_get_type (void) G_GNUC_CONST;
 GduSdMonitor *gdu_sd_monitor_new (void);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GduSdMonitor, g_object_unref)
 G_END_DECLS

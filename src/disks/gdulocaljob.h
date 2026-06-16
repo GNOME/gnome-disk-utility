@@ -27,4 +27,5 @@ void gdu_local_job_set_extra_markup (GduLocalJob *job, const gchar *markup);
 const gchar *gdu_local_job_get_extra_markup (GduLocalJob *job);
 void gdu_local_job_canceled (GduLocalJob *job);
 
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (GduLocalJob, g_object_unref)
 G_END_DECLS

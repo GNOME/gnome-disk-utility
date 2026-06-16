@@ -30,14 +30,6 @@ include:
       meson-test-options: "--verbose --no-stdsplit"
       lsan-options: "suppressions=${CI_PROJECT_DIR}/build-aux/ci/lsan.supp"
       grcov-c: "disabled"
-  - component: "gitlab.gnome.org/GNOME/citemplates/gnomeos-basic-ci@master"
-    inputs:
-      job-name: "build-gnomeos-default-options"
-      before-script: *gnomeos_before_script
-      meson-options: "-Dman=false $MESON_SETUP_ARGS"
-      run-tests: "no"
-      grcov-c: "disabled"
-      scan-build: "disabled"
   - project: "gnome/citemplates"
     file: "flatpak/flatpak_ci_initiative.yml"
 

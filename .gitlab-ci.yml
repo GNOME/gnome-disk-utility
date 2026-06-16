@@ -1,6 +1,9 @@
 include:
   - project: "gnome/citemplates"
     file: "flatpak/flatpak_ci_initiative.yml"
+  - component: "gitlab.gnome.org/GNOME/citemplates/goblint@master"
+    inputs:
+      source-directory: "."
   - component: "gitlab.gnome.org/GNOME/citemplates/release-service@master"
     inputs:
       dist-job-name: "flatpak"

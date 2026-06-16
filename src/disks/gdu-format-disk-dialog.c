@@ -42,7 +42,7 @@ struct _GduFormatDiskDialog {
     GduPartitioningType partitioning_type;
 };
 
-G_DEFINE_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduFormatDiskDialog, gdu_format_disk_dialog, ADW_TYPE_DIALOG)
 
 G_DEFINE_ENUM_TYPE (GduPartitioningType, gdu_partitioning_type, G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_GPT, "gpt"),
                     G_DEFINE_ENUM_VALUE (GDU_PARTITIONING_TYPE_DOS, "dos"),

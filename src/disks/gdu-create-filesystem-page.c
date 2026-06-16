@@ -32,7 +32,7 @@ struct _GduCreateFilesystemPage {
     GduFsType fs_type;
 };
 
-G_DEFINE_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, ADW_TYPE_BIN);
 
 G_DEFINE_ENUM_TYPE (GduFsType, gdu_fs_type, G_DEFINE_ENUM_VALUE (GDU_FS_TYPE_EXT4, "ext4"),
                     G_DEFINE_ENUM_VALUE (GDU_FS_TYPE_NTFS, "ntfs"), G_DEFINE_ENUM_VALUE (GDU_FS_TYPE_FAT, "vfat"),

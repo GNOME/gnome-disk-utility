@@ -44,7 +44,7 @@ typedef enum {
 
 static GParamSpec *props[PROP_USEC_REMAINING + 1] = { NULL, };
 
-G_DEFINE_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (GduEstimator, gdu_estimator, G_TYPE_OBJECT)
 
 static void
 gdu_estimator_get_property (GObject *object, guint property_id, GValue *value, GParamSpec *pspec)

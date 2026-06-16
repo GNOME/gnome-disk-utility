@@ -39,7 +39,7 @@ struct _GduChangePassphraseDialog {
     gboolean has_passphrase_in_conf;
 };
 
-G_DEFINE_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduChangePassphraseDialog, gdu_change_passphrase_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_change_passphrase_dialog_get_window (GduChangePassphraseDialog *self)

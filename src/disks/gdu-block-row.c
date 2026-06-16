@@ -63,7 +63,7 @@ struct _GduBlockRow {
     GduBlock *block;
 };
 
-G_DEFINE_TYPE (GduBlockRow, gdu_block_row, ADW_TYPE_EXPANDER_ROW)
+G_DEFINE_FINAL_TYPE (GduBlockRow, gdu_block_row, ADW_TYPE_EXPANDER_ROW)
 
 static gpointer
 block_row_get_window (GduBlockRow *self)

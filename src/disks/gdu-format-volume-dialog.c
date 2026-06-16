@@ -61,7 +61,7 @@ struct _GduFormatVolumeDialog {
     guint64 add_partition_maxsize;
 };
 
-G_DEFINE_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduFormatVolumeDialog, gdu_format_volume_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_format_volume_dialog_get_window (GduFormatVolumeDialog *self)

@@ -41,7 +41,7 @@ struct _GduEncryptionOptionsDialog {
     gboolean is_self_change;
 };
 
-G_DEFINE_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEncryptionOptionsDialog, gdu_encryption_options_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_encryption_options_dialog_get_window (GduEncryptionOptionsDialog *self)

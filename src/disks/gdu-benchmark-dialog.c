@@ -32,7 +32,7 @@ struct _GduBenchmarkSample {
     gdouble value;
 };
 
-G_DEFINE_TYPE (GduBenchmarkSample, gdu_benchmark_sample, g_object_get_type ())
+G_DEFINE_FINAL_TYPE (GduBenchmarkSample, gdu_benchmark_sample, g_object_get_type ())
 
 typedef struct {
     gdouble max;
@@ -51,7 +51,7 @@ struct _GduBenchmarkGraph {
     GListStore *atime_samples;
 };
 
-G_DEFINE_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
+G_DEFINE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
 
 struct _GduBenchmarkDialog {
     AdwDialog parent_instance;
@@ -91,7 +91,7 @@ struct _GduBenchmarkDialog {
     GtkWindow *parent_window;
 };
 
-G_DEFINE_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_DIALOG)
 
 G_LOCK_DEFINE (benchmark_lock);
 

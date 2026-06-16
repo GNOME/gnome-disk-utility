@@ -27,7 +27,7 @@ struct _GduEditFilesystemDialog {
     GduBlock *drive_block;
 };
 
-G_DEFINE_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEditFilesystemDialog, gdu_edit_filesystem_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_edit_filesystem_dialog_get_window (GduEditFilesystemDialog *self)

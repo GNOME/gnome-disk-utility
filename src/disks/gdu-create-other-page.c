@@ -29,7 +29,7 @@ struct _GduCreateOtherPage {
     GduOtherFsType fs_type;
 };
 
-G_DEFINE_TYPE (GduCreateOtherPage, gdu_create_other_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateOtherPage, gdu_create_other_page, ADW_TYPE_BIN);
 
 G_DEFINE_ENUM_TYPE (GduOtherFsType, gdu_other_fs_type, G_DEFINE_ENUM_VALUE (GDU_OTHER_FS_TYPE_XFS, "xfs"),
                     G_DEFINE_ENUM_VALUE (GDU_OTHER_FS_TYPE_SWAP, "swap"),

@@ -55,7 +55,7 @@ struct _GduBlock {
     bool in_progress;
 };
 
-G_DEFINE_TYPE (GduBlock, gdu_block, GDU_TYPE_ITEM)
+G_DEFINE_FINAL_TYPE (GduBlock, gdu_block, GDU_TYPE_ITEM)
 
 #define return_if_progress(self, task)                                                                                 \
     do {                                                                                                               \

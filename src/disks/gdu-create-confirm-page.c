@@ -31,7 +31,7 @@ struct _GduCreateConfirmPage {
     UDisksBlock *block;
 };
 
-G_DEFINE_TYPE (GduCreateConfirmPage, gdu_create_confirm_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreateConfirmPage, gdu_create_confirm_page, ADW_TYPE_BIN);
 
 static void
 gdu_create_confirm_page_set_device_name (GduCreateConfirmPage *self)

@@ -32,7 +32,7 @@ struct _GduSpaceAllocationBar {
     GduDrive *drive;
 };
 
-G_DEFINE_TYPE (GduSpaceAllocationBar, gdu_space_allocation_bar, GTK_TYPE_WIDGET)
+G_DEFINE_FINAL_TYPE (GduSpaceAllocationBar, gdu_space_allocation_bar, GTK_TYPE_WIDGET)
 
 static void
 update_space_allocation_bar (GduSpaceAllocationBar *self)

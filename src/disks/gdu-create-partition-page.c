@@ -39,7 +39,7 @@ struct _GduCreatePartitionPage {
     gboolean complete;
 };
 
-G_DEFINE_TYPE (GduCreatePartitionPage, gdu_create_partition_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreatePartitionPage, gdu_create_partition_page, ADW_TYPE_BIN);
 
 gboolean
 gdu_create_partition_page_is_extended (GduCreatePartitionPage *self)

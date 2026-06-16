@@ -46,7 +46,7 @@ struct _GduNewDiskImageDialog {
     gint cur_unit_num;
 };
 
-G_DEFINE_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduNewDiskImageDialog, gdu_new_disk_image_dialog, ADW_TYPE_DIALOG)
 
 static gpointer
 gdu_new_disk_image_dialog_get_window (GduNewDiskImageDialog *self)

@@ -51,7 +51,7 @@ struct _GduUnlockDialog {
     gulong pim;
 };
 
-G_DEFINE_TYPE (GduUnlockDialog, gdu_unlock_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduUnlockDialog, gdu_unlock_dialog, ADW_TYPE_DIALOG)
 
 static void
 unlock_dialog_update_unlock_button_cb (GduUnlockDialog *self)

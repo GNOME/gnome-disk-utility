@@ -54,7 +54,7 @@ struct _GduDrive {
     bool in_progress;
 };
 
-G_DEFINE_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
+G_DEFINE_FINAL_TYPE (GduDrive, gdu_drive, GDU_TYPE_ITEM)
 
 #define NUM_PARTITION_COLORS 7
 

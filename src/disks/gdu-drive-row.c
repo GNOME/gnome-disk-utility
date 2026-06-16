@@ -23,7 +23,7 @@ struct _GduDriveRow {
     GduDrive *drive;
 };
 
-G_DEFINE_TYPE (GduDriveRow, gdu_drive_row, ADW_TYPE_ACTION_ROW)
+G_DEFINE_FINAL_TYPE (GduDriveRow, gdu_drive_row, ADW_TYPE_ACTION_ROW)
 
 static void
 update_drive_row (GduDriveRow *self)

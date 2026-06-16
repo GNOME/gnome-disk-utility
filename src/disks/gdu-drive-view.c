@@ -58,7 +58,7 @@ struct _GduDriveView {
     gboolean mobile;
 };
 
-G_DEFINE_TYPE (GduDriveView, gdu_drive_view, ADW_TYPE_BIN)
+G_DEFINE_FINAL_TYPE (GduDriveView, gdu_drive_view, ADW_TYPE_BIN)
 
 static gpointer
 drive_view_get_window (GduDriveView *self)

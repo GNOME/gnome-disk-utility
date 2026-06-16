@@ -78,7 +78,7 @@ struct _GduCreateDiskImageDialog {
     GduLocalJob *local_job;
 };
 
-G_DEFINE_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduCreateDiskImageDialog, gdu_create_disk_image_dialog, ADW_TYPE_DIALOG)
 /* ---------------------------------------------------------------------------------------------------- */
 
 static gpointer

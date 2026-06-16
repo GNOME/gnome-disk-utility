@@ -43,7 +43,7 @@ struct _GduManager {
     gulong properties_changed_id;
 };
 
-G_DEFINE_TYPE (GduManager, gdu_manager, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (GduManager, gdu_manager, G_TYPE_OBJECT)
 
 static bool
 drive_in_manager (GduManager *self, UDisksObject *object, guint *position)

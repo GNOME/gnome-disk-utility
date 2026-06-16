@@ -41,7 +41,7 @@ struct _GduWindow {
     GduManager *manager;
 };
 
-G_DEFINE_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW)
+G_DEFINE_FINAL_TYPE (GduWindow, gdu_window, ADW_TYPE_APPLICATION_WINDOW)
 
 GSettings *gdu_window_state;
 

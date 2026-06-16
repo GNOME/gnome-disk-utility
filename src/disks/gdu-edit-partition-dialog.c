@@ -44,7 +44,7 @@ struct _GduEditPartitionDialog {
     GListModel *model;
 };
 
-G_DEFINE_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduEditPartitionDialog, gdu_edit_partition_dialog, ADW_TYPE_DIALOG)
 
 static gchar *
 gdu_edit_partition_dialog_get_new_type (GduEditPartitionDialog *self)

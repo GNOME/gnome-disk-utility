@@ -36,7 +36,7 @@ struct _GduApplication {
     GHashTable *local_jobs;
 };
 
-G_DEFINE_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
+G_DEFINE_FINAL_TYPE (GduApplication, gdu_application, ADW_TYPE_APPLICATION);
 
 static void gdu_application_set_options (GduApplication *app);
 

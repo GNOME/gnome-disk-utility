@@ -50,7 +50,7 @@ struct _GduMountOptionsDialog {
     GVariant *orig_fstab_entry;
 };
 
-G_DEFINE_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, ADW_TYPE_DIALOG)
 
 static gboolean
 check_if_system_mount (const gchar *dir)

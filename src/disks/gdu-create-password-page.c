@@ -31,7 +31,7 @@ struct _GduCreatePasswordPage {
     gboolean complete;
 };
 
-G_DEFINE_TYPE (GduCreatePasswordPage, gdu_create_password_page, ADW_TYPE_BIN);
+G_DEFINE_FINAL_TYPE (GduCreatePasswordPage, gdu_create_password_page, ADW_TYPE_BIN);
 
 static const gchar *
 pw_error_hint (gint error)

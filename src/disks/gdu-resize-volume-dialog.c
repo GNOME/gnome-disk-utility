@@ -50,7 +50,7 @@ struct _GduResizeVolumeDialog {
     guint wait_for_filesystem;
 };
 
-G_DEFINE_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_DIALOG)
+G_DEFINE_FINAL_TYPE (GduResizeVolumeDialog, gdu_resize_volume_dialog, ADW_TYPE_DIALOG)
 
 static void set_unit_num (GduResizeVolumeDialog *self, gint unit_num);
 

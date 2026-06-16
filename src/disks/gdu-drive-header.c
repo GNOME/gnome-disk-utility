@@ -60,8 +60,6 @@ gdu_drive_header_set_property (GObject *object, guint prop_id, const GValue *val
     case PROP_DRIVE_PATH:
         gdu_drive_header_set_drive_path (self, g_value_get_string (value));
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -80,8 +78,6 @@ gdu_drive_header_get_property (GObject *object, guint prop_id, GValue *value, GP
     case PROP_DRIVE_PATH:
         g_value_set_string (value, self->drive_path);
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 

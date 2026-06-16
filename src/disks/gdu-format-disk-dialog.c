@@ -286,9 +286,6 @@ gdu_format_disk_dialog_get_property (GObject *object, guint property_id, GValue 
     case PROP_PARTITIONING_TYPE:
         g_value_set_enum (value, self->partitioning_type);
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
     }
 }
 
@@ -301,8 +298,6 @@ gdu_format_disk_dialog_set_property (GObject *object, guint property_id, const G
     case PROP_PARTITIONING_TYPE:
         self->partitioning_type = g_value_get_enum (value);
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
     }
 }
 

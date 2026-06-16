@@ -68,10 +68,6 @@ gdu_estimator_get_property (GObject *object, guint property_id, GValue *value, G
     case PROP_USEC_REMAINING:
         g_value_set_uint64 (value, gdu_estimator_get_usec_remaining (estimator));
         break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
     }
 }
 
@@ -84,9 +80,10 @@ gdu_estimator_set_property (GObject *object, guint property_id, const GValue *va
     case PROP_TARGET_BYTES:
         estimator->target_bytes = g_value_get_uint64 (value);
         break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_COMPLETED_BYTES:
+    case PROP_BYTES_PER_SEC:
+    case PROP_USEC_REMAINING:
+        g_assert_not_reached ();
         break;
     }
 }

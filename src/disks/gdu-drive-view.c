@@ -481,8 +481,6 @@ gdu_drive_view_set_property (GObject *object, guint prop_id, const GValue *value
     case PROP_MOBILE:
         gdu_drive_view_set_mobile (self, g_value_get_boolean (value));
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 
@@ -495,8 +493,6 @@ gdu_drive_view_get_property (GObject *object, guint prop_id, GValue *value, GPar
     case PROP_MOBILE:
         g_value_set_boolean (value, self->mobile);
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
     }
 }
 

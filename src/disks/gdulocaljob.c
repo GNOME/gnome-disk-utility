@@ -78,10 +78,6 @@ gdu_local_job_get_property (GObject *object, guint property_id, GValue *value, G
     case PROP_EXTRA_MARKUP:
         g_value_set_string (value, gdu_local_job_get_extra_markup (job));
         break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
     }
 }
 
@@ -102,10 +98,6 @@ gdu_local_job_set_property (GObject *object, guint property_id, const GValue *va
 
     case PROP_EXTRA_MARKUP:
         gdu_local_job_set_extra_markup (job, g_value_get_string (value));
-        break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
 }

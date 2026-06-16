@@ -95,8 +95,9 @@ gdu_create_other_page_set_property (GObject *object, guint property_id, const GV
     case PROP_FS_TYPE:
         self->fs_type = g_value_get_enum (value);
         break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    case PROP_COMPLETE:
+        g_assert_not_reached ();
+        break;
     }
 }
 
@@ -111,9 +112,6 @@ gdu_create_other_page_get_property (GObject *object, guint property_id, GValue *
         break;
     case PROP_FS_TYPE:
         g_value_set_enum (value, self->fs_type);
-        break;
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
 }

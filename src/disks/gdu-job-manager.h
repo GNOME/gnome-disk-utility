@@ -7,8 +7,9 @@
 
 #pragma once
 
-#include "gdulocaljob.h"
 #include <gio/gio.h>
+
+#include "gdulocaljob.h"
 
 G_BEGIN_DECLS
 

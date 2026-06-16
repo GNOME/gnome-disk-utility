@@ -5,16 +5,14 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #define G_LOG_DOMAIN "gdu-job-row"
-#include "glib-object.h"
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
+
+#include "gdu-job-row.h"
 
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 
-#include "gdu-job-row.h"
 #include "gduutils.h"
 
 struct _GduJobRow {
@@ -84,7 +82,7 @@ format_job_status (GduJobRow *self)
 }
 
 static void
-gdu_job_row_set_status_label (GduJobRow *self, const char *status)
+gdu_job_row_set_status_label (GduJobRow *self, const gchar *status)
 {
     const gchar *extra_markup;
 
@@ -136,7 +134,7 @@ gdu_job_row_update (GduJobRow *self)
 }
 
 static void
-gdu_job_row_cancel_clicked_cb (GtkWidget *widget, const char *action_name, GVariant *parameter)
+gdu_job_row_cancel_clicked_cb (GtkWidget *widget, const gchar *action_name, GVariant *parameter)
 {
     GduJobRow *self = GDU_JOB_ROW (widget);
 

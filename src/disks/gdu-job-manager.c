@@ -25,14 +25,12 @@ struct _GduJobManager {
 
 G_DEFINE_FINAL_TYPE (GduJobManager, gdu_job_manager, G_TYPE_OBJECT)
 
-enum {
-    PROP_0,
-    PROP_JOBS,
+typedef enum {
+    PROP_JOBS = 1,
     PROP_N_JOBS,
-    N_PROPS
-};
+} GduJobManagerProps;
 
-static GParamSpec *props[N_PROPS];
+static GParamSpec *props[PROP_N_JOBS + 1];
 
 static void job_state_changed_cb (GduLocalJob *job, GParamSpec *pspec, gpointer user_data);
 
@@ -181,17 +179,13 @@ gdu_job_manager_get_property (GObject *object, guint property_id, GValue *value,
 {
     GduJobManager *self = GDU_JOB_MANAGER (object);
 
-    switch (property_id) {
+    switch ((GduJobManagerProps) property_id) {
     case PROP_JOBS:
         g_value_set_object (value, self->jobs);
         break;
 
     case PROP_N_JOBS:
         g_value_set_uint (value, gdu_job_manager_get_n_jobs (self));
-        break;
-
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
         break;
     }
 }
@@ -221,7 +215,7 @@ gdu_job_manager_class_init (GduJobManagerClass *klass)
     props[PROP_N_JOBS] =
         g_param_spec_uint ("n-jobs", NULL, NULL, 0, G_MAXUINT, 0, G_PARAM_READABLE | G_PARAM_STATIC_STRINGS);
 
-    g_object_class_install_properties (object_class, N_PROPS, props);
+    g_object_class_install_properties (object_class, G_N_ELEMENTS (props), props);
 }
 
 static void

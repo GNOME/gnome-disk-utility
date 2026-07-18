@@ -29,7 +29,7 @@ struct GduXzDecompressorClass {
     GObjectClass parent_class;
 };
 
-GType gdu_xz_decompressor_get_type (void) G_GNUC_CONST;
+GType gdu_xz_decompressor_get_type (void);
 GduXzDecompressor *gdu_xz_decompressor_new (void);
 
 gsize gdu_xz_decompressor_get_uncompressed_size (GFile *compressed_file);

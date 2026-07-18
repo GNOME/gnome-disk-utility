@@ -17,7 +17,7 @@ G_BEGIN_DECLS
 #define GDU_TYPE_CREATE_FILESYSTEM_PAGE (gdu_create_filesystem_page_get_type ())
 G_DECLARE_FINAL_TYPE (GduCreateFilesystemPage, gdu_create_filesystem_page, GDU, CREATE_FILESYSTEM_PAGE, AdwBin)
 
-GType gdu_fs_type_get_type (void) G_GNUC_CONST;
+GType gdu_fs_type_get_type (void);
 #define GDU_TYPE_FS_TYPE (gdu_fs_type_get_type ())
 
 typedef enum {

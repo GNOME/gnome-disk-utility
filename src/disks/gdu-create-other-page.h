@@ -17,7 +17,7 @@ G_BEGIN_DECLS
 #define GDU_TYPE_CREATE_OTHER_PAGE gdu_create_other_page_get_type ()
 G_DECLARE_FINAL_TYPE (GduCreateOtherPage, gdu_create_other_page, GDU, CREATE_OTHER_PAGE, AdwBin)
 
-GType gdu_other_fs_type_get_type (void) G_GNUC_CONST;
+GType gdu_other_fs_type_get_type (void);
 #define GDU_TYPE_OTHER_FS_TYPE (gdu_other_fs_type_get_type ())
 
 typedef enum {

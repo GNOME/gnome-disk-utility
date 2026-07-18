@@ -38,7 +38,7 @@ typedef void (*GduLocalJobUpdateFunc) (GduLocalJob *job);
 typedef void (*GduLocalJobCompletedFunc) (GduLocalJob *job, GduLocalJobResult result, GError *error);
 
 #define GDU_TYPE_LOCAL_JOB_STATE (gdu_local_job_state_get_type ())
-GType gdu_local_job_state_get_type (void) G_GNUC_CONST;
+GType gdu_local_job_state_get_type (void);
 
 GduLocalJob *gdu_local_job_new (UDisksObject *object, const gchar *operation, const gchar *description,
                                 GduLocalJobRunFunc run_func, GduLocalJobUpdateFunc update_func,

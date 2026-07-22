@@ -213,7 +213,9 @@ object_added_cb (GduManager *self, UDisksObject *object)
 
     drive = manager_get_object_drive (self, object);
     if (drive && udisks_object_peek_partition_table (object) && udisks_object_peek_block (object)) {
-        gdu_drive_set_child (drive, object);
+        /* Refresh the drive as well as its children so partitioning details
+         * and observers are updated after the interface is added. */
+        gdu_item_changed (GDU_ITEM (drive));
     }
 
     if (!g_object_get_data (G_OBJECT (object), "gdu-block") && !g_object_get_data (G_OBJECT (object), "gdu-drive"))

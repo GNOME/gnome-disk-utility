@@ -196,6 +196,7 @@ gdu_job_manager_finalize (GObject *object)
     GduJobManager *self = GDU_JOB_MANAGER (object);
 
     g_clear_pointer (&self->jobs_by_object_path, g_hash_table_destroy);
+    g_list_store_remove_all (self->jobs);
     g_clear_object (&self->jobs);
 
     G_OBJECT_CLASS (gdu_job_manager_parent_class)->finalize (object);

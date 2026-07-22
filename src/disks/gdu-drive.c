@@ -251,37 +251,73 @@ gdu_drive_get_features (GduItem *item)
 }
 
 static void
+gdu_drive_set_no_partitioning (GduDrive *self, UDisksObject *object)
+{
+    g_autoptr(GduBlock) block = NULL;
+    guint64 size;
+
+    g_clear_object (&self->partition_table);
+    g_list_store_remove_all (self->partitions);
+    self->partition_color_index = 0;
+
+    size = gdu_item_get_size (GDU_ITEM (self));
+    if (size == 0 || object == NULL)
+        return;
+
+    /* A drive without a partition table is represented by one block spanning
+     * the whole device. Keep the real block for drive-less devices so its
+     * filesystem details and actions remain available. */
+    if (self->drive == NULL)
+        block = gdu_block_new (self->client, object, GDU_ITEM (self));
+    else
+        block = gdu_block_sized_new (self->client, 0, size, GDU_ITEM (self));
+
+    gdu_drive_set_block_color (self, block);
+    g_list_store_append (self->partitions, block);
+
+    if (udisks_object_peek_encrypted (object))
+        gdu_drive_add_decrypted (self, object, GDU_ITEM (block));
+}
+
+static void
 gdu_drive_changed (GduItem *item)
 {
     GduDrive *self = (GduDrive *) item;
+    g_autoptr(UDisksBlock) drive_block = NULL;
+    UDisksObject *block_object = NULL;
+    UDisksFilesystem *file_system;
 
     g_assert (GDU_IS_DRIVE (self));
 
     g_clear_object (&self->info);
     self->info = udisks_client_get_object_info (self->client, self->object);
-    g_clear_object (&self->partition_table);
 
-    if (self->drive) {
-        g_autoptr(UDisksBlock) block = NULL;
-        UDisksObject *object;
-
-        block = udisks_client_get_block_for_drive (self->client, self->drive, false);
-        object = (gpointer) g_dbus_interface_get_object ((gpointer) block);
-        g_set_object (&self->partition_table, g_object_ref (object));
-    }
-
+    /* UDisks keeps physical drives and their blocks on separate objects, while
+     * loop devices expose both from the same object. Refresh from whichever
+     * object owns the Block and PartitionTable interfaces. */
     g_set_object (&self->block, udisks_object_peek_block (self->object));
     if (self->block) {
         g_clear_object (&self->drive);
         self->drive = udisks_client_get_drive_for_block (self->client, self->block);
+        block_object = self->object;
     } else {
         g_set_object (&self->drive, udisks_object_peek_drive (self->object));
+        drive_block = udisks_client_get_block_for_drive (self->client, self->drive, false);
+        g_set_object (&self->block, drive_block);
+
+        if (drive_block != NULL)
+            block_object = (gpointer) g_dbus_interface_get_object ((gpointer) drive_block);
     }
 
-    g_set_object (&self->file_system, udisks_object_peek_filesystem (self->object));
+    file_system = block_object ? udisks_object_peek_filesystem (block_object) : NULL;
+    g_set_object (&self->file_system, file_system);
 
-    if (udisks_object_peek_partition_table (self->object))
-        gdu_drive_set_child (self, self->object);
+    /* Interface removal keeps the GduDrive alive, so replace its partition
+     * model explicitly instead of leaving rows from the old table behind. */
+    if (block_object != NULL && udisks_object_peek_partition_table (block_object))
+        gdu_drive_set_child (self, block_object);
+    else
+        gdu_drive_set_no_partitioning (self, block_object);
 
     g_signal_emit_by_name (self, "changed", 0);
 }
@@ -345,7 +381,6 @@ GduDrive *
 gdu_drive_new (gpointer udisk_client, gpointer udisk_object, GduItem *parent)
 {
     GduDrive *self;
-    guint64 size;
 
     g_return_val_if_fail (UDISKS_IS_CLIENT (udisk_client), NULL);
     g_return_val_if_fail (UDISKS_IS_OBJECT (udisk_object), NULL);
@@ -365,40 +400,6 @@ gdu_drive_new (gpointer udisk_client, gpointer udisk_object, GduItem *parent)
     if (self->block == NULL && self->drive != NULL)
         self->block = udisks_client_get_block_for_drive (self->client, self->drive, FALSE);
     g_object_set_data (udisk_object, "gdu-drive", self);
-
-    size = gdu_item_get_size (GDU_ITEM (self));
-
-    /*
-     * If the device has a non zero size add a block that maps the whole device.
-     * If the device has a partition table, this will be removed and real partitions
-     * shall be addded there.
-     */
-    if (size > 0) {
-        g_autoptr(GduBlock) block = NULL;
-
-        block = gdu_block_sized_new (udisk_client, 0, size, GDU_ITEM (self));
-        gdu_drive_set_block_color (self, block);
-        g_list_store_append (self->partitions, block);
-    }
-
-    /* First, add a single empty full disk partition */
-    if (self->block != NULL && self->drive == NULL) {
-        g_autoptr(GduBlock) partition = NULL;
-
-        /* Remove previously added free partition */
-        g_list_store_remove_all (self->partitions);
-
-        partition = gdu_block_new (self->client, udisk_object, GDU_ITEM (self));
-        gdu_drive_set_block_color (self, partition);
-        g_list_store_append (self->partitions, partition);
-
-        if (udisks_object_peek_encrypted (udisk_object))
-            gdu_drive_add_decrypted (self, udisk_object, GDU_ITEM (partition));
-    }
-
-    /* Now, try populating the partitions if we have a partition table */
-    if (udisks_object_peek_partition_table (self->object))
-        gdu_drive_set_child (self, udisk_object);
 
     gdu_item_changed (GDU_ITEM (self));
 

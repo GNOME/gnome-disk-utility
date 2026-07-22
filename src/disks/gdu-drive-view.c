@@ -561,9 +561,16 @@ gdu_drive_view_set_drive (GduDriveView *self, GduDrive *drive)
     if (self->drive == drive)
         return;
 
+    if (self->drive != NULL)
+        g_signal_handlers_disconnect_by_func (self->drive, update_drive_view, self);
+
     g_set_object (&self->drive, drive);
     gdu_space_allocation_bar_set_drive (GDU_SPACE_ALLOCATION_BAR (self->space_allocation_bar), self->drive);
 
-    if (drive)
+    if (drive) {
+        /* Partition-table interfaces can change without replacing the drive,
+         * so keep the selected drive details in sync with the model. */
+        g_signal_connect_object (drive, "changed", G_CALLBACK (update_drive_view), self, G_CONNECT_SWAPPED);
         update_drive_view (self);
+    }
 }

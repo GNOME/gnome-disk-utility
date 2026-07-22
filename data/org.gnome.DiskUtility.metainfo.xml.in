@@ -6,6 +6,7 @@
   <project_license>GPL-2.0+</project_license>
   <name>Disks</name>
   <summary>Disk management utility for GNOME</summary>
+
   <description>
     <p>
       Disks provides an easy way to inspect, format, partition, and configure disks
@@ -16,6 +17,7 @@
       disks, and image USB sticks.
     </p>
   </description>
+
   <screenshots>
     <screenshot>
       <image>https://gitlab.gnome.org/GNOME/gnome-disk-utility/raw/HEAD/data/screenshots/disks-format.png</image>
@@ -30,6 +32,7 @@
       <caption>Manage your storage devices</caption>
     </screenshot>
   </screenshots>
+
   <update_contact>kailueke@riseup.net</update_contact>
   <project_group>GNOME</project_group>
   <kudos>
@@ -42,9 +45,11 @@
   <launchable type="desktop-id">org.gnome.DiskUtility.desktop</launchable>
   <!-- developer_name tag deprecated with Appstream 1.0 -->
   <developer_name>The GNOME Project</developer_name>
+
   <developer id="org.gnome">
     <name>The GNOME Project</name>
   </developer>
+
   <url type="homepage">https://apps.gnome.org/DiskUtility/</url>
   <url type="bugtracker">https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues</url>
   <url type="contribute">https://welcome.gnome.org/app/DiskUtility/</url>
@@ -52,12 +57,25 @@
   <url type="help">https://help.gnome.org/users/gnome-help/stable/disk.html</url>
   <url type="translate">https://l10n.gnome.org/module/gnome-disk-utility/</url>
   <url type="vcs-browser">https://gitlab.gnome.org/GNOME/gnome-disk-utility</url>
+
   <recommends>
     <control>touch</control>
     <control>keyboard</control>
     <control>pointing</control>
   </recommends>
+
   <requires>
     <display_length compare="ge">360</display_length>
   </requires>
+
+  <releases>
+    <release date="2026-07-22" version="51~beta" type="development">
+      <description>
+        <p>This is an unstable release with the following changes:</p>
+        <ul>
+          <li>Port to GTK4/libadwaita</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
 </component>

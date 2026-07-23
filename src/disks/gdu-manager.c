@@ -246,7 +246,10 @@ object_removed_cb (GduManager *self, UDisksObject *object)
     g_assert (GDU_IS_MANAGER (self));
     g_assert (UDISKS_IS_OBJECT (object));
 
-    if (g_object_get_data (G_OBJECT (object), "gdu-drive") != NULL)
+    /* A managed drive may be associated with a child object, so match removed
+     * Drive and Loop objects against the store as well as direct mappings. */
+    if (udisks_object_peek_drive (object) != NULL || udisks_object_peek_loop (object) != NULL
+        || g_object_get_data (G_OBJECT (object), "gdu-drive") != NULL)
         manager_remove_drive (self, object);
 }
 

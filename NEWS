@@ -1,7 +1,130 @@
-51.beta - July 22, 2026
-=====================
+51.beta - July 30, 2026
+=======================
 
- * Port to GTK4/libadwaita
+Adrian Vovk:
+ * notify: Switch Disks notifications to a systemd user service
+
+Aryan Kadole:
+ * Fix NVMe size when udisks2 reports the wrong size
+ * Show extended partitions in the drive view
+ * Fix create-partition and edit-partition-type size bounds
+ * Show a dialog when a resize utility is missing
+ * Add GduBenchmarkGraph and redesign the benchmark dialog graphs
+
+Automeris naranja:
+ * Polish dialogs for HIG and accessibility (ESC to close, mnemonics,
+   tooltips, suggested-action buttons, property rows)
+ * Port shortcuts to AdwShortcutsDialog and about to AdwAboutDialog
+ * Make mount-options, resize, benchmark, and edit-partition adaptive
+ * Bump GTK/libadwaita requirements and improve create-filesystem UX
+
+Balló György:
+ * Raise the existing window on activation (single-instance)
+
+Baxrom Raxmatov:
+ * Add Uzbek (Latin) translation
+
+Christopher Davis:
+ * Make the drive-view header adaptive
+ * Improve block-row info layout with clamp and level bar
+
+Corey Berla:
+ * Persist and apply mount-option fields with restore-defaults support
+ * Show required-field feedback and a spinner while applying options
+
+Cyber Phantom:
+ * Port the application to GTK4/libadwaita
+ * Port the main window, drive view, block rows, and core dialogs
+ * Add partition create/delete, mount/unmount, lock/unlock, and
+   take-ownership actions on block rows
+ * Add a space allocation bar and job spinner to block rows
+ * Port confirmations to AdwAlertDialog
+ * Improve unlock (multi-keyfile, background unlock) and resize UX
+ * Introduce GduJobManager and GduJobRow progress UI
+ * Port Create Disk Image to the new job API
+ * Start migrating UI definitions to Blueprint
+ * Fix loop/partition UI when UDisks interfaces are removed
+ * Add clang-format and gobject-linter CI checks
+
+Daniel Rusek:
+ * Remove the X-GNOME-Utilities desktop category
+
+Felipe Borges:
+ * Set the notification application name
+
+FineFindus:
+ * Add Meson/Cargo Rust support
+ * Rewrite Disk Image Mounter in Rust (mount, write, inspect, unmount,
+   encrypted volumes, compressed images)
+ * Port libgdu utilities and the restore disk image dialog to Rust
+ * Support restoring xz-compressed images with progress and inhibit
+
+Ignacy Kuchciński:
+ * Don't manually initialize libadwaita
+
+Jordan Petridis:
+ * flatpak: Use the llvm20 Sdk extension
+ * ci: Add release-service for publishing tarballs
+
+Kai Lüke:
+ * Flatpak and INSTALL updates for devel builds
+ * Prefer the new image-mount UI and avoid duplicate MIME handlers
+ * Don't format if Cancel is clicked
+
+Maximiliano Sandoval:
+ * Port ATA SMART and disk settings dialogs to GTK4/AdwDialog
+ * Make benchmark results adaptive
+ * Fix Flatpak module builds and allow network in test-args
+
+Mohammed Sadiq:
+ * Fix memory leaks and async ref-counting in drive/block UI
+ * Refresh block and drive models live on UDisks changes
+ * Fix loop device removal from the drive cache
+
+Programejt:
+ * Restore missing Eject and Detach actions
+ * Remember window size and position after close
+ * Refresh metainfo and screenshots
+ * Bump version to 51.alpha / 51.beta
+
+Proman4713:
+ * notify: Use org.gnome.DiskUtility for notify_init
+
+Sophie Herold:
+ * Fix AppStream application id
+
+Titouan Real:
+ * Port dialogs to AdwDialog / AdwAlertDialog
+
+Valentin David:
+ * Install the missing libgnome_disks.so
+
+Vikram Kangotra:
+ * Show total filesystem size for mounted multi-device filesystems
+   (e.g. Btrfs)
+
+Updated translations:
+ * Abduqadir Abliz (ug), Aefgh Threenine (th), Álvaro Burns (pt_BR),
+   Anders Jonsson (sv), Andika Triwidada (id), Antonio Marin (ro),
+   Artur S0 (ru), Asier Sarasua Garmendia (eu), Ask Hjorth Larsen (da),
+   Athmane MOKRAOUI (kab), Aurimas Černius (lt), Balázs Úr (hu),
+   Baurzhan Muftakhidinov (kk), Baxrom Raxmatov (uz),
+   Bruce Cowan (en_GB), Chao-Hsiung Liao (zh_TW),
+   Christian Kirbach (de), Danial Behzadi (fa), Daniel Mustieles (es),
+   Daniel Rusek (cs), Davide Ferracin (it), Dušan Kazik (sk),
+   Efstathios Iosifidis (el), Ekaterine Papava (ka),
+   Emin Tufan Çetin (tr), Fabio Tomat (fur), Fran Diéguez (gl),
+   Hugo Carvalho (pt), Irénée THIRION (fr), Jean-Marc TISSIERES (fr),
+   Jiri Grönroos (fi), John Erling Blad (nb),
+   Jordi Mas i Hernandez (ca), Jose Riha (sk),
+   Juliano de Souza Camargo (pt_BR), Kjartan Maraas (nb),
+   Kristjan ESPERANTO (eo), Luming Zh (zh_CN), Makoto Sakaguchi (ja),
+   Martin (sl), Nathan Follens (nl), Pawan Chitrakar (ne),
+   Quentin PAGÈS (oc), Rafael Fontenelle (pt_BR), Sabri Ünal (tr),
+   Scrambled 777 (hi), Seong-ho Cho (ko), Sveinn í Felli (is),
+   Tim Sabsch (de), twlvnn kraftwerk (bg), Vasil Pupkin (be),
+   Victor Dargallo (ca), Yaron Shahrabani (he), Yosef Or Boczko (he),
+   Yuri Chornoivan (uk), Марко Костић (sr)
 
 46.1 - September 03, 2024
 =========================

@@ -632,6 +632,8 @@ gdu_resize_dialog_show (GtkWindow *parent_window, UDisksObject *object, UDisksCl
                          ? self->current_size
                          : gdu_utils_calc_space_to_grow (self->client, self->table, self->partition);
 
+    set_unit_num (self, gdu_utils_get_default_unit (self->current_size));
+
     if (self->filesystem != NULL) {
         gboolean available;
 

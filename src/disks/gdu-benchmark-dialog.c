@@ -13,10 +13,14 @@
 #include <math.h>
 
 #include <glib/gi18n.h>
+#include <glib/gstdio.h>
 #include <linux/fs.h>
 #include <sys/ioctl.h>
 
 #include "gdk/gdk.h"
+#include "gdu-application.h"
+#include "gdu-job-manager.h"
+#include "gdulocaljob.h"
 #include "gio/gio.h"
 #include "glib-object.h"
 #include "glib.h"
@@ -25,20 +29,67 @@
 #include "gsk/gsk.h"
 #include "gtk/gtk.h"
 
-struct _GduBenchmarkSample {
-    GObject parent_instance;
+/* Taken from
+ * https://gitlab.gnome.org/GNOME/gnome-control-center/-/blob/f9c4cbe62c3d456a08c35fddd8666af7c0f2884e/panels/wellbeing/cc-bar-chart.c#L553
+ * Adapted for Disks
+ */
+static const guint GRID_LINE_WIDTH = 1;
+static const GdkRGBA GRID_LINE_COLOR = { .red = 0, .green = 0, .blue = 0, .alpha = 0.15 };
+static const GdkRGBA GRID_LINE_COLOR_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.15 };
+static const GdkRGBA GRID_LINE_COLOR_HC = { .red = 0, .green = 0, .blue = 0, .alpha = 0.5 };
+static const GdkRGBA GRID_LINE_COLOR_HC_DARK = { .red = 1, .green = 1, .blue = 1, .alpha = 0.5 };
+static const gfloat GRID_LINE_DASH[] = { 4, 2 };
 
-    guint64 offset;
-    gdouble value;
+static const GdkRGBA READ_CURVE_COLOR = {
+    .red = 53.0 / 255.0, .green = 132.0 / 255.0, .blue = 228.0 / 255.0, .alpha = 1
+};
+static const GdkRGBA WRITE_CURVE_COLOR = {
+    .red = 230.0 / 255.0, .green = 45.0 / 255.0, .blue = 66.0 / 255.0, .alpha = 1
+};
+static const GdkRGBA ATIME_DOT_COLOR = {
+    .red = 58.0 / 255.0, .green = 148.0 / 255.0, .blue = 74.0 / 255.0, .alpha = 0.5
 };
 
-G_DEFINE_FINAL_TYPE (GduBenchmarkSample, gdu_benchmark_sample, g_object_get_type ())
+static const GdkRGBA GRAPH_BG_COLOR = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1 };
+static const GdkRGBA GRAPH_BG_COLOR_DARK = {
+    .red = 52.0 / 255.0, .green = 52.0 / 255.0, .blue = 55.0 / 255.0, .alpha = 1
+};
+
+static const GdkRGBA LABEL_COLOR = { .red = 0.0, .green = 0.0, .blue = 0.0, .alpha = 1 };
+static const GdkRGBA LABEL_COLOR_DARK = { .red = 1.0, .green = 1.0, .blue = 1.0, .alpha = 1 };
+
+typedef enum {
+    BENCHMARK_SAMPLE_READ,
+    BENCHMARK_SAMPLE_WRITE,
+    BENCHMARK_SAMPLE_ACCESS_TIME,
+} BenchmarkSampleKind;
+
+typedef struct {
+    BenchmarkSampleKind kind;
+    guint64 offset;
+    gdouble value;
+} BenchmarkSample;
 
 typedef struct {
     gdouble max;
-    gdouble min;
     gdouble avg;
 } BenchmarkStats;
+
+typedef struct {
+    GWeakRef dialog;
+    UDisksBlock *block;
+    GAsyncQueue *pending_samples;
+    guint64 benchmark_size;
+    guint num_samples;
+    guint sample_size_mib;
+    guint num_access_samples;
+    gint completed_samples;
+    guint inhibit_cookie;
+    gboolean write_benchmark;
+} BenchmarkJobData;
+
+#define GDU_TYPE_BENCHMARK_GRAPH (gdu_benchmark_graph_get_type ())
+G_DECLARE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, GDU, BENCHMARK_GRAPH, AdwBin)
 
 struct _GduBenchmarkGraph {
     AdwBin parent_instance;
@@ -46,17 +97,15 @@ struct _GduBenchmarkGraph {
     guint64 benchmark_size;
     guint total_transfer_samples;
     guint total_atime_samples;
-    GListStore *read_samples;
-    GListStore *write_samples;
-    GListStore *atime_samples;
+    GArray *read_samples;
+    GArray *write_samples;
+    GArray *atime_samples;
 };
 
 G_DEFINE_FINAL_TYPE (GduBenchmarkGraph, gdu_benchmark_graph, ADW_TYPE_BIN)
 
 struct _GduBenchmarkDialog {
     AdwDialog parent_instance;
-
-    GCancellable *cancellable;
 
     GtkWidget *close_button;
     GtkWidget *cancel_button;
@@ -77,12 +126,7 @@ struct _GduBenchmarkDialog {
     GtkWidget *write_rate_row;
     GtkWidget *access_time_row;
 
-    /* must hold benchmark_lock when reading/writing these */
-    GError *benchmark_error;
-    GCancellable *benchmark_cancellable;
-    gboolean benchmark_in_progress;
-    gboolean benchmark_update_timeout_pending;
-    guint benchmark_update_timeout_id;
+    GduLocalJob *job;
 
     GSettings *settings;
     UDisksClient *client;
@@ -94,11 +138,41 @@ struct _GduBenchmarkDialog {
 
 G_DEFINE_FINAL_TYPE (GduBenchmarkDialog, gdu_benchmark_dialog, ADW_TYPE_DIALOG)
 
-G_LOCK_DEFINE (benchmark_lock);
+static void
+benchmark_job_data_free (BenchmarkJobData *data)
+{
+    if (data->inhibit_cookie != 0)
+        gtk_application_uninhibit ((gpointer) g_application_get_default (), data->inhibit_cookie);
 
-static GduBenchmarkSample *gdu_benchmark_sample_new (guint64 offset, gdouble value);
+    g_weak_ref_clear (&data->dialog);
+    g_clear_object (&data->block);
+    g_clear_pointer (&data->pending_samples, g_async_queue_unref);
+    g_free (data);
+}
 
-static gpointer
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (BenchmarkJobData, benchmark_job_data_free)
+
+static BenchmarkJobData *
+benchmark_job_data_new (GduBenchmarkDialog *self)
+{
+    BenchmarkJobData *data = g_new0 (BenchmarkJobData, 1);
+
+    g_weak_ref_init (&data->dialog, self);
+    data->block = g_object_ref (self->block);
+    data->pending_samples = g_async_queue_new_full (g_free);
+    data->num_samples = g_settings_get_int (self->settings, "num-samples");
+    data->sample_size_mib = g_settings_get_int (self->settings, "sample-size-mib");
+    data->num_access_samples = g_settings_get_int (self->settings, "num-access-samples");
+    data->write_benchmark = g_settings_get_boolean (self->settings, "do-write");
+    data->inhibit_cookie = gtk_application_inhibit ((gpointer) g_application_get_default (), self->parent_window,
+                                                    GTK_APPLICATION_INHIBIT_SUSPEND | GTK_APPLICATION_INHIBIT_LOGOUT,
+                                                    /* Translators: Reason why suspend/logout is being inhibited */
+                                                    "Benchmark in progress");
+
+    return data;
+}
+
+static GtkWindow *
 gdu_benchmark_dialog_get_window (GduBenchmarkDialog *self)
 {
     return self->parent_window;
@@ -143,29 +217,21 @@ gdu_benchmark_dialog_save_options (GduBenchmarkDialog *self)
 }
 
 static BenchmarkStats
-get_max_min_avg (GListStore *list)
+get_max_avg (GArray *samples)
 {
-    guint n;
-    guint n_items;
-    gdouble sum;
+    gdouble sum = 0;
     BenchmarkStats ret = { 0 };
 
-    n_items = g_list_model_get_n_items (G_LIST_MODEL (list));
-    if (n_items == 0)
+    if (samples->len == 0)
         return ret;
 
-    ret.max = G_MINDOUBLE;
-    ret.min = G_MAXDOUBLE;
-    sum = 0;
-
-    for (n = 0; n < n_items; n++) {
-        GduBenchmarkSample *s = g_list_model_get_item (G_LIST_MODEL (list), n);
-        ret.max = MAX (ret.max, s->value);
-        ret.min = MIN (ret.min, s->value);
-        sum += s->value;
+    for (guint n = 0; n < samples->len; n++) {
+        BenchmarkSample *sample = &g_array_index (samples, BenchmarkSample, n);
+        ret.max = MAX (ret.max, sample->value);
+        sum += sample->value;
     }
 
-    ret.avg = sum / n_items;
+    ret.avg = sum / samples->len;
 
     return ret;
 }
@@ -173,34 +239,13 @@ get_max_min_avg (GListStore *list)
 static gdouble
 get_max_speed (GduBenchmarkGraph *self)
 {
-    gdouble max_val = 0.0;
-    BenchmarkStats stats;
-
-    if (self->read_samples && g_list_model_get_n_items (G_LIST_MODEL (self->read_samples)) > 0) {
-        stats = get_max_min_avg (self->read_samples);
-        max_val = MAX (max_val, stats.max);
-    }
-
-    if (self->write_samples && g_list_model_get_n_items (G_LIST_MODEL (self->write_samples)) > 0) {
-        stats = get_max_min_avg (self->write_samples);
-        max_val = MAX (max_val, stats.max);
-    }
-
-    return MAX (1, max_val);
+    return MAX (get_max_avg (self->read_samples).max, get_max_avg (self->write_samples).max);
 }
 
 static gdouble
 get_max_time (GduBenchmarkGraph *self)
 {
-    gdouble max_val = 0.0;
-    BenchmarkStats stats;
-
-    if (self->atime_samples && g_list_model_get_n_items (G_LIST_MODEL (self->atime_samples)) > 0) {
-        stats = get_max_min_avg (self->atime_samples);
-        max_val = MAX (max_val, stats.max);
-    }
-
-    return MAX (1, max_val);
+    return get_max_avg (self->atime_samples).max;
 }
 
 typedef struct {
@@ -211,7 +256,7 @@ typedef struct {
     gint graph_x;
     gint graph_y;
     const GdkRGBA *color;
-    GListStore *samples;
+    GArray *samples;
     guint total_samples;
     guint64 benchmark_size;
     gdouble max_speed;
@@ -299,11 +344,11 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     pango_font_description_set_absolute_size (label_font_desc, PANGO_SCALE_X_SMALL * font_size);
     pango_font_description_set_absolute_size (axis_title_font_desc, PANGO_SCALE_SMALL * font_size);
 
-    label = g_strdup_printf ("100");
+    label = g_strdup ("100");
     layout = gtk_widget_create_pango_layout (widget, label);
     pango_layout_set_font_description (layout, label_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
-    g_free (label);
+    g_clear_pointer (&label, g_free);
 
     graph_data->graph_height -= (text_height + 2 * padding);
 
@@ -364,7 +409,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
         gtk_snapshot_translate (snapshot, &GRAPHENE_POINT_INIT (x, y - (text_height / 2.0)));
         gtk_snapshot_append_layout (snapshot, layout, text_color);
         gtk_snapshot_restore (snapshot);
-        g_free (label);
+        g_clear_pointer (&label, g_free);
 
         x = graph_data->graph_width;
         label = g_strdup_printf ("%-3g", j * time_step * 1000);
@@ -378,7 +423,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
         gtk_snapshot_append_layout (snapshot, layout, text_color);
         gtk_snapshot_restore (snapshot);
 
-        g_free (label);
+        g_clear_pointer (&label, g_free);
     }
 
     graph_data->graph_width -= (max_left_label_width + max_right_label_width + 2 * padding);
@@ -403,7 +448,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     stroke = gsk_stroke_new (GRID_LINE_WIDTH);
     gtk_snapshot_append_stroke (snapshot, path, stroke, grid_line_color);
 
-    label = g_strdup_printf (_("Read/Write Speed (MB/s)"));
+    label = g_strdup (_("Read/Write Speed (MB/s)"));
     layout = gtk_widget_create_pango_layout (widget, label);
     pango_layout_set_font_description (layout, axis_title_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -415,9 +460,7 @@ draw_horizontal_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, Graph
     gtk_snapshot_rotate (snapshot, -90.0);
     gtk_snapshot_append_layout (snapshot, layout, text_color);
     gtk_snapshot_restore (snapshot);
-    g_free (label);
-
-    label = g_strdup_printf (_("Access Time (ms)"));
+    g_set_str (&label, _("Access Time (ms)"));
     layout = gtk_widget_create_pango_layout (widget, label);
     pango_layout_set_font_description (layout, axis_title_font_desc);
     pango_layout_get_pixel_size (layout, &text_width, &text_height);
@@ -478,7 +521,7 @@ draw_vertical_axis_and_labels (GtkWidget *widget, GtkSnapshot *snapshot, GraphDa
         gtk_snapshot_append_layout (snapshot, layout, text_color);
         gtk_snapshot_restore (snapshot);
 
-        g_free (label);
+        g_clear_pointer (&label, g_free);
     }
 
     label = g_strdup_printf (_("Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)"));
@@ -509,17 +552,17 @@ gdu_benchmark_graph_draw_grid (GduBenchmarkGraph *self, GtkSnapshot *snapshot, G
 static void
 draw_scatterplot (GdkSnapshot *snapshot, GraphData *graph_data)
 {
-    guint n, n_samples;
+    guint n_samples;
     gdouble maximum_value = graph_data->max_time;
-    g_autoptr(GskPathBuilder) builder = NULL;
-    g_autoptr(GskStroke) stroke = NULL;
+    g_autoptr(GskPathBuilder) builder = gsk_path_builder_new ();
+    g_autoptr(GskStroke) stroke = gsk_stroke_new (GRID_LINE_WIDTH);
     g_autoptr(GskPath) path = NULL;
     guint64 max_offset;
 
     if (graph_data->samples == NULL)
         return;
 
-    n_samples = g_list_model_get_n_items (G_LIST_MODEL (graph_data->samples));
+    n_samples = graph_data->samples->len;
     if (n_samples == 0)
         return;
 
@@ -527,22 +570,20 @@ draw_scatterplot (GdkSnapshot *snapshot, GraphData *graph_data)
 
     g_assert (max_offset != 0);
 
-    for (n = 0; n < n_samples; n++) {
-        GduBenchmarkSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
+    for (guint n = 0; n < n_samples; n++) {
+        BenchmarkSample *sample = &g_array_index (graph_data->samples, BenchmarkSample, n);
         graphene_point_t p;
 
         p.x = graph_data->graph_x + (((double) sample->offset / max_offset) * graph_data->graph_width);
         p.y = graph_data->graph_y
               + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
 
-        builder = gsk_path_builder_new ();
         gsk_path_builder_add_circle (builder, &p, 2);
-
-        path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
-        stroke = gsk_stroke_new (GRID_LINE_WIDTH);
-        gtk_snapshot_append_stroke (snapshot, path, stroke, graph_data->color);
-        gtk_snapshot_append_fill (snapshot, path, GSK_FILL_RULE_WINDING, graph_data->color);
     }
+
+    path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
+    gtk_snapshot_append_stroke (snapshot, path, stroke, graph_data->color);
+    gtk_snapshot_append_fill (snapshot, path, GSK_FILL_RULE_WINDING, graph_data->color);
 }
 
 static void
@@ -550,109 +591,68 @@ draw_curve (GdkSnapshot *snapshot, GraphData *graph_data)
 {
     g_autoptr(GskPath) path = NULL;
     g_autoptr(GskStroke) stroke = NULL;
-    g_autoptr(GskPathBuilder) builder = NULL;
-    gdouble x, y;
-    guint n, n_samples, total_samples;
+    g_autoptr(GskPathBuilder) builder = gsk_path_builder_new ();
+    guint n_samples;
+    guint total_samples;
     gdouble maximum_value = graph_data->max_speed;
-    gdouble prev_slope = 0, prev_m = 0;
+    gdouble previous_slope = 0;
+    gdouble previous_tangent = 0;
 
     if (graph_data->samples == NULL)
         return;
 
-    n_samples = g_list_model_get_n_items (G_LIST_MODEL (graph_data->samples));
+    n_samples = graph_data->samples->len;
     if (n_samples == 0)
         return;
 
     total_samples = graph_data->total_samples - 1;
 
-    builder = gsk_path_builder_new ();
-
-    /*
-     * For smoothing, use monotonic cubic interpolation
-     * Step 1: Compute slopes of the secant line between successive points
-     *         s_k = (y_k+1 - y_k) / (x_k+1 - x_k)
-     * Step 2: Initialize tangent as the average of successive secant slopes
-     *         m_k = (s_k-1 / s_k) / 2
-     * Step 3: Initialize factors alpha and beta as
-     *         a_k = (m_k-1 / s_k), b_k = (m_k / s_k)
-     * Step 4: The function a_k - ((2a_k + b_k - 3) ^ 2 / 3(a_k + b_k - 2)) must be positive
-     *         to ensure monotonicity
-     * Step 5: Easy way to do this is by scaling the vector (a_k, b_k) to a circle of radius 3
-     *         by some factor r
-     * Step 6: Rescale the tangents (m_k and m_k-1) by the factor r
-     * Step 7: Now you have the tangents to get a hermite spline. Use it to find the bezier
-     *         Control Points for the curve
-     */
-
     {
-        GduBenchmarkSample *sample = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), 0);
-        x = graph_data->graph_x + ((0.0 / total_samples) * graph_data->graph_width);
-        y = graph_data->graph_y
-            + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
-        gsk_path_builder_move_to (builder, x, y);
+        BenchmarkSample *sample = &g_array_index (graph_data->samples, BenchmarkSample, 0);
+        gdouble y = graph_data->graph_y
+                    + (graph_data->graph_height - (sample->value / maximum_value * graph_data->graph_height));
+
+        gsk_path_builder_move_to (builder, graph_data->graph_x, y);
     }
 
-    for (n = 0; n < n_samples - 1; n++) {
-        GduBenchmarkSample *sample1 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n);
-        GduBenchmarkSample *sample2 = g_list_model_get_item (G_LIST_MODEL (graph_data->samples), n + 1);
-        gdouble x0, x1, x2, x3, y0, y1, y2, y3;
-        gdouble slope, m;
-        gdouble a, b, r;
+    /* Monotonic cubic interpolation avoids overshooting measured values. */
+    for (guint n = 0; n + 1 < n_samples; n++) {
+        BenchmarkSample *sample1 = &g_array_index (graph_data->samples, BenchmarkSample, n);
+        BenchmarkSample *sample2 = &g_array_index (graph_data->samples, BenchmarkSample, n + 1);
+        gdouble x0 = graph_data->graph_x + ((gdouble) n / total_samples * graph_data->graph_width);
+        gdouble x3 = graph_data->graph_x + ((gdouble) (n + 1) / total_samples * graph_data->graph_width);
+        gdouble y0 = graph_data->graph_y
+                     + (graph_data->graph_height - (sample1->value / maximum_value * graph_data->graph_height));
+        gdouble y3 = graph_data->graph_y
+                     + (graph_data->graph_height - (sample2->value / maximum_value * graph_data->graph_height));
+        gdouble slope = (y3 - y0) / (x3 - x0);
+        gdouble tangent = slope;
 
-        x0 = graph_data->graph_x + (((double) n / total_samples) * graph_data->graph_width);
-        x3 = graph_data->graph_x + ((((double) (n + 1)) / total_samples) * graph_data->graph_width);
-        y0 = graph_data->graph_y
-             + (graph_data->graph_height - (sample1->value / maximum_value * graph_data->graph_height));
-        y3 = graph_data->graph_y
-             + (graph_data->graph_height - (sample2->value / maximum_value * graph_data->graph_height));
+        if (n > 0) {
+            tangent = previous_slope * slope <= 0 ? 0 : (previous_slope + slope) / 2.0;
 
-        slope = (y3 - y0) / (x3 - x0);
+            if (previous_slope != 0) {
+                gdouble alpha = previous_tangent / previous_slope;
+                gdouble beta = tangent / previous_slope;
+                gdouble magnitude = alpha * alpha + beta * beta;
 
-        // initialize tangents as average of slopes
-        if (n == 0 || n == n_samples - 1) {
-            m = slope;
-        } else {
-            if ((prev_slope > 0 && slope < 0) || (prev_slope < 0 && slope > 0))
-                m = 0;
-            else
-                m = (prev_slope + slope) / 2.0;
+                if (magnitude > 9) {
+                    gdouble scale = 3 / sqrt (magnitude);
+
+                    previous_tangent = scale * alpha * previous_slope;
+                    tangent = scale * beta * previous_slope;
+                }
+            }
         }
 
-        if (slope == 0) {
-            prev_slope = 0;
-            m = 0;
-        }
+        gsk_path_builder_cubic_to (builder, x0 + (x3 - x0) / 3, MAX (0, y0 + (x3 - x0) * previous_tangent / 3),
+                                   x3 - (x3 - x0) / 3, MAX (0, y3 - (x3 - x0) * tangent / 3), x3, MAX (0, y3));
 
-        a = prev_m / prev_slope;
-        b = m / prev_slope;
-
-        // scale down tangents to ensure monotonicity
-        if ((a * a + b * b) > 3 * 3) {
-            r = 3 / sqrt (a * a + b * b);
-            prev_m = r * a * prev_slope;
-            m = r * b * prev_slope;
-        }
-
-        // calculate bezier control points
-        x1 = x0 + (x3 - x0) / 3;
-        x2 = x3 - (x3 - x0) / 3;
-
-        y1 = y0 + ((1.0 / 3.0) * (x3 - x0) * prev_m);
-        y2 = y3 - ((1.0 / 3.0) * (x3 - x0) * m);
-
-        // cap it to graph height if it overflows
-        y1 = fmax (0.0, y1);
-        y2 = fmax (0.0, y2);
-        y3 = fmax (0.0, y3);
-
-        prev_m = m;
-        prev_slope = slope;
-
-        gsk_path_builder_cubic_to (builder, x1, y1, x2, y2, x3, y3);
+        previous_slope = slope;
+        previous_tangent = tangent;
     }
 
     path = gsk_path_builder_free_to_path (g_steal_pointer (&builder));
-
     stroke = gsk_stroke_new (GRID_LINE_WIDTH);
     gtk_snapshot_append_stroke (snapshot, path, stroke, graph_data->color);
 }
@@ -687,7 +687,7 @@ gdu_benchmark_graph_snapshot (GtkWidget *widget, GtkSnapshot *snapshot)
 }
 
 static gchar *
-format_stats (gdouble stat, guint num_samples, gdouble is_atime)
+format_stats (gdouble stat, guint num_samples, gboolean is_atime)
 {
     g_autofree char *s;
     g_autofree char *s2;
@@ -699,171 +699,156 @@ format_stats (gdouble stat, guint num_samples, gdouble is_atime)
     return g_strdup_printf ("%s <small>(%s)</small>", s, s2);
 }
 
-static void
-update_dialog (GduBenchmarkDialog *self)
+static BenchmarkSample *
+benchmark_sample_new (BenchmarkSampleKind kind, guint64 offset, gdouble value)
 {
-    g_autoptr(GError) error = NULL;
+    BenchmarkSample *sample = g_new (BenchmarkSample, 1);
+
+    *sample = (BenchmarkSample){ .kind = kind, .offset = offset, .value = value };
+
+    return sample;
+}
+
+static void
+append_pending_samples (BenchmarkJobData *data, GduBenchmarkGraph *graph)
+{
+    BenchmarkSample *sample;
+    GArray *samples;
+
+    while ((sample = g_async_queue_try_pop (data->pending_samples)) != NULL) {
+        switch (sample->kind) {
+        case BENCHMARK_SAMPLE_READ:
+            samples = graph->read_samples;
+            break;
+        case BENCHMARK_SAMPLE_WRITE:
+            samples = graph->write_samples;
+            break;
+        case BENCHMARK_SAMPLE_ACCESS_TIME:
+            samples = graph->atime_samples;
+            break;
+        default:
+            g_assert_not_reached ();
+        }
+
+        g_array_append_val (samples, *sample);
+        g_free (sample);
+    }
+}
+
+static void
+update_dialog (GduBenchmarkDialog *self, BenchmarkJobData *data)
+{
+    GduBenchmarkGraph *graph = GDU_BENCHMARK_GRAPH (self->benchmark_graph);
     BenchmarkStats read_stats;
     BenchmarkStats write_stats;
     BenchmarkStats atime_stats;
     g_autofree gchar *s = NULL;
 
-    G_LOCK (benchmark_lock);
-    if (self->benchmark_error != NULL)
-        error = g_steal_pointer (&self->benchmark_error);
-    G_UNLOCK (benchmark_lock);
+    append_pending_samples (data, graph);
 
-    /* present an error if something went wrong */
-    if (error != NULL && (error->domain != G_IO_ERROR || error->code != G_IO_ERROR_CANCELLED)) {
-        gdu_utils_show_error (gdu_benchmark_dialog_get_window (self), _("An error occurred"), error);
+    graph->benchmark_size = data->benchmark_size;
 
-        s = g_strdup ("–");
-        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
-        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
-        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
-        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
-        return;
-    }
-
-    G_LOCK (benchmark_lock);
-    read_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples);
-    write_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples);
-    atime_stats = get_max_min_avg (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples);
-    G_UNLOCK (benchmark_lock);
+    read_stats = get_max_avg (graph->read_samples);
+    write_stats = get_max_avg (graph->write_samples);
+    atime_stats = get_max_avg (graph->atime_samples);
 
     if (read_stats.avg != 0.0) {
-        s = format_stats (
-            read_stats.avg,
-            g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples)), FALSE);
+        s = format_stats (read_stats.avg, graph->read_samples->len, FALSE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), s);
         g_clear_pointer (&s, g_free);
     }
 
     if (write_stats.avg != 0.0) {
-        s = format_stats (
-            write_stats.avg,
-            g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples)),
-            FALSE);
+        s = format_stats (write_stats.avg, graph->write_samples->len, FALSE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), s);
         g_clear_pointer (&s, g_free);
     }
 
     if (atime_stats.avg != 0.0) {
-        s = format_stats (
-            atime_stats.avg,
-            g_list_model_get_n_items (G_LIST_MODEL (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples)), TRUE);
+        s = format_stats (atime_stats.avg, graph->atime_samples->len, TRUE);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), s);
         g_clear_pointer (&s, g_free);
     }
 
-    gtk_widget_queue_draw (GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
-}
-
-/* called on main / UI thread */
-static gboolean
-bmt_on_timeout (gpointer user_data)
-{
-    GduBenchmarkDialog *self = user_data;
-    update_dialog (self);
-    G_LOCK (benchmark_lock);
-    self->benchmark_update_timeout_pending = FALSE;
-    self->benchmark_update_timeout_id = 0;
-    G_UNLOCK (benchmark_lock);
-    return FALSE; /* don't run again */
+    gtk_widget_queue_draw (GTK_WIDGET (graph));
 }
 
 static void
-bmt_schedule_update (GduBenchmarkDialog *self)
+benchmark_job_update (GduLocalJob *job)
 {
-    /* rate-limit updates */
-    G_LOCK (benchmark_lock);
-    if (!self->benchmark_update_timeout_pending) {
-        self->benchmark_update_timeout_id = g_timeout_add (200, /* ms */
-                                                           bmt_on_timeout, self);
-        self->benchmark_update_timeout_pending = TRUE;
-    }
-    G_UNLOCK (benchmark_lock);
+    BenchmarkJobData *data = gdu_local_job_get_user_data (job);
+    g_autoptr(GduBenchmarkDialog) self = NULL;
+    guint total_samples = data->num_samples + data->num_access_samples;
+
+    gdu_local_job_set_progress (job, (gdouble) g_atomic_int_get (&data->completed_samples) / total_samples);
+
+    self = g_weak_ref_get (&data->dialog);
+    if (self != NULL)
+        update_dialog (self, data);
 }
 
-static gpointer
-end_benchmark (GduBenchmarkDialog *self, GError *error, gint fd, guint inhibit_cookie)
+static void
+queue_job_update_if_due (GduLocalJob *job, gint64 *last_update_usec)
 {
-    if (fd != -1)
-        close (fd);
-    self->benchmark_in_progress = FALSE;
-    gtk_widget_set_visible (self->cancel_button, FALSE);
+    gint64 now_usec = g_get_monotonic_time ();
 
-    if (inhibit_cookie != 0)
-        gtk_application_uninhibit ((gpointer) g_application_get_default (), inhibit_cookie);
+    if (now_usec - *last_update_usec < 200 * 1000)
+        return;
 
-    if (error != NULL) {
-        G_LOCK (benchmark_lock);
-        self->benchmark_error = error;
-        G_UNLOCK (benchmark_lock);
-    }
-
-    bmt_schedule_update (self);
-
-    return NULL;
+    *last_update_usec = now_usec;
+    gdu_local_job_queue_update (job);
 }
 
 static GError *
-open_for_benchmark (GduBenchmarkDialog *self, gint *fd)
+open_for_benchmark (BenchmarkJobData *data, GCancellable *cancellable, gint *fd)
 {
     GVariantBuilder options_builder;
     GError *error = NULL;
-    gboolean write_benchmark = 0;
     g_autoptr (GVariant) fd_index = NULL;
     g_autoptr (GUnixFDList) fd_list = NULL;
 
     g_assert (fd != NULL);
 
-    write_benchmark = g_settings_get_boolean (self->settings, "do-write");
-
     g_variant_builder_init (&options_builder, G_VARIANT_TYPE_VARDICT);
-    g_variant_builder_add (&options_builder, "{sv}", "writable", g_variant_new_boolean (write_benchmark));
+    g_variant_builder_add (&options_builder, "{sv}", "writable", g_variant_new_boolean (data->write_benchmark));
 
-    if (!udisks_block_call_open_for_benchmark_sync (self->block, g_variant_builder_end (&options_builder),
+    if (!udisks_block_call_open_for_benchmark_sync (data->block, g_variant_builder_end (&options_builder),
                                                     NULL, /* fd_list */
-                                                    &fd_index, &fd_list, self->benchmark_cancellable, &error))
+                                                    &fd_index, &fd_list, cancellable, &error))
         return error;
 
-    *fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), NULL);
+    *fd = g_unix_fd_list_get (fd_list, g_variant_get_handle (fd_index), &error);
 
-    return NULL;
+    return error;
 }
 
 static GError *
-benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, gint fd, glong page_size, guint64 disk_size)
+benchmark_transfer_rate (BenchmarkJobData *data, GduLocalJob *job, GCancellable *cancellable, guchar *buffer, gint fd,
+                         glong page_size, guint64 disk_size, gint64 *last_update_usec)
 {
     guint n;
-    guint num_samples = 0;
-    gint sample_size = 0;
-    gboolean write_benchmark = 0;
+    gint sample_size;
     GError *error = NULL;
 
     g_assert (fd != -1);
     g_assert (buffer != NULL);
 
-    num_samples = (guint) g_settings_get_int (self->settings, "num-samples");
-    sample_size = g_settings_get_int (self->settings, "sample-size-mib");
-    sample_size = sample_size * 1024 * 1024;
-    write_benchmark = g_settings_get_boolean (self->settings, "do-write");
+    sample_size = data->sample_size_mib * 1024 * 1024;
 
-    for (n = 0; n < num_samples; n++) {
+    for (n = 0; n < data->num_samples; n++) {
         g_autofree char *s = NULL;
         g_autofree char *s2 = NULL;
         gint64 begin_usec;
         gint64 end_usec;
         gint64 offset;
         gssize num_read;
-        GduBenchmarkSample *sample;
+        g_autofree BenchmarkSample *sample = NULL;
 
-        if (g_cancellable_set_error_if_cancelled (self->benchmark_cancellable, &error))
+        if (g_cancellable_set_error_if_cancelled (cancellable, &error))
             return error;
 
         /* figure out offset and align to page-size */
-        offset = n * disk_size / num_samples;
+        offset = n * disk_size / data->num_samples;
         offset &= ~(page_size - 1);
 
         if (lseek (fd, offset, SEEK_SET) != offset) {
@@ -896,13 +881,12 @@ benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, gint fd, glon
         }
         end_usec = g_get_monotonic_time ();
 
-        sample = gdu_benchmark_sample_new (offset, ((gdouble) G_USEC_PER_SEC) * num_read / (end_usec - begin_usec));
+        sample = benchmark_sample_new (BENCHMARK_SAMPLE_READ, offset,
+                                       ((gdouble) G_USEC_PER_SEC) * num_read / (end_usec - begin_usec));
 
-        G_LOCK (benchmark_lock);
-        g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, sample);
-        G_UNLOCK (benchmark_lock);
+        g_async_queue_push (data->pending_samples, g_steal_pointer (&sample));
 
-        if (write_benchmark) {
+        if (data->write_benchmark) {
             gssize num_written;
 
             /* and now write the same block again... */
@@ -946,42 +930,40 @@ benchmark_transfer_rate (GduBenchmarkDialog *self, guchar *buffer, gint fd, glon
             }
             end_usec = g_get_monotonic_time ();
 
-            sample =
-                gdu_benchmark_sample_new (offset, ((gdouble) G_USEC_PER_SEC) * num_written / (end_usec - begin_usec));
+            sample = benchmark_sample_new (BENCHMARK_SAMPLE_WRITE, offset,
+                                           ((gdouble) G_USEC_PER_SEC) * num_written / (end_usec - begin_usec));
 
-            G_LOCK (benchmark_lock);
-            g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, sample);
-            G_UNLOCK (benchmark_lock);
+            g_async_queue_push (data->pending_samples, g_steal_pointer (&sample));
         }
-        bmt_schedule_update (self);
+        g_atomic_int_inc (&data->completed_samples);
+        queue_job_update_if_due (job, last_update_usec);
     }
 
     return NULL;
 }
 
 static GError *
-benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, gint fd, glong page_size, guint64 disk_size)
+benchmark_access_time (BenchmarkJobData *data, GduLocalJob *job, GCancellable *cancellable, guchar *buffer, gint fd,
+                       glong page_size, guint64 disk_size, gint64 *last_update_usec)
 {
     guint n;
     GError *error = NULL;
-    guint num_access_samples = 0;
     gdouble prev_offset = 0;
     g_autoptr (GRand) rand = NULL;
 
     g_assert (buffer != NULL);
     g_assert (fd != -1);
 
-    num_access_samples = (guint) g_settings_get_int (self->settings, "num-access-samples");
     rand = g_rand_new_with_seed (42); /* want this to be deterministic (per size) so it's repeatable */
 
-    for (n = 0; n < num_access_samples; n++) {
+    for (n = 0; n < data->num_access_samples; n++) {
         gint64 begin_usec;
         gint64 end_usec;
         gint64 offset;
         gssize num_read;
-        GduBenchmarkSample *sample;
+        g_autofree BenchmarkSample *sample = NULL;
 
-        if (g_cancellable_set_error_if_cancelled (self->benchmark_cancellable, &error)) {
+        if (g_cancellable_set_error_if_cancelled (cancellable, &error)) {
             return error;
         }
 
@@ -1004,49 +986,55 @@ benchmark_access_time (GduBenchmarkDialog *self, guchar *buffer, gint fd, glong 
         }
         end_usec = g_get_monotonic_time ();
 
-        sample = gdu_benchmark_sample_new (offset, (end_usec - begin_usec) / ((gdouble) G_USEC_PER_SEC));
+        sample = benchmark_sample_new (BENCHMARK_SAMPLE_ACCESS_TIME, offset,
+                                       (end_usec - begin_usec) / ((gdouble) G_USEC_PER_SEC));
 
         {
             gdouble sample_offset = sample->offset;
             if (n != 0) {
                 sample->offset = fabs (sample->offset - prev_offset);
-                G_LOCK (benchmark_lock);
-                g_list_store_append (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, sample);
-                G_UNLOCK (benchmark_lock);
+                g_async_queue_push (data->pending_samples, g_steal_pointer (&sample));
             }
             prev_offset = sample_offset;
         }
 
-        bmt_schedule_update (self);
+        g_atomic_int_inc (&data->completed_samples);
+        queue_job_update_if_due (job, last_update_usec);
     }
 
     return NULL;
 }
 
-static gpointer
-benchmark_thread (gpointer user_data)
+static GduLocalJobResult
+benchmark_job_result (GError *error, GError **out_error)
 {
-    GduBenchmarkDialog *self = user_data;
-    GError *error = NULL;
+    g_autoptr(GError) owned_error = error;
+
+    if (owned_error == NULL)
+        return GDU_LOCAL_JOB_RESULT_SUCCESS;
+
+    if (g_error_matches (owned_error, G_IO_ERROR, G_IO_ERROR_CANCELLED))
+        return GDU_LOCAL_JOB_RESULT_CANCELLED;
+
+    *out_error = g_steal_pointer (&owned_error);
+    return GDU_LOCAL_JOB_RESULT_ERROR;
+}
+
+static GduLocalJobResult
+benchmark_job_run (GduLocalJob *job, GCancellable *cancellable, GError **out_error)
+{
+    BenchmarkJobData *data = gdu_local_job_get_user_data (job);
+    g_autoptr(GError) error = NULL;
     guchar *buffer = NULL;
     g_autofree guchar *buffer_unaligned = NULL;
-    gint fd = -1;
+    g_autofd gint fd = -1;
+    gint64 last_update_usec = 0;
     glong page_size;
     guint64 disk_size;
-    guint inhibit_cookie;
-    gint sample_size_mib = 0;
 
-    sample_size_mib = g_settings_get_int (self->settings, "sample-size-mib");
-
-    inhibit_cookie = gtk_application_inhibit ((gpointer) g_application_get_default (), self->parent_window,
-                                              GTK_APPLICATION_INHIBIT_SUSPEND | GTK_APPLICATION_INHIBIT_LOGOUT,
-                                              /* Translators: Reason why suspend/logout is being inhibited */
-                                              "Benchmark in progress");
-
-    error = open_for_benchmark (self, &fd);
-    if (error != NULL) {
-        return end_benchmark (self, error, fd, inhibit_cookie);
-    }
+    error = open_for_benchmark (data, cancellable, &fd);
+    if (error != NULL)
+        return benchmark_job_result (g_steal_pointer (&error), out_error);
 
     /* We can't use udisks_block_get_size() because the media may have
      * changed and udisks may not have noticed. TODO: maybe have a
@@ -1054,72 +1042,112 @@ benchmark_thread (gpointer user_data)
      */
     if (ioctl (fd, BLKGETSIZE64, &disk_size) != 0) {
         g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno), "Error getting size of device: %m");
-        return end_benchmark (self, error, fd, inhibit_cookie);
+        return benchmark_job_result (g_steal_pointer (&error), out_error);
     }
 
     page_size = sysconf (_SC_PAGESIZE);
     if (page_size < 1) {
         g_set_error (&error, G_IO_ERROR, g_io_error_from_errno (errno), "Error getting page size: %m\n");
-        return end_benchmark (self, error, fd, inhibit_cookie);
+        return benchmark_job_result (g_steal_pointer (&error), out_error);
     }
 
-    buffer_unaligned = g_new0 (guchar, sample_size_mib * 1024 * 1024 + page_size);
+    buffer_unaligned = g_new0 (guchar, data->sample_size_mib * 1024 * 1024 + page_size);
     buffer = (guchar *) (((gintptr) (buffer_unaligned + page_size)) & (~(page_size - 1)));
 
-    G_LOCK (benchmark_lock);
-    GDU_BENCHMARK_GRAPH (self->benchmark_graph)->benchmark_size = disk_size;
-    G_UNLOCK (benchmark_lock);
+    data->benchmark_size = disk_size;
+    gdu_local_job_queue_update (job);
 
-    error = benchmark_transfer_rate (self, buffer, fd, page_size, disk_size);
-    if (error != NULL) {
-        return end_benchmark (self, error, fd, inhibit_cookie);
+    error = benchmark_transfer_rate (data, job, cancellable, buffer, fd, page_size, disk_size, &last_update_usec);
+    if (error != NULL)
+        return benchmark_job_result (g_steal_pointer (&error), out_error);
+
+    error = benchmark_access_time (data, job, cancellable, buffer, fd, page_size, disk_size, &last_update_usec);
+
+    return benchmark_job_result (g_steal_pointer (&error), out_error);
+}
+
+static void
+benchmark_job_completed (GduLocalJob *job, GduLocalJobResult result, GError *error)
+{
+    BenchmarkJobData *data = gdu_local_job_get_user_data (job);
+    g_autoptr(GduBenchmarkDialog) self = NULL;
+
+    if (data->inhibit_cookie != 0) {
+        gtk_application_uninhibit ((gpointer) g_application_get_default (), data->inhibit_cookie);
+        data->inhibit_cookie = 0;
     }
 
-    error = benchmark_access_time (self, buffer, fd, page_size, disk_size);
-    if (error != NULL) {
-        return end_benchmark (self, error, fd, inhibit_cookie);
+    self = g_weak_ref_get (&data->dialog);
+    if (self == NULL)
+        return;
+
+    update_dialog (self, data);
+    gtk_widget_set_visible (self->cancel_button, FALSE);
+
+    if (result == GDU_LOCAL_JOB_RESULT_ERROR) {
+        gdu_utils_show_error (gdu_benchmark_dialog_get_window (self), _("An error occurred"), error);
+        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), "–");
+        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->read_rate_row), "–");
+        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->write_rate_row), "–");
+        adw_action_row_set_subtitle (ADW_ACTION_ROW (self->access_time_row), "–");
     }
 
-    return end_benchmark (self, error, fd, inhibit_cookie);
+    g_clear_object (&self->job);
 }
 
 static void
 on_cancel_clicked_cb (GduBenchmarkDialog *self)
 {
-    g_cancellable_cancel (self->benchmark_cancellable);
+    if (self->job != NULL)
+        gdu_local_job_request_cancel (self->job);
 }
 
 static void
 start_benchmark (GduBenchmarkDialog *self)
 {
+    GduBenchmarkGraph *graph = GDU_BENCHMARK_GRAPH (self->benchmark_graph);
+    GduJobManager *job_manager;
+    g_autoptr(BenchmarkJobData) data = NULL;
+    g_autoptr(GduLocalJob) job = NULL;
     gint sample_size = 0;
     g_autofree char *s = NULL;
-    self->benchmark_in_progress = TRUE;
-    g_cancellable_reset (self->benchmark_cancellable);
 
-    GDU_BENCHMARK_GRAPH (self->benchmark_graph)->total_transfer_samples =
-        (guint) g_settings_get_int (self->settings, "num-samples");
-    GDU_BENCHMARK_GRAPH (self->benchmark_graph)->total_atime_samples =
-        (guint) g_settings_get_int (self->settings, "num-access-samples");
+    data = benchmark_job_data_new (self);
 
-    sample_size = g_settings_get_int (self->settings, "sample-size-mib");
-    sample_size = sample_size * 1024 * 1024;
+    graph->total_transfer_samples = data->num_samples;
+    graph->total_atime_samples = data->num_access_samples;
+
+    sample_size = data->sample_size_mib * 1024 * 1024;
 
     if (sample_size != 0) {
         s = g_format_size_full (sample_size, G_FORMAT_SIZE_IEC_UNITS | G_FORMAT_SIZE_LONG_FORMAT);
         adw_action_row_set_subtitle (ADW_ACTION_ROW (self->sample_size_action_row), s);
     }
 
-    g_thread_new ("benchmark-thread", benchmark_thread, self);
+    job = gdu_local_job_new (self->object, "x-gdu-benchmark",
+                             _("Benchmarking"), benchmark_job_run, benchmark_job_update, benchmark_job_completed,
+                               g_steal_pointer (&data), (GDestroyNotify) benchmark_job_data_free);
+    gdu_local_job_set_cancelable (job, TRUE);
+    gdu_local_job_set_progress_valid (job, TRUE);
+    self->job = g_object_ref (job);
+
+    job_manager = gdu_application_get_job_manager ();
+    if (!gdu_job_manager_enqueue (job_manager, g_steal_pointer (&job))) {
+        g_warning ("Failed to enqueue benchmark job");
+        g_clear_object (&self->job);
+        gtk_widget_set_visible (self->cancel_button, FALSE);
+    }
 }
 
 static void
 ensure_unused_cb (GtkWindow *window, GAsyncResult *res, gpointer user_data)
 {
-    GduBenchmarkDialog *self = user_data;
+    g_autoptr(GduBenchmarkDialog) self = user_data;
 
     if (gdu_utils_ensure_unused_finish (self->client, res, NULL))
         start_benchmark (self);
+    else
+        gtk_widget_set_visible (self->cancel_button, FALSE);
 }
 
 static void
@@ -1127,7 +1155,7 @@ on_start_clicked_cb (GduBenchmarkDialog *self, GtkButton *button)
 {
     gboolean write_benchmark;
 
-    g_assert (!self->benchmark_in_progress);
+    g_assert (self->job == NULL);
 
     gdu_benchmark_dialog_save_options (self);
 
@@ -1137,7 +1165,7 @@ on_start_clicked_cb (GduBenchmarkDialog *self, GtkButton *button)
     if (write_benchmark)
         gdu_utils_ensure_unused (self->client, gdu_benchmark_dialog_get_window (self), self->object,
                                  (GAsyncReadyCallback) ensure_unused_cb, NULL, /* GCancellable */
-                                 self);
+                                 g_object_ref (self));
     else
         start_benchmark (self);
 
@@ -1167,37 +1195,14 @@ set_sample_size_unit_cb (AdwSpinRow *spin_row, gpointer *user_data)
     return TRUE;
 }
 
-static GduBenchmarkSample *
-gdu_benchmark_sample_new (guint64 offset, gdouble value)
-{
-    GduBenchmarkSample *self;
-
-    self = g_object_new (GDU_TYPE_BENCHMARK_SAMPLE, NULL);
-
-    self->offset = offset;
-    self->value = value;
-
-    return self;
-}
-
-static void
-gdu_benchmark_sample_init (GduBenchmarkSample *self)
-{
-}
-
-static void
-gdu_benchmark_sample_class_init (GduBenchmarkSampleClass *self)
-{
-}
-
 static void
 gdu_benchmark_graph_dispose (GObject *object)
 {
     GduBenchmarkGraph *self = GDU_BENCHMARK_GRAPH (object);
 
-    g_clear_object (&self->read_samples);
-    g_clear_object (&self->write_samples);
-    g_clear_object (&self->atime_samples);
+    g_clear_pointer (&self->read_samples, g_array_unref);
+    g_clear_pointer (&self->write_samples, g_array_unref);
+    g_clear_pointer (&self->atime_samples, g_array_unref);
 
     G_OBJECT_CLASS (gdu_benchmark_graph_parent_class)->dispose (object);
 }
@@ -1205,9 +1210,9 @@ gdu_benchmark_graph_dispose (GObject *object)
 static void
 gdu_benchmark_graph_init (GduBenchmarkGraph *self)
 {
-    self->read_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
-    self->write_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
-    self->atime_samples = g_list_store_new (GDU_TYPE_BENCHMARK_SAMPLE);
+    self->read_samples = g_array_new (FALSE, FALSE, sizeof (BenchmarkSample));
+    self->write_samples = g_array_new (FALSE, FALSE, sizeof (BenchmarkSample));
+    self->atime_samples = g_array_new (FALSE, FALSE, sizeof (BenchmarkSample));
 
     gtk_widget_set_size_request (GTK_WIDGET (self), -1, 279);
 }
@@ -1228,7 +1233,10 @@ gdu_benchmark_dialog_finalize (GObject *object)
 {
     GduBenchmarkDialog *self = GDU_BENCHMARK_DIALOG (object);
 
-    g_clear_handle_id (&self->benchmark_update_timeout_id, g_source_remove);
+    g_clear_object (&self->job);
+    g_clear_object (&self->settings);
+    g_clear_object (&self->object);
+    g_clear_object (&self->parent_window);
 
     G_OBJECT_CLASS (gdu_benchmark_dialog_parent_class)->finalize (object);
 }
@@ -1272,7 +1280,6 @@ gdu_benchmark_dialog_init (GduBenchmarkDialog *self)
     gtk_widget_init_template (GTK_WIDGET (self));
 
     self->settings = g_settings_new ("org.gnome.Disks.benchmark");
-    self->benchmark_cancellable = g_cancellable_new ();
 }
 
 void
@@ -1285,18 +1292,6 @@ gdu_benchmark_dialog_show (GtkWindow *parent_window, UDisksObject *object, UDisk
     self->parent_window = g_object_ref (parent_window);
     self->block = udisks_object_peek_block (self->object);
     self->client = client;
-
-    g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->read_samples, "notify::n-items",
-                              G_CALLBACK (gtk_widget_queue_draw),
-                              GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
-
-    g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->write_samples, "notify::n-items",
-                              G_CALLBACK (gtk_widget_queue_draw),
-                              GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
-
-    g_signal_connect_swapped (GDU_BENCHMARK_GRAPH (self->benchmark_graph)->atime_samples, "notify::n-items",
-                              G_CALLBACK (gtk_widget_queue_draw),
-                              GTK_WIDGET (GDU_BENCHMARK_GRAPH (self->benchmark_graph)));
 
     gdu_benchmark_dialog_set_title (self);
     gdu_benchmark_dialog_load_options (self);

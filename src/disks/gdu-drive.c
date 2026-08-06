@@ -1021,15 +1021,15 @@ gdu_drive_get_object (GduDrive *self)
     return self->object;
 }
 
-gpointer
-gdu_drive_get_object_for_format (GduDrive *self)
+UDisksObject *
+gdu_drive_get_block_object (GduDrive *self)
 {
     g_return_val_if_fail (GDU_IS_DRIVE (self), NULL);
 
-    if (self->partition_table)
-        return self->partition_table;
+    if (self->block)
+        return UDISKS_OBJECT (g_dbus_interface_get_object (G_DBUS_INTERFACE (self->block)));
 
-    return self->object;
+    return NULL;
 }
 
 void

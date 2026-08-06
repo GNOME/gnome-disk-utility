@@ -11,6 +11,7 @@
 #pragma once
 
 #include <gio/gio.h>
+#include <udisks/udisks.h>
 
 #include "gdu-item.h"
 
@@ -46,6 +47,6 @@ void gdu_drive_block_changed (GduDrive *self, gpointer block);
 
 /* xxx: to be removed once the dust settles */
 gpointer gdu_drive_get_object (GduDrive *self);
-gpointer gdu_drive_get_object_for_format (GduDrive *self);
+UDisksObject *gdu_drive_get_block_object (GduDrive *self);
 
 G_END_DECLS

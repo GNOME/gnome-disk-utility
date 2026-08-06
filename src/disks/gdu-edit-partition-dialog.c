@@ -53,6 +53,9 @@ gdu_edit_partition_dialog_get_new_type (GduEditPartitionDialog *self)
     gchar *type;
 
     item = adw_combo_row_get_selected_item (ADW_COMBO_ROW (self->type_row));
+    if (item == NULL)
+        return g_strdup (udisks_partition_get_type_ (self->udisks_partition));
+
     type = g_strdup (g_object_get_data (G_OBJECT (item), "type"));
 
     return type;
@@ -180,7 +183,7 @@ gdu_edit_partition_dialog_populate_types_row (GduEditPartitionDialog *self)
                                                                       info->table_subtype, info->type);
         gtk_string_list_append (GTK_STRING_LIST (self->model), s);
         obj = g_list_model_get_item (G_LIST_MODEL (self->model), n);
-        g_object_set_data (G_OBJECT (obj), "type", (gpointer) info->type);
+        g_object_set_data_full (G_OBJECT (obj), "type", g_strdup (info->type), g_free);
         if (g_strcmp0 (info->type, cur_type) == 0)
             adw_combo_row_set_selected (ADW_COMBO_ROW (self->type_row), n);
         n += 1;
@@ -287,8 +290,8 @@ gdu_edit_partition_dialog_show (GtkWindow *parent_window, UDisksObject *object, 
                             "is referred to as the “active” partition"));
     }
 
-    gdu_edit_partition_dialog_populate (self);
     gdu_edit_partition_dialog_populate_types_row (self);
+    gdu_edit_partition_dialog_populate (self);
 
     adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

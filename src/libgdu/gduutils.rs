@@ -1066,7 +1066,7 @@ mod unfuse_path_tests {
 
     #[test]
     fn unfuse_path_without_home() {
-        let path = "/root";
+        let path = "/__gdu_path_outside_home__";
         assert_eq!(path, unfuse_path(path));
     }
 }

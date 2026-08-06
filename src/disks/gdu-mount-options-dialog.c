@@ -48,6 +48,8 @@ struct _GduMountOptionsDialog {
     UDisksBlock *block;
     GListModel *model;
     GVariant *orig_fstab_entry;
+
+    gboolean configured;
 };
 
 G_DEFINE_FINAL_TYPE (GduMountOptionsDialog, gdu_mount_options_dialog, ADW_TYPE_DIALOG)
@@ -438,7 +440,8 @@ fstab_on_device_combo_row_changed (GtkWidget *widget, GParamSpec *pspec, GduMoun
             s = "/disk";
         proposed_mount_point = g_strdup_printf ("/mnt/%s", s + 1);
 
-        gtk_editable_set_text (GTK_EDITABLE (self->mount_point_row), proposed_mount_point);
+        if (self->configured || strcmp (gtk_editable_get_text (GTK_EDITABLE (self->mount_point_row)), "") == 0)
+            gtk_editable_set_text (GTK_EDITABLE (self->mount_point_row), proposed_mount_point);
     }
 
     on_property_changed (widget, pspec, self);
@@ -502,6 +505,8 @@ gdu_mount_options_dialog_show (GtkWindow *parent_window, UDisksObject *object, U
 
     self = g_object_new (GDU_TYPE_MOUNT_OPTIONS_DIALOG, NULL);
 
+    self->configured = FALSE;
+
     self->client = client;
     self->object = g_object_ref (object);
     self->block = udisks_object_get_block (self->object);
@@ -521,6 +526,8 @@ gdu_mount_options_dialog_show (GtkWindow *parent_window, UDisksObject *object, U
 
     gdu_mount_options_dialog_populate (self);
     gdu_mount_options_dialog_populate_device_combo_row (self);
+
+    self->configured = TRUE;
 
     adw_dialog_present (ADW_DIALOG (self), GTK_WIDGET (parent_window));
 }

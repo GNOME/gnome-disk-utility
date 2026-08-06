@@ -393,10 +393,19 @@ gdu_disk_settings_dialog_show (GtkWindow    *parent_window,
         }
 
       if (vendor_recommended_value >= 128 && vendor_recommended_value <= 254)
-        gtk_scale_add_mark (GTK_SCALE (self->aam_value_scale),
-                            vendor_recommended_value,
-                            GTK_POS_BOTTOM,
-                            _("Vendor Recommended"));
+        {
+          g_autofree gchar *description =
+            g_strdup_printf (_("The vendor-recommended AAM value is %d."),
+                             vendor_recommended_value);
+          gtk_accessible_update_property (GTK_ACCESSIBLE (self->aam_value_scale),
+                                          GTK_ACCESSIBLE_PROPERTY_DESCRIPTION,
+                                          description,
+                                          -1);
+          gtk_scale_add_mark (GTK_SCALE (self->aam_value_scale),
+                              vendor_recommended_value,
+                              GTK_POS_BOTTOM,
+                              _("Vendor Recommended"));
+        }
 
       adw_switch_row_set_active (ADW_SWITCH_ROW (self->override_write_cache_switch), write_cache_enabled_set ? TRUE : FALSE);
       adw_combo_row_set_selected (ADW_COMBO_ROW (self->write_cache_combo_row), write_cache_enabled_set ? (write_cache_enabled ? 0 : 1) : -1);

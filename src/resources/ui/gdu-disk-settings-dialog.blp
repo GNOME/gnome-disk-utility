@@ -35,225 +35,207 @@ template $GduDiskSettingsDialog: Adw.Dialog {
       }
     }
 
-    content: ScrolledWindow {
-      hscrollbar-policy: never;
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup standby_group {
+        title: _("Standby");
 
-      Adw.Clamp {
-        child: Adw.PreferencesPage {
-          Adw.PreferencesGroup standby_group {
-            title: _("Standby");
-            separate-rows: true;
+        Adw.SwitchRow override_standby_switch {
+          title: _("Override Vendor Defaults");
+          notify::active => $on_property_changed() swapped;
+        }
+      }
 
-            Adw.SwitchRow override_standby_switch {
-              title: _("Override Vendor Defaults");
-              notify::active => $on_property_changed() swapped;
-            }
+      Adw.PreferencesGroup {
+        visible: bind standby_group.visible;
 
-            Adw.PreferencesRow {
-              activatable: false;
+        Adw.ActionRow standby_value_row {
+          title: _("Standby Time");
+          activatable-widget: standby_time_scale;
 
-              Box {
-                orientation: vertical;
+          styles [
+            "property",
+          ]
+        }
 
-                Adw.ActionRow standby_value_row {
-                  title: _("Standby Time");
+        Adw.PreferencesRow {
+          activatable: false;
+          margin-top: 12;
+          margin-bottom: 12;
+          sensitive: bind override_standby_switch.active;
 
-                  styles [
-                    "property",
-                  ]
-                }
-
-                Separator {}
-
-                Adw.PreferencesRow {
-                  activatable: false;
-                  margin-top: 12;
-                  margin-bottom: 12;
-                  sensitive: bind override_standby_switch.active;
-
-                  Scale {
-                    adjustment: Adjustment standby_time_adjustment {
-                      upper: 255;
-                      value: 60;
-                      step-increment: 1;
-                      page-increment: 10;
-                      value-changed => $on_property_changed() swapped;
-                    };
-                  }
-                }
-              }
-            }
+          Scale standby_time_scale {
+            adjustment: Adjustment standby_time_adjustment {
+              upper: 255;
+              value: 60;
+              step-increment: 1;
+              page-increment: 10;
+              value-changed => $on_property_changed() swapped;
+            };
           }
+        }
+      }
 
-          Adw.PreferencesGroup apm_group {
-            title: _("Advanced Power Management");
-            separate-rows: true;
+      Adw.PreferencesGroup apm_group {
+        title: _("Advanced Power Management");
 
-            Adw.SwitchRow override_apm_switch {
-              title: _("Override Vendor Defaults");
-              notify::active => $on_property_changed() swapped;
-            }
+        Adw.SwitchRow override_apm_switch {
+          title: _("Override Vendor Defaults");
+          notify::active => $on_property_changed() swapped;
+        }
+      }
 
-            Adw.PreferencesRow {
-              activatable: false;
+      Adw.PreferencesGroup {
+        visible: bind apm_group.visible;
 
-              Box {
-                orientation: vertical;
+        Adw.ActionRow apm_value_row {
+          title: _("APM Level");
+          activatable-widget: apm_scale;
 
-                Adw.ActionRow apm_value_row {
-                  title: _("APM Level");
+          [suffix]
+          MenuButton {
+            tooltip-text: _("More Information");
+            icon-name: "help-about-symbolic";
+            valign: center;
 
-                  [suffix]
-                  MenuButton {
-                    tooltip-text: _("More Information");
-                    icon-name: "help-about-symbolic";
-                    valign: center;
-
-                    popover: Popover {
-                      child: Label {
-                        halign: center;
-                        margin-start: 6;
-                        margin-end: 6;
-                        margin-top: 6;
-                        margin-bottom: 6;
-                        label: _(
-                          "Aggressive spin down may wear out the drive faster than anticipated. Periodically check the “Start/Stop Count” SMART attribute to be aware of drive health."
-                        );
-                        wrap: true;
-                        max-width-chars: 50;
-                        valign: center;
-                      };
-                    };
-
-                    styles [
-                      "flat",
-                    ]
-                  }
-
-                  styles [
-                    "property",
-                  ]
-                }
-
-                Separator {}
-
-                Adw.PreferencesRow {
-                  activatable: false;
-                  margin-top: 12;
-                  margin-bottom: 12;
-                  sensitive: bind override_apm_switch.active;
-
-                  Scale {
-                    adjustment: Adjustment apm_adjustment {
-                      lower: 1;
-                      upper: 255;
-                      value: 127;
-                      step-increment: 1;
-                      page-increment: 10;
-                      value-changed => $on_property_changed() swapped;
-                    };
-                  }
-                }
-              }
-            }
-
-            Separator {
-              height-request: 12;
-
-              styles [
-                "spacer",
-              ]
-            }
-
-            Label {
-              label: _("A lower APM value will save power and a higher value will increase drive performance.");
-              wrap: true;
-              xalign: 0;
-
-              styles [
-                "dimmed",
-              ]
-            }
-          }
-
-          Adw.PreferencesGroup aam_group {
-            title: _("Automatic Acoustic Management");
-            separate-rows: true;
-
-            Adw.SwitchRow override_aam_switch {
-              title: _("Override Vendor Defaults");
-              notify::active => $on_property_changed() swapped;
-            }
-
-            Adw.ActionRow {
-              activatable: false;
-              sensitive: bind override_aam_switch.active;
-              title: _("AAM Level");
-
-              [suffix]
-              Scale aam_value_scale {
+            popover: Popover {
+              child: Label {
+                halign: center;
+                margin-start: 6;
+                margin-end: 6;
+                margin-top: 6;
+                margin-bottom: 6;
+                label: _(
+                  "Aggressive spin down may wear out the drive faster than anticipated. Periodically check the “Start/Stop Count” SMART attribute to be aware of drive health."
+                );
+                wrap: true;
+                max-width-chars: 50;
                 valign: center;
-
-                marks [
-                  mark (127, bottom, _("Quiet (Slow)")),
-                  mark (254, right, _("Loud (Fast)")),
-                ]
-
-                adjustment: Adjustment aam_adjustment {
-                  lower: 127;
-                  upper: 254;
-                  value: 128;
-                  step-increment: 1;
-                  page-increment: 10;
-                  value-changed => $on_property_changed() swapped;
-                };
-              }
-            }
-          }
-
-          Adw.PreferencesGroup write_cache_group {
-            title: _("Write Cache");
-            separate-rows: true;
-
-            Adw.SwitchRow override_write_cache_switch {
-              title: _("Override Vendor Defaults");
-              notify::active => $on_property_changed() swapped;
-            }
-
-            Adw.ComboRow write_cache_combo_row {
-              sensitive: bind override_write_cache_switch.active;
-              title: _("Write Cache Settings");
-              notify::selected => $on_property_changed() swapped;
-
-              model: StringList {
-                strings [
-                  _("Enabled"),
-                  _("Disabled"),
-                ]
               };
-            }
+            };
 
-            Separator {
-              height-request: 12;
-
-              styles [
-                "spacer",
-              ]
-            }
-
-            Label {
-              label: _(
-                "Performance is increased by enabling write caching, but leaves the system susceptible to data loss in the event of a power failure"
-              );
-              wrap: true;
-              xalign: 0;
-
-              styles [
-                "dimmed",
-              ]
-            }
+            styles [
+              "flat",
+            ]
           }
-        };
+
+          styles [
+            "property",
+          ]
+        }
+
+        Adw.PreferencesRow {
+          activatable: false;
+          margin-top: 12;
+          margin-bottom: 12;
+          sensitive: bind override_apm_switch.active;
+
+          Scale apm_scale {
+            adjustment: Adjustment apm_adjustment {
+              lower: 1;
+              upper: 255;
+              value: 127;
+              step-increment: 1;
+              page-increment: 10;
+              value-changed => $on_property_changed() swapped;
+            };
+          }
+        }
+
+        Separator {
+          height-request: 12;
+
+          styles [
+            "spacer",
+          ]
+        }
+
+        Label {
+          label: _("A lower APM value will save power and a higher value will increase drive performance.");
+          wrap: true;
+          xalign: 0;
+
+          styles [
+            "dimmed",
+          ]
+        }
+      }
+
+      Adw.PreferencesGroup aam_group {
+        title: _("Automatic Acoustic Management");
+        separate-rows: true;
+
+        Adw.SwitchRow override_aam_switch {
+          title: _("Override Vendor Defaults");
+          notify::active => $on_property_changed() swapped;
+        }
+
+        Adw.ActionRow {
+          activatable-widget: aam_value_scale;
+          sensitive: bind override_aam_switch.active;
+          title: _("AAM Level");
+
+          [suffix]
+          Scale aam_value_scale {
+            valign: center;
+
+            marks [
+              mark (127, bottom, _("Quiet (Slow)")),
+              mark (254, right, _("Loud (Fast)")),
+            ]
+
+            adjustment: Adjustment aam_adjustment {
+              lower: 127;
+              upper: 254;
+              value: 128;
+              step-increment: 1;
+              page-increment: 10;
+              value-changed => $on_property_changed() swapped;
+            };
+          }
+        }
+      }
+
+      Adw.PreferencesGroup write_cache_group {
+        title: _("Write Cache");
+        separate-rows: true;
+
+        Adw.SwitchRow override_write_cache_switch {
+          title: _("Override Vendor Defaults");
+          notify::active => $on_property_changed() swapped;
+        }
+
+        Adw.ComboRow write_cache_combo_row {
+          sensitive: bind override_write_cache_switch.active;
+          title: _("Write Cache Settings");
+          notify::selected => $on_property_changed() swapped;
+
+          model: StringList {
+            strings [
+              _("Enabled"),
+              _("Disabled"),
+            ]
+          };
+        }
+
+        Separator {
+          height-request: 12;
+
+          styles [
+            "spacer",
+          ]
+        }
+
+        Label {
+          label: _(
+            "Performance is increased by enabling write caching, but leaves the system susceptible to data loss in the event of a power failure"
+          );
+          wrap: true;
+          xalign: 0;
+
+          styles [
+            "dimmed",
+          ]
+        }
       }
     };
   };

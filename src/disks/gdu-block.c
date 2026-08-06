@@ -353,17 +353,6 @@ gdu_block_get_features (GduItem *item)
 }
 
 static void
-gdu_block_dispose (GObject *object)
-{
-    GduBlock *self = (GduBlock *) object;
-
-    if (self->object)
-        g_object_set_data (G_OBJECT (self->object), "gdu-block", NULL);
-
-    G_OBJECT_CLASS (gdu_block_parent_class)->dispose (object);
-}
-
-static void
 gdu_block_finalize (GObject *object)
 {
     GduBlock *self = (GduBlock *) object;
@@ -380,7 +369,6 @@ gdu_block_class_init (GduBlockClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
     GduItemClass *item_class = GDU_ITEM_CLASS (klass);
 
-    object_class->dispose = gdu_block_dispose;
     object_class->finalize = gdu_block_finalize;
 
     item_class->get_description = gdu_block_get_description;
@@ -422,8 +410,6 @@ gdu_block_new (gpointer udisk_client, gpointer udisk_object, GduItem *parent)
         else
             self->start_offset = 0;
     }
-
-    g_object_set_data (G_OBJECT (udisk_object), "gdu-block", self);
 
     return self;
 }

@@ -440,7 +440,7 @@ fstab_on_device_combo_row_changed (GtkWidget *widget, GParamSpec *pspec, GduMoun
             s = "/disk";
         proposed_mount_point = g_strdup_printf ("/mnt/%s", s + 1);
 
-        if (self->configured || strcmp (gtk_editable_get_text (GTK_EDITABLE (self->mount_point_row)), "") == 0)
+        if (self->configured || g_strcmp0 (gtk_editable_get_text (GTK_EDITABLE (self->mount_point_row)), "") == 0)
             gtk_editable_set_text (GTK_EDITABLE (self->mount_point_row), proposed_mount_point);
     }
 

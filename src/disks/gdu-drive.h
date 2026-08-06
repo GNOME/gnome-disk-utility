@@ -42,7 +42,7 @@ gboolean gdu_drive_eject_finish (GduDrive *self, GAsyncResult *result, GError **
 void gdu_drive_power_off_async (GduDrive *self, gpointer parent_window, GCancellable *cancellable,
                                 GAsyncReadyCallback callback, gpointer user_data);
 gboolean gdu_drive_power_off_finish (GduDrive *self, GAsyncResult *result, GError **error);
-void gdu_drive_block_changed (GduDrive *self, gpointer block);
+void gdu_drive_block_changed (GduDrive *self, gpointer object);
 
 /* xxx: to be removed once the dust settles */
 gpointer gdu_drive_get_object (GduDrive *self);

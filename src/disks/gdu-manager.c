@@ -25,7 +25,6 @@
 
 #include <udisks/udisks.h>
 
-#include "gdu-block.h"
 #include "gdu-drive.h"
 #include "gduutils.h"
 
@@ -145,14 +144,17 @@ compare_drive_path (GduDrive *drive_a, GduDrive *drive_b)
 static GduDrive *
 manager_get_object_drive (GduManager *self, UDisksObject *object)
 {
+    GListModel *drives;
     UDisksDrive *drive = NULL;
     UDisksBlock *block;
+    GduDrive *gdu_drive;
 
     g_assert (GDU_IS_MANAGER (self));
     g_assert (UDISKS_IS_OBJECT (object));
 
-    if (g_object_get_data (G_OBJECT (object), "gdu-drive"))
-        return g_object_get_data (G_OBJECT (object), "gdu-drive");
+    gdu_drive = g_object_get_data (G_OBJECT (object), "gdu-drive");
+    if (gdu_drive != NULL)
+        return g_object_ref (gdu_drive);
 
     block = udisks_object_peek_block (object);
     if (block)
@@ -163,7 +165,18 @@ manager_get_object_drive (GduManager *self, UDisksObject *object)
 
         obj = (gpointer) g_dbus_interface_get_object ((gpointer) drive);
 
-        return g_object_get_data (G_OBJECT (obj), "gdu-drive");
+        gdu_drive = g_object_get_data (G_OBJECT (obj), "gdu-drive");
+        if (gdu_drive != NULL)
+            return g_object_ref (gdu_drive);
+    }
+
+    drives = G_LIST_MODEL (self->drives);
+    for (guint i = 0; i < g_list_model_get_n_items (drives); i++) {
+        gdu_drive = g_list_model_get_item (drives, i);
+        if (gdu_drive_matches_object (gdu_drive, object))
+            return gdu_drive;
+
+        g_object_unref (gdu_drive);
     }
 
     return NULL;
@@ -191,34 +204,23 @@ manager_add_drive (GduManager *self, UDisksObject *object)
 static void
 object_added_cb (GduManager *self, UDisksObject *object)
 {
-    GduDrive *drive;
+    g_autoptr(GduDrive) drive = NULL;
 
     g_assert (GDU_IS_MANAGER (self));
     g_assert (UDISKS_IS_OBJECT (object));
 
-    g_debug ("UDisksObject %p added, GduDrive: %p, GduBlock: %p", object,
-             g_object_get_data (G_OBJECT (object), "gdu-drive"), g_object_get_data (G_OBJECT (object), "gdu-block"));
-
-    /* If it's a block, update every parent as some changes (like partition size changes)
-       also affects its parents */
-    if (g_object_get_data (G_OBJECT (object), "gdu-block")) {
-        GduItem *item = g_object_get_data (G_OBJECT (object), "gdu-block");
-
-        gdu_block_emit_updated (GDU_BLOCK (item));
-        item = (GduItem *) gdu_item_get_parent (item);
-
-        if (GDU_IS_DRIVE (item))
-            gdu_drive_block_changed (GDU_DRIVE (item), g_object_get_data (G_OBJECT (object), "gdu-block"));
-    }
+    g_debug ("UDisksObject %p added, GduDrive: %p", object, g_object_get_data (G_OBJECT (object), "gdu-drive"));
 
     drive = manager_get_object_drive (self, object);
     if (drive && udisks_object_peek_partition_table (object) && udisks_object_peek_block (object)) {
         /* Refresh the drive as well as its children so partitioning details
          * and observers are updated after the interface is added. */
         gdu_item_changed (GDU_ITEM (drive));
+    } else if (drive && udisks_object_peek_block (object)) {
+        gdu_drive_block_changed (drive, object);
     }
 
-    if (!g_object_get_data (G_OBJECT (object), "gdu-block") && !g_object_get_data (G_OBJECT (object), "gdu-drive"))
+    if (drive == NULL)
         manager_add_drive (self, object);
 }
 
@@ -256,7 +258,7 @@ object_removed_cb (GduManager *self, UDisksObject *object)
 static void
 interface_removed_cb (GduManager *self, UDisksObject *object, GDBusInterface *interface)
 {
-    GduDrive *drive;
+    g_autoptr(GduDrive) drive = NULL;
 
     g_assert (GDU_IS_MANAGER (self));
     g_assert (UDISKS_IS_OBJECT (object));

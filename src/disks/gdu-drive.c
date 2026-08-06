@@ -420,6 +420,8 @@ gdu_drive_new (gpointer udisk_client, gpointer udisk_object, GduItem *parent)
 gboolean
 gdu_drive_matches_object (GduDrive *self, gpointer udisk_object)
 {
+    guint n_items;
+
     g_return_val_if_fail (GDU_IS_DRIVE (self), FALSE);
     g_return_val_if_fail (UDISKS_IS_OBJECT (udisk_object), FALSE);
 
@@ -431,6 +433,14 @@ gdu_drive_matches_object (GduDrive *self, gpointer udisk_object)
 
     if (self->drive && self->drive == udisks_object_peek_drive (udisk_object))
         return TRUE;
+
+    n_items = g_list_model_get_n_items (G_LIST_MODEL (self->partitions));
+    for (guint i = 0; i < n_items; i++) {
+        g_autoptr(GduBlock) block = g_list_model_get_item (G_LIST_MODEL (self->partitions), i);
+
+        if (gdu_block_get_object (block) == udisk_object)
+            return TRUE;
+    }
 
     if (self->partition_table && udisks_object_peek_partition (udisk_object)) {
         g_autoptr(UDisksPartitionTable) obj_table = NULL;
@@ -1033,17 +1043,30 @@ gdu_drive_get_object_for_format (GduDrive *self)
 }
 
 void
-gdu_drive_block_changed (GduDrive *self, gpointer block)
+gdu_drive_block_changed (GduDrive *self, gpointer object)
 {
+    g_autoptr(GduBlock) block = NULL;
     g_autoptr(GduBlock) before = NULL;
     g_autoptr(GduBlock) after = NULL;
-    guint position;
+    guint n_items;
+    guint position = 0;
 
     g_return_if_fail (GDU_IS_DRIVE (self));
-    g_return_if_fail (GDU_IS_BLOCK (block));
+    g_return_if_fail (UDISKS_IS_OBJECT (object));
 
-    if (!g_list_store_find (self->partitions, block, &position))
-        g_return_if_reached ();
+    n_items = g_list_model_get_n_items (G_LIST_MODEL (self->partitions));
+    for (; position < n_items; position++) {
+        block = g_list_model_get_item (G_LIST_MODEL (self->partitions), position);
+        if (gdu_block_get_object (block) == object)
+            break;
+
+        g_clear_object (&block);
+    }
+
+    if (block == NULL) {
+        gdu_item_changed (GDU_ITEM (self));
+        return;
+    }
 
     gdu_block_emit_updated (block);
 

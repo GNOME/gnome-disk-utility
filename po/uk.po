@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issue"
 "s\n"
-"POT-Creation-Date: 2026-07-30 07:48+0000\n"
-"PO-Revision-Date: 2026-07-30 22:43+0300\n"
+"POT-Creation-Date: 2026-08-07 13:01+0000\n"
+"PO-Revision-Date: 2026-08-07 19:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -77,7 +77,7 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Кількість зразків, які буде включено до тестування часу доступу."
 
 #: data/org.gnome.DiskUtility.desktop.in:2
-#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:305
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:307
 #: src/notify/gdusdmonitor.c:241 src/resources/ui/gdu-window.blp:21
 msgid "Disks"
 msgstr "Диски"
@@ -120,7 +120,6 @@ msgid "Partition and format disks"
 msgstr "Форматування дисків та поділ дисків на розділи"
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:28
-#| msgid "Inspect drive speed and health status"
 msgid "Inspect drive speed and access time"
 msgstr "Визначення швидкості диска та його часу доступу"
 
@@ -131,7 +130,7 @@ msgstr "Керування вашими сховищами даних"
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.DiskUtility.metainfo.xml.in:47
 #: data/org.gnome.DiskUtility.metainfo.xml.in:50
-#: src/disks/gdu-application.c:306
+#: src/disks/gdu-application.c:308
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
 
@@ -139,62 +138,62 @@ msgstr "Проект GNOME"
 msgid "GNOME Disk Image Mounter"
 msgstr "Монтування образів диска GNOME"
 
-#: src/disks/gdu-application.c:97
+#: src/disks/gdu-application.c:98
 msgid "Cancel running operations?"
 msgstr "Скасувати поточні дії?"
 
-#: src/disks/gdu-application.c:98
+#: src/disks/gdu-application.c:99
 msgid ""
 "Disks is performing one or more operations. Closing the app will cancel them."
 msgstr ""
 "«Диски» виконують одну або декілька дій. Закриття вікна програми призведе до "
 "їхнього скасування."
 
-#: src/disks/gdu-application.c:99
+#: src/disks/gdu-application.c:100
 msgid "Close"
 msgstr "Закрити"
 
-#: src/disks/gdu-application.c:144
+#: src/disks/gdu-application.c:145
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Помилка відкривання %s: %s"
 
-#: src/disks/gdu-application.c:150
+#: src/disks/gdu-application.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Помилка знаходження блокового пристрою для %s"
 
-#: src/disks/gdu-application.c:179
+#: src/disks/gdu-application.c:180
 msgid "Select device"
 msgstr "Виберіть пристрій"
 
-#: src/disks/gdu-application.c:180
+#: src/disks/gdu-application.c:181
 msgid "Format selected device"
 msgstr "Форматувати вибраний пристрій"
 
-#: src/disks/gdu-application.c:182
+#: src/disks/gdu-application.c:183
 msgid "Show verbose logs, specify up to four times to increase log level"
 msgstr ""
 "Показати докладний журнал, вкажіть аж до чотирьох разів, щоб збільшити "
 "рівень журналювання"
 
-#: src/disks/gdu-application.c:183
+#: src/disks/gdu-application.c:184
 msgid "Ignored, kept for compatibility"
 msgstr "Буде проігноровано, зберігається для сумісності"
 
-#: src/disks/gdu-application.c:184
+#: src/disks/gdu-application.c:185
 msgid "Restore disk image"
 msgstr "Відновити образ диска"
 
-#: src/disks/gdu-application.c:214
+#: src/disks/gdu-application.c:215
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device потрібно використовувати з --block-device\n"
 
-#: src/disks/gdu-application.c:220
+#: src/disks/gdu-application.c:221
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device не можна поєднувати із --restore-disk-image"
 
-#: src/disks/gdu-application.c:307
+#: src/disks/gdu-application.c:309
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -204,7 +203,7 @@ msgstr ""
 "© Red Hat, Inc., 2008-2013\n"
 "© David Zeuthen, 2008-2013"
 
-#: src/disks/gdu-application.c:310
+#: src/disks/gdu-application.c:312
 msgid "translator-credits"
 msgstr ""
 "wanderlust <wanderlust@ukr.net>\n"
@@ -1223,6 +1222,16 @@ msgstr "Оновлення"
 msgid "Assessment"
 msgstr "Оцінка"
 
+#: src/disks/gdu-attach-disk-image-dialog.c:44
+#: src/disks/gdu-new-disk-image-dialog.c:74
+#: src/disks/gdu-new-disk-image-dialog.c:106
+msgid "Error attaching disk image"
+msgstr "Помилка під'єднання образу диска"
+
+#: src/disks/gdu-attach-disk-image-dialog.c:84
+msgid "Select a Disk Image to Attach"
+msgstr "Вибрати образ диска для під'єднання"
+
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
@@ -1509,6 +1518,7 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:338
 #: src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:16
 #: src/resources/ui/gdu-benchmark-dialog.blp:14
 #: src/resources/ui/gdu-benchmark-dialog.blp:21
 #: src/resources/ui/gdu-change-passphrase-dialog.blp:18
@@ -1545,8 +1555,6 @@ msgstr "Помилка виділення простору для файла о�
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdu-create-disk-image-dialog.c:668
-#| msgctxt "create-inhibit-message"
-#| msgid "Copying device to disk image"
 msgid "Copying device to disk image"
 msgstr "Копіювання пристрою на образ диска…"
 
@@ -1847,26 +1855,20 @@ msgstr ""
 "Виникла помилка, коли спробували розбудити пристрій з режиму чергування"
 
 #: src/disks/gdu-drive-view.c:303
-#| msgid "Error deleting loop device"
 msgid "Error detaching loop device"
 msgstr "Помилка від'єднання циклічного пристрою"
 
 #: src/disks/gdu-drive-view.c:326
-#| msgid "Error ejecting media"
 msgid "Error ejecting drive"
 msgstr "Помилка витягування носія"
 
 #. Translators: Heading for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:368
-#| msgid "Are you sure you want to power off the drives?"
 msgid "Are you sure you want to eject the drives?"
 msgstr "Ви справді хочете виштовхнути носії даних?"
 
 #. Translators: Message for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:370
-#| msgid ""
-#| "This operation will prepare the system for the following drives to be "
-#| "powered down and removed."
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "ejected."
@@ -2065,7 +2067,6 @@ msgid "Queued"
 msgstr "У черзі"
 
 #: src/disks/gdu-job-row.c:46
-#| msgid "Cancel"
 msgid "Canceling"
 msgstr "Скасування"
 
@@ -2090,26 +2091,20 @@ msgid "Running"
 msgstr "Виконання"
 
 #: src/disks/gdu-job-row.c:120
-#| msgid "Drive Options"
 msgid "Disk Operation"
 msgstr "Дія з диском"
 
-#: src/disks/gdu-mount-options-dialog.c:278
+#: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
 msgstr "Помилка оновлення  старого запису /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:295
+#: src/disks/gdu-mount-options-dialog.c:297
 msgid "Error adding new /etc/fstab entry"
 msgstr "Помилка долучення старого запису /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:312
+#: src/disks/gdu-mount-options-dialog.c:314
 msgid "Error removing old /etc/fstab entry"
 msgstr "Помилка вилучення старого запису /etc/fstab"
-
-#: src/disks/gdu-new-disk-image-dialog.c:74
-#: src/disks/gdu-new-disk-image-dialog.c:106 src/disks/gdu-window.c:113
-msgid "Error attaching disk image"
-msgstr "Помилка під'єднання образу диска"
 
 #: src/disks/gdu-new-disk-image-dialog.c:152
 msgid "Error writing file"
@@ -2175,6 +2170,7 @@ msgid "Error mounting the filesystem"
 msgstr "Помилка під час монтування файлової системи"
 
 #: src/disks/gdu-unlock-dialog.c:116
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:38
 #: src/resources/ui/gdu-restore-disk-image-dialog.blp:45
 #: src/resources/ui/gdu-unlock-dialog.blp:62
 msgid "None Selected"
@@ -2187,10 +2183,6 @@ msgstr "Виберіть файли ключів для розблокуванн
 #: src/disks/gdu-unlock-dialog.c:139
 msgid "Error unlocking device"
 msgstr "Помилка під час спроби розблокувати пристрій"
-
-#: src/disks/gdu-window.c:249
-msgid "Select a Disk Image to Attach"
-msgstr "Вибрати образ диска для під'єднання"
 
 #: src/disks/gduxzdecompressor.c:108
 msgid "Invalid compressed data"
@@ -2425,6 +2417,7 @@ msgstr ""
 
 #: src/libgdu/gduutils.rs:549
 #: src/resources/ui/gdu-encryption-options-dialog.blp:16
+#: src/resources/ui/gdu-job-row.blp:32
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -2529,6 +2522,31 @@ msgstr "_Розширений"
 #: src/resources/ui/gdu-ata-smart-dialog.ui:271
 msgid "_Conveyance"
 msgstr "П_еревезення"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:6
+#| msgid "_Attach Disk Image…"
+msgid "Attach Disk Image"
+msgstr "Долучити образ диска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:23
+#| msgid "Detach"
+msgid "_Attach"
+msgstr "_Долучити"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:37
+#| msgid "_Delete Disk Image File"
+msgid "_Disk Image File"
+msgstr "Файл образу д_иска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:44
+#| msgid "Select a Disk Image to Attach"
+msgid "Select a Disk Image"
+msgstr "Виберіть образ диска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:60
+#| msgid "%s (Read-Only)"
+msgid "_Read-Only"
+msgstr "_Лише читання"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:5
 #: src/resources/ui/gdu-benchmark-dialog.blp:40
@@ -3048,7 +3066,6 @@ msgid "Wake Up"
 msgstr "Розбудити"
 
 #: src/resources/ui/gdu-drive-header.blp:134
-#| msgid "_Attach"
 msgid "Detach"
 msgstr "Від’єднати"
 
@@ -3506,10 +3523,6 @@ msgstr "_Довідка"
 msgid "_About Disks"
 msgstr "_Про «Диски»"
 
-#: src/resources/ui/gdu-window.blp:117
-msgid "Set up _read-only loop device"
-msgstr "Налаштувати лише для _читання циклічний пристрій"
-
 #: src/resources/ui/shortcuts-dialog.blp:6
 msgctxt "shortcuts dialog"
 msgid "General"
@@ -3599,6 +3612,9 @@ msgstr "Відкрити меню тому"
 msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Форматувати позначений том"
+
+#~ msgid "Set up _read-only loop device"
+#~ msgstr "Налаштувати лише для _читання циклічний пристрій"
 
 #~ msgid "Stop running jobs?"
 #~ msgstr "Припинити виконання завдань?"
@@ -4471,10 +4487,6 @@ msgstr "Форматувати позначений том"
 #~ msgstr ""
 #~ "Якщо вказано, циклічний пристрій буде лише для читання. Це зручно, коли "
 #~ "ви не бажаєте, щоб файл змінювався."
-
-#, c-format
-#~ msgid "%s (Read-Only)"
-#~ msgstr "%s (тільки для читання)"
 
 #, c-format
 #~ msgctxt "job-remaining-with-rate"

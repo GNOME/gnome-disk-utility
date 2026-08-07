@@ -1,0 +1,67 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GduAttachDiskImageDialog: Adw.Dialog {
+  follows-content-size: true;
+  title: _("Attach Disk Image");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-start-title-buttons: false;
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("_Cancel");
+        use-underline: true;
+        action-name: "window.close";
+      }
+
+      [end]
+      Button attach_image_button {
+        label: _("_Attach");
+        use-underline: true;
+        sensitive: false;
+        clicked => $on_attach_image_button_clicked_cb(template);
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.ActionRow disk_image_file_row {
+          title: _("_Disk Image File");
+          subtitle: _("None Selected");
+          subtitle-lines: 1;
+          use-underline: true;
+
+          [suffix]
+          Button file_chooser_button {
+            tooltip-text: _("Select a Disk Image");
+            valign: center;
+            icon-name: "folder-open-symbolic";
+            clicked => $on_choose_disk_image_button_clicked_cb(template);
+
+            styles [
+              "flat",
+            ]
+          }
+
+          styles [
+            "property",
+          ]
+        }
+
+        Adw.SwitchRow readonly_row {
+          title: _("_Read-Only");
+          use-underline: true;
+          active: true;
+        }
+      }
+    };
+  }
+}

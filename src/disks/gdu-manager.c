@@ -456,12 +456,14 @@ gdu_manager_open_loop_async (GduManager *self, GFile *file, gboolean read_only, 
 
     task = g_task_new (self, NULL, callback, user_data);
     g_task_set_source_tag (task, gdu_manager_open_loop_async);
-    g_task_set_task_data (task, g_strdup (path), g_free);
-    g_object_set_data (G_OBJECT (task), "read-only", GINT_TO_POINTER (read_only));
 
-    fd = open (path, O_RDWR);
-    if (fd == -1)
+    fd = open (path, read_only ? O_RDONLY : O_RDWR);
+
+    if (fd == -1 && !read_only) {
+        g_warning ("Open RW failed for %s: %s; falling back to read-only", path, g_strerror (errno));
         fd = open (path, O_RDONLY);
+        read_only = TRUE;
+    }
 
     if (fd == -1) {
         g_task_return_new_error (task, G_IO_ERROR, g_io_error_from_errno (errno), "%s", strerror (errno));

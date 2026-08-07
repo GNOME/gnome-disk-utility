@@ -17,6 +17,7 @@
 
 #include <glib/gi18n.h>
 
+#include "gdu-attach-disk-image-dialog.h"
 #include "gdu-format-volume-dialog.h"
 #include "gdu-job-manager.h"
 #include "gdu-log.h"
@@ -293,7 +294,8 @@ static void
 attach_disk_image_activated (GSimpleAction *action, GVariant *parameter, gpointer user_data)
 {
     GduApplication *app = GDU_APPLICATION (user_data);
-    gdu_window_show_attach_disk_image (app->window);
+
+    gdu_attach_disk_image_dialog_show (GTK_WINDOW (app->window), app->disk_manager);
 }
 
 static void

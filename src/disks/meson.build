@@ -91,6 +91,7 @@ enum_headers = files('gduenums.h')
 sources = files(
   'gdu-application.c',
   'gdu-ata-smart-dialog.c',
+  'gdu-attach-disk-image-dialog.c',
   'gdu-benchmark-dialog.c',
   'gdu-change-passphrase-dialog.c',
   'gdu-create-confirm-page.c',

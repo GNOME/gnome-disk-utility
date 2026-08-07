@@ -1,6 +1,7 @@
 fs = import('fs')
 
 ui_sources = files(
+  'ui/gdu-attach-disk-image-dialog.blp',
   'ui/gdu-benchmark-dialog.blp',
   'ui/gdu-block-row.blp',
   'ui/gdu-change-passphrase-dialog.blp',

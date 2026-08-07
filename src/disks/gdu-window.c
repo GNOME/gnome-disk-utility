@@ -19,9 +19,6 @@
 #endif
 
 #include "gdu-window.h"
-
-#include <glib/gi18n.h>
-
 #include "gdu-application.h"
 #include "gdu-drive-row.h"
 #include "gdu-drive-view.h"
@@ -40,9 +37,6 @@ struct _GduWindow {
 
     GtkWidget *job_progress_button;
     GtkListBox *jobs_listbox;
-
-    GtkFileDialog *loop_file_chooser;
-    GtkCheckButton *readonly_check_button;
 
     GduManager *manager;
     GduJobManager *job_manager;
@@ -99,36 +93,6 @@ drive_list_row_selection_changed_cb (GduWindow *self)
 
     if (row)
         gdu_drive_view_set_drive (self->drive_view, gdu_drive_row_get_drive (row));
-}
-
-static void
-loop_open_cb (GObject *object, GAsyncResult *result, gpointer user_data)
-{
-    g_autoptr(GduWindow) self = user_data;
-    g_autoptr(GError) error = NULL;
-
-    gdu_manager_open_loop_finish (self->manager, result, &error);
-
-    if (error) {
-        gdu_utils_show_error (GTK_WINDOW (self), _("Error attaching disk image"), error);
-    }
-}
-
-static void
-file_dialog_open_cb (GObject *source_object, GAsyncResult *res, gpointer user_data)
-{
-    GduWindow *self = GDU_WINDOW (user_data);
-    GtkFileDialog *file_dialog = GTK_FILE_DIALOG (source_object);
-    GFile *file = NULL;
-
-    g_assert (GDU_IS_WINDOW (self));
-
-    file = gtk_file_dialog_open_finish (file_dialog, res, NULL);
-
-    if (!file)
-        return;
-
-    gdu_manager_open_loop_async (self->manager, file, TRUE, loop_open_cb, g_object_ref (self));
 }
 
 static void
@@ -204,8 +168,6 @@ gdu_window_class_init (GduWindowClass *klass)
     gtk_widget_class_bind_template_child (widget_class, GduWindow, job_progress_button);
     gtk_widget_class_bind_template_child (widget_class, GduWindow, jobs_listbox);
 
-    gtk_widget_class_bind_template_child (widget_class, GduWindow, readonly_check_button);
-
     gtk_widget_class_bind_template_callback (widget_class, drive_list_row_selection_changed_cb);
 }
 
@@ -237,20 +199,4 @@ gdu_window_new (GApplication *application, GduManager *manager)
     gtk_list_box_bind_model (self->drives_listbox, drives, (GtkListBoxCreateWidgetFunc) gdu_drive_row_new, NULL, NULL);
 
     return self;
-}
-
-void
-gdu_window_show_attach_disk_image (GduWindow *self)
-{
-    GtkFileDialog *dialog;
-    g_return_if_fail (GDU_IS_WINDOW (self));
-
-    dialog = gtk_file_dialog_new ();
-    gtk_file_dialog_set_title (dialog, _("Select a Disk Image to Attach"));
-    gtk_file_dialog_set_modal (dialog, TRUE);
-
-    gdu_utils_configure_file_dialog_for_disk_images (dialog, TRUE, /* set file types */
-                                                     FALSE);       /* allow_compressed */
-
-    gtk_file_dialog_open (dialog, GTK_WINDOW (self), NULL, file_dialog_open_cb, self);
 }

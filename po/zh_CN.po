@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2026-07-30 07:48+0000\n"
-"PO-Revision-Date: 2026-08-05 08:35+0800\n"
+"POT-Creation-Date: 2026-08-07 13:01+0000\n"
+"PO-Revision-Date: 2026-08-08 07:15+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -81,7 +81,7 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "访问时间测试中性能测试会使用的样本个数。"
 
 #: data/org.gnome.DiskUtility.desktop.in:2
-#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:305
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:307
 #: src/notify/gdusdmonitor.c:241 src/resources/ui/gdu-window.blp:21
 msgid "Disks"
 msgstr "磁盘"
@@ -130,7 +130,7 @@ msgstr "管理您的存储设备"
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.DiskUtility.metainfo.xml.in:47
 #: data/org.gnome.DiskUtility.metainfo.xml.in:50
-#: src/disks/gdu-application.c:306
+#: src/disks/gdu-application.c:308
 msgid "The GNOME Project"
 msgstr "GNOME 项目"
 
@@ -138,58 +138,58 @@ msgstr "GNOME 项目"
 msgid "GNOME Disk Image Mounter"
 msgstr "GNOME 磁盘映像挂载器"
 
-#: src/disks/gdu-application.c:97
+#: src/disks/gdu-application.c:98
 msgid "Cancel running operations?"
 msgstr "取消正在运行的操作吗？"
 
-#: src/disks/gdu-application.c:98
+#: src/disks/gdu-application.c:99
 msgid ""
 "Disks is performing one or more operations. Closing the app will cancel them."
 msgstr "“磁盘”正在执行一项或多项操作。关闭该应用将取消它们。"
 
-#: src/disks/gdu-application.c:99
+#: src/disks/gdu-application.c:100
 msgid "Close"
 msgstr "关闭"
 
-#: src/disks/gdu-application.c:144
+#: src/disks/gdu-application.c:145
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "打开 %s 出错：%s"
 
-#: src/disks/gdu-application.c:150
+#: src/disks/gdu-application.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "为 %s 查找块设备出错"
 
-#: src/disks/gdu-application.c:179
+#: src/disks/gdu-application.c:180
 msgid "Select device"
 msgstr "选择设备"
 
-#: src/disks/gdu-application.c:180
+#: src/disks/gdu-application.c:181
 msgid "Format selected device"
 msgstr "格式化所选设备"
 
-#: src/disks/gdu-application.c:182
+#: src/disks/gdu-application.c:183
 msgid "Show verbose logs, specify up to four times to increase log level"
 msgstr "显示详尽日志，指定最多 4 次可增加日志级别"
 
-#: src/disks/gdu-application.c:183
+#: src/disks/gdu-application.c:184
 msgid "Ignored, kept for compatibility"
 msgstr "忽略，仅用于保持兼容性"
 
-#: src/disks/gdu-application.c:184
+#: src/disks/gdu-application.c:185
 msgid "Restore disk image"
 msgstr "恢复磁盘映像"
 
-#: src/disks/gdu-application.c:214
+#: src/disks/gdu-application.c:215
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device 必须与 --block-device 一起使用\n"
 
-#: src/disks/gdu-application.c:220
+#: src/disks/gdu-application.c:221
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device 不能与 --restore-disk-image 一起使用"
 
-#: src/disks/gdu-application.c:307
+#: src/disks/gdu-application.c:309
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -199,7 +199,7 @@ msgstr ""
 "© 2008-2013 红帽公司\n"
 "© 2008-2013 David Zeuthen"
 
-#: src/disks/gdu-application.c:310
+#: src/disks/gdu-application.c:312
 msgid "translator-credits"
 msgstr ""
 "Wei Mingzhi <weimingzhi@gmail.com>\n"
@@ -1212,6 +1212,16 @@ msgstr "更新方法"
 msgid "Assessment"
 msgstr "评估"
 
+#: src/disks/gdu-attach-disk-image-dialog.c:44
+#: src/disks/gdu-new-disk-image-dialog.c:74
+#: src/disks/gdu-new-disk-image-dialog.c:106
+msgid "Error attaching disk image"
+msgstr "附加磁盘映像时出错"
+
+#: src/disks/gdu-attach-disk-image-dialog.c:84
+msgid "Select a Disk Image to Attach"
+msgstr "选择要附加的磁盘映像"
+
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
@@ -1491,6 +1501,7 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:338
 #: src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:16
 #: src/resources/ui/gdu-benchmark-dialog.blp:14
 #: src/resources/ui/gdu-benchmark-dialog.blp:21
 #: src/resources/ui/gdu-change-passphrase-dialog.blp:18
@@ -2050,22 +2061,17 @@ msgstr "正在运行"
 msgid "Disk Operation"
 msgstr "磁盘操作"
 
-#: src/disks/gdu-mount-options-dialog.c:278
+#: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
 msgstr "更新 /etc/fstab 中的条目时出错"
 
-#: src/disks/gdu-mount-options-dialog.c:295
+#: src/disks/gdu-mount-options-dialog.c:297
 msgid "Error adding new /etc/fstab entry"
 msgstr "增加新的 /etc/fstab 条目时出错"
 
-#: src/disks/gdu-mount-options-dialog.c:312
+#: src/disks/gdu-mount-options-dialog.c:314
 msgid "Error removing old /etc/fstab entry"
 msgstr "移除旧的 /etc/fstab 条目时出错"
-
-#: src/disks/gdu-new-disk-image-dialog.c:74
-#: src/disks/gdu-new-disk-image-dialog.c:106 src/disks/gdu-window.c:113
-msgid "Error attaching disk image"
-msgstr "附加磁盘映像时出错"
 
 #: src/disks/gdu-new-disk-image-dialog.c:152
 msgid "Error writing file"
@@ -2129,6 +2135,7 @@ msgid "Error mounting the filesystem"
 msgstr "挂载文件系统时出错"
 
 #: src/disks/gdu-unlock-dialog.c:116
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:38
 #: src/resources/ui/gdu-restore-disk-image-dialog.blp:45
 #: src/resources/ui/gdu-unlock-dialog.blp:62
 msgid "None Selected"
@@ -2141,10 +2148,6 @@ msgstr "选择密钥文件以解锁此卷。"
 #: src/disks/gdu-unlock-dialog.c:139
 msgid "Error unlocking device"
 msgstr "解锁设备时出错"
-
-#: src/disks/gdu-window.c:249
-msgid "Select a Disk Image to Attach"
-msgstr "选择要附加的磁盘映像"
 
 #: src/disks/gduxzdecompressor.c:108
 msgid "Invalid compressed data"
@@ -2364,6 +2367,7 @@ msgstr "关闭自动清除回环设备时出错"
 
 #: src/libgdu/gduutils.rs:549
 #: src/resources/ui/gdu-encryption-options-dialog.blp:16
+#: src/resources/ui/gdu-job-row.blp:32
 msgid "Cancel"
 msgstr "取消"
 
@@ -2468,6 +2472,26 @@ msgstr "扩展(_E)"
 #: src/resources/ui/gdu-ata-smart-dialog.ui:271
 msgid "_Conveyance"
 msgstr "传输(_C)"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:6
+msgid "Attach Disk Image"
+msgstr "附加磁盘映像"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:23
+msgid "_Attach"
+msgstr "附加(_A)"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:37
+msgid "_Disk Image File"
+msgstr "磁盘映像文件(_D)"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:44
+msgid "Select a Disk Image"
+msgstr "选择磁盘映像"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:60
+msgid "_Read-Only"
+msgstr "只读(_R)"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:5
 #: src/resources/ui/gdu-benchmark-dialog.blp:40
@@ -3420,10 +3444,6 @@ msgstr "帮助(_H)"
 msgid "_About Disks"
 msgstr "关于磁盘(_A)"
 
-#: src/resources/ui/gdu-window.blp:117
-msgid "Set up _read-only loop device"
-msgstr "设置只读的回环设备(_R)"
-
 #: src/resources/ui/shortcuts-dialog.blp:6
 msgctxt "shortcuts dialog"
 msgid "General"
@@ -3513,6 +3533,9 @@ msgstr "打开卷菜单"
 msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "格式化所选卷"
+
+#~ msgid "Set up _read-only loop device"
+#~ msgstr "设置只读的回环设备(_R)"
 
 #~ msgid "Compressed image files are not mountable"
 #~ msgstr "不能挂载压缩的映像文件"
@@ -4334,10 +4357,6 @@ msgstr "格式化所选卷"
 #~ "If checked, the loop device will be read-only. This is useful if you "
 #~ "don’t want the underlying file to be modified"
 #~ msgstr "如果勾选，回环设备将会是只读的。这在您不希望文件被修改时有用"
-
-#, c-format
-#~ msgid "%s (Read-Only)"
-#~ msgstr "%s（只读）"
 
 #, c-format
 #~ msgctxt "job-remaining-with-rate"

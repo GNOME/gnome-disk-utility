@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2026-07-23 17:17+0000\n"
-"PO-Revision-Date: 2026-07-26 18:33+0300\n"
+"POT-Creation-Date: 2026-08-07 13:01+0000\n"
+"PO-Revision-Date: 2026-08-08 19:45+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -81,7 +81,7 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Количество образцов в измерениях скорости доступа."
 
 #: data/org.gnome.DiskUtility.desktop.in:2
-#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:305
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:307
 #: src/notify/gdusdmonitor.c:241 src/resources/ui/gdu-window.blp:21
 msgid "Disks"
 msgstr "Диски"
@@ -131,7 +131,7 @@ msgstr "Управление устройствами хранения данн�
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.DiskUtility.metainfo.xml.in:47
 #: data/org.gnome.DiskUtility.metainfo.xml.in:50
-#: src/disks/gdu-application.c:306
+#: src/disks/gdu-application.c:308
 msgid "The GNOME Project"
 msgstr "Проект GNOME"
 
@@ -139,61 +139,62 @@ msgstr "Проект GNOME"
 msgid "GNOME Disk Image Mounter"
 msgstr "Устройство монтирования образа диска GNOME"
 
-#: src/disks/gdu-application.c:97
+#: src/disks/gdu-application.c:98
 msgid "Cancel running operations?"
 msgstr "Отменить выполняемые операции?"
 
-#: src/disks/gdu-application.c:98
+#: src/disks/gdu-application.c:99
 msgid ""
 "Disks is performing one or more operations. Closing the app will cancel them."
 msgstr ""
-"Приложение выполняет одну или несколько операций. Закрытие приложения отменит их."
+"Приложение выполняет одну или несколько операций. Закрытие приложения "
+"отменит их."
 
-#: src/disks/gdu-application.c:99
+#: src/disks/gdu-application.c:100
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/disks/gdu-application.c:144
+#: src/disks/gdu-application.c:145
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "Ошибка открытия «%s»: %s"
 
-#: src/disks/gdu-application.c:150
+#: src/disks/gdu-application.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "Ошибка поиска блочного устройства для %s"
 
-#: src/disks/gdu-application.c:179
+#: src/disks/gdu-application.c:180
 msgid "Select device"
 msgstr "Выберите устройство"
 
-#: src/disks/gdu-application.c:180
+#: src/disks/gdu-application.c:181
 msgid "Format selected device"
 msgstr "Форматировать выбранное устройство"
 
-#: src/disks/gdu-application.c:182
+#: src/disks/gdu-application.c:183
 msgid "Show verbose logs, specify up to four times to increase log level"
 msgstr ""
 "Показать подробные журналы, можно увеличить уровень журнала до четырех раз"
 
-#: src/disks/gdu-application.c:183
+#: src/disks/gdu-application.c:184
 msgid "Ignored, kept for compatibility"
 msgstr "Игнорируется, сохраняется для совместимости"
 
-#: src/disks/gdu-application.c:184
+#: src/disks/gdu-application.c:185
 msgid "Restore disk image"
 msgstr "Восстановить образ диска"
 
-#: src/disks/gdu-application.c:214
+#: src/disks/gdu-application.c:215
 msgid "--format-device must be used together with --block-device\n"
 msgstr ""
 "Параметр --format-device должен использоваться с параметром --block-device\n"
 
-#: src/disks/gdu-application.c:220
+#: src/disks/gdu-application.c:221
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr "--format-device не должен использоваться вместе с --restore-disk-image"
 
-#: src/disks/gdu-application.c:307
+#: src/disks/gdu-application.c:309
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -203,7 +204,7 @@ msgstr ""
 "© 2008-2013 Red Hat, Inc.\n"
 "© 2008-2013 David Zeuthen"
 
-#: src/disks/gdu-application.c:310
+#: src/disks/gdu-application.c:312
 msgid "translator-credits"
 msgstr ""
 "Yuri Myasoedov <ymyasoedov@yandex.ru>, 2012-2017.\n"
@@ -1223,6 +1224,16 @@ msgstr "Обновление"
 msgid "Assessment"
 msgstr "Оценка"
 
+#: src/disks/gdu-attach-disk-image-dialog.c:44
+#: src/disks/gdu-new-disk-image-dialog.c:74
+#: src/disks/gdu-new-disk-image-dialog.c:106
+msgid "Error attaching disk image"
+msgstr "Ошибка отключения образа диска"
+
+#: src/disks/gdu-attach-disk-image-dialog.c:84
+msgid "Select a Disk Image to Attach"
+msgstr "Выберите образ диска для присоединения"
+
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
@@ -1512,6 +1523,7 @@ msgstr ""
 
 #: src/disks/gdu-create-disk-image-dialog.c:338
 #: src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:16
 #: src/resources/ui/gdu-benchmark-dialog.blp:14
 #: src/resources/ui/gdu-benchmark-dialog.blp:21
 #: src/resources/ui/gdu-change-passphrase-dialog.blp:18
@@ -2091,22 +2103,17 @@ msgstr "Выполняется"
 msgid "Disk Operation"
 msgstr "Операция с диском"
 
-#: src/disks/gdu-mount-options-dialog.c:278
+#: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
 msgstr "Ошибка обновления записи /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:295
+#: src/disks/gdu-mount-options-dialog.c:297
 msgid "Error adding new /etc/fstab entry"
 msgstr "Ошибка добавления новой записи /etc/fstab"
 
-#: src/disks/gdu-mount-options-dialog.c:312
+#: src/disks/gdu-mount-options-dialog.c:314
 msgid "Error removing old /etc/fstab entry"
 msgstr "Ошибка удаления старой записи /etc/fstab"
-
-#: src/disks/gdu-new-disk-image-dialog.c:74
-#: src/disks/gdu-new-disk-image-dialog.c:106 src/disks/gdu-window.c:113
-msgid "Error attaching disk image"
-msgstr "Ошибка отключения образа диска"
 
 #: src/disks/gdu-new-disk-image-dialog.c:152
 msgid "Error writing file"
@@ -2171,6 +2178,7 @@ msgid "Error mounting the filesystem"
 msgstr "Ошибка монтирования файловой системы"
 
 #: src/disks/gdu-unlock-dialog.c:116
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:38
 #: src/resources/ui/gdu-restore-disk-image-dialog.blp:45
 #: src/resources/ui/gdu-unlock-dialog.blp:62
 msgid "None Selected"
@@ -2183,10 +2191,6 @@ msgstr "Выберите файлы-ключи для разблокировки
 #: src/disks/gdu-unlock-dialog.c:139
 msgid "Error unlocking device"
 msgstr "Ошибка разблокирования устройства"
-
-#: src/disks/gdu-window.c:249
-msgid "Select a Disk Image to Attach"
-msgstr "Выберите образ диска для присоединения"
 
 #: src/disks/gduxzdecompressor.c:108
 msgid "Invalid compressed data"
@@ -2420,6 +2424,7 @@ msgstr "Ошибка отключения авточистки петлевог�
 
 #: src/libgdu/gduutils.rs:549
 #: src/resources/ui/gdu-encryption-options-dialog.blp:16
+#: src/resources/ui/gdu-job-row.blp:32
 msgid "Cancel"
 msgstr "Отменить"
 
@@ -2524,6 +2529,26 @@ msgstr "_Расширенный"
 #: src/resources/ui/gdu-ata-smart-dialog.ui:271
 msgid "_Conveyance"
 msgstr "_Конвейер"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:6
+msgid "Attach Disk Image"
+msgstr "Подключить образ диска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:23
+msgid "_Attach"
+msgstr "_Подключить"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:37
+msgid "_Disk Image File"
+msgstr "_Файл образа диска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:44
+msgid "Select a Disk Image"
+msgstr "Выберите образ диска"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:60
+msgid "_Read-Only"
+msgstr "_Только для чтения"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:5
 #: src/resources/ui/gdu-benchmark-dialog.blp:40
@@ -3507,10 +3532,6 @@ msgstr "Сп_равка"
 msgid "_About Disks"
 msgstr "_О приложении"
 
-#: src/resources/ui/gdu-window.blp:117
-msgid "Set up _read-only loop device"
-msgstr "Настроить _петлевое устройство только для чтения"
-
 #: src/resources/ui/shortcuts-dialog.blp:6
 msgctxt "shortcuts dialog"
 msgid "General"
@@ -3600,6 +3621,9 @@ msgstr "Открыть меню тома"
 msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Форматировать выбранный том"
+
+#~ msgid "Set up _read-only loop device"
+#~ msgstr "Настроить _петлевое устройство только для чтения"
 
 #~ msgid "Stop running jobs?"
 #~ msgstr "Остановить выполнение заданий?"
@@ -4504,10 +4528,6 @@ msgstr "Форматировать выбранный том"
 #~ "Если выбрано, loop-устройство будет доступно только для чтения. Это "
 #~ "полезно, когда вы хотите избежать изменения используемого для устройства "
 #~ "файла"
-
-#, c-format
-#~ msgid "%s (Read-Only)"
-#~ msgstr "%s (только для чтения)"
 
 #, c-format
 #~ msgctxt "job-remaining-with-rate"

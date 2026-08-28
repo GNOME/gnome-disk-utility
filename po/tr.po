@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
 "issues\n"
-"POT-Creation-Date: 2026-06-16 08:54+0000\n"
-"PO-Revision-Date: 2026-06-30 08:00+0300\n"
+"POT-Creation-Date: 2026-08-12 14:42+0000\n"
+"PO-Revision-Date: 2026-08-28 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -81,7 +81,7 @@ msgid "The number of samples the benchmark will do for the access time test."
 msgstr "Kıyaslamanın erişim zamanı sınaması için yapacağı örnek sayısı."
 
 #: data/org.gnome.DiskUtility.desktop.in:2
-#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:273
+#: data/org.gnome.DiskUtility.metainfo.xml.in:7 src/disks/gdu-application.c:307
 #: src/notify/gdusdmonitor.c:241 src/resources/ui/gdu-window.blp:21
 msgid "Disks"
 msgstr "Diskler"
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Disk management utility for GNOME"
 msgstr "GNOME için disk yönetim aracı"
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:10
+#: data/org.gnome.DiskUtility.metainfo.xml.in:11
 msgid ""
 "Disks provides an easy way to inspect, format, partition, and configure "
 "disks and block devices."
@@ -111,7 +111,7 @@ msgstr ""
 "Diskler; diskleri ve blok aygıtları denetlemek, biçimlendirmek, "
 "bölümlendirmek ve yapılandırmak için kolay bir yol sağlar."
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:14
+#: data/org.gnome.DiskUtility.metainfo.xml.in:15
 msgid ""
 "Using Disks, you can view SMART data, manage devices, benchmark physical "
 "disks, and image USB sticks."
@@ -119,21 +119,22 @@ msgstr ""
 "Diskler’i kullanarak; SMART verisini görebilir, aygıtları yönetebilir, "
 "fiziksel diskleri değerlendirebilir, USB bellekleri kopyalayabilirsiniz."
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:22
+#: data/org.gnome.DiskUtility.metainfo.xml.in:24
 msgid "Partition and format disks"
 msgstr "Diskleri bölümle ve biçimlendir"
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:26
-msgid "Inspect drive speed and health status"
-msgstr "Sürücü hızını ve sağlık durumunu incele"
+#: data/org.gnome.DiskUtility.metainfo.xml.in:28
+msgid "Inspect drive speed and access time"
+msgstr "Sürücü hızı ve erişim zamanını incele"
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:30
+#: data/org.gnome.DiskUtility.metainfo.xml.in:32
 msgid "Manage your storage devices"
 msgstr "Depolama aygıtlarını yönet"
 
 #. developer_name tag deprecated with Appstream 1.0
-#: data/org.gnome.DiskUtility.metainfo.xml.in:44
-#: src/disks/gdu-application.c:274
+#: data/org.gnome.DiskUtility.metainfo.xml.in:47
+#: data/org.gnome.DiskUtility.metainfo.xml.in:50
+#: src/disks/gdu-application.c:308
 msgid "The GNOME Project"
 msgstr "GNOME Projesi"
 
@@ -141,48 +142,63 @@ msgstr "GNOME Projesi"
 msgid "GNOME Disk Image Mounter"
 msgstr "GNOME Disk Görüntüsü Bağlayıcı"
 
-#: src/disks/gdu-application.c:114
+#: src/disks/gdu-application.c:98
+msgid "Cancel running operations?"
+msgstr "Çalışan işlemler iptal edilsin mi?"
+
+#: src/disks/gdu-application.c:99
+msgid ""
+"Disks is performing one or more operations. Closing the app will cancel them."
+msgstr ""
+"Diskler, bir ya da daha çok işlem gerçekleştiriyor. Uygulamayı kapatmak bunları "
+"iptal edecektir."
+
+#: src/disks/gdu-application.c:100
+msgid "Close"
+msgstr "Kapat"
+
+#: src/disks/gdu-application.c:145
 #, c-format
 msgid "Error opening %s: %s"
 msgstr "%s açılırken hata: %s"
 
-#: src/disks/gdu-application.c:120
+#: src/disks/gdu-application.c:151
 #, c-format
 msgid "Error looking up block device for %s"
 msgstr "%s için blok aygıtı ararken hata"
 
-#: src/disks/gdu-application.c:149
+#: src/disks/gdu-application.c:180
 msgid "Select device"
 msgstr "Aygıt seç"
 
-#: src/disks/gdu-application.c:150
+#: src/disks/gdu-application.c:181
 msgid "Format selected device"
 msgstr "Seçilen aygıtı biçimlendir"
 
-#: src/disks/gdu-application.c:152
+#: src/disks/gdu-application.c:183
 msgid "Show verbose logs, specify up to four times to increase log level"
 msgstr ""
 "Ayrıntılı günlükleri göster, günlük düzeyini artırmak için en çok dört "
 "olarak belirleyin"
 
-#: src/disks/gdu-application.c:153
+#: src/disks/gdu-application.c:184
 msgid "Ignored, kept for compatibility"
 msgstr "Görmezden gelindi, uyumluluk için saklandı"
 
-#: src/disks/gdu-application.c:154
+#: src/disks/gdu-application.c:185
 msgid "Restore disk image"
 msgstr "Disk görüntüsü geri yükle"
 
-#: src/disks/gdu-application.c:184
+#: src/disks/gdu-application.c:215
 msgid "--format-device must be used together with --block-device\n"
 msgstr "--format-device seçeneği --block-device ile birlikte kullanılmalıdır\n"
 
-#: src/disks/gdu-application.c:190
+#: src/disks/gdu-application.c:221
 msgid "--format-device must not be used together with --restore-disk-image"
 msgstr ""
 "--format-device seçeneği --restore-disk-image ile birlikte kullanılmamalıdır"
 
-#: src/disks/gdu-application.c:275
+#: src/disks/gdu-application.c:309
 msgid ""
 "© 2009 The GNOME Project\n"
 "© 2008-2013 Red Hat, Inc.\n"
@@ -192,24 +208,12 @@ msgstr ""
 "© 2008-2013 Red Hat, Inc.\n"
 "© 2008-2013 David Zeuthen"
 
-#: src/disks/gdu-application.c:278
+#: src/disks/gdu-application.c:312
 msgid "translator-credits"
 msgstr ""
 "Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Muhammet Kara <muhammetk@gmail.com>\n"
 "Sabri Ünal <yakushabb@gmail.com>"
-
-#: src/disks/gdu-application.c:291
-msgid "Stop running jobs?"
-msgstr "Çalışan işler durdurulsun mu?"
-
-#: src/disks/gdu-application.c:292
-msgid "Closing now stops the running jobs and leads to a corrupt result."
-msgstr "Şimdi kapatmak çalışan işleri durdurur ve bozuk sonuca yol açar."
-
-#: src/disks/gdu-application.c:293
-msgid "Stop"
-msgstr "Durdur"
 
 #. Translators: SMART attribute, see http://smartmontools.sourceforge.net/doc.html
 #. * or the next string for a longer explanation.
@@ -1213,6 +1217,16 @@ msgstr "Güncellemeler"
 msgid "Assessment"
 msgstr "Değerlendirme"
 
+#: src/disks/gdu-attach-disk-image-dialog.c:44
+#: src/disks/gdu-new-disk-image-dialog.c:74
+#: src/disks/gdu-new-disk-image-dialog.c:106
+msgid "Error attaching disk image"
+msgstr "Disk görüntüsü eklemede hata"
+
+#: src/disks/gdu-attach-disk-image-dialog.c:84
+msgid "Select a Disk Image to Attach"
+msgstr "Eklenecek Disk Görüntüsü Seç"
+
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
@@ -1265,7 +1279,7 @@ msgstr "Genişletilmiş Bölüm"
 #. *              The second %s is a short string with the space free (e.g. '43 GB').
 #. *              The %f is the percentage in use (e.g. 62.2).
 #.
-#: src/disks/gdu-block.c:541
+#: src/disks/gdu-block.c:527
 #, c-format
 msgid "%s — %s free (%.1f%% full)"
 msgstr "%s — %s boş (%%%.1f dolu)"
@@ -1441,48 +1455,48 @@ msgstr "%s (%%%.1f)"
 #. * there's a read error that's being ignored, see
 #. * CA_PROP_EVENT_DESCRIPTION
 #.
-#: src/disks/gdu-create-disk-image-dialog.c:131
+#: src/disks/gdu-create-disk-image-dialog.c:157
 msgid "Disk image read error"
 msgstr "Disk görüntüsü okuma hatası"
 
-#: src/disks/gdu-create-disk-image-dialog.c:167
+#: src/disks/gdu-create-disk-image-dialog.c:198
 msgid "Allocating Disk Image"
 msgstr "Disk Görüntüsüne Alan Ayrılıyor"
 
-#: src/disks/gdu-create-disk-image-dialog.c:169
+#: src/disks/gdu-create-disk-image-dialog.c:200
 msgid "Retrieving DVD keys"
 msgstr "DVD anahtarları alınıyor"
 
 #. Translators: Shown when there are read errors and we skip some data.
 #. *              The first %s is the amount of unreadable data (ex. "512 kB").
 #.
-#: src/disks/gdu-create-disk-image-dialog.c:177
+#: src/disks/gdu-create-disk-image-dialog.c:208
 #, c-format
 msgid "%s unreadable (replaced with zeroes)"
 msgstr "%s okunamıyor (yerine sıfırlar kondu)"
 
 #. Translators: A descriptive string for the 'complete' sound, see CA_PROP_EVENT_DESCRIPTION
-#: src/disks/gdu-create-disk-image-dialog.c:222
+#: src/disks/gdu-create-disk-image-dialog.c:252
 #: src/disks/restore_disk_image_dialog.rs:378
 msgid "Disk image copying complete"
 msgstr "Disk görüntüsü kopyalama tamamlandı"
 
-#: src/disks/gdu-create-disk-image-dialog.c:256
+#: src/disks/gdu-create-disk-image-dialog.c:290
 msgid "Error creating disk image"
 msgstr "Disk görüntüsü oluşturmada hata"
 
 #. Translators: Heading in dialog shown if some data was unreadable while
 #. creating a disk image
-#: src/disks/gdu-create-disk-image-dialog.c:317
+#: src/disks/gdu-create-disk-image-dialog.c:324
 msgid "Unrecoverable Read Errors"
 msgstr "Kurtarılamayan Okuma Hataları"
 
-#. Translators: Body in dialog shown if some data was unreadable while creating a disk image.
-#. * The %f is the percentage of unreadable data (ex. 13.0).
-#. * The first %s is the amount of unreadable data (ex. "4.2 MB").
+#. Translators: Body in dialog shown if some data was unreadable while
+#. * creating a disk image. The %f is the percentage of unreadable data
+#. * (ex. 13.0). The first %s is the amount of unreadable data (ex. "4.2 MB").
 #. * The second %s is the name of the device (ex "/dev/").
 #.
-#: src/disks/gdu-create-disk-image-dialog.c:330
+#: src/disks/gdu-create-disk-image-dialog.c:334
 #, c-format
 msgid ""
 "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with "
@@ -1493,8 +1507,9 @@ msgstr ""
 "oluşturulan disk görüntüsü dosyasında bunların yerine sıfır koyuldu. Bu "
 "genellikle ortam çizildiyse ya da sürücüde fiziksel hasar varsa gerçekleşir."
 
-#: src/disks/gdu-create-disk-image-dialog.c:334
+#: src/disks/gdu-create-disk-image-dialog.c:338
 #: src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:16
 #: src/resources/ui/gdu-benchmark-dialog.blp:14
 #: src/resources/ui/gdu-benchmark-dialog.blp:21
 #: src/resources/ui/gdu-change-passphrase-dialog.blp:18
@@ -1512,61 +1527,59 @@ msgstr ""
 msgid "_Cancel"
 msgstr "_Vazgeç"
 
-#: src/disks/gdu-create-disk-image-dialog.c:334
+#: src/disks/gdu-create-disk-image-dialog.c:338
 msgid "_Delete Disk Image File"
 msgstr "Disk Görüntüsü Dosyasını _Sil"
 
-#: src/disks/gdu-create-disk-image-dialog.c:515
+#: src/disks/gdu-create-disk-image-dialog.c:507
 msgid "Error determining size of device: "
 msgstr "Aygıt boyutu saptamada hata: "
 
-#: src/disks/gdu-create-disk-image-dialog.c:520
+#: src/disks/gdu-create-disk-image-dialog.c:512
 #, c-format
 msgid "Device is size 0"
 msgstr "Aygıt boyutu 0"
 
-#: src/disks/gdu-create-disk-image-dialog.c:546
+#: src/disks/gdu-create-disk-image-dialog.c:538
 msgid "Error allocating space for disk image file: "
 msgstr "Disk görüntü dosyası için yer ayırmada hata: "
 
-#: src/disks/gdu-create-disk-image-dialog.c:674
+#. Translators: Reason why suspend/logout is being inhibited
+#: src/disks/gdu-create-disk-image-dialog.c:668
+msgid "Copying device to disk image"
+msgstr "Aygıt, disk görüntüsüne kopyalanıyor"
+
+#: src/disks/gdu-create-disk-image-dialog.c:691
 #: src/disks/gdu-new-disk-image-dialog.c:140
 msgid "Error opening file for writing"
 msgstr "Yazmak için dosya açmada hata"
 
-#. Translators: Reason why suspend/logout is being inhibited
-#: src/disks/gdu-create-disk-image-dialog.c:686
-msgctxt "create-inhibit-message"
-msgid "Copying device to disk image"
-msgstr "Aygıt, disk görüntüsüne kopyalanıyor"
-
-#. Translators: this is the description of the job
-#: src/disks/gdu-create-disk-image-dialog.c:691
+#: src/disks/gdu-create-disk-image-dialog.c:702
 msgid "Creating Disk Image"
 msgstr "Disk Görüntüsü Oluşturma"
 
-#: src/disks/gdu-create-disk-image-dialog.c:761
+#: src/disks/gdu-create-disk-image-dialog.c:778
 #: src/disks/gdu-new-disk-image-dialog.c:266
 msgid "Replace File?"
 msgstr "Dosya Değiştirilsin Mi?"
 
-#: src/disks/gdu-create-disk-image-dialog.c:762
+#: src/disks/gdu-create-disk-image-dialog.c:779
 #: src/disks/gdu-new-disk-image-dialog.c:267
 #, c-format
 msgid "A file named “%s” already exists in %s"
 msgstr "“%s” adlı dosya %s içinde zaten var"
 
-#: src/disks/gdu-create-disk-image-dialog.c:764
+#: src/disks/gdu-create-disk-image-dialog.c:781
 #: src/disks/gdu-new-disk-image-dialog.c:269
 msgid "Replace"
 msgstr "Değiştir"
 
-#: src/disks/gdu-create-disk-image-dialog.c:810
+#: src/disks/gdu-create-disk-image-dialog.c:828
 #: src/disks/gdu-new-disk-image-dialog.c:229
 msgid "Choose a location to save the disk image."
 msgstr "Disk görüntüsünü kaydetmek için konum seç."
 
-#: src/disks/gdu-create-disk-image-dialog.c:846
+#: src/disks/gdu-create-disk-image-dialog.c:864
 #, c-format
 msgid "Disk Image of %s (%s).img"
 msgstr "Disk Görüntüsü %s (%s).img"
@@ -1847,9 +1860,7 @@ msgstr "Sürücüleri çıkarmak istediğinizden emin misiniz?"
 msgid ""
 "This operation will prepare the system for the following drives to be "
 "ejected."
-msgstr ""
-"Bu işlem aşağıdaki sürücülerin çıkarılması için sistemi "
-"hazırlar."
+msgstr "Bu işlem aşağıdaki sürücülerin çıkarılması için sistemi hazırlar."
 
 #: src/disks/gdu-drive-view.c:371
 msgid "_Eject"
@@ -1880,27 +1891,27 @@ msgstr "G_ücü Kapat"
 msgid "Error setting label"
 msgstr "Etiket değiştirmede hata"
 
-#: src/disks/gdu-edit-partition-dialog.c:108
+#: src/disks/gdu-edit-partition-dialog.c:111
 msgid "Error setting partition type"
 msgstr "Bölüm türü ayarlamada hata"
 
-#: src/disks/gdu-edit-partition-dialog.c:118
+#: src/disks/gdu-edit-partition-dialog.c:121
 msgid "Error setting partition name"
 msgstr "Bölüm adı ayarlamada hata"
 
-#: src/disks/gdu-edit-partition-dialog.c:128
+#: src/disks/gdu-edit-partition-dialog.c:131
 msgid "Error setting partition flags"
 msgstr "Bölüm bayrağı ayarlamada hata"
 
-#: src/disks/gdu-edit-partition-dialog.c:282
+#: src/disks/gdu-edit-partition-dialog.c:285
 msgid "The partition type as a 8-bit unsigned integer"
 msgstr "8 bit işaretsiz tamsayı biçiminde bölüm türü"
 
-#: src/disks/gdu-edit-partition-dialog.c:283
+#: src/disks/gdu-edit-partition-dialog.c:286
 msgid "_Bootable"
 msgstr "_Önyüklenir"
 
-#: src/disks/gdu-edit-partition-dialog.c:285
+#: src/disks/gdu-edit-partition-dialog.c:288
 msgid ""
 "A flag used by the Platform bootloader to determine where the OS should be "
 "loaded from. Sometimes the partition with this flag set is referred to as "
@@ -2040,22 +2051,49 @@ msgstr "Parola Belirle"
 msgid "Confirm Details"
 msgstr "Ayrıntıları Onayla"
 
-#: src/disks/gdu-mount-options-dialog.c:278
+#: src/disks/gdu-job-row.c:43
+msgid "Queued"
+msgstr "Sırada"
+
+#: src/disks/gdu-job-row.c:46
+msgid "Canceling"
+msgstr "İptal Ediliyor"
+
+#: src/disks/gdu-job-row.c:49
+msgid "Finished"
+msgstr "Bitti"
+
+#. Translators: Shown for an active job. The first placeholder is the
+#. * percentage complete, the second is a duration such as "1 minute".
+#: src/disks/gdu-job-row.c:75
+#, c-format
+msgid "%u%% - %s left"
+msgstr "%%%u - %s kaldı"
+
+#: src/disks/gdu-job-row.c:78
+#, c-format
+msgid "%u%%"
+msgstr "%%%u"
+
+#: src/disks/gdu-job-row.c:81
+msgid "Running"
+msgstr "Çalışıyor"
+
+#: src/disks/gdu-job-row.c:120
+msgid "Disk Operation"
+msgstr "Disk İşlemi"
+
+#: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
 msgstr "/etc/fstab girdisini güncellemede hata"
 
-#: src/disks/gdu-mount-options-dialog.c:295
+#: src/disks/gdu-mount-options-dialog.c:297
 msgid "Error adding new /etc/fstab entry"
 msgstr "Yeni /etc/fstab girdisi eklemede hata"
 
-#: src/disks/gdu-mount-options-dialog.c:312
+#: src/disks/gdu-mount-options-dialog.c:314
 msgid "Error removing old /etc/fstab entry"
 msgstr "Eski /etc/fstab girdisini kaldırmada hata"
-
-#: src/disks/gdu-new-disk-image-dialog.c:74
-#: src/disks/gdu-new-disk-image-dialog.c:106 src/disks/gdu-window.c:74
-msgid "Error attaching disk image"
-msgstr "Disk görüntüsü eklemede hata"
 
 #: src/disks/gdu-new-disk-image-dialog.c:152
 msgid "Error writing file"
@@ -2119,6 +2157,7 @@ msgid "Error mounting the filesystem"
 msgstr "Dosya sistemini bağlarken hata"
 
 #: src/disks/gdu-unlock-dialog.c:116
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:38
 #: src/resources/ui/gdu-restore-disk-image-dialog.blp:45
 #: src/resources/ui/gdu-unlock-dialog.blp:62
 msgid "None Selected"
@@ -2131,10 +2170,6 @@ msgstr "Bu birimin kilidini açmak için anahtar dosyaları seç."
 #: src/disks/gdu-unlock-dialog.c:139
 msgid "Error unlocking device"
 msgstr "Aygıt kilidi açılırken hata"
-
-#: src/disks/gdu-window.c:205
-msgid "Select a Disk Image to Attach"
-msgstr "Eklenecek Disk Görüntüsü Seç"
 
 #: src/disks/gduxzdecompressor.c:108
 msgid "Invalid compressed data"
@@ -2355,6 +2390,7 @@ msgstr ""
 
 #: src/libgdu/gduutils.rs:549
 #: src/resources/ui/gdu-encryption-options-dialog.blp:16
+#: src/resources/ui/gdu-job-row.blp:32
 msgid "Cancel"
 msgstr "İptal"
 
@@ -2459,6 +2495,26 @@ msgstr "_Genişletilmiş"
 #: src/resources/ui/gdu-ata-smart-dialog.ui:271
 msgid "_Conveyance"
 msgstr "_Nakil"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:6
+msgid "Attach Disk Image"
+msgstr "Disk Görüntüsü Ekle"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:23
+msgid "_Attach"
+msgstr "_Ekle"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:37
+msgid "_Disk Image File"
+msgstr "_Disk Görüntü Dosyası"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:44
+msgid "Select a Disk Image"
+msgstr "Disk Görüntüsü Seç"
+
+#: src/resources/ui/gdu-attach-disk-image-dialog.blp:60
+msgid "_Read-Only"
+msgstr "_Salt Okunur"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:5
 #: src/resources/ui/gdu-benchmark-dialog.blp:40
@@ -3400,41 +3456,37 @@ msgstr "Windows Sistemi"
 msgid "Unlock an encrypted Windows system partition or drive."
 msgstr "Şifreli Windows sistem bölümünün ya da sürücüsünün kilidini aç."
 
-#: src/resources/ui/gdu-window.blp:29
+#: src/resources/ui/gdu-window.blp:46
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: src/resources/ui/gdu-window.blp:62
+#: src/resources/ui/gdu-window.blp:79
 msgid "Show Sidebar"
 msgstr "Kenar Çubuğunu Göster"
 
-#: src/resources/ui/gdu-window.blp:71
+#: src/resources/ui/gdu-window.blp:88
 msgid "No Device Selected"
 msgstr "Aygıt Seçilmedi"
 
-#: src/resources/ui/gdu-window.blp:88
+#: src/resources/ui/gdu-window.blp:105
 msgid "_New Disk Image…"
 msgstr "_Yeni Disk Görüntüsü…"
 
-#: src/resources/ui/gdu-window.blp:89
+#: src/resources/ui/gdu-window.blp:106
 msgid "_Attach Disk Image…"
 msgstr "Disk Görüntüsü _Ekle…"
 
-#: src/resources/ui/gdu-window.blp:93
+#: src/resources/ui/gdu-window.blp:110
 msgid "_Keyboard Shortcuts"
 msgstr "_Klavye Kısayolları"
 
-#: src/resources/ui/gdu-window.blp:94
+#: src/resources/ui/gdu-window.blp:111
 msgid "_Help"
 msgstr "_Yardım"
 
-#: src/resources/ui/gdu-window.blp:95
+#: src/resources/ui/gdu-window.blp:112
 msgid "_About Disks"
 msgstr "Diskler _Hakkında"
-
-#: src/resources/ui/gdu-window.blp:100
-msgid "Set up _read-only loop device"
-msgstr "_Salt okunur döngü aygıtı olarak ayarla"
 
 #: src/resources/ui/shortcuts-dialog.blp:6
 msgctxt "shortcuts dialog"
@@ -3526,3 +3578,14 @@ msgctxt "shortcuts dialog"
 msgid "Format the selected volume"
 msgstr "Seçilen birimi biçimlendir"
 
+#~ msgid "Stop running jobs?"
+#~ msgstr "Çalışan işler durdurulsun mu?"
+
+#~ msgid "Closing now stops the running jobs and leads to a corrupt result."
+#~ msgstr "Şimdi kapatmak çalışan işleri durdurur ve bozuk sonuca yol açar."
+
+#~ msgid "Stop"
+#~ msgstr "Durdur"
+
+#~ msgid "Set up _read-only loop device"
+#~ msgstr "_Salt okunur döngü aygıtı olarak ayarla"

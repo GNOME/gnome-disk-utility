@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
-"POT-Creation-Date: 2026-08-12 17:42+0300\n"
-"PO-Revision-Date: 2026-07-25 20:31+0300\n"
+"POT-Creation-Date: 2026-08-12 14:42+0000\n"
+"PO-Revision-Date: 2026-09-08 19:54+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -46,11 +46,11 @@ msgstr "Levykuvien luomisen ja palauttamisen oletussijainti. Jos tyhjä, käytet
 
 #: data/org.gnome.Disks.gschema.xml:13
 msgid "Initial state of the window"
-msgstr ""
+msgstr "Ikkunan alkutila"
 
 #: data/org.gnome.Disks.gschema.xml:14
 msgid "A tuple containing the initial width, height and maximize state of the app window."
-msgstr ""
+msgstr "Järjestetty, muuttumaton lista (tuple) sisältäen alkuarvon leveyden ja korkeuden sekä sovellusikkunan suurennetun tilan osalta."
 
 #: data/org.gnome.Disks.gschema.xml:20
 msgid "The number of samples the benchmark will include for the read/write test."
@@ -98,10 +98,8 @@ msgid "Partition and format disks"
 msgstr "Osioi ja alusta levyjä"
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:28
-#, fuzzy
-#| msgid "Inspect drive speed and health status"
 msgid "Inspect drive speed and access time"
-msgstr "Tarkista asemien nopeus ja kunto"
+msgstr "Tarkista asemien nopeus ja hakuaika"
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:32
 msgid "Manage your storage devices"
@@ -112,29 +110,17 @@ msgstr "Hallitse tallennuslaitteita"
 msgid "The GNOME Project"
 msgstr "Gnome-projekti"
 
-#: data/org.gnome.DiskUtility.metainfo.xml.in:74
-msgid "This is an unstable release with the following changes:"
-msgstr ""
-
-#: data/org.gnome.DiskUtility.metainfo.xml.in:76
-msgid "Port to GTK4/libadwaita"
-msgstr ""
-
-#: data/org.gnome.DiskUtility.metainfo.xml.in:77
-msgid "Rewrite Disk Image Mounter and restore disk image in Rust"
-msgstr ""
-
 #: src/disk-image-mounter/main.rs:20
 msgid "GNOME Disk Image Mounter"
 msgstr "Levykuvan liittäjä"
 
 #: src/disks/gdu-application.c:98
 msgid "Cancel running operations?"
-msgstr ""
+msgstr "Perutaanko käynnissä olevat toiminnot?"
 
 #: src/disks/gdu-application.c:99
 msgid "Disks is performing one or more operations. Closing the app will cancel them."
-msgstr ""
+msgstr "Levyt-sovellus suorittaa yhtä tai useampaa toimintoa. Sovelluksen sulkeminen peruu toiminnot."
 
 #: src/disks/gdu-application.c:100
 msgid "Close"
@@ -492,8 +478,12 @@ msgid "Current Pending Sector Count"
 msgstr "Tuomiota odottavat sektorit"
 
 #: src/disks/gdu-ata-smart-dialog.c:271
-msgid "Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not remap the sector, it will only be remapped on a failed write attempt"
-msgstr "Uudelleensijoitusta odottavien sektoreiden lukumäärä. Jos sektori sijoituksen jälkeen kirjoitetaan oikein, tämä arvo pienenee, ja sektoria ei sijoiteta uudelleen. Sektorin lukuvirheet eivät sijoita sektoria uudelleen, sektori sijoitetaan uudelleen vain epäonnistuneen kirjoitusyrityksen myötä. Kertoo sektoreista, jotka ovat parhaillaan epäiltyjen listalla odottamassa lopullista tuomiota"
+msgid ""
+"Number of sectors waiting to be remapped. If the sector waiting to be remapped is subsequently written or read successfully, this value is decreased and the sector is not remapped. Read errors on the sector will not "
+"remap the sector, it will only be remapped on a failed write attempt"
+msgstr ""
+"Uudelleensijoitusta odottavien sektoreiden lukumäärä. Jos sektori sijoituksen jälkeen kirjoitetaan oikein, tämä arvo pienenee, ja sektoria ei sijoiteta uudelleen. Sektorin lukuvirheet eivät sijoita sektoria uudelleen, "
+"sektori sijoitetaan uudelleen vain epäonnistuneen kirjoitusyrityksen myötä. Kertoo sektoreista, jotka ovat parhaillaan epäiltyjen listalla odottamassa lopullista tuomiota"
 
 #. Translators: SMART attribute, see
 #. * http://smartmontools.sourceforge.net/doc.html or the next string
@@ -1162,18 +1152,17 @@ msgstr "Valitse liitettävä levykuva"
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
-msgstr ""
+msgstr "Luku-/kirjoitusnopeus (Mt/s)"
 
 #: src/disks/gdu-benchmark-dialog.c:420
-#, fuzzy, c-format
-#| msgid "Access Time"
+#, c-format
 msgid "Access Time (ms)"
-msgstr "Hakuaika"
+msgstr "Hakuaika (ms)"
 
 #: src/disks/gdu-benchmark-dialog.c:484
 #, c-format
 msgid "Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)"
-msgstr ""
+msgstr "Nopeus: Sijainti levyllä (%%) / Hakuaika: Sijainnin delta (%%)"
 
 #: src/disks/gdu-benchmark-dialog.c:697
 #, c-format
@@ -1323,8 +1312,12 @@ msgid "Repair Filesystem?"
 msgstr "Korjataanko tiedostojärjestelmä?"
 
 #: src/disks/gdu-block-row.c:650
-msgid "A filesystem repair is not always possible and can cause data loss. Consider backing it up first in order to use forensic recovery tools that retrieve lost files. The operation may take a long time, especially if the partition contains a lot of data."
-msgstr "Tiedostojärjestelmän korjaaminen ei ole aina mahdollista ja se saattaa aiheuttaa tietojen katoamista. Tiedostojärjestelmän varmuuskopiointi ennen jatkamista on suositeltavaa, jotta kadonneita tiedostoja on mahdollista yrittää palauttaa myöhemmin erikoisohjelmien avulla. Toimenpide voi kestää kauan, varsinkin jos osio sisältää paljon tietoa."
+msgid ""
+"A filesystem repair is not always possible and can cause data loss. Consider backing it up first in order to use forensic recovery tools that retrieve lost files. The operation may take a long time, especially if the "
+"partition contains a lot of data."
+msgstr ""
+"Tiedostojärjestelmän korjaaminen ei ole aina mahdollista ja se saattaa aiheuttaa tietojen katoamista. Tiedostojärjestelmän varmuuskopiointi ennen jatkamista on suositeltavaa, jotta kadonneita tiedostoja on mahdollista "
+"yrittää palauttaa myöhemmin erikoisohjelmien avulla. Toimenpide voi kestää kauan, varsinkin jos osio sisältää paljon tietoa."
 
 #: src/disks/gdu-block-row.c:654
 msgid "Repair"
@@ -1422,7 +1415,11 @@ msgstr "Lukuvirheitä joista ei voi palautua"
 msgid "%2.1f%% (%s) of the data on the device “%s” was unreadable and replaced with zeroes in the created disk image file. This typically happens if the medium is scratched or if there is physical damage to the drive."
 msgstr "%2.1f%% (%s) datasta laitteella “%s” oli lukukelvotonta ja korvattiin nollilla tehdyssä levykuvatiedostossa. Näin yleensä käy jos media on naarmuuntunut tai laite on fyysisesti vaurioitunut."
 
-#: src/disks/gdu-create-disk-image-dialog.c:338 src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623 src/resources/ui/gdu-attach-disk-image-dialog.blp:16 src/resources/ui/gdu-benchmark-dialog.blp:14 src/resources/ui/gdu-benchmark-dialog.blp:21 src/resources/ui/gdu-change-passphrase-dialog.blp:18 src/resources/ui/gdu-create-disk-image-dialog.blp:16 src/resources/ui/gdu-disk-settings-dialog.blp:17 src/resources/ui/gdu-edit-filesystem-dialog.blp:15 src/resources/ui/gdu-edit-partition-dialog.blp:16 src/resources/ui/gdu-format-disk-dialog.blp:16 src/resources/ui/gdu-mount-options-dialog.blp:16 src/resources/ui/gdu-new-disk-image-dialog.blp:16 src/resources/ui/gdu-resize-volume-dialog.blp:15 src/resources/ui/gdu-restore-disk-image-dialog.blp:16 src/resources/ui/gdu-take-ownership-dialog.blp:36 src/resources/ui/gdu-unlock-dialog.blp:15
+#: src/disks/gdu-create-disk-image-dialog.c:338 src/disks/gdu-format-volume-dialog.c:173 src/libgdu/gduutils.c:623 src/resources/ui/gdu-attach-disk-image-dialog.blp:16 src/resources/ui/gdu-benchmark-dialog.blp:14
+#: src/resources/ui/gdu-benchmark-dialog.blp:21 src/resources/ui/gdu-change-passphrase-dialog.blp:18 src/resources/ui/gdu-create-disk-image-dialog.blp:16 src/resources/ui/gdu-disk-settings-dialog.blp:17
+#: src/resources/ui/gdu-edit-filesystem-dialog.blp:15 src/resources/ui/gdu-edit-partition-dialog.blp:16 src/resources/ui/gdu-format-disk-dialog.blp:16 src/resources/ui/gdu-mount-options-dialog.blp:16
+#: src/resources/ui/gdu-new-disk-image-dialog.blp:16 src/resources/ui/gdu-resize-volume-dialog.blp:15 src/resources/ui/gdu-restore-disk-image-dialog.blp:16 src/resources/ui/gdu-take-ownership-dialog.blp:36
+#: src/resources/ui/gdu-unlock-dialog.blp:15
 msgid "_Cancel"
 msgstr "_Peru"
 
@@ -1435,6 +1432,7 @@ msgid "Error determining size of device: "
 msgstr "Virhe laitteen kokoa määriteltäessä: "
 
 #: src/disks/gdu-create-disk-image-dialog.c:512
+#, c-format
 msgid "Device is size 0"
 msgstr "Laitteen koko on 0"
 
@@ -1444,9 +1442,6 @@ msgstr "Virhe varattaessa tilaa levykuvatiedostolle: "
 
 #. Translators: Reason why suspend/logout is being inhibited
 #: src/disks/gdu-create-disk-image-dialog.c:668
-#, fuzzy
-#| msgctxt "create-inhibit-message"
-#| msgid "Copying device to disk image"
 msgid "Copying device to disk image"
 msgstr "Kopioidaan laitteen sisältöä levykuvaksi"
 
@@ -1726,34 +1721,26 @@ msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Aseman palauttaminen valmiustilasta epäonnistui"
 
 #: src/disks/gdu-drive-view.c:303
-#, fuzzy
-#| msgid "Error deleting loop device"
 msgid "Error detaching loop device"
 msgstr "Virhe virtuaalisen aseman poistamisessa"
 
 #: src/disks/gdu-drive-view.c:326
-#, fuzzy
-#| msgid "Error ejecting media"
 msgid "Error ejecting drive"
-msgstr "Virhe irrottaessa mediaa"
+msgstr "Virhe irrottaessa asemaa"
 
 #. Translators: Heading for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:368
-#, fuzzy
-#| msgid "Are you sure you want to erase the disks?"
 msgid "Are you sure you want to eject the drives?"
-msgstr "Haluatko varmasti tyhjentää levyt?"
+msgstr "Haluatko varmasti irrottaa asemat?"
 
 #. Translators: Message for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:370
-#, fuzzy
-#| msgid "This operation will prepare the system for the following drives to be powered down and removed."
 msgid "This operation will prepare the system for the following drives to be ejected."
 msgstr "Tämä toiminto valmistelee järjestelmän seuraavien levyjen sammuttamista ja poistamista varten."
 
 #: src/disks/gdu-drive-view.c:371
 msgid "_Eject"
-msgstr ""
+msgstr "_Irrota"
 
 #: src/disks/gdu-drive-view.c:388
 msgid "Error powering off drive"
@@ -1914,42 +1901,35 @@ msgstr "Vahvista tiedot"
 
 #: src/disks/gdu-job-row.c:43
 msgid "Queued"
-msgstr ""
+msgstr "Jonossa"
 
 #: src/disks/gdu-job-row.c:46
-#, fuzzy
-#| msgid "Cancel"
 msgid "Canceling"
-msgstr "Peru"
+msgstr "Perutaan"
 
 #: src/disks/gdu-job-row.c:49
 msgid "Finished"
-msgstr ""
+msgstr "Valmis"
 
 #. Translators: Shown for an active job. The first placeholder is the
 #. * percentage complete, the second is a duration such as "1 minute".
 #: src/disks/gdu-job-row.c:75
 #, c-format
 msgid "%u%% - %s left"
-msgstr ""
+msgstr "%u%% - %s jäljellä"
 
 #: src/disks/gdu-job-row.c:78
 #, c-format
 msgid "%u%%"
-msgstr ""
+msgstr "%u%%"
 
 #: src/disks/gdu-job-row.c:81
-#, fuzzy
-#| msgctxt "mdraid-state"
-#| msgid "Running"
 msgid "Running"
 msgstr "Käynnissä"
 
 #: src/disks/gdu-job-row.c:120
-#, fuzzy
-#| msgid "Drive Options"
 msgid "Disk Operation"
-msgstr "Aseman asetukset"
+msgstr "Levytoiminto"
 
 #: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
@@ -2036,6 +2016,7 @@ msgid "Not enough memory"
 msgstr "Muisti ei riitä"
 
 #: src/disks/gduxzdecompressor.c:118
+#, c-format
 msgid "Internal error"
 msgstr "Sisäinen virhe"
 
@@ -2356,32 +2337,24 @@ msgid "_Conveyance"
 msgstr "_Kuljetustesti"
 
 #: src/resources/ui/gdu-attach-disk-image-dialog.blp:6
-#, fuzzy
-#| msgid "_Attach Disk Image…"
 msgid "Attach Disk Image"
-msgstr "_Liitä levykuva…"
+msgstr "Liitä levykuva"
 
 #: src/resources/ui/gdu-attach-disk-image-dialog.blp:23
 msgid "_Attach"
 msgstr "Liit_ä"
 
 #: src/resources/ui/gdu-attach-disk-image-dialog.blp:37
-#, fuzzy
-#| msgid "_Delete Disk Image File"
 msgid "_Disk Image File"
-msgstr "_Poista levykuvatiedosto"
+msgstr "_Levykuvatiedosto"
 
 #: src/resources/ui/gdu-attach-disk-image-dialog.blp:44
-#, fuzzy
-#| msgid "Select a Disk Image to Attach"
 msgid "Select a Disk Image"
-msgstr "Valitse liitettävä levykuva"
+msgstr "Valitse levykuva"
 
 #: src/resources/ui/gdu-attach-disk-image-dialog.blp:60
-#, fuzzy
-#| msgid "%s (Read-Only)"
 msgid "_Read-Only"
-msgstr "%s (vain luku)"
+msgstr "_Vain luku"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:5 src/resources/ui/gdu-benchmark-dialog.blp:40
 msgid "Benchmark"
@@ -2584,7 +2557,8 @@ msgstr "_Taltion nimi"
 msgid "_Overwrite Existing Data"
 msgstr "_Kirjoita vanhan datan päälle"
 
-#: src/resources/ui/gdu-create-filesystem-page.blp:24 src/resources/ui/gdu-edit-partition-dialog.blp:66 src/resources/ui/gdu-edit-partition-dialog.blp:105 src/resources/ui/gdu-edit-partition-dialog.blp:144 src/resources/ui/gdu-format-disk-dialog.blp:46 src/resources/ui/gdu-take-ownership-dialog.blp:18 src/resources/ui/gdu-unlock-dialog.blp:90 src/resources/ui/gdu-unlock-dialog.blp:129
+#: src/resources/ui/gdu-create-filesystem-page.blp:24 src/resources/ui/gdu-edit-partition-dialog.blp:66 src/resources/ui/gdu-edit-partition-dialog.blp:105 src/resources/ui/gdu-edit-partition-dialog.blp:144
+#: src/resources/ui/gdu-format-disk-dialog.blp:46 src/resources/ui/gdu-take-ownership-dialog.blp:18 src/resources/ui/gdu-unlock-dialog.blp:90 src/resources/ui/gdu-unlock-dialog.blp:129
 msgid "More Information"
 msgstr "Lisätietoja"
 
@@ -2825,14 +2799,10 @@ msgid "Wake Up"
 msgstr "Herätä valmiustilasta"
 
 #: src/resources/ui/gdu-drive-header.blp:134
-#, fuzzy
-#| msgid "_Attach"
 msgid "Detach"
-msgstr "Liit_ä"
+msgstr "Irrota"
 
 #: src/resources/ui/gdu-drive-header.blp:140
-#, fuzzy
-#| msgid "Eject media"
 msgid "Eject"
 msgstr "Poista media asemasta"
 
@@ -2914,7 +2884,8 @@ msgstr "_Järjestelmäosio"
 
 #: src/resources/ui/gdu-edit-partition-dialog.blp:116
 msgid "Used to indicate that the partition and its contents are required for the OS/Platform to function. Special care should be taken to not delete or overwrite the contents."
-msgstr "Ilmoittaa, että osio ja sen sisältö vaaditaan käyttöjärjestelmän tai laitteen toimintaan. Osion sisältöä ei tule poistaa tai ylikirjoittaa, tai jos niin on tarkoitus tehdä, erityistä varovaisuutta on sovellettava."
+msgstr ""
+"Ilmoittaa, että osio ja sen sisältö vaaditaan käyttöjärjestelmän tai laitteen toimintaan. Osion sisältöä ei tule poistaa tai ylikirjoittaa, tai jos niin on tarkoitus tehdä, erityistä varovaisuutta on sovellettava."
 
 #: src/resources/ui/gdu-edit-partition-dialog.blp:138
 msgid "_Hide from Firmware"
@@ -3182,7 +3153,7 @@ msgstr "Tämä taltio saattaa olla VeraCrypt-taltio, koska se sisältää satunn
 
 #: src/resources/ui/gdu-unlock-dialog.blp:46
 msgid "Security Credentials"
-msgstr ""
+msgstr "Kirjautumistiedot"
 
 #: src/resources/ui/gdu-unlock-dialog.blp:61
 msgid "Keyfiles"

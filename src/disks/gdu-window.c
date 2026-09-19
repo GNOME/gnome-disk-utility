@@ -139,6 +139,16 @@ gdu_window_load_state (GduWindow *self)
 }
 
 static void
+gdu_window_dispose (GObject *object)
+{
+    GduWindow *self = GDU_WINDOW (object);
+
+    gtk_list_box_bind_model (self->drives_listbox, NULL, NULL, NULL, NULL);
+
+    G_OBJECT_CLASS (gdu_window_parent_class)->dispose (object);
+}
+
+static void
 gdu_window_finalize (GObject *object)
 {
     GduWindow *self = GDU_WINDOW (object);
@@ -155,6 +165,7 @@ gdu_window_class_init (GduWindowClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+    object_class->dispose = gdu_window_dispose;
     object_class->finalize = gdu_window_finalize;
     widget_class->unmap = gdu_window_unmap;
 

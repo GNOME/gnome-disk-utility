@@ -35,7 +35,7 @@ msgstr ""
 "Project-Id-Version: gnome-disk-utility\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
 "POT-Creation-Date: 2026-08-12 14:42+0000\n"
-"PO-Revision-Date: 2026-09-07 21:54+0200\n"
+"PO-Revision-Date: 2026-09-07 22:11+0200\n"
 "Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -67,11 +67,11 @@ msgstr "Erstzustand des Fensters"
 
 #: data/org.gnome.Disks.gschema.xml:14
 msgid "A tuple containing the initial width, height and maximize state of the app window."
-msgstr ""
+msgstr "Ein Tupel, welches die anfängliche Breite und Höhe sowie den Maximierungszustand des Anwendungsfensters enthält."
 
 #: data/org.gnome.Disks.gschema.xml:20
 msgid "The number of samples the benchmark will include for the read/write test."
-msgstr "Anzahl an Messpunkten, die in den Lese-/Schreibtest einbezogen werden."
+msgstr "Anzahl an Messwerten, die in den Lese-/Schreibtest einbezogen werden."
 
 #: data/org.gnome.Disks.gschema.xml:24
 msgid "The number of MiB (1048576 bytes) to read/write for each sample."
@@ -116,10 +116,8 @@ msgid "Partition and format disks"
 msgstr "Datenträger partitionieren und formatieren"
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:28
-#, fuzzy
-#| msgid "Inspect drive speed and health status"
 msgid "Inspect drive speed and access time"
-msgstr "Geschwindigkeit und den Zustand des Laufwerks prüfen"
+msgstr "Geschwindigkeit und Zugriffszeit des Laufwerks prüfen"
 
 #: data/org.gnome.DiskUtility.metainfo.xml.in:32
 msgid "Manage your storage devices"
@@ -136,11 +134,11 @@ msgstr "GNOME Datenträgerabbild-Einhänger"
 
 #: src/disks/gdu-application.c:98
 msgid "Cancel running operations?"
-msgstr ""
+msgstr "Laufende Vorgänge abbrechen?"
 
 #: src/disks/gdu-application.c:99
 msgid "Disks is performing one or more operations. Closing the app will cancel them."
-msgstr ""
+msgstr "Laufwerke führt eine oder mehrere Vorgänge aus. Ein Schließen der Anwendung wird diese abbrechen."
 
 #: src/disks/gdu-application.c:100
 msgid "Close"
@@ -1187,25 +1185,24 @@ msgstr "Ein Datenträgerabbild zum Einbinden auswählen"
 #: src/disks/gdu-benchmark-dialog.c:406
 #, c-format
 msgid "Read/Write Speed (MB/s)"
-msgstr ""
+msgstr "Lese-/Schreibgeschwindigkeit (MB/s)"
 
 #: src/disks/gdu-benchmark-dialog.c:420
-#, fuzzy, c-format
-#| msgid "_Access Time Samples"
+#, c-format
 msgid "Access Time (ms)"
-msgstr "Beispiele für _Zugriffszeiten"
+msgstr "Zugriffszeit (ms)"
 
 #: src/disks/gdu-benchmark-dialog.c:484
 #, c-format
 msgid "Speed: Location Within Disk (%%) / Access Time: Location Delta (%%)"
-msgstr ""
+msgstr "Geschwindigkeit: Bereich auf dem Laufwerk (%%) / Zugriffszeit: Bereichs-Delta (%%)"
 
 #: src/disks/gdu-benchmark-dialog.c:697
 #, c-format
 msgid "%u sample"
 msgid_plural "%u samples"
-msgstr[0] "%u Messpunkt"
-msgstr[1] "%u Messpunkte"
+msgstr[0] "%u Messwert"
+msgstr[1] "%u Messwerte"
 
 #: src/disks/gdu-benchmark-dialog.c:718
 msgid "An error occurred"
@@ -1765,30 +1762,22 @@ msgid "An error occurred when trying to wake up the drive from standby mode"
 msgstr "Ein Fehler ist bei dem Versuch aufgetreten, das Laufwerk aus dem Bereitschaftsmodus aufwachen zu lassen"
 
 #: src/disks/gdu-drive-view.c:303
-#, fuzzy
-#| msgid "Error deleting loop device"
 msgid "Error detaching loop device"
-msgstr "Fehler beim Löschen des Loop-Gerätes"
+msgstr "Fehler beim Aushängen des Schleifen-Gerätes"
 
 #: src/disks/gdu-drive-view.c:326
-#, fuzzy
-#| msgid "Error ejecting media"
 msgid "Error ejecting drive"
-msgstr "Fehler beim Auswerfen des Mediums"
+msgstr "Fehler beim Auswerfen des Laufwerks"
 
 #. Translators: Heading for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:368
-#, fuzzy
-#| msgid "Are you sure you want to power off the drives?"
 msgid "Are you sure you want to eject the drives?"
-msgstr "Sind Sie sicher, dass die Laufwerke ausgeschaltet werden soll?"
+msgstr "Sind Sie sicher, dass die Laufwerke aushängen wollen?"
 
 #. Translators: Message for ejecting a device with multiple drives
 #: src/disks/gdu-drive-view.c:370
-#, fuzzy
-#| msgid "This operation will prepare the system for the following drives to be powered down and removed."
 msgid "This operation will prepare the system for the following drives to be ejected."
-msgstr "Diese Operation wird das System darauf vorbereiten, dass die folgenden Laufwerke entfernt und ausgeschaltet werden."
+msgstr "Dieser Vorgang wird das System darauf vorbereiten, dass die folgenden Laufwerke ausgeworfen werden."
 
 #: src/disks/gdu-drive-view.c:371
 msgid "_Eject"
@@ -1805,7 +1794,7 @@ msgstr "Sind Sie sicher, dass die Laufwerke ausgeschaltet werden soll?"
 
 #: src/disks/gdu-drive-view.c:434
 msgid "This operation will prepare the system for the following drives to be powered down and removed."
-msgstr "Diese Operation wird das System darauf vorbereiten, dass die folgenden Laufwerke entfernt und ausgeschaltet werden."
+msgstr "Dieser Vorgang wird das System darauf vorbereiten, dass die folgenden Laufwerke entfernt und ausgeschaltet werden."
 
 #: src/disks/gdu-drive-view.c:435
 msgid "_Power Off"
@@ -1978,22 +1967,20 @@ msgstr "Abgeschlossen"
 #: src/disks/gdu-job-row.c:75
 #, c-format
 msgid "%u%% - %s left"
-msgstr ""
+msgstr "%u%% - %s verbleiben"
 
 #: src/disks/gdu-job-row.c:78
 #, c-format
 msgid "%u%%"
-msgstr ""
+msgstr "%u%%"
 
 #: src/disks/gdu-job-row.c:81
 msgid "Running"
 msgstr "Wird ausgeführt"
 
 #: src/disks/gdu-job-row.c:120
-#, fuzzy
-#| msgid "Drive Options"
 msgid "Disk Operation"
-msgstr "Datenträgereinstellungen"
+msgstr "Laufwerksvorgang"
 
 #: src/disks/gdu-mount-options-dialog.c:280
 msgid "Error updating /etc/fstab entry"
@@ -2439,15 +2426,15 @@ msgstr ""
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:57
 msgid "Transfer S_amples"
-msgstr "_Messpunkte übertragen"
+msgstr "_Übertragungsmesswerte"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:70
 msgid "Transfer Sample S_ize"
-msgstr "_Anzahl an Messpunkten übertragen"
+msgstr "_Messwertgröße"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:84
 msgid "_Access Time Samples"
-msgstr "Beispiele für _Zugriffszeiten"
+msgstr "Messwerte für _Zugriffszeit"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:99
 msgid "_Write Benchmark"
@@ -2459,7 +2446,7 @@ msgstr "Vor der Verwendung dieser Funktion sollten die Daten gesichert werden"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:117
 msgid "Sample Size"
-msgstr "Anzahl an Messpunkten"
+msgstr "Messwertgröße"
 
 #: src/resources/ui/gdu-benchmark-dialog.blp:126
 msgid "Average Read Rate"

@@ -7,9 +7,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-disk-utility 3.38.x\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/issues\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-disk-utility/"
+"issues\n"
 "POT-Creation-Date: 2024-09-03 00:20+0000\n"
-"PO-Revision-Date: 2026-07-10 10:13+0200\n"
+"PO-Revision-Date: 2026-11-05 14:19+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: nb\n"
@@ -49,19 +50,19 @@ msgstr ""
 #: data/org.gnome.Disks.gschema.xml:13
 msgid ""
 "The number of samples the benchmark will include for the read/write test."
-msgstr ""
+msgstr "Antall datapunkter ytelsestesten vil ta med for lese-/skrivetest."
 
 #: data/org.gnome.Disks.gschema.xml:17
 msgid "The number of MiB (1048576 bytes) to read/write for each sample."
-msgstr ""
+msgstr "Antall MiB (1048576 bytes) som skal leses/skrives for hvert datapunkt."
 
 #: data/org.gnome.Disks.gschema.xml:21
 msgid "To enable or disable the write test."
-msgstr ""
+msgstr "Slå av eller på skrivetest."
 
 #: data/org.gnome.Disks.gschema.xml:25
 msgid "The number of samples the benchmark will do for the access time test."
-msgstr ""
+msgstr "Antall datapunkter ytelsestesten vil bruke for test av aksesstid."
 
 #: data/org.gnome.DiskUtility.appdata.xml.in:7
 #: data/org.gnome.DiskUtility.desktop.in:2 src/disks/gduwindow.c:1107
@@ -103,6 +104,7 @@ msgstr "Håndter dine lagringsenheter"
 
 #. developer_name tag deprecated with Appstream 1.0
 #: data/org.gnome.DiskUtility.appdata.xml.in:44
+#: data/org.gnome.DiskUtility.appdata.xml.in:46
 msgid "The GNOME Project"
 msgstr "GNOME prosjektet"
 
@@ -190,7 +192,9 @@ msgstr "Stopp kjørende jobber?"
 
 #: src/disks/gduapplication.c:93
 msgid "Closing now stops the running jobs and leads to a corrupt result."
-msgstr "Hvis du lukker nå vil kjørende jobber stoppe og det vil medføre et korrupt resultat."
+msgstr ""
+"Hvis du lukker nå vil kjørende jobber stoppe og det vil medføre et korrupt "
+"resultat."
 
 #: src/disks/gduapplication.c:143
 #, c-format
@@ -2316,7 +2320,11 @@ msgid ""
 "backing it up first in order to use forensic recovery tools that retrieve "
 "lost files. The operation may take a long time, especially if the partition "
 "contains a lot of data."
-msgstr "Reparasjon av filsystem er ikke alltid mulig og kan forårsake datatap. Vurder å ta en sikkerhetskopi først for å kunne bruke verktøy som kan gjenopprette tapte filer. Operasjonen kan ta lang tid - spesielt hvis partisjonen inneholder store mengder data."
+msgstr ""
+"Reparasjon av filsystem er ikke alltid mulig og kan forårsake datatap. "
+"Vurder å ta en sikkerhetskopi først for å kunne bruke verktøy som kan "
+"gjenopprette tapte filer. Operasjonen kan ta lang tid - spesielt hvis "
+"partisjonen inneholder store mengder data."
 
 #: src/disks/gduwindow.c:3132
 msgid "Error while taking filesystem ownership"
@@ -2763,7 +2771,10 @@ msgid ""
 "In case that the default options do not fit your needs select one of the "
 "following filesystems. Be aware of the technical differences and do research "
 "about your use case."
-msgstr "Hvis forvalgte alternativer ikke passer til dine behov kan du velge et av følgende filsystemer. Vær oppmerksom på de tekniske forskjellene og undersøk litt rundt ditt bruksområde."
+msgstr ""
+"Hvis forvalgte alternativer ikke passer til dine behov kan du velge et av "
+"følgende filsystemer. Vær oppmerksom på de tekniske forskjellene og undersøk "
+"litt rundt ditt bruksområde."
 
 #: src/disks/ui/create-partition-page.ui:71 src/disks/ui/resize-dialog.ui:87
 msgid "Partition _Size"
@@ -3398,7 +3409,9 @@ msgstr "Skjul fra _fastvare"
 msgid ""
 "Indicates that EFI firmware should ignore the content of the partition and "
 "not try to read from it"
-msgstr "Indikerer at EFI-maskinvare skal ignorere innholdet på partisjonen og ikke prøve å lese fra den"
+msgstr ""
+"Indikerer at EFI-maskinvare skal ignorere innholdet på partisjonen og ikke "
+"prøve å lese fra den"
 
 #: src/disks/ui/erase-multiple-disks-dialog.ui:7
 msgid "Erase Multiple Disks"
@@ -3450,7 +3463,12 @@ msgid ""
 "data before. The resize operation will take longer if a lot of data has to "
 "be moved. The minimal size is calculated according to the current content. "
 "Keep additional free space for the filesystem to work fast and reliably."
-msgstr "Endring av størrelse på et filsystem kan føre til datatap. Det anbefales at du tar en sikkerhetskopi først. Operasjonen vil ta lenger tid hvis store datamengder må flyttes. Minimumsstørrelse kalkuleres i henhold til eksisterende innhold. Sørg for ekstra ledig plass for at filsystemet skal være raskt og pålitelig."
+msgstr ""
+"Endring av størrelse på et filsystem kan føre til datatap. Det anbefales at "
+"du tar en sikkerhetskopi først. Operasjonen vil ta lenger tid hvis store "
+"datamengder må flyttes. Minimumsstørrelse kalkuleres i henhold til "
+"eksisterende innhold. Sørg for ekstra ledig plass for at filsystemet skal "
+"være raskt og pålitelig."
 
 #: src/disks/ui/resize-dialog.ui:189
 msgid "_Difference"
@@ -3665,7 +3683,12 @@ msgid ""
 "can lead to destructive results when the filesystem contains a directory "
 "structure where ownership should belong to different users (e.g., a system "
 "backup or a filesystem that is accessed by multiple users)."
-msgstr "Endrer eierskap av filsystemet til din bruker og gruppe. Rekursivt modus endrer også eierskap på alle underkataloger og filer. Dette kan medføre destruktive resultater når filsystemet inneholder en katalogstruktur hvor eierskap skal tilhøre flere brukere (f.eks. en sikkerhetskopi av systemet eller et filsystem som aksesseres av flere brukere)."
+msgstr ""
+"Endrer eierskap av filsystemet til din bruker og gruppe. Rekursivt modus "
+"endrer også eierskap på alle underkataloger og filer. Dette kan medføre "
+"destruktive resultater når filsystemet inneholder en katalogstruktur hvor "
+"eierskap skal tilhøre flere brukere (f.eks. en sikkerhetskopi av systemet "
+"eller et filsystem som aksesseres av flere brukere)."
 
 #: src/disks/ui/take-ownership-dialog.ui:13
 msgid "Enable _recursive mode"
@@ -3677,7 +3700,9 @@ msgstr "Oppgi passordfrase for å låse opp"
 
 #: src/disks/ui/unlock-device-dialog.ui:31
 msgid "This volume might be a VeraCrypt volume as it contains random data."
-msgstr "Dette volumet kan være et VeraCrypt-volum siden det inneholder tilfeldige data."
+msgstr ""
+"Dette volumet kan være et VeraCrypt-volum siden det inneholder tilfeldige "
+"data."
 
 #: src/disks/ui/unlock-device-dialog.ui:62
 #: src/disks/ui/unlock-device-dialog.ui:160
@@ -3696,7 +3721,9 @@ msgstr "_Skjult"
 msgid ""
 "Instead of unlocking this volume, attempt to unlock a secondary volume "
 "hidden inside."
-msgstr "Prøv å låse opp et sekundært volum inne i dette volumet i stedet for å låse det opp."
+msgstr ""
+"Prøv å låse opp et sekundært volum inne i dette volumet i stedet for å låse "
+"det opp."
 
 #: src/disks/ui/unlock-device-dialog.ui:127
 msgid "Windows _system"
@@ -3714,7 +3741,9 @@ msgstr "PI_M"
 msgid ""
 "If set, the VeraCrypt PIM (Personal Iterations Multiplier) numeric value to "
 "use for this volume."
-msgstr "Numerisk verdi for VeraCrypt PIM (Personal Iterations Multiplier) som skal brukes for volumet, hvis satt."
+msgstr ""
+"Numerisk verdi for VeraCrypt PIM (Personal Iterations Multiplier) som skal "
+"brukes for volumet, hvis satt."
 
 #: src/disks/ui/unlock-device-dialog.ui:174
 msgid "_Keyfiles"
